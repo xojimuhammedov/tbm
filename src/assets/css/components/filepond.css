@@ -1,0 +1,16 @@
+/* Dark mode overrides for FilePond drop area */
+/* Assumes dark mode is toggled by adding the .dark class to a parent (see index.css @custom-variant) */
+
+.dark .filepond--drop-label,
+.dark .filepond--root .filepond--drop-label {
+  /* make the drop label text white in dark mode */
+  color: #ffffff;
+  /* add a dark gray background behind the drop label */
+  background-color: #2b2b2b;
+}
+
+/* Ensure inner <label> text also follows white color if more specific rules apply */
+.dark .filepond--drop-label label,
+.dark .filepond--root .filepond--drop-label label {
+  color: inherit;
+}

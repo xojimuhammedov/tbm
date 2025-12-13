@@ -1,0 +1,3 @@
+const APPLICATION_QUERY_KEY = "f177";
+
+export { APPLICATION_QUERY_KEY };

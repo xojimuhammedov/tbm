@@ -1,0 +1,1 @@
+import{u as y,a}from"./useApi-BNT2PGFQ.js";const i=({url:e=[],queryKey:r=[],baseUrl:s,params:t={},options:u={}})=>{const{get:o}=y([...e],s);return a({queryKey:[...r,...e],queryFn:({signal:n})=>o({params:t,options:{signal:n}}),retry:0,...u})};export{i as u};
