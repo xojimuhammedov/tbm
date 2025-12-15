@@ -1,4 +1,6 @@
 import { FormContainerFooter } from "@/shared/components/templates/form";
+import KEYS from "@/shared/constants/keys";
+import URLS from "@/shared/constants/urls";
 import usePostQuery from "@/shared/hooks/query/usePostQuery";
 import { useToast } from "@/shared/hooks/useToast";
 import { Button } from "dgz-ui";
@@ -22,13 +24,13 @@ const RHDApplication = () => {
         }
     });
     const { mutate } = usePostQuery({
-        listKeyId: "RH_D_Application",
+        listKeyId: KEYS.RH_D_Application,
     })
 
     const onSubmit = (data: any) => {
         mutate(
             {
-                url: '/api/rh-252/d-app',
+                url: URLS.RH_D_Application,
                 attributes: data
             },
             {

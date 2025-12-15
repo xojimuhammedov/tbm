@@ -9,7 +9,7 @@ const useDeleteQuery = ({ listKeyId }: any) => {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
 
-    const { mutate, isError, error } = useMutation<
+    const { mutate, isError, error, isPending } = useMutation<
         unknown,
         Error,
         { url: string }
@@ -30,7 +30,8 @@ const useDeleteQuery = ({ listKeyId }: any) => {
     return {
         mutate,
         isError,
-        error
+        error,
+        isPending
     };
 };
 
