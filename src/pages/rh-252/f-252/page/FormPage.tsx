@@ -1,179 +1,227 @@
-import { useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Form, MyInput } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui/button";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, Plus, Trash2 } from "lucide-react";
 import { FormContainerFooter } from "@/shared/components/templates/form";
-import useFApplicationForm from "@/pages/rh-252/f-252/hooks/useFApplicationForm.ts";
+import { useFieldArray, useForm } from "react-hook-form";
+import { useToast } from "@/shared/hooks/useToast";
+import usePostQuery from "@/shared/hooks/query/usePostQuery";
+import { get } from "lodash";
+import KEYS from "@/shared/constants/keys";
+import URLS from "@/shared/constants/urls";
 
-const FApplicationPage = () => {
+const RH_F_Application = () => {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const handleSave = useCallback(() => {
-    navigate("/rh-252/f-252");
-  }, [navigate]);
-
-  const { form, onSubmit, isLoading } = useFApplicationForm({
-    id: id || null,
-    onSave: handleSave,
+  const form = useForm<any>({
+    defaultValues: {
+      requestNumber: "",
+      actionType: ["create", "update"],
+      APInput: "",
+      UBPInput: "",
+      data: [
+        {
+          orderNumberAndDate: "",
+          connectionEstablishedDate: "",
+          connectionRouteDetails: "",
+          comment: "",
+        },
+      ],
+    },
   });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "data",
+  });
+
+  const handleAppend = () => {
+    append({
+      orderNumberAndDate: "",
+      connectionEstablishedDate: "",
+      connectionRouteDetails: "",
+      comment: "",
+    });
+  };
+
+  const { mutate } = usePostQuery({
+    listKeyId: KEYS.RH_F_Application,
+  });
+
+  const onSubmit = (data: any) => {
+    mutate(
+      {
+        url: URLS.RH_F_Application,
+        attributes: data,
+      },
+      {
+        onSuccess: () => {
+          form.reset();
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Application created successfully`),
+          });
+        },
+        onError: (error: any) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
+        },
+      },
+    );
+  };
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="p-4 h-full flex flex-col font-inter"
-      >
-        <div
-          className="flex-1 w-full max-w-7xl mx-auto p-6 rounded-lg shadow-sm transition-colors duration-200
-                        bg-white dark:bg-[#202020] border border-gray-200 dark:border-gray-700"
-        >
-          <h1
-            className="text-2xl font-bold text-center mb-8 transition-colors
-                         text-[#202020] dark:text-white"
-          >
-            {t("F-252 Shakl bo'yicha ma'lumot")}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="p-4">
+        <div className="w-full max-w-7xl mx-auto p-4">
+          <h1 className="text-2xl font-bold text-center mb-4">
+            {t(
+              "«Ўзбектелеком» АК фармойишлари бажарилганлиги тўғрисида маълумот шакли",
+            )}
           </h1>
-          <div className="flex flex-col mb-10 items-center">
-            <p
-              className="text-center text-sm font-medium mb-2 transition-colors
-                          text-gray-500 dark:text-gray-400"
-            >
-              {t("Hujjat raqamini kiriting")}
+          <div className="flex flex-col mb-6">
+            <p className="text-center text-sm">
+              {t(
+                "«Ўзбектелеком» АК филиалларининг фармойишлари асосида алоқаларни ташкил этиш тўғрисида",
+              )}{" "}
+              <br />
             </p>
-
-            <div className="flex items-end gap-3 justify-center">
+            <div className="flex items-end gap-2 justify-center">
               <MyInput
                 control={form.control}
-                placeholder={t("№")}
-                name="requestNumber"
-                className="border-0 border-b-2 rounded-none w-[160px] text-center text-xl transition-colors
-                           border-gray-400 dark:border-gray-600
-                           text-[#202020] dark:text-white
-                           bg-transparent
-                           placeholder:font-normal placeholder:text-gray-400
-                           focus:ring-0 focus:border-[#202020] dark:focus:border-white"
-              />
-              <span
-                className="text-lg font-bold uppercase tracking-wide transition-colors
-                               text-[#202020] dark:text-gray-300"
-              >
-                {t("sonli SO'ROVNOMA")}
-              </span>
-            </div>
-          </div>
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 rounded-xl border transition-colors
-                          border-gray-200 dark:border-gray-700"
-          >
-            <div
-              className="col-span-1 md:col-span-2 border-b pb-4 mb-2
-                            border-gray-200 dark:border-gray-700"
-            >
-              <h3
-                className="text-lg font-bold transition-colors
-                             text-[#202020] dark:text-gray-100"
-              >
-                {t("Asosiy ma'lumotlar")}
-              </h3>
-            </div>
-
-            <div className="space-y-1">
-              <MyInput
-                control={form.control}
-                name="sender"
-                label={t("Jo'natuvchi")}
-                placeholder={t("Bo'lim yoki shaxs nomini kiriting")}
-                className="w-full font-normal transition-colors
-                           text-[#202020] dark:text-white
-                           bg-gray-50 dark:bg-[#202020]
-                           border-gray-300 dark:border-gray-600
-                           focus:border-[#202020] dark:focus:border-gray-400"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <MyInput
-                control={form.control}
-                name="recipient"
-                label={t("Qabul qiluvchi")}
-                placeholder={t("Bo'lim nomini kiriting")}
-                className="w-full font-normal transition-colors
-                           text-[#202020] dark:text-white
-                           bg-gray-50 dark:bg-[#202020]
-                           border-gray-300 dark:border-gray-600
-                           focus:border-[#202020] dark:focus:border-gray-400"
-              />
-            </div>
-
-            <div className="space-y-1 md:col-span-2">
-              <MyInput
-                control={form.control}
-                name="leader"
-                label={t("Tasdiqlovchi Rahbar")}
-                placeholder={t("F.I.Sh")}
-                className="w-full font-normal transition-colors
-                           text-[#202020] dark:text-white
-                           bg-gray-50 dark:bg-[#202020]
-                           border-gray-300 dark:border-gray-600
-                           focus:border-[#202020] dark:focus:border-gray-400"
-              />
-            </div>
-            <div className="col-span-1 md:col-span-2">
-              {/* Custom Label: Weight 700 (Bold) */}
-              <label
-                className="text-sm font-bold leading-none mb-3 block
-                                  text-[#202020] dark:text-gray-300"
-              >
-                {t("Harakat turlari")}
-              </label>
-
-              <div
-                className="flex flex-col gap-2 p-5 border rounded-lg transition-colors
-                                bg-gray-50 dark:bg-[#202020]
-                                border-gray-200 dark:border-gray-700"
-              >
-                <MyInput
-                  control={form.control}
-                  name="actionType.0"
-                  placeholder={t(
-                    "Harakat turini yozing (masalan: Yangi ulash)",
-                  )}
-                  className="w-full font-normal
-                                   bg-white dark:bg-[#202020]
-                                   text-[#202020] dark:text-white
-                                   border-gray-300 dark:border-gray-600"
-                />
-                <p
-                  className="text-xs font-medium mt-1
-                                   text-gray-500 dark:text-gray-500"
-                >
-                  * {t("Hozircha bitta harakat turi kiritish imkoniyati")}
-                </p>
-              </div>
+                placeholder={t("")}
+                name={"requestNumber"}
+                className="border border-t-0 border-l-0 border-r-0 rounded-none w-[100px]"
+              />{" "}
+              {t("сон МАЪЛУМОТ")}
             </div>
           </div>
         </div>
-        <FormContainerFooter
-          className="mt-6 border-t pt-4 sticky bottom-0 transition-colors
-                                        bg-white dark:bg-[#202020]
-                                        border-gray-200 dark:border-gray-800"
-        >
+        <table className="border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-2 py-3 text-xs text-center align-middle w-12"
+              >
+                Т.р.
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                «Ўзбектелеком» АК филиали фармойишининг номери ва сана
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                Алоқаларни ташкил этиш санаси
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                Ташкил этилган алоқалар трассаси
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center w-32"
+              >
+                Изох*
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {fields.map((field, index) => (
+              <tr key={field.id} className="hover:bg-gray-50">
+                <td className="border border-gray-300 px-2 py-2 text-center font-medium">
+                  {index + 1}
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    control={form.control}
+                    name={`data.${index}.orderNumberAndDate`}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    placeholder="Order #12345 - 2025-12-10"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    control={form.control}
+                    name={`data.${index}.connectionEstablishedDate`}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                    placeholder="2025-12-20"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    control={form.control}
+                    name={`data.${index}.connectionRouteDetails`}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                    placeholder="Completed"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    control={form.control}
+                    name={`data.${index}.comment`}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                    placeholder="No issues"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2 text-center">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => remove(index)}
+                    disabled={fields.length === 1}
+                    className="text-red-600 hover:text-red-800 hover:bg-red-50 cursor-pointer"
+                  >
+                    <Trash2 size={18} />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="mt-4 flex justify-end">
           <Button
-            size="sm"
-            variant="ghost"
             type="button"
-            onClick={() => navigate(-1)}
-            disabled={isLoading}
-            className="flex items-center gap-2 font-medium transition-colors
-                       text-[#202020] hover:bg-gray-100
-                       dark:text-gray-300 dark:hover:bg-gray-800"
+            onClick={handleAppend}
+            className="flex items-center gap-2"
           >
-            <ArrowLeftIcon size={18} />
-            {t("Orqaga")}
+            <Plus size={20} />
+          </Button>
+        </div>
+        <div className="mt-4 text-sm mb-4 flex flex-col gap-2">
+          <MyInput
+            placeholder={t("")}
+            control={form.control}
+            name="APInput"
+            label="АП номери, бажарувчининг исм-шарифи, фамилияси ва сана"
+            className="w-1/3"
+          />
+          <MyInput
+            control={form.control}
+            name="UBPInput"
+            label="УБП номери, бажарувчининг исм-шарифи, фамилияси ва сана"
+            placeholder={t("")}
+            className="w-1/3"
+          />
+        </div>
+        <FormContainerFooter>
+          <Button size={"sm"} variant={"ghost"} type={"button"}>
+            <ArrowLeftIcon />
+            {t("Back")}
           </Button>
         </FormContainerFooter>
       </form>
@@ -181,4 +229,4 @@ const FApplicationPage = () => {
   );
 };
 
-export default FApplicationPage;
+export default RH_F_Application;

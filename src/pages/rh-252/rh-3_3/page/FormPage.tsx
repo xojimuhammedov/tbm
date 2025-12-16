@@ -1,190 +1,261 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ArrowLeftIcon, Save } from "lucide-react";
 import { Button } from "dgz-ui/button";
-import { Form, MyInput, MySelect } from "dgz-ui-shared/components/form";
-import { FormContainerFooter } from "@/shared/components/templates/form";
-import useNum3ApplicationForm from "@/pages/rh-252/rh-3_3/hooks/useNum3ApplicationForm.ts";
+import { Form, MyInput } from "dgz-ui-shared/components/form";
+import { useFieldArray, useForm } from "react-hook-form";
+import { Plus, Trash2 } from "lucide-react";
+import usePostQuery from "@/shared/hooks/query/usePostQuery";
+import { useToast } from "@/shared/hooks/useToast";
+import { get } from "lodash";
+import URLS from "@/shared/constants/urls";
+import KEYS from "@/shared/constants/keys";
 
 const Num3ApplicationPage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { toast } = useToast();
 
-  const { form, onSubmit, isLoading } = useNum3ApplicationForm({
-    id: id || null,
-    onSave: () => {
-      navigate(-1);
+  const form = useForm<any>({
+    defaultValues: {
+      requestNumber: "",
+      APInput: "",
+      UBPInput: "",
+      data: [
+        {
+          orderNumberAndDate: "",
+          specifiedDeadline: "",
+          actualCompletion: "",
+          responsibleExecutor: "",
+          customerDetails: "",
+          failureReason: "",
+          comment: "",
+        },
+      ],
     },
   });
 
-  const actionOptions = [
-    { value: "create", label: "Create" },
-    { value: "update", label: "Update" },
-    { value: "delete", label: "Delete" },
-    { value: "read", label: "Read" },
-  ];
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "data",
+  });
 
-  const underlineInputStyle =
-    "border-0 border-b border-gray-400 dark:border-gray-600 rounded-none focus:ring-0 px-0 shadow-none bg-transparent text-[#202020] dark:text-white placeholder:text-gray-400 focus:border-[#202020] dark:focus:border-white transition-colors font-medium";
+  const handleAppend = () => {
+    append({
+      orderNumberAndDate: "",
+      specifiedDeadline: "",
+      actualCompletion: "",
+      responsibleExecutor: "",
+      customerDetails: "",
+      failureReason: "",
+      comment: "",
+    });
+  };
+
+  const { mutate } = usePostQuery({
+    listKeyId: KEYS.RH_B_Application,
+  });
+
+  const onSubmit = (data: any) => {
+    mutate(
+      {
+        url: URLS.RH_B_Application,
+        attributes: data,
+      },
+      {
+        onSuccess: () => {
+          form.reset();
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Application created successfully`),
+          });
+        },
+        onError: (error: any) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
+        },
+      },
+    );
+  };
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="h-full flex flex-col font-inter bg-gray-50 dark:bg-black/10"
-      >
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
-          <div
-            className="max-w-4xl mx-auto p-12 shadow-lg min-h-[800px] transition-colors duration-200
-                                    bg-white dark:bg-[#202020]
-                                    text-[#202020] dark:text-white
-                                    border border-transparent dark:border-gray-700"
-          >
-            <div className="text-center mb-8">
-              <h1 className="text-xl font-bold uppercase leading-relaxed">
-                «O'ZBEKISTON TELEKOMMUNIKATSIYA TARMOQLARINI BOSHQARISH
-                RESPUBLIKA MARKAZI» DAVLAT UNITAR KORXONASI
-              </h1>
-            </div>
-
-            <div className="text-center mb-10 border-b-2 border-[#202020] dark:border-gray-500 pb-6">
-              <h2 className="text-lg font-bold uppercase tracking-wide mb-4">
-                Фармойишлари бажарилганлиги тўғрисида маълумот шакли
-              </h2>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 italic px-8">
-                «ЎзТТБРМ» ДУКнинг алоқалари шакллантириш / тугатиш / қайта
-                шакллантириш / блокировкалаш / блокдан чиқариш бўйича
-                фармойишларининг бажарилиши тўғрисида
-              </p>
-            </div>
-
-            <div className="text-center font-bold text-2xl mb-12 tracking-wider uppercase">
-              МАЪЛУМОТНОМА
-            </div>
-            <div className="space-y-10 text-lg px-2 md:px-8">
-              <div className="flex flex-col md:flex-row justify-between gap-10">
-                <div className="flex gap-4 items-end w-full md:w-1/2">
-                  <span className="font-bold whitespace-nowrap text-[#202020] dark:text-gray-200">
-                    SANA:
-                  </span>
-                  <div className="w-full border-b border-gray-400 dark:border-gray-600 pb-1 text-center font-medium">
-                    {new Date().toLocaleDateString()}
-                  </div>
-                </div>
-
-                <div className="flex gap-4 items-end w-full md:w-1/2">
-                  <span className="font-bold whitespace-nowrap text-[#202020] dark:text-gray-200">
-                    №
-                  </span>
-                  <div className="w-full">
-                    <MyInput
-                      control={form.control}
-                      name="requestNumber"
-                      placeholder="001"
-                      className={`${underlineInputStyle} text-center font-bold text-xl`}
-                      disabled={isLoading}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 items-end">
-                <span className="font-bold whitespace-nowrap w-32 text-[#202020] dark:text-gray-200">
-                  Кимдан:
-                </span>
-                <div className="w-full">
-                  <MyInput
-                    control={form.control}
-                    name="sender"
-                    placeholder="Маълумот юборувчи бўлим ёки шахс"
-                    className={underlineInputStyle}
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 items-end">
-                <span className="font-bold whitespace-nowrap w-32 text-[#202020] dark:text-gray-200">
-                  Кимга:
-                </span>
-                <div className="w-full">
-                  <MyInput
-                    control={form.control}
-                    name="recipient"
-                    placeholder="Қабул қилувчи"
-                    className={underlineInputStyle}
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 items-end">
-                <span className="font-bold whitespace-nowrap w-32 text-[#202020] dark:text-gray-200">
-                  Раҳбар:
-                </span>
-                <div className="w-full">
-                  <MyInput
-                    control={form.control}
-                    name="leader"
-                    placeholder="Тасдиқловчи раҳбар Ф.И.Ш"
-                    className={underlineInputStyle}
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 items-center pt-4">
-                <span className="font-bold whitespace-nowrap w-40 self-start md:self-center text-[#202020] dark:text-gray-200">
-                  Ҳаракат тури:
-                </span>
-                <div className="w-full">
-                  <MySelect
-                    control={form.control}
-                    name="actionType"
-                    placeholder="Танланг..."
-                    options={actionOptions}
-                    isDisabled={isLoading}
-                    isMulti={true}
-                    className="react-select-container text-left"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mt-24 border-t border-gray-300 dark:border-gray-700 pt-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center italic">
-                Ушbu ҳужжат электрон тизим орқали шакллантирилди.
-              </p>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="p-4">
+        <div className="w-full max-w-7xl mx-auto p-4">
+          <h1 className="text-2xl font-bold text-center mb-4">
+            «ЎзТТБРМ» ДУК фармойишлари бажарилганлиги тўғрисида маълумот шакли
+          </h1>
+          <div className="flex flex-col mb-6">
+            <p className="text-center text-sm">
+              «ЎзТТБРМ» ДУКнинг алоқалари шакллантириш/тугатиш/қайта
+              шакллантириш/блокировкалаш/блокдан чиқариш бўйича фармойишларининг
+              бажарилиши тўғрисида <br />
+            </p>
+            <div className="flex items-center justify-center">
+              <MyInput
+                control={form.control}
+                placeholder={t("")}
+                name={"requestNumber"}
+                className="border border-t-0 border-l-0 border-r-0 rounded-none w-[100px]"
+              />{" "}
+              сон МАЪЛУМОТ
             </div>
           </div>
         </div>
-        <FormContainerFooter
-          className="border-t py-4 px-8 sticky bottom-0 z-10 transition-colors
-                                                bg-white dark:bg-[#202020]
-                                                border-gray-200 dark:border-gray-800"
-        >
-          <div className="flex justify-between w-full max-w-4xl mx-auto">
-            <Button
-              size="sm"
-              variant="ghost"
-              type="button"
-              onClick={() => navigate(-1)}
-              disabled={isLoading}
-              className="flex items-center gap-2 font-medium text-[#202020] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              {t("Back")}
-            </Button>
-
-            <Button
-              size="sm"
-              type="submit"
-              disabled={isLoading}
-              className="flex items-center gap-2 font-medium text-white
-                                       bg-[#202020] hover:bg-black
-                                       dark:bg-blue-700 dark:hover:bg-blue-600"
-            >
-              <Save className="h-4 w-4" />
-              {t("Save")}
-            </Button>
-          </div>
-        </FormContainerFooter>
+        <table className="border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-2 py-3 text-xs text-center align-middle w-12"
+              >
+                Т.р.
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                «ЎзТТБРМ» ДУК фармойишининг сони ва сана
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                Фармойишда кўрсатилган бажариш муддати
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                Фармойиш хатката бажарилганлиги
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                Фармойишни бажариш учун жавобгарлар
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                Ижрочи (алоқани қабул қилган ижрочи фамилияси)
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center"
+              >
+                Бажарилмаганлик сабаби
+              </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center w-32"
+              >
+                Изох*
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {fields.map((field, index) => (
+              <tr key={field.id} className="hover:bg-gray-50">
+                <td className="border border-gray-300 px-2 py-2 text-center font-medium">
+                  {index + 1}
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    {...form.register(`data.${index}.orderNumberAndDate`)}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    placeholder="Order #12345 - 2025-12-10"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    {...form.register(`data.${index}.specifiedDeadline`)}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                    placeholder="2025-12-20"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    {...form.register(`data.${index}.actualCompletion`)}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                    placeholder="Completed"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    {...form.register(`data.${index}.responsibleExecutor`)}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                    placeholder="John Doe"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    {...form.register(`data.${index}.customerDetails`)}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                    placeholder="Customer ABC"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    {...form.register(`data.${index}.failureReason`)}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2">
+                  <MyInput
+                    {...form.register(`data.${index}.comment`)}
+                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+                    placeholder="No issues"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2 text-center">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => remove(index)}
+                    disabled={fields.length === 1}
+                    className="text-red-600 hover:text-red-800 hover:bg-red-50 cursor-pointer"
+                  >
+                    <Trash2 size={18} />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="mt-4 flex justify-end">
+          <Button
+            type="button"
+            onClick={handleAppend}
+            className="flex items-center gap-2"
+          >
+            <Plus size={20} />
+          </Button>
+        </div>
+        <div className="mt-4 text-sm">
+          <MyInput
+            placeholder={t("")}
+            {...form.register("APInput")}
+            label="АП номери, бажарувчининг исм-шарифи, фамилияси ва сана"
+            className="w-1/3"
+          />
+          <MyInput
+            {...form.register("UBPInput")}
+            label="УБП номери, бажарувчининг исм-шарифи, фамилияси ва сана"
+            placeholder={t("")}
+            className="w-1/3"
+          />
+        </div>
+        <div className="mt-8 cursor-pointer">
+          <Button type="submit" size="lg">
+            Create
+          </Button>
+        </div>
       </form>
     </Form>
   );

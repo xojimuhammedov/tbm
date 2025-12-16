@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { FilePondProps } from "react-filepond";
-import request from "@/request";
 import { config } from "@/shared/utils/config";
+import { request } from "@/request";
 
 type LoadCallback = (response: unknown) => void;
 type ErrorCallback = (message: string) => void;
