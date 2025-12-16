@@ -99,11 +99,15 @@ const RH_CFormDocument = lazy(
   () => import("@/pages/rh-252/c-252/page/FormPage"),
 );
 
-const RH_D_Application = lazy(() => import("@/pages/rh-252/d-252/Page"))
-const RH_D_ApplicationForm = lazy(() => import("@/pages/rh-252/d-252/page/FormPage"))
+const RH_D_Application = lazy(() => import("@/pages/rh-252/d-252/Page"));
+const RH_D_ApplicationForm = lazy(
+  () => import("@/pages/rh-252/d-252/page/FormPage"),
+);
 
-const F252_Application = lazy(() => import("@/pages/rh-252/f-252/Page"))
-const F252_ApplicationForm = lazy(() => import("@/pages/rh-252/f-252/page/FormPage"))
+const F252_Application = lazy(() => import("@/pages/rh-252/f-252/Page"));
+const F252_ApplicationForm = lazy(
+  () => import("@/pages/rh-252/f-252/page/FormPage"),
+);
 
 // Administration Pages
 const StaffPage = lazy(() => import("@/pages/staff/Page"));
@@ -428,6 +432,10 @@ function Router() {
           element: <RH3_3FormPage />,
         },
         {
+          path: "rh-252/rh-3_3/edit/:id",
+          element: <RH3_3FormPage />,
+        },
+        {
           path: "rh-252/c-252",
           element: <RH_CDocument />,
         },
@@ -437,20 +445,28 @@ function Router() {
         },
         {
           path: "rh-252/d-252",
-          element: <RH_D_Application />
+          element: <RH_D_Application />,
         },
         {
           path: "rh-252/d-252/create",
-          element: <RH_D_ApplicationForm />
+          element: <RH_D_ApplicationForm />,
+        },
+        {
+          path: "rh-252/d-252/edit/:id",
+          element: <RH_D_ApplicationForm />,
         },
         {
           path: "rh-252/f-252",
-          element: <F252_Application />
+          element: <F252_Application />,
         },
         {
           path: "rh-252/f-252/create",
-          element: <F252_ApplicationForm />
-        }
+          element: <F252_ApplicationForm />,
+        },
+        {
+          path: "rh-252/f-252/edit/:id",
+          element: <F252_ApplicationForm />,
+        },
       ],
     },
     {

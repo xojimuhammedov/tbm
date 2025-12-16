@@ -1,1 +1,273 @@
-import{R as E,a$ as K,r as R,F as O,H as w}from"./index-ADhmmBpU.js";import{l as j}from"./lodash-BI9_Ro3R.js";function C(e,a){let n;try{n=e()}catch{return}return{getItem:r=>{var l;const s=t=>t===null?null:JSON.parse(t,void 0),c=(l=n.getItem(r))!=null?l:null;return c instanceof Promise?c.then(s):s(c)},setItem:(r,l)=>n.setItem(r,JSON.stringify(l,void 0)),removeItem:r=>n.removeItem(r)}}const P=e=>a=>{try{const n=e(a);return n instanceof Promise?n:{then(r){return P(r)(n)},catch(r){return this}}}catch(n){return{then(r){return this},catch(r){return P(r)(n)}}}},N=(e,a)=>(n,r,l)=>{let s={storage:C(()=>localStorage),partialize:o=>o,version:0,merge:(o,h)=>({...h,...o}),...a},c=!1;const t=new Set,m=new Set;let i=s.storage;if(!i)return e((...o)=>{console.warn(`[zustand persist middleware] Unable to update item '${s.name}', the given storage is currently unavailable.`),n(...o)},r,l);const d=()=>{const o=s.partialize({...r()});return i.setItem(s.name,{state:o,version:s.version})},y=l.setState;l.setState=(o,h)=>{y(o,h),d()};const S=e((...o)=>{n(...o),d()},r,l);l.getInitialState=()=>S;let g;const I=()=>{var o,h;if(!i)return;c=!1,t.forEach(u=>{var f;return u((f=r())!=null?f:S)});const v=((h=s.onRehydrateStorage)==null?void 0:h.call(s,(o=r())!=null?o:S))||void 0;return P(i.getItem.bind(i))(s.name).then(u=>{if(u)if(typeof u.version=="number"&&u.version!==s.version){if(s.migrate){const f=s.migrate(u.state,u.version);return f instanceof Promise?f.then(b=>[!0,b]):[!0,f]}console.error("State loaded from storage couldn't be migrated since no migrate function was provided")}else return[!1,u.state];return[!1,void 0]}).then(u=>{var f;const[b,J]=u;if(g=s.merge(J,(f=r())!=null?f:S),n(g,!0),b)return d()}).then(()=>{v==null||v(g,void 0),g=r(),c=!0,m.forEach(u=>u(g))}).catch(u=>{v==null||v(void 0,u)})};return l.persist={setOptions:o=>{s={...s,...o},o.storage&&(i=o.storage)},clearStorage:()=>{i==null||i.removeItem(s.name)},getOptions:()=>s,rehydrate:()=>I(),hasHydrated:()=>c,onHydrate:o=>(t.add(o),()=>{t.delete(o)}),onFinishHydration:o=>(m.add(o),()=>{m.delete(o)})},s.skipHydration||I(),g||S},z=N,x=e=>{let a;const n=new Set,r=(t,m)=>{const i=typeof t=="function"?t(a):t;if(!Object.is(i,a)){const d=a;a=m??(typeof i!="object"||i===null)?i:Object.assign({},a,i),n.forEach(y=>y(a,d))}},l=()=>a,s={setState:r,getState:l,getInitialState:()=>c,subscribe:t=>(n.add(t),()=>n.delete(t))},c=a=e(r,l,s);return s},F=e=>e?x(e):x,D=e=>e;function U(e,a=D){const n=E.useSyncExternalStore(e.subscribe,()=>a(e.getState()),()=>a(e.getInitialState()));return E.useDebugValue(n),n}const H=e=>{const a=F(e),n=r=>U(a,r);return Object.assign(n,a),n},A=e=>e?H(e):H,Q=A()(z(e=>({setColumns:a=>{e({storedColumns:a})},storedColumns:{}}),{name:"columnsStore"})),$=A()(z(e=>({setStoredRange:a=>{e({storedRanges:a})},storedRanges:{}}),{name:"dateRangesStore",storage:C(()=>localStorage)})),T=e=>{const[a,n]=K(),{storedRanges:r}=$(),l=R.useMemo(()=>{const c={};if(e!=null&&e.dateRangeKey){const t=r[e.dateRangeKey];t!=null&&t.from&&(t!=null&&t.to)&&(c.from=O(t.from).utc(!0).format((e==null?void 0:e.format)??w),c.to=O(t.to).utc(!0).format((e==null?void 0:e.format)??w))}return a.forEach((t,m)=>{var d;if((d=e==null?void 0:e.excludeParams)!=null&&d.includes(m))return;const i=a.getAll(m);c[m]=i.length>1?i:t}),c},[a,e==null?void 0:e.excludeParams,e==null?void 0:e.dateRangeKey,JSON.stringify(j.get(r,(e==null?void 0:e.dateRangeKey)??"",""))]),s=R.useCallback(c=>{const t=new URLSearchParams;Object.entries(c).forEach(([m,i])=>{j.isNil(i)?t.delete(m):Array.isArray(i)?i.forEach(d=>t.append(m,String(d))):t.set(m,String(i))}),n(t,{replace:!0})},[n]);return{params:l,handleSetParams:s}};export{Q as P,$ as g,T as u};
+import { R as E, a$ as K, r as R, F as O, H as w } from "./index-ADhmmBpU.js";
+import { l as j } from "./lodash-BI9_Ro3R.js";
+function C(e, a) {
+  let n;
+  try {
+    n = e();
+  } catch {
+    return;
+  }
+  return {
+    getItem: (r) => {
+      var l;
+      const s = (t) => (t === null ? null : JSON.parse(t, void 0)),
+        c = (l = n.getItem(r)) != null ? l : null;
+      return c instanceof Promise ? c.then(s) : s(c);
+    },
+    setItem: (r, l) => n.setItem(r, JSON.stringify(l, void 0)),
+    removeItem: (r) => n.removeItem(r),
+  };
+}
+const P = (e) => (a) => {
+    try {
+      const n = e(a);
+      return n instanceof Promise
+        ? n
+        : {
+            then(r) {
+              return P(r)(n);
+            },
+            catch(r) {
+              return this;
+            },
+          };
+    } catch (n) {
+      return {
+        then(r) {
+          return this;
+        },
+        catch(r) {
+          return P(r)(n);
+        },
+      };
+    }
+  },
+  N = (e, a) => (n, r, l) => {
+    let s = {
+        storage: C(() => localStorage),
+        partialize: (o) => o,
+        version: 0,
+        merge: (o, h) => ({ ...h, ...o }),
+        ...a,
+      },
+      c = !1;
+    const t = new Set(),
+      m = new Set();
+    let i = s.storage;
+    if (!i)
+      return e(
+        (...o) => {
+          (console.warn(
+            `[zustand persist middleware] Unable to update item '${s.name}', the given storage is currently unavailable.`,
+          ),
+            n(...o));
+        },
+        r,
+        l,
+      );
+    const d = () => {
+        const o = s.partialize({ ...r() });
+        return i.setItem(s.name, { state: o, version: s.version });
+      },
+      y = l.setState;
+    l.setState = (o, h) => {
+      (y(o, h), d());
+    };
+    const S = e(
+      (...o) => {
+        (n(...o), d());
+      },
+      r,
+      l,
+    );
+    l.getInitialState = () => S;
+    let g;
+    const I = () => {
+      var o, h;
+      if (!i) return;
+      ((c = !1),
+        t.forEach((u) => {
+          var f;
+          return u((f = r()) != null ? f : S);
+        }));
+      const v =
+        ((h = s.onRehydrateStorage) == null
+          ? void 0
+          : h.call(s, (o = r()) != null ? o : S)) || void 0;
+      return P(i.getItem.bind(i))(s.name)
+        .then((u) => {
+          if (u)
+            if (typeof u.version == "number" && u.version !== s.version) {
+              if (s.migrate) {
+                const f = s.migrate(u.state, u.version);
+                return f instanceof Promise ? f.then((b) => [!0, b]) : [!0, f];
+              }
+              console.error(
+                "State loaded from storage couldn't be migrated since no migrate function was provided",
+              );
+            } else return [!1, u.state];
+          return [!1, void 0];
+        })
+        .then((u) => {
+          var f;
+          const [b, J] = u;
+          if (((g = s.merge(J, (f = r()) != null ? f : S)), n(g, !0), b))
+            return d();
+        })
+        .then(() => {
+          (v == null || v(g, void 0),
+            (g = r()),
+            (c = !0),
+            m.forEach((u) => u(g)));
+        })
+        .catch((u) => {
+          v == null || v(void 0, u);
+        });
+    };
+    return (
+      (l.persist = {
+        setOptions: (o) => {
+          ((s = { ...s, ...o }), o.storage && (i = o.storage));
+        },
+        clearStorage: () => {
+          i == null || i.removeItem(s.name);
+        },
+        getOptions: () => s,
+        rehydrate: () => I(),
+        hasHydrated: () => c,
+        onHydrate: (o) => (
+          t.add(o),
+          () => {
+            t.delete(o);
+          }
+        ),
+        onFinishHydration: (o) => (
+          m.add(o),
+          () => {
+            m.delete(o);
+          }
+        ),
+      }),
+      s.skipHydration || I(),
+      g || S
+    );
+  },
+  z = N,
+  x = (e) => {
+    let a;
+    const n = new Set(),
+      r = (t, m) => {
+        const i = typeof t == "function" ? t(a) : t;
+        if (!Object.is(i, a)) {
+          const d = a;
+          ((a =
+            (m ?? (typeof i != "object" || i === null))
+              ? i
+              : Object.assign({}, a, i)),
+            n.forEach((y) => y(a, d)));
+        }
+      },
+      l = () => a,
+      s = {
+        setState: r,
+        getState: l,
+        getInitialState: () => c,
+        subscribe: (t) => (n.add(t), () => n.delete(t)),
+      },
+      c = (a = e(r, l, s));
+    return s;
+  },
+  F = (e) => (e ? x(e) : x),
+  D = (e) => e;
+function U(e, a = D) {
+  const n = E.useSyncExternalStore(
+    e.subscribe,
+    () => a(e.getState()),
+    () => a(e.getInitialState()),
+  );
+  return (E.useDebugValue(n), n);
+}
+const H = (e) => {
+    const a = F(e),
+      n = (r) => U(a, r);
+    return (Object.assign(n, a), n);
+  },
+  A = (e) => (e ? H(e) : H),
+  Q = A()(
+    z(
+      (e) => ({
+        setColumns: (a) => {
+          e({ storedColumns: a });
+        },
+        storedColumns: {},
+      }),
+      { name: "columnsStore" },
+    ),
+  ),
+  $ = A()(
+    z(
+      (e) => ({
+        setStoredRange: (a) => {
+          e({ storedRanges: a });
+        },
+        storedRanges: {},
+      }),
+      { name: "dateRangesStore", storage: C(() => localStorage) },
+    ),
+  ),
+  T = (e) => {
+    const [a, n] = K(),
+      { storedRanges: r } = $(),
+      l = R.useMemo(() => {
+        const c = {};
+        if (e != null && e.dateRangeKey) {
+          const t = r[e.dateRangeKey];
+          t != null &&
+            t.from &&
+            t != null &&
+            t.to &&
+            ((c.from = O(t.from)
+              .utc(!0)
+              .format((e == null ? void 0 : e.format) ?? w)),
+            (c.to = O(t.to)
+              .utc(!0)
+              .format((e == null ? void 0 : e.format) ?? w)));
+        }
+        return (
+          a.forEach((t, m) => {
+            var d;
+            if (
+              (d = e == null ? void 0 : e.excludeParams) != null &&
+              d.includes(m)
+            )
+              return;
+            const i = a.getAll(m);
+            c[m] = i.length > 1 ? i : t;
+          }),
+          c
+        );
+      }, [
+        a,
+        e == null ? void 0 : e.excludeParams,
+        e == null ? void 0 : e.dateRangeKey,
+        JSON.stringify(
+          j.get(r, (e == null ? void 0 : e.dateRangeKey) ?? "", ""),
+        ),
+      ]),
+      s = R.useCallback(
+        (c) => {
+          const t = new URLSearchParams();
+          (Object.entries(c).forEach(([m, i]) => {
+            j.isNil(i)
+              ? t.delete(m)
+              : Array.isArray(i)
+                ? i.forEach((d) => t.append(m, String(d)))
+                : t.set(m, String(i));
+          }),
+            n(t, { replace: !0 }));
+        },
+        [n],
+      );
+    return { params: l, handleSetParams: s };
+  };
+export { Q as P, $ as g, T as u };

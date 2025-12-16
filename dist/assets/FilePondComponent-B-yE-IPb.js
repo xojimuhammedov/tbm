@@ -1,1 +1,163 @@
-import{r as u,a as v,j as A}from"./index-ADhmmBpU.js";import{F as $,r as B,a as E,b as I,p as _}from"./react-filepond.esm-B2oG36mQ.js";import{r as m}from"./useApi-BNT2PGFQ.js";import{u as D}from"./button-Bp2lHjov-bkEUXTzY.js";const M=d=>({uploadServer:{process:u.useCallback(async(i,l,c,e,s,p)=>{var f;try{const o=new FormData;o.append(i,l,l.name),c&&typeof c=="object"&&Object.keys(c).forEach(r=>{const n=c[r];(typeof n=="string"||n instanceof Blob)&&o.append(r,n)});const a=await m.post(v.BASE_PATH+"api/files",o,{headers:{"Content-Type":"multipart/form-data"},onUploadProgress:r=>{if(r.total){const n=Math.round(r.loaded*100/r.total);p(!0,n,100)}}});if(a.data){let r=a.data;if(typeof a.data=="object"&&a.data!==null){const n=a.data,y=["_id","id","serverId","fileId","uuid","key","path"];for(const b of y){const t=n[b];if(typeof t=="string"&&t){r=t;break}if(typeof t=="number"){r=String(t);break}}}if(e(r),d)try{d(a.data)}catch(n){console.error("Failed to parse upload response:",n)}}else e(a.data)}catch(o){if(console.error("File upload error:",o),o&&typeof o=="object"&&"response"in o){const r=((f=o.response.data)==null?void 0:f.message)||"Upload failed";s(r)}else o&&typeof o=="object"&&"request"in o?s("Network error. Please check your connection."):s("Upload failed. Please try again.")}},[d]),revert:u.useCallback(async(i,l,c)=>{try{let e;if(typeof i=="string"){const s=i.trim();if(s.startsWith("{")||s.startsWith("["))try{const p=JSON.parse(s);if(p&&typeof p=="object"){const f=Array.isArray(p)?p[0]:p;e=["id","serverId","fileId","uuid","key","path","_id"].map(o=>f==null?void 0:f[o]).find(Boolean)}}catch{}else e=s}e?await m.delete(`${v.BASE_PATH}api/files/${encodeURIComponent(e)}`):await m.delete(`${v.BASE_PATH}api/files`,{data:{id:i}}),l()}catch(e){console.error("File removal error:",e),c("Failed to remove file")}},[]),load:u.useCallback(async(i,l,c)=>{try{if(typeof i=="string"){const e=await m.get(i,{responseType:"blob"}),s=new Blob([e.data],{type:e.headers["content-type"]||"video/mp4"});l(s)}else l(i)}catch(e){console.error("File load error:",e),c("Failed to load file")}},[])}});B(E,I,_);const T=({allowFileTypeValidation:d=!0,acceptedFileTypes:h=["image/*","video/*","audio/*"],allowFileSizeValidation:i=!0,server:l,name:c="file",maxFiles:e=10,allowMultiple:s=!0,instantUpload:p=void 0,onFinishUpload:f,credits:o=!1,docType:a,...r})=>{const{t:n}=D(),{uploadServer:y}=M(f),b=u.useMemo(()=>{const t=l||y;if(!a)return t;if(t&&typeof t=="object"&&"process"in t){const j=t.process;if(typeof j=="function")return{...t,process:(k,P,g,F,C,S,w)=>{const x={...typeof g=="object"&&g?g:{},type:a};return j(k,P,x,F,C,S,w)}}}return t},[l,y,a]);return A.jsx($,{allowFileTypeValidation:d,acceptedFileTypes:h,allowFileSizeValidation:i,server:b,name:c,maxFiles:e,allowMultiple:s,instantUpload:p,credits:o,labelIdle:`${n("Drag & Drop your images here or")} <span class="filepond--label-action">${n("Browse")}</span>`,...r})},R=u.memo(T);export{R as F};
+import { r as u, a as v, j as A } from "./index-ADhmmBpU.js";
+import {
+  F as $,
+  r as B,
+  a as E,
+  b as I,
+  p as _,
+} from "./react-filepond.esm-B2oG36mQ.js";
+import { r as m } from "./useApi-BNT2PGFQ.js";
+import { u as D } from "./button-Bp2lHjov-bkEUXTzY.js";
+const M = (d) => ({
+  uploadServer: {
+    process: u.useCallback(
+      async (i, l, c, e, s, p) => {
+        var f;
+        try {
+          const o = new FormData();
+          (o.append(i, l, l.name),
+            c &&
+              typeof c == "object" &&
+              Object.keys(c).forEach((r) => {
+                const n = c[r];
+                (typeof n == "string" || n instanceof Blob) && o.append(r, n);
+              }));
+          const a = await m.post(v.BASE_PATH + "api/files", o, {
+            headers: { "Content-Type": "multipart/form-data" },
+            onUploadProgress: (r) => {
+              if (r.total) {
+                const n = Math.round((r.loaded * 100) / r.total);
+                p(!0, n, 100);
+              }
+            },
+          });
+          if (a.data) {
+            let r = a.data;
+            if (typeof a.data == "object" && a.data !== null) {
+              const n = a.data,
+                y = ["_id", "id", "serverId", "fileId", "uuid", "key", "path"];
+              for (const b of y) {
+                const t = n[b];
+                if (typeof t == "string" && t) {
+                  r = t;
+                  break;
+                }
+                if (typeof t == "number") {
+                  r = String(t);
+                  break;
+                }
+              }
+            }
+            if ((e(r), d))
+              try {
+                d(a.data);
+              } catch (n) {
+                console.error("Failed to parse upload response:", n);
+              }
+          } else e(a.data);
+        } catch (o) {
+          if (
+            (console.error("File upload error:", o),
+            o && typeof o == "object" && "response" in o)
+          ) {
+            const r =
+              ((f = o.response.data) == null ? void 0 : f.message) ||
+              "Upload failed";
+            s(r);
+          } else
+            o && typeof o == "object" && "request" in o
+              ? s("Network error. Please check your connection.")
+              : s("Upload failed. Please try again.");
+        }
+      },
+      [d],
+    ),
+    revert: u.useCallback(async (i, l, c) => {
+      try {
+        let e;
+        if (typeof i == "string") {
+          const s = i.trim();
+          if (s.startsWith("{") || s.startsWith("["))
+            try {
+              const p = JSON.parse(s);
+              if (p && typeof p == "object") {
+                const f = Array.isArray(p) ? p[0] : p;
+                e = ["id", "serverId", "fileId", "uuid", "key", "path", "_id"]
+                  .map((o) => (f == null ? void 0 : f[o]))
+                  .find(Boolean);
+              }
+            } catch {}
+          else e = s;
+        }
+        (e
+          ? await m.delete(`${v.BASE_PATH}api/files/${encodeURIComponent(e)}`)
+          : await m.delete(`${v.BASE_PATH}api/files`, { data: { id: i } }),
+          l());
+      } catch (e) {
+        (console.error("File removal error:", e), c("Failed to remove file"));
+      }
+    }, []),
+    load: u.useCallback(async (i, l, c) => {
+      try {
+        if (typeof i == "string") {
+          const e = await m.get(i, { responseType: "blob" }),
+            s = new Blob([e.data], {
+              type: e.headers["content-type"] || "video/mp4",
+            });
+          l(s);
+        } else l(i);
+      } catch (e) {
+        (console.error("File load error:", e), c("Failed to load file"));
+      }
+    }, []),
+  },
+});
+B(E, I, _);
+const T = ({
+    allowFileTypeValidation: d = !0,
+    acceptedFileTypes: h = ["image/*", "video/*", "audio/*"],
+    allowFileSizeValidation: i = !0,
+    server: l,
+    name: c = "file",
+    maxFiles: e = 10,
+    allowMultiple: s = !0,
+    instantUpload: p = void 0,
+    onFinishUpload: f,
+    credits: o = !1,
+    docType: a,
+    ...r
+  }) => {
+    const { t: n } = D(),
+      { uploadServer: y } = M(f),
+      b = u.useMemo(() => {
+        const t = l || y;
+        if (!a) return t;
+        if (t && typeof t == "object" && "process" in t) {
+          const j = t.process;
+          if (typeof j == "function")
+            return {
+              ...t,
+              process: (k, P, g, F, C, S, w) => {
+                const x = { ...(typeof g == "object" && g ? g : {}), type: a };
+                return j(k, P, x, F, C, S, w);
+              },
+            };
+        }
+        return t;
+      }, [l, y, a]);
+    return A.jsx($, {
+      allowFileTypeValidation: d,
+      acceptedFileTypes: h,
+      allowFileSizeValidation: i,
+      server: b,
+      name: c,
+      maxFiles: e,
+      allowMultiple: s,
+      instantUpload: p,
+      credits: o,
+      labelIdle: `${n("Drag & Drop your images here or")} <span class="filepond--label-action">${n("Browse")}</span>`,
+      ...r,
+    });
+  },
+  R = u.memo(T);
+export { R as F };

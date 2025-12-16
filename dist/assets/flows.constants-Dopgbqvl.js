@@ -1,1 +1,2 @@
-const o="flows-id";export{o as F};
+const o = "flows-id";
+export { o as F };

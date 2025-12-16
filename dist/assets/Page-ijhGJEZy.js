@@ -1,1 +1,162 @@
-import{J as g,j as a,M as k,i as y,q as j,r as i}from"./index-ADhmmBpU.js";import{P as E}from"./PageHeader-l3FtlNyv.js";import{P as S}from"./PageWrapper-D7EWSq9s.js";import{u as f,c as v}from"./button-Bp2lHjov-bkEUXTzY.js";import{l as h}from"./lodash-BI9_Ro3R.js";import{H as P}from"./index.es-BKLEAvF1.js";import{C as l}from"./channels.constants-BBumYQzh.js";import{u as A}from"./useLists-DBTxrMAi.js";import{S as I,u as N}from"./useDelete-DMNw96p5.js";import{M as x}from"./MyTooltip-DPJtpMhP.js";import{T}from"./trash-2-B_r_Bsxl.js";import{C as b}from"./circle-plus-CJWL5GeC.js";import"./sidebar-C0lF1Npi.js";import"./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";import"./useQueryParams-Dns8Zny6.js";import"./createLucideIcon-B950nf2d-ChSZaRdU.js";import"./popover-HTqpqYpJ-CIljcfgV-Ob8cCMTy.js";import"./MySelect-CDOMHlry-CVNRsqeU.js";import"./useApi-BNT2PGFQ.js";import"./MutateRequestMethod-D0dsk-6r.js";const M=(e,s,r)=>[{key:"code",dataIndex:"code",name:e("Code")},{key:"stream_identifier",dataIndex:"stream_identifier",name:e("Stream identifier")},{key:"channel_identifier",dataIndex:"channel_identifier",name:e("Channel identifier")},{key:"site_a",dataIndex:"site_a",name:e("Site A")},{key:"site_z",dataIndex:"site_z",name:e("Site Z")},{key:"updated_at",dataIndex:"updated_at",name:e("Updated date"),render:t=>g(t,k)},{key:"_id",dataIndex:"_id",name:e(""),render:t=>a.jsxs("div",{className:"flex items-center gap-2",children:[a.jsx(x,{content:e("Edit"),children:a.jsx(I,{className:"size-4",onClick:()=>r(t)})}),a.jsx(x,{content:e("Delete"),children:a.jsx(T,{className:"size-4",onClick:()=>s(t)})})]})}],z=()=>{const{t:e}=f(),s=y(),{removeWithConfirm:r}=N([l]),{toast:t}=j(),{query:n,handleFilter:d,params:c}=A({url:[l]}),o=i.useCallback(m=>{r(m).then(()=>{n.refetch(),t({variant:"success",title:e("Success"),description:e("Channel removed successfully")})}).catch(p=>{t({variant:"destructive",title:e(`${h.get(p,"response.statusText","Error")}`),description:e(`${h.get(p,"response.data.message","An error occurred. Contact the administrator")}`)})})},[r,e,t,n]),_=i.useCallback(()=>{s("/channels-5_3/create")},[s]),u=i.useCallback(m=>{s(`/channels-5_3/edit/${m}`)},[s]),C=i.useMemo(()=>M(e,o,u),[e,o,u]);return{loading:n.isLoading,columns:C,dataSource:n.data,params:c,handleFilter:d,handleAdd:_}},ee=()=>{const{t:e}=f(),{loading:s,columns:r,dataSource:t,handleFilter:n,params:d,handleAdd:c}=z(),o=i.useMemo(()=>[{name:e("Channels(5_3)"),path:"/channels-5_3",isActive:!0}],[e]);return a.jsxs(a.Fragment,{children:[a.jsx(E,{className:"sticky top-0",breadcrumbs:o,children:a.jsxs(v,{size:"sm",onClick:c,children:[a.jsx(b,{}),e("Add new")]})}),a.jsx(S,{children:a.jsx(P,{tableKey:l,hasNumbers:!0,hasSearch:!0,isStickyHeader:!0,hasPagination:!0,loading:s,params:d,onParamChange:n,rowKey:"_id",dataSource:t,dataKey:"docs",columns:r})})]})};export{ee as default};
+import {
+  J as g,
+  j as a,
+  M as k,
+  i as y,
+  q as j,
+  r as i,
+} from "./index-ADhmmBpU.js";
+import { P as E } from "./PageHeader-l3FtlNyv.js";
+import { P as S } from "./PageWrapper-D7EWSq9s.js";
+import { u as f, c as v } from "./button-Bp2lHjov-bkEUXTzY.js";
+import { l as h } from "./lodash-BI9_Ro3R.js";
+import { H as P } from "./index.es-BKLEAvF1.js";
+import { C as l } from "./channels.constants-BBumYQzh.js";
+import { u as A } from "./useLists-DBTxrMAi.js";
+import { S as I, u as N } from "./useDelete-DMNw96p5.js";
+import { M as x } from "./MyTooltip-DPJtpMhP.js";
+import { T } from "./trash-2-B_r_Bsxl.js";
+import { C as b } from "./circle-plus-CJWL5GeC.js";
+import "./sidebar-C0lF1Npi.js";
+import "./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";
+import "./useQueryParams-Dns8Zny6.js";
+import "./createLucideIcon-B950nf2d-ChSZaRdU.js";
+import "./popover-HTqpqYpJ-CIljcfgV-Ob8cCMTy.js";
+import "./MySelect-CDOMHlry-CVNRsqeU.js";
+import "./useApi-BNT2PGFQ.js";
+import "./MutateRequestMethod-D0dsk-6r.js";
+const M = (e, s, r) => [
+    { key: "code", dataIndex: "code", name: e("Code") },
+    {
+      key: "stream_identifier",
+      dataIndex: "stream_identifier",
+      name: e("Stream identifier"),
+    },
+    {
+      key: "channel_identifier",
+      dataIndex: "channel_identifier",
+      name: e("Channel identifier"),
+    },
+    { key: "site_a", dataIndex: "site_a", name: e("Site A") },
+    { key: "site_z", dataIndex: "site_z", name: e("Site Z") },
+    {
+      key: "updated_at",
+      dataIndex: "updated_at",
+      name: e("Updated date"),
+      render: (t) => g(t, k),
+    },
+    {
+      key: "_id",
+      dataIndex: "_id",
+      name: e(""),
+      render: (t) =>
+        a.jsxs("div", {
+          className: "flex items-center gap-2",
+          children: [
+            a.jsx(x, {
+              content: e("Edit"),
+              children: a.jsx(I, { className: "size-4", onClick: () => r(t) }),
+            }),
+            a.jsx(x, {
+              content: e("Delete"),
+              children: a.jsx(T, { className: "size-4", onClick: () => s(t) }),
+            }),
+          ],
+        }),
+    },
+  ],
+  z = () => {
+    const { t: e } = f(),
+      s = y(),
+      { removeWithConfirm: r } = N([l]),
+      { toast: t } = j(),
+      { query: n, handleFilter: d, params: c } = A({ url: [l] }),
+      o = i.useCallback(
+        (m) => {
+          r(m)
+            .then(() => {
+              (n.refetch(),
+                t({
+                  variant: "success",
+                  title: e("Success"),
+                  description: e("Channel removed successfully"),
+                }));
+            })
+            .catch((p) => {
+              t({
+                variant: "destructive",
+                title: e(`${h.get(p, "response.statusText", "Error")}`),
+                description: e(
+                  `${h.get(p, "response.data.message", "An error occurred. Contact the administrator")}`,
+                ),
+              });
+            });
+        },
+        [r, e, t, n],
+      ),
+      _ = i.useCallback(() => {
+        s("/channels-5_3/create");
+      }, [s]),
+      u = i.useCallback(
+        (m) => {
+          s(`/channels-5_3/edit/${m}`);
+        },
+        [s],
+      ),
+      C = i.useMemo(() => M(e, o, u), [e, o, u]);
+    return {
+      loading: n.isLoading,
+      columns: C,
+      dataSource: n.data,
+      params: c,
+      handleFilter: d,
+      handleAdd: _,
+    };
+  },
+  ee = () => {
+    const { t: e } = f(),
+      {
+        loading: s,
+        columns: r,
+        dataSource: t,
+        handleFilter: n,
+        params: d,
+        handleAdd: c,
+      } = z(),
+      o = i.useMemo(
+        () => [
+          { name: e("Channels(5_3)"), path: "/channels-5_3", isActive: !0 },
+        ],
+        [e],
+      );
+    return a.jsxs(a.Fragment, {
+      children: [
+        a.jsx(E, {
+          className: "sticky top-0",
+          breadcrumbs: o,
+          children: a.jsxs(v, {
+            size: "sm",
+            onClick: c,
+            children: [a.jsx(b, {}), e("Add new")],
+          }),
+        }),
+        a.jsx(S, {
+          children: a.jsx(P, {
+            tableKey: l,
+            hasNumbers: !0,
+            hasSearch: !0,
+            isStickyHeader: !0,
+            hasPagination: !0,
+            loading: s,
+            params: d,
+            onParamChange: n,
+            rowKey: "_id",
+            dataSource: t,
+            dataKey: "docs",
+            columns: r,
+          }),
+        }),
+      ],
+    });
+  };
+export { ee as default };

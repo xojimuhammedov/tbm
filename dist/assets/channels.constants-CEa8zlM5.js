@@ -1,1 +1,2 @@
-const n="channels-id";export{n as C};
+const n = "channels-id";
+export { n as C };

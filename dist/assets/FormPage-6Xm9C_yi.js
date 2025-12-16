@@ -1,1 +1,296 @@
-import{a as s,q,r as f,i as I,j as o,k as j,z as i,Q as E}from"./index-ADhmmBpU.js";import{P as g}from"./PageHeader-l3FtlNyv.js";import{P as L}from"./PageWrapper-D7EWSq9s.js";import{l as b}from"./lodash-BI9_Ro3R.js";import"./index.es-njk8-3Q7.js";import{u as p,c as v}from"./button-Bp2lHjov-bkEUXTzY.js";import"./sidebar-C0lF1Npi.js";import{F as C}from"./FormContainerFooter-M0H-Jjey.js";import{u as S}from"./useGetOne-DA0KuYmv.js";import{u as T,a as _}from"./useMutate-B2j67kPQ.js";import{o as D,s as l,a as V}from"./zod-BQt-Wj8X.js";import{M as A}from"./MutateRequestMethod-D0dsk-6r.js";import{C as N}from"./card-indexes.constants-DqNyTkxE.js";import{A as k}from"./arrow-left-Bv-o5b3i.js";import"./createLucideIcon-B950nf2d-ChSZaRdU.js";import"./Spin-D_PNnV0x.js";import"./useApi-BNT2PGFQ.js";const G=e=>D({code:l().nonempty(e("required {{field}}",{field:e("Code"),ns:s.LANG.NS.VALIDATION})),verification:l().nonempty(e("required {{field}}",{field:e("Verification"),ns:s.LANG.NS.VALIDATION})),consumer:l().nonempty(e("required {{field}}",{field:e("Consumer"),ns:s.LANG.NS.VALIDATION})),zone2:l().nonempty(e("required {{field}}",{field:e("Zone 2"),ns:s.LANG.NS.VALIDATION})),track:l().nonempty(e("required {{field}}",{field:e("Track"),ns:s.LANG.NS.VALIDATION})),id:l().nonempty(e("required {{field}}",{field:e("ID"),ns:s.LANG.NS.VALIDATION})),international:l().nonempty(e("required {{field}}",{field:e("International"),ns:s.LANG.NS.VALIDATION})),start:l().nonempty(e("required {{field}}",{field:e("Start"),ns:s.LANG.NS.VALIDATION})),end:l().nonempty(e("required {{field}}",{field:e("End"),ns:s.LANG.NS.VALIDATION})),signal_level:l().nonempty(e("required {{field}}",{field:e("Signal level"),ns:s.LANG.NS.VALIDATION})),order_number_for_stream:l().nonempty(e("required {{field}}",{field:e("Order number for stream"),ns:s.LANG.NS.VALIDATION}))}),y=({id:e,onSave:d})=>{const{t}=p(),{toast:r}=q(),a=f.useMemo(()=>G(t),[t]),c=T({resolver:V(a)}),m=S({url:[N,e||""],options:{enabled:!!e}}),{query:u}=_({url:[N,e||""],method:e?A.PUT:A.POST,options:{onError:n=>{r({variant:"destructive",title:t(`${b.get(n,"response.statusText","Error")}`),description:t(`${b.get(n,"response.data.message","An error occurred. Contact the administrator")}`)})},onSuccess:()=>{c.reset(),d==null||d(),r({variant:"success",title:t("Success"),description:t(e?"Card index updated successfully":"Card index created successfully")})}}});f.useEffect(()=>{var x;const n=(x=m.data)==null?void 0:x.data;n&&c.reset({code:n.code,verification:n.verification,consumer:n.consumer,zone2:n.zone2,track:n.track,id:n.id,international:n.international,start:n.start,end:n.end,signal_level:n.signal_level,order_number_for_stream:n.order_number_for_stream})},[m.data,c]);const h=f.useCallback(n=>{u.mutate(n)},[u]);return{form:c,onSubmit:h}},z=({id:e,onSave:d,readOnly:t=!1})=>{const{t:r}=p(),{form:a,onSubmit:c}=y({id:e,onSave:d}),m=I(),u=e?`${r("Edit")} ${r("Card index")}`:`${r("Create")} ${r("Card index")}`;return o.jsx(j,{...a,children:o.jsxs("form",{onSubmit:a.handleSubmit(c),className:"space-y-4",children:[o.jsx("h2",{className:"text-xl font-medium",children:u}),o.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-3 gap-4",children:[o.jsx(i,{control:a.control,name:"code",label:r("Code"),placeholder:r("Enter code"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"verification",label:r("Verification"),placeholder:r("Enter verification"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"consumer",label:r("Consumer"),placeholder:r("Enter consumer"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"zone2",label:r("Zone 2"),placeholder:r("Enter zone 2"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"track",label:r("Track"),placeholder:r("Enter track"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"id",label:r("ID"),placeholder:r("Enter ID"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"international",label:r("International"),placeholder:r("Enter international"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"start",label:r("Start"),placeholder:r("Enter start date"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"end",label:r("End"),placeholder:r("Enter end date"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"signal_level",label:r("Signal level"),placeholder:r("Enter signal level"),required:!0,disabled:t}),o.jsx(i,{control:a.control,name:"order_number_for_stream",label:r("Order number for stream"),placeholder:r("Enter order number for stream"),required:!0,disabled:t})]}),!t&&o.jsx(C,{children:o.jsxs(v,{size:"sm",variant:"ghost",type:"button",onClick:()=>m("/card-indexes"),children:[o.jsx(k,{}),r("Back")]})})]})})},ee=()=>{const{t:e}=p(),d=I(),{id:t}=E(),r=f.useMemo(()=>[{name:e("Resource Database"),path:"/",isActive:!1},{name:e("Card index"),path:"/card-indexes",isActive:!1},{name:e(t?"Edit":"Create"),path:t?`/card-indexes/edit/${t}`:"/card-indexes/create",isActive:!0}],[t,e]);return o.jsxs(o.Fragment,{children:[o.jsx(g,{className:"sticky top-0",breadcrumbs:r}),o.jsx(L,{children:o.jsx(z,{id:t||null,onSave:()=>d("/card-indexes")})})]})};export{ee as default};
+import {
+  a as s,
+  q,
+  r as f,
+  i as I,
+  j as o,
+  k as j,
+  z as i,
+  Q as E,
+} from "./index-ADhmmBpU.js";
+import { P as g } from "./PageHeader-l3FtlNyv.js";
+import { P as L } from "./PageWrapper-D7EWSq9s.js";
+import { l as b } from "./lodash-BI9_Ro3R.js";
+import "./index.es-njk8-3Q7.js";
+import { u as p, c as v } from "./button-Bp2lHjov-bkEUXTzY.js";
+import "./sidebar-C0lF1Npi.js";
+import { F as C } from "./FormContainerFooter-M0H-Jjey.js";
+import { u as S } from "./useGetOne-DA0KuYmv.js";
+import { u as T, a as _ } from "./useMutate-B2j67kPQ.js";
+import { o as D, s as l, a as V } from "./zod-BQt-Wj8X.js";
+import { M as A } from "./MutateRequestMethod-D0dsk-6r.js";
+import { C as N } from "./card-indexes.constants-DqNyTkxE.js";
+import { A as k } from "./arrow-left-Bv-o5b3i.js";
+import "./createLucideIcon-B950nf2d-ChSZaRdU.js";
+import "./Spin-D_PNnV0x.js";
+import "./useApi-BNT2PGFQ.js";
+const G = (e) =>
+    D({
+      code: l().nonempty(
+        e("required {{field}}", { field: e("Code"), ns: s.LANG.NS.VALIDATION }),
+      ),
+      verification: l().nonempty(
+        e("required {{field}}", {
+          field: e("Verification"),
+          ns: s.LANG.NS.VALIDATION,
+        }),
+      ),
+      consumer: l().nonempty(
+        e("required {{field}}", {
+          field: e("Consumer"),
+          ns: s.LANG.NS.VALIDATION,
+        }),
+      ),
+      zone2: l().nonempty(
+        e("required {{field}}", {
+          field: e("Zone 2"),
+          ns: s.LANG.NS.VALIDATION,
+        }),
+      ),
+      track: l().nonempty(
+        e("required {{field}}", {
+          field: e("Track"),
+          ns: s.LANG.NS.VALIDATION,
+        }),
+      ),
+      id: l().nonempty(
+        e("required {{field}}", { field: e("ID"), ns: s.LANG.NS.VALIDATION }),
+      ),
+      international: l().nonempty(
+        e("required {{field}}", {
+          field: e("International"),
+          ns: s.LANG.NS.VALIDATION,
+        }),
+      ),
+      start: l().nonempty(
+        e("required {{field}}", {
+          field: e("Start"),
+          ns: s.LANG.NS.VALIDATION,
+        }),
+      ),
+      end: l().nonempty(
+        e("required {{field}}", { field: e("End"), ns: s.LANG.NS.VALIDATION }),
+      ),
+      signal_level: l().nonempty(
+        e("required {{field}}", {
+          field: e("Signal level"),
+          ns: s.LANG.NS.VALIDATION,
+        }),
+      ),
+      order_number_for_stream: l().nonempty(
+        e("required {{field}}", {
+          field: e("Order number for stream"),
+          ns: s.LANG.NS.VALIDATION,
+        }),
+      ),
+    }),
+  y = ({ id: e, onSave: d }) => {
+    const { t } = p(),
+      { toast: r } = q(),
+      a = f.useMemo(() => G(t), [t]),
+      c = T({ resolver: V(a) }),
+      m = S({ url: [N, e || ""], options: { enabled: !!e } }),
+      { query: u } = _({
+        url: [N, e || ""],
+        method: e ? A.PUT : A.POST,
+        options: {
+          onError: (n) => {
+            r({
+              variant: "destructive",
+              title: t(`${b.get(n, "response.statusText", "Error")}`),
+              description: t(
+                `${b.get(n, "response.data.message", "An error occurred. Contact the administrator")}`,
+              ),
+            });
+          },
+          onSuccess: () => {
+            (c.reset(),
+              d == null || d(),
+              r({
+                variant: "success",
+                title: t("Success"),
+                description: t(
+                  e
+                    ? "Card index updated successfully"
+                    : "Card index created successfully",
+                ),
+              }));
+          },
+        },
+      });
+    f.useEffect(() => {
+      var x;
+      const n = (x = m.data) == null ? void 0 : x.data;
+      n &&
+        c.reset({
+          code: n.code,
+          verification: n.verification,
+          consumer: n.consumer,
+          zone2: n.zone2,
+          track: n.track,
+          id: n.id,
+          international: n.international,
+          start: n.start,
+          end: n.end,
+          signal_level: n.signal_level,
+          order_number_for_stream: n.order_number_for_stream,
+        });
+    }, [m.data, c]);
+    const h = f.useCallback(
+      (n) => {
+        u.mutate(n);
+      },
+      [u],
+    );
+    return { form: c, onSubmit: h };
+  },
+  z = ({ id: e, onSave: d, readOnly: t = !1 }) => {
+    const { t: r } = p(),
+      { form: a, onSubmit: c } = y({ id: e, onSave: d }),
+      m = I(),
+      u = e
+        ? `${r("Edit")} ${r("Card index")}`
+        : `${r("Create")} ${r("Card index")}`;
+    return o.jsx(j, {
+      ...a,
+      children: o.jsxs("form", {
+        onSubmit: a.handleSubmit(c),
+        className: "space-y-4",
+        children: [
+          o.jsx("h2", { className: "text-xl font-medium", children: u }),
+          o.jsxs("div", {
+            className: "grid grid-cols-1 md:grid-cols-3 gap-4",
+            children: [
+              o.jsx(i, {
+                control: a.control,
+                name: "code",
+                label: r("Code"),
+                placeholder: r("Enter code"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "verification",
+                label: r("Verification"),
+                placeholder: r("Enter verification"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "consumer",
+                label: r("Consumer"),
+                placeholder: r("Enter consumer"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "zone2",
+                label: r("Zone 2"),
+                placeholder: r("Enter zone 2"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "track",
+                label: r("Track"),
+                placeholder: r("Enter track"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "id",
+                label: r("ID"),
+                placeholder: r("Enter ID"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "international",
+                label: r("International"),
+                placeholder: r("Enter international"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "start",
+                label: r("Start"),
+                placeholder: r("Enter start date"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "end",
+                label: r("End"),
+                placeholder: r("Enter end date"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "signal_level",
+                label: r("Signal level"),
+                placeholder: r("Enter signal level"),
+                required: !0,
+                disabled: t,
+              }),
+              o.jsx(i, {
+                control: a.control,
+                name: "order_number_for_stream",
+                label: r("Order number for stream"),
+                placeholder: r("Enter order number for stream"),
+                required: !0,
+                disabled: t,
+              }),
+            ],
+          }),
+          !t &&
+            o.jsx(C, {
+              children: o.jsxs(v, {
+                size: "sm",
+                variant: "ghost",
+                type: "button",
+                onClick: () => m("/card-indexes"),
+                children: [o.jsx(k, {}), r("Back")],
+              }),
+            }),
+        ],
+      }),
+    });
+  },
+  ee = () => {
+    const { t: e } = p(),
+      d = I(),
+      { id: t } = E(),
+      r = f.useMemo(
+        () => [
+          { name: e("Resource Database"), path: "/", isActive: !1 },
+          { name: e("Card index"), path: "/card-indexes", isActive: !1 },
+          {
+            name: e(t ? "Edit" : "Create"),
+            path: t ? `/card-indexes/edit/${t}` : "/card-indexes/create",
+            isActive: !0,
+          },
+        ],
+        [t, e],
+      );
+    return o.jsxs(o.Fragment, {
+      children: [
+        o.jsx(g, { className: "sticky top-0", breadcrumbs: r }),
+        o.jsx(L, {
+          children: o.jsx(z, {
+            id: t || null,
+            onSave: () => d("/card-indexes"),
+          }),
+        }),
+      ],
+    });
+  };
+export { ee as default };

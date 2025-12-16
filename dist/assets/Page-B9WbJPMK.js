@@ -1,7 +1,552 @@
-import{j as s,J as C,a as A,M as z,i as P,q as R,r as l}from"./index-ADhmmBpU.js";import{P as D}from"./PageHeader-l3FtlNyv.js";import{P as E}from"./PageWrapper-D7EWSq9s.js";import{u as m,c as q}from"./button-Bp2lHjov-bkEUXTzY.js";import{l as w}from"./lodash-BI9_Ro3R.js";import{H as F}from"./index.es-BKLEAvF1.js";import{l as M}from"./badge-DGmo3xSE-Cderfv3F.js";import{M as p}from"./MyTooltip-DPJtpMhP.js";import{F as _}from"./file-8TEH2UwQ.js";import{E as V}from"./eye-CW1pDi29.js";import{S as O,u as B}from"./useDelete-DMNw96p5.js";import{T as K}from"./trash-2-B_r_Bsxl.js";import{u as U}from"./useLists-DBTxrMAi.js";import{u as H,R as T}from"./useRTTSIDocument-Bhne8kUd.js";import{M as L}from"./MyModal-3lICjm9q.js";import{D as $}from"./DocumentInfo-DZJr13Om.js";import{F as J}from"./MyAccordion-x3W9CRJW.js";import{L as v}from"./ListStatisticsCard-BcOJa2-j.js";import{C as Q}from"./circle-plus-CJWL5GeC.js";import"./sidebar-C0lF1Npi.js";import"./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";import"./useQueryParams-Dns8Zny6.js";import"./createLucideIcon-B950nf2d-ChSZaRdU.js";import"./popover-HTqpqYpJ-CIljcfgV-Ob8cCMTy.js";import"./MySelect-CDOMHlry-CVNRsqeU.js";import"./useApi-BNT2PGFQ.js";import"./MutateRequestMethod-D0dsk-6r.js";import"./useGetOne-DA0KuYmv.js";import"./user-D-Egm9vv.js";const W=r=>{switch(r){case"approved":return"green-outlined";case"sent":return"blue-outlined";case"rejected":return"red-outlined";default:return"gray-outlined"}},Y=(r,a,e,t)=>[{key:"title",dataIndex:"title",name:r("Document"),render:(i,c)=>s.jsxs("a",{className:"flex items-center gap-2 cursor-pointer",href:`${A.BASE_PATH}${c.files[0]}`,target:"_blank",children:[s.jsx(_,{size:15})," ",i]})},{key:"created_at",dataIndex:"created_at",name:r("Sent time"),render:i=>C(i,z)},{key:"sender",dataIndex:"creatorId",name:r("Sender"),render:i=>s.jsxs("div",{children:[i.first_name," ",i.second_name]})},{key:"status",dataIndex:"status",name:r("Status"),render:i=>s.jsx(M,{variant:W(i),children:i})},{key:"actions",dataIndex:"_id",name:"",render:i=>s.jsxs("div",{className:"flex items-center gap-2",children:[s.jsx(p,{content:r("View"),children:s.jsx(V,{className:"size-4 cursor-pointer",onClick:()=>t(i)})}),s.jsx(p,{content:r("Edit"),children:s.jsx(O,{className:"size-4 cursor-pointer",onClick:()=>a(i)})}),s.jsx(p,{content:r("Delete"),children:s.jsx(K,{className:"size-4 cursor-pointer",onClick:()=>e(i)})})]})}],G=()=>{var g;const{t:r}=m(),a=P(),{toast:e}=R(),[t,i]=l.useState(!1),[c,d]=l.useState(null),{removeWithConfirm:h}=B([T]),{query:x,handleFilter:o,params:j}=U({url:[T]}),{rttsiDocumentQuery:k}=H(c),I=l.useCallback(()=>{a("/rttsi/create")},[a]),b=l.useCallback(n=>{a(`/rttsi/edit/${n}`)},[a]),N=l.useCallback(n=>{d(n),i(!0)},[]),S=l.useCallback(n=>{i(n),n||d(null)},[]),f=l.useCallback(n=>{h(n).then(()=>{x.refetch(),e({variant:"success",title:r("Success"),description:r("F56 document successfully")})}).catch(y=>{e({variant:"destructive",title:r(`${w.get(y,"response.statusText","Error")}`),description:r(`${w.get(y,"response.data.message","An error occurred. Contact the administrator")}`)})})},[h,r,e]),u=l.useMemo(()=>Y(r,b,f,N),[f,b,N,r]);return{params:j,handleAdd:I,handleFilter:o,loading:x.isLoading,dataSource:x.data,columns:u,openView:t,currentItem:(g=k.data)==null?void 0:g.data,handleCloseView:S}},X=({title:r,document:a})=>{const{t:e}=m();return s.jsxs("div",{className:"rounded-lg shadow-sm border p-6 space-y-3",children:[s.jsx("div",{className:"flex items-center justify-end",children:s.jsx("div",{className:"text-sm text-gray-500",children:r})}),s.jsxs("div",{className:"text-center mb-4",children:[s.jsx("h2",{className:"text-lg font-semibold mb-1",children:"D ilova"}),s.jsx("p",{className:"text-gray-300 mb-3",children:e("(Majburiy)")}),s.jsx("p",{className:"text-sm",children:e("Rejadan tashqari o'rtacha-sozlash ishlarini o'tkazish uchun <br /> talabnomaning shakli")})]}),s.jsxs("div",{className:"text-center mb-6",children:[s.jsxs("div",{className:"flex justify-center items-center gap-4 mb-3",children:[s.jsx("div",{className:"",children:s.jsx("div",{className:"inline-block min-w-24 border-b text-sm px-2 py-1",children:(a==null?void 0:a.UbpNumber)||""})}),s.jsx("div",{className:"mt-1 text-sm",children:e("UBPdan")})]}),s.jsx("div",{className:"mb-2 text-sm",children:e("rejadan tashqari ta’mirlash-sozlash ishlarini o’tkazish uchun")}),s.jsxs("div",{className:"flex justify-center items-center gap-4 mb-3",children:[s.jsx("div",{className:"inline-block min-w-24 border-b text-sm px-2 py-1",children:(a==null?void 0:a.applicationNumber)||""}),s.jsxs("div",{className:"mt-1 text-sm",children:["- ",e("son TALABNOMA")]})]})]}),s.jsxs("div",{className:"space-y-3 text-sm",children:[s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["1. ",e("Ishlarni o'tkazish shartlari"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.workConditions)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["2. ",e("Sana va vaqt"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.date)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["3. ",e("Uchastka, stansiyalar"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.magistralName)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["4. ",e("NO nomeri"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.NoNumber)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["5. ",e("Al-9 kanallari"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.ai9Channels)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["6. ",e("Ishni bajarish sababi"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.reasonJob)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["7. ",e("Bajarilayotgan ishlar xususiyati"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.jobDescription)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["8. ",e("NO holati"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.NOStatus)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["9. ",e("AAG"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.aag)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["10. ",e("Rezervlashning boshqa usuli"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.reservation)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["11. ",e("Ishlarni o’tkazish uchun javobgar shaxs"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.responsiblePerson)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["12."," ","“O’zbekiston” AK ekspluatasiya qiluvchi korxona texnik rahbari",":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.headOfTheEnterprise)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["13. ",e("AI-9 F.I.Sh. (Joylarda)"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.aiFullName)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["14. ",e("Talabnoma tuzuvchi (AP)"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.applicantAP)||" "})]}),s.jsxs("div",{className:"flex items-start gap-2",children:[s.jsxs("div",{className:"min-w-48",children:["15. ",e("Talabnoma tuzuvchi (UBP)"),":"]}),s.jsx("div",{className:"flex-1 border-b text-gray-900",children:(a==null?void 0:a.applicantUBP)||" "})]})]})]})},Z=({open:r,onOpenChange:a,document:e})=>{const{t}=m();return s.jsx(L,{open:r,onOpenChange:a,size:"8xl",className:"overflow-auto",header:s.jsxs("div",{className:"flex items-center gap-2",children:[s.jsx(J,{className:"size-5"}),s.jsx("span",{children:(e==null?void 0:e.title)||t("RTTSI document")})]}),children:s.jsxs("div",{className:"flex flex-1 flex-col xl:flex-row gap-4 overflow-hidden",children:[s.jsx("div",{className:`
+import {
+  j as s,
+  J as C,
+  a as A,
+  M as z,
+  i as P,
+  q as R,
+  r as l,
+} from "./index-ADhmmBpU.js";
+import { P as D } from "./PageHeader-l3FtlNyv.js";
+import { P as E } from "./PageWrapper-D7EWSq9s.js";
+import { u as m, c as q } from "./button-Bp2lHjov-bkEUXTzY.js";
+import { l as w } from "./lodash-BI9_Ro3R.js";
+import { H as F } from "./index.es-BKLEAvF1.js";
+import { l as M } from "./badge-DGmo3xSE-Cderfv3F.js";
+import { M as p } from "./MyTooltip-DPJtpMhP.js";
+import { F as _ } from "./file-8TEH2UwQ.js";
+import { E as V } from "./eye-CW1pDi29.js";
+import { S as O, u as B } from "./useDelete-DMNw96p5.js";
+import { T as K } from "./trash-2-B_r_Bsxl.js";
+import { u as U } from "./useLists-DBTxrMAi.js";
+import { u as H, R as T } from "./useRTTSIDocument-Bhne8kUd.js";
+import { M as L } from "./MyModal-3lICjm9q.js";
+import { D as $ } from "./DocumentInfo-DZJr13Om.js";
+import { F as J } from "./MyAccordion-x3W9CRJW.js";
+import { L as v } from "./ListStatisticsCard-BcOJa2-j.js";
+import { C as Q } from "./circle-plus-CJWL5GeC.js";
+import "./sidebar-C0lF1Npi.js";
+import "./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";
+import "./useQueryParams-Dns8Zny6.js";
+import "./createLucideIcon-B950nf2d-ChSZaRdU.js";
+import "./popover-HTqpqYpJ-CIljcfgV-Ob8cCMTy.js";
+import "./MySelect-CDOMHlry-CVNRsqeU.js";
+import "./useApi-BNT2PGFQ.js";
+import "./MutateRequestMethod-D0dsk-6r.js";
+import "./useGetOne-DA0KuYmv.js";
+import "./user-D-Egm9vv.js";
+const W = (r) => {
+    switch (r) {
+      case "approved":
+        return "green-outlined";
+      case "sent":
+        return "blue-outlined";
+      case "rejected":
+        return "red-outlined";
+      default:
+        return "gray-outlined";
+    }
+  },
+  Y = (r, a, e, t) => [
+    {
+      key: "title",
+      dataIndex: "title",
+      name: r("Document"),
+      render: (i, c) =>
+        s.jsxs("a", {
+          className: "flex items-center gap-2 cursor-pointer",
+          href: `${A.BASE_PATH}${c.files[0]}`,
+          target: "_blank",
+          children: [s.jsx(_, { size: 15 }), " ", i],
+        }),
+    },
+    {
+      key: "created_at",
+      dataIndex: "created_at",
+      name: r("Sent time"),
+      render: (i) => C(i, z),
+    },
+    {
+      key: "sender",
+      dataIndex: "creatorId",
+      name: r("Sender"),
+      render: (i) =>
+        s.jsxs("div", { children: [i.first_name, " ", i.second_name] }),
+    },
+    {
+      key: "status",
+      dataIndex: "status",
+      name: r("Status"),
+      render: (i) => s.jsx(M, { variant: W(i), children: i }),
+    },
+    {
+      key: "actions",
+      dataIndex: "_id",
+      name: "",
+      render: (i) =>
+        s.jsxs("div", {
+          className: "flex items-center gap-2",
+          children: [
+            s.jsx(p, {
+              content: r("View"),
+              children: s.jsx(V, {
+                className: "size-4 cursor-pointer",
+                onClick: () => t(i),
+              }),
+            }),
+            s.jsx(p, {
+              content: r("Edit"),
+              children: s.jsx(O, {
+                className: "size-4 cursor-pointer",
+                onClick: () => a(i),
+              }),
+            }),
+            s.jsx(p, {
+              content: r("Delete"),
+              children: s.jsx(K, {
+                className: "size-4 cursor-pointer",
+                onClick: () => e(i),
+              }),
+            }),
+          ],
+        }),
+    },
+  ],
+  G = () => {
+    var g;
+    const { t: r } = m(),
+      a = P(),
+      { toast: e } = R(),
+      [t, i] = l.useState(!1),
+      [c, d] = l.useState(null),
+      { removeWithConfirm: h } = B([T]),
+      { query: x, handleFilter: o, params: j } = U({ url: [T] }),
+      { rttsiDocumentQuery: k } = H(c),
+      I = l.useCallback(() => {
+        a("/rttsi/create");
+      }, [a]),
+      b = l.useCallback(
+        (n) => {
+          a(`/rttsi/edit/${n}`);
+        },
+        [a],
+      ),
+      N = l.useCallback((n) => {
+        (d(n), i(!0));
+      }, []),
+      S = l.useCallback((n) => {
+        (i(n), n || d(null));
+      }, []),
+      f = l.useCallback(
+        (n) => {
+          h(n)
+            .then(() => {
+              (x.refetch(),
+                e({
+                  variant: "success",
+                  title: r("Success"),
+                  description: r("F56 document successfully"),
+                }));
+            })
+            .catch((y) => {
+              e({
+                variant: "destructive",
+                title: r(`${w.get(y, "response.statusText", "Error")}`),
+                description: r(
+                  `${w.get(y, "response.data.message", "An error occurred. Contact the administrator")}`,
+                ),
+              });
+            });
+        },
+        [h, r, e],
+      ),
+      u = l.useMemo(() => Y(r, b, f, N), [f, b, N, r]);
+    return {
+      params: j,
+      handleAdd: I,
+      handleFilter: o,
+      loading: x.isLoading,
+      dataSource: x.data,
+      columns: u,
+      openView: t,
+      currentItem: (g = k.data) == null ? void 0 : g.data,
+      handleCloseView: S,
+    };
+  },
+  X = ({ title: r, document: a }) => {
+    const { t: e } = m();
+    return s.jsxs("div", {
+      className: "rounded-lg shadow-sm border p-6 space-y-3",
+      children: [
+        s.jsx("div", {
+          className: "flex items-center justify-end",
+          children: s.jsx("div", {
+            className: "text-sm text-gray-500",
+            children: r,
+          }),
+        }),
+        s.jsxs("div", {
+          className: "text-center mb-4",
+          children: [
+            s.jsx("h2", {
+              className: "text-lg font-semibold mb-1",
+              children: "D ilova",
+            }),
+            s.jsx("p", {
+              className: "text-gray-300 mb-3",
+              children: e("(Majburiy)"),
+            }),
+            s.jsx("p", {
+              className: "text-sm",
+              children: e(
+                "Rejadan tashqari o'rtacha-sozlash ishlarini o'tkazish uchun <br /> talabnomaning shakli",
+              ),
+            }),
+          ],
+        }),
+        s.jsxs("div", {
+          className: "text-center mb-6",
+          children: [
+            s.jsxs("div", {
+              className: "flex justify-center items-center gap-4 mb-3",
+              children: [
+                s.jsx("div", {
+                  className: "",
+                  children: s.jsx("div", {
+                    className:
+                      "inline-block min-w-24 border-b text-sm px-2 py-1",
+                    children: (a == null ? void 0 : a.UbpNumber) || "",
+                  }),
+                }),
+                s.jsx("div", {
+                  className: "mt-1 text-sm",
+                  children: e("UBPdan"),
+                }),
+              ],
+            }),
+            s.jsx("div", {
+              className: "mb-2 text-sm",
+              children: e(
+                "rejadan tashqari ta’mirlash-sozlash ishlarini o’tkazish uchun",
+              ),
+            }),
+            s.jsxs("div", {
+              className: "flex justify-center items-center gap-4 mb-3",
+              children: [
+                s.jsx("div", {
+                  className: "inline-block min-w-24 border-b text-sm px-2 py-1",
+                  children: (a == null ? void 0 : a.applicationNumber) || "",
+                }),
+                s.jsxs("div", {
+                  className: "mt-1 text-sm",
+                  children: ["- ", e("son TALABNOMA")],
+                }),
+              ],
+            }),
+          ],
+        }),
+        s.jsxs("div", {
+          className: "space-y-3 text-sm",
+          children: [
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["1. ", e("Ishlarni o'tkazish shartlari"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.workConditions) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["2. ", e("Sana va vaqt"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.date) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["3. ", e("Uchastka, stansiyalar"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.magistralName) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["4. ", e("NO nomeri"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.NoNumber) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["5. ", e("Al-9 kanallari"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.ai9Channels) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["6. ", e("Ishni bajarish sababi"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.reasonJob) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["7. ", e("Bajarilayotgan ishlar xususiyati"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.jobDescription) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["8. ", e("NO holati"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.NOStatus) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["9. ", e("AAG"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.aag) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["10. ", e("Rezervlashning boshqa usuli"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.reservation) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: [
+                    "11. ",
+                    e("Ishlarni o’tkazish uchun javobgar shaxs"),
+                    ":",
+                  ],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.responsiblePerson) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: [
+                    "12.",
+                    " ",
+                    "“O’zbekiston” AK ekspluatasiya qiluvchi korxona texnik rahbari",
+                    ":",
+                  ],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.headOfTheEnterprise) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["13. ", e("AI-9 F.I.Sh. (Joylarda)"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.aiFullName) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["14. ", e("Talabnoma tuzuvchi (AP)"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.applicantAP) || " ",
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                s.jsxs("div", {
+                  className: "min-w-48",
+                  children: ["15. ", e("Talabnoma tuzuvchi (UBP)"), ":"],
+                }),
+                s.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (a == null ? void 0 : a.applicantUBP) || " ",
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    });
+  },
+  Z = ({ open: r, onOpenChange: a, document: e }) => {
+    const { t } = m();
+    return s.jsx(L, {
+      open: r,
+      onOpenChange: a,
+      size: "8xl",
+      className: "overflow-auto",
+      header: s.jsxs("div", {
+        className: "flex items-center gap-2",
+        children: [
+          s.jsx(J, { className: "size-5" }),
+          s.jsx("span", {
+            children: (e == null ? void 0 : e.title) || t("RTTSI document"),
+          }),
+        ],
+      }),
+      children: s.jsxs("div", {
+        className: "flex flex-1 flex-col xl:flex-row gap-4 overflow-hidden",
+        children: [
+          s.jsx("div", {
+            className: `
             flex-1 border rounded-lg p-2
             overflow-visible
             xl:overflow-y-auto
             xl:max-h-[80vh]
             scrollbar-thin scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thumb-rounded-full
-          `,children:s.jsx(X,{title:e==null?void 0:e.title,document:e})}),s.jsx($,{docType:t("RTTSI"),onOpenChange:a,document:e})]})})},As=()=>{const{t:r}=m(),{handleAdd:a,loading:e,dataSource:t,columns:i,params:c,handleFilter:d,currentItem:h,handleCloseView:x,openView:o}=G(),j=l.useMemo(()=>[{name:r("RTTSI"),path:"/rttsi",isActive:!0}],[r]);return s.jsxs(s.Fragment,{children:[s.jsx(Z,{open:o,onOpenChange:x,document:h}),s.jsx(D,{className:"sticky top-0",breadcrumbs:j,children:s.jsxs(q,{size:"sm",onClick:a,children:[s.jsx(Q,{}),r("Add new")]})}),s.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3",children:[s.jsx(v,{title:r("Tasdiqlanganlar"),count:123}),s.jsx(v,{title:r("Ko'rib chiqilmoqda"),count:123}),s.jsx(v,{title:r("Rad etilganlar"),count:123})]}),s.jsx(E,{children:s.jsx(F,{tableKey:"rttsi-documents",hasNumbers:!0,hasSearch:!0,isStickyHeader:!0,loading:e,params:c,onParamChange:d,rowKey:"_id",dataSource:t,dataKey:"docs",columns:i})})]})};export{As as default};
+          `,
+            children: s.jsx(X, {
+              title: e == null ? void 0 : e.title,
+              document: e,
+            }),
+          }),
+          s.jsx($, { docType: t("RTTSI"), onOpenChange: a, document: e }),
+        ],
+      }),
+    });
+  },
+  As = () => {
+    const { t: r } = m(),
+      {
+        handleAdd: a,
+        loading: e,
+        dataSource: t,
+        columns: i,
+        params: c,
+        handleFilter: d,
+        currentItem: h,
+        handleCloseView: x,
+        openView: o,
+      } = G(),
+      j = l.useMemo(
+        () => [{ name: r("RTTSI"), path: "/rttsi", isActive: !0 }],
+        [r],
+      );
+    return s.jsxs(s.Fragment, {
+      children: [
+        s.jsx(Z, { open: o, onOpenChange: x, document: h }),
+        s.jsx(D, {
+          className: "sticky top-0",
+          breadcrumbs: j,
+          children: s.jsxs(q, {
+            size: "sm",
+            onClick: a,
+            children: [s.jsx(Q, {}), r("Add new")],
+          }),
+        }),
+        s.jsxs("div", {
+          className: "grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3",
+          children: [
+            s.jsx(v, { title: r("Tasdiqlanganlar"), count: 123 }),
+            s.jsx(v, { title: r("Ko'rib chiqilmoqda"), count: 123 }),
+            s.jsx(v, { title: r("Rad etilganlar"), count: 123 }),
+          ],
+        }),
+        s.jsx(E, {
+          children: s.jsx(F, {
+            tableKey: "rttsi-documents",
+            hasNumbers: !0,
+            hasSearch: !0,
+            isStickyHeader: !0,
+            loading: e,
+            params: c,
+            onParamChange: d,
+            rowKey: "_id",
+            dataSource: t,
+            dataKey: "docs",
+            columns: i,
+          }),
+        }),
+      ],
+    });
+  };
+export { As as default };

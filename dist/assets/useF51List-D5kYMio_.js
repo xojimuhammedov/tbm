@@ -1,1 +1,118 @@
-import{a as b,q as A,r as _}from"./index-ADhmmBpU.js";import{u as D,a as S}from"./useMutate-B2j67kPQ.js";import{o as q,b as F,s as d,a as L}from"./zod-BQt-Wj8X.js";import{M as V}from"./MutateRequestMethod-D0dsk-6r.js";import{l as u}from"./lodash-BI9_Ro3R.js";import{u as w,F as x}from"./useF56Document-DUDGEvHE.js";import{u as M}from"./button-Bp2lHjov-bkEUXTzY.js";import{u as Y}from"./useLists-DBTxrMAi.js";import{F as N}from"./f51.constants-C9eI1nkf.js";const P=s=>q({recipientIds:F(d()).nonempty(s("required {{field}}",{field:s("Staffs"),ns:b.LANG.NS.VALIDATION})),description:d().optional(),f51_ids:F(d()).default([])}),G=({id:s,onSave:a,allF51Ids:n=[]})=>{const{t:i}=M(),{toast:f}=A(),{f56DocumentQuery:m}=w(s),r=D({resolver:L(P(i)),defaultValues:{recipientIds:[""],description:"",f51_ids:[]}});_.useEffect(()=>{var o,y;const t=(o=m.data)==null?void 0:o.data;if(t){r.setValue("description",t.description);const h=((y=t.recipientIds)==null?void 0:y.map(e=>e._id))??[];r.setValue("recipientIds",h.length>0?h:[""]);const T=(u.get(t,"f51_ids",[])||[]).map(e=>{if(e==null)return null;if(typeof e=="string")return e;if(typeof e=="number")return String(e);if(typeof e=="object"){const l=u.get(e,"_id");if(typeof l=="string"||typeof l=="number")return String(l)}return null}).filter(e=>!!e);r.setValue("f51_ids",T,{shouldDirty:!1,shouldValidate:!1})}},[m.data,r]);const{query:p}=S({url:[x,s||""],method:s?V.PUT:V.POST,options:{onError:t=>{f({variant:"destructive",title:i(`${u.get(t,"response.statusText","Error")}`),description:i(`${u.get(t,"response.data.message","An error occurred. Contact the administrator")}`)})},onSuccess:()=>{r.reset(),a==null||a(),f({variant:"success",title:i("Success"),description:i(s?"F56 updated successfully":"F56 created successfully")})}}}),E=_.useCallback(t=>{p.mutate(t)},[p]),c=r.watch("f51_ids")||[],g=((n==null?void 0:n.length)??0)>0&&n.every(t=>c.includes(t));return{form:r,handleSubmit:E,selectedF51Ids:c,allSelected:g,toggleAllF51:()=>{r.setValue("f51_ids",g?[]:n,{shouldDirty:!0,shouldValidate:!1})},toggleF51:t=>{const o=new Set(c);o.has(t)?o.delete(t):o.add(t),r.setValue("f51_ids",Array.from(o),{shouldDirty:!0,shouldValidate:!1})}}},H=()=>{var a;const{query:s}=Y({url:[N],defaultParams:{page:1,limit:9999}});return{f51List:(a=s.data)==null?void 0:a.docs}};export{G as a,H as u};
+import { a as b, q as A, r as _ } from "./index-ADhmmBpU.js";
+import { u as D, a as S } from "./useMutate-B2j67kPQ.js";
+import { o as q, b as F, s as d, a as L } from "./zod-BQt-Wj8X.js";
+import { M as V } from "./MutateRequestMethod-D0dsk-6r.js";
+import { l as u } from "./lodash-BI9_Ro3R.js";
+import { u as w, F as x } from "./useF56Document-DUDGEvHE.js";
+import { u as M } from "./button-Bp2lHjov-bkEUXTzY.js";
+import { u as Y } from "./useLists-DBTxrMAi.js";
+import { F as N } from "./f51.constants-C9eI1nkf.js";
+const P = (s) =>
+    q({
+      recipientIds: F(d()).nonempty(
+        s("required {{field}}", {
+          field: s("Staffs"),
+          ns: b.LANG.NS.VALIDATION,
+        }),
+      ),
+      description: d().optional(),
+      f51_ids: F(d()).default([]),
+    }),
+  G = ({ id: s, onSave: a, allF51Ids: n = [] }) => {
+    const { t: i } = M(),
+      { toast: f } = A(),
+      { f56DocumentQuery: m } = w(s),
+      r = D({
+        resolver: L(P(i)),
+        defaultValues: { recipientIds: [""], description: "", f51_ids: [] },
+      });
+    _.useEffect(() => {
+      var o, y;
+      const t = (o = m.data) == null ? void 0 : o.data;
+      if (t) {
+        r.setValue("description", t.description);
+        const h =
+          ((y = t.recipientIds) == null ? void 0 : y.map((e) => e._id)) ?? [];
+        r.setValue("recipientIds", h.length > 0 ? h : [""]);
+        const T = (u.get(t, "f51_ids", []) || [])
+          .map((e) => {
+            if (e == null) return null;
+            if (typeof e == "string") return e;
+            if (typeof e == "number") return String(e);
+            if (typeof e == "object") {
+              const l = u.get(e, "_id");
+              if (typeof l == "string" || typeof l == "number")
+                return String(l);
+            }
+            return null;
+          })
+          .filter((e) => !!e);
+        r.setValue("f51_ids", T, { shouldDirty: !1, shouldValidate: !1 });
+      }
+    }, [m.data, r]);
+    const { query: p } = S({
+        url: [x, s || ""],
+        method: s ? V.PUT : V.POST,
+        options: {
+          onError: (t) => {
+            f({
+              variant: "destructive",
+              title: i(`${u.get(t, "response.statusText", "Error")}`),
+              description: i(
+                `${u.get(t, "response.data.message", "An error occurred. Contact the administrator")}`,
+              ),
+            });
+          },
+          onSuccess: () => {
+            (r.reset(),
+              a == null || a(),
+              f({
+                variant: "success",
+                title: i("Success"),
+                description: i(
+                  s ? "F56 updated successfully" : "F56 created successfully",
+                ),
+              }));
+          },
+        },
+      }),
+      E = _.useCallback(
+        (t) => {
+          p.mutate(t);
+        },
+        [p],
+      ),
+      c = r.watch("f51_ids") || [],
+      g =
+        ((n == null ? void 0 : n.length) ?? 0) > 0 &&
+        n.every((t) => c.includes(t));
+    return {
+      form: r,
+      handleSubmit: E,
+      selectedF51Ids: c,
+      allSelected: g,
+      toggleAllF51: () => {
+        r.setValue("f51_ids", g ? [] : n, {
+          shouldDirty: !0,
+          shouldValidate: !1,
+        });
+      },
+      toggleF51: (t) => {
+        const o = new Set(c);
+        (o.has(t) ? o.delete(t) : o.add(t),
+          r.setValue("f51_ids", Array.from(o), {
+            shouldDirty: !0,
+            shouldValidate: !1,
+          }));
+      },
+    };
+  },
+  H = () => {
+    var a;
+    const { query: s } = Y({
+      url: [N],
+      defaultParams: { page: 1, limit: 9999 },
+    });
+    return { f51List: (a = s.data) == null ? void 0 : a.docs };
+  };
+export { G as a, H as u };

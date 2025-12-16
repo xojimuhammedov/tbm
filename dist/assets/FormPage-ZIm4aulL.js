@@ -1,2 +1,438 @@
-import{j as e,k as m,z as s,X as x,i as b,Q as h,r as p}from"./index-ADhmmBpU.js";import{P as j}from"./PageHeader-l3FtlNyv.js";import{P as N}from"./PageWrapper-D7EWSq9s.js";import"./lodash-BI9_Ro3R.js";import"./index.es-njk8-3Q7.js";import{u as c,c as n}from"./button-Bp2lHjov-bkEUXTzY.js";import{u,S as v}from"./useStaffOptions-CXWN6ZMm.js";import{u as f}from"./useApplicationDocumentForm-CWDV2SPQ.js";import{S as g}from"./MySelect-CDOMHlry-CVNRsqeU.js";import"./sidebar-C0lF1Npi.js";import"./createLucideIcon-B950nf2d-ChSZaRdU.js";import"./useLists-DBTxrMAi.js";import"./useApi-BNT2PGFQ.js";import"./useQueryParams-Dns8Zny6.js";import"./staff.constants-D5gKBh84.js";import"./useMutate-B2j67kPQ.js";import"./zod-BQt-Wj8X.js";import"./MutateRequestMethod-D0dsk-6r.js";import"./useApplicationDocument-C6bKJL3W.js";import"./useGetOne-DA0KuYmv.js";const y=({id:l,onSave:i,onCancel:o})=>{const{t:r}=c(),{staffOptions:t}=u(),{form:a,handleSubmit:d}=f({id:l,onSave:i});return e.jsx(m,{...a,children:e.jsx("form",{onSubmit:a.handleSubmit(d),className:"py-6 px-4",children:e.jsxs("div",{className:"max-w-5xl mx-auto px-2",children:[e.jsxs("div",{className:"rounded-lg shadow-sm border-2 p-8",children:[e.jsxs("div",{className:"text-center",children:[e.jsx("div",{className:"flex items-center justify-center",children:e.jsx("p",{className:"text-body-lg-semi-bold max-w-3xl",children:r(`“O'zbektelekom” AK Janubi-G'arbiy filiali rejaga asosan ta'mirlash-sozlash ishlari olib
-borish uchun`)})}),e.jsxs("div",{className:"flex items-center justify-center gap-2",children:[e.jsx("h2",{className:"text-lg font-semibold text-gray-800 mt-3",children:r("TALABNOMA")}),e.jsx("p",{className:"text-body-lg-semi-bold mt-3",children:r("№")}),e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none max-w-20 h-7 focus-visible:ring-0",name:"applicationNumber"})]})]}),e.jsxs("div",{className:"space-y-2 px-2",children:[e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["1. ",r("Ish bajarish tartibi"),":"]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"workProcedure",placeholder:r("aloqani yopish /aloqani yopmaslik/qisqa muddatli to‘xtalish yo‘li bilan)")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["2. ",r("Sana va vaqt"),":"]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"workDateTime",placeholder:r("ishni bajarish. sana, oy, yil, soat, min.")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["3. ",r("Stansiya / oraliq"),":"]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"station",placeholder:r("Magistral nomi, №AP")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["4. ",r("NO raqami")]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"noNumber",placeholder:r("Liniya/trakt/qurilma")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["5. ",r("AI-7, 9 kanallari"),":"]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"aiChannels",placeholder:r("Bor / yo'q")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsx("label",{className:"mt-4",children:"6. "}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"workReason",placeholder:r("Ishni bajarish sababi")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsx("label",{className:"mt-4",children:"7."}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"workDescription",placeholder:r("O‘tkaziladigan ishning to‘liq mazmuni")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["8. ",r("KO xolati")]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"koStatus",placeholder:r("Xolati indeks va KO o‘zgartirilgan sana")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["9. ",r("GOZ")]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"bypassSchedule",placeholder:r("Aylanib o‘tish va almashtirishlar grafigi")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsx("label",{className:"mt-4",children:"10. "}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"alternativeBackup",placeholder:r("Zaxiralashning boshqa yo‘llari")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["11. ",r("Boshqaruvchi"),": "]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"responsiblePerson",placeholder:r("Ishni bajarilishiga javobgar shaxs")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["12. ",r("Kelishildi"),": "]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"approvedByTechnicalDirector",placeholder:r("MTRK”, “RTUM”, “O‘zbektelekom” AK  va filiallari  texnik rahbariyati")})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsxs("label",{className:"mt-4",children:["13. ",r("Kelishildi"),": "]}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"approvedByLocalAI",placeholder:"AI-9 F.I.Sh. (Joylarda)"})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsx("label",{className:"mt-4",children:"14. Talabnoma tuzuvchi (AP)"}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"orderAP",placeholder:"Talabnomaning sanasi, vaqti, raqami"})})]}),e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsx("label",{className:"mt-4",children:"15. Talabnoma tuzuvchi (UBP)"}),e.jsx("div",{className:"flex-1",children:e.jsx(s,{control:a.control,className:"border border-t-0 border-l-0 border-r-0 rounded-none",name:"orderMBB",placeholder:"Sana, vaqt, imzo"})})]})]})]}),e.jsx(g,{control:a.control,name:"recipientIds",options:t||[],label:r("Yuboriladigan xodimlar"),placeholder:r("Select staffs"),isClearable:!0,required:!0,isMulti:!0}),e.jsxs("div",{className:"flex items-center justify-between mt-8 pt-6 border-t",children:[e.jsxs(n,{type:"button",variant:"secondary",onClick:o,children:[e.jsx(x,{className:"size-4"}),"Bekor qilish"]}),e.jsxs(n,{type:"submit",children:[e.jsx(v,{className:"size-4"}),"Yuborish"]})]})]})})})},J=()=>{const{t:l}=c(),i=b(),{id:o}=h(),r=p.useMemo(()=>[{name:l("RTSI"),path:"rtsi",isActive:!1},{name:l("Application"),path:"application",isActive:!1},{name:l("Application document"),path:"application",isActive:!1},{name:l(o?"Edit":"Create"),path:o?`${o}/edit`:"create",isActive:!0}],[o,l]);return e.jsxs(e.Fragment,{children:[e.jsx(j,{className:"sticky top-0",breadcrumbs:r}),e.jsx(N,{children:e.jsx(y,{id:o,onSave:()=>i("/rtsi/application"),onCancel:()=>i("/rtsi/application")})})]})};export{J as default};
+import {
+  j as e,
+  k as m,
+  z as s,
+  X as x,
+  i as b,
+  Q as h,
+  r as p,
+} from "./index-ADhmmBpU.js";
+import { P as j } from "./PageHeader-l3FtlNyv.js";
+import { P as N } from "./PageWrapper-D7EWSq9s.js";
+import "./lodash-BI9_Ro3R.js";
+import "./index.es-njk8-3Q7.js";
+import { u as c, c as n } from "./button-Bp2lHjov-bkEUXTzY.js";
+import { u, S as v } from "./useStaffOptions-CXWN6ZMm.js";
+import { u as f } from "./useApplicationDocumentForm-CWDV2SPQ.js";
+import { S as g } from "./MySelect-CDOMHlry-CVNRsqeU.js";
+import "./sidebar-C0lF1Npi.js";
+import "./createLucideIcon-B950nf2d-ChSZaRdU.js";
+import "./useLists-DBTxrMAi.js";
+import "./useApi-BNT2PGFQ.js";
+import "./useQueryParams-Dns8Zny6.js";
+import "./staff.constants-D5gKBh84.js";
+import "./useMutate-B2j67kPQ.js";
+import "./zod-BQt-Wj8X.js";
+import "./MutateRequestMethod-D0dsk-6r.js";
+import "./useApplicationDocument-C6bKJL3W.js";
+import "./useGetOne-DA0KuYmv.js";
+const y = ({ id: l, onSave: i, onCancel: o }) => {
+    const { t: r } = c(),
+      { staffOptions: t } = u(),
+      { form: a, handleSubmit: d } = f({ id: l, onSave: i });
+    return e.jsx(m, {
+      ...a,
+      children: e.jsx("form", {
+        onSubmit: a.handleSubmit(d),
+        className: "py-6 px-4",
+        children: e.jsxs("div", {
+          className: "max-w-5xl mx-auto px-2",
+          children: [
+            e.jsxs("div", {
+              className: "rounded-lg shadow-sm border-2 p-8",
+              children: [
+                e.jsxs("div", {
+                  className: "text-center",
+                  children: [
+                    e.jsx("div", {
+                      className: "flex items-center justify-center",
+                      children: e.jsx("p", {
+                        className: "text-body-lg-semi-bold max-w-3xl",
+                        children:
+                          r(`“O'zbektelekom” AK Janubi-G'arbiy filiali rejaga asosan ta'mirlash-sozlash ishlari olib
+borish uchun`),
+                      }),
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center justify-center gap-2",
+                      children: [
+                        e.jsx("h2", {
+                          className: "text-lg font-semibold text-gray-800 mt-3",
+                          children: r("TALABNOMA"),
+                        }),
+                        e.jsx("p", {
+                          className: "text-body-lg-semi-bold mt-3",
+                          children: r("№"),
+                        }),
+                        e.jsx(s, {
+                          control: a.control,
+                          className:
+                            "border border-t-0 border-l-0 border-r-0 rounded-none max-w-20 h-7 focus-visible:ring-0",
+                          name: "applicationNumber",
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+                e.jsxs("div", {
+                  className: "space-y-2 px-2",
+                  children: [
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["1. ", r("Ish bajarish tartibi"), ":"],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "workProcedure",
+                            placeholder: r(
+                              "aloqani yopish /aloqani yopmaslik/qisqa muddatli to‘xtalish yo‘li bilan)",
+                            ),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["2. ", r("Sana va vaqt"), ":"],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "workDateTime",
+                            placeholder: r(
+                              "ishni bajarish. sana, oy, yil, soat, min.",
+                            ),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["3. ", r("Stansiya / oraliq"), ":"],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "station",
+                            placeholder: r("Magistral nomi, №AP"),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["4. ", r("NO raqami")],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "noNumber",
+                            placeholder: r("Liniya/trakt/qurilma"),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["5. ", r("AI-7, 9 kanallari"), ":"],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "aiChannels",
+                            placeholder: r("Bor / yo'q"),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsx("label", { className: "mt-4", children: "6. " }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "workReason",
+                            placeholder: r("Ishni bajarish sababi"),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsx("label", { className: "mt-4", children: "7." }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "workDescription",
+                            placeholder: r(
+                              "O‘tkaziladigan ishning to‘liq mazmuni",
+                            ),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["8. ", r("KO xolati")],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "koStatus",
+                            placeholder: r(
+                              "Xolati indeks va KO o‘zgartirilgan sana",
+                            ),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["9. ", r("GOZ")],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "bypassSchedule",
+                            placeholder: r(
+                              "Aylanib o‘tish va almashtirishlar grafigi",
+                            ),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsx("label", { className: "mt-4", children: "10. " }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "alternativeBackup",
+                            placeholder: r("Zaxiralashning boshqa yo‘llari"),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["11. ", r("Boshqaruvchi"), ": "],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "responsiblePerson",
+                            placeholder: r(
+                              "Ishni bajarilishiga javobgar shaxs",
+                            ),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["12. ", r("Kelishildi"), ": "],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "approvedByTechnicalDirector",
+                            placeholder: r(
+                              "MTRK”, “RTUM”, “O‘zbektelekom” AK  va filiallari  texnik rahbariyati",
+                            ),
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsxs("label", {
+                          className: "mt-4",
+                          children: ["13. ", r("Kelishildi"), ": "],
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "approvedByLocalAI",
+                            placeholder: "AI-9 F.I.Sh. (Joylarda)",
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsx("label", {
+                          className: "mt-4",
+                          children: "14. Talabnoma tuzuvchi (AP)",
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "orderAP",
+                            placeholder: "Talabnomaning sanasi, vaqti, raqami",
+                          }),
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center gap-2",
+                      children: [
+                        e.jsx("label", {
+                          className: "mt-4",
+                          children: "15. Talabnoma tuzuvchi (UBP)",
+                        }),
+                        e.jsx("div", {
+                          className: "flex-1",
+                          children: e.jsx(s, {
+                            control: a.control,
+                            className:
+                              "border border-t-0 border-l-0 border-r-0 rounded-none",
+                            name: "orderMBB",
+                            placeholder: "Sana, vaqt, imzo",
+                          }),
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+            e.jsx(g, {
+              control: a.control,
+              name: "recipientIds",
+              options: t || [],
+              label: r("Yuboriladigan xodimlar"),
+              placeholder: r("Select staffs"),
+              isClearable: !0,
+              required: !0,
+              isMulti: !0,
+            }),
+            e.jsxs("div", {
+              className: "flex items-center justify-between mt-8 pt-6 border-t",
+              children: [
+                e.jsxs(n, {
+                  type: "button",
+                  variant: "secondary",
+                  onClick: o,
+                  children: [e.jsx(x, { className: "size-4" }), "Bekor qilish"],
+                }),
+                e.jsxs(n, {
+                  type: "submit",
+                  children: [e.jsx(v, { className: "size-4" }), "Yuborish"],
+                }),
+              ],
+            }),
+          ],
+        }),
+      }),
+    });
+  },
+  J = () => {
+    const { t: l } = c(),
+      i = b(),
+      { id: o } = h(),
+      r = p.useMemo(
+        () => [
+          { name: l("RTSI"), path: "rtsi", isActive: !1 },
+          { name: l("Application"), path: "application", isActive: !1 },
+          {
+            name: l("Application document"),
+            path: "application",
+            isActive: !1,
+          },
+          {
+            name: l(o ? "Edit" : "Create"),
+            path: o ? `${o}/edit` : "create",
+            isActive: !0,
+          },
+        ],
+        [o, l],
+      );
+    return e.jsxs(e.Fragment, {
+      children: [
+        e.jsx(j, { className: "sticky top-0", breadcrumbs: r }),
+        e.jsx(N, {
+          children: e.jsx(y, {
+            id: o,
+            onSave: () => i("/rtsi/application"),
+            onCancel: () => i("/rtsi/application"),
+          }),
+        }),
+      ],
+    });
+  };
+export { J as default };

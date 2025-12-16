@@ -1,1 +1,2 @@
-const _="flows";export{_ as F};
+const _ = "flows";
+export { _ as F };

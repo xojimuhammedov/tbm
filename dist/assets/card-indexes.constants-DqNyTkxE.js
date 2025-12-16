@@ -1,1 +1,2 @@
-const E="card-indexes";export{E as C};
+const E = "card-indexes";
+export { E as C };

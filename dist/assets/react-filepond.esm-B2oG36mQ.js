@@ -1,8 +1,522 @@
-import{R as Ps,r as Ht}from"./index-ADhmmBpU.js";/*!
+import { R as Ps, r as Ht } from "./index-ADhmmBpU.js";
+/*!
  * FilePondPluginImagePreview 4.6.12
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
- */const ws=e=>/^image/.test(e.type),Yt=(e,t)=>Ve(e.x*t,e.y*t),Wt=(e,t)=>Ve(e.x+t.x,e.y+t.y),Cs=e=>{const t=Math.sqrt(e.x*e.x+e.y*e.y);return t===0?{x:0,y:0}:Ve(e.x/t,e.y/t)},We=(e,t,n)=>{const s=Math.cos(t),r=Math.sin(t),a=Ve(e.x-n.x,e.y-n.y);return Ve(n.x+s*a.x-r*a.y,n.y+r*a.x+s*a.y)},Ve=(e=0,t=0)=>({x:e,y:t}),ee=(e,t,n=1,s)=>{if(typeof e=="string")return parseFloat(e)*n;if(typeof e=="number")return e*(s?t[s]:Math.min(t.width,t.height))},bs=(e,t,n)=>{const s=e.borderStyle||e.lineStyle||"solid",r=e.backgroundColor||e.fontColor||"transparent",a=e.borderColor||e.lineColor||"transparent",i=ee(e.borderWidth||e.lineWidth,t,n),l=e.lineCap||"round",o=e.lineJoin||"round",d=typeof s=="string"?"":s.map(E=>ee(E,t,n)).join(","),c=e.opacity||1;return{"stroke-linecap":l,"stroke-linejoin":o,"stroke-width":i||0,"stroke-dasharray":d,stroke:a,fill:r,opacity:c}},ne=e=>e!=null,Ns=(e,t,n=1)=>{let s=ee(e.x,t,n,"width")||ee(e.left,t,n,"width"),r=ee(e.y,t,n,"height")||ee(e.top,t,n,"height"),a=ee(e.width,t,n,"width"),i=ee(e.height,t,n,"height"),l=ee(e.right,t,n,"width"),o=ee(e.bottom,t,n,"height");return ne(r)||(ne(i)&&ne(o)?r=t.height-i-o:r=o),ne(s)||(ne(a)&&ne(l)?s=t.width-a-l:s=l),ne(a)||(ne(s)&&ne(l)?a=t.width-s-l:a=0),ne(i)||(ne(r)&&ne(o)?i=t.height-r-o:i=0),{x:s||0,y:r||0,width:a||0,height:i||0}},vs=e=>e.map((t,n)=>`${n===0?"M":"L"} ${t.x} ${t.y}`).join(" "),ue=(e,t)=>Object.keys(t).forEach(n=>e.setAttribute(n,t[n])),Gs="http://www.w3.org/2000/svg",Me=(e,t)=>{const n=document.createElementNS(Gs,e);return t&&ue(n,t),n},Fs=e=>ue(e,{...e.rect,...e.styles}),Bs=e=>{const t=e.rect.x+e.rect.width*.5,n=e.rect.y+e.rect.height*.5,s=e.rect.width*.5,r=e.rect.height*.5;return ue(e,{cx:t,cy:n,rx:s,ry:r,...e.styles})},Us={contain:"xMidYMid meet",cover:"xMidYMid slice"},xs=(e,t)=>{ue(e,{...e.rect,...e.styles,preserveAspectRatio:Us[t.fit]||"none"})},Vs={left:"start",center:"middle",right:"end"},Hs=(e,t,n,s)=>{const r=ee(t.fontSize,n,s),a=t.fontFamily||"sans-serif",i=t.fontWeight||"normal",l=Vs[t.textAlign]||"start";ue(e,{...e.rect,...e.styles,"stroke-width":0,"font-weight":i,"font-size":r,"font-family":a,"text-anchor":l}),e.text!==t.text&&(e.text=t.text,e.textContent=t.text.length?t.text:" ")},Ys=(e,t,n,s)=>{ue(e,{...e.rect,...e.styles,fill:"none"});const r=e.childNodes[0],a=e.childNodes[1],i=e.childNodes[2],l=e.rect,o={x:e.rect.x+e.rect.width,y:e.rect.y+e.rect.height};if(ue(r,{x1:l.x,y1:l.y,x2:o.x,y2:o.y}),!t.lineDecoration)return;a.style.display="none",i.style.display="none";const d=Cs({x:o.x-l.x,y:o.y-l.y}),c=ee(.05,n,s);if(t.lineDecoration.indexOf("arrow-begin")!==-1){const E=Yt(d,c),I=Wt(l,E),p=We(l,2,I),u=We(l,-2,I);ue(a,{style:"display:block;",d:`M${p.x},${p.y} L${l.x},${l.y} L${u.x},${u.y}`})}if(t.lineDecoration.indexOf("arrow-end")!==-1){const E=Yt(d,-c),I=Wt(o,E),p=We(o,2,I),u=We(o,-2,I);ue(i,{style:"display:block;",d:`M${p.x},${p.y} L${o.x},${o.y} L${u.x},${u.y}`})}},Ws=(e,t,n,s)=>{ue(e,{...e.styles,fill:"none",d:vs(t.points.map(r=>({x:ee(r.x,n,s,"width"),y:ee(r.y,n,s,"height")})))})},qe=e=>t=>Me(e,{id:t.id}),qs=e=>{const t=Me("image",{id:e.id,"stroke-linecap":"round","stroke-linejoin":"round",opacity:"0"});return t.onload=()=>{t.setAttribute("opacity",e.opacity||1)},t.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href",e.src),t},zs=e=>{const t=Me("g",{id:e.id,"stroke-linecap":"round","stroke-linejoin":"round"}),n=Me("line");t.appendChild(n);const s=Me("path");t.appendChild(s);const r=Me("path");return t.appendChild(r),t},$s={image:qs,rect:qe("rect"),ellipse:qe("ellipse"),text:qe("text"),path:qe("path"),line:zs},ks={rect:Fs,ellipse:Bs,image:xs,text:Hs,path:Ws,line:Ys},Xs=(e,t)=>$s[e](t),js=(e,t,n,s,r)=>{t!=="path"&&(e.rect=Ns(n,s,r)),e.styles=bs(n,s,r),ks[t](e,n,s,r)},Zs=["x","y","left","top","right","bottom","width","height"],Qs=e=>typeof e=="string"&&/%/.test(e)?parseFloat(e)/100:e,Ks=e=>{const[t,n]=e,s=n.points?{}:Zs.reduce((r,a)=>(r[a]=Qs(n[a]),r),{});return[t,{zIndex:0,...n,...s}]},Js=(e,t)=>e[1].zIndex>t[1].zIndex?1:e[1].zIndex<t[1].zIndex?-1:0,er=e=>e.utils.createView({name:"image-preview-markup",tag:"svg",ignoreRect:!0,mixins:{apis:["width","height","crop","markup","resize","dirty"]},write:({root:t,props:n})=>{if(!n.dirty)return;const{crop:s,resize:r,markup:a}=n,i=n.width,l=n.height;let o=s.width,d=s.height;if(r){const{size:p}=r;let u=p&&p.width,_=p&&p.height;const m=r.mode,h=r.upscale;u&&!_&&(_=u),_&&!u&&(u=_);const f=o<u&&d<_;if(!f||f&&h){let T=u/o,R=_/d;if(m==="force")o=u,d=_;else{let S;m==="cover"?S=Math.max(T,R):m==="contain"&&(S=Math.min(T,R)),o=o*S,d=d*S}}}const c={width:i,height:l};t.element.setAttribute("width",c.width),t.element.setAttribute("height",c.height);const E=Math.min(i/o,l/d);t.element.innerHTML="";const I=t.query("GET_IMAGE_PREVIEW_MARKUP_FILTER");a.filter(I).map(Ks).sort(Js).forEach(p=>{const[u,_]=p,m=Xs(u,_);js(m,u,_,c,E),t.element.appendChild(m)})}}),Ue=(e,t)=>({x:e,y:t}),tr=(e,t)=>e.x*t.x+e.y*t.y,qt=(e,t)=>Ue(e.x-t.x,e.y-t.y),nr=(e,t)=>tr(qt(e,t),qt(e,t)),zt=(e,t)=>Math.sqrt(nr(e,t)),$t=(e,t)=>{const n=e,s=1.5707963267948966,r=t,a=1.5707963267948966-t,i=Math.sin(s),l=Math.sin(r),o=Math.sin(a),d=Math.cos(a),c=n/i,E=c*l,I=c*o;return Ue(d*E,d*I)},sr=(e,t)=>{const n=e.width,s=e.height,r=$t(n,t),a=$t(s,t),i=Ue(e.x+Math.abs(r.x),e.y-Math.abs(r.y)),l=Ue(e.x+e.width+Math.abs(a.y),e.y+Math.abs(a.x)),o=Ue(e.x-Math.abs(a.y),e.y+e.height-Math.abs(a.x));return{width:zt(i,l),height:zt(i,o)}},rr=(e,t,n=1)=>{const s=e.height/e.width;let r=1,a=t,i=1,l=s;l>a&&(l=a,i=l/s);const o=Math.max(r/i,a/l),d=e.width/(n*o*i),c=d*t;return{width:d,height:c}},Vn=(e,t,n,s)=>{const r=s.x>.5?1-s.x:s.x,a=s.y>.5?1-s.y:s.y,i=r*2*e.width,l=a*2*e.height,o=sr(t,n);return Math.max(o.width/i,o.height/l)},Hn=(e,t)=>{let n=e.width,s=n*t;s>e.height&&(s=e.height,n=s/t);const r=(e.width-n)*.5,a=(e.height-s)*.5;return{x:r,y:a,width:n,height:s}},ir=(e,t={})=>{let{zoom:n,rotation:s,center:r,aspectRatio:a}=t;a||(a=e.height/e.width);const i=rr(e,a,n),l={width:i.width,height:i.height},o=typeof t.scaleToFit>"u"||t.scaleToFit,d=Vn(e,Hn(l,a),s,o?r:{x:.5,y:.5}),c=n*d;return{widthFloat:i.width/c,heightFloat:i.height/c,width:Math.round(i.width/c),height:Math.round(i.height/c)}},de={type:"spring",stiffness:.5,damping:.45,mass:10},ar=e=>e.utils.createView({name:"image-bitmap",ignoreRect:!0,mixins:{styles:["scaleX","scaleY"]},create:({root:t,props:n})=>{t.appendChild(n.image)}}),or=e=>e.utils.createView({name:"image-canvas-wrapper",tag:"div",ignoreRect:!0,mixins:{apis:["crop","width","height"],styles:["originX","originY","translateX","translateY","scaleX","scaleY","rotateZ"],animations:{originX:de,originY:de,scaleX:de,scaleY:de,translateX:de,translateY:de,rotateZ:de}},create:({root:t,props:n})=>{n.width=n.image.width,n.height=n.image.height,t.ref.bitmap=t.appendChildView(t.createChildView(ar(e),{image:n.image}))},write:({root:t,props:n})=>{const{flip:s}=n.crop,{bitmap:r}=t.ref;r.scaleX=s.horizontal?-1:1,r.scaleY=s.vertical?-1:1}}),lr=e=>e.utils.createView({name:"image-clip",tag:"div",ignoreRect:!0,mixins:{apis:["crop","markup","resize","width","height","dirty","background"],styles:["width","height","opacity"],animations:{opacity:{type:"tween",duration:250}}},didWriteView:function({root:t,props:n}){n.background&&(t.element.style.backgroundColor=n.background)},create:({root:t,props:n})=>{t.ref.image=t.appendChildView(t.createChildView(or(e),Object.assign({},n))),t.ref.createMarkup=()=>{t.ref.markup||(t.ref.markup=t.appendChildView(t.createChildView(er(e),Object.assign({},n))))},t.ref.destroyMarkup=()=>{t.ref.markup&&(t.removeChildView(t.ref.markup),t.ref.markup=null)};const s=t.query("GET_IMAGE_PREVIEW_TRANSPARENCY_INDICATOR");s!==null&&(s==="grid"?t.element.dataset.transparencyIndicator=s:t.element.dataset.transparencyIndicator="color")},write:({root:t,props:n,shouldOptimize:s})=>{const{crop:r,markup:a,resize:i,dirty:l,width:o,height:d}=n;t.ref.image.crop=r;const c={width:o,height:d,center:{x:o*.5,y:d*.5}},E={width:t.ref.image.width,height:t.ref.image.height},I={x:r.center.x*E.width,y:r.center.y*E.height},p={x:c.center.x-E.width*r.center.x,y:c.center.y-E.height*r.center.y},u=Math.PI*2+r.rotation%(Math.PI*2),_=r.aspectRatio||E.height/E.width,m=typeof r.scaleToFit>"u"||r.scaleToFit,h=Vn(E,Hn(c,_),u,m?r.center:{x:.5,y:.5}),f=r.zoom*h;a&&a.length?(t.ref.createMarkup(),t.ref.markup.width=o,t.ref.markup.height=d,t.ref.markup.resize=i,t.ref.markup.dirty=l,t.ref.markup.markup=a,t.ref.markup.crop=ir(E,r)):t.ref.markup&&t.ref.destroyMarkup();const T=t.ref.image;if(s){T.originX=null,T.originY=null,T.translateX=null,T.translateY=null,T.rotateZ=null,T.scaleX=null,T.scaleY=null;return}T.originX=I.x,T.originY=I.y,T.translateX=p.x,T.translateY=p.y,T.rotateZ=u,T.scaleX=f,T.scaleY=f}}),cr=e=>e.utils.createView({name:"image-preview",tag:"div",ignoreRect:!0,mixins:{apis:["image","crop","markup","resize","dirty","background"],styles:["translateY","scaleX","scaleY","opacity"],animations:{scaleX:de,scaleY:de,translateY:de,opacity:{type:"tween",duration:400}}},create:({root:t,props:n})=>{t.ref.clip=t.appendChildView(t.createChildView(lr(e),{id:n.id,image:n.image,crop:n.crop,markup:n.markup,resize:n.resize,dirty:n.dirty,background:n.background}))},write:({root:t,props:n,shouldOptimize:s})=>{const{clip:r}=t.ref,{image:a,crop:i,markup:l,resize:o,dirty:d}=n;if(r.crop=i,r.markup=l,r.resize=o,r.dirty=d,r.opacity=s?0:1,s||t.rect.element.hidden)return;const c=a.height/a.width;let E=i.aspectRatio||c;const I=t.rect.inner.width,p=t.rect.inner.height;let u=t.query("GET_IMAGE_PREVIEW_HEIGHT");const _=t.query("GET_IMAGE_PREVIEW_MIN_HEIGHT"),m=t.query("GET_IMAGE_PREVIEW_MAX_HEIGHT"),h=t.query("GET_PANEL_ASPECT_RATIO"),f=t.query("GET_ALLOW_MULTIPLE");h&&!f&&(u=I*h,E=h);let T=u!==null?u:Math.max(_,Math.min(I*E,m)),R=T/E;R>I&&(R=I,T=R*E),T>p&&(T=p,R=p/E),r.width=R,r.height=T}});let dr=`<svg width="500" height="200" viewBox="0 0 500 200" preserveAspectRatio="none">
+ */ const ws = (e) => /^image/.test(e.type),
+  Yt = (e, t) => Ve(e.x * t, e.y * t),
+  Wt = (e, t) => Ve(e.x + t.x, e.y + t.y),
+  Cs = (e) => {
+    const t = Math.sqrt(e.x * e.x + e.y * e.y);
+    return t === 0 ? { x: 0, y: 0 } : Ve(e.x / t, e.y / t);
+  },
+  We = (e, t, n) => {
+    const s = Math.cos(t),
+      r = Math.sin(t),
+      a = Ve(e.x - n.x, e.y - n.y);
+    return Ve(n.x + s * a.x - r * a.y, n.y + r * a.x + s * a.y);
+  },
+  Ve = (e = 0, t = 0) => ({ x: e, y: t }),
+  ee = (e, t, n = 1, s) => {
+    if (typeof e == "string") return parseFloat(e) * n;
+    if (typeof e == "number")
+      return e * (s ? t[s] : Math.min(t.width, t.height));
+  },
+  bs = (e, t, n) => {
+    const s = e.borderStyle || e.lineStyle || "solid",
+      r = e.backgroundColor || e.fontColor || "transparent",
+      a = e.borderColor || e.lineColor || "transparent",
+      i = ee(e.borderWidth || e.lineWidth, t, n),
+      l = e.lineCap || "round",
+      o = e.lineJoin || "round",
+      d = typeof s == "string" ? "" : s.map((E) => ee(E, t, n)).join(","),
+      c = e.opacity || 1;
+    return {
+      "stroke-linecap": l,
+      "stroke-linejoin": o,
+      "stroke-width": i || 0,
+      "stroke-dasharray": d,
+      stroke: a,
+      fill: r,
+      opacity: c,
+    };
+  },
+  ne = (e) => e != null,
+  Ns = (e, t, n = 1) => {
+    let s = ee(e.x, t, n, "width") || ee(e.left, t, n, "width"),
+      r = ee(e.y, t, n, "height") || ee(e.top, t, n, "height"),
+      a = ee(e.width, t, n, "width"),
+      i = ee(e.height, t, n, "height"),
+      l = ee(e.right, t, n, "width"),
+      o = ee(e.bottom, t, n, "height");
+    return (
+      ne(r) || (ne(i) && ne(o) ? (r = t.height - i - o) : (r = o)),
+      ne(s) || (ne(a) && ne(l) ? (s = t.width - a - l) : (s = l)),
+      ne(a) || (ne(s) && ne(l) ? (a = t.width - s - l) : (a = 0)),
+      ne(i) || (ne(r) && ne(o) ? (i = t.height - r - o) : (i = 0)),
+      { x: s || 0, y: r || 0, width: a || 0, height: i || 0 }
+    );
+  },
+  vs = (e) => e.map((t, n) => `${n === 0 ? "M" : "L"} ${t.x} ${t.y}`).join(" "),
+  ue = (e, t) => Object.keys(t).forEach((n) => e.setAttribute(n, t[n])),
+  Gs = "http://www.w3.org/2000/svg",
+  Me = (e, t) => {
+    const n = document.createElementNS(Gs, e);
+    return (t && ue(n, t), n);
+  },
+  Fs = (e) => ue(e, { ...e.rect, ...e.styles }),
+  Bs = (e) => {
+    const t = e.rect.x + e.rect.width * 0.5,
+      n = e.rect.y + e.rect.height * 0.5,
+      s = e.rect.width * 0.5,
+      r = e.rect.height * 0.5;
+    return ue(e, { cx: t, cy: n, rx: s, ry: r, ...e.styles });
+  },
+  Us = { contain: "xMidYMid meet", cover: "xMidYMid slice" },
+  xs = (e, t) => {
+    ue(e, { ...e.rect, ...e.styles, preserveAspectRatio: Us[t.fit] || "none" });
+  },
+  Vs = { left: "start", center: "middle", right: "end" },
+  Hs = (e, t, n, s) => {
+    const r = ee(t.fontSize, n, s),
+      a = t.fontFamily || "sans-serif",
+      i = t.fontWeight || "normal",
+      l = Vs[t.textAlign] || "start";
+    (ue(e, {
+      ...e.rect,
+      ...e.styles,
+      "stroke-width": 0,
+      "font-weight": i,
+      "font-size": r,
+      "font-family": a,
+      "text-anchor": l,
+    }),
+      e.text !== t.text &&
+        ((e.text = t.text), (e.textContent = t.text.length ? t.text : " ")));
+  },
+  Ys = (e, t, n, s) => {
+    ue(e, { ...e.rect, ...e.styles, fill: "none" });
+    const r = e.childNodes[0],
+      a = e.childNodes[1],
+      i = e.childNodes[2],
+      l = e.rect,
+      o = { x: e.rect.x + e.rect.width, y: e.rect.y + e.rect.height };
+    if ((ue(r, { x1: l.x, y1: l.y, x2: o.x, y2: o.y }), !t.lineDecoration))
+      return;
+    ((a.style.display = "none"), (i.style.display = "none"));
+    const d = Cs({ x: o.x - l.x, y: o.y - l.y }),
+      c = ee(0.05, n, s);
+    if (t.lineDecoration.indexOf("arrow-begin") !== -1) {
+      const E = Yt(d, c),
+        I = Wt(l, E),
+        p = We(l, 2, I),
+        u = We(l, -2, I);
+      ue(a, {
+        style: "display:block;",
+        d: `M${p.x},${p.y} L${l.x},${l.y} L${u.x},${u.y}`,
+      });
+    }
+    if (t.lineDecoration.indexOf("arrow-end") !== -1) {
+      const E = Yt(d, -c),
+        I = Wt(o, E),
+        p = We(o, 2, I),
+        u = We(o, -2, I);
+      ue(i, {
+        style: "display:block;",
+        d: `M${p.x},${p.y} L${o.x},${o.y} L${u.x},${u.y}`,
+      });
+    }
+  },
+  Ws = (e, t, n, s) => {
+    ue(e, {
+      ...e.styles,
+      fill: "none",
+      d: vs(
+        t.points.map((r) => ({
+          x: ee(r.x, n, s, "width"),
+          y: ee(r.y, n, s, "height"),
+        })),
+      ),
+    });
+  },
+  qe = (e) => (t) => Me(e, { id: t.id }),
+  qs = (e) => {
+    const t = Me("image", {
+      id: e.id,
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      opacity: "0",
+    });
+    return (
+      (t.onload = () => {
+        t.setAttribute("opacity", e.opacity || 1);
+      }),
+      t.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", e.src),
+      t
+    );
+  },
+  zs = (e) => {
+    const t = Me("g", {
+        id: e.id,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+      }),
+      n = Me("line");
+    t.appendChild(n);
+    const s = Me("path");
+    t.appendChild(s);
+    const r = Me("path");
+    return (t.appendChild(r), t);
+  },
+  $s = {
+    image: qs,
+    rect: qe("rect"),
+    ellipse: qe("ellipse"),
+    text: qe("text"),
+    path: qe("path"),
+    line: zs,
+  },
+  ks = { rect: Fs, ellipse: Bs, image: xs, text: Hs, path: Ws, line: Ys },
+  Xs = (e, t) => $s[e](t),
+  js = (e, t, n, s, r) => {
+    (t !== "path" && (e.rect = Ns(n, s, r)),
+      (e.styles = bs(n, s, r)),
+      ks[t](e, n, s, r));
+  },
+  Zs = ["x", "y", "left", "top", "right", "bottom", "width", "height"],
+  Qs = (e) => (typeof e == "string" && /%/.test(e) ? parseFloat(e) / 100 : e),
+  Ks = (e) => {
+    const [t, n] = e,
+      s = n.points ? {} : Zs.reduce((r, a) => ((r[a] = Qs(n[a])), r), {});
+    return [t, { zIndex: 0, ...n, ...s }];
+  },
+  Js = (e, t) =>
+    e[1].zIndex > t[1].zIndex ? 1 : e[1].zIndex < t[1].zIndex ? -1 : 0,
+  er = (e) =>
+    e.utils.createView({
+      name: "image-preview-markup",
+      tag: "svg",
+      ignoreRect: !0,
+      mixins: {
+        apis: ["width", "height", "crop", "markup", "resize", "dirty"],
+      },
+      write: ({ root: t, props: n }) => {
+        if (!n.dirty) return;
+        const { crop: s, resize: r, markup: a } = n,
+          i = n.width,
+          l = n.height;
+        let o = s.width,
+          d = s.height;
+        if (r) {
+          const { size: p } = r;
+          let u = p && p.width,
+            _ = p && p.height;
+          const m = r.mode,
+            h = r.upscale;
+          (u && !_ && (_ = u), _ && !u && (u = _));
+          const f = o < u && d < _;
+          if (!f || (f && h)) {
+            let T = u / o,
+              R = _ / d;
+            if (m === "force") ((o = u), (d = _));
+            else {
+              let S;
+              (m === "cover"
+                ? (S = Math.max(T, R))
+                : m === "contain" && (S = Math.min(T, R)),
+                (o = o * S),
+                (d = d * S));
+            }
+          }
+        }
+        const c = { width: i, height: l };
+        (t.element.setAttribute("width", c.width),
+          t.element.setAttribute("height", c.height));
+        const E = Math.min(i / o, l / d);
+        t.element.innerHTML = "";
+        const I = t.query("GET_IMAGE_PREVIEW_MARKUP_FILTER");
+        a.filter(I)
+          .map(Ks)
+          .sort(Js)
+          .forEach((p) => {
+            const [u, _] = p,
+              m = Xs(u, _);
+            (js(m, u, _, c, E), t.element.appendChild(m));
+          });
+      },
+    }),
+  Ue = (e, t) => ({ x: e, y: t }),
+  tr = (e, t) => e.x * t.x + e.y * t.y,
+  qt = (e, t) => Ue(e.x - t.x, e.y - t.y),
+  nr = (e, t) => tr(qt(e, t), qt(e, t)),
+  zt = (e, t) => Math.sqrt(nr(e, t)),
+  $t = (e, t) => {
+    const n = e,
+      s = 1.5707963267948966,
+      r = t,
+      a = 1.5707963267948966 - t,
+      i = Math.sin(s),
+      l = Math.sin(r),
+      o = Math.sin(a),
+      d = Math.cos(a),
+      c = n / i,
+      E = c * l,
+      I = c * o;
+    return Ue(d * E, d * I);
+  },
+  sr = (e, t) => {
+    const n = e.width,
+      s = e.height,
+      r = $t(n, t),
+      a = $t(s, t),
+      i = Ue(e.x + Math.abs(r.x), e.y - Math.abs(r.y)),
+      l = Ue(e.x + e.width + Math.abs(a.y), e.y + Math.abs(a.x)),
+      o = Ue(e.x - Math.abs(a.y), e.y + e.height - Math.abs(a.x));
+    return { width: zt(i, l), height: zt(i, o) };
+  },
+  rr = (e, t, n = 1) => {
+    const s = e.height / e.width;
+    let r = 1,
+      a = t,
+      i = 1,
+      l = s;
+    l > a && ((l = a), (i = l / s));
+    const o = Math.max(r / i, a / l),
+      d = e.width / (n * o * i),
+      c = d * t;
+    return { width: d, height: c };
+  },
+  Vn = (e, t, n, s) => {
+    const r = s.x > 0.5 ? 1 - s.x : s.x,
+      a = s.y > 0.5 ? 1 - s.y : s.y,
+      i = r * 2 * e.width,
+      l = a * 2 * e.height,
+      o = sr(t, n);
+    return Math.max(o.width / i, o.height / l);
+  },
+  Hn = (e, t) => {
+    let n = e.width,
+      s = n * t;
+    s > e.height && ((s = e.height), (n = s / t));
+    const r = (e.width - n) * 0.5,
+      a = (e.height - s) * 0.5;
+    return { x: r, y: a, width: n, height: s };
+  },
+  ir = (e, t = {}) => {
+    let { zoom: n, rotation: s, center: r, aspectRatio: a } = t;
+    a || (a = e.height / e.width);
+    const i = rr(e, a, n),
+      l = { width: i.width, height: i.height },
+      o = typeof t.scaleToFit > "u" || t.scaleToFit,
+      d = Vn(e, Hn(l, a), s, o ? r : { x: 0.5, y: 0.5 }),
+      c = n * d;
+    return {
+      widthFloat: i.width / c,
+      heightFloat: i.height / c,
+      width: Math.round(i.width / c),
+      height: Math.round(i.height / c),
+    };
+  },
+  de = { type: "spring", stiffness: 0.5, damping: 0.45, mass: 10 },
+  ar = (e) =>
+    e.utils.createView({
+      name: "image-bitmap",
+      ignoreRect: !0,
+      mixins: { styles: ["scaleX", "scaleY"] },
+      create: ({ root: t, props: n }) => {
+        t.appendChild(n.image);
+      },
+    }),
+  or = (e) =>
+    e.utils.createView({
+      name: "image-canvas-wrapper",
+      tag: "div",
+      ignoreRect: !0,
+      mixins: {
+        apis: ["crop", "width", "height"],
+        styles: [
+          "originX",
+          "originY",
+          "translateX",
+          "translateY",
+          "scaleX",
+          "scaleY",
+          "rotateZ",
+        ],
+        animations: {
+          originX: de,
+          originY: de,
+          scaleX: de,
+          scaleY: de,
+          translateX: de,
+          translateY: de,
+          rotateZ: de,
+        },
+      },
+      create: ({ root: t, props: n }) => {
+        ((n.width = n.image.width),
+          (n.height = n.image.height),
+          (t.ref.bitmap = t.appendChildView(
+            t.createChildView(ar(e), { image: n.image }),
+          )));
+      },
+      write: ({ root: t, props: n }) => {
+        const { flip: s } = n.crop,
+          { bitmap: r } = t.ref;
+        ((r.scaleX = s.horizontal ? -1 : 1), (r.scaleY = s.vertical ? -1 : 1));
+      },
+    }),
+  lr = (e) =>
+    e.utils.createView({
+      name: "image-clip",
+      tag: "div",
+      ignoreRect: !0,
+      mixins: {
+        apis: [
+          "crop",
+          "markup",
+          "resize",
+          "width",
+          "height",
+          "dirty",
+          "background",
+        ],
+        styles: ["width", "height", "opacity"],
+        animations: { opacity: { type: "tween", duration: 250 } },
+      },
+      didWriteView: function ({ root: t, props: n }) {
+        n.background && (t.element.style.backgroundColor = n.background);
+      },
+      create: ({ root: t, props: n }) => {
+        ((t.ref.image = t.appendChildView(
+          t.createChildView(or(e), Object.assign({}, n)),
+        )),
+          (t.ref.createMarkup = () => {
+            t.ref.markup ||
+              (t.ref.markup = t.appendChildView(
+                t.createChildView(er(e), Object.assign({}, n)),
+              ));
+          }),
+          (t.ref.destroyMarkup = () => {
+            t.ref.markup &&
+              (t.removeChildView(t.ref.markup), (t.ref.markup = null));
+          }));
+        const s = t.query("GET_IMAGE_PREVIEW_TRANSPARENCY_INDICATOR");
+        s !== null &&
+          (s === "grid"
+            ? (t.element.dataset.transparencyIndicator = s)
+            : (t.element.dataset.transparencyIndicator = "color"));
+      },
+      write: ({ root: t, props: n, shouldOptimize: s }) => {
+        const {
+          crop: r,
+          markup: a,
+          resize: i,
+          dirty: l,
+          width: o,
+          height: d,
+        } = n;
+        t.ref.image.crop = r;
+        const c = { width: o, height: d, center: { x: o * 0.5, y: d * 0.5 } },
+          E = { width: t.ref.image.width, height: t.ref.image.height },
+          I = { x: r.center.x * E.width, y: r.center.y * E.height },
+          p = {
+            x: c.center.x - E.width * r.center.x,
+            y: c.center.y - E.height * r.center.y,
+          },
+          u = Math.PI * 2 + (r.rotation % (Math.PI * 2)),
+          _ = r.aspectRatio || E.height / E.width,
+          m = typeof r.scaleToFit > "u" || r.scaleToFit,
+          h = Vn(E, Hn(c, _), u, m ? r.center : { x: 0.5, y: 0.5 }),
+          f = r.zoom * h;
+        a && a.length
+          ? (t.ref.createMarkup(),
+            (t.ref.markup.width = o),
+            (t.ref.markup.height = d),
+            (t.ref.markup.resize = i),
+            (t.ref.markup.dirty = l),
+            (t.ref.markup.markup = a),
+            (t.ref.markup.crop = ir(E, r)))
+          : t.ref.markup && t.ref.destroyMarkup();
+        const T = t.ref.image;
+        if (s) {
+          ((T.originX = null),
+            (T.originY = null),
+            (T.translateX = null),
+            (T.translateY = null),
+            (T.rotateZ = null),
+            (T.scaleX = null),
+            (T.scaleY = null));
+          return;
+        }
+        ((T.originX = I.x),
+          (T.originY = I.y),
+          (T.translateX = p.x),
+          (T.translateY = p.y),
+          (T.rotateZ = u),
+          (T.scaleX = f),
+          (T.scaleY = f));
+      },
+    }),
+  cr = (e) =>
+    e.utils.createView({
+      name: "image-preview",
+      tag: "div",
+      ignoreRect: !0,
+      mixins: {
+        apis: ["image", "crop", "markup", "resize", "dirty", "background"],
+        styles: ["translateY", "scaleX", "scaleY", "opacity"],
+        animations: {
+          scaleX: de,
+          scaleY: de,
+          translateY: de,
+          opacity: { type: "tween", duration: 400 },
+        },
+      },
+      create: ({ root: t, props: n }) => {
+        t.ref.clip = t.appendChildView(
+          t.createChildView(lr(e), {
+            id: n.id,
+            image: n.image,
+            crop: n.crop,
+            markup: n.markup,
+            resize: n.resize,
+            dirty: n.dirty,
+            background: n.background,
+          }),
+        );
+      },
+      write: ({ root: t, props: n, shouldOptimize: s }) => {
+        const { clip: r } = t.ref,
+          { image: a, crop: i, markup: l, resize: o, dirty: d } = n;
+        if (
+          ((r.crop = i),
+          (r.markup = l),
+          (r.resize = o),
+          (r.dirty = d),
+          (r.opacity = s ? 0 : 1),
+          s || t.rect.element.hidden)
+        )
+          return;
+        const c = a.height / a.width;
+        let E = i.aspectRatio || c;
+        const I = t.rect.inner.width,
+          p = t.rect.inner.height;
+        let u = t.query("GET_IMAGE_PREVIEW_HEIGHT");
+        const _ = t.query("GET_IMAGE_PREVIEW_MIN_HEIGHT"),
+          m = t.query("GET_IMAGE_PREVIEW_MAX_HEIGHT"),
+          h = t.query("GET_PANEL_ASPECT_RATIO"),
+          f = t.query("GET_ALLOW_MULTIPLE");
+        h && !f && ((u = I * h), (E = h));
+        let T = u !== null ? u : Math.max(_, Math.min(I * E, m)),
+          R = T / E;
+        (R > I && ((R = I), (T = R * E)),
+          T > p && ((T = p), (R = p / E)),
+          (r.width = R),
+          (r.height = T));
+      },
+    });
+let dr = `<svg width="500" height="200" viewBox="0 0 500 200" preserveAspectRatio="none">
     <defs>
         <radialGradient id="gradient-__UID__" cx=".5" cy="1.25" r="1.15">
             <stop offset='50%' stop-color='#000000'/>
@@ -20,25 +534,6430 @@ import{R as Ps,r as Ht}from"./index-ADhmmBpU.js";/*!
         </mask>
     </defs>
     <rect x="0" width="500" height="200" fill="currentColor" mask="url(#mask-__UID__)"></rect>
-</svg>`,kt=0;const ur=e=>e.utils.createView({name:"image-preview-overlay",tag:"div",ignoreRect:!0,create:({root:t,props:n})=>{let s=dr;if(document.querySelector("base")){const r=new URL(window.location.href.replace(window.location.hash,"")).href;s=s.replace(/url\(\#/g,"url("+r+"#")}kt++,t.element.classList.add(`filepond--image-preview-overlay-${n.status}`),t.element.innerHTML=s.replace(/__UID__/g,kt)},mixins:{styles:["opacity"],animations:{opacity:{type:"spring",mass:25}}}}),Er=function(){self.onmessage=e=>{createImageBitmap(e.data.message.file).then(t=>{self.postMessage({id:e.data.id,message:t},[t])})}},fr=function(){self.onmessage=e=>{const t=e.data.message.imageData,n=e.data.message.colorMatrix,s=t.data,r=s.length,a=n[0],i=n[1],l=n[2],o=n[3],d=n[4],c=n[5],E=n[6],I=n[7],p=n[8],u=n[9],_=n[10],m=n[11],h=n[12],f=n[13],T=n[14],R=n[15],S=n[16],L=n[17],b=n[18],D=n[19];let M=0,v=0,P=0,w=0,x=0;for(;M<r;M+=4)v=s[M]/255,P=s[M+1]/255,w=s[M+2]/255,x=s[M+3]/255,s[M]=Math.max(0,Math.min((v*a+P*i+w*l+x*o+d)*255,255)),s[M+1]=Math.max(0,Math.min((v*c+P*E+w*I+x*p+u)*255,255)),s[M+2]=Math.max(0,Math.min((v*_+P*m+w*h+x*f+T)*255,255)),s[M+3]=Math.max(0,Math.min((v*R+P*S+w*L+x*b+D)*255,255));self.postMessage({id:e.data.id,message:t},[t.data.buffer])}},pr=(e,t)=>{let n=new Image;n.onload=()=>{const s=n.naturalWidth,r=n.naturalHeight;n=null,t(s,r)},n.src=e},Ir={1:()=>[1,0,0,1,0,0],2:e=>[-1,0,0,1,e,0],3:(e,t)=>[-1,0,0,-1,e,t],4:(e,t)=>[1,0,0,-1,0,t],5:()=>[0,1,1,0,0,0],6:(e,t)=>[0,1,-1,0,t,0],7:(e,t)=>[0,-1,-1,0,t,e],8:e=>[0,-1,1,0,0,e]},_r=(e,t,n,s)=>{s!==-1&&e.transform.apply(e,Ir[s](t,n))},Tr=(e,t,n,s)=>{t=Math.round(t),n=Math.round(n);const r=document.createElement("canvas");r.width=t,r.height=n;const a=r.getContext("2d");return s>=5&&s<=8&&([t,n]=[n,t]),_r(a,t,n,s),a.drawImage(e,0,0,t,n),r},Yn=e=>/^image/.test(e.type)&&!/svg/.test(e.type),mr=10,gr=10,hr=e=>{const t=Math.min(mr/e.width,gr/e.height),n=document.createElement("canvas"),s=n.getContext("2d"),r=n.width=Math.ceil(e.width*t),a=n.height=Math.ceil(e.height*t);s.drawImage(e,0,0,r,a);let i=null;try{i=s.getImageData(0,0,r,a).data}catch{return null}const l=i.length;let o=0,d=0,c=0,E=0;for(;E<l;E+=4)o+=i[E]*i[E],d+=i[E+1]*i[E+1],c+=i[E+2]*i[E+2];return o=ut(o,l),d=ut(d,l),c=ut(c,l),{r:o,g:d,b:c}},ut=(e,t)=>Math.floor(Math.sqrt(e/(t/4))),Rr=(e,t)=>(t=t||document.createElement("canvas"),t.width=e.width,t.height=e.height,t.getContext("2d").drawImage(e,0,0),t),Or=e=>{let t;try{t=new ImageData(e.width,e.height)}catch{t=document.createElement("canvas").getContext("2d").createImageData(e.width,e.height)}return t.data.set(new Uint8ClampedArray(e.data)),t},Sr=e=>new Promise((t,n)=>{const s=new Image;s.crossOrigin="Anonymous",s.onload=()=>{t(s)},s.onerror=r=>{n(r)},s.src=e}),Dr=e=>{const t=ur(e),n=cr(e),{createWorker:s}=e.utils,r=(f,T,R)=>new Promise(S=>{f.ref.imageData||(f.ref.imageData=R.getContext("2d").getImageData(0,0,R.width,R.height));const L=Or(f.ref.imageData);if(!T||T.length!==20)return R.getContext("2d").putImageData(L,0,0),S();const b=s(fr);b.post({imageData:L,colorMatrix:T},D=>{R.getContext("2d").putImageData(D,0,0),b.terminate(),S()},[L.data.buffer])}),a=(f,T)=>{f.removeChildView(T),T.image.width=1,T.image.height=1,T._destroy()},i=({root:f})=>{const T=f.ref.images.shift();return T.opacity=0,T.translateY=-15,f.ref.imageViewBin.push(T),T},l=({root:f,props:T,image:R})=>{const S=T.id,L=f.query("GET_ITEM",{id:S});if(!L)return;const b=L.getMetadata("crop")||{center:{x:.5,y:.5},flip:{horizontal:!1,vertical:!1},zoom:1,rotation:0,aspectRatio:null},D=f.query("GET_IMAGE_TRANSFORM_CANVAS_BACKGROUND_COLOR");let M,v,P=!1;f.query("GET_IMAGE_PREVIEW_MARKUP_SHOW")&&(M=L.getMetadata("markup")||[],v=L.getMetadata("resize"),P=!0);const w=f.appendChildView(f.createChildView(n,{id:S,image:R,crop:b,resize:v,markup:M,dirty:P,background:D,opacity:0,scaleX:1.15,scaleY:1.15,translateY:15}),f.childViews.length);f.ref.images.push(w),w.opacity=1,w.scaleX=1,w.scaleY=1,w.translateY=0,setTimeout(()=>{f.dispatch("DID_IMAGE_PREVIEW_SHOW",{id:S})},250)},o=({root:f,props:T})=>{const R=f.query("GET_ITEM",{id:T.id});if(!R)return;const S=f.ref.images[f.ref.images.length-1];S.crop=R.getMetadata("crop"),S.background=f.query("GET_IMAGE_TRANSFORM_CANVAS_BACKGROUND_COLOR"),f.query("GET_IMAGE_PREVIEW_MARKUP_SHOW")&&(S.dirty=!0,S.resize=R.getMetadata("resize"),S.markup=R.getMetadata("markup"))},d=({root:f,props:T,action:R})=>{if(!/crop|filter|markup|resize/.test(R.change.key)||!f.ref.images.length)return;const S=f.query("GET_ITEM",{id:T.id});if(S){if(/filter/.test(R.change.key)){const L=f.ref.images[f.ref.images.length-1];r(f,R.change.value,L.image);return}if(/crop|markup|resize/.test(R.change.key)){const L=S.getMetadata("crop"),b=f.ref.images[f.ref.images.length-1];if(L&&L.aspectRatio&&b.crop&&b.crop.aspectRatio&&Math.abs(L.aspectRatio-b.crop.aspectRatio)>1e-5){const D=i({root:f});l({root:f,props:T,image:Rr(D.image)})}else o({root:f,props:T})}}},c=f=>{const R=window.navigator.userAgent.match(/Firefox\/([0-9]+)\./),S=R?parseInt(R[1]):null;return S!==null&&S<=58?!1:"createImageBitmap"in window&&Yn(f)},E=({root:f,props:T})=>{const{id:R}=T,S=f.query("GET_ITEM",R);if(!S)return;const L=URL.createObjectURL(S.file);pr(L,(b,D)=>{f.dispatch("DID_IMAGE_PREVIEW_CALCULATE_SIZE",{id:R,width:b,height:D})})},I=({root:f,props:T})=>{const{id:R}=T,S=f.query("GET_ITEM",R);if(!S)return;const L=URL.createObjectURL(S.file),b=()=>{Sr(L).then(D)},D=M=>{URL.revokeObjectURL(L);const P=(S.getMetadata("exif")||{}).orientation||-1;let{width:w,height:x}=M;if(!w||!x)return;P>=5&&P<=8&&([w,x]=[x,w]);const y=Math.max(1,window.devicePixelRatio*.75),O=f.query("GET_IMAGE_PREVIEW_ZOOM_FACTOR")*y,A=x/w,C=f.rect.element.width,N=f.rect.element.height;let V=C,F=V*A;A>1?(V=Math.min(w,C*O),F=V*A):(F=Math.min(x,N*O),V=F/A);const Te=Tr(M,V,F,P),ve=()=>{const dt=f.query("GET_IMAGE_PREVIEW_CALCULATE_AVERAGE_IMAGE_COLOR")?hr(data):null;S.setMetadata("color",dt,!0),"close"in M&&M.close(),f.ref.overlayShadow.opacity=1,l({root:f,props:T,image:Te})},ae=S.getMetadata("filter");ae?r(f,ae,Te).then(ve):ve()};if(c(S.file)){const M=s(Er);M.post({file:S.file},v=>{if(M.terminate(),!v){b();return}D(v)})}else b()},p=({root:f})=>{const T=f.ref.images[f.ref.images.length-1];T.translateY=0,T.scaleX=1,T.scaleY=1,T.opacity=1},u=({root:f})=>{f.ref.overlayShadow.opacity=1,f.ref.overlayError.opacity=0,f.ref.overlaySuccess.opacity=0},_=({root:f})=>{f.ref.overlayShadow.opacity=.25,f.ref.overlayError.opacity=1},m=({root:f})=>{f.ref.overlayShadow.opacity=.25,f.ref.overlaySuccess.opacity=1},h=({root:f})=>{f.ref.images=[],f.ref.imageData=null,f.ref.imageViewBin=[],f.ref.overlayShadow=f.appendChildView(f.createChildView(t,{opacity:0,status:"idle"})),f.ref.overlaySuccess=f.appendChildView(f.createChildView(t,{opacity:0,status:"success"})),f.ref.overlayError=f.appendChildView(f.createChildView(t,{opacity:0,status:"failure"}))};return e.utils.createView({name:"image-preview-wrapper",create:h,styles:["height"],apis:["height"],destroy:({root:f})=>{f.ref.images.forEach(T=>{T.image.width=1,T.image.height=1})},didWriteView:({root:f})=>{f.ref.images.forEach(T=>{T.dirty=!1})},write:e.utils.createRoute({DID_IMAGE_PREVIEW_DRAW:p,DID_IMAGE_PREVIEW_CONTAINER_CREATE:E,DID_FINISH_CALCULATE_PREVIEWSIZE:I,DID_UPDATE_ITEM_METADATA:d,DID_THROW_ITEM_LOAD_ERROR:_,DID_THROW_ITEM_PROCESSING_ERROR:_,DID_THROW_ITEM_INVALID:_,DID_COMPLETE_ITEM_PROCESSING:m,DID_START_ITEM_PROCESSING:u,DID_REVERT_ITEM_PROCESSING:u},({root:f})=>{const T=f.ref.imageViewBin.filter(R=>R.opacity===0);f.ref.imageViewBin=f.ref.imageViewBin.filter(R=>R.opacity>0),T.forEach(R=>a(f,R)),T.length=0})})},Ar=e=>{const{addFilter:t,utils:n}=e,{Type:s,createRoute:r,isFile:a}=n,i=Dr(e);return t("CREATE_VIEW",l=>{const{is:o,view:d,query:c}=l;if(!o("file")||!c("GET_ALLOW_IMAGE_PREVIEW"))return;const E=({root:m,props:h})=>{const{id:f}=h,T=c("GET_ITEM",f);if(!T||!a(T.file)||T.archived)return;const R=T.file;if(!ws(R)||!c("GET_IMAGE_PREVIEW_FILTER_ITEM")(T))return;const S="createImageBitmap"in(window||{}),L=c("GET_IMAGE_PREVIEW_MAX_FILE_SIZE");if(!S&&L&&R.size>L)return;m.ref.imagePreview=d.appendChildView(d.createChildView(i,{id:f}));const b=m.query("GET_IMAGE_PREVIEW_HEIGHT");b&&m.dispatch("DID_UPDATE_PANEL_HEIGHT",{id:T.id,height:b});const D=!S&&R.size>c("GET_IMAGE_PREVIEW_MAX_INSTANT_PREVIEW_FILE_SIZE");m.dispatch("DID_IMAGE_PREVIEW_CONTAINER_CREATE",{id:f},D)},I=(m,h)=>{if(!m.ref.imagePreview)return;let{id:f}=h;const T=m.query("GET_ITEM",{id:f});if(!T)return;const R=m.query("GET_PANEL_ASPECT_RATIO"),S=m.query("GET_ITEM_PANEL_ASPECT_RATIO"),L=m.query("GET_IMAGE_PREVIEW_HEIGHT");if(R||S||L)return;let{imageWidth:b,imageHeight:D}=m.ref;if(!b||!D)return;const M=m.query("GET_IMAGE_PREVIEW_MIN_HEIGHT"),v=m.query("GET_IMAGE_PREVIEW_MAX_HEIGHT"),w=(T.getMetadata("exif")||{}).orientation||-1;if(w>=5&&w<=8&&([b,D]=[D,b]),!Yn(T.file)||m.query("GET_IMAGE_PREVIEW_UPSCALE")){const C=2048/b;b*=C,D*=C}const x=D/b,y=(T.getMetadata("crop")||{}).aspectRatio||x;let B=Math.max(M,Math.min(D,v));const O=m.rect.element.width,A=Math.min(O*y,B);m.dispatch("DID_UPDATE_PANEL_HEIGHT",{id:T.id,height:A})},p=({root:m})=>{m.ref.shouldRescale=!0},u=({root:m,action:h})=>{h.change.key==="crop"&&(m.ref.shouldRescale=!0)},_=({root:m,action:h})=>{m.ref.imageWidth=h.width,m.ref.imageHeight=h.height,m.ref.shouldRescale=!0,m.ref.shouldDrawPreview=!0,m.dispatch("KICK")};d.registerWriter(r({DID_RESIZE_ROOT:p,DID_STOP_RESIZE:p,DID_LOAD_ITEM:E,DID_IMAGE_PREVIEW_CALCULATE_SIZE:_,DID_UPDATE_ITEM_METADATA:u},({root:m,props:h})=>{m.ref.imagePreview&&(m.rect.element.hidden||(m.ref.shouldRescale&&(I(m,h),m.ref.shouldRescale=!1),m.ref.shouldDrawPreview&&(requestAnimationFrame(()=>{requestAnimationFrame(()=>{m.dispatch("DID_FINISH_CALCULATE_PREVIEWSIZE",{id:h.id})})}),m.ref.shouldDrawPreview=!1)))}))}),{options:{allowImagePreview:[!0,s.BOOLEAN],imagePreviewFilterItem:[()=>!0,s.FUNCTION],imagePreviewHeight:[null,s.INT],imagePreviewMinHeight:[44,s.INT],imagePreviewMaxHeight:[256,s.INT],imagePreviewMaxFileSize:[null,s.INT],imagePreviewZoomFactor:[2,s.INT],imagePreviewUpscale:[!1,s.BOOLEAN],imagePreviewMaxInstantPreviewFileSize:[1e6,s.INT],imagePreviewTransparencyIndicator:[null,s.STRING],imagePreviewCalculateAverageImageColor:[!1,s.BOOLEAN],imagePreviewMarkupShow:[!0,s.BOOLEAN],imagePreviewMarkupFilter:[()=>!0,s.FUNCTION]}}},yr=typeof window<"u"&&typeof window.document<"u";yr&&document.dispatchEvent(new CustomEvent("FilePond:pluginloaded",{detail:Ar}));/*!
+</svg>`,
+  kt = 0;
+const ur = (e) =>
+    e.utils.createView({
+      name: "image-preview-overlay",
+      tag: "div",
+      ignoreRect: !0,
+      create: ({ root: t, props: n }) => {
+        let s = dr;
+        if (document.querySelector("base")) {
+          const r = new URL(
+            window.location.href.replace(window.location.hash, ""),
+          ).href;
+          s = s.replace(/url\(\#/g, "url(" + r + "#");
+        }
+        (kt++,
+          t.element.classList.add(
+            `filepond--image-preview-overlay-${n.status}`,
+          ),
+          (t.element.innerHTML = s.replace(/__UID__/g, kt)));
+      },
+      mixins: {
+        styles: ["opacity"],
+        animations: { opacity: { type: "spring", mass: 25 } },
+      },
+    }),
+  Er = function () {
+    self.onmessage = (e) => {
+      createImageBitmap(e.data.message.file).then((t) => {
+        self.postMessage({ id: e.data.id, message: t }, [t]);
+      });
+    };
+  },
+  fr = function () {
+    self.onmessage = (e) => {
+      const t = e.data.message.imageData,
+        n = e.data.message.colorMatrix,
+        s = t.data,
+        r = s.length,
+        a = n[0],
+        i = n[1],
+        l = n[2],
+        o = n[3],
+        d = n[4],
+        c = n[5],
+        E = n[6],
+        I = n[7],
+        p = n[8],
+        u = n[9],
+        _ = n[10],
+        m = n[11],
+        h = n[12],
+        f = n[13],
+        T = n[14],
+        R = n[15],
+        S = n[16],
+        L = n[17],
+        b = n[18],
+        D = n[19];
+      let M = 0,
+        v = 0,
+        P = 0,
+        w = 0,
+        x = 0;
+      for (; M < r; M += 4)
+        ((v = s[M] / 255),
+          (P = s[M + 1] / 255),
+          (w = s[M + 2] / 255),
+          (x = s[M + 3] / 255),
+          (s[M] = Math.max(
+            0,
+            Math.min((v * a + P * i + w * l + x * o + d) * 255, 255),
+          )),
+          (s[M + 1] = Math.max(
+            0,
+            Math.min((v * c + P * E + w * I + x * p + u) * 255, 255),
+          )),
+          (s[M + 2] = Math.max(
+            0,
+            Math.min((v * _ + P * m + w * h + x * f + T) * 255, 255),
+          )),
+          (s[M + 3] = Math.max(
+            0,
+            Math.min((v * R + P * S + w * L + x * b + D) * 255, 255),
+          )));
+      self.postMessage({ id: e.data.id, message: t }, [t.data.buffer]);
+    };
+  },
+  pr = (e, t) => {
+    let n = new Image();
+    ((n.onload = () => {
+      const s = n.naturalWidth,
+        r = n.naturalHeight;
+      ((n = null), t(s, r));
+    }),
+      (n.src = e));
+  },
+  Ir = {
+    1: () => [1, 0, 0, 1, 0, 0],
+    2: (e) => [-1, 0, 0, 1, e, 0],
+    3: (e, t) => [-1, 0, 0, -1, e, t],
+    4: (e, t) => [1, 0, 0, -1, 0, t],
+    5: () => [0, 1, 1, 0, 0, 0],
+    6: (e, t) => [0, 1, -1, 0, t, 0],
+    7: (e, t) => [0, -1, -1, 0, t, e],
+    8: (e) => [0, -1, 1, 0, 0, e],
+  },
+  _r = (e, t, n, s) => {
+    s !== -1 && e.transform.apply(e, Ir[s](t, n));
+  },
+  Tr = (e, t, n, s) => {
+    ((t = Math.round(t)), (n = Math.round(n)));
+    const r = document.createElement("canvas");
+    ((r.width = t), (r.height = n));
+    const a = r.getContext("2d");
+    return (
+      s >= 5 && s <= 8 && ([t, n] = [n, t]),
+      _r(a, t, n, s),
+      a.drawImage(e, 0, 0, t, n),
+      r
+    );
+  },
+  Yn = (e) => /^image/.test(e.type) && !/svg/.test(e.type),
+  mr = 10,
+  gr = 10,
+  hr = (e) => {
+    const t = Math.min(mr / e.width, gr / e.height),
+      n = document.createElement("canvas"),
+      s = n.getContext("2d"),
+      r = (n.width = Math.ceil(e.width * t)),
+      a = (n.height = Math.ceil(e.height * t));
+    s.drawImage(e, 0, 0, r, a);
+    let i = null;
+    try {
+      i = s.getImageData(0, 0, r, a).data;
+    } catch {
+      return null;
+    }
+    const l = i.length;
+    let o = 0,
+      d = 0,
+      c = 0,
+      E = 0;
+    for (; E < l; E += 4)
+      ((o += i[E] * i[E]),
+        (d += i[E + 1] * i[E + 1]),
+        (c += i[E + 2] * i[E + 2]));
+    return (
+      (o = ut(o, l)),
+      (d = ut(d, l)),
+      (c = ut(c, l)),
+      { r: o, g: d, b: c }
+    );
+  },
+  ut = (e, t) => Math.floor(Math.sqrt(e / (t / 4))),
+  Rr = (e, t) => (
+    (t = t || document.createElement("canvas")),
+    (t.width = e.width),
+    (t.height = e.height),
+    t.getContext("2d").drawImage(e, 0, 0),
+    t
+  ),
+  Or = (e) => {
+    let t;
+    try {
+      t = new ImageData(e.width, e.height);
+    } catch {
+      t = document
+        .createElement("canvas")
+        .getContext("2d")
+        .createImageData(e.width, e.height);
+    }
+    return (t.data.set(new Uint8ClampedArray(e.data)), t);
+  },
+  Sr = (e) =>
+    new Promise((t, n) => {
+      const s = new Image();
+      ((s.crossOrigin = "Anonymous"),
+        (s.onload = () => {
+          t(s);
+        }),
+        (s.onerror = (r) => {
+          n(r);
+        }),
+        (s.src = e));
+    }),
+  Dr = (e) => {
+    const t = ur(e),
+      n = cr(e),
+      { createWorker: s } = e.utils,
+      r = (f, T, R) =>
+        new Promise((S) => {
+          f.ref.imageData ||
+            (f.ref.imageData = R.getContext("2d").getImageData(
+              0,
+              0,
+              R.width,
+              R.height,
+            ));
+          const L = Or(f.ref.imageData);
+          if (!T || T.length !== 20)
+            return (R.getContext("2d").putImageData(L, 0, 0), S());
+          const b = s(fr);
+          b.post(
+            { imageData: L, colorMatrix: T },
+            (D) => {
+              (R.getContext("2d").putImageData(D, 0, 0), b.terminate(), S());
+            },
+            [L.data.buffer],
+          );
+        }),
+      a = (f, T) => {
+        (f.removeChildView(T),
+          (T.image.width = 1),
+          (T.image.height = 1),
+          T._destroy());
+      },
+      i = ({ root: f }) => {
+        const T = f.ref.images.shift();
+        return (
+          (T.opacity = 0),
+          (T.translateY = -15),
+          f.ref.imageViewBin.push(T),
+          T
+        );
+      },
+      l = ({ root: f, props: T, image: R }) => {
+        const S = T.id,
+          L = f.query("GET_ITEM", { id: S });
+        if (!L) return;
+        const b = L.getMetadata("crop") || {
+            center: { x: 0.5, y: 0.5 },
+            flip: { horizontal: !1, vertical: !1 },
+            zoom: 1,
+            rotation: 0,
+            aspectRatio: null,
+          },
+          D = f.query("GET_IMAGE_TRANSFORM_CANVAS_BACKGROUND_COLOR");
+        let M,
+          v,
+          P = !1;
+        f.query("GET_IMAGE_PREVIEW_MARKUP_SHOW") &&
+          ((M = L.getMetadata("markup") || []),
+          (v = L.getMetadata("resize")),
+          (P = !0));
+        const w = f.appendChildView(
+          f.createChildView(n, {
+            id: S,
+            image: R,
+            crop: b,
+            resize: v,
+            markup: M,
+            dirty: P,
+            background: D,
+            opacity: 0,
+            scaleX: 1.15,
+            scaleY: 1.15,
+            translateY: 15,
+          }),
+          f.childViews.length,
+        );
+        (f.ref.images.push(w),
+          (w.opacity = 1),
+          (w.scaleX = 1),
+          (w.scaleY = 1),
+          (w.translateY = 0),
+          setTimeout(() => {
+            f.dispatch("DID_IMAGE_PREVIEW_SHOW", { id: S });
+          }, 250));
+      },
+      o = ({ root: f, props: T }) => {
+        const R = f.query("GET_ITEM", { id: T.id });
+        if (!R) return;
+        const S = f.ref.images[f.ref.images.length - 1];
+        ((S.crop = R.getMetadata("crop")),
+          (S.background = f.query(
+            "GET_IMAGE_TRANSFORM_CANVAS_BACKGROUND_COLOR",
+          )),
+          f.query("GET_IMAGE_PREVIEW_MARKUP_SHOW") &&
+            ((S.dirty = !0),
+            (S.resize = R.getMetadata("resize")),
+            (S.markup = R.getMetadata("markup"))));
+      },
+      d = ({ root: f, props: T, action: R }) => {
+        if (
+          !/crop|filter|markup|resize/.test(R.change.key) ||
+          !f.ref.images.length
+        )
+          return;
+        const S = f.query("GET_ITEM", { id: T.id });
+        if (S) {
+          if (/filter/.test(R.change.key)) {
+            const L = f.ref.images[f.ref.images.length - 1];
+            r(f, R.change.value, L.image);
+            return;
+          }
+          if (/crop|markup|resize/.test(R.change.key)) {
+            const L = S.getMetadata("crop"),
+              b = f.ref.images[f.ref.images.length - 1];
+            if (
+              L &&
+              L.aspectRatio &&
+              b.crop &&
+              b.crop.aspectRatio &&
+              Math.abs(L.aspectRatio - b.crop.aspectRatio) > 1e-5
+            ) {
+              const D = i({ root: f });
+              l({ root: f, props: T, image: Rr(D.image) });
+            } else o({ root: f, props: T });
+          }
+        }
+      },
+      c = (f) => {
+        const R = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./),
+          S = R ? parseInt(R[1]) : null;
+        return S !== null && S <= 58
+          ? !1
+          : "createImageBitmap" in window && Yn(f);
+      },
+      E = ({ root: f, props: T }) => {
+        const { id: R } = T,
+          S = f.query("GET_ITEM", R);
+        if (!S) return;
+        const L = URL.createObjectURL(S.file);
+        pr(L, (b, D) => {
+          f.dispatch("DID_IMAGE_PREVIEW_CALCULATE_SIZE", {
+            id: R,
+            width: b,
+            height: D,
+          });
+        });
+      },
+      I = ({ root: f, props: T }) => {
+        const { id: R } = T,
+          S = f.query("GET_ITEM", R);
+        if (!S) return;
+        const L = URL.createObjectURL(S.file),
+          b = () => {
+            Sr(L).then(D);
+          },
+          D = (M) => {
+            URL.revokeObjectURL(L);
+            const P = (S.getMetadata("exif") || {}).orientation || -1;
+            let { width: w, height: x } = M;
+            if (!w || !x) return;
+            P >= 5 && P <= 8 && ([w, x] = [x, w]);
+            const y = Math.max(1, window.devicePixelRatio * 0.75),
+              O = f.query("GET_IMAGE_PREVIEW_ZOOM_FACTOR") * y,
+              A = x / w,
+              C = f.rect.element.width,
+              N = f.rect.element.height;
+            let V = C,
+              F = V * A;
+            A > 1
+              ? ((V = Math.min(w, C * O)), (F = V * A))
+              : ((F = Math.min(x, N * O)), (V = F / A));
+            const Te = Tr(M, V, F, P),
+              ve = () => {
+                const dt = f.query(
+                  "GET_IMAGE_PREVIEW_CALCULATE_AVERAGE_IMAGE_COLOR",
+                )
+                  ? hr(data)
+                  : null;
+                (S.setMetadata("color", dt, !0),
+                  "close" in M && M.close(),
+                  (f.ref.overlayShadow.opacity = 1),
+                  l({ root: f, props: T, image: Te }));
+              },
+              ae = S.getMetadata("filter");
+            ae ? r(f, ae, Te).then(ve) : ve();
+          };
+        if (c(S.file)) {
+          const M = s(Er);
+          M.post({ file: S.file }, (v) => {
+            if ((M.terminate(), !v)) {
+              b();
+              return;
+            }
+            D(v);
+          });
+        } else b();
+      },
+      p = ({ root: f }) => {
+        const T = f.ref.images[f.ref.images.length - 1];
+        ((T.translateY = 0), (T.scaleX = 1), (T.scaleY = 1), (T.opacity = 1));
+      },
+      u = ({ root: f }) => {
+        ((f.ref.overlayShadow.opacity = 1),
+          (f.ref.overlayError.opacity = 0),
+          (f.ref.overlaySuccess.opacity = 0));
+      },
+      _ = ({ root: f }) => {
+        ((f.ref.overlayShadow.opacity = 0.25),
+          (f.ref.overlayError.opacity = 1));
+      },
+      m = ({ root: f }) => {
+        ((f.ref.overlayShadow.opacity = 0.25),
+          (f.ref.overlaySuccess.opacity = 1));
+      },
+      h = ({ root: f }) => {
+        ((f.ref.images = []),
+          (f.ref.imageData = null),
+          (f.ref.imageViewBin = []),
+          (f.ref.overlayShadow = f.appendChildView(
+            f.createChildView(t, { opacity: 0, status: "idle" }),
+          )),
+          (f.ref.overlaySuccess = f.appendChildView(
+            f.createChildView(t, { opacity: 0, status: "success" }),
+          )),
+          (f.ref.overlayError = f.appendChildView(
+            f.createChildView(t, { opacity: 0, status: "failure" }),
+          )));
+      };
+    return e.utils.createView({
+      name: "image-preview-wrapper",
+      create: h,
+      styles: ["height"],
+      apis: ["height"],
+      destroy: ({ root: f }) => {
+        f.ref.images.forEach((T) => {
+          ((T.image.width = 1), (T.image.height = 1));
+        });
+      },
+      didWriteView: ({ root: f }) => {
+        f.ref.images.forEach((T) => {
+          T.dirty = !1;
+        });
+      },
+      write: e.utils.createRoute(
+        {
+          DID_IMAGE_PREVIEW_DRAW: p,
+          DID_IMAGE_PREVIEW_CONTAINER_CREATE: E,
+          DID_FINISH_CALCULATE_PREVIEWSIZE: I,
+          DID_UPDATE_ITEM_METADATA: d,
+          DID_THROW_ITEM_LOAD_ERROR: _,
+          DID_THROW_ITEM_PROCESSING_ERROR: _,
+          DID_THROW_ITEM_INVALID: _,
+          DID_COMPLETE_ITEM_PROCESSING: m,
+          DID_START_ITEM_PROCESSING: u,
+          DID_REVERT_ITEM_PROCESSING: u,
+        },
+        ({ root: f }) => {
+          const T = f.ref.imageViewBin.filter((R) => R.opacity === 0);
+          ((f.ref.imageViewBin = f.ref.imageViewBin.filter(
+            (R) => R.opacity > 0,
+          )),
+            T.forEach((R) => a(f, R)),
+            (T.length = 0));
+        },
+      ),
+    });
+  },
+  Ar = (e) => {
+    const { addFilter: t, utils: n } = e,
+      { Type: s, createRoute: r, isFile: a } = n,
+      i = Dr(e);
+    return (
+      t("CREATE_VIEW", (l) => {
+        const { is: o, view: d, query: c } = l;
+        if (!o("file") || !c("GET_ALLOW_IMAGE_PREVIEW")) return;
+        const E = ({ root: m, props: h }) => {
+            const { id: f } = h,
+              T = c("GET_ITEM", f);
+            if (!T || !a(T.file) || T.archived) return;
+            const R = T.file;
+            if (!ws(R) || !c("GET_IMAGE_PREVIEW_FILTER_ITEM")(T)) return;
+            const S = "createImageBitmap" in (window || {}),
+              L = c("GET_IMAGE_PREVIEW_MAX_FILE_SIZE");
+            if (!S && L && R.size > L) return;
+            m.ref.imagePreview = d.appendChildView(
+              d.createChildView(i, { id: f }),
+            );
+            const b = m.query("GET_IMAGE_PREVIEW_HEIGHT");
+            b && m.dispatch("DID_UPDATE_PANEL_HEIGHT", { id: T.id, height: b });
+            const D =
+              !S &&
+              R.size > c("GET_IMAGE_PREVIEW_MAX_INSTANT_PREVIEW_FILE_SIZE");
+            m.dispatch("DID_IMAGE_PREVIEW_CONTAINER_CREATE", { id: f }, D);
+          },
+          I = (m, h) => {
+            if (!m.ref.imagePreview) return;
+            let { id: f } = h;
+            const T = m.query("GET_ITEM", { id: f });
+            if (!T) return;
+            const R = m.query("GET_PANEL_ASPECT_RATIO"),
+              S = m.query("GET_ITEM_PANEL_ASPECT_RATIO"),
+              L = m.query("GET_IMAGE_PREVIEW_HEIGHT");
+            if (R || S || L) return;
+            let { imageWidth: b, imageHeight: D } = m.ref;
+            if (!b || !D) return;
+            const M = m.query("GET_IMAGE_PREVIEW_MIN_HEIGHT"),
+              v = m.query("GET_IMAGE_PREVIEW_MAX_HEIGHT"),
+              w = (T.getMetadata("exif") || {}).orientation || -1;
+            if (
+              (w >= 5 && w <= 8 && ([b, D] = [D, b]),
+              !Yn(T.file) || m.query("GET_IMAGE_PREVIEW_UPSCALE"))
+            ) {
+              const C = 2048 / b;
+              ((b *= C), (D *= C));
+            }
+            const x = D / b,
+              y = (T.getMetadata("crop") || {}).aspectRatio || x;
+            let B = Math.max(M, Math.min(D, v));
+            const O = m.rect.element.width,
+              A = Math.min(O * y, B);
+            m.dispatch("DID_UPDATE_PANEL_HEIGHT", { id: T.id, height: A });
+          },
+          p = ({ root: m }) => {
+            m.ref.shouldRescale = !0;
+          },
+          u = ({ root: m, action: h }) => {
+            h.change.key === "crop" && (m.ref.shouldRescale = !0);
+          },
+          _ = ({ root: m, action: h }) => {
+            ((m.ref.imageWidth = h.width),
+              (m.ref.imageHeight = h.height),
+              (m.ref.shouldRescale = !0),
+              (m.ref.shouldDrawPreview = !0),
+              m.dispatch("KICK"));
+          };
+        d.registerWriter(
+          r(
+            {
+              DID_RESIZE_ROOT: p,
+              DID_STOP_RESIZE: p,
+              DID_LOAD_ITEM: E,
+              DID_IMAGE_PREVIEW_CALCULATE_SIZE: _,
+              DID_UPDATE_ITEM_METADATA: u,
+            },
+            ({ root: m, props: h }) => {
+              m.ref.imagePreview &&
+                (m.rect.element.hidden ||
+                  (m.ref.shouldRescale && (I(m, h), (m.ref.shouldRescale = !1)),
+                  m.ref.shouldDrawPreview &&
+                    (requestAnimationFrame(() => {
+                      requestAnimationFrame(() => {
+                        m.dispatch("DID_FINISH_CALCULATE_PREVIEWSIZE", {
+                          id: h.id,
+                        });
+                      });
+                    }),
+                    (m.ref.shouldDrawPreview = !1))));
+            },
+          ),
+        );
+      }),
+      {
+        options: {
+          allowImagePreview: [!0, s.BOOLEAN],
+          imagePreviewFilterItem: [() => !0, s.FUNCTION],
+          imagePreviewHeight: [null, s.INT],
+          imagePreviewMinHeight: [44, s.INT],
+          imagePreviewMaxHeight: [256, s.INT],
+          imagePreviewMaxFileSize: [null, s.INT],
+          imagePreviewZoomFactor: [2, s.INT],
+          imagePreviewUpscale: [!1, s.BOOLEAN],
+          imagePreviewMaxInstantPreviewFileSize: [1e6, s.INT],
+          imagePreviewTransparencyIndicator: [null, s.STRING],
+          imagePreviewCalculateAverageImageColor: [!1, s.BOOLEAN],
+          imagePreviewMarkupShow: [!0, s.BOOLEAN],
+          imagePreviewMarkupFilter: [() => !0, s.FUNCTION],
+        },
+      }
+    );
+  },
+  yr = typeof window < "u" && typeof window.document < "u";
+yr &&
+  document.dispatchEvent(
+    new CustomEvent("FilePond:pluginloaded", { detail: Ar }),
+  );
+/*!
  * FilePondPluginFileValidateType 1.2.9
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
- */const Lr=({addFilter:e,utils:t})=>{const{Type:n,isString:s,replaceInString:r,guesstimateMimeType:a,getExtensionFromFilename:i,getFilenameFromURL:l}=t,o=(p,u)=>{const _=(/^[^/]+/.exec(p)||[]).pop(),m=u.slice(0,-2);return _===m},d=(p,u)=>p.some(_=>/\*$/.test(_)?o(u,_):_===u),c=p=>{let u="";if(s(p)){const _=l(p),m=i(_);m&&(u=a(m))}else u=p.type;return u},E=(p,u,_)=>{if(u.length===0)return!0;const m=c(p);return _?new Promise((h,f)=>{_(p,m).then(T=>{d(u,T)?h():f()}).catch(f)}):d(u,m)},I=p=>u=>p[u]===null?!1:p[u]||u;return e("SET_ATTRIBUTE_TO_OPTION_MAP",p=>Object.assign(p,{accept:"acceptedFileTypes"})),e("ALLOW_HOPPER_ITEM",(p,{query:u})=>u("GET_ALLOW_FILE_TYPE_VALIDATION")?E(p,u("GET_ACCEPTED_FILE_TYPES")):!0),e("LOAD_FILE",(p,{query:u})=>new Promise((_,m)=>{if(!u("GET_ALLOW_FILE_TYPE_VALIDATION")){_(p);return}const h=u("GET_ACCEPTED_FILE_TYPES"),f=u("GET_FILE_VALIDATE_TYPE_DETECT_TYPE"),T=E(p,h,f),R=()=>{const S=h.map(I(u("GET_FILE_VALIDATE_TYPE_LABEL_EXPECTED_TYPES_MAP"))).filter(b=>b!==!1),L=S.filter((b,D)=>S.indexOf(b)===D);m({status:{main:u("GET_LABEL_FILE_TYPE_NOT_ALLOWED"),sub:r(u("GET_FILE_VALIDATE_TYPE_LABEL_EXPECTED_TYPES"),{allTypes:L.join(", "),allButLastType:L.slice(0,-1).join(", "),lastType:L[L.length-1]})}})};if(typeof T=="boolean")return T?_(p):R();T.then(()=>{_(p)}).catch(R)})),{options:{allowFileTypeValidation:[!0,n.BOOLEAN],acceptedFileTypes:[[],n.ARRAY],labelFileTypeNotAllowed:["File is of invalid type",n.STRING],fileValidateTypeLabelExpectedTypes:["Expects {allButLastType} or {lastType}",n.STRING],fileValidateTypeLabelExpectedTypesMap:[{},n.OBJECT],fileValidateTypeDetectType:[null,n.FUNCTION]}}},Mr=typeof window<"u"&&typeof window.document<"u";Mr&&document.dispatchEvent(new CustomEvent("FilePond:pluginloaded",{detail:Lr}));/*!
+ */ const Lr = ({ addFilter: e, utils: t }) => {
+    const {
+        Type: n,
+        isString: s,
+        replaceInString: r,
+        guesstimateMimeType: a,
+        getExtensionFromFilename: i,
+        getFilenameFromURL: l,
+      } = t,
+      o = (p, u) => {
+        const _ = (/^[^/]+/.exec(p) || []).pop(),
+          m = u.slice(0, -2);
+        return _ === m;
+      },
+      d = (p, u) => p.some((_) => (/\*$/.test(_) ? o(u, _) : _ === u)),
+      c = (p) => {
+        let u = "";
+        if (s(p)) {
+          const _ = l(p),
+            m = i(_);
+          m && (u = a(m));
+        } else u = p.type;
+        return u;
+      },
+      E = (p, u, _) => {
+        if (u.length === 0) return !0;
+        const m = c(p);
+        return _
+          ? new Promise((h, f) => {
+              _(p, m)
+                .then((T) => {
+                  d(u, T) ? h() : f();
+                })
+                .catch(f);
+            })
+          : d(u, m);
+      },
+      I = (p) => (u) => (p[u] === null ? !1 : p[u] || u);
+    return (
+      e("SET_ATTRIBUTE_TO_OPTION_MAP", (p) =>
+        Object.assign(p, { accept: "acceptedFileTypes" }),
+      ),
+      e("ALLOW_HOPPER_ITEM", (p, { query: u }) =>
+        u("GET_ALLOW_FILE_TYPE_VALIDATION")
+          ? E(p, u("GET_ACCEPTED_FILE_TYPES"))
+          : !0,
+      ),
+      e(
+        "LOAD_FILE",
+        (p, { query: u }) =>
+          new Promise((_, m) => {
+            if (!u("GET_ALLOW_FILE_TYPE_VALIDATION")) {
+              _(p);
+              return;
+            }
+            const h = u("GET_ACCEPTED_FILE_TYPES"),
+              f = u("GET_FILE_VALIDATE_TYPE_DETECT_TYPE"),
+              T = E(p, h, f),
+              R = () => {
+                const S = h
+                    .map(
+                      I(u("GET_FILE_VALIDATE_TYPE_LABEL_EXPECTED_TYPES_MAP")),
+                    )
+                    .filter((b) => b !== !1),
+                  L = S.filter((b, D) => S.indexOf(b) === D);
+                m({
+                  status: {
+                    main: u("GET_LABEL_FILE_TYPE_NOT_ALLOWED"),
+                    sub: r(u("GET_FILE_VALIDATE_TYPE_LABEL_EXPECTED_TYPES"), {
+                      allTypes: L.join(", "),
+                      allButLastType: L.slice(0, -1).join(", "),
+                      lastType: L[L.length - 1],
+                    }),
+                  },
+                });
+              };
+            if (typeof T == "boolean") return T ? _(p) : R();
+            T.then(() => {
+              _(p);
+            }).catch(R);
+          }),
+      ),
+      {
+        options: {
+          allowFileTypeValidation: [!0, n.BOOLEAN],
+          acceptedFileTypes: [[], n.ARRAY],
+          labelFileTypeNotAllowed: ["File is of invalid type", n.STRING],
+          fileValidateTypeLabelExpectedTypes: [
+            "Expects {allButLastType} or {lastType}",
+            n.STRING,
+          ],
+          fileValidateTypeLabelExpectedTypesMap: [{}, n.OBJECT],
+          fileValidateTypeDetectType: [null, n.FUNCTION],
+        },
+      }
+    );
+  },
+  Mr = typeof window < "u" && typeof window.document < "u";
+Mr &&
+  document.dispatchEvent(
+    new CustomEvent("FilePond:pluginloaded", { detail: Lr }),
+  );
+/*!
  * FilePondPluginFileValidateSize 2.2.8
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
- */const Pr=({addFilter:e,utils:t})=>{const{Type:n,replaceInString:s,toNaturalFileSize:r}=t;return e("ALLOW_HOPPER_ITEM",(a,{query:i})=>{if(!i("GET_ALLOW_FILE_SIZE_VALIDATION"))return!0;const l=i("GET_MAX_FILE_SIZE");if(l!==null&&a.size>l)return!1;const o=i("GET_MIN_FILE_SIZE");return!(o!==null&&a.size<o)}),e("LOAD_FILE",(a,{query:i})=>new Promise((l,o)=>{if(!i("GET_ALLOW_FILE_SIZE_VALIDATION"))return l(a);const d=i("GET_FILE_VALIDATE_SIZE_FILTER");if(d&&!d(a))return l(a);const c=i("GET_MAX_FILE_SIZE");if(c!==null&&a.size>c){o({status:{main:i("GET_LABEL_MAX_FILE_SIZE_EXCEEDED"),sub:s(i("GET_LABEL_MAX_FILE_SIZE"),{filesize:r(c,".",i("GET_FILE_SIZE_BASE"),i("GET_FILE_SIZE_LABELS",i))})}});return}const E=i("GET_MIN_FILE_SIZE");if(E!==null&&a.size<E){o({status:{main:i("GET_LABEL_MIN_FILE_SIZE_EXCEEDED"),sub:s(i("GET_LABEL_MIN_FILE_SIZE"),{filesize:r(E,".",i("GET_FILE_SIZE_BASE"),i("GET_FILE_SIZE_LABELS",i))})}});return}const I=i("GET_MAX_TOTAL_FILE_SIZE");if(I!==null&&i("GET_ACTIVE_ITEMS").reduce((u,_)=>u+_.fileSize,0)>I){o({status:{main:i("GET_LABEL_MAX_TOTAL_FILE_SIZE_EXCEEDED"),sub:s(i("GET_LABEL_MAX_TOTAL_FILE_SIZE"),{filesize:r(I,".",i("GET_FILE_SIZE_BASE"),i("GET_FILE_SIZE_LABELS",i))})}});return}l(a)})),{options:{allowFileSizeValidation:[!0,n.BOOLEAN],maxFileSize:[null,n.INT],minFileSize:[null,n.INT],maxTotalFileSize:[null,n.INT],fileValidateSizeFilter:[null,n.FUNCTION],labelMinFileSizeExceeded:["File is too small",n.STRING],labelMinFileSize:["Minimum file size is {filesize}",n.STRING],labelMaxFileSizeExceeded:["File is too large",n.STRING],labelMaxFileSize:["Maximum file size is {filesize}",n.STRING],labelMaxTotalFileSizeExceeded:["Maximum total size exceeded",n.STRING],labelMaxTotalFileSize:["Maximum total file size is {filesize}",n.STRING]}}},wr=typeof window<"u"&&typeof window.document<"u";wr&&document.dispatchEvent(new CustomEvent("FilePond:pluginloaded",{detail:Pr}));/*!
+ */ const Pr = ({ addFilter: e, utils: t }) => {
+    const { Type: n, replaceInString: s, toNaturalFileSize: r } = t;
+    return (
+      e("ALLOW_HOPPER_ITEM", (a, { query: i }) => {
+        if (!i("GET_ALLOW_FILE_SIZE_VALIDATION")) return !0;
+        const l = i("GET_MAX_FILE_SIZE");
+        if (l !== null && a.size > l) return !1;
+        const o = i("GET_MIN_FILE_SIZE");
+        return !(o !== null && a.size < o);
+      }),
+      e(
+        "LOAD_FILE",
+        (a, { query: i }) =>
+          new Promise((l, o) => {
+            if (!i("GET_ALLOW_FILE_SIZE_VALIDATION")) return l(a);
+            const d = i("GET_FILE_VALIDATE_SIZE_FILTER");
+            if (d && !d(a)) return l(a);
+            const c = i("GET_MAX_FILE_SIZE");
+            if (c !== null && a.size > c) {
+              o({
+                status: {
+                  main: i("GET_LABEL_MAX_FILE_SIZE_EXCEEDED"),
+                  sub: s(i("GET_LABEL_MAX_FILE_SIZE"), {
+                    filesize: r(
+                      c,
+                      ".",
+                      i("GET_FILE_SIZE_BASE"),
+                      i("GET_FILE_SIZE_LABELS", i),
+                    ),
+                  }),
+                },
+              });
+              return;
+            }
+            const E = i("GET_MIN_FILE_SIZE");
+            if (E !== null && a.size < E) {
+              o({
+                status: {
+                  main: i("GET_LABEL_MIN_FILE_SIZE_EXCEEDED"),
+                  sub: s(i("GET_LABEL_MIN_FILE_SIZE"), {
+                    filesize: r(
+                      E,
+                      ".",
+                      i("GET_FILE_SIZE_BASE"),
+                      i("GET_FILE_SIZE_LABELS", i),
+                    ),
+                  }),
+                },
+              });
+              return;
+            }
+            const I = i("GET_MAX_TOTAL_FILE_SIZE");
+            if (
+              I !== null &&
+              i("GET_ACTIVE_ITEMS").reduce((u, _) => u + _.fileSize, 0) > I
+            ) {
+              o({
+                status: {
+                  main: i("GET_LABEL_MAX_TOTAL_FILE_SIZE_EXCEEDED"),
+                  sub: s(i("GET_LABEL_MAX_TOTAL_FILE_SIZE"), {
+                    filesize: r(
+                      I,
+                      ".",
+                      i("GET_FILE_SIZE_BASE"),
+                      i("GET_FILE_SIZE_LABELS", i),
+                    ),
+                  }),
+                },
+              });
+              return;
+            }
+            l(a);
+          }),
+      ),
+      {
+        options: {
+          allowFileSizeValidation: [!0, n.BOOLEAN],
+          maxFileSize: [null, n.INT],
+          minFileSize: [null, n.INT],
+          maxTotalFileSize: [null, n.INT],
+          fileValidateSizeFilter: [null, n.FUNCTION],
+          labelMinFileSizeExceeded: ["File is too small", n.STRING],
+          labelMinFileSize: ["Minimum file size is {filesize}", n.STRING],
+          labelMaxFileSizeExceeded: ["File is too large", n.STRING],
+          labelMaxFileSize: ["Maximum file size is {filesize}", n.STRING],
+          labelMaxTotalFileSizeExceeded: [
+            "Maximum total size exceeded",
+            n.STRING,
+          ],
+          labelMaxTotalFileSize: [
+            "Maximum total file size is {filesize}",
+            n.STRING,
+          ],
+        },
+      }
+    );
+  },
+  wr = typeof window < "u" && typeof window.document < "u";
+wr &&
+  document.dispatchEvent(
+    new CustomEvent("FilePond:pluginloaded", { detail: Pr }),
+  );
+/*!
  * FilePond 4.32.9
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
- */const Cr=e=>e instanceof HTMLElement,br=(e,t=[],n=[])=>{const s={...e},r=[],a=[],i=()=>({...s}),l=()=>{const u=[...r];return r.length=0,u},o=()=>{const u=[...a];a.length=0,u.forEach(({type:_,data:m})=>{d(_,m)})},d=(u,_,m)=>{if(m&&!document.hidden){a.push({type:u,data:_});return}p[u]&&p[u](_),r.push({type:u,data:_})},c=(u,..._)=>I[u]?I[u](..._):null,E={getState:i,processActionQueue:l,processDispatchQueue:o,dispatch:d,query:c};let I={};t.forEach(u=>{I={...u(s),...I}});let p={};return n.forEach(u=>{p={...u(d,c,s),...p}}),E},Nr=(e,t,n)=>{if(typeof n=="function"){e[t]=n;return}Object.defineProperty(e,t,{...n})},H=(e,t)=>{for(const n in e)e.hasOwnProperty(n)&&t(n,e[n])},_e=e=>{const t={};return H(e,n=>{Nr(t,n,e[n])}),t},z=(e,t,n=null)=>{if(n===null)return e.getAttribute(t)||e.hasAttribute(t);e.setAttribute(t,n)},vr="http://www.w3.org/2000/svg",Gr=["svg","path"],Xt=e=>Gr.includes(e),Je=(e,t,n={})=>{typeof t=="object"&&(n=t,t=null);const s=Xt(e)?document.createElementNS(vr,e):document.createElement(e);return t&&(Xt(e)?z(s,"class",t):s.className=t),H(n,(r,a)=>{z(s,r,a)}),s},Fr=e=>(t,n)=>{typeof n<"u"&&e.children[n]?e.insertBefore(t,e.children[n]):e.appendChild(t)},Br=(e,t)=>(n,s)=>(typeof s<"u"?t.splice(s,0,n):t.push(n),n),Ur=(e,t)=>n=>(t.splice(t.indexOf(n),1),n.element.parentNode&&e.removeChild(n.element),n),xr=typeof window<"u"&&typeof window.document<"u",Wn=()=>xr,Vr=Wn()?Je("svg"):{},Hr="children"in Vr?e=>e.children.length:e=>e.childNodes.length,qn=(e,t,n,s)=>{const r=n[0]||e.left,a=n[1]||e.top,i=r+e.width,l=a+e.height*(s[1]||1),o={element:{...e},inner:{left:e.left,top:e.top,right:e.right,bottom:e.bottom},outer:{left:r,top:a,right:i,bottom:l}};return t.filter(d=>!d.isRectIgnored()).map(d=>d.rect).forEach(d=>{jt(o.inner,{...d.inner}),jt(o.outer,{...d.outer})}),Zt(o.inner),o.outer.bottom+=o.element.marginBottom,o.outer.right+=o.element.marginRight,Zt(o.outer),o},jt=(e,t)=>{t.top+=e.top,t.right+=e.left,t.bottom+=e.top,t.left+=e.left,t.bottom>e.bottom&&(e.bottom=t.bottom),t.right>e.right&&(e.right=t.right)},Zt=e=>{e.width=e.right-e.left,e.height=e.bottom-e.top},me=e=>typeof e=="number",Yr=(e,t,n,s=.001)=>Math.abs(e-t)<s&&Math.abs(n)<s,Wr=({stiffness:e=.5,damping:t=.75,mass:n=10}={})=>{let s=null,r=null,a=0,i=!1;const d=_e({interpolate:(c,E)=>{if(i)return;if(!(me(s)&&me(r))){i=!0,a=0;return}const I=-(r-s)*e;a+=I/n,r+=a,a*=t,Yr(r,s,a)||E?(r=s,a=0,i=!0,d.onupdate(r),d.oncomplete(r)):d.onupdate(r)},target:{set:c=>{if(me(c)&&!me(r)&&(r=c),s===null&&(s=c,r=c),s=c,r===s||typeof s>"u"){i=!0,a=0,d.onupdate(r),d.oncomplete(r);return}i=!1},get:()=>s},resting:{get:()=>i},onupdate:c=>{},oncomplete:c=>{}});return d},qr=e=>e<.5?2*e*e:-1+(4-2*e)*e,zr=({duration:e=500,easing:t=qr,delay:n=0}={})=>{let s=null,r,a,i=!0,l=!1,o=null;const c=_e({interpolate:(E,I)=>{i||o===null||(s===null&&(s=E),!(E-s<n)&&(r=E-s-n,r>=e||I?(r=1,a=l?0:1,c.onupdate(a*o),c.oncomplete(a*o),i=!0):(a=r/e,c.onupdate((r>=0?t(l?1-a:a):0)*o))))},target:{get:()=>l?0:o,set:E=>{if(o===null){o=E,c.onupdate(E),c.oncomplete(E);return}E<o?(o=1,l=!0):(l=!1,o=E),i=!1,s=null}},resting:{get:()=>i},onupdate:E=>{},oncomplete:E=>{}});return c},Qt={spring:Wr,tween:zr},$r=(e,t,n)=>{const s=e[t]&&typeof e[t][n]=="object"?e[t][n]:e[t]||e,r=typeof s=="string"?s:s.type,a=typeof s=="object"?{...s}:{};return Qt[r]?Qt[r](a):null},Mt=(e,t,n,s=!1)=>{t=Array.isArray(t)?t:[t],t.forEach(r=>{e.forEach(a=>{let i=a,l=()=>n[a],o=d=>n[a]=d;typeof a=="object"&&(i=a.key,l=a.getter||l,o=a.setter||o),!(r[i]&&!s)&&(r[i]={get:l,set:o})})})},kr=({mixinConfig:e,viewProps:t,viewInternalAPI:n,viewExternalAPI:s})=>{const r={...t},a=[];return H(e,(i,l)=>{const o=$r(l);if(!o)return;o.onupdate=c=>{t[i]=c},o.target=r[i],Mt([{key:i,setter:c=>{o.target!==c&&(o.target=c)},getter:()=>t[i]}],[n,s],t,!0),a.push(o)}),{write:i=>{let l=document.hidden,o=!0;return a.forEach(d=>{d.resting||(o=!1),d.interpolate(i,l)}),o},destroy:()=>{}}},Xr=e=>(t,n)=>{e.addEventListener(t,n)},jr=e=>(t,n)=>{e.removeEventListener(t,n)},Zr=({mixinConfig:e,viewProps:t,viewInternalAPI:n,viewExternalAPI:s,viewState:r,view:a})=>{const i=[],l=Xr(a.element),o=jr(a.element);return s.on=(d,c)=>{i.push({type:d,fn:c}),l(d,c)},s.off=(d,c)=>{i.splice(i.findIndex(E=>E.type===d&&E.fn===c),1),o(d,c)},{write:()=>!0,destroy:()=>{i.forEach(d=>{o(d.type,d.fn)})}}},Qr=({mixinConfig:e,viewProps:t,viewExternalAPI:n})=>{Mt(e,n,t)},j=e=>e!=null,Kr={opacity:1,scaleX:1,scaleY:1,translateX:0,translateY:0,rotateX:0,rotateY:0,rotateZ:0,originX:0,originY:0},Jr=({mixinConfig:e,viewProps:t,viewInternalAPI:n,viewExternalAPI:s,view:r})=>{const a={...t},i={};Mt(e,[n,s],t);const l=()=>[t.translateX||0,t.translateY||0],o=()=>[t.scaleX||0,t.scaleY||0],d=()=>r.rect?qn(r.rect,r.childViews,l(),o()):null;return n.rect={get:d},s.rect={get:d},e.forEach(c=>{t[c]=typeof a[c]>"u"?Kr[c]:a[c]}),{write:()=>{if(ei(i,t))return ti(r.element,t),Object.assign(i,{...t}),!0},destroy:()=>{}}},ei=(e,t)=>{if(Object.keys(e).length!==Object.keys(t).length)return!0;for(const n in t)if(t[n]!==e[n])return!0;return!1},ti=(e,{opacity:t,perspective:n,translateX:s,translateY:r,scaleX:a,scaleY:i,rotateX:l,rotateY:o,rotateZ:d,originX:c,originY:E,width:I,height:p})=>{let u="",_="";(j(c)||j(E))&&(_+=`transform-origin: ${c||0}px ${E||0}px;`),j(n)&&(u+=`perspective(${n}px) `),(j(s)||j(r))&&(u+=`translate3d(${s||0}px, ${r||0}px, 0) `),(j(a)||j(i))&&(u+=`scale3d(${j(a)?a:1}, ${j(i)?i:1}, 1) `),j(d)&&(u+=`rotateZ(${d}rad) `),j(l)&&(u+=`rotateX(${l}rad) `),j(o)&&(u+=`rotateY(${o}rad) `),u.length&&(_+=`transform:${u};`),j(t)&&(_+=`opacity:${t};`,t===0&&(_+="visibility:hidden;"),t<1&&(_+="pointer-events:none;")),j(p)&&(_+=`height:${p}px;`),j(I)&&(_+=`width:${I}px;`);const m=e.elementCurrentStyle||"";(_.length!==m.length||_!==m)&&(e.style.cssText=_,e.elementCurrentStyle=_)},ni={styles:Jr,listeners:Zr,animations:kr,apis:Qr},Kt=(e={},t={},n={})=>(t.layoutCalculated||(e.paddingTop=parseInt(n.paddingTop,10)||0,e.marginTop=parseInt(n.marginTop,10)||0,e.marginRight=parseInt(n.marginRight,10)||0,e.marginBottom=parseInt(n.marginBottom,10)||0,e.marginLeft=parseInt(n.marginLeft,10)||0,t.layoutCalculated=!0),e.left=t.offsetLeft||0,e.top=t.offsetTop||0,e.width=t.offsetWidth||0,e.height=t.offsetHeight||0,e.right=e.left+e.width,e.bottom=e.top+e.height,e.scrollTop=t.scrollTop,e.hidden=t.offsetParent===null,e),q=({tag:e="div",name:t=null,attributes:n={},read:s=()=>{},write:r=()=>{},create:a=()=>{},destroy:i=()=>{},filterFrameActionsForChild:l=(p,u)=>u,didCreateView:o=()=>{},didWriteView:d=()=>{},ignoreRect:c=!1,ignoreRectUpdate:E=!1,mixins:I=[]}={})=>(p,u={})=>{const _=Je(e,`filepond--${t}`,n),m=window.getComputedStyle(_,null),h=Kt();let f=null,T=!1;const R=[],S=[],L={},b={},D=[r],M=[s],v=[i],P=()=>_,w=()=>R.concat(),x=()=>L,y=U=>(X,Ee)=>X(U,Ee),B=()=>f||(f=qn(h,R,[0,0],[1,1]),f),O=()=>m,A=()=>{f=null,R.forEach(Ee=>Ee._read()),!(E&&h.width&&h.height)&&Kt(h,_,m);const X={root:ae,props:u,rect:h};M.forEach(Ee=>Ee(X))},C=(U,X,Ee)=>{let Le=X.length===0;return D.forEach(K=>{K({props:u,root:ae,actions:X,timestamp:U,shouldOptimize:Ee})===!1&&(Le=!1)}),S.forEach(K=>{K.write(U)===!1&&(Le=!1)}),R.filter(K=>!!K.element.parentNode).forEach(K=>{K._write(U,l(K,X),Ee)||(Le=!1)}),R.forEach((K,Ye)=>{K.element.parentNode||(ae.appendChild(K.element,Ye),K._read(),K._write(U,l(K,X),Ee),Le=!1)}),T=Le,d({props:u,root:ae,actions:X,timestamp:U}),Le},N=()=>{S.forEach(U=>U.destroy()),v.forEach(U=>{U({root:ae,props:u})}),R.forEach(U=>U._destroy())},V={element:{get:P},style:{get:O},childViews:{get:w}},F={...V,rect:{get:B},ref:{get:x},is:U=>t===U,appendChild:Fr(_),createChildView:y(p),linkView:U=>(R.push(U),U),unlinkView:U=>{R.splice(R.indexOf(U),1)},appendChildView:Br(_,R),removeChildView:Ur(_,R),registerWriter:U=>D.push(U),registerReader:U=>M.push(U),registerDestroyer:U=>v.push(U),invalidateLayout:()=>_.layoutCalculated=!1,dispatch:p.dispatch,query:p.query},Te={element:{get:P},childViews:{get:w},rect:{get:B},resting:{get:()=>T},isRectIgnored:()=>c,_read:A,_write:C,_destroy:N},ve={...V,rect:{get:()=>h}};Object.keys(I).sort((U,X)=>U==="styles"?1:X==="styles"?-1:0).forEach(U=>{const X=ni[U]({mixinConfig:I[U],viewProps:u,viewState:b,viewInternalAPI:F,viewExternalAPI:Te,view:_e(ve)});X&&S.push(X)});const ae=_e(F);a({root:ae,props:u});const dt=Hr(_);return R.forEach((U,X)=>{ae.appendChild(U.element,dt+X)}),o(ae),_e(Te)},si=(e,t,n=60)=>{const s="__framePainter";if(window[s]){window[s].readers.push(e),window[s].writers.push(t);return}window[s]={readers:[e],writers:[t]};const r=window[s],a=1e3/n;let i=null,l=null,o=null,d=null;const c=()=>{document.hidden?(o=()=>window.setTimeout(()=>E(performance.now()),a),d=()=>window.clearTimeout(l)):(o=()=>window.requestAnimationFrame(E),d=()=>window.cancelAnimationFrame(l))};document.addEventListener("visibilitychange",()=>{d&&d(),c(),E(performance.now())});const E=I=>{l=o(E),i||(i=I);const p=I-i;p<=a||(i=I-p%a,r.readers.forEach(u=>u()),r.writers.forEach(u=>u(I)))};return c(),E(performance.now()),{pause:()=>{d(l)}}},Q=(e,t)=>({root:n,props:s,actions:r=[],timestamp:a,shouldOptimize:i})=>{r.filter(l=>e[l.type]).forEach(l=>e[l.type]({root:n,props:s,action:l.data,timestamp:a,shouldOptimize:i})),t&&t({root:n,props:s,actions:r,timestamp:a,shouldOptimize:i})},Jt=(e,t)=>t.parentNode.insertBefore(e,t),en=(e,t)=>t.parentNode.insertBefore(e,t.nextSibling),st=e=>Array.isArray(e),fe=e=>e==null,ri=e=>e.trim(),rt=e=>""+e,ii=(e,t=",")=>fe(e)?[]:st(e)?e:rt(e).split(t).map(ri).filter(n=>n.length),zn=e=>typeof e=="boolean",$n=e=>zn(e)?e:e==="true",Z=e=>typeof e=="string",kn=e=>me(e)?e:Z(e)?rt(e).replace(/[a-z]+/gi,""):0,Qe=e=>parseInt(kn(e),10),tn=e=>parseFloat(kn(e)),Ne=e=>me(e)&&isFinite(e)&&Math.floor(e)===e,nn=(e,t=1e3)=>{if(Ne(e))return e;let n=rt(e).trim();return/MB$/i.test(n)?(n=n.replace(/MB$i/,"").trim(),Qe(n)*t*t):/KB/i.test(n)?(n=n.replace(/KB$i/,"").trim(),Qe(n)*t):Qe(n)},ge=e=>typeof e=="function",ai=e=>{let t=self,n=e.split("."),s=null;for(;s=n.shift();)if(t=t[s],!t)return null;return t},sn={process:"POST",patch:"PATCH",revert:"DELETE",fetch:"GET",restore:"GET",load:"GET"},oi=e=>{const t={};return t.url=Z(e)?e:e.url||"",t.timeout=e.timeout?parseInt(e.timeout,10):0,t.headers=e.headers?e.headers:{},H(sn,n=>{t[n]=li(n,e[n],sn[n],t.timeout,t.headers)}),t.process=e.process||Z(e)||e.url?t.process:null,t.remove=e.remove||null,delete t.headers,t},li=(e,t,n,s,r)=>{if(t===null)return null;if(typeof t=="function")return t;const a={url:n==="GET"||n==="PATCH"?`?${e}=`:"",method:n,headers:r,withCredentials:!1,timeout:s,onload:null,ondata:null,onerror:null};if(Z(t))return a.url=t,a;if(Object.assign(a,t),Z(a.headers)){const i=a.headers.split(/:(.+)/);a.headers={header:i[0],value:i[1]}}return a.withCredentials=$n(a.withCredentials),a},ci=e=>oi(e),di=e=>e===null,k=e=>typeof e=="object"&&e!==null,ui=e=>k(e)&&Z(e.url)&&k(e.process)&&k(e.revert)&&k(e.restore)&&k(e.fetch),gt=e=>st(e)?"array":di(e)?"null":Ne(e)?"int":/^[0-9]+ ?(?:GB|MB|KB)$/gi.test(e)?"bytes":ui(e)?"api":typeof e,Ei=e=>e.replace(/{\s*'/g,'{"').replace(/'\s*}/g,'"}').replace(/'\s*:/g,'":').replace(/:\s*'/g,':"').replace(/,\s*'/g,',"').replace(/'\s*,/g,'",'),fi={array:ii,boolean:$n,int:e=>gt(e)==="bytes"?nn(e):Qe(e),number:tn,float:tn,bytes:nn,string:e=>ge(e)?e:rt(e),function:e=>ai(e),serverapi:ci,object:e=>{try{return JSON.parse(Ei(e))}catch{return null}}},pi=(e,t)=>fi[t](e),Xn=(e,t,n)=>{if(e===t)return e;let s=gt(e);if(s!==n){const r=pi(e,n);if(s=gt(r),r===null)throw`Trying to assign value with incorrect type to "${option}", allowed type: "${n}"`;e=r}return e},Ii=(e,t)=>{let n=e;return{enumerable:!0,get:()=>n,set:s=>{n=Xn(s,e,t)}}},_i=e=>{const t={};return H(e,n=>{const s=e[n];t[n]=Ii(s[0],s[1])}),_e(t)},Ti=e=>({items:[],listUpdateTimeout:null,itemUpdateTimeout:null,processingQueue:[],options:_i(e)}),it=(e,t="-")=>e.split(/(?=[A-Z])/).map(n=>n.toLowerCase()).join(t),mi=(e,t)=>{const n={};return H(t,s=>{n[s]={get:()=>e.getState().options[s],set:r=>{e.dispatch(`SET_${it(s,"_").toUpperCase()}`,{value:r})}}}),n},gi=e=>(t,n,s)=>{const r={};return H(e,a=>{const i=it(a,"_").toUpperCase();r[`SET_${i}`]=l=>{try{s.options[a]=l.value}catch{}t(`DID_SET_${i}`,{value:s.options[a]})}}),r},hi=e=>t=>{const n={};return H(e,s=>{n[`GET_${it(s,"_").toUpperCase()}`]=r=>t.options[s]}),n},ie={API:1,DROP:2,BROWSE:3,PASTE:4,NONE:5},Pt=()=>Math.random().toString(36).substring(2,11),wt=(e,t)=>e.splice(t,1),Ri=(e,t)=>{t?e():document.hidden?Promise.resolve(1).then(e):setTimeout(e,0)},at=()=>{const e=[],t=(s,r)=>{wt(e,e.findIndex(a=>a.event===s&&(a.cb===r||!r)))},n=(s,r,a)=>{e.filter(i=>i.event===s).map(i=>i.cb).forEach(i=>Ri(()=>i(...r),a))};return{fireSync:(s,...r)=>{n(s,r,!0)},fire:(s,...r)=>{n(s,r,!1)},on:(s,r)=>{e.push({event:s,cb:r})},onOnce:(s,r)=>{e.push({event:s,cb:(...a)=>{t(s,r),r(...a)}})},off:t}},jn=(e,t,n)=>{Object.getOwnPropertyNames(e).filter(s=>!n.includes(s)).forEach(s=>Object.defineProperty(t,s,Object.getOwnPropertyDescriptor(e,s)))},Oi=["fire","process","revert","load","on","off","onOnce","retryLoad","extend","archive","archived","release","released","requestProcessing","freeze"],J=e=>{const t={};return jn(e,t,Oi),t},Si=e=>{e.forEach((t,n)=>{t.released&&wt(e,n)})},G={INIT:1,IDLE:2,PROCESSING_QUEUED:9,PROCESSING:3,PROCESSING_COMPLETE:5,PROCESSING_ERROR:6,PROCESSING_REVERT_ERROR:10,LOADING:7,LOAD_ERROR:8},$={INPUT:1,LIMBO:2,LOCAL:3},Zn=e=>/[^0-9]+/.exec(e),Qn=()=>Zn(1.1.toLocaleString())[0],Di=()=>{const e=Qn(),t=1e3.toLocaleString();return t!=="1000"?Zn(t)[0]:e==="."?",":"."},g={BOOLEAN:"boolean",INT:"int",NUMBER:"number",STRING:"string",ARRAY:"array",OBJECT:"object",FUNCTION:"function",ACTION:"action",SERVER_API:"serverapi",REGEX:"regex"},Ct=[],oe=(e,t,n)=>new Promise((s,r)=>{const a=Ct.filter(l=>l.key===e).map(l=>l.cb);if(a.length===0){s(t);return}const i=a.shift();a.reduce((l,o)=>l.then(d=>o(d,n)),i(t,n)).then(l=>s(l)).catch(l=>r(l))}),Ae=(e,t,n)=>Ct.filter(s=>s.key===e).map(s=>s.cb(t,n)),Ai=(e,t)=>Ct.push({key:e,cb:t}),yi=e=>Object.assign(Pe,e),et=()=>({...Pe}),Li=e=>{H(e,(t,n)=>{Pe[t]&&(Pe[t][0]=Xn(n,Pe[t][0],Pe[t][1]))})},Pe={id:[null,g.STRING],name:["filepond",g.STRING],disabled:[!1,g.BOOLEAN],className:[null,g.STRING],required:[!1,g.BOOLEAN],captureMethod:[null,g.STRING],allowSyncAcceptAttribute:[!0,g.BOOLEAN],allowDrop:[!0,g.BOOLEAN],allowBrowse:[!0,g.BOOLEAN],allowPaste:[!0,g.BOOLEAN],allowMultiple:[!1,g.BOOLEAN],allowReplace:[!0,g.BOOLEAN],allowRevert:[!0,g.BOOLEAN],allowRemove:[!0,g.BOOLEAN],allowProcess:[!0,g.BOOLEAN],allowReorder:[!1,g.BOOLEAN],allowDirectoriesOnly:[!1,g.BOOLEAN],storeAsFile:[!1,g.BOOLEAN],forceRevert:[!1,g.BOOLEAN],maxFiles:[null,g.INT],checkValidity:[!1,g.BOOLEAN],itemInsertLocationFreedom:[!0,g.BOOLEAN],itemInsertLocation:["before",g.STRING],itemInsertInterval:[75,g.INT],dropOnPage:[!1,g.BOOLEAN],dropOnElement:[!0,g.BOOLEAN],dropValidation:[!1,g.BOOLEAN],ignoredFiles:[[".ds_store","thumbs.db","desktop.ini"],g.ARRAY],instantUpload:[!0,g.BOOLEAN],maxParallelUploads:[2,g.INT],allowMinimumUploadDuration:[!0,g.BOOLEAN],chunkUploads:[!1,g.BOOLEAN],chunkForce:[!1,g.BOOLEAN],chunkSize:[5e6,g.INT],chunkRetryDelays:[[500,1e3,3e3],g.ARRAY],server:[null,g.SERVER_API],fileSizeBase:[1e3,g.INT],labelFileSizeBytes:["bytes",g.STRING],labelFileSizeKilobytes:["KB",g.STRING],labelFileSizeMegabytes:["MB",g.STRING],labelFileSizeGigabytes:["GB",g.STRING],labelDecimalSeparator:[Qn(),g.STRING],labelThousandsSeparator:[Di(),g.STRING],labelIdle:['Drag & Drop your files or <span class="filepond--label-action">Browse</span>',g.STRING],labelInvalidField:["Field contains invalid files",g.STRING],labelFileWaitingForSize:["Waiting for size",g.STRING],labelFileSizeNotAvailable:["Size not available",g.STRING],labelFileCountSingular:["file in list",g.STRING],labelFileCountPlural:["files in list",g.STRING],labelFileLoading:["Loading",g.STRING],labelFileAdded:["Added",g.STRING],labelFileLoadError:["Error during load",g.STRING],labelFileRemoved:["Removed",g.STRING],labelFileRemoveError:["Error during remove",g.STRING],labelFileProcessing:["Uploading",g.STRING],labelFileProcessingComplete:["Upload complete",g.STRING],labelFileProcessingAborted:["Upload cancelled",g.STRING],labelFileProcessingError:["Error during upload",g.STRING],labelFileProcessingRevertError:["Error during revert",g.STRING],labelTapToCancel:["tap to cancel",g.STRING],labelTapToRetry:["tap to retry",g.STRING],labelTapToUndo:["tap to undo",g.STRING],labelButtonRemoveItem:["Remove",g.STRING],labelButtonAbortItemLoad:["Abort",g.STRING],labelButtonRetryItemLoad:["Retry",g.STRING],labelButtonAbortItemProcessing:["Cancel",g.STRING],labelButtonUndoItemProcessing:["Undo",g.STRING],labelButtonRetryItemProcessing:["Retry",g.STRING],labelButtonProcessItem:["Upload",g.STRING],iconRemove:['<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M11.586 13l-2.293 2.293a1 1 0 0 0 1.414 1.414L13 14.414l2.293 2.293a1 1 0 0 0 1.414-1.414L14.414 13l2.293-2.293a1 1 0 0 0-1.414-1.414L13 11.586l-2.293-2.293a1 1 0 0 0-1.414 1.414L11.586 13z" fill="currentColor" fill-rule="nonzero"/></svg>',g.STRING],iconProcess:['<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M14 10.414v3.585a1 1 0 0 1-2 0v-3.585l-1.293 1.293a1 1 0 0 1-1.414-1.415l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.415L14 10.414zM9 18a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2H9z" fill="currentColor" fill-rule="evenodd"/></svg>',g.STRING],iconRetry:['<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M10.81 9.185l-.038.02A4.997 4.997 0 0 0 8 13.683a5 5 0 0 0 5 5 5 5 0 0 0 5-5 1 1 0 0 1 2 0A7 7 0 1 1 9.722 7.496l-.842-.21a.999.999 0 1 1 .484-1.94l3.23.806c.535.133.86.675.73 1.21l-.804 3.233a.997.997 0 0 1-1.21.73.997.997 0 0 1-.73-1.21l.23-.928v-.002z" fill="currentColor" fill-rule="nonzero"/></svg>',g.STRING],iconUndo:['<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M9.185 10.81l.02-.038A4.997 4.997 0 0 1 13.683 8a5 5 0 0 1 5 5 5 5 0 0 1-5 5 1 1 0 0 0 0 2A7 7 0 1 0 7.496 9.722l-.21-.842a.999.999 0 1 0-1.94.484l.806 3.23c.133.535.675.86 1.21.73l3.233-.803a.997.997 0 0 0 .73-1.21.997.997 0 0 0-1.21-.73l-.928.23-.002-.001z" fill="currentColor" fill-rule="nonzero"/></svg>',g.STRING],iconDone:['<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M18.293 9.293a1 1 0 0 1 1.414 1.414l-7.002 7a1 1 0 0 1-1.414 0l-3.998-4a1 1 0 1 1 1.414-1.414L12 15.586l6.294-6.293z" fill="currentColor" fill-rule="nonzero"/></svg>',g.STRING],oninit:[null,g.FUNCTION],onwarning:[null,g.FUNCTION],onerror:[null,g.FUNCTION],onactivatefile:[null,g.FUNCTION],oninitfile:[null,g.FUNCTION],onaddfilestart:[null,g.FUNCTION],onaddfileprogress:[null,g.FUNCTION],onaddfile:[null,g.FUNCTION],onprocessfilestart:[null,g.FUNCTION],onprocessfileprogress:[null,g.FUNCTION],onprocessfileabort:[null,g.FUNCTION],onprocessfilerevert:[null,g.FUNCTION],onprocessfile:[null,g.FUNCTION],onprocessfiles:[null,g.FUNCTION],onremovefile:[null,g.FUNCTION],onpreparefile:[null,g.FUNCTION],onupdatefiles:[null,g.FUNCTION],onreorderfiles:[null,g.FUNCTION],beforeDropFile:[null,g.FUNCTION],beforeAddFile:[null,g.FUNCTION],beforeRemoveFile:[null,g.FUNCTION],beforePrepareFile:[null,g.FUNCTION],stylePanelLayout:[null,g.STRING],stylePanelAspectRatio:[null,g.STRING],styleItemPanelAspectRatio:[null,g.STRING],styleButtonRemoveItemPosition:["left",g.STRING],styleButtonProcessItemPosition:["right",g.STRING],styleLoadIndicatorPosition:["right",g.STRING],styleProgressIndicatorPosition:["right",g.STRING],styleButtonRemoveItemAlign:[!1,g.BOOLEAN],files:[[],g.ARRAY],credits:[["https://pqina.nl/","Powered by PQINA"],g.ARRAY]},he=(e,t)=>fe(t)?e[0]||null:Ne(t)?e[t]||null:(typeof t=="object"&&(t=t.id),e.find(n=>n.id===t)||null),Kn=e=>{if(fe(e))return e;if(/:/.test(e)){const t=e.split(":");return t[1]/t[0]}return parseFloat(e)},le=e=>e.filter(t=>!t.archived),Mi={EMPTY:0,IDLE:1,ERROR:2,BUSY:3,READY:4};let ze=null;const Pi=()=>{if(ze===null)try{const e=new DataTransfer;e.items.add(new File(["hello world"],"This_Works.txt"));const t=document.createElement("input");t.setAttribute("type","file"),t.files=e.files,ze=t.files.length===1}catch{ze=!1}return ze},wi=[G.LOAD_ERROR,G.PROCESSING_ERROR,G.PROCESSING_REVERT_ERROR],Ci=[G.LOADING,G.PROCESSING,G.PROCESSING_QUEUED,G.INIT],bi=[G.PROCESSING_COMPLETE],Ni=e=>wi.includes(e.status),vi=e=>Ci.includes(e.status),Gi=e=>bi.includes(e.status),rn=e=>k(e.options.server)&&(k(e.options.server.process)||ge(e.options.server.process)),Fi=e=>({GET_STATUS:()=>{const t=le(e.items),{EMPTY:n,ERROR:s,BUSY:r,IDLE:a,READY:i}=Mi;return t.length===0?n:t.some(Ni)?s:t.some(vi)?r:t.some(Gi)?i:a},GET_ITEM:t=>he(e.items,t),GET_ACTIVE_ITEM:t=>he(le(e.items),t),GET_ACTIVE_ITEMS:()=>le(e.items),GET_ITEMS:()=>e.items,GET_ITEM_NAME:t=>{const n=he(e.items,t);return n?n.filename:null},GET_ITEM_SIZE:t=>{const n=he(e.items,t);return n?n.fileSize:null},GET_STYLES:()=>Object.keys(e.options).filter(t=>/^style/.test(t)).map(t=>({name:t,value:e.options[t]})),GET_PANEL_ASPECT_RATIO:()=>/circle/.test(e.options.stylePanelLayout)?1:Kn(e.options.stylePanelAspectRatio),GET_ITEM_PANEL_ASPECT_RATIO:()=>e.options.styleItemPanelAspectRatio,GET_ITEMS_BY_STATUS:t=>le(e.items).filter(n=>n.status===t),GET_TOTAL_ITEMS:()=>le(e.items).length,SHOULD_UPDATE_FILE_INPUT:()=>e.options.storeAsFile&&Pi()&&!rn(e),IS_ASYNC:()=>rn(e),GET_FILE_SIZE_LABELS:t=>({labelBytes:t("GET_LABEL_FILE_SIZE_BYTES")||void 0,labelKilobytes:t("GET_LABEL_FILE_SIZE_KILOBYTES")||void 0,labelMegabytes:t("GET_LABEL_FILE_SIZE_MEGABYTES")||void 0,labelGigabytes:t("GET_LABEL_FILE_SIZE_GIGABYTES")||void 0})}),Bi=e=>{const t=le(e.items).length;if(!e.options.allowMultiple)return t===0;const n=e.options.maxFiles;return n===null||t<n},Jn=(e,t,n)=>Math.max(Math.min(n,e),t),Ui=(e,t,n)=>e.splice(t,0,n),xi=(e,t,n)=>fe(t)?null:typeof n>"u"?(e.push(t),t):(n=Jn(n,0,e.length),Ui(e,n,t),t),ht=e=>/^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*)\s*$/i.test(e),He=e=>`${e}`.split("/").pop().split("?").shift(),ot=e=>e.split(".").pop(),Vi=e=>{if(typeof e!="string")return"";const t=e.split("/").pop();return/svg/.test(t)?"svg":/zip|compressed/.test(t)?"zip":/plain/.test(t)?"txt":/msword/.test(t)?"doc":/[a-z]+/.test(t)?t==="jpeg"?"jpg":t:""},Ge=(e,t="")=>(t+e).slice(-t.length),es=(e=new Date)=>`${e.getFullYear()}-${Ge(e.getMonth()+1,"00")}-${Ge(e.getDate(),"00")}_${Ge(e.getHours(),"00")}-${Ge(e.getMinutes(),"00")}-${Ge(e.getSeconds(),"00")}`,be=(e,t,n=null,s=null)=>{const r=typeof n=="string"?e.slice(0,e.size,n):e.slice(0,e.size,e.type);return r.lastModifiedDate=new Date,e._relativePath&&(r._relativePath=e._relativePath),Z(t)||(t=es()),t&&s===null&&ot(t)?r.name=t:(s=s||Vi(r.type),r.name=t+(s?"."+s:"")),r},Hi=()=>window.BlobBuilder=window.BlobBuilder||window.WebKitBlobBuilder||window.MozBlobBuilder||window.MSBlobBuilder,ts=(e,t)=>{const n=Hi();if(n){const s=new n;return s.append(e),s.getBlob(t)}return new Blob([e],{type:t})},Yi=(e,t)=>{const n=new ArrayBuffer(e.length),s=new Uint8Array(n);for(let r=0;r<e.length;r++)s[r]=e.charCodeAt(r);return ts(n,t)},ns=e=>(/^data:(.+);/.exec(e)||[])[1]||null,Wi=e=>e.split(",")[1].replace(/\s/g,""),qi=e=>atob(Wi(e)),zi=e=>{const t=ns(e),n=qi(e);return Yi(n,t)},$i=(e,t,n)=>be(zi(e),t,null,n),ki=e=>{if(!/^content-disposition:/i.test(e))return null;const t=e.split(/filename=|filename\*=.+''/).splice(1).map(n=>n.trim().replace(/^["']|[;"']{0,2}$/g,"")).filter(n=>n.length);return t.length?decodeURI(t[t.length-1]):null},Xi=e=>{if(/content-length:/i.test(e)){const t=e.match(/[0-9]+/)[0];return t?parseInt(t,10):null}return null},ji=e=>/x-content-transfer-id:/i.test(e)&&(e.split(":")[1]||"").trim()||null,bt=e=>{const t={source:null,name:null,size:null},n=e.split(`
-`);for(let s of n){const r=ki(s);if(r){t.name=r;continue}const a=Xi(s);if(a){t.size=a;continue}const i=ji(s);if(i){t.source=i;continue}}return t},Zi=e=>{const t={source:null,complete:!1,progress:0,size:null,timestamp:null,duration:0,request:null},n=()=>t.progress,s=()=>{t.request&&t.request.abort&&t.request.abort()},r=()=>{const l=t.source;i.fire("init",l),l instanceof File?i.fire("load",l):l instanceof Blob?i.fire("load",be(l,l.name)):ht(l)?i.fire("load",$i(l)):a(l)},a=l=>{if(!e){i.fire("error",{type:"error",body:"Can't load URL",code:400});return}t.timestamp=Date.now(),t.request=e(l,o=>{t.duration=Date.now()-t.timestamp,t.complete=!0,o instanceof Blob&&(o=be(o,o.name||He(l))),i.fire("load",o instanceof Blob?o:o?o.body:null)},o=>{i.fire("error",typeof o=="string"?{type:"error",code:0,body:o}:o)},(o,d,c)=>{if(c&&(t.size=c),t.duration=Date.now()-t.timestamp,!o){t.progress=null;return}t.progress=d/c,i.fire("progress",t.progress)},()=>{i.fire("abort")},o=>{const d=bt(typeof o=="string"?o:o.headers);i.fire("meta",{size:t.size||d.size,filename:d.name,source:d.source})})},i={...at(),setSource:l=>t.source=l,getProgress:n,abort:s,load:r};return i},an=e=>/GET|HEAD/.test(e),Re=(e,t,n)=>{const s={onheaders:()=>{},onprogress:()=>{},onload:()=>{},ontimeout:()=>{},onerror:()=>{},onabort:()=>{},abort:()=>{r=!0,i.abort()}};let r=!1,a=!1;n={method:"POST",headers:{},withCredentials:!1,...n},t=encodeURI(t),an(n.method)&&e&&(t=`${t}${encodeURIComponent(typeof e=="string"?e:JSON.stringify(e))}`);const i=new XMLHttpRequest,l=an(n.method)?i:i.upload;return l.onprogress=o=>{r||s.onprogress(o.lengthComputable,o.loaded,o.total)},i.onreadystatechange=()=>{i.readyState<2||i.readyState===4&&i.status===0||a||(a=!0,s.onheaders(i))},i.onload=()=>{i.status>=200&&i.status<300?s.onload(i):s.onerror(i)},i.onerror=()=>s.onerror(i),i.onabort=()=>{r=!0,s.onabort()},i.ontimeout=()=>s.ontimeout(i),i.open(n.method,t,!0),Ne(n.timeout)&&(i.timeout=n.timeout),Object.keys(n.headers).forEach(o=>{const d=unescape(encodeURIComponent(n.headers[o]));i.setRequestHeader(o,d)}),n.responseType&&(i.responseType=n.responseType),n.withCredentials&&(i.withCredentials=!0),i.send(e),s},Y=(e,t,n,s)=>({type:e,code:t,body:n,headers:s}),Oe=e=>t=>{e(Y("error",0,"Timeout",t.getAllResponseHeaders()))},on=e=>/\?/.test(e),xe=(...e)=>{let t="";return e.forEach(n=>{t+=on(t)&&on(n)?n.replace(/\?/,"&"):n}),t},Et=(e="",t)=>{if(typeof t=="function")return t;if(!t||!Z(t.url))return null;const n=t.onload||(r=>r),s=t.onerror||(r=>null);return(r,a,i,l,o,d)=>{const c=Re(r,xe(e,t.url),{...t,responseType:"blob"});return c.onload=E=>{const I=E.getAllResponseHeaders(),p=bt(I).name||He(r);a(Y("load",E.status,t.method==="HEAD"?null:be(n(E.response),p),I))},c.onerror=E=>{i(Y("error",E.status,s(E.response)||E.statusText,E.getAllResponseHeaders()))},c.onheaders=E=>{d(Y("headers",E.status,null,E.getAllResponseHeaders()))},c.ontimeout=Oe(i),c.onprogress=l,c.onabort=o,c}},se={QUEUED:0,COMPLETE:1,PROCESSING:2,ERROR:3,WAITING:4},Qi=(e,t,n,s,r,a,i,l,o,d,c)=>{const E=[],{chunkTransferId:I,chunkServer:p,chunkSize:u,chunkRetryDelays:_}=c,m={serverId:I,aborted:!1},h=t.ondata||(y=>y),f=t.onload||((y,B)=>B==="HEAD"?y.getResponseHeader("Upload-Offset"):y.response),T=t.onerror||(y=>null),R=y=>{const B=new FormData;k(r)&&B.append(n,JSON.stringify(r));const O=typeof t.headers=="function"?t.headers(s,r):{...t.headers,"Upload-Length":s.size},A={...t,headers:O},C=Re(h(B),xe(e,t.url),A);C.onload=N=>y(f(N,A.method)),C.onerror=N=>i(Y("error",N.status,T(N.response)||N.statusText,N.getAllResponseHeaders())),C.ontimeout=Oe(i)},S=y=>{const B=xe(e,p.url,m.serverId),A={headers:typeof t.headers=="function"?t.headers(m.serverId):{...t.headers},method:"HEAD"},C=Re(null,B,A);C.onload=N=>y(f(N,A.method)),C.onerror=N=>i(Y("error",N.status,T(N.response)||N.statusText,N.getAllResponseHeaders())),C.ontimeout=Oe(i)},L=Math.floor(s.size/u);for(let y=0;y<=L;y++){const B=y*u,O=s.slice(B,B+u,"application/offset+octet-stream");E[y]={index:y,size:O.size,offset:B,data:O,file:s,progress:0,retries:[..._],status:se.QUEUED,error:null,request:null,timeout:null}}const b=()=>a(m.serverId),D=y=>y.status===se.QUEUED||y.status===se.ERROR,M=y=>{if(m.aborted)return;if(y=y||E.find(D),!y){E.every(F=>F.status===se.COMPLETE)&&b();return}y.status=se.PROCESSING,y.progress=null;const B=p.ondata||(F=>F),O=p.onerror||(F=>null),A=p.onload||(()=>{}),C=xe(e,p.url,m.serverId),N=typeof p.headers=="function"?p.headers(y):{...p.headers,"Content-Type":"application/offset+octet-stream","Upload-Offset":y.offset,"Upload-Length":s.size,"Upload-Name":s.name},V=y.request=Re(B(y.data),C,{...p,headers:N});V.onload=F=>{A(F,y.index,E.length),y.status=se.COMPLETE,y.request=null,w()},V.onprogress=(F,Te,ve)=>{y.progress=F?Te:null,P()},V.onerror=F=>{y.status=se.ERROR,y.request=null,y.error=O(F.response)||F.statusText,v(y)||i(Y("error",F.status,O(F.response)||F.statusText,F.getAllResponseHeaders()))},V.ontimeout=F=>{y.status=se.ERROR,y.request=null,v(y)||Oe(i)(F)},V.onabort=()=>{y.status=se.QUEUED,y.request=null,o()}},v=y=>y.retries.length===0?!1:(y.status=se.WAITING,clearTimeout(y.timeout),y.timeout=setTimeout(()=>{M(y)},y.retries.shift()),!0),P=()=>{const y=E.reduce((O,A)=>O===null||A.progress===null?null:O+A.progress,0);if(y===null)return l(!1,0,0);const B=E.reduce((O,A)=>O+A.size,0);l(!0,y,B)},w=()=>{E.filter(B=>B.status===se.PROCESSING).length>=1||M()},x=()=>{E.forEach(y=>{clearTimeout(y.timeout),y.request&&y.request.abort()})};return m.serverId?S(y=>{m.aborted||(E.filter(B=>B.offset<y).forEach(B=>{B.status=se.COMPLETE,B.progress=B.size}),w())}):R(y=>{m.aborted||(d(y),m.serverId=y,w())}),{abort:()=>{m.aborted=!0,x()}}},Ki=(e,t,n,s)=>(r,a,i,l,o,d,c)=>{if(!r)return;const E=s.chunkUploads,I=E&&r.size>s.chunkSize,p=E&&(I||s.chunkForce);if(r instanceof Blob&&p)return Qi(e,t,n,r,a,i,l,o,d,c,s);const u=t.ondata||(S=>S),_=t.onload||(S=>S),m=t.onerror||(S=>null),h=typeof t.headers=="function"?t.headers(r,a)||{}:{...t.headers},f={...t,headers:h};var T=new FormData;k(a)&&T.append(n,JSON.stringify(a)),(r instanceof Blob?[{name:null,file:r}]:r).forEach(S=>{T.append(n,S.file,S.name===null?S.file.name:`${S.name}${S.file.name}`)});const R=Re(u(T),xe(e,t.url),f);return R.onload=S=>{i(Y("load",S.status,_(S.response),S.getAllResponseHeaders()))},R.onerror=S=>{l(Y("error",S.status,m(S.response)||S.statusText,S.getAllResponseHeaders()))},R.ontimeout=Oe(l),R.onprogress=o,R.onabort=d,R},Ji=(e="",t,n,s)=>typeof t=="function"?(...r)=>t(n,...r,s):!t||!Z(t.url)?null:Ki(e,t,n,s),Fe=(e="",t)=>{if(typeof t=="function")return t;if(!t||!Z(t.url))return(r,a)=>a();const n=t.onload||(r=>r),s=t.onerror||(r=>null);return(r,a,i)=>{const l=Re(r,e+t.url,t);return l.onload=o=>{a(Y("load",o.status,n(o.response),o.getAllResponseHeaders()))},l.onerror=o=>{i(Y("error",o.status,s(o.response)||o.statusText,o.getAllResponseHeaders()))},l.ontimeout=Oe(i),l}},ss=(e=0,t=1)=>e+Math.random()*(t-e),ea=(e,t=1e3,n=0,s=25,r=250)=>{let a=null;const i=Date.now(),l=()=>{let o=Date.now()-i,d=ss(s,r);o+d>t&&(d=o+d-t);let c=o/t;if(c>=1||document.hidden){e(1);return}e(c),a=setTimeout(l,d)};return t>0&&l(),{clear:()=>{clearTimeout(a)}}},ta=(e,t)=>{const n={complete:!1,perceivedProgress:0,perceivedPerformanceUpdater:null,progress:null,timestamp:null,perceivedDuration:0,duration:0,request:null,response:null},{allowMinimumUploadDuration:s}=t,r=(c,E)=>{const I=()=>{n.duration===0||n.progress===null||d.fire("progress",d.getProgress())},p=()=>{n.complete=!0,d.fire("load-perceived",n.response.body)};d.fire("start"),n.timestamp=Date.now(),n.perceivedPerformanceUpdater=ea(u=>{n.perceivedProgress=u,n.perceivedDuration=Date.now()-n.timestamp,I(),n.response&&n.perceivedProgress===1&&!n.complete&&p()},s?ss(750,1500):0),n.request=e(c,E,u=>{n.response=k(u)?u:{type:"load",code:200,body:`${u}`,headers:{}},n.duration=Date.now()-n.timestamp,n.progress=1,d.fire("load",n.response.body),(!s||s&&n.perceivedProgress===1)&&p()},u=>{n.perceivedPerformanceUpdater.clear(),d.fire("error",k(u)?u:{type:"error",code:0,body:`${u}`})},(u,_,m)=>{n.duration=Date.now()-n.timestamp,n.progress=u?_/m:null,I()},()=>{n.perceivedPerformanceUpdater.clear(),d.fire("abort",n.response?n.response.body:null)},u=>{d.fire("transfer",u)})},a=()=>{n.request&&(n.perceivedPerformanceUpdater.clear(),n.request.abort&&n.request.abort(),n.complete=!0)},i=()=>{a(),n.complete=!1,n.perceivedProgress=0,n.progress=0,n.timestamp=null,n.perceivedDuration=0,n.duration=0,n.request=null,n.response=null},l=s?()=>n.progress?Math.min(n.progress,n.perceivedProgress):null:()=>n.progress||null,o=s?()=>Math.min(n.duration,n.perceivedDuration):()=>n.duration,d={...at(),process:r,abort:a,getProgress:l,getDuration:o,reset:i};return d},rs=e=>e.substring(0,e.lastIndexOf("."))||e,na=e=>{let t=[e.name,e.size,e.type];return e instanceof Blob||ht(e)?t[0]=e.name||es():ht(e)?(t[1]=e.length,t[2]=ns(e)):Z(e)&&(t[0]=He(e),t[1]=0,t[2]="application/octet-stream"),{name:t[0],size:t[1],type:t[2]}},Se=e=>!!(e instanceof File||e instanceof Blob&&e.name),is=e=>{if(!k(e))return e;const t=st(e)?[]:{};for(const n in e){if(!e.hasOwnProperty(n))continue;const s=e[n];t[n]=s&&k(s)?is(s):s}return t},sa=(e=null,t=null,n=null)=>{const s=Pt(),r={archived:!1,frozen:!1,released:!1,source:null,file:n,serverFileReference:t,transferId:null,processingAborted:!1,status:t?G.PROCESSING_COMPLETE:G.INIT,activeLoader:null,activeProcessor:null};let a=null;const i={},l=D=>r.status=D,o=(D,...M)=>{r.released||r.frozen||L.fire(D,...M)},d=()=>ot(r.file.name),c=()=>r.file.type,E=()=>r.file.size,I=()=>r.file,p=(D,M,v)=>{if(r.source=D,L.fireSync("init"),r.file){L.fireSync("load-skip");return}r.file=na(D),M.on("init",()=>{o("load-init")}),M.on("meta",P=>{r.file.size=P.size,r.file.filename=P.filename,P.source&&(e=$.LIMBO,r.serverFileReference=P.source,r.status=G.PROCESSING_COMPLETE),o("load-meta")}),M.on("progress",P=>{l(G.LOADING),o("load-progress",P)}),M.on("error",P=>{l(G.LOAD_ERROR),o("load-request-error",P)}),M.on("abort",()=>{l(G.INIT),o("load-abort")}),M.on("load",P=>{r.activeLoader=null;const w=y=>{r.file=Se(y)?y:r.file,e===$.LIMBO&&r.serverFileReference?l(G.PROCESSING_COMPLETE):l(G.IDLE),o("load")},x=y=>{r.file=P,o("load-meta"),l(G.LOAD_ERROR),o("load-file-error",y)};if(r.serverFileReference){w(P);return}v(P,w,x)}),M.setSource(D),r.activeLoader=M,M.load()},u=()=>{r.activeLoader&&r.activeLoader.load()},_=()=>{if(r.activeLoader){r.activeLoader.abort();return}l(G.INIT),o("load-abort")},m=(D,M)=>{if(r.processingAborted){r.processingAborted=!1;return}if(l(G.PROCESSING),a=null,!(r.file instanceof Blob)){L.on("load",()=>{m(D,M)});return}D.on("load",w=>{r.transferId=null,r.serverFileReference=w}),D.on("transfer",w=>{r.transferId=w}),D.on("load-perceived",w=>{r.activeProcessor=null,r.transferId=null,r.serverFileReference=w,l(G.PROCESSING_COMPLETE),o("process-complete",w)}),D.on("start",()=>{o("process-start")}),D.on("error",w=>{r.activeProcessor=null,l(G.PROCESSING_ERROR),o("process-error",w)}),D.on("abort",w=>{r.activeProcessor=null,r.serverFileReference=w,l(G.IDLE),o("process-abort"),a&&a()}),D.on("progress",w=>{o("process-progress",w)});const v=w=>{r.archived||D.process(w,{...i})},P=console.error;M(r.file,v,P),r.activeProcessor=D},h=()=>{r.processingAborted=!1,l(G.PROCESSING_QUEUED)},f=()=>new Promise(D=>{if(!r.activeProcessor){r.processingAborted=!0,l(G.IDLE),o("process-abort"),D();return}a=()=>{D()},r.activeProcessor.abort()}),T=(D,M)=>new Promise((v,P)=>{const w=r.serverFileReference!==null?r.serverFileReference:r.transferId;if(w===null){v();return}D(w,()=>{r.serverFileReference=null,r.transferId=null,v()},x=>{if(!M){v();return}l(G.PROCESSING_REVERT_ERROR),o("process-revert-error"),P(x)}),l(G.IDLE),o("process-revert")}),R=(D,M,v)=>{const P=D.split("."),w=P[0],x=P.pop();let y=i;P.forEach(B=>y=y[B]),JSON.stringify(y[x])!==JSON.stringify(M)&&(y[x]=M,o("metadata-update",{key:w,value:i[w],silent:v}))},L={id:{get:()=>s},origin:{get:()=>e,set:D=>e=D},serverId:{get:()=>r.serverFileReference},transferId:{get:()=>r.transferId},status:{get:()=>r.status},filename:{get:()=>r.file.name},filenameWithoutExtension:{get:()=>rs(r.file.name)},fileExtension:{get:d},fileType:{get:c},fileSize:{get:E},file:{get:I},relativePath:{get:()=>r.file._relativePath},source:{get:()=>r.source},getMetadata:D=>is(D?i[D]:i),setMetadata:(D,M,v)=>{if(k(D)){const P=D;return Object.keys(P).forEach(w=>{R(w,P[w],M)}),D}return R(D,M,v),M},extend:(D,M)=>b[D]=M,abortLoad:_,retryLoad:u,requestProcessing:h,abortProcessing:f,load:p,process:m,revert:T,...at(),freeze:()=>r.frozen=!0,release:()=>r.released=!0,released:{get:()=>r.released},archive:()=>r.archived=!0,archived:{get:()=>r.archived},setFile:D=>r.file=D},b=_e(L);return b},ra=(e,t)=>fe(t)?0:Z(t)?e.findIndex(n=>n.id===t):-1,ln=(e,t)=>{const n=ra(e,t);if(!(n<0))return e[n]||null},cn=(e,t,n,s,r,a)=>{const i=Re(null,e,{method:"GET",responseType:"blob"});return i.onload=l=>{const o=l.getAllResponseHeaders(),d=bt(o).name||He(e);t(Y("load",l.status,be(l.response,d),o))},i.onerror=l=>{n(Y("error",l.status,l.statusText,l.getAllResponseHeaders()))},i.onheaders=l=>{a(Y("headers",l.status,null,l.getAllResponseHeaders()))},i.ontimeout=Oe(n),i.onprogress=s,i.onabort=r,i},dn=e=>(e.indexOf("//")===0&&(e=location.protocol+e),e.toLowerCase().replace("blob:","").replace(/([a-z])?:\/\//,"$1").split("/")[0]),ia=e=>(e.indexOf(":")>-1||e.indexOf("//")>-1)&&dn(location.href)!==dn(e),$e=e=>(...t)=>ge(e)?e(...t):e,aa=e=>!Se(e.file),ft=(e,t)=>{clearTimeout(t.listUpdateTimeout),t.listUpdateTimeout=setTimeout(()=>{e("DID_UPDATE_ITEMS",{items:le(t.items)})},0)},un=(e,...t)=>new Promise(n=>{if(!e)return n(!0);const s=e(...t);if(s==null)return n(!0);if(typeof s=="boolean")return n(s);typeof s.then=="function"&&s.then(n)}),pt=(e,t)=>{e.items.sort((n,s)=>t(J(n),J(s)))},re=(e,t)=>({query:n,success:s=()=>{},failure:r=()=>{},...a}={})=>{const i=he(e.items,n);if(!i){r({error:Y("error",0,"Item not found"),file:null});return}t(i,s,r,a||{})},oa=(e,t,n)=>({ABORT_ALL:()=>{le(n.items).forEach(s=>{s.freeze(),s.abortLoad(),s.abortProcessing()})},DID_SET_FILES:({value:s=[]})=>{const r=s.map(i=>({source:i.source?i.source:i,options:i.options}));let a=le(n.items);a.forEach(i=>{r.find(l=>l.source===i.source||l.source===i.file)||e("REMOVE_ITEM",{query:i,remove:!1})}),a=le(n.items),r.forEach((i,l)=>{a.find(o=>o.source===i.source||o.file===i.source)||e("ADD_ITEM",{...i,interactionMethod:ie.NONE,index:l})})},DID_UPDATE_ITEM_METADATA:({id:s,action:r,change:a})=>{a.silent||(clearTimeout(n.itemUpdateTimeout),n.itemUpdateTimeout=setTimeout(()=>{const i=ln(n.items,s);if(!t("IS_ASYNC")){oe("SHOULD_PREPARE_OUTPUT",!1,{item:i,query:t,action:r,change:a}).then(c=>{const E=t("GET_BEFORE_PREPARE_FILE");E&&(c=E(i,c)),c&&e("REQUEST_PREPARE_OUTPUT",{query:s,item:i,success:I=>{e("DID_PREPARE_OUTPUT",{id:s,file:I})}},!0)});return}i.origin===$.LOCAL&&e("DID_LOAD_ITEM",{id:i.id,error:null,serverFileReference:i.source});const l=()=>{setTimeout(()=>{e("REQUEST_ITEM_PROCESSING",{query:s})},32)},o=c=>{i.revert(Fe(n.options.server.url,n.options.server.revert),t("GET_FORCE_REVERT")).then(c?l:()=>{}).catch(()=>{})},d=c=>{i.abortProcessing().then(c?l:()=>{})};if(i.status===G.PROCESSING_COMPLETE)return o(n.options.instantUpload);if(i.status===G.PROCESSING)return d(n.options.instantUpload);n.options.instantUpload&&l()},0))},MOVE_ITEM:({query:s,index:r})=>{const a=he(n.items,s);if(!a)return;const i=n.items.indexOf(a);r=Jn(r,0,n.items.length-1),i!==r&&n.items.splice(r,0,n.items.splice(i,1)[0])},SORT:({compare:s})=>{pt(n,s),e("DID_SORT_ITEMS",{items:t("GET_ACTIVE_ITEMS")})},ADD_ITEMS:({items:s,index:r,interactionMethod:a,success:i=()=>{},failure:l=()=>{}})=>{let o=r;if(r===-1||typeof r>"u"){const p=t("GET_ITEM_INSERT_LOCATION"),u=t("GET_TOTAL_ITEMS");o=p==="before"?0:u}const d=t("GET_IGNORED_FILES"),c=p=>Se(p)?!d.includes(p.name.toLowerCase()):!fe(p),I=s.filter(c).map(p=>new Promise((u,_)=>{e("ADD_ITEM",{interactionMethod:a,source:p.source||p,success:u,failure:_,index:o++,options:p.options||{}})}));Promise.all(I).then(i).catch(l)},ADD_ITEM:({source:s,index:r=-1,interactionMethod:a,success:i=()=>{},failure:l=()=>{},options:o={}})=>{if(fe(s)){l({error:Y("error",0,"No source"),file:null});return}if(Se(s)&&n.options.ignoredFiles.includes(s.name.toLowerCase()))return;if(!Bi(n)){if(n.options.allowMultiple||!n.options.allowMultiple&&!n.options.allowReplace){const f=Y("warning",0,"Max files");e("DID_THROW_MAX_FILES",{source:s,error:f}),l({error:f,file:null});return}const h=le(n.items)[0];if(h.status===G.PROCESSING_COMPLETE||h.status===G.PROCESSING_REVERT_ERROR){const f=t("GET_FORCE_REVERT");if(h.revert(Fe(n.options.server.url,n.options.server.revert),f).then(()=>{f&&e("ADD_ITEM",{source:s,index:r,interactionMethod:a,success:i,failure:l,options:o})}).catch(()=>{}),f)return}e("REMOVE_ITEM",{query:h.id})}const d=o.type==="local"?$.LOCAL:o.type==="limbo"?$.LIMBO:$.INPUT,c=sa(d,d===$.INPUT?null:s,o.file);Object.keys(o.metadata||{}).forEach(h=>{c.setMetadata(h,o.metadata[h])}),Ae("DID_CREATE_ITEM",c,{query:t,dispatch:e});const E=t("GET_ITEM_INSERT_LOCATION");n.options.itemInsertLocationFreedom||(r=E==="before"?-1:n.items.length),xi(n.items,c,r),ge(E)&&s&&pt(n,E);const I=c.id;c.on("init",()=>{e("DID_INIT_ITEM",{id:I})}),c.on("load-init",()=>{e("DID_START_ITEM_LOAD",{id:I})}),c.on("load-meta",()=>{e("DID_UPDATE_ITEM_META",{id:I})}),c.on("load-progress",h=>{e("DID_UPDATE_ITEM_LOAD_PROGRESS",{id:I,progress:h})}),c.on("load-request-error",h=>{const f=$e(n.options.labelFileLoadError)(h);if(h.code>=400&&h.code<500){e("DID_THROW_ITEM_INVALID",{id:I,error:h,status:{main:f,sub:`${h.code} (${h.body})`}}),l({error:h,file:J(c)});return}e("DID_THROW_ITEM_LOAD_ERROR",{id:I,error:h,status:{main:f,sub:n.options.labelTapToRetry}})}),c.on("load-file-error",h=>{e("DID_THROW_ITEM_INVALID",{id:I,error:h.status,status:h.status}),l({error:h.status,file:J(c)})}),c.on("load-abort",()=>{e("REMOVE_ITEM",{query:I})}),c.on("load-skip",()=>{c.on("metadata-update",h=>{Se(c.file)&&e("DID_UPDATE_ITEM_METADATA",{id:I,change:h})}),e("COMPLETE_LOAD_ITEM",{query:I,item:c,data:{source:s,success:i}})}),c.on("load",()=>{const h=f=>{if(!f){e("REMOVE_ITEM",{query:I});return}c.on("metadata-update",T=>{e("DID_UPDATE_ITEM_METADATA",{id:I,change:T})}),oe("SHOULD_PREPARE_OUTPUT",!1,{item:c,query:t}).then(T=>{const R=t("GET_BEFORE_PREPARE_FILE");R&&(T=R(c,T));const S=()=>{e("COMPLETE_LOAD_ITEM",{query:I,item:c,data:{source:s,success:i}}),ft(e,n)};if(T){e("REQUEST_PREPARE_OUTPUT",{query:I,item:c,success:L=>{e("DID_PREPARE_OUTPUT",{id:I,file:L}),S()}},!0);return}S()})};oe("DID_LOAD_ITEM",c,{query:t,dispatch:e}).then(()=>{un(t("GET_BEFORE_ADD_FILE"),J(c)).then(h)}).catch(f=>{if(!f||!f.error||!f.status)return h(!1);e("DID_THROW_ITEM_INVALID",{id:I,error:f.error,status:f.status})})}),c.on("process-start",()=>{e("DID_START_ITEM_PROCESSING",{id:I})}),c.on("process-progress",h=>{e("DID_UPDATE_ITEM_PROCESS_PROGRESS",{id:I,progress:h})}),c.on("process-error",h=>{e("DID_THROW_ITEM_PROCESSING_ERROR",{id:I,error:h,status:{main:$e(n.options.labelFileProcessingError)(h),sub:n.options.labelTapToRetry}})}),c.on("process-revert-error",h=>{e("DID_THROW_ITEM_PROCESSING_REVERT_ERROR",{id:I,error:h,status:{main:$e(n.options.labelFileProcessingRevertError)(h),sub:n.options.labelTapToRetry}})}),c.on("process-complete",h=>{e("DID_COMPLETE_ITEM_PROCESSING",{id:I,error:null,serverFileReference:h}),e("DID_DEFINE_VALUE",{id:I,value:h})}),c.on("process-abort",()=>{e("DID_ABORT_ITEM_PROCESSING",{id:I})}),c.on("process-revert",()=>{e("DID_REVERT_ITEM_PROCESSING",{id:I}),e("DID_DEFINE_VALUE",{id:I,value:null})}),e("DID_ADD_ITEM",{id:I,index:r,interactionMethod:a}),ft(e,n);const{url:p,load:u,restore:_,fetch:m}=n.options.server||{};c.load(s,Zi(d===$.INPUT?Z(s)&&ia(s)&&m?Et(p,m):cn:d===$.LIMBO?Et(p,_):Et(p,u)),(h,f,T)=>{oe("LOAD_FILE",h,{query:t}).then(f).catch(T)})},REQUEST_PREPARE_OUTPUT:({item:s,success:r,failure:a=()=>{}})=>{const i={error:Y("error",0,"Item not found"),file:null};if(s.archived)return a(i);oe("PREPARE_OUTPUT",s.file,{query:t,item:s}).then(l=>{oe("COMPLETE_PREPARE_OUTPUT",l,{query:t,item:s}).then(o=>{if(s.archived)return a(i);r(o)})})},COMPLETE_LOAD_ITEM:({item:s,data:r})=>{const{success:a,source:i}=r,l=t("GET_ITEM_INSERT_LOCATION");if(ge(l)&&i&&pt(n,l),e("DID_LOAD_ITEM",{id:s.id,error:null,serverFileReference:s.origin===$.INPUT?null:i}),a(J(s)),s.origin===$.LOCAL){e("DID_LOAD_LOCAL_ITEM",{id:s.id});return}if(s.origin===$.LIMBO){e("DID_COMPLETE_ITEM_PROCESSING",{id:s.id,error:null,serverFileReference:i}),e("DID_DEFINE_VALUE",{id:s.id,value:s.serverId||i});return}t("IS_ASYNC")&&n.options.instantUpload&&e("REQUEST_ITEM_PROCESSING",{query:s.id})},RETRY_ITEM_LOAD:re(n,s=>{s.retryLoad()}),REQUEST_ITEM_PREPARE:re(n,(s,r,a)=>{e("REQUEST_PREPARE_OUTPUT",{query:s.id,item:s,success:i=>{e("DID_PREPARE_OUTPUT",{id:s.id,file:i}),r({file:s,output:i})},failure:a},!0)}),REQUEST_ITEM_PROCESSING:re(n,(s,r,a)=>{if(!(s.status===G.IDLE||s.status===G.PROCESSING_ERROR)){const l=()=>e("REQUEST_ITEM_PROCESSING",{query:s,success:r,failure:a}),o=()=>document.hidden?l():setTimeout(l,32);s.status===G.PROCESSING_COMPLETE||s.status===G.PROCESSING_REVERT_ERROR?s.revert(Fe(n.options.server.url,n.options.server.revert),t("GET_FORCE_REVERT")).then(o).catch(()=>{}):s.status===G.PROCESSING&&s.abortProcessing().then(o);return}s.status!==G.PROCESSING_QUEUED&&(s.requestProcessing(),e("DID_REQUEST_ITEM_PROCESSING",{id:s.id}),e("PROCESS_ITEM",{query:s,success:r,failure:a},!0))}),PROCESS_ITEM:re(n,(s,r,a)=>{const i=t("GET_MAX_PARALLEL_UPLOADS");if(t("GET_ITEMS_BY_STATUS",G.PROCESSING).length===i){n.processingQueue.push({id:s.id,success:r,failure:a});return}if(s.status===G.PROCESSING)return;const o=()=>{const c=n.processingQueue.shift();if(!c)return;const{id:E,success:I,failure:p}=c,u=he(n.items,E);if(!u||u.archived){o();return}e("PROCESS_ITEM",{query:E,success:I,failure:p},!0)};s.onOnce("process-complete",()=>{r(J(s)),o();const c=n.options.server;if(n.options.instantUpload&&s.origin===$.LOCAL&&ge(c.remove)){const p=()=>{};s.origin=$.LIMBO,n.options.server.remove(s.source,p,p)}t("GET_ITEMS_BY_STATUS",G.PROCESSING_COMPLETE).length===n.items.length&&e("DID_COMPLETE_ITEM_PROCESSING_ALL")}),s.onOnce("process-error",c=>{a({error:c,file:J(s)}),o()});const d=n.options;s.process(ta(Ji(d.server.url,d.server.process,d.name,{chunkTransferId:s.transferId,chunkServer:d.server.patch,chunkUploads:d.chunkUploads,chunkForce:d.chunkForce,chunkSize:d.chunkSize,chunkRetryDelays:d.chunkRetryDelays}),{allowMinimumUploadDuration:t("GET_ALLOW_MINIMUM_UPLOAD_DURATION")}),(c,E,I)=>{oe("PREPARE_OUTPUT",c,{query:t,item:s}).then(p=>{e("DID_PREPARE_OUTPUT",{id:s.id,file:p}),E(p)}).catch(I)})}),RETRY_ITEM_PROCESSING:re(n,s=>{e("REQUEST_ITEM_PROCESSING",{query:s})}),REQUEST_REMOVE_ITEM:re(n,s=>{un(t("GET_BEFORE_REMOVE_FILE"),J(s)).then(r=>{r&&e("REMOVE_ITEM",{query:s})})}),RELEASE_ITEM:re(n,s=>{s.release()}),REMOVE_ITEM:re(n,(s,r,a,i)=>{const l=()=>{const d=s.id;ln(n.items,d).archive(),e("DID_REMOVE_ITEM",{error:null,id:d,item:s}),ft(e,n),r(J(s))},o=n.options.server;s.origin===$.LOCAL&&o&&ge(o.remove)&&i.remove!==!1?(e("DID_START_ITEM_REMOVE",{id:s.id}),o.remove(s.source,()=>l(),d=>{e("DID_THROW_ITEM_REMOVE_ERROR",{id:s.id,error:Y("error",0,d,null),status:{main:$e(n.options.labelFileRemoveError)(d),sub:n.options.labelTapToRetry}})})):((i.revert&&s.origin!==$.LOCAL&&s.serverId!==null||n.options.chunkUploads&&s.file.size>n.options.chunkSize||n.options.chunkUploads&&n.options.chunkForce)&&s.revert(Fe(n.options.server.url,n.options.server.revert),t("GET_FORCE_REVERT")),l())}),ABORT_ITEM_LOAD:re(n,s=>{s.abortLoad()}),ABORT_ITEM_PROCESSING:re(n,s=>{if(s.serverId){e("REVERT_ITEM_PROCESSING",{id:s.id});return}s.abortProcessing().then(()=>{n.options.instantUpload&&e("REMOVE_ITEM",{query:s.id})})}),REQUEST_REVERT_ITEM_PROCESSING:re(n,s=>{if(!n.options.instantUpload){e("REVERT_ITEM_PROCESSING",{query:s});return}const r=l=>{l&&e("REVERT_ITEM_PROCESSING",{query:s})},a=t("GET_BEFORE_REMOVE_FILE");if(!a)return r(!0);const i=a(J(s));if(i==null)return r(!0);if(typeof i=="boolean")return r(i);typeof i.then=="function"&&i.then(r)}),REVERT_ITEM_PROCESSING:re(n,s=>{s.revert(Fe(n.options.server.url,n.options.server.revert),t("GET_FORCE_REVERT")).then(()=>{(n.options.instantUpload||aa(s))&&e("REMOVE_ITEM",{query:s.id})}).catch(()=>{})}),SET_OPTIONS:({options:s})=>{const r=Object.keys(s),a=la.filter(l=>r.includes(l));[...a,...Object.keys(s).filter(l=>!a.includes(l))].forEach(l=>{e(`SET_${it(l,"_").toUpperCase()}`,{value:s[l]})})}}),la=["server"],Nt=e=>e,pe=e=>document.createElement(e),W=(e,t)=>{let n=e.childNodes[0];n?t!==n.nodeValue&&(n.nodeValue=t):(n=document.createTextNode(t),e.appendChild(n))},En=(e,t,n,s)=>{const r=(s%360-90)*Math.PI/180;return{x:e+n*Math.cos(r),y:t+n*Math.sin(r)}},ca=(e,t,n,s,r,a)=>{const i=En(e,t,n,r),l=En(e,t,n,s);return["M",i.x,i.y,"A",n,n,0,a,0,l.x,l.y].join(" ")},da=(e,t,n,s,r)=>{let a=1;return r>s&&r-s<=.5&&(a=0),s>r&&s-r>=.5&&(a=0),ca(e,t,n,Math.min(.9999,s)*360,Math.min(.9999,r)*360,a)},ua=({root:e,props:t})=>{t.spin=!1,t.progress=0,t.opacity=0;const n=Je("svg");e.ref.path=Je("path",{"stroke-width":2,"stroke-linecap":"round"}),n.appendChild(e.ref.path),e.ref.svg=n,e.appendChild(n)},Ea=({root:e,props:t})=>{if(t.opacity===0)return;t.align&&(e.element.dataset.align=t.align);const n=parseInt(z(e.ref.path,"stroke-width"),10),s=e.rect.element.width*.5;let r=0,a=0;t.spin?(r=0,a=.5):(r=0,a=t.progress);const i=da(s,s,s-n,r,a);z(e.ref.path,"d",i),z(e.ref.path,"stroke-opacity",t.spin||t.progress>0?1:0)},fn=q({tag:"div",name:"progress-indicator",ignoreRectUpdate:!0,ignoreRect:!0,create:ua,write:Ea,mixins:{apis:["progress","spin","align"],styles:["opacity"],animations:{opacity:{type:"tween",duration:500},progress:{type:"spring",stiffness:.95,damping:.65,mass:10}}}}),fa=({root:e,props:t})=>{e.element.innerHTML=(t.icon||"")+`<span>${t.label}</span>`,t.isDisabled=!1},pa=({root:e,props:t})=>{const{isDisabled:n}=t,s=e.query("GET_DISABLED")||t.opacity===0;s&&!n?(t.isDisabled=!0,z(e.element,"disabled","disabled")):!s&&n&&(t.isDisabled=!1,e.element.removeAttribute("disabled"))},as=q({tag:"button",attributes:{type:"button"},ignoreRect:!0,ignoreRectUpdate:!0,name:"file-action-button",mixins:{apis:["label"],styles:["translateX","translateY","scaleX","scaleY","opacity"],animations:{scaleX:"spring",scaleY:"spring",translateX:"spring",translateY:"spring",opacity:{type:"tween",duration:250}},listeners:!0},create:fa,write:pa}),os=(e,t=".",n=1e3,s={})=>{const{labelBytes:r="bytes",labelKilobytes:a="KB",labelMegabytes:i="MB",labelGigabytes:l="GB"}=s;e=Math.round(Math.abs(e));const o=n,d=n*n,c=n*n*n;return e<o?`${e} ${r}`:e<d?`${Math.floor(e/o)} ${a}`:e<c?`${pn(e/d,1,t)} ${i}`:`${pn(e/c,2,t)} ${l}`},pn=(e,t,n)=>e.toFixed(t).split(".").filter(s=>s!=="0").join(n),Ia=({root:e,props:t})=>{const n=pe("span");n.className="filepond--file-info-main",z(n,"aria-hidden","true"),e.appendChild(n),e.ref.fileName=n;const s=pe("span");s.className="filepond--file-info-sub",e.appendChild(s),e.ref.fileSize=s,W(s,e.query("GET_LABEL_FILE_WAITING_FOR_SIZE")),W(n,Nt(e.query("GET_ITEM_NAME",t.id)))},Rt=({root:e,props:t})=>{W(e.ref.fileSize,os(e.query("GET_ITEM_SIZE",t.id),".",e.query("GET_FILE_SIZE_BASE"),e.query("GET_FILE_SIZE_LABELS",e.query))),W(e.ref.fileName,Nt(e.query("GET_ITEM_NAME",t.id)))},In=({root:e,props:t})=>{if(Ne(e.query("GET_ITEM_SIZE",t.id))){Rt({root:e,props:t});return}W(e.ref.fileSize,e.query("GET_LABEL_FILE_SIZE_NOT_AVAILABLE"))},_a=q({name:"file-info",ignoreRect:!0,ignoreRectUpdate:!0,write:Q({DID_LOAD_ITEM:Rt,DID_UPDATE_ITEM_META:Rt,DID_THROW_ITEM_LOAD_ERROR:In,DID_THROW_ITEM_INVALID:In}),didCreateView:e=>{Ae("CREATE_VIEW",{...e,view:e})},create:Ia,mixins:{styles:["translateX","translateY"],animations:{translateX:"spring",translateY:"spring"}}}),ls=e=>Math.round(e*100),Ta=({root:e})=>{const t=pe("span");t.className="filepond--file-status-main",e.appendChild(t),e.ref.main=t;const n=pe("span");n.className="filepond--file-status-sub",e.appendChild(n),e.ref.sub=n,cs({root:e,action:{progress:null}})},cs=({root:e,action:t})=>{const n=t.progress===null?e.query("GET_LABEL_FILE_LOADING"):`${e.query("GET_LABEL_FILE_LOADING")} ${ls(t.progress)}%`;W(e.ref.main,n),W(e.ref.sub,e.query("GET_LABEL_TAP_TO_CANCEL"))},ma=({root:e,action:t})=>{const n=t.progress===null?e.query("GET_LABEL_FILE_PROCESSING"):`${e.query("GET_LABEL_FILE_PROCESSING")} ${ls(t.progress)}%`;W(e.ref.main,n),W(e.ref.sub,e.query("GET_LABEL_TAP_TO_CANCEL"))},ga=({root:e})=>{W(e.ref.main,e.query("GET_LABEL_FILE_PROCESSING")),W(e.ref.sub,e.query("GET_LABEL_TAP_TO_CANCEL"))},ha=({root:e})=>{W(e.ref.main,e.query("GET_LABEL_FILE_PROCESSING_ABORTED")),W(e.ref.sub,e.query("GET_LABEL_TAP_TO_RETRY"))},Ra=({root:e})=>{W(e.ref.main,e.query("GET_LABEL_FILE_PROCESSING_COMPLETE")),W(e.ref.sub,e.query("GET_LABEL_TAP_TO_UNDO"))},_n=({root:e})=>{W(e.ref.main,""),W(e.ref.sub,"")},Be=({root:e,action:t})=>{W(e.ref.main,t.status.main),W(e.ref.sub,t.status.sub)},Oa=q({name:"file-status",ignoreRect:!0,ignoreRectUpdate:!0,write:Q({DID_LOAD_ITEM:_n,DID_REVERT_ITEM_PROCESSING:_n,DID_REQUEST_ITEM_PROCESSING:ga,DID_ABORT_ITEM_PROCESSING:ha,DID_COMPLETE_ITEM_PROCESSING:Ra,DID_UPDATE_ITEM_PROCESS_PROGRESS:ma,DID_UPDATE_ITEM_LOAD_PROGRESS:cs,DID_THROW_ITEM_LOAD_ERROR:Be,DID_THROW_ITEM_INVALID:Be,DID_THROW_ITEM_PROCESSING_ERROR:Be,DID_THROW_ITEM_PROCESSING_REVERT_ERROR:Be,DID_THROW_ITEM_REMOVE_ERROR:Be}),didCreateView:e=>{Ae("CREATE_VIEW",{...e,view:e})},create:Ta,mixins:{styles:["translateX","translateY","opacity"],animations:{opacity:{type:"tween",duration:250},translateX:"spring",translateY:"spring"}}}),Ot={AbortItemLoad:{label:"GET_LABEL_BUTTON_ABORT_ITEM_LOAD",action:"ABORT_ITEM_LOAD",className:"filepond--action-abort-item-load",align:"LOAD_INDICATOR_POSITION"},RetryItemLoad:{label:"GET_LABEL_BUTTON_RETRY_ITEM_LOAD",action:"RETRY_ITEM_LOAD",icon:"GET_ICON_RETRY",className:"filepond--action-retry-item-load",align:"BUTTON_PROCESS_ITEM_POSITION"},RemoveItem:{label:"GET_LABEL_BUTTON_REMOVE_ITEM",action:"REQUEST_REMOVE_ITEM",icon:"GET_ICON_REMOVE",className:"filepond--action-remove-item",align:"BUTTON_REMOVE_ITEM_POSITION"},ProcessItem:{label:"GET_LABEL_BUTTON_PROCESS_ITEM",action:"REQUEST_ITEM_PROCESSING",icon:"GET_ICON_PROCESS",className:"filepond--action-process-item",align:"BUTTON_PROCESS_ITEM_POSITION"},AbortItemProcessing:{label:"GET_LABEL_BUTTON_ABORT_ITEM_PROCESSING",action:"ABORT_ITEM_PROCESSING",className:"filepond--action-abort-item-processing",align:"BUTTON_PROCESS_ITEM_POSITION"},RetryItemProcessing:{label:"GET_LABEL_BUTTON_RETRY_ITEM_PROCESSING",action:"RETRY_ITEM_PROCESSING",icon:"GET_ICON_RETRY",className:"filepond--action-retry-item-processing",align:"BUTTON_PROCESS_ITEM_POSITION"},RevertItemProcessing:{label:"GET_LABEL_BUTTON_UNDO_ITEM_PROCESSING",action:"REQUEST_REVERT_ITEM_PROCESSING",icon:"GET_ICON_UNDO",className:"filepond--action-revert-item-processing",align:"BUTTON_PROCESS_ITEM_POSITION"}},St=[];H(Ot,e=>{St.push(e)});const te=e=>{if(Dt(e)==="right")return 0;const t=e.ref.buttonRemoveItem.rect.element;return t.hidden?null:t.width+t.left},Sa=e=>e.ref.buttonAbortItemLoad.rect.element.width,ke=e=>Math.floor(e.ref.buttonRemoveItem.rect.element.height/4),Da=e=>Math.floor(e.ref.buttonRemoveItem.rect.element.left/2),Aa=e=>e.query("GET_STYLE_LOAD_INDICATOR_POSITION"),ya=e=>e.query("GET_STYLE_PROGRESS_INDICATOR_POSITION"),Dt=e=>e.query("GET_STYLE_BUTTON_REMOVE_ITEM_POSITION"),La={buttonAbortItemLoad:{opacity:0},buttonRetryItemLoad:{opacity:0},buttonRemoveItem:{opacity:0},buttonProcessItem:{opacity:0},buttonAbortItemProcessing:{opacity:0},buttonRetryItemProcessing:{opacity:0},buttonRevertItemProcessing:{opacity:0},loadProgressIndicator:{opacity:0,align:Aa},processProgressIndicator:{opacity:0,align:ya},processingCompleteIndicator:{opacity:0,scaleX:.75,scaleY:.75},info:{translateX:0,translateY:0,opacity:0},status:{translateX:0,translateY:0,opacity:0}},Tn={buttonRemoveItem:{opacity:1},buttonProcessItem:{opacity:1},info:{translateX:te},status:{translateX:te}},It={buttonAbortItemProcessing:{opacity:1},processProgressIndicator:{opacity:1},status:{opacity:1}},we={DID_THROW_ITEM_INVALID:{buttonRemoveItem:{opacity:1},info:{translateX:te},status:{translateX:te,opacity:1}},DID_START_ITEM_LOAD:{buttonAbortItemLoad:{opacity:1},loadProgressIndicator:{opacity:1},status:{opacity:1}},DID_THROW_ITEM_LOAD_ERROR:{buttonRetryItemLoad:{opacity:1},buttonRemoveItem:{opacity:1},info:{translateX:te},status:{opacity:1}},DID_START_ITEM_REMOVE:{processProgressIndicator:{opacity:1,align:Dt},info:{translateX:te},status:{opacity:0}},DID_THROW_ITEM_REMOVE_ERROR:{processProgressIndicator:{opacity:0,align:Dt},buttonRemoveItem:{opacity:1},info:{translateX:te},status:{opacity:1,translateX:te}},DID_LOAD_ITEM:Tn,DID_LOAD_LOCAL_ITEM:{buttonRemoveItem:{opacity:1},info:{translateX:te},status:{translateX:te}},DID_START_ITEM_PROCESSING:It,DID_REQUEST_ITEM_PROCESSING:It,DID_UPDATE_ITEM_PROCESS_PROGRESS:It,DID_COMPLETE_ITEM_PROCESSING:{buttonRevertItemProcessing:{opacity:1},info:{opacity:1},status:{opacity:1}},DID_THROW_ITEM_PROCESSING_ERROR:{buttonRemoveItem:{opacity:1},buttonRetryItemProcessing:{opacity:1},status:{opacity:1},info:{translateX:te}},DID_THROW_ITEM_PROCESSING_REVERT_ERROR:{buttonRevertItemProcessing:{opacity:1},status:{opacity:1},info:{opacity:1}},DID_ABORT_ITEM_PROCESSING:{buttonRemoveItem:{opacity:1},buttonProcessItem:{opacity:1},info:{translateX:te},status:{opacity:1}},DID_REVERT_ITEM_PROCESSING:Tn},Ma=q({create:({root:e})=>{e.element.innerHTML=e.query("GET_ICON_DONE")},name:"processing-complete-indicator",ignoreRect:!0,mixins:{styles:["scaleX","scaleY","opacity"],animations:{scaleX:"spring",scaleY:"spring",opacity:{type:"tween",duration:250}}}}),Pa=({root:e,props:t})=>{const n=Object.keys(Ot).reduce((u,_)=>(u[_]={...Ot[_]},u),{}),{id:s}=t,r=e.query("GET_ALLOW_REVERT"),a=e.query("GET_ALLOW_REMOVE"),i=e.query("GET_ALLOW_PROCESS"),l=e.query("GET_INSTANT_UPLOAD"),o=e.query("IS_ASYNC"),d=e.query("GET_STYLE_BUTTON_REMOVE_ITEM_ALIGN");let c;o?i&&!r?c=u=>!/RevertItemProcessing/.test(u):!i&&r?c=u=>!/ProcessItem|RetryItemProcessing|AbortItemProcessing/.test(u):!i&&!r&&(c=u=>!/Process/.test(u)):c=u=>!/Process/.test(u);const E=c?St.filter(c):St.concat();if(l&&r&&(n.RevertItemProcessing.label="GET_LABEL_BUTTON_REMOVE_ITEM",n.RevertItemProcessing.icon="GET_ICON_REMOVE"),o&&!r){const u=we.DID_COMPLETE_ITEM_PROCESSING;u.info.translateX=Da,u.info.translateY=ke,u.status.translateY=ke,u.processingCompleteIndicator={opacity:1,scaleX:1,scaleY:1}}if(o&&!i&&(["DID_START_ITEM_PROCESSING","DID_REQUEST_ITEM_PROCESSING","DID_UPDATE_ITEM_PROCESS_PROGRESS","DID_THROW_ITEM_PROCESSING_ERROR"].forEach(u=>{we[u].status.translateY=ke}),we.DID_THROW_ITEM_PROCESSING_ERROR.status.translateX=Sa),d&&r){n.RevertItemProcessing.align="BUTTON_REMOVE_ITEM_POSITION";const u=we.DID_COMPLETE_ITEM_PROCESSING;u.info.translateX=te,u.status.translateY=ke,u.processingCompleteIndicator={opacity:1,scaleX:1,scaleY:1}}a||(n.RemoveItem.disabled=!0),H(n,(u,_)=>{const m=e.createChildView(as,{label:e.query(_.label),icon:e.query(_.icon),opacity:0});E.includes(u)&&e.appendChildView(m),_.disabled&&(m.element.setAttribute("disabled","disabled"),m.element.setAttribute("hidden","hidden")),m.element.dataset.align=e.query(`GET_STYLE_${_.align}`),m.element.classList.add(_.className),m.on("click",h=>{h.stopPropagation(),!_.disabled&&e.dispatch(_.action,{query:s})}),e.ref[`button${u}`]=m}),e.ref.processingCompleteIndicator=e.appendChildView(e.createChildView(Ma)),e.ref.processingCompleteIndicator.element.dataset.align=e.query("GET_STYLE_BUTTON_PROCESS_ITEM_POSITION"),e.ref.info=e.appendChildView(e.createChildView(_a,{id:s})),e.ref.status=e.appendChildView(e.createChildView(Oa,{id:s}));const I=e.appendChildView(e.createChildView(fn,{opacity:0,align:e.query("GET_STYLE_LOAD_INDICATOR_POSITION")}));I.element.classList.add("filepond--load-indicator"),e.ref.loadProgressIndicator=I;const p=e.appendChildView(e.createChildView(fn,{opacity:0,align:e.query("GET_STYLE_PROGRESS_INDICATOR_POSITION")}));p.element.classList.add("filepond--process-indicator"),e.ref.processProgressIndicator=p,e.ref.activeStyles=[]},wa=({root:e,actions:t,props:n})=>{Ca({root:e,actions:t,props:n});let s=t.concat().filter(r=>/^DID_/.test(r.type)).reverse().find(r=>we[r.type]);if(s){e.ref.activeStyles=[];const r=we[s.type];H(La,(a,i)=>{const l=e.ref[a];H(i,(o,d)=>{const c=r[a]&&typeof r[a][o]<"u"?r[a][o]:d;e.ref.activeStyles.push({control:l,key:o,value:c})})})}e.ref.activeStyles.forEach(({control:r,key:a,value:i})=>{r[a]=typeof i=="function"?i(e):i})},Ca=Q({DID_SET_LABEL_BUTTON_ABORT_ITEM_PROCESSING:({root:e,action:t})=>{e.ref.buttonAbortItemProcessing.label=t.value},DID_SET_LABEL_BUTTON_ABORT_ITEM_LOAD:({root:e,action:t})=>{e.ref.buttonAbortItemLoad.label=t.value},DID_SET_LABEL_BUTTON_ABORT_ITEM_REMOVAL:({root:e,action:t})=>{e.ref.buttonAbortItemRemoval.label=t.value},DID_REQUEST_ITEM_PROCESSING:({root:e})=>{e.ref.processProgressIndicator.spin=!0,e.ref.processProgressIndicator.progress=0},DID_START_ITEM_LOAD:({root:e})=>{e.ref.loadProgressIndicator.spin=!0,e.ref.loadProgressIndicator.progress=0},DID_START_ITEM_REMOVE:({root:e})=>{e.ref.processProgressIndicator.spin=!0,e.ref.processProgressIndicator.progress=0},DID_UPDATE_ITEM_LOAD_PROGRESS:({root:e,action:t})=>{e.ref.loadProgressIndicator.spin=!1,e.ref.loadProgressIndicator.progress=t.progress},DID_UPDATE_ITEM_PROCESS_PROGRESS:({root:e,action:t})=>{e.ref.processProgressIndicator.spin=!1,e.ref.processProgressIndicator.progress=t.progress}}),ba=q({create:Pa,write:wa,didCreateView:e=>{Ae("CREATE_VIEW",{...e,view:e})},name:"file"}),Na=({root:e,props:t})=>{e.ref.fileName=pe("legend"),e.appendChild(e.ref.fileName),e.ref.file=e.appendChildView(e.createChildView(ba,{id:t.id})),e.ref.data=!1},va=({root:e,props:t})=>{W(e.ref.fileName,Nt(e.query("GET_ITEM_NAME",t.id)))},Ga=q({create:Na,ignoreRect:!0,write:Q({DID_LOAD_ITEM:va}),didCreateView:e=>{Ae("CREATE_VIEW",{...e,view:e})},tag:"fieldset",name:"file-wrapper"}),mn={type:"spring",damping:.6,mass:7},Fa=({root:e,props:t})=>{[{name:"top"},{name:"center",props:{translateY:null,scaleY:null},mixins:{animations:{scaleY:mn},styles:["translateY","scaleY"]}},{name:"bottom",props:{translateY:null},mixins:{animations:{translateY:mn},styles:["translateY"]}}].forEach(n=>{Ba(e,n,t.name)}),e.element.classList.add(`filepond--${t.name}`),e.ref.scalable=null},Ba=(e,t,n)=>{const s=q({name:`panel-${t.name} filepond--${n}`,mixins:t.mixins,ignoreRectUpdate:!0}),r=e.createChildView(s,t.props);e.ref[t.name]=e.appendChildView(r)},Ua=({root:e,props:t})=>{if((e.ref.scalable===null||t.scalable!==e.ref.scalable)&&(e.ref.scalable=zn(t.scalable)?t.scalable:!0,e.element.dataset.scalable=e.ref.scalable),!t.height)return;const n=e.ref.top.rect.element,s=e.ref.bottom.rect.element,r=Math.max(n.height+s.height,t.height);e.ref.center.translateY=n.height,e.ref.center.scaleY=(r-n.height-s.height)/100,e.ref.bottom.translateY=r-s.height},ds=q({name:"panel",read:({root:e,props:t})=>t.heightCurrent=e.ref.bottom.translateY,write:Ua,create:Fa,ignoreRect:!0,mixins:{apis:["height","heightCurrent","scalable"]}}),xa=e=>{const t=e.map(s=>s.id);let n;return{setIndex:s=>{n=s},getIndex:()=>n,getItemIndex:s=>t.indexOf(s.id)}},gn={type:"spring",stiffness:.75,damping:.45,mass:10},hn="spring",Rn={DID_START_ITEM_LOAD:"busy",DID_UPDATE_ITEM_LOAD_PROGRESS:"loading",DID_THROW_ITEM_INVALID:"load-invalid",DID_THROW_ITEM_LOAD_ERROR:"load-error",DID_LOAD_ITEM:"idle",DID_THROW_ITEM_REMOVE_ERROR:"remove-error",DID_START_ITEM_REMOVE:"busy",DID_START_ITEM_PROCESSING:"busy processing",DID_REQUEST_ITEM_PROCESSING:"busy processing",DID_UPDATE_ITEM_PROCESS_PROGRESS:"processing",DID_COMPLETE_ITEM_PROCESSING:"processing-complete",DID_THROW_ITEM_PROCESSING_ERROR:"processing-error",DID_THROW_ITEM_PROCESSING_REVERT_ERROR:"processing-revert-error",DID_ABORT_ITEM_PROCESSING:"cancelled",DID_REVERT_ITEM_PROCESSING:"idle"},Va=({root:e,props:t})=>{if(e.ref.handleClick=s=>e.dispatch("DID_ACTIVATE_ITEM",{id:t.id}),e.element.id=`filepond--item-${t.id}`,e.element.addEventListener("click",e.ref.handleClick),e.ref.container=e.appendChildView(e.createChildView(Ga,{id:t.id})),e.ref.panel=e.appendChildView(e.createChildView(ds,{name:"item-panel"})),e.ref.panel.height=null,t.markedForRemoval=!1,!e.query("GET_ALLOW_REORDER"))return;e.element.dataset.dragState="idle";const n=s=>{if(!s.isPrimary)return;let r=!1;const a={x:s.pageX,y:s.pageY};t.dragOrigin={x:e.translateX,y:e.translateY},t.dragCenter={x:s.offsetX,y:s.offsetY};const i=xa(e.query("GET_ACTIVE_ITEMS"));e.dispatch("DID_GRAB_ITEM",{id:t.id,dragState:i});const l=E=>{if(!E.isPrimary)return;E.stopPropagation(),E.preventDefault(),t.dragOffset={x:E.pageX-a.x,y:E.pageY-a.y},t.dragOffset.x*t.dragOffset.x+t.dragOffset.y*t.dragOffset.y>16&&!r&&(r=!0,e.element.removeEventListener("click",e.ref.handleClick)),e.dispatch("DID_DRAG_ITEM",{id:t.id,dragState:i})},o=E=>{E.isPrimary&&(t.dragOffset={x:E.pageX-a.x,y:E.pageY-a.y},c())},d=()=>{c()},c=()=>{document.removeEventListener("pointercancel",d),document.removeEventListener("pointermove",l),document.removeEventListener("pointerup",o),e.dispatch("DID_DROP_ITEM",{id:t.id,dragState:i}),r&&setTimeout(()=>e.element.addEventListener("click",e.ref.handleClick),0)};document.addEventListener("pointercancel",d),document.addEventListener("pointermove",l),document.addEventListener("pointerup",o)};e.element.addEventListener("pointerdown",n)},Ha=Q({DID_UPDATE_PANEL_HEIGHT:({root:e,action:t})=>{e.height=t.height}}),Ya=Q({DID_GRAB_ITEM:({root:e,props:t})=>{t.dragOrigin={x:e.translateX,y:e.translateY}},DID_DRAG_ITEM:({root:e})=>{e.element.dataset.dragState="drag"},DID_DROP_ITEM:({root:e,props:t})=>{t.dragOffset=null,t.dragOrigin=null,e.element.dataset.dragState="drop"}},({root:e,actions:t,props:n,shouldOptimize:s})=>{e.element.dataset.dragState==="drop"&&e.scaleX<=1&&(e.element.dataset.dragState="idle");let r=t.concat().filter(i=>/^DID_/.test(i.type)).reverse().find(i=>Rn[i.type]);r&&r.type!==n.currentState&&(n.currentState=r.type,e.element.dataset.filepondItemState=Rn[n.currentState]||"");const a=e.query("GET_ITEM_PANEL_ASPECT_RATIO")||e.query("GET_PANEL_ASPECT_RATIO");a?s||(e.height=e.rect.element.width*a):(Ha({root:e,actions:t,props:n}),!e.height&&e.ref.container.rect.element.height>0&&(e.height=e.ref.container.rect.element.height)),s&&(e.ref.panel.height=null),e.ref.panel.height=e.height}),Wa=q({create:Va,write:Ya,destroy:({root:e,props:t})=>{e.element.removeEventListener("click",e.ref.handleClick),e.dispatch("RELEASE_ITEM",{query:t.id})},tag:"li",name:"item",mixins:{apis:["id","interactionMethod","markedForRemoval","spawnDate","dragCenter","dragOrigin","dragOffset"],styles:["translateX","translateY","scaleX","scaleY","opacity","height"],animations:{scaleX:hn,scaleY:hn,translateX:gn,translateY:gn,opacity:{type:"tween",duration:150}}}});var vt=(e,t)=>Math.max(1,Math.floor((e+1)/t));const Gt=(e,t,n)=>{if(!n)return;const s=e.rect.element.width,r=t.length;let a=null;if(r===0||n.top<t[0].rect.element.top)return-1;const l=t[0].rect.element,o=l.marginLeft+l.marginRight,d=l.width+o,c=vt(s,d);if(c===1){for(let p=0;p<r;p++){const u=t[p],_=u.rect.outer.top+u.rect.element.height*.5;if(n.top<_)return p}return r}const E=l.marginTop+l.marginBottom,I=l.height+E;for(let p=0;p<r;p++){const u=p%c,_=Math.floor(p/c),m=u*d,h=_*I,f=h-l.marginTop,T=m+d,R=h+I+l.marginBottom;if(n.top<R&&n.top>f){if(n.left<T)return p;p!==r-1?a=p:a=null}}return a!==null?a:r},Xe={height:0,width:0,get getHeight(){return this.height},set setHeight(e){(this.height===0||e===0)&&(this.height=e)},get getWidth(){return this.width},set setWidth(e){(this.width===0||e===0)&&(this.width=e)}},qa=({root:e})=>{z(e.element,"role","list"),e.ref.lastItemSpanwDate=Date.now()},za=({root:e,action:t})=>{const{id:n,index:s,interactionMethod:r}=t;e.ref.addIndex=s;const a=Date.now();let i=a,l=1;if(r!==ie.NONE){l=0;const o=e.query("GET_ITEM_INSERT_INTERVAL"),d=a-e.ref.lastItemSpanwDate;i=d<o?a+(o-d):a}e.ref.lastItemSpanwDate=i,e.appendChildView(e.createChildView(Wa,{spawnDate:i,id:n,opacity:l,interactionMethod:r}),s)},On=(e,t,n,s=0,r=1)=>{e.dragOffset?(e.translateX=null,e.translateY=null,e.translateX=e.dragOrigin.x+e.dragOffset.x,e.translateY=e.dragOrigin.y+e.dragOffset.y,e.scaleX=1.025,e.scaleY=1.025):(e.translateX=t,e.translateY=n,Date.now()>e.spawnDate&&(e.opacity===0&&$a(e,t,n,s,r),e.scaleX=1,e.scaleY=1,e.opacity=1))},$a=(e,t,n,s,r)=>{e.interactionMethod===ie.NONE?(e.translateX=null,e.translateX=t,e.translateY=null,e.translateY=n):e.interactionMethod===ie.DROP?(e.translateX=null,e.translateX=t-s*20,e.translateY=null,e.translateY=n-r*10,e.scaleX=.8,e.scaleY=.8):e.interactionMethod===ie.BROWSE?(e.translateY=null,e.translateY=n-30):e.interactionMethod===ie.API&&(e.translateX=null,e.translateX=t-30,e.translateY=null)},ka=({root:e,action:t})=>{const{id:n}=t,s=e.childViews.find(r=>r.id===n);s&&(s.scaleX=.9,s.scaleY=.9,s.opacity=0,s.markedForRemoval=!0)},_t=e=>e.rect.element.height+e.rect.element.marginBottom*.5+e.rect.element.marginTop*.5,Xa=e=>e.rect.element.width+e.rect.element.marginLeft*.5+e.rect.element.marginRight*.5,ja=({root:e,action:t})=>{const{id:n,dragState:s}=t,r=e.query("GET_ITEM",{id:n}),a=e.childViews.find(m=>m.id===n),i=e.childViews.length,l=s.getItemIndex(r);if(!a)return;const o={x:a.dragOrigin.x+a.dragOffset.x+a.dragCenter.x,y:a.dragOrigin.y+a.dragOffset.y+a.dragCenter.y},d=_t(a),c=Xa(a);let E=Math.floor(e.rect.outer.width/c);E>i&&(E=i);const I=Math.floor(i/E+1);Xe.setHeight=d*I,Xe.setWidth=c*E;var p={y:Math.floor(o.y/d),x:Math.floor(o.x/c),getGridIndex:function(){return o.y>Xe.getHeight||o.y<0||o.x>Xe.getWidth||o.x<0?l:this.y*E+this.x},getColIndex:function(){const h=e.query("GET_ACTIVE_ITEMS"),f=e.childViews.filter(P=>P.rect.element.height),T=h.map(P=>f.find(w=>w.id===P.id)),R=T.findIndex(P=>P===a),S=_t(a),L=T.length;let b=L,D=0,M=0,v=0;for(let P=0;P<L;P++)if(D=_t(T[P]),v=M,M=v+D,o.y<M){if(R>P){if(o.y<v+S){b=P;break}continue}b=P;break}return b}};const u=E>1?p.getGridIndex():p.getColIndex();e.dispatch("MOVE_ITEM",{query:a,index:u});const _=s.getIndex();if(_===void 0||_!==u){if(s.setIndex(u),_===void 0)return;e.dispatch("DID_REORDER_ITEMS",{items:e.query("GET_ACTIVE_ITEMS"),origin:l,target:u})}},Za=Q({DID_ADD_ITEM:za,DID_REMOVE_ITEM:ka,DID_DRAG_ITEM:ja}),Qa=({root:e,props:t,actions:n,shouldOptimize:s})=>{Za({root:e,props:t,actions:n});const{dragCoordinates:r}=t,a=e.rect.element.width,i=e.childViews.filter(T=>T.rect.element.height),l=e.query("GET_ACTIVE_ITEMS").map(T=>i.find(R=>R.id===T.id)).filter(T=>T),o=r?Gt(e,l,r):null,d=e.ref.addIndex||null;e.ref.addIndex=null;let c=0,E=0,I=0;if(l.length===0)return;const p=l[0].rect.element,u=p.marginTop+p.marginBottom,_=p.marginLeft+p.marginRight,m=p.width+_,h=p.height+u,f=vt(a,m);if(f===1){let T=0,R=0;l.forEach((S,L)=>{if(o){let M=L-o;M===-2?R=-u*.25:M===-1?R=-u*.75:M===0?R=u*.75:M===1?R=u*.25:R=0}s&&(S.translateX=null,S.translateY=null),S.markedForRemoval||On(S,0,T+R);let D=(S.rect.element.height+u)*(S.markedForRemoval?S.opacity:1);T+=D})}else{let T=0,R=0;l.forEach((S,L)=>{L===o&&(c=1),L===d&&(I+=1),S.markedForRemoval&&S.opacity<.5&&(E-=1);const b=L+I+c+E,D=b%f,M=Math.floor(b/f),v=D*m,P=M*h,w=Math.sign(v-T),x=Math.sign(P-R);T=v,R=P,!S.markedForRemoval&&(s&&(S.translateX=null,S.translateY=null),On(S,v,P,w,x))})}},Ka=(e,t)=>t.filter(n=>n.data&&n.data.id?e.id===n.data.id:!0),Ja=q({create:qa,write:Qa,tag:"ul",name:"list",didWriteView:({root:e})=>{e.childViews.filter(t=>t.markedForRemoval&&t.opacity===0&&t.resting).forEach(t=>{t._destroy(),e.removeChildView(t)})},filterFrameActionsForChild:Ka,mixins:{apis:["dragCoordinates"]}}),eo=({root:e,props:t})=>{e.ref.list=e.appendChildView(e.createChildView(Ja)),t.dragCoordinates=null,t.overflowing=!1},to=({root:e,props:t,action:n})=>{e.query("GET_ITEM_INSERT_LOCATION_FREEDOM")&&(t.dragCoordinates={left:n.position.scopeLeft-e.ref.list.rect.element.left,top:n.position.scopeTop-(e.rect.outer.top+e.rect.element.marginTop+e.rect.element.scrollTop)})},no=({props:e})=>{e.dragCoordinates=null},so=Q({DID_DRAG:to,DID_END_DRAG:no}),ro=({root:e,props:t,actions:n})=>{if(so({root:e,props:t,actions:n}),e.ref.list.dragCoordinates=t.dragCoordinates,t.overflowing&&!t.overflow&&(t.overflowing=!1,e.element.dataset.state="",e.height=null),t.overflow){const s=Math.round(t.overflow);s!==e.height&&(t.overflowing=!0,e.element.dataset.state="overflow",e.height=s)}},io=q({create:eo,write:ro,name:"list-scroller",mixins:{apis:["overflow","dragCoordinates"],styles:["height","translateY"],animations:{translateY:"spring"}}}),ce=(e,t,n,s="")=>{n?z(e,t,s):e.removeAttribute(t)},ao=e=>{if(!(!e||e.value==="")){try{e.value=""}catch{}if(e.value){const t=pe("form"),n=e.parentNode,s=e.nextSibling;t.appendChild(e),t.reset(),s?n.insertBefore(e,s):n.appendChild(e)}}},oo=({root:e,props:t})=>{e.element.id=`filepond--browser-${t.id}`,z(e.element,"name",e.query("GET_NAME")),z(e.element,"aria-controls",`filepond--assistant-${t.id}`),z(e.element,"aria-labelledby",`filepond--drop-label-${t.id}`),us({root:e,action:{value:e.query("GET_ACCEPTED_FILE_TYPES")}}),Es({root:e,action:{value:e.query("GET_ALLOW_MULTIPLE")}}),fs({root:e,action:{value:e.query("GET_ALLOW_DIRECTORIES_ONLY")}}),At({root:e}),ps({root:e,action:{value:e.query("GET_REQUIRED")}}),Is({root:e,action:{value:e.query("GET_CAPTURE_METHOD")}}),e.ref.handleChange=n=>{if(!e.element.value)return;const s=Array.from(e.element.files).map(r=>(r._relativePath=r.webkitRelativePath,r));setTimeout(()=>{t.onload(s),ao(e.element)},250)},e.element.addEventListener("change",e.ref.handleChange)},us=({root:e,action:t})=>{e.query("GET_ALLOW_SYNC_ACCEPT_ATTRIBUTE")&&ce(e.element,"accept",!!t.value,t.value?t.value.join(","):"")},Es=({root:e,action:t})=>{ce(e.element,"multiple",t.value)},fs=({root:e,action:t})=>{ce(e.element,"webkitdirectory",t.value)},At=({root:e})=>{const t=e.query("GET_DISABLED"),n=e.query("GET_ALLOW_BROWSE"),s=t||!n;ce(e.element,"disabled",s)},ps=({root:e,action:t})=>{t.value?e.query("GET_TOTAL_ITEMS")===0&&ce(e.element,"required",!0):ce(e.element,"required",!1)},Is=({root:e,action:t})=>{ce(e.element,"capture",!!t.value,t.value===!0?"":t.value)},Sn=({root:e})=>{const{element:t}=e;if(e.query("GET_TOTAL_ITEMS")>0){ce(t,"required",!1),ce(t,"name",!1);const n=e.query("GET_ACTIVE_ITEMS");let s=!1;for(let r=0;r<n.length;r++)n[r].status===G.LOAD_ERROR&&(s=!0);e.element.setCustomValidity(s?e.query("GET_LABEL_INVALID_FIELD"):"")}else ce(t,"name",!0,e.query("GET_NAME")),e.query("GET_CHECK_VALIDITY")&&t.setCustomValidity(""),e.query("GET_REQUIRED")&&ce(t,"required",!0)},lo=({root:e})=>{e.query("GET_CHECK_VALIDITY")&&e.element.setCustomValidity(e.query("GET_LABEL_INVALID_FIELD"))},co=q({tag:"input",name:"browser",ignoreRect:!0,ignoreRectUpdate:!0,attributes:{type:"file"},create:oo,destroy:({root:e})=>{e.element.removeEventListener("change",e.ref.handleChange)},write:Q({DID_LOAD_ITEM:Sn,DID_REMOVE_ITEM:Sn,DID_THROW_ITEM_INVALID:lo,DID_SET_DISABLED:At,DID_SET_ALLOW_BROWSE:At,DID_SET_ALLOW_DIRECTORIES_ONLY:fs,DID_SET_ALLOW_MULTIPLE:Es,DID_SET_ACCEPTED_FILE_TYPES:us,DID_SET_CAPTURE_METHOD:Is,DID_SET_REQUIRED:ps})}),Dn={ENTER:13,SPACE:32},uo=({root:e,props:t})=>{const n=pe("label");z(n,"for",`filepond--browser-${t.id}`),z(n,"id",`filepond--drop-label-${t.id}`),e.ref.handleKeyDown=s=>{(s.keyCode===Dn.ENTER||s.keyCode===Dn.SPACE)&&(s.preventDefault(),e.ref.label.click())},e.ref.handleClick=s=>{s.target===n||n.contains(s.target)||e.ref.label.click()},n.addEventListener("keydown",e.ref.handleKeyDown),e.element.addEventListener("click",e.ref.handleClick),_s(n,t.caption),e.appendChild(n),e.ref.label=n},_s=(e,t)=>{e.innerHTML=t;const n=e.querySelector(".filepond--label-action");return n&&z(n,"tabindex","0"),t},Eo=q({name:"drop-label",ignoreRect:!0,create:uo,destroy:({root:e})=>{e.ref.label.addEventListener("keydown",e.ref.handleKeyDown),e.element.removeEventListener("click",e.ref.handleClick)},write:Q({DID_SET_LABEL_IDLE:({root:e,action:t})=>{_s(e.ref.label,t.value)}}),mixins:{styles:["opacity","translateX","translateY"],animations:{opacity:{type:"tween",duration:150},translateX:"spring",translateY:"spring"}}}),fo=q({name:"drip-blob",ignoreRect:!0,mixins:{styles:["translateX","translateY","scaleX","scaleY","opacity"],animations:{scaleX:"spring",scaleY:"spring",translateX:"spring",translateY:"spring",opacity:{type:"tween",duration:250}}}}),po=({root:e})=>{const t=e.rect.element.width*.5,n=e.rect.element.height*.5;e.ref.blob=e.appendChildView(e.createChildView(fo,{opacity:0,scaleX:2.5,scaleY:2.5,translateX:t,translateY:n}))},Io=({root:e,action:t})=>{if(!e.ref.blob){po({root:e});return}e.ref.blob.translateX=t.position.scopeLeft,e.ref.blob.translateY=t.position.scopeTop,e.ref.blob.scaleX=1,e.ref.blob.scaleY=1,e.ref.blob.opacity=1},_o=({root:e})=>{e.ref.blob&&(e.ref.blob.opacity=0)},To=({root:e})=>{e.ref.blob&&(e.ref.blob.scaleX=2.5,e.ref.blob.scaleY=2.5,e.ref.blob.opacity=0)},mo=({root:e,props:t,actions:n})=>{go({root:e,props:t,actions:n});const{blob:s}=e.ref;n.length===0&&s&&s.opacity===0&&(e.removeChildView(s),e.ref.blob=null)},go=Q({DID_DRAG:Io,DID_DROP:To,DID_END_DRAG:_o}),ho=q({ignoreRect:!0,ignoreRectUpdate:!0,name:"drip",write:mo}),Ts=(e,t)=>{try{const n=new DataTransfer;t.forEach(s=>{s instanceof File?n.items.add(s):n.items.add(new File([s],s.name,{type:s.type}))}),e.files=n.files}catch{return!1}return!0},Ro=({root:e})=>{e.ref.fields={};const t=document.createElement("legend");t.textContent="Files",e.element.appendChild(t)},lt=(e,t)=>e.ref.fields[t],Ft=e=>{e.query("GET_ACTIVE_ITEMS").forEach(t=>{e.ref.fields[t.id]&&e.element.appendChild(e.ref.fields[t.id])})},An=({root:e})=>Ft(e),Oo=({root:e,action:t})=>{const r=!(e.query("GET_ITEM",t.id).origin===$.LOCAL)&&e.query("SHOULD_UPDATE_FILE_INPUT"),a=pe("input");a.type=r?"file":"hidden",a.name=e.query("GET_NAME"),e.ref.fields[t.id]=a,Ft(e)},So=({root:e,action:t})=>{const n=lt(e,t.id);if(!n||(t.serverFileReference!==null&&(n.value=t.serverFileReference),!e.query("SHOULD_UPDATE_FILE_INPUT")))return;const s=e.query("GET_ITEM",t.id);Ts(n,[s.file])},Do=({root:e,action:t})=>{e.query("SHOULD_UPDATE_FILE_INPUT")&&setTimeout(()=>{const n=lt(e,t.id);n&&Ts(n,[t.file])},0)},Ao=({root:e})=>{e.element.disabled=e.query("GET_DISABLED")},yo=({root:e,action:t})=>{const n=lt(e,t.id);n&&(n.parentNode&&n.parentNode.removeChild(n),delete e.ref.fields[t.id])},Lo=({root:e,action:t})=>{const n=lt(e,t.id);n&&(t.value===null?n.removeAttribute("value"):n.type!="file"&&(n.value=t.value),Ft(e))},Mo=Q({DID_SET_DISABLED:Ao,DID_ADD_ITEM:Oo,DID_LOAD_ITEM:So,DID_REMOVE_ITEM:yo,DID_DEFINE_VALUE:Lo,DID_PREPARE_OUTPUT:Do,DID_REORDER_ITEMS:An,DID_SORT_ITEMS:An}),Po=q({tag:"fieldset",name:"data",create:Ro,write:Mo,ignoreRect:!0}),wo=e=>"getRootNode"in e?e.getRootNode():document,Co=["jpg","jpeg","png","gif","bmp","webp","svg","tiff"],bo=["css","csv","html","txt"],No={zip:"zip|compressed",epub:"application/epub+zip"},ms=(e="")=>(e=e.toLowerCase(),Co.includes(e)?"image/"+(e==="jpg"?"jpeg":e==="svg"?"svg+xml":e):bo.includes(e)?"text/"+e:No[e]||""),Bt=e=>new Promise((t,n)=>{const s=Ho(e);if(s.length&&!vo(e))return t(s);Go(e).then(t)}),vo=e=>e.files?e.files.length>0:!1,Go=e=>new Promise((t,n)=>{const s=(e.items?Array.from(e.items):[]).filter(r=>Fo(r)).map(r=>Bo(r));if(!s.length){t(e.files?Array.from(e.files):[]);return}Promise.all(s).then(r=>{const a=[];r.forEach(i=>{a.push.apply(a,i)}),t(a.filter(i=>i).map(i=>(i._relativePath||(i._relativePath=i.webkitRelativePath),i)))}).catch(console.error)}),Fo=e=>{if(gs(e)){const t=Ut(e);if(t)return t.isFile||t.isDirectory}return e.kind==="file"},Bo=e=>new Promise((t,n)=>{if(Vo(e)){Uo(Ut(e)).then(t).catch(n);return}t([e.getAsFile()])}),Uo=e=>new Promise((t,n)=>{const s=[];let r=0,a=0;const i=()=>{a===0&&r===0&&t(s)},l=o=>{r++;const d=o.createReader(),c=()=>{d.readEntries(E=>{if(E.length===0){r--,i();return}E.forEach(I=>{I.isDirectory?l(I):(a++,I.file(p=>{const u=xo(p);I.fullPath&&(u._relativePath=I.fullPath),s.push(u),a--,i()}))}),c()},n)};c()};l(e)}),xo=e=>{if(e.type.length)return e;const t=e.lastModifiedDate,n=e.name,s=ms(ot(e.name));return s.length&&(e=e.slice(0,e.size,s),e.name=n,e.lastModifiedDate=t),e},Vo=e=>gs(e)&&(Ut(e)||{}).isDirectory,gs=e=>"webkitGetAsEntry"in e,Ut=e=>e.webkitGetAsEntry(),Ho=e=>{let t=[];try{if(t=Wo(e),t.length)return t;t=Yo(e)}catch{}return t},Yo=e=>{let t=e.getData("url");return typeof t=="string"&&t.length?[t]:[]},Wo=e=>{let t=e.getData("text/html");if(typeof t=="string"&&t.length){const n=t.match(/src\s*=\s*"(.+?)"/);if(n)return[n[1]]}return[]},tt=[],De=e=>({pageLeft:e.pageX,pageTop:e.pageY,scopeLeft:e.offsetX||e.layerX,scopeTop:e.offsetY||e.layerY}),qo=(e,t,n)=>{const s=zo(t),r={element:e,filterElement:n,state:null,ondrop:()=>{},onenter:()=>{},ondrag:()=>{},onexit:()=>{},onload:()=>{},allowdrop:()=>{}};return r.destroy=s.addListener(r),r},zo=e=>{const t=tt.find(s=>s.element===e);if(t)return t;const n=$o(e);return tt.push(n),n},$o=e=>{const t=[],n={dragenter:Xo,dragover:jo,dragleave:Qo,drop:Zo},s={};H(n,(a,i)=>{s[a]=i(e,t),e.addEventListener(a,s[a],!1)});const r={element:e,addListener:a=>(t.push(a),()=>{t.splice(t.indexOf(a),1),t.length===0&&(tt.splice(tt.indexOf(r),1),H(n,i=>{e.removeEventListener(i,s[i],!1)}))})};return r},ko=(e,t)=>("elementFromPoint"in e||(e=document),e.elementFromPoint(t.x,t.y)),xt=(e,t)=>{const n=wo(t),s=ko(n,{x:e.pageX-window.pageXOffset,y:e.pageY-window.pageYOffset});return s===t||t.contains(s)};let hs=null;const je=(e,t)=>{try{e.dropEffect=t}catch{}},Xo=(e,t)=>n=>{n.preventDefault(),hs=n.target,t.forEach(s=>{const{element:r,onenter:a}=s;xt(n,r)&&(s.state="enter",a(De(n)))})},jo=(e,t)=>n=>{n.preventDefault();const s=n.dataTransfer;Bt(s).then(r=>{let a=!1;t.some(i=>{const{filterElement:l,element:o,onenter:d,onexit:c,ondrag:E,allowdrop:I}=i;je(s,"copy");const p=I(r);if(!p){je(s,"none");return}if(xt(n,o)){if(a=!0,i.state===null){i.state="enter",d(De(n));return}if(i.state="over",l&&!p){je(s,"none");return}E(De(n))}else l&&!a&&je(s,"none"),i.state&&(i.state=null,c(De(n)))})})},Zo=(e,t)=>n=>{n.preventDefault();const s=n.dataTransfer;Bt(s).then(r=>{t.forEach(a=>{const{filterElement:i,element:l,ondrop:o,onexit:d,allowdrop:c}=a;if(a.state=null,!(i&&!xt(n,l))){if(!c(r))return d(De(n));o(De(n),r)}})})},Qo=(e,t)=>n=>{hs===n.target&&t.forEach(s=>{const{onexit:r}=s;s.state=null,r(De(n))})},Ko=(e,t,n)=>{e.classList.add("filepond--hopper");const{catchesDropsOnPage:s,requiresDropOnElement:r,filterItems:a=c=>c}=n,i=qo(e,s?document.documentElement:e,r);let l="",o="";i.allowdrop=c=>t(a(c)),i.ondrop=(c,E)=>{const I=a(E);if(!t(I)){d.ondragend(c);return}o="drag-drop",d.onload(I,c)},i.ondrag=c=>{d.ondrag(c)},i.onenter=c=>{o="drag-over",d.ondragstart(c)},i.onexit=c=>{o="drag-exit",d.ondragend(c)};const d={updateHopperState:()=>{l!==o&&(e.dataset.hopperState=o,l=o)},onload:()=>{},ondragstart:()=>{},ondrag:()=>{},ondragend:()=>{},destroy:()=>{i.destroy()}};return d};let yt=!1;const Ce=[],Rs=e=>{const t=document.activeElement;if(t&&(/textarea|input/i.test(t.nodeName)||t.getAttribute("contenteditable")==="true"||t.getAttribute("contenteditable")==="")){let s=!1,r=t;for(;r!==document.body;){if(r.classList.contains("filepond--root")){s=!0;break}r=r.parentNode}if(!s)return}Bt(e.clipboardData).then(s=>{s.length&&Ce.forEach(r=>r(s))})},Jo=e=>{Ce.includes(e)||(Ce.push(e),!yt&&(yt=!0,document.addEventListener("paste",Rs)))},el=e=>{wt(Ce,Ce.indexOf(e)),Ce.length===0&&(document.removeEventListener("paste",Rs),yt=!1)},tl=()=>{const e=n=>{t.onload(n)},t={destroy:()=>{el(e)},onload:()=>{}};return Jo(e),t},nl=({root:e,props:t})=>{e.element.id=`filepond--assistant-${t.id}`,z(e.element,"role","alert"),z(e.element,"aria-live","polite"),z(e.element,"aria-relevant","additions")};let yn=null,Ln=null;const Tt=[],ct=(e,t)=>{e.element.textContent=t},sl=e=>{e.element.textContent=""},Os=(e,t,n)=>{const s=e.query("GET_TOTAL_ITEMS");ct(e,`${n} ${t}, ${s} ${s===1?e.query("GET_LABEL_FILE_COUNT_SINGULAR"):e.query("GET_LABEL_FILE_COUNT_PLURAL")}`),clearTimeout(Ln),Ln=setTimeout(()=>{sl(e)},1500)},Ss=e=>e.element.parentNode.contains(document.activeElement),rl=({root:e,action:t})=>{if(!Ss(e))return;e.element.textContent="";const n=e.query("GET_ITEM",t.id);Tt.push(n.filename),clearTimeout(yn),yn=setTimeout(()=>{Os(e,Tt.join(", "),e.query("GET_LABEL_FILE_ADDED")),Tt.length=0},750)},il=({root:e,action:t})=>{if(!Ss(e))return;const n=t.item;Os(e,n.filename,e.query("GET_LABEL_FILE_REMOVED"))},al=({root:e,action:t})=>{const s=e.query("GET_ITEM",t.id).filename,r=e.query("GET_LABEL_FILE_PROCESSING_COMPLETE");ct(e,`${s} ${r}`)},Mn=({root:e,action:t})=>{const s=e.query("GET_ITEM",t.id).filename,r=e.query("GET_LABEL_FILE_PROCESSING_ABORTED");ct(e,`${s} ${r}`)},Ze=({root:e,action:t})=>{const s=e.query("GET_ITEM",t.id).filename;ct(e,`${t.status.main} ${s} ${t.status.sub}`)},ol=q({create:nl,ignoreRect:!0,ignoreRectUpdate:!0,write:Q({DID_LOAD_ITEM:rl,DID_REMOVE_ITEM:il,DID_COMPLETE_ITEM_PROCESSING:al,DID_ABORT_ITEM_PROCESSING:Mn,DID_REVERT_ITEM_PROCESSING:Mn,DID_THROW_ITEM_REMOVE_ERROR:Ze,DID_THROW_ITEM_LOAD_ERROR:Ze,DID_THROW_ITEM_INVALID:Ze,DID_THROW_ITEM_PROCESSING_ERROR:Ze}),tag:"span",name:"assistant"}),Ds=(e,t="-")=>e.replace(new RegExp(`${t}.`,"g"),n=>n.charAt(1).toUpperCase()),As=(e,t=16,n=!0)=>{let s=Date.now(),r=null;return(...a)=>{clearTimeout(r);const i=Date.now()-s,l=()=>{s=Date.now(),e(...a)};i<t?n||(r=setTimeout(l,t-i)):l()}},ll=1e6,nt=e=>e.preventDefault(),cl=({root:e,props:t})=>{const n=e.query("GET_ID");n&&(e.element.id=n);const s=e.query("GET_CLASS_NAME");s&&s.split(" ").filter(o=>o.length).forEach(o=>{e.element.classList.add(o)}),e.ref.label=e.appendChildView(e.createChildView(Eo,{...t,translateY:null,caption:e.query("GET_LABEL_IDLE")})),e.ref.list=e.appendChildView(e.createChildView(io,{translateY:null})),e.ref.panel=e.appendChildView(e.createChildView(ds,{name:"panel-root"})),e.ref.assistant=e.appendChildView(e.createChildView(ol,{...t})),e.ref.data=e.appendChildView(e.createChildView(Po,{...t})),e.ref.measure=pe("div"),e.ref.measure.style.height="100%",e.element.appendChild(e.ref.measure),e.ref.bounds=null,e.query("GET_STYLES").filter(o=>!fe(o.value)).map(({name:o,value:d})=>{e.element.dataset[o]=d}),e.ref.widthPrevious=null,e.ref.widthUpdated=As(()=>{e.ref.updateHistory=[],e.dispatch("DID_RESIZE_ROOT")},250),e.ref.previousAspectRatio=null,e.ref.updateHistory=[];const r=window.matchMedia("(pointer: fine) and (hover: hover)").matches,a="PointerEvent"in window;e.query("GET_ALLOW_REORDER")&&a&&!r&&(e.element.addEventListener("touchmove",nt,{passive:!1}),e.element.addEventListener("gesturestart",nt));const i=e.query("GET_CREDITS");if(i.length===2){const o=document.createElement("a");o.className="filepond--credits",o.href=i[0],o.tabIndex=-1,o.target="_blank",o.rel="noopener noreferrer nofollow",o.textContent=i[1],e.element.appendChild(o),e.ref.credits=o}},dl=({root:e,props:t,actions:n})=>{if(Il({root:e,props:t,actions:n}),n.filter(L=>/^DID_SET_STYLE_/.test(L.type)).filter(L=>!fe(L.data.value)).map(({type:L,data:b})=>{const D=Ds(L.substring(8).toLowerCase(),"_");e.element.dataset[D]=b.value,e.invalidateLayout()}),e.rect.element.hidden)return;e.rect.element.width!==e.ref.widthPrevious&&(e.ref.widthPrevious=e.rect.element.width,e.ref.widthUpdated());let s=e.ref.bounds;s||(s=e.ref.bounds=fl(e),e.element.removeChild(e.ref.measure),e.ref.measure=null);const{hopper:r,label:a,list:i,panel:l}=e.ref;r&&r.updateHopperState();const o=e.query("GET_PANEL_ASPECT_RATIO"),d=e.query("GET_ALLOW_MULTIPLE"),c=e.query("GET_TOTAL_ITEMS"),E=d?e.query("GET_MAX_FILES")||ll:1,I=c===E,p=n.find(L=>L.type==="DID_ADD_ITEM");if(I&&p){const L=p.data.interactionMethod;a.opacity=0,d?a.translateY=-40:L===ie.API?a.translateX=40:L===ie.BROWSE?a.translateY=40:a.translateY=30}else I||(a.opacity=1,a.translateX=0,a.translateY=0);const u=ul(e),_=El(e),m=a.rect.element.height,h=!d||I?0:m,f=I?i.rect.element.marginTop:0,T=c===0?0:i.rect.element.marginBottom,R=h+f+_.visual+T,S=h+f+_.bounds+T;if(i.translateY=Math.max(0,h-i.rect.element.marginTop)-u.top,o){const L=e.rect.element.width,b=L*o;o!==e.ref.previousAspectRatio&&(e.ref.previousAspectRatio=o,e.ref.updateHistory=[]);const D=e.ref.updateHistory;D.push(L);const M=2;if(D.length>M*2){const P=D.length,w=P-10;let x=0;for(let y=P;y>=w;y--)if(D[y]===D[y-2]&&x++,x>=M)return}l.scalable=!1,l.height=b;const v=b-h-(T-u.bottom)-(I?f:0);_.visual>v?i.overflow=v:i.overflow=null,e.height=b}else if(s.fixedHeight){l.scalable=!1;const L=s.fixedHeight-h-(T-u.bottom)-(I?f:0);_.visual>L?i.overflow=L:i.overflow=null}else if(s.cappedHeight){const L=R>=s.cappedHeight,b=Math.min(s.cappedHeight,R);l.scalable=!0,l.height=L?b:b-u.top-u.bottom;const D=b-h-(T-u.bottom)-(I?f:0);R>s.cappedHeight&&_.visual>D?i.overflow=D:i.overflow=null,e.height=Math.min(s.cappedHeight,S-u.top-u.bottom)}else{const L=c>0?u.top+u.bottom:0;l.scalable=!0,l.height=Math.max(m,R-L),e.height=Math.max(m,S-L)}e.ref.credits&&l.heightCurrent&&(e.ref.credits.style.transform=`translateY(${l.heightCurrent}px)`)},ul=e=>{const t=e.ref.list.childViews[0].childViews[0];return t?{top:t.rect.element.marginTop,bottom:t.rect.element.marginBottom}:{top:0,bottom:0}},El=e=>{let t=0,n=0;const s=e.ref.list,r=s.childViews[0],a=r.childViews.filter(f=>f.rect.element.height),i=e.query("GET_ACTIVE_ITEMS").map(f=>a.find(T=>T.id===f.id)).filter(f=>f);if(i.length===0)return{visual:t,bounds:n};const l=r.rect.element.width,o=Gt(r,i,s.dragCoordinates),d=i[0].rect.element,c=d.marginTop+d.marginBottom,E=d.marginLeft+d.marginRight,I=d.width+E,p=d.height+c,u=typeof o<"u"&&o>=0?1:0,_=i.find(f=>f.markedForRemoval&&f.opacity<.45)?-1:0,m=i.length+u+_,h=vt(l,I);return h===1?i.forEach(f=>{const T=f.rect.element.height+c;n+=T,t+=T*f.opacity}):(n=Math.ceil(m/h)*p,t=n),{visual:t,bounds:n}},fl=e=>{const t=e.ref.measureHeight||null;return{cappedHeight:parseInt(e.style.maxHeight,10)||null,fixedHeight:t===0?null:t}},Vt=(e,t)=>{const n=e.query("GET_ALLOW_REPLACE"),s=e.query("GET_ALLOW_MULTIPLE"),r=e.query("GET_TOTAL_ITEMS");let a=e.query("GET_MAX_FILES");const i=t.length;return!s&&i>1?(e.dispatch("DID_THROW_MAX_FILES",{source:t,error:Y("warning",0,"Max files")}),!0):(a=s?a:1,!s&&n?!1:Ne(a)&&r+i>a?(e.dispatch("DID_THROW_MAX_FILES",{source:t,error:Y("warning",0,"Max files")}),!0):!1)},pl=(e,t,n)=>{const s=e.childViews[0];return Gt(s,t,{left:n.scopeLeft-s.rect.element.left,top:n.scopeTop-(e.rect.outer.top+e.rect.element.marginTop+e.rect.element.scrollTop)})},Pn=e=>{const t=e.query("GET_ALLOW_DROP"),n=e.query("GET_DISABLED"),s=t&&!n;if(s&&!e.ref.hopper){const r=Ko(e.element,a=>{const i=e.query("GET_BEFORE_DROP_FILE")||(()=>!0);return e.query("GET_DROP_VALIDATION")?a.every(o=>Ae("ALLOW_HOPPER_ITEM",o,{query:e.query}).every(d=>d===!0)&&i(o)):!0},{filterItems:a=>{const i=e.query("GET_IGNORED_FILES");return a.filter(l=>Se(l)?!i.includes(l.name.toLowerCase()):!0)},catchesDropsOnPage:e.query("GET_DROP_ON_PAGE"),requiresDropOnElement:e.query("GET_DROP_ON_ELEMENT")});r.onload=(a,i)=>{const o=e.ref.list.childViews[0].childViews.filter(c=>c.rect.element.height),d=e.query("GET_ACTIVE_ITEMS").map(c=>o.find(E=>E.id===c.id)).filter(c=>c);oe("ADD_ITEMS",a,{dispatch:e.dispatch}).then(c=>{if(Vt(e,c))return!1;e.dispatch("ADD_ITEMS",{items:c,index:pl(e.ref.list,d,i),interactionMethod:ie.DROP})}),e.dispatch("DID_DROP",{position:i}),e.dispatch("DID_END_DRAG",{position:i})},r.ondragstart=a=>{e.dispatch("DID_START_DRAG",{position:a})},r.ondrag=As(a=>{e.dispatch("DID_DRAG",{position:a})}),r.ondragend=a=>{e.dispatch("DID_END_DRAG",{position:a})},e.ref.hopper=r,e.ref.drip=e.appendChildView(e.createChildView(ho))}else!s&&e.ref.hopper&&(e.ref.hopper.destroy(),e.ref.hopper=null,e.removeChildView(e.ref.drip))},wn=(e,t)=>{const n=e.query("GET_ALLOW_BROWSE"),s=e.query("GET_DISABLED"),r=n&&!s;r&&!e.ref.browser?e.ref.browser=e.appendChildView(e.createChildView(co,{...t,onload:a=>{oe("ADD_ITEMS",a,{dispatch:e.dispatch}).then(i=>{if(Vt(e,i))return!1;e.dispatch("ADD_ITEMS",{items:i,index:-1,interactionMethod:ie.BROWSE})})}}),0):!r&&e.ref.browser&&(e.removeChildView(e.ref.browser),e.ref.browser=null)},Cn=e=>{const t=e.query("GET_ALLOW_PASTE"),n=e.query("GET_DISABLED"),s=t&&!n;s&&!e.ref.paster?(e.ref.paster=tl(),e.ref.paster.onload=r=>{oe("ADD_ITEMS",r,{dispatch:e.dispatch}).then(a=>{if(Vt(e,a))return!1;e.dispatch("ADD_ITEMS",{items:a,index:-1,interactionMethod:ie.PASTE})})}):!s&&e.ref.paster&&(e.ref.paster.destroy(),e.ref.paster=null)},Il=Q({DID_SET_ALLOW_BROWSE:({root:e,props:t})=>{wn(e,t)},DID_SET_ALLOW_DROP:({root:e})=>{Pn(e)},DID_SET_ALLOW_PASTE:({root:e})=>{Cn(e)},DID_SET_DISABLED:({root:e,props:t})=>{Pn(e),Cn(e),wn(e,t),e.query("GET_DISABLED")?e.element.dataset.disabled="disabled":e.element.removeAttribute("data-disabled")}}),_l=q({name:"root",read:({root:e})=>{e.ref.measure&&(e.ref.measureHeight=e.ref.measure.offsetHeight)},create:cl,write:dl,destroy:({root:e})=>{e.ref.paster&&e.ref.paster.destroy(),e.ref.hopper&&e.ref.hopper.destroy(),e.element.removeEventListener("touchmove",nt),e.element.removeEventListener("gesturestart",nt)},mixins:{styles:["height"]}}),Tl=(e={})=>{let t=null;const n=et(),s=br(Ti(n),[Fi,hi(n)],[oa,gi(n)]);s.dispatch("SET_OPTIONS",{options:e});const r=()=>{document.hidden||s.dispatch("KICK")};document.addEventListener("visibilitychange",r);let a=null,i=!1,l=!1,o=null,d=null;const c=()=>{i||(i=!0),clearTimeout(a),a=setTimeout(()=>{i=!1,o=null,d=null,l&&(l=!1,s.dispatch("DID_STOP_RESIZE"))},500)};window.addEventListener("resize",c);const E=_l(s,{id:Pt()});let I=!1,p=!1;const u={_read:()=>{i&&(d=window.innerWidth,o||(o=d),!l&&d!==o&&(s.dispatch("DID_START_RESIZE"),l=!0)),p&&I&&(I=E.element.offsetParent===null),!I&&(E._read(),p=E.rect.element.hidden)},_write:O=>{const A=s.processActionQueue().filter(C=>!/^SET_/.test(C.type));I&&!A.length||(f(A),I=E._write(O,A,l),Si(s.query("GET_ITEMS")),I&&s.processDispatchQueue())}},_=O=>A=>{const C={type:O};if(!A)return C;if(A.hasOwnProperty("error")&&(C.error=A.error?{...A.error}:null),A.status&&(C.status={...A.status}),A.file&&(C.output=A.file),A.source)C.file=A.source;else if(A.item||A.id){const N=A.item?A.item:s.query("GET_ITEM",A.id);C.file=N?J(N):null}return A.items&&(C.items=A.items.map(J)),/progress/.test(O)&&(C.progress=A.progress),A.hasOwnProperty("origin")&&A.hasOwnProperty("target")&&(C.origin=A.origin,C.target=A.target),C},m={DID_DESTROY:_("destroy"),DID_INIT:_("init"),DID_THROW_MAX_FILES:_("warning"),DID_INIT_ITEM:_("initfile"),DID_START_ITEM_LOAD:_("addfilestart"),DID_UPDATE_ITEM_LOAD_PROGRESS:_("addfileprogress"),DID_LOAD_ITEM:_("addfile"),DID_THROW_ITEM_INVALID:[_("error"),_("addfile")],DID_THROW_ITEM_LOAD_ERROR:[_("error"),_("addfile")],DID_THROW_ITEM_REMOVE_ERROR:[_("error"),_("removefile")],DID_PREPARE_OUTPUT:_("preparefile"),DID_START_ITEM_PROCESSING:_("processfilestart"),DID_UPDATE_ITEM_PROCESS_PROGRESS:_("processfileprogress"),DID_ABORT_ITEM_PROCESSING:_("processfileabort"),DID_COMPLETE_ITEM_PROCESSING:_("processfile"),DID_COMPLETE_ITEM_PROCESSING_ALL:_("processfiles"),DID_REVERT_ITEM_PROCESSING:_("processfilerevert"),DID_THROW_ITEM_PROCESSING_ERROR:[_("error"),_("processfile")],DID_REMOVE_ITEM:_("removefile"),DID_UPDATE_ITEMS:_("updatefiles"),DID_ACTIVATE_ITEM:_("activatefile"),DID_REORDER_ITEMS:_("reorderfiles")},h=O=>{const A={pond:B,...O};delete A.type,E.element.dispatchEvent(new CustomEvent(`FilePond:${O.type}`,{detail:A,bubbles:!0,cancelable:!0,composed:!0}));const C=[];O.hasOwnProperty("error")&&C.push(O.error),O.hasOwnProperty("file")&&C.push(O.file);const N=["type","error","file"];Object.keys(O).filter(F=>!N.includes(F)).forEach(F=>C.push(O[F])),B.fire(O.type,...C);const V=s.query(`GET_ON${O.type.toUpperCase()}`);V&&V(...C)},f=O=>{O.length&&O.filter(A=>m[A.type]).forEach(A=>{const C=m[A.type];(Array.isArray(C)?C:[C]).forEach(N=>{A.type==="DID_INIT_ITEM"?h(N(A.data)):setTimeout(()=>{h(N(A.data))},0)})})},T=O=>s.dispatch("SET_OPTIONS",{options:O}),R=O=>s.query("GET_ACTIVE_ITEM",O),S=O=>new Promise((A,C)=>{s.dispatch("REQUEST_ITEM_PREPARE",{query:O,success:N=>{A(N)},failure:N=>{C(N)}})}),L=(O,A={})=>new Promise((C,N)=>{M([{source:O,options:A}],{index:A.index}).then(V=>C(V&&V[0])).catch(N)}),b=O=>O.file&&O.id,D=(O,A)=>(typeof O=="object"&&!b(O)&&!A&&(A=O,O=void 0),s.dispatch("REMOVE_ITEM",{...A,query:O}),s.query("GET_ACTIVE_ITEM",O)===null),M=(...O)=>new Promise((A,C)=>{const N=[],V={};if(st(O[0]))N.push.apply(N,O[0]),Object.assign(V,O[1]||{});else{const F=O[O.length-1];typeof F=="object"&&!(F instanceof Blob)&&Object.assign(V,O.pop()),N.push(...O)}s.dispatch("ADD_ITEMS",{items:N,index:V.index,interactionMethod:ie.API,success:A,failure:C})}),v=()=>s.query("GET_ACTIVE_ITEMS"),P=O=>new Promise((A,C)=>{s.dispatch("REQUEST_ITEM_PROCESSING",{query:O,success:N=>{A(N)},failure:N=>{C(N)}})}),w=(...O)=>{const A=Array.isArray(O[0])?O[0]:O,C=A.length?A:v();return Promise.all(C.map(S))},x=(...O)=>{const A=Array.isArray(O[0])?O[0]:O;if(!A.length){const C=v().filter(N=>!(N.status===G.IDLE&&N.origin===$.LOCAL)&&N.status!==G.PROCESSING&&N.status!==G.PROCESSING_COMPLETE&&N.status!==G.PROCESSING_REVERT_ERROR);return Promise.all(C.map(P))}return Promise.all(A.map(P))},y=(...O)=>{const A=Array.isArray(O[0])?O[0]:O;let C;typeof A[A.length-1]=="object"?C=A.pop():Array.isArray(O[0])&&(C=O[1]);const N=v();return A.length?A.map(F=>me(F)?N[F]?N[F].id:null:F).filter(F=>F).map(F=>D(F,C)):Promise.all(N.map(F=>D(F,C)))},B={...at(),...u,...mi(s,n),setOptions:T,addFile:L,addFiles:M,getFile:R,processFile:P,prepareFile:S,removeFile:D,moveFile:(O,A)=>s.dispatch("MOVE_ITEM",{query:O,index:A}),getFiles:v,processFiles:x,removeFiles:y,prepareFiles:w,sort:O=>s.dispatch("SORT",{compare:O}),browse:()=>{var O=E.element.querySelector("input[type=file]");O&&O.click()},destroy:()=>{B.fire("destroy",E.element),s.dispatch("ABORT_ALL"),E._destroy(),window.removeEventListener("resize",c),document.removeEventListener("visibilitychange",r),s.dispatch("DID_DESTROY")},insertBefore:O=>Jt(E.element,O),insertAfter:O=>en(E.element,O),appendTo:O=>O.appendChild(E.element),replaceElement:O=>{Jt(E.element,O),O.parentNode.removeChild(O),t=O},restoreElement:()=>{t&&(en(t,E.element),E.element.parentNode.removeChild(E.element),t=null)},isAttachedTo:O=>E.element===O||t===O,element:{get:()=>E.element},status:{get:()=>s.query("GET_STATUS")}};return s.dispatch("DID_INIT"),_e(B)},ys=(e={})=>{const t={};return H(et(),(s,r)=>{t[s]=r[0]}),Tl({...t,...e})},ml=e=>e.charAt(0).toLowerCase()+e.slice(1),gl=e=>Ds(e.replace(/^data-/,"")),Ls=(e,t)=>{H(t,(n,s)=>{H(e,(r,a)=>{const i=new RegExp(n);if(!i.test(r)||(delete e[r],s===!1))return;if(Z(s)){e[s]=a;return}const o=s.group;k(s)&&!e[o]&&(e[o]={}),e[o][ml(r.replace(i,""))]=a}),s.mapping&&Ls(e[s.group],s.mapping)})},hl=(e,t={})=>{const n=[];H(e.attributes,r=>{n.push(e.attributes[r])});const s=n.filter(r=>r.name).reduce((r,a)=>{const i=z(e,a.name);return r[gl(a.name)]=i===a.name?!0:i,r},{});return Ls(s,t),s},Rl=(e,t={})=>{const n={"^class$":"className","^multiple$":"allowMultiple","^capture$":"captureMethod","^webkitdirectory$":"allowDirectoriesOnly","^server":{group:"server",mapping:{"^process":{group:"process"},"^revert":{group:"revert"},"^fetch":{group:"fetch"},"^restore":{group:"restore"},"^load":{group:"load"}}},"^type$":!1,"^files$":!1};Ae("SET_ATTRIBUTE_TO_OPTION_MAP",n);const s={...t},r=hl(e.nodeName==="FIELDSET"?e.querySelector("input[type=file]"):e,n);Object.keys(r).forEach(i=>{k(r[i])?(k(s[i])||(s[i]={}),Object.assign(s[i],r[i])):s[i]=r[i]}),s.files=(t.files||[]).concat(Array.from(e.querySelectorAll("input:not([type=file])")).map(i=>({source:i.value,options:{type:i.dataset.type}})));const a=ys(s);return e.files&&Array.from(e.files).forEach(i=>{a.addFile(i)}),a.replaceElement(e),a},Ol=(...e)=>Cr(e[0])?Rl(...e):ys(...e),Sl=["fire","_read","_write"],bn=e=>{const t={};return jn(e,t,Sl),t},Dl=(e,t)=>e.replace(/(?:{([a-zA-Z]+)})/g,(n,s)=>t[s]),Al=e=>{const t=new Blob(["(",e.toString(),")()"],{type:"application/javascript"}),n=URL.createObjectURL(t),s=new Worker(n);return{transfer:(r,a)=>{},post:(r,a,i)=>{const l=Pt();s.onmessage=o=>{o.data.id===l&&a(o.data.message)},s.postMessage({id:l,message:r},i)},terminate:()=>{s.terminate(),URL.revokeObjectURL(n)}}},yl=e=>new Promise((t,n)=>{const s=new Image;s.onload=()=>{t(s)},s.onerror=r=>{n(r)},s.src=e}),Ms=(e,t)=>{const n=e.slice(0,e.size,e.type);return n.lastModifiedDate=e.lastModifiedDate,n.name=t,n},Ll=e=>Ms(e,e.name),Nn=[],Ml=e=>{if(Nn.includes(e))return;Nn.push(e);const t=e({addFilter:Ai,utils:{Type:g,forin:H,isString:Z,isFile:Se,toNaturalFileSize:os,replaceInString:Dl,getExtensionFromFilename:ot,getFilenameWithoutExtension:rs,guesstimateMimeType:ms,getFileFromBlob:be,getFilenameFromURL:He,createRoute:Q,createWorker:Al,createView:q,createItemAPI:J,loadImage:yl,copyFile:Ll,renameFile:Ms,createBlob:ts,applyFilterChain:oe,text:W,getNumericAspectRatioFromString:Kn},views:{fileActionButton:as}});yi(t.options)},Pl=()=>Object.prototype.toString.call(window.operamini)==="[object OperaMini]",wl=()=>"Promise"in window,Cl=()=>"slice"in Blob.prototype,bl=()=>"URL"in window&&"createObjectURL"in window.URL,Nl=()=>"visibilityState"in document,vl=()=>"performance"in window,Gl=()=>"supports"in(window.CSS||{}),Fl=()=>/MSIE|Trident/.test(window.navigator.userAgent),Lt=(()=>{const e=Wn()&&!Pl()&&Nl()&&wl()&&Cl()&&bl()&&vl()&&(Gl()||Fl());return()=>e})(),Ie={apps:[]},Bl="filepond",ye=()=>{};let vn={},Ke=ye,mt=ye,Gn=ye,Fn=ye,Bn=ye,Un=ye,xn=ye;if(Lt()){si(()=>{Ie.apps.forEach(n=>n._read())},n=>{Ie.apps.forEach(s=>s._write(n))});const e=()=>{document.dispatchEvent(new CustomEvent("FilePond:loaded",{detail:{supported:Lt,create:Ke,destroy:mt,parse:Gn,find:Fn,registerPlugin:Bn,setOptions:xn}})),document.removeEventListener("DOMContentLoaded",e)};document.readyState!=="loading"?setTimeout(()=>e(),0):document.addEventListener("DOMContentLoaded",e);const t=()=>H(et(),(n,s)=>{vn[n]=s[1]});vn={},t(),Ke=(...n)=>{const s=Ol(...n);return s.on("destroy",mt),Ie.apps.push(s),bn(s)},mt=n=>{const s=Ie.apps.findIndex(r=>r.isAttachedTo(n));return s>=0?(Ie.apps.splice(s,1)[0].restoreElement(),!0):!1},Gn=n=>Array.from(n.querySelectorAll(`.${Bl}`)).filter(a=>!Ie.apps.find(i=>i.isAttachedTo(a))).map(a=>Ke(a)),Fn=n=>{const s=Ie.apps.find(r=>r.isAttachedTo(n));return s?bn(s):null},Bn=(...n)=>{n.forEach(Ml),t()},Un=()=>{const n={};return H(et(),(s,r)=>{n[s]=r[0]}),n},xn=n=>(k(n)&&(Ie.apps.forEach(s=>{s.setOptions(n)}),Li(n)),Un())}/*!
+ */ const Cr = (e) => e instanceof HTMLElement,
+  br = (e, t = [], n = []) => {
+    const s = { ...e },
+      r = [],
+      a = [],
+      i = () => ({ ...s }),
+      l = () => {
+        const u = [...r];
+        return ((r.length = 0), u);
+      },
+      o = () => {
+        const u = [...a];
+        ((a.length = 0),
+          u.forEach(({ type: _, data: m }) => {
+            d(_, m);
+          }));
+      },
+      d = (u, _, m) => {
+        if (m && !document.hidden) {
+          a.push({ type: u, data: _ });
+          return;
+        }
+        (p[u] && p[u](_), r.push({ type: u, data: _ }));
+      },
+      c = (u, ..._) => (I[u] ? I[u](..._) : null),
+      E = {
+        getState: i,
+        processActionQueue: l,
+        processDispatchQueue: o,
+        dispatch: d,
+        query: c,
+      };
+    let I = {};
+    t.forEach((u) => {
+      I = { ...u(s), ...I };
+    });
+    let p = {};
+    return (
+      n.forEach((u) => {
+        p = { ...u(d, c, s), ...p };
+      }),
+      E
+    );
+  },
+  Nr = (e, t, n) => {
+    if (typeof n == "function") {
+      e[t] = n;
+      return;
+    }
+    Object.defineProperty(e, t, { ...n });
+  },
+  H = (e, t) => {
+    for (const n in e) e.hasOwnProperty(n) && t(n, e[n]);
+  },
+  _e = (e) => {
+    const t = {};
+    return (
+      H(e, (n) => {
+        Nr(t, n, e[n]);
+      }),
+      t
+    );
+  },
+  z = (e, t, n = null) => {
+    if (n === null) return e.getAttribute(t) || e.hasAttribute(t);
+    e.setAttribute(t, n);
+  },
+  vr = "http://www.w3.org/2000/svg",
+  Gr = ["svg", "path"],
+  Xt = (e) => Gr.includes(e),
+  Je = (e, t, n = {}) => {
+    typeof t == "object" && ((n = t), (t = null));
+    const s = Xt(e)
+      ? document.createElementNS(vr, e)
+      : document.createElement(e);
+    return (
+      t && (Xt(e) ? z(s, "class", t) : (s.className = t)),
+      H(n, (r, a) => {
+        z(s, r, a);
+      }),
+      s
+    );
+  },
+  Fr = (e) => (t, n) => {
+    typeof n < "u" && e.children[n]
+      ? e.insertBefore(t, e.children[n])
+      : e.appendChild(t);
+  },
+  Br = (e, t) => (n, s) => (typeof s < "u" ? t.splice(s, 0, n) : t.push(n), n),
+  Ur = (e, t) => (n) => (
+    t.splice(t.indexOf(n), 1),
+    n.element.parentNode && e.removeChild(n.element),
+    n
+  ),
+  xr = typeof window < "u" && typeof window.document < "u",
+  Wn = () => xr,
+  Vr = Wn() ? Je("svg") : {},
+  Hr = "children" in Vr ? (e) => e.children.length : (e) => e.childNodes.length,
+  qn = (e, t, n, s) => {
+    const r = n[0] || e.left,
+      a = n[1] || e.top,
+      i = r + e.width,
+      l = a + e.height * (s[1] || 1),
+      o = {
+        element: { ...e },
+        inner: { left: e.left, top: e.top, right: e.right, bottom: e.bottom },
+        outer: { left: r, top: a, right: i, bottom: l },
+      };
+    return (
+      t
+        .filter((d) => !d.isRectIgnored())
+        .map((d) => d.rect)
+        .forEach((d) => {
+          (jt(o.inner, { ...d.inner }), jt(o.outer, { ...d.outer }));
+        }),
+      Zt(o.inner),
+      (o.outer.bottom += o.element.marginBottom),
+      (o.outer.right += o.element.marginRight),
+      Zt(o.outer),
+      o
+    );
+  },
+  jt = (e, t) => {
+    ((t.top += e.top),
+      (t.right += e.left),
+      (t.bottom += e.top),
+      (t.left += e.left),
+      t.bottom > e.bottom && (e.bottom = t.bottom),
+      t.right > e.right && (e.right = t.right));
+  },
+  Zt = (e) => {
+    ((e.width = e.right - e.left), (e.height = e.bottom - e.top));
+  },
+  me = (e) => typeof e == "number",
+  Yr = (e, t, n, s = 0.001) => Math.abs(e - t) < s && Math.abs(n) < s,
+  Wr = ({ stiffness: e = 0.5, damping: t = 0.75, mass: n = 10 } = {}) => {
+    let s = null,
+      r = null,
+      a = 0,
+      i = !1;
+    const d = _e({
+      interpolate: (c, E) => {
+        if (i) return;
+        if (!(me(s) && me(r))) {
+          ((i = !0), (a = 0));
+          return;
+        }
+        const I = -(r - s) * e;
+        ((a += I / n),
+          (r += a),
+          (a *= t),
+          Yr(r, s, a) || E
+            ? ((r = s), (a = 0), (i = !0), d.onupdate(r), d.oncomplete(r))
+            : d.onupdate(r));
+      },
+      target: {
+        set: (c) => {
+          if (
+            (me(c) && !me(r) && (r = c),
+            s === null && ((s = c), (r = c)),
+            (s = c),
+            r === s || typeof s > "u")
+          ) {
+            ((i = !0), (a = 0), d.onupdate(r), d.oncomplete(r));
+            return;
+          }
+          i = !1;
+        },
+        get: () => s,
+      },
+      resting: { get: () => i },
+      onupdate: (c) => {},
+      oncomplete: (c) => {},
+    });
+    return d;
+  },
+  qr = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
+  zr = ({ duration: e = 500, easing: t = qr, delay: n = 0 } = {}) => {
+    let s = null,
+      r,
+      a,
+      i = !0,
+      l = !1,
+      o = null;
+    const c = _e({
+      interpolate: (E, I) => {
+        i ||
+          o === null ||
+          (s === null && (s = E),
+          !(E - s < n) &&
+            ((r = E - s - n),
+            r >= e || I
+              ? ((r = 1),
+                (a = l ? 0 : 1),
+                c.onupdate(a * o),
+                c.oncomplete(a * o),
+                (i = !0))
+              : ((a = r / e),
+                c.onupdate((r >= 0 ? t(l ? 1 - a : a) : 0) * o))));
+      },
+      target: {
+        get: () => (l ? 0 : o),
+        set: (E) => {
+          if (o === null) {
+            ((o = E), c.onupdate(E), c.oncomplete(E));
+            return;
+          }
+          (E < o ? ((o = 1), (l = !0)) : ((l = !1), (o = E)),
+            (i = !1),
+            (s = null));
+        },
+      },
+      resting: { get: () => i },
+      onupdate: (E) => {},
+      oncomplete: (E) => {},
+    });
+    return c;
+  },
+  Qt = { spring: Wr, tween: zr },
+  $r = (e, t, n) => {
+    const s = e[t] && typeof e[t][n] == "object" ? e[t][n] : e[t] || e,
+      r = typeof s == "string" ? s : s.type,
+      a = typeof s == "object" ? { ...s } : {};
+    return Qt[r] ? Qt[r](a) : null;
+  },
+  Mt = (e, t, n, s = !1) => {
+    ((t = Array.isArray(t) ? t : [t]),
+      t.forEach((r) => {
+        e.forEach((a) => {
+          let i = a,
+            l = () => n[a],
+            o = (d) => (n[a] = d);
+          (typeof a == "object" &&
+            ((i = a.key), (l = a.getter || l), (o = a.setter || o)),
+            !(r[i] && !s) && (r[i] = { get: l, set: o }));
+        });
+      }));
+  },
+  kr = ({
+    mixinConfig: e,
+    viewProps: t,
+    viewInternalAPI: n,
+    viewExternalAPI: s,
+  }) => {
+    const r = { ...t },
+      a = [];
+    return (
+      H(e, (i, l) => {
+        const o = $r(l);
+        if (!o) return;
+        ((o.onupdate = (c) => {
+          t[i] = c;
+        }),
+          (o.target = r[i]),
+          Mt(
+            [
+              {
+                key: i,
+                setter: (c) => {
+                  o.target !== c && (o.target = c);
+                },
+                getter: () => t[i],
+              },
+            ],
+            [n, s],
+            t,
+            !0,
+          ),
+          a.push(o));
+      }),
+      {
+        write: (i) => {
+          let l = document.hidden,
+            o = !0;
+          return (
+            a.forEach((d) => {
+              (d.resting || (o = !1), d.interpolate(i, l));
+            }),
+            o
+          );
+        },
+        destroy: () => {},
+      }
+    );
+  },
+  Xr = (e) => (t, n) => {
+    e.addEventListener(t, n);
+  },
+  jr = (e) => (t, n) => {
+    e.removeEventListener(t, n);
+  },
+  Zr = ({
+    mixinConfig: e,
+    viewProps: t,
+    viewInternalAPI: n,
+    viewExternalAPI: s,
+    viewState: r,
+    view: a,
+  }) => {
+    const i = [],
+      l = Xr(a.element),
+      o = jr(a.element);
+    return (
+      (s.on = (d, c) => {
+        (i.push({ type: d, fn: c }), l(d, c));
+      }),
+      (s.off = (d, c) => {
+        (i.splice(
+          i.findIndex((E) => E.type === d && E.fn === c),
+          1,
+        ),
+          o(d, c));
+      }),
+      {
+        write: () => !0,
+        destroy: () => {
+          i.forEach((d) => {
+            o(d.type, d.fn);
+          });
+        },
+      }
+    );
+  },
+  Qr = ({ mixinConfig: e, viewProps: t, viewExternalAPI: n }) => {
+    Mt(e, n, t);
+  },
+  j = (e) => e != null,
+  Kr = {
+    opacity: 1,
+    scaleX: 1,
+    scaleY: 1,
+    translateX: 0,
+    translateY: 0,
+    rotateX: 0,
+    rotateY: 0,
+    rotateZ: 0,
+    originX: 0,
+    originY: 0,
+  },
+  Jr = ({
+    mixinConfig: e,
+    viewProps: t,
+    viewInternalAPI: n,
+    viewExternalAPI: s,
+    view: r,
+  }) => {
+    const a = { ...t },
+      i = {};
+    Mt(e, [n, s], t);
+    const l = () => [t.translateX || 0, t.translateY || 0],
+      o = () => [t.scaleX || 0, t.scaleY || 0],
+      d = () => (r.rect ? qn(r.rect, r.childViews, l(), o()) : null);
+    return (
+      (n.rect = { get: d }),
+      (s.rect = { get: d }),
+      e.forEach((c) => {
+        t[c] = typeof a[c] > "u" ? Kr[c] : a[c];
+      }),
+      {
+        write: () => {
+          if (ei(i, t))
+            return (ti(r.element, t), Object.assign(i, { ...t }), !0);
+        },
+        destroy: () => {},
+      }
+    );
+  },
+  ei = (e, t) => {
+    if (Object.keys(e).length !== Object.keys(t).length) return !0;
+    for (const n in t) if (t[n] !== e[n]) return !0;
+    return !1;
+  },
+  ti = (
+    e,
+    {
+      opacity: t,
+      perspective: n,
+      translateX: s,
+      translateY: r,
+      scaleX: a,
+      scaleY: i,
+      rotateX: l,
+      rotateY: o,
+      rotateZ: d,
+      originX: c,
+      originY: E,
+      width: I,
+      height: p,
+    },
+  ) => {
+    let u = "",
+      _ = "";
+    ((j(c) || j(E)) && (_ += `transform-origin: ${c || 0}px ${E || 0}px;`),
+      j(n) && (u += `perspective(${n}px) `),
+      (j(s) || j(r)) && (u += `translate3d(${s || 0}px, ${r || 0}px, 0) `),
+      (j(a) || j(i)) && (u += `scale3d(${j(a) ? a : 1}, ${j(i) ? i : 1}, 1) `),
+      j(d) && (u += `rotateZ(${d}rad) `),
+      j(l) && (u += `rotateX(${l}rad) `),
+      j(o) && (u += `rotateY(${o}rad) `),
+      u.length && (_ += `transform:${u};`),
+      j(t) &&
+        ((_ += `opacity:${t};`),
+        t === 0 && (_ += "visibility:hidden;"),
+        t < 1 && (_ += "pointer-events:none;")),
+      j(p) && (_ += `height:${p}px;`),
+      j(I) && (_ += `width:${I}px;`));
+    const m = e.elementCurrentStyle || "";
+    (_.length !== m.length || _ !== m) &&
+      ((e.style.cssText = _), (e.elementCurrentStyle = _));
+  },
+  ni = { styles: Jr, listeners: Zr, animations: kr, apis: Qr },
+  Kt = (e = {}, t = {}, n = {}) => (
+    t.layoutCalculated ||
+      ((e.paddingTop = parseInt(n.paddingTop, 10) || 0),
+      (e.marginTop = parseInt(n.marginTop, 10) || 0),
+      (e.marginRight = parseInt(n.marginRight, 10) || 0),
+      (e.marginBottom = parseInt(n.marginBottom, 10) || 0),
+      (e.marginLeft = parseInt(n.marginLeft, 10) || 0),
+      (t.layoutCalculated = !0)),
+    (e.left = t.offsetLeft || 0),
+    (e.top = t.offsetTop || 0),
+    (e.width = t.offsetWidth || 0),
+    (e.height = t.offsetHeight || 0),
+    (e.right = e.left + e.width),
+    (e.bottom = e.top + e.height),
+    (e.scrollTop = t.scrollTop),
+    (e.hidden = t.offsetParent === null),
+    e
+  ),
+  q =
+    ({
+      tag: e = "div",
+      name: t = null,
+      attributes: n = {},
+      read: s = () => {},
+      write: r = () => {},
+      create: a = () => {},
+      destroy: i = () => {},
+      filterFrameActionsForChild: l = (p, u) => u,
+      didCreateView: o = () => {},
+      didWriteView: d = () => {},
+      ignoreRect: c = !1,
+      ignoreRectUpdate: E = !1,
+      mixins: I = [],
+    } = {}) =>
+    (p, u = {}) => {
+      const _ = Je(e, `filepond--${t}`, n),
+        m = window.getComputedStyle(_, null),
+        h = Kt();
+      let f = null,
+        T = !1;
+      const R = [],
+        S = [],
+        L = {},
+        b = {},
+        D = [r],
+        M = [s],
+        v = [i],
+        P = () => _,
+        w = () => R.concat(),
+        x = () => L,
+        y = (U) => (X, Ee) => X(U, Ee),
+        B = () => f || ((f = qn(h, R, [0, 0], [1, 1])), f),
+        O = () => m,
+        A = () => {
+          ((f = null),
+            R.forEach((Ee) => Ee._read()),
+            !(E && h.width && h.height) && Kt(h, _, m));
+          const X = { root: ae, props: u, rect: h };
+          M.forEach((Ee) => Ee(X));
+        },
+        C = (U, X, Ee) => {
+          let Le = X.length === 0;
+          return (
+            D.forEach((K) => {
+              K({
+                props: u,
+                root: ae,
+                actions: X,
+                timestamp: U,
+                shouldOptimize: Ee,
+              }) === !1 && (Le = !1);
+            }),
+            S.forEach((K) => {
+              K.write(U) === !1 && (Le = !1);
+            }),
+            R.filter((K) => !!K.element.parentNode).forEach((K) => {
+              K._write(U, l(K, X), Ee) || (Le = !1);
+            }),
+            R.forEach((K, Ye) => {
+              K.element.parentNode ||
+                (ae.appendChild(K.element, Ye),
+                K._read(),
+                K._write(U, l(K, X), Ee),
+                (Le = !1));
+            }),
+            (T = Le),
+            d({ props: u, root: ae, actions: X, timestamp: U }),
+            Le
+          );
+        },
+        N = () => {
+          (S.forEach((U) => U.destroy()),
+            v.forEach((U) => {
+              U({ root: ae, props: u });
+            }),
+            R.forEach((U) => U._destroy()));
+        },
+        V = { element: { get: P }, style: { get: O }, childViews: { get: w } },
+        F = {
+          ...V,
+          rect: { get: B },
+          ref: { get: x },
+          is: (U) => t === U,
+          appendChild: Fr(_),
+          createChildView: y(p),
+          linkView: (U) => (R.push(U), U),
+          unlinkView: (U) => {
+            R.splice(R.indexOf(U), 1);
+          },
+          appendChildView: Br(_, R),
+          removeChildView: Ur(_, R),
+          registerWriter: (U) => D.push(U),
+          registerReader: (U) => M.push(U),
+          registerDestroyer: (U) => v.push(U),
+          invalidateLayout: () => (_.layoutCalculated = !1),
+          dispatch: p.dispatch,
+          query: p.query,
+        },
+        Te = {
+          element: { get: P },
+          childViews: { get: w },
+          rect: { get: B },
+          resting: { get: () => T },
+          isRectIgnored: () => c,
+          _read: A,
+          _write: C,
+          _destroy: N,
+        },
+        ve = { ...V, rect: { get: () => h } };
+      Object.keys(I)
+        .sort((U, X) => (U === "styles" ? 1 : X === "styles" ? -1 : 0))
+        .forEach((U) => {
+          const X = ni[U]({
+            mixinConfig: I[U],
+            viewProps: u,
+            viewState: b,
+            viewInternalAPI: F,
+            viewExternalAPI: Te,
+            view: _e(ve),
+          });
+          X && S.push(X);
+        });
+      const ae = _e(F);
+      a({ root: ae, props: u });
+      const dt = Hr(_);
+      return (
+        R.forEach((U, X) => {
+          ae.appendChild(U.element, dt + X);
+        }),
+        o(ae),
+        _e(Te)
+      );
+    },
+  si = (e, t, n = 60) => {
+    const s = "__framePainter";
+    if (window[s]) {
+      (window[s].readers.push(e), window[s].writers.push(t));
+      return;
+    }
+    window[s] = { readers: [e], writers: [t] };
+    const r = window[s],
+      a = 1e3 / n;
+    let i = null,
+      l = null,
+      o = null,
+      d = null;
+    const c = () => {
+      document.hidden
+        ? ((o = () => window.setTimeout(() => E(performance.now()), a)),
+          (d = () => window.clearTimeout(l)))
+        : ((o = () => window.requestAnimationFrame(E)),
+          (d = () => window.cancelAnimationFrame(l)));
+    };
+    document.addEventListener("visibilitychange", () => {
+      (d && d(), c(), E(performance.now()));
+    });
+    const E = (I) => {
+      ((l = o(E)), i || (i = I));
+      const p = I - i;
+      p <= a ||
+        ((i = I - (p % a)),
+        r.readers.forEach((u) => u()),
+        r.writers.forEach((u) => u(I)));
+    };
+    return (
+      c(),
+      E(performance.now()),
+      {
+        pause: () => {
+          d(l);
+        },
+      }
+    );
+  },
+  Q =
+    (e, t) =>
+    ({
+      root: n,
+      props: s,
+      actions: r = [],
+      timestamp: a,
+      shouldOptimize: i,
+    }) => {
+      (r
+        .filter((l) => e[l.type])
+        .forEach((l) =>
+          e[l.type]({
+            root: n,
+            props: s,
+            action: l.data,
+            timestamp: a,
+            shouldOptimize: i,
+          }),
+        ),
+        t &&
+          t({
+            root: n,
+            props: s,
+            actions: r,
+            timestamp: a,
+            shouldOptimize: i,
+          }));
+    },
+  Jt = (e, t) => t.parentNode.insertBefore(e, t),
+  en = (e, t) => t.parentNode.insertBefore(e, t.nextSibling),
+  st = (e) => Array.isArray(e),
+  fe = (e) => e == null,
+  ri = (e) => e.trim(),
+  rt = (e) => "" + e,
+  ii = (e, t = ",") =>
+    fe(e)
+      ? []
+      : st(e)
+        ? e
+        : rt(e)
+            .split(t)
+            .map(ri)
+            .filter((n) => n.length),
+  zn = (e) => typeof e == "boolean",
+  $n = (e) => (zn(e) ? e : e === "true"),
+  Z = (e) => typeof e == "string",
+  kn = (e) => (me(e) ? e : Z(e) ? rt(e).replace(/[a-z]+/gi, "") : 0),
+  Qe = (e) => parseInt(kn(e), 10),
+  tn = (e) => parseFloat(kn(e)),
+  Ne = (e) => me(e) && isFinite(e) && Math.floor(e) === e,
+  nn = (e, t = 1e3) => {
+    if (Ne(e)) return e;
+    let n = rt(e).trim();
+    return /MB$/i.test(n)
+      ? ((n = n.replace(/MB$i/, "").trim()), Qe(n) * t * t)
+      : /KB/i.test(n)
+        ? ((n = n.replace(/KB$i/, "").trim()), Qe(n) * t)
+        : Qe(n);
+  },
+  ge = (e) => typeof e == "function",
+  ai = (e) => {
+    let t = self,
+      n = e.split("."),
+      s = null;
+    for (; (s = n.shift()); ) if (((t = t[s]), !t)) return null;
+    return t;
+  },
+  sn = {
+    process: "POST",
+    patch: "PATCH",
+    revert: "DELETE",
+    fetch: "GET",
+    restore: "GET",
+    load: "GET",
+  },
+  oi = (e) => {
+    const t = {};
+    return (
+      (t.url = Z(e) ? e : e.url || ""),
+      (t.timeout = e.timeout ? parseInt(e.timeout, 10) : 0),
+      (t.headers = e.headers ? e.headers : {}),
+      H(sn, (n) => {
+        t[n] = li(n, e[n], sn[n], t.timeout, t.headers);
+      }),
+      (t.process = e.process || Z(e) || e.url ? t.process : null),
+      (t.remove = e.remove || null),
+      delete t.headers,
+      t
+    );
+  },
+  li = (e, t, n, s, r) => {
+    if (t === null) return null;
+    if (typeof t == "function") return t;
+    const a = {
+      url: n === "GET" || n === "PATCH" ? `?${e}=` : "",
+      method: n,
+      headers: r,
+      withCredentials: !1,
+      timeout: s,
+      onload: null,
+      ondata: null,
+      onerror: null,
+    };
+    if (Z(t)) return ((a.url = t), a);
+    if ((Object.assign(a, t), Z(a.headers))) {
+      const i = a.headers.split(/:(.+)/);
+      a.headers = { header: i[0], value: i[1] };
+    }
+    return ((a.withCredentials = $n(a.withCredentials)), a);
+  },
+  ci = (e) => oi(e),
+  di = (e) => e === null,
+  k = (e) => typeof e == "object" && e !== null,
+  ui = (e) =>
+    k(e) &&
+    Z(e.url) &&
+    k(e.process) &&
+    k(e.revert) &&
+    k(e.restore) &&
+    k(e.fetch),
+  gt = (e) =>
+    st(e)
+      ? "array"
+      : di(e)
+        ? "null"
+        : Ne(e)
+          ? "int"
+          : /^[0-9]+ ?(?:GB|MB|KB)$/gi.test(e)
+            ? "bytes"
+            : ui(e)
+              ? "api"
+              : typeof e,
+  Ei = (e) =>
+    e
+      .replace(/{\s*'/g, '{"')
+      .replace(/'\s*}/g, '"}')
+      .replace(/'\s*:/g, '":')
+      .replace(/:\s*'/g, ':"')
+      .replace(/,\s*'/g, ',"')
+      .replace(/'\s*,/g, '",'),
+  fi = {
+    array: ii,
+    boolean: $n,
+    int: (e) => (gt(e) === "bytes" ? nn(e) : Qe(e)),
+    number: tn,
+    float: tn,
+    bytes: nn,
+    string: (e) => (ge(e) ? e : rt(e)),
+    function: (e) => ai(e),
+    serverapi: ci,
+    object: (e) => {
+      try {
+        return JSON.parse(Ei(e));
+      } catch {
+        return null;
+      }
+    },
+  },
+  pi = (e, t) => fi[t](e),
+  Xn = (e, t, n) => {
+    if (e === t) return e;
+    let s = gt(e);
+    if (s !== n) {
+      const r = pi(e, n);
+      if (((s = gt(r)), r === null))
+        throw `Trying to assign value with incorrect type to "${option}", allowed type: "${n}"`;
+      e = r;
+    }
+    return e;
+  },
+  Ii = (e, t) => {
+    let n = e;
+    return {
+      enumerable: !0,
+      get: () => n,
+      set: (s) => {
+        n = Xn(s, e, t);
+      },
+    };
+  },
+  _i = (e) => {
+    const t = {};
+    return (
+      H(e, (n) => {
+        const s = e[n];
+        t[n] = Ii(s[0], s[1]);
+      }),
+      _e(t)
+    );
+  },
+  Ti = (e) => ({
+    items: [],
+    listUpdateTimeout: null,
+    itemUpdateTimeout: null,
+    processingQueue: [],
+    options: _i(e),
+  }),
+  it = (e, t = "-") =>
+    e
+      .split(/(?=[A-Z])/)
+      .map((n) => n.toLowerCase())
+      .join(t),
+  mi = (e, t) => {
+    const n = {};
+    return (
+      H(t, (s) => {
+        n[s] = {
+          get: () => e.getState().options[s],
+          set: (r) => {
+            e.dispatch(`SET_${it(s, "_").toUpperCase()}`, { value: r });
+          },
+        };
+      }),
+      n
+    );
+  },
+  gi = (e) => (t, n, s) => {
+    const r = {};
+    return (
+      H(e, (a) => {
+        const i = it(a, "_").toUpperCase();
+        r[`SET_${i}`] = (l) => {
+          try {
+            s.options[a] = l.value;
+          } catch {}
+          t(`DID_SET_${i}`, { value: s.options[a] });
+        };
+      }),
+      r
+    );
+  },
+  hi = (e) => (t) => {
+    const n = {};
+    return (
+      H(e, (s) => {
+        n[`GET_${it(s, "_").toUpperCase()}`] = (r) => t.options[s];
+      }),
+      n
+    );
+  },
+  ie = { API: 1, DROP: 2, BROWSE: 3, PASTE: 4, NONE: 5 },
+  Pt = () => Math.random().toString(36).substring(2, 11),
+  wt = (e, t) => e.splice(t, 1),
+  Ri = (e, t) => {
+    t ? e() : document.hidden ? Promise.resolve(1).then(e) : setTimeout(e, 0);
+  },
+  at = () => {
+    const e = [],
+      t = (s, r) => {
+        wt(
+          e,
+          e.findIndex((a) => a.event === s && (a.cb === r || !r)),
+        );
+      },
+      n = (s, r, a) => {
+        e.filter((i) => i.event === s)
+          .map((i) => i.cb)
+          .forEach((i) => Ri(() => i(...r), a));
+      };
+    return {
+      fireSync: (s, ...r) => {
+        n(s, r, !0);
+      },
+      fire: (s, ...r) => {
+        n(s, r, !1);
+      },
+      on: (s, r) => {
+        e.push({ event: s, cb: r });
+      },
+      onOnce: (s, r) => {
+        e.push({
+          event: s,
+          cb: (...a) => {
+            (t(s, r), r(...a));
+          },
+        });
+      },
+      off: t,
+    };
+  },
+  jn = (e, t, n) => {
+    Object.getOwnPropertyNames(e)
+      .filter((s) => !n.includes(s))
+      .forEach((s) =>
+        Object.defineProperty(t, s, Object.getOwnPropertyDescriptor(e, s)),
+      );
+  },
+  Oi = [
+    "fire",
+    "process",
+    "revert",
+    "load",
+    "on",
+    "off",
+    "onOnce",
+    "retryLoad",
+    "extend",
+    "archive",
+    "archived",
+    "release",
+    "released",
+    "requestProcessing",
+    "freeze",
+  ],
+  J = (e) => {
+    const t = {};
+    return (jn(e, t, Oi), t);
+  },
+  Si = (e) => {
+    e.forEach((t, n) => {
+      t.released && wt(e, n);
+    });
+  },
+  G = {
+    INIT: 1,
+    IDLE: 2,
+    PROCESSING_QUEUED: 9,
+    PROCESSING: 3,
+    PROCESSING_COMPLETE: 5,
+    PROCESSING_ERROR: 6,
+    PROCESSING_REVERT_ERROR: 10,
+    LOADING: 7,
+    LOAD_ERROR: 8,
+  },
+  $ = { INPUT: 1, LIMBO: 2, LOCAL: 3 },
+  Zn = (e) => /[^0-9]+/.exec(e),
+  Qn = () => Zn((1.1).toLocaleString())[0],
+  Di = () => {
+    const e = Qn(),
+      t = (1e3).toLocaleString();
+    return t !== "1000" ? Zn(t)[0] : e === "." ? "," : ".";
+  },
+  g = {
+    BOOLEAN: "boolean",
+    INT: "int",
+    NUMBER: "number",
+    STRING: "string",
+    ARRAY: "array",
+    OBJECT: "object",
+    FUNCTION: "function",
+    ACTION: "action",
+    SERVER_API: "serverapi",
+    REGEX: "regex",
+  },
+  Ct = [],
+  oe = (e, t, n) =>
+    new Promise((s, r) => {
+      const a = Ct.filter((l) => l.key === e).map((l) => l.cb);
+      if (a.length === 0) {
+        s(t);
+        return;
+      }
+      const i = a.shift();
+      a.reduce((l, o) => l.then((d) => o(d, n)), i(t, n))
+        .then((l) => s(l))
+        .catch((l) => r(l));
+    }),
+  Ae = (e, t, n) => Ct.filter((s) => s.key === e).map((s) => s.cb(t, n)),
+  Ai = (e, t) => Ct.push({ key: e, cb: t }),
+  yi = (e) => Object.assign(Pe, e),
+  et = () => ({ ...Pe }),
+  Li = (e) => {
+    H(e, (t, n) => {
+      Pe[t] && (Pe[t][0] = Xn(n, Pe[t][0], Pe[t][1]));
+    });
+  },
+  Pe = {
+    id: [null, g.STRING],
+    name: ["filepond", g.STRING],
+    disabled: [!1, g.BOOLEAN],
+    className: [null, g.STRING],
+    required: [!1, g.BOOLEAN],
+    captureMethod: [null, g.STRING],
+    allowSyncAcceptAttribute: [!0, g.BOOLEAN],
+    allowDrop: [!0, g.BOOLEAN],
+    allowBrowse: [!0, g.BOOLEAN],
+    allowPaste: [!0, g.BOOLEAN],
+    allowMultiple: [!1, g.BOOLEAN],
+    allowReplace: [!0, g.BOOLEAN],
+    allowRevert: [!0, g.BOOLEAN],
+    allowRemove: [!0, g.BOOLEAN],
+    allowProcess: [!0, g.BOOLEAN],
+    allowReorder: [!1, g.BOOLEAN],
+    allowDirectoriesOnly: [!1, g.BOOLEAN],
+    storeAsFile: [!1, g.BOOLEAN],
+    forceRevert: [!1, g.BOOLEAN],
+    maxFiles: [null, g.INT],
+    checkValidity: [!1, g.BOOLEAN],
+    itemInsertLocationFreedom: [!0, g.BOOLEAN],
+    itemInsertLocation: ["before", g.STRING],
+    itemInsertInterval: [75, g.INT],
+    dropOnPage: [!1, g.BOOLEAN],
+    dropOnElement: [!0, g.BOOLEAN],
+    dropValidation: [!1, g.BOOLEAN],
+    ignoredFiles: [[".ds_store", "thumbs.db", "desktop.ini"], g.ARRAY],
+    instantUpload: [!0, g.BOOLEAN],
+    maxParallelUploads: [2, g.INT],
+    allowMinimumUploadDuration: [!0, g.BOOLEAN],
+    chunkUploads: [!1, g.BOOLEAN],
+    chunkForce: [!1, g.BOOLEAN],
+    chunkSize: [5e6, g.INT],
+    chunkRetryDelays: [[500, 1e3, 3e3], g.ARRAY],
+    server: [null, g.SERVER_API],
+    fileSizeBase: [1e3, g.INT],
+    labelFileSizeBytes: ["bytes", g.STRING],
+    labelFileSizeKilobytes: ["KB", g.STRING],
+    labelFileSizeMegabytes: ["MB", g.STRING],
+    labelFileSizeGigabytes: ["GB", g.STRING],
+    labelDecimalSeparator: [Qn(), g.STRING],
+    labelThousandsSeparator: [Di(), g.STRING],
+    labelIdle: [
+      'Drag & Drop your files or <span class="filepond--label-action">Browse</span>',
+      g.STRING,
+    ],
+    labelInvalidField: ["Field contains invalid files", g.STRING],
+    labelFileWaitingForSize: ["Waiting for size", g.STRING],
+    labelFileSizeNotAvailable: ["Size not available", g.STRING],
+    labelFileCountSingular: ["file in list", g.STRING],
+    labelFileCountPlural: ["files in list", g.STRING],
+    labelFileLoading: ["Loading", g.STRING],
+    labelFileAdded: ["Added", g.STRING],
+    labelFileLoadError: ["Error during load", g.STRING],
+    labelFileRemoved: ["Removed", g.STRING],
+    labelFileRemoveError: ["Error during remove", g.STRING],
+    labelFileProcessing: ["Uploading", g.STRING],
+    labelFileProcessingComplete: ["Upload complete", g.STRING],
+    labelFileProcessingAborted: ["Upload cancelled", g.STRING],
+    labelFileProcessingError: ["Error during upload", g.STRING],
+    labelFileProcessingRevertError: ["Error during revert", g.STRING],
+    labelTapToCancel: ["tap to cancel", g.STRING],
+    labelTapToRetry: ["tap to retry", g.STRING],
+    labelTapToUndo: ["tap to undo", g.STRING],
+    labelButtonRemoveItem: ["Remove", g.STRING],
+    labelButtonAbortItemLoad: ["Abort", g.STRING],
+    labelButtonRetryItemLoad: ["Retry", g.STRING],
+    labelButtonAbortItemProcessing: ["Cancel", g.STRING],
+    labelButtonUndoItemProcessing: ["Undo", g.STRING],
+    labelButtonRetryItemProcessing: ["Retry", g.STRING],
+    labelButtonProcessItem: ["Upload", g.STRING],
+    iconRemove: [
+      '<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M11.586 13l-2.293 2.293a1 1 0 0 0 1.414 1.414L13 14.414l2.293 2.293a1 1 0 0 0 1.414-1.414L14.414 13l2.293-2.293a1 1 0 0 0-1.414-1.414L13 11.586l-2.293-2.293a1 1 0 0 0-1.414 1.414L11.586 13z" fill="currentColor" fill-rule="nonzero"/></svg>',
+      g.STRING,
+    ],
+    iconProcess: [
+      '<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M14 10.414v3.585a1 1 0 0 1-2 0v-3.585l-1.293 1.293a1 1 0 0 1-1.414-1.415l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.415L14 10.414zM9 18a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2H9z" fill="currentColor" fill-rule="evenodd"/></svg>',
+      g.STRING,
+    ],
+    iconRetry: [
+      '<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M10.81 9.185l-.038.02A4.997 4.997 0 0 0 8 13.683a5 5 0 0 0 5 5 5 5 0 0 0 5-5 1 1 0 0 1 2 0A7 7 0 1 1 9.722 7.496l-.842-.21a.999.999 0 1 1 .484-1.94l3.23.806c.535.133.86.675.73 1.21l-.804 3.233a.997.997 0 0 1-1.21.73.997.997 0 0 1-.73-1.21l.23-.928v-.002z" fill="currentColor" fill-rule="nonzero"/></svg>',
+      g.STRING,
+    ],
+    iconUndo: [
+      '<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M9.185 10.81l.02-.038A4.997 4.997 0 0 1 13.683 8a5 5 0 0 1 5 5 5 5 0 0 1-5 5 1 1 0 0 0 0 2A7 7 0 1 0 7.496 9.722l-.21-.842a.999.999 0 1 0-1.94.484l.806 3.23c.133.535.675.86 1.21.73l3.233-.803a.997.997 0 0 0 .73-1.21.997.997 0 0 0-1.21-.73l-.928.23-.002-.001z" fill="currentColor" fill-rule="nonzero"/></svg>',
+      g.STRING,
+    ],
+    iconDone: [
+      '<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M18.293 9.293a1 1 0 0 1 1.414 1.414l-7.002 7a1 1 0 0 1-1.414 0l-3.998-4a1 1 0 1 1 1.414-1.414L12 15.586l6.294-6.293z" fill="currentColor" fill-rule="nonzero"/></svg>',
+      g.STRING,
+    ],
+    oninit: [null, g.FUNCTION],
+    onwarning: [null, g.FUNCTION],
+    onerror: [null, g.FUNCTION],
+    onactivatefile: [null, g.FUNCTION],
+    oninitfile: [null, g.FUNCTION],
+    onaddfilestart: [null, g.FUNCTION],
+    onaddfileprogress: [null, g.FUNCTION],
+    onaddfile: [null, g.FUNCTION],
+    onprocessfilestart: [null, g.FUNCTION],
+    onprocessfileprogress: [null, g.FUNCTION],
+    onprocessfileabort: [null, g.FUNCTION],
+    onprocessfilerevert: [null, g.FUNCTION],
+    onprocessfile: [null, g.FUNCTION],
+    onprocessfiles: [null, g.FUNCTION],
+    onremovefile: [null, g.FUNCTION],
+    onpreparefile: [null, g.FUNCTION],
+    onupdatefiles: [null, g.FUNCTION],
+    onreorderfiles: [null, g.FUNCTION],
+    beforeDropFile: [null, g.FUNCTION],
+    beforeAddFile: [null, g.FUNCTION],
+    beforeRemoveFile: [null, g.FUNCTION],
+    beforePrepareFile: [null, g.FUNCTION],
+    stylePanelLayout: [null, g.STRING],
+    stylePanelAspectRatio: [null, g.STRING],
+    styleItemPanelAspectRatio: [null, g.STRING],
+    styleButtonRemoveItemPosition: ["left", g.STRING],
+    styleButtonProcessItemPosition: ["right", g.STRING],
+    styleLoadIndicatorPosition: ["right", g.STRING],
+    styleProgressIndicatorPosition: ["right", g.STRING],
+    styleButtonRemoveItemAlign: [!1, g.BOOLEAN],
+    files: [[], g.ARRAY],
+    credits: [["https://pqina.nl/", "Powered by PQINA"], g.ARRAY],
+  },
+  he = (e, t) =>
+    fe(t)
+      ? e[0] || null
+      : Ne(t)
+        ? e[t] || null
+        : (typeof t == "object" && (t = t.id),
+          e.find((n) => n.id === t) || null),
+  Kn = (e) => {
+    if (fe(e)) return e;
+    if (/:/.test(e)) {
+      const t = e.split(":");
+      return t[1] / t[0];
+    }
+    return parseFloat(e);
+  },
+  le = (e) => e.filter((t) => !t.archived),
+  Mi = { EMPTY: 0, IDLE: 1, ERROR: 2, BUSY: 3, READY: 4 };
+let ze = null;
+const Pi = () => {
+    if (ze === null)
+      try {
+        const e = new DataTransfer();
+        e.items.add(new File(["hello world"], "This_Works.txt"));
+        const t = document.createElement("input");
+        (t.setAttribute("type", "file"),
+          (t.files = e.files),
+          (ze = t.files.length === 1));
+      } catch {
+        ze = !1;
+      }
+    return ze;
+  },
+  wi = [G.LOAD_ERROR, G.PROCESSING_ERROR, G.PROCESSING_REVERT_ERROR],
+  Ci = [G.LOADING, G.PROCESSING, G.PROCESSING_QUEUED, G.INIT],
+  bi = [G.PROCESSING_COMPLETE],
+  Ni = (e) => wi.includes(e.status),
+  vi = (e) => Ci.includes(e.status),
+  Gi = (e) => bi.includes(e.status),
+  rn = (e) =>
+    k(e.options.server) &&
+    (k(e.options.server.process) || ge(e.options.server.process)),
+  Fi = (e) => ({
+    GET_STATUS: () => {
+      const t = le(e.items),
+        { EMPTY: n, ERROR: s, BUSY: r, IDLE: a, READY: i } = Mi;
+      return t.length === 0
+        ? n
+        : t.some(Ni)
+          ? s
+          : t.some(vi)
+            ? r
+            : t.some(Gi)
+              ? i
+              : a;
+    },
+    GET_ITEM: (t) => he(e.items, t),
+    GET_ACTIVE_ITEM: (t) => he(le(e.items), t),
+    GET_ACTIVE_ITEMS: () => le(e.items),
+    GET_ITEMS: () => e.items,
+    GET_ITEM_NAME: (t) => {
+      const n = he(e.items, t);
+      return n ? n.filename : null;
+    },
+    GET_ITEM_SIZE: (t) => {
+      const n = he(e.items, t);
+      return n ? n.fileSize : null;
+    },
+    GET_STYLES: () =>
+      Object.keys(e.options)
+        .filter((t) => /^style/.test(t))
+        .map((t) => ({ name: t, value: e.options[t] })),
+    GET_PANEL_ASPECT_RATIO: () =>
+      /circle/.test(e.options.stylePanelLayout)
+        ? 1
+        : Kn(e.options.stylePanelAspectRatio),
+    GET_ITEM_PANEL_ASPECT_RATIO: () => e.options.styleItemPanelAspectRatio,
+    GET_ITEMS_BY_STATUS: (t) => le(e.items).filter((n) => n.status === t),
+    GET_TOTAL_ITEMS: () => le(e.items).length,
+    SHOULD_UPDATE_FILE_INPUT: () => e.options.storeAsFile && Pi() && !rn(e),
+    IS_ASYNC: () => rn(e),
+    GET_FILE_SIZE_LABELS: (t) => ({
+      labelBytes: t("GET_LABEL_FILE_SIZE_BYTES") || void 0,
+      labelKilobytes: t("GET_LABEL_FILE_SIZE_KILOBYTES") || void 0,
+      labelMegabytes: t("GET_LABEL_FILE_SIZE_MEGABYTES") || void 0,
+      labelGigabytes: t("GET_LABEL_FILE_SIZE_GIGABYTES") || void 0,
+    }),
+  }),
+  Bi = (e) => {
+    const t = le(e.items).length;
+    if (!e.options.allowMultiple) return t === 0;
+    const n = e.options.maxFiles;
+    return n === null || t < n;
+  },
+  Jn = (e, t, n) => Math.max(Math.min(n, e), t),
+  Ui = (e, t, n) => e.splice(t, 0, n),
+  xi = (e, t, n) =>
+    fe(t)
+      ? null
+      : typeof n > "u"
+        ? (e.push(t), t)
+        : ((n = Jn(n, 0, e.length)), Ui(e, n, t), t),
+  ht = (e) =>
+    /^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*)\s*$/i.test(
+      e,
+    ),
+  He = (e) => `${e}`.split("/").pop().split("?").shift(),
+  ot = (e) => e.split(".").pop(),
+  Vi = (e) => {
+    if (typeof e != "string") return "";
+    const t = e.split("/").pop();
+    return /svg/.test(t)
+      ? "svg"
+      : /zip|compressed/.test(t)
+        ? "zip"
+        : /plain/.test(t)
+          ? "txt"
+          : /msword/.test(t)
+            ? "doc"
+            : /[a-z]+/.test(t)
+              ? t === "jpeg"
+                ? "jpg"
+                : t
+              : "";
+  },
+  Ge = (e, t = "") => (t + e).slice(-t.length),
+  es = (e = new Date()) =>
+    `${e.getFullYear()}-${Ge(e.getMonth() + 1, "00")}-${Ge(e.getDate(), "00")}_${Ge(e.getHours(), "00")}-${Ge(e.getMinutes(), "00")}-${Ge(e.getSeconds(), "00")}`,
+  be = (e, t, n = null, s = null) => {
+    const r =
+      typeof n == "string" ? e.slice(0, e.size, n) : e.slice(0, e.size, e.type);
+    return (
+      (r.lastModifiedDate = new Date()),
+      e._relativePath && (r._relativePath = e._relativePath),
+      Z(t) || (t = es()),
+      t && s === null && ot(t)
+        ? (r.name = t)
+        : ((s = s || Vi(r.type)), (r.name = t + (s ? "." + s : ""))),
+      r
+    );
+  },
+  Hi = () =>
+    (window.BlobBuilder =
+      window.BlobBuilder ||
+      window.WebKitBlobBuilder ||
+      window.MozBlobBuilder ||
+      window.MSBlobBuilder),
+  ts = (e, t) => {
+    const n = Hi();
+    if (n) {
+      const s = new n();
+      return (s.append(e), s.getBlob(t));
+    }
+    return new Blob([e], { type: t });
+  },
+  Yi = (e, t) => {
+    const n = new ArrayBuffer(e.length),
+      s = new Uint8Array(n);
+    for (let r = 0; r < e.length; r++) s[r] = e.charCodeAt(r);
+    return ts(n, t);
+  },
+  ns = (e) => (/^data:(.+);/.exec(e) || [])[1] || null,
+  Wi = (e) => e.split(",")[1].replace(/\s/g, ""),
+  qi = (e) => atob(Wi(e)),
+  zi = (e) => {
+    const t = ns(e),
+      n = qi(e);
+    return Yi(n, t);
+  },
+  $i = (e, t, n) => be(zi(e), t, null, n),
+  ki = (e) => {
+    if (!/^content-disposition:/i.test(e)) return null;
+    const t = e
+      .split(/filename=|filename\*=.+''/)
+      .splice(1)
+      .map((n) => n.trim().replace(/^["']|[;"']{0,2}$/g, ""))
+      .filter((n) => n.length);
+    return t.length ? decodeURI(t[t.length - 1]) : null;
+  },
+  Xi = (e) => {
+    if (/content-length:/i.test(e)) {
+      const t = e.match(/[0-9]+/)[0];
+      return t ? parseInt(t, 10) : null;
+    }
+    return null;
+  },
+  ji = (e) =>
+    (/x-content-transfer-id:/i.test(e) && (e.split(":")[1] || "").trim()) ||
+    null,
+  bt = (e) => {
+    const t = { source: null, name: null, size: null },
+      n = e.split(`
+`);
+    for (let s of n) {
+      const r = ki(s);
+      if (r) {
+        t.name = r;
+        continue;
+      }
+      const a = Xi(s);
+      if (a) {
+        t.size = a;
+        continue;
+      }
+      const i = ji(s);
+      if (i) {
+        t.source = i;
+        continue;
+      }
+    }
+    return t;
+  },
+  Zi = (e) => {
+    const t = {
+        source: null,
+        complete: !1,
+        progress: 0,
+        size: null,
+        timestamp: null,
+        duration: 0,
+        request: null,
+      },
+      n = () => t.progress,
+      s = () => {
+        t.request && t.request.abort && t.request.abort();
+      },
+      r = () => {
+        const l = t.source;
+        (i.fire("init", l),
+          l instanceof File
+            ? i.fire("load", l)
+            : l instanceof Blob
+              ? i.fire("load", be(l, l.name))
+              : ht(l)
+                ? i.fire("load", $i(l))
+                : a(l));
+      },
+      a = (l) => {
+        if (!e) {
+          i.fire("error", { type: "error", body: "Can't load URL", code: 400 });
+          return;
+        }
+        ((t.timestamp = Date.now()),
+          (t.request = e(
+            l,
+            (o) => {
+              ((t.duration = Date.now() - t.timestamp),
+                (t.complete = !0),
+                o instanceof Blob && (o = be(o, o.name || He(l))),
+                i.fire("load", o instanceof Blob ? o : o ? o.body : null));
+            },
+            (o) => {
+              i.fire(
+                "error",
+                typeof o == "string" ? { type: "error", code: 0, body: o } : o,
+              );
+            },
+            (o, d, c) => {
+              if (
+                (c && (t.size = c), (t.duration = Date.now() - t.timestamp), !o)
+              ) {
+                t.progress = null;
+                return;
+              }
+              ((t.progress = d / c), i.fire("progress", t.progress));
+            },
+            () => {
+              i.fire("abort");
+            },
+            (o) => {
+              const d = bt(typeof o == "string" ? o : o.headers);
+              i.fire("meta", {
+                size: t.size || d.size,
+                filename: d.name,
+                source: d.source,
+              });
+            },
+          )));
+      },
+      i = {
+        ...at(),
+        setSource: (l) => (t.source = l),
+        getProgress: n,
+        abort: s,
+        load: r,
+      };
+    return i;
+  },
+  an = (e) => /GET|HEAD/.test(e),
+  Re = (e, t, n) => {
+    const s = {
+      onheaders: () => {},
+      onprogress: () => {},
+      onload: () => {},
+      ontimeout: () => {},
+      onerror: () => {},
+      onabort: () => {},
+      abort: () => {
+        ((r = !0), i.abort());
+      },
+    };
+    let r = !1,
+      a = !1;
+    ((n = { method: "POST", headers: {}, withCredentials: !1, ...n }),
+      (t = encodeURI(t)),
+      an(n.method) &&
+        e &&
+        (t = `${t}${encodeURIComponent(typeof e == "string" ? e : JSON.stringify(e))}`));
+    const i = new XMLHttpRequest(),
+      l = an(n.method) ? i : i.upload;
+    return (
+      (l.onprogress = (o) => {
+        r || s.onprogress(o.lengthComputable, o.loaded, o.total);
+      }),
+      (i.onreadystatechange = () => {
+        i.readyState < 2 ||
+          (i.readyState === 4 && i.status === 0) ||
+          a ||
+          ((a = !0), s.onheaders(i));
+      }),
+      (i.onload = () => {
+        i.status >= 200 && i.status < 300 ? s.onload(i) : s.onerror(i);
+      }),
+      (i.onerror = () => s.onerror(i)),
+      (i.onabort = () => {
+        ((r = !0), s.onabort());
+      }),
+      (i.ontimeout = () => s.ontimeout(i)),
+      i.open(n.method, t, !0),
+      Ne(n.timeout) && (i.timeout = n.timeout),
+      Object.keys(n.headers).forEach((o) => {
+        const d = unescape(encodeURIComponent(n.headers[o]));
+        i.setRequestHeader(o, d);
+      }),
+      n.responseType && (i.responseType = n.responseType),
+      n.withCredentials && (i.withCredentials = !0),
+      i.send(e),
+      s
+    );
+  },
+  Y = (e, t, n, s) => ({ type: e, code: t, body: n, headers: s }),
+  Oe = (e) => (t) => {
+    e(Y("error", 0, "Timeout", t.getAllResponseHeaders()));
+  },
+  on = (e) => /\?/.test(e),
+  xe = (...e) => {
+    let t = "";
+    return (
+      e.forEach((n) => {
+        t += on(t) && on(n) ? n.replace(/\?/, "&") : n;
+      }),
+      t
+    );
+  },
+  Et = (e = "", t) => {
+    if (typeof t == "function") return t;
+    if (!t || !Z(t.url)) return null;
+    const n = t.onload || ((r) => r),
+      s = t.onerror || ((r) => null);
+    return (r, a, i, l, o, d) => {
+      const c = Re(r, xe(e, t.url), { ...t, responseType: "blob" });
+      return (
+        (c.onload = (E) => {
+          const I = E.getAllResponseHeaders(),
+            p = bt(I).name || He(r);
+          a(
+            Y(
+              "load",
+              E.status,
+              t.method === "HEAD" ? null : be(n(E.response), p),
+              I,
+            ),
+          );
+        }),
+        (c.onerror = (E) => {
+          i(
+            Y(
+              "error",
+              E.status,
+              s(E.response) || E.statusText,
+              E.getAllResponseHeaders(),
+            ),
+          );
+        }),
+        (c.onheaders = (E) => {
+          d(Y("headers", E.status, null, E.getAllResponseHeaders()));
+        }),
+        (c.ontimeout = Oe(i)),
+        (c.onprogress = l),
+        (c.onabort = o),
+        c
+      );
+    };
+  },
+  se = { QUEUED: 0, COMPLETE: 1, PROCESSING: 2, ERROR: 3, WAITING: 4 },
+  Qi = (e, t, n, s, r, a, i, l, o, d, c) => {
+    const E = [],
+      {
+        chunkTransferId: I,
+        chunkServer: p,
+        chunkSize: u,
+        chunkRetryDelays: _,
+      } = c,
+      m = { serverId: I, aborted: !1 },
+      h = t.ondata || ((y) => y),
+      f =
+        t.onload ||
+        ((y, B) =>
+          B === "HEAD" ? y.getResponseHeader("Upload-Offset") : y.response),
+      T = t.onerror || ((y) => null),
+      R = (y) => {
+        const B = new FormData();
+        k(r) && B.append(n, JSON.stringify(r));
+        const O =
+            typeof t.headers == "function"
+              ? t.headers(s, r)
+              : { ...t.headers, "Upload-Length": s.size },
+          A = { ...t, headers: O },
+          C = Re(h(B), xe(e, t.url), A);
+        ((C.onload = (N) => y(f(N, A.method))),
+          (C.onerror = (N) =>
+            i(
+              Y(
+                "error",
+                N.status,
+                T(N.response) || N.statusText,
+                N.getAllResponseHeaders(),
+              ),
+            )),
+          (C.ontimeout = Oe(i)));
+      },
+      S = (y) => {
+        const B = xe(e, p.url, m.serverId),
+          A = {
+            headers:
+              typeof t.headers == "function"
+                ? t.headers(m.serverId)
+                : { ...t.headers },
+            method: "HEAD",
+          },
+          C = Re(null, B, A);
+        ((C.onload = (N) => y(f(N, A.method))),
+          (C.onerror = (N) =>
+            i(
+              Y(
+                "error",
+                N.status,
+                T(N.response) || N.statusText,
+                N.getAllResponseHeaders(),
+              ),
+            )),
+          (C.ontimeout = Oe(i)));
+      },
+      L = Math.floor(s.size / u);
+    for (let y = 0; y <= L; y++) {
+      const B = y * u,
+        O = s.slice(B, B + u, "application/offset+octet-stream");
+      E[y] = {
+        index: y,
+        size: O.size,
+        offset: B,
+        data: O,
+        file: s,
+        progress: 0,
+        retries: [..._],
+        status: se.QUEUED,
+        error: null,
+        request: null,
+        timeout: null,
+      };
+    }
+    const b = () => a(m.serverId),
+      D = (y) => y.status === se.QUEUED || y.status === se.ERROR,
+      M = (y) => {
+        if (m.aborted) return;
+        if (((y = y || E.find(D)), !y)) {
+          E.every((F) => F.status === se.COMPLETE) && b();
+          return;
+        }
+        ((y.status = se.PROCESSING), (y.progress = null));
+        const B = p.ondata || ((F) => F),
+          O = p.onerror || ((F) => null),
+          A = p.onload || (() => {}),
+          C = xe(e, p.url, m.serverId),
+          N =
+            typeof p.headers == "function"
+              ? p.headers(y)
+              : {
+                  ...p.headers,
+                  "Content-Type": "application/offset+octet-stream",
+                  "Upload-Offset": y.offset,
+                  "Upload-Length": s.size,
+                  "Upload-Name": s.name,
+                },
+          V = (y.request = Re(B(y.data), C, { ...p, headers: N }));
+        ((V.onload = (F) => {
+          (A(F, y.index, E.length),
+            (y.status = se.COMPLETE),
+            (y.request = null),
+            w());
+        }),
+          (V.onprogress = (F, Te, ve) => {
+            ((y.progress = F ? Te : null), P());
+          }),
+          (V.onerror = (F) => {
+            ((y.status = se.ERROR),
+              (y.request = null),
+              (y.error = O(F.response) || F.statusText),
+              v(y) ||
+                i(
+                  Y(
+                    "error",
+                    F.status,
+                    O(F.response) || F.statusText,
+                    F.getAllResponseHeaders(),
+                  ),
+                ));
+          }),
+          (V.ontimeout = (F) => {
+            ((y.status = se.ERROR), (y.request = null), v(y) || Oe(i)(F));
+          }),
+          (V.onabort = () => {
+            ((y.status = se.QUEUED), (y.request = null), o());
+          }));
+      },
+      v = (y) =>
+        y.retries.length === 0
+          ? !1
+          : ((y.status = se.WAITING),
+            clearTimeout(y.timeout),
+            (y.timeout = setTimeout(() => {
+              M(y);
+            }, y.retries.shift())),
+            !0),
+      P = () => {
+        const y = E.reduce(
+          (O, A) => (O === null || A.progress === null ? null : O + A.progress),
+          0,
+        );
+        if (y === null) return l(!1, 0, 0);
+        const B = E.reduce((O, A) => O + A.size, 0);
+        l(!0, y, B);
+      },
+      w = () => {
+        E.filter((B) => B.status === se.PROCESSING).length >= 1 || M();
+      },
+      x = () => {
+        E.forEach((y) => {
+          (clearTimeout(y.timeout), y.request && y.request.abort());
+        });
+      };
+    return (
+      m.serverId
+        ? S((y) => {
+            m.aborted ||
+              (E.filter((B) => B.offset < y).forEach((B) => {
+                ((B.status = se.COMPLETE), (B.progress = B.size));
+              }),
+              w());
+          })
+        : R((y) => {
+            m.aborted || (d(y), (m.serverId = y), w());
+          }),
+      {
+        abort: () => {
+          ((m.aborted = !0), x());
+        },
+      }
+    );
+  },
+  Ki = (e, t, n, s) => (r, a, i, l, o, d, c) => {
+    if (!r) return;
+    const E = s.chunkUploads,
+      I = E && r.size > s.chunkSize,
+      p = E && (I || s.chunkForce);
+    if (r instanceof Blob && p) return Qi(e, t, n, r, a, i, l, o, d, c, s);
+    const u = t.ondata || ((S) => S),
+      _ = t.onload || ((S) => S),
+      m = t.onerror || ((S) => null),
+      h =
+        typeof t.headers == "function"
+          ? t.headers(r, a) || {}
+          : { ...t.headers },
+      f = { ...t, headers: h };
+    var T = new FormData();
+    (k(a) && T.append(n, JSON.stringify(a)),
+      (r instanceof Blob ? [{ name: null, file: r }] : r).forEach((S) => {
+        T.append(
+          n,
+          S.file,
+          S.name === null ? S.file.name : `${S.name}${S.file.name}`,
+        );
+      }));
+    const R = Re(u(T), xe(e, t.url), f);
+    return (
+      (R.onload = (S) => {
+        i(Y("load", S.status, _(S.response), S.getAllResponseHeaders()));
+      }),
+      (R.onerror = (S) => {
+        l(
+          Y(
+            "error",
+            S.status,
+            m(S.response) || S.statusText,
+            S.getAllResponseHeaders(),
+          ),
+        );
+      }),
+      (R.ontimeout = Oe(l)),
+      (R.onprogress = o),
+      (R.onabort = d),
+      R
+    );
+  },
+  Ji = (e = "", t, n, s) =>
+    typeof t == "function"
+      ? (...r) => t(n, ...r, s)
+      : !t || !Z(t.url)
+        ? null
+        : Ki(e, t, n, s),
+  Fe = (e = "", t) => {
+    if (typeof t == "function") return t;
+    if (!t || !Z(t.url)) return (r, a) => a();
+    const n = t.onload || ((r) => r),
+      s = t.onerror || ((r) => null);
+    return (r, a, i) => {
+      const l = Re(r, e + t.url, t);
+      return (
+        (l.onload = (o) => {
+          a(Y("load", o.status, n(o.response), o.getAllResponseHeaders()));
+        }),
+        (l.onerror = (o) => {
+          i(
+            Y(
+              "error",
+              o.status,
+              s(o.response) || o.statusText,
+              o.getAllResponseHeaders(),
+            ),
+          );
+        }),
+        (l.ontimeout = Oe(i)),
+        l
+      );
+    };
+  },
+  ss = (e = 0, t = 1) => e + Math.random() * (t - e),
+  ea = (e, t = 1e3, n = 0, s = 25, r = 250) => {
+    let a = null;
+    const i = Date.now(),
+      l = () => {
+        let o = Date.now() - i,
+          d = ss(s, r);
+        o + d > t && (d = o + d - t);
+        let c = o / t;
+        if (c >= 1 || document.hidden) {
+          e(1);
+          return;
+        }
+        (e(c), (a = setTimeout(l, d)));
+      };
+    return (
+      t > 0 && l(),
+      {
+        clear: () => {
+          clearTimeout(a);
+        },
+      }
+    );
+  },
+  ta = (e, t) => {
+    const n = {
+        complete: !1,
+        perceivedProgress: 0,
+        perceivedPerformanceUpdater: null,
+        progress: null,
+        timestamp: null,
+        perceivedDuration: 0,
+        duration: 0,
+        request: null,
+        response: null,
+      },
+      { allowMinimumUploadDuration: s } = t,
+      r = (c, E) => {
+        const I = () => {
+            n.duration === 0 ||
+              n.progress === null ||
+              d.fire("progress", d.getProgress());
+          },
+          p = () => {
+            ((n.complete = !0), d.fire("load-perceived", n.response.body));
+          };
+        (d.fire("start"),
+          (n.timestamp = Date.now()),
+          (n.perceivedPerformanceUpdater = ea(
+            (u) => {
+              ((n.perceivedProgress = u),
+                (n.perceivedDuration = Date.now() - n.timestamp),
+                I(),
+                n.response && n.perceivedProgress === 1 && !n.complete && p());
+            },
+            s ? ss(750, 1500) : 0,
+          )),
+          (n.request = e(
+            c,
+            E,
+            (u) => {
+              ((n.response = k(u)
+                ? u
+                : { type: "load", code: 200, body: `${u}`, headers: {} }),
+                (n.duration = Date.now() - n.timestamp),
+                (n.progress = 1),
+                d.fire("load", n.response.body),
+                (!s || (s && n.perceivedProgress === 1)) && p());
+            },
+            (u) => {
+              (n.perceivedPerformanceUpdater.clear(),
+                d.fire(
+                  "error",
+                  k(u) ? u : { type: "error", code: 0, body: `${u}` },
+                ));
+            },
+            (u, _, m) => {
+              ((n.duration = Date.now() - n.timestamp),
+                (n.progress = u ? _ / m : null),
+                I());
+            },
+            () => {
+              (n.perceivedPerformanceUpdater.clear(),
+                d.fire("abort", n.response ? n.response.body : null));
+            },
+            (u) => {
+              d.fire("transfer", u);
+            },
+          )));
+      },
+      a = () => {
+        n.request &&
+          (n.perceivedPerformanceUpdater.clear(),
+          n.request.abort && n.request.abort(),
+          (n.complete = !0));
+      },
+      i = () => {
+        (a(),
+          (n.complete = !1),
+          (n.perceivedProgress = 0),
+          (n.progress = 0),
+          (n.timestamp = null),
+          (n.perceivedDuration = 0),
+          (n.duration = 0),
+          (n.request = null),
+          (n.response = null));
+      },
+      l = s
+        ? () => (n.progress ? Math.min(n.progress, n.perceivedProgress) : null)
+        : () => n.progress || null,
+      o = s
+        ? () => Math.min(n.duration, n.perceivedDuration)
+        : () => n.duration,
+      d = {
+        ...at(),
+        process: r,
+        abort: a,
+        getProgress: l,
+        getDuration: o,
+        reset: i,
+      };
+    return d;
+  },
+  rs = (e) => e.substring(0, e.lastIndexOf(".")) || e,
+  na = (e) => {
+    let t = [e.name, e.size, e.type];
+    return (
+      e instanceof Blob || ht(e)
+        ? (t[0] = e.name || es())
+        : ht(e)
+          ? ((t[1] = e.length), (t[2] = ns(e)))
+          : Z(e) &&
+            ((t[0] = He(e)), (t[1] = 0), (t[2] = "application/octet-stream")),
+      { name: t[0], size: t[1], type: t[2] }
+    );
+  },
+  Se = (e) => !!(e instanceof File || (e instanceof Blob && e.name)),
+  is = (e) => {
+    if (!k(e)) return e;
+    const t = st(e) ? [] : {};
+    for (const n in e) {
+      if (!e.hasOwnProperty(n)) continue;
+      const s = e[n];
+      t[n] = s && k(s) ? is(s) : s;
+    }
+    return t;
+  },
+  sa = (e = null, t = null, n = null) => {
+    const s = Pt(),
+      r = {
+        archived: !1,
+        frozen: !1,
+        released: !1,
+        source: null,
+        file: n,
+        serverFileReference: t,
+        transferId: null,
+        processingAborted: !1,
+        status: t ? G.PROCESSING_COMPLETE : G.INIT,
+        activeLoader: null,
+        activeProcessor: null,
+      };
+    let a = null;
+    const i = {},
+      l = (D) => (r.status = D),
+      o = (D, ...M) => {
+        r.released || r.frozen || L.fire(D, ...M);
+      },
+      d = () => ot(r.file.name),
+      c = () => r.file.type,
+      E = () => r.file.size,
+      I = () => r.file,
+      p = (D, M, v) => {
+        if (((r.source = D), L.fireSync("init"), r.file)) {
+          L.fireSync("load-skip");
+          return;
+        }
+        ((r.file = na(D)),
+          M.on("init", () => {
+            o("load-init");
+          }),
+          M.on("meta", (P) => {
+            ((r.file.size = P.size),
+              (r.file.filename = P.filename),
+              P.source &&
+                ((e = $.LIMBO),
+                (r.serverFileReference = P.source),
+                (r.status = G.PROCESSING_COMPLETE)),
+              o("load-meta"));
+          }),
+          M.on("progress", (P) => {
+            (l(G.LOADING), o("load-progress", P));
+          }),
+          M.on("error", (P) => {
+            (l(G.LOAD_ERROR), o("load-request-error", P));
+          }),
+          M.on("abort", () => {
+            (l(G.INIT), o("load-abort"));
+          }),
+          M.on("load", (P) => {
+            r.activeLoader = null;
+            const w = (y) => {
+                ((r.file = Se(y) ? y : r.file),
+                  e === $.LIMBO && r.serverFileReference
+                    ? l(G.PROCESSING_COMPLETE)
+                    : l(G.IDLE),
+                  o("load"));
+              },
+              x = (y) => {
+                ((r.file = P),
+                  o("load-meta"),
+                  l(G.LOAD_ERROR),
+                  o("load-file-error", y));
+              };
+            if (r.serverFileReference) {
+              w(P);
+              return;
+            }
+            v(P, w, x);
+          }),
+          M.setSource(D),
+          (r.activeLoader = M),
+          M.load());
+      },
+      u = () => {
+        r.activeLoader && r.activeLoader.load();
+      },
+      _ = () => {
+        if (r.activeLoader) {
+          r.activeLoader.abort();
+          return;
+        }
+        (l(G.INIT), o("load-abort"));
+      },
+      m = (D, M) => {
+        if (r.processingAborted) {
+          r.processingAborted = !1;
+          return;
+        }
+        if ((l(G.PROCESSING), (a = null), !(r.file instanceof Blob))) {
+          L.on("load", () => {
+            m(D, M);
+          });
+          return;
+        }
+        (D.on("load", (w) => {
+          ((r.transferId = null), (r.serverFileReference = w));
+        }),
+          D.on("transfer", (w) => {
+            r.transferId = w;
+          }),
+          D.on("load-perceived", (w) => {
+            ((r.activeProcessor = null),
+              (r.transferId = null),
+              (r.serverFileReference = w),
+              l(G.PROCESSING_COMPLETE),
+              o("process-complete", w));
+          }),
+          D.on("start", () => {
+            o("process-start");
+          }),
+          D.on("error", (w) => {
+            ((r.activeProcessor = null),
+              l(G.PROCESSING_ERROR),
+              o("process-error", w));
+          }),
+          D.on("abort", (w) => {
+            ((r.activeProcessor = null),
+              (r.serverFileReference = w),
+              l(G.IDLE),
+              o("process-abort"),
+              a && a());
+          }),
+          D.on("progress", (w) => {
+            o("process-progress", w);
+          }));
+        const v = (w) => {
+            r.archived || D.process(w, { ...i });
+          },
+          P = console.error;
+        (M(r.file, v, P), (r.activeProcessor = D));
+      },
+      h = () => {
+        ((r.processingAborted = !1), l(G.PROCESSING_QUEUED));
+      },
+      f = () =>
+        new Promise((D) => {
+          if (!r.activeProcessor) {
+            ((r.processingAborted = !0), l(G.IDLE), o("process-abort"), D());
+            return;
+          }
+          ((a = () => {
+            D();
+          }),
+            r.activeProcessor.abort());
+        }),
+      T = (D, M) =>
+        new Promise((v, P) => {
+          const w =
+            r.serverFileReference !== null
+              ? r.serverFileReference
+              : r.transferId;
+          if (w === null) {
+            v();
+            return;
+          }
+          (D(
+            w,
+            () => {
+              ((r.serverFileReference = null), (r.transferId = null), v());
+            },
+            (x) => {
+              if (!M) {
+                v();
+                return;
+              }
+              (l(G.PROCESSING_REVERT_ERROR), o("process-revert-error"), P(x));
+            },
+          ),
+            l(G.IDLE),
+            o("process-revert"));
+        }),
+      R = (D, M, v) => {
+        const P = D.split("."),
+          w = P[0],
+          x = P.pop();
+        let y = i;
+        (P.forEach((B) => (y = y[B])),
+          JSON.stringify(y[x]) !== JSON.stringify(M) &&
+            ((y[x] = M),
+            o("metadata-update", { key: w, value: i[w], silent: v })));
+      },
+      L = {
+        id: { get: () => s },
+        origin: { get: () => e, set: (D) => (e = D) },
+        serverId: { get: () => r.serverFileReference },
+        transferId: { get: () => r.transferId },
+        status: { get: () => r.status },
+        filename: { get: () => r.file.name },
+        filenameWithoutExtension: { get: () => rs(r.file.name) },
+        fileExtension: { get: d },
+        fileType: { get: c },
+        fileSize: { get: E },
+        file: { get: I },
+        relativePath: { get: () => r.file._relativePath },
+        source: { get: () => r.source },
+        getMetadata: (D) => is(D ? i[D] : i),
+        setMetadata: (D, M, v) => {
+          if (k(D)) {
+            const P = D;
+            return (
+              Object.keys(P).forEach((w) => {
+                R(w, P[w], M);
+              }),
+              D
+            );
+          }
+          return (R(D, M, v), M);
+        },
+        extend: (D, M) => (b[D] = M),
+        abortLoad: _,
+        retryLoad: u,
+        requestProcessing: h,
+        abortProcessing: f,
+        load: p,
+        process: m,
+        revert: T,
+        ...at(),
+        freeze: () => (r.frozen = !0),
+        release: () => (r.released = !0),
+        released: { get: () => r.released },
+        archive: () => (r.archived = !0),
+        archived: { get: () => r.archived },
+        setFile: (D) => (r.file = D),
+      },
+      b = _e(L);
+    return b;
+  },
+  ra = (e, t) => (fe(t) ? 0 : Z(t) ? e.findIndex((n) => n.id === t) : -1),
+  ln = (e, t) => {
+    const n = ra(e, t);
+    if (!(n < 0)) return e[n] || null;
+  },
+  cn = (e, t, n, s, r, a) => {
+    const i = Re(null, e, { method: "GET", responseType: "blob" });
+    return (
+      (i.onload = (l) => {
+        const o = l.getAllResponseHeaders(),
+          d = bt(o).name || He(e);
+        t(Y("load", l.status, be(l.response, d), o));
+      }),
+      (i.onerror = (l) => {
+        n(Y("error", l.status, l.statusText, l.getAllResponseHeaders()));
+      }),
+      (i.onheaders = (l) => {
+        a(Y("headers", l.status, null, l.getAllResponseHeaders()));
+      }),
+      (i.ontimeout = Oe(n)),
+      (i.onprogress = s),
+      (i.onabort = r),
+      i
+    );
+  },
+  dn = (e) => (
+    e.indexOf("//") === 0 && (e = location.protocol + e),
+    e
+      .toLowerCase()
+      .replace("blob:", "")
+      .replace(/([a-z])?:\/\//, "$1")
+      .split("/")[0]
+  ),
+  ia = (e) =>
+    (e.indexOf(":") > -1 || e.indexOf("//") > -1) &&
+    dn(location.href) !== dn(e),
+  $e =
+    (e) =>
+    (...t) =>
+      ge(e) ? e(...t) : e,
+  aa = (e) => !Se(e.file),
+  ft = (e, t) => {
+    (clearTimeout(t.listUpdateTimeout),
+      (t.listUpdateTimeout = setTimeout(() => {
+        e("DID_UPDATE_ITEMS", { items: le(t.items) });
+      }, 0)));
+  },
+  un = (e, ...t) =>
+    new Promise((n) => {
+      if (!e) return n(!0);
+      const s = e(...t);
+      if (s == null) return n(!0);
+      if (typeof s == "boolean") return n(s);
+      typeof s.then == "function" && s.then(n);
+    }),
+  pt = (e, t) => {
+    e.items.sort((n, s) => t(J(n), J(s)));
+  },
+  re =
+    (e, t) =>
+    ({ query: n, success: s = () => {}, failure: r = () => {}, ...a } = {}) => {
+      const i = he(e.items, n);
+      if (!i) {
+        r({ error: Y("error", 0, "Item not found"), file: null });
+        return;
+      }
+      t(i, s, r, a || {});
+    },
+  oa = (e, t, n) => ({
+    ABORT_ALL: () => {
+      le(n.items).forEach((s) => {
+        (s.freeze(), s.abortLoad(), s.abortProcessing());
+      });
+    },
+    DID_SET_FILES: ({ value: s = [] }) => {
+      const r = s.map((i) => ({
+        source: i.source ? i.source : i,
+        options: i.options,
+      }));
+      let a = le(n.items);
+      (a.forEach((i) => {
+        r.find((l) => l.source === i.source || l.source === i.file) ||
+          e("REMOVE_ITEM", { query: i, remove: !1 });
+      }),
+        (a = le(n.items)),
+        r.forEach((i, l) => {
+          a.find((o) => o.source === i.source || o.file === i.source) ||
+            e("ADD_ITEM", { ...i, interactionMethod: ie.NONE, index: l });
+        }));
+    },
+    DID_UPDATE_ITEM_METADATA: ({ id: s, action: r, change: a }) => {
+      a.silent ||
+        (clearTimeout(n.itemUpdateTimeout),
+        (n.itemUpdateTimeout = setTimeout(() => {
+          const i = ln(n.items, s);
+          if (!t("IS_ASYNC")) {
+            oe("SHOULD_PREPARE_OUTPUT", !1, {
+              item: i,
+              query: t,
+              action: r,
+              change: a,
+            }).then((c) => {
+              const E = t("GET_BEFORE_PREPARE_FILE");
+              (E && (c = E(i, c)),
+                c &&
+                  e(
+                    "REQUEST_PREPARE_OUTPUT",
+                    {
+                      query: s,
+                      item: i,
+                      success: (I) => {
+                        e("DID_PREPARE_OUTPUT", { id: s, file: I });
+                      },
+                    },
+                    !0,
+                  ));
+            });
+            return;
+          }
+          i.origin === $.LOCAL &&
+            e("DID_LOAD_ITEM", {
+              id: i.id,
+              error: null,
+              serverFileReference: i.source,
+            });
+          const l = () => {
+              setTimeout(() => {
+                e("REQUEST_ITEM_PROCESSING", { query: s });
+              }, 32);
+            },
+            o = (c) => {
+              i.revert(
+                Fe(n.options.server.url, n.options.server.revert),
+                t("GET_FORCE_REVERT"),
+              )
+                .then(c ? l : () => {})
+                .catch(() => {});
+            },
+            d = (c) => {
+              i.abortProcessing().then(c ? l : () => {});
+            };
+          if (i.status === G.PROCESSING_COMPLETE)
+            return o(n.options.instantUpload);
+          if (i.status === G.PROCESSING) return d(n.options.instantUpload);
+          n.options.instantUpload && l();
+        }, 0)));
+    },
+    MOVE_ITEM: ({ query: s, index: r }) => {
+      const a = he(n.items, s);
+      if (!a) return;
+      const i = n.items.indexOf(a);
+      ((r = Jn(r, 0, n.items.length - 1)),
+        i !== r && n.items.splice(r, 0, n.items.splice(i, 1)[0]));
+    },
+    SORT: ({ compare: s }) => {
+      (pt(n, s), e("DID_SORT_ITEMS", { items: t("GET_ACTIVE_ITEMS") }));
+    },
+    ADD_ITEMS: ({
+      items: s,
+      index: r,
+      interactionMethod: a,
+      success: i = () => {},
+      failure: l = () => {},
+    }) => {
+      let o = r;
+      if (r === -1 || typeof r > "u") {
+        const p = t("GET_ITEM_INSERT_LOCATION"),
+          u = t("GET_TOTAL_ITEMS");
+        o = p === "before" ? 0 : u;
+      }
+      const d = t("GET_IGNORED_FILES"),
+        c = (p) => (Se(p) ? !d.includes(p.name.toLowerCase()) : !fe(p)),
+        I = s.filter(c).map(
+          (p) =>
+            new Promise((u, _) => {
+              e("ADD_ITEM", {
+                interactionMethod: a,
+                source: p.source || p,
+                success: u,
+                failure: _,
+                index: o++,
+                options: p.options || {},
+              });
+            }),
+        );
+      Promise.all(I).then(i).catch(l);
+    },
+    ADD_ITEM: ({
+      source: s,
+      index: r = -1,
+      interactionMethod: a,
+      success: i = () => {},
+      failure: l = () => {},
+      options: o = {},
+    }) => {
+      if (fe(s)) {
+        l({ error: Y("error", 0, "No source"), file: null });
+        return;
+      }
+      if (Se(s) && n.options.ignoredFiles.includes(s.name.toLowerCase()))
+        return;
+      if (!Bi(n)) {
+        if (
+          n.options.allowMultiple ||
+          (!n.options.allowMultiple && !n.options.allowReplace)
+        ) {
+          const f = Y("warning", 0, "Max files");
+          (e("DID_THROW_MAX_FILES", { source: s, error: f }),
+            l({ error: f, file: null }));
+          return;
+        }
+        const h = le(n.items)[0];
+        if (
+          h.status === G.PROCESSING_COMPLETE ||
+          h.status === G.PROCESSING_REVERT_ERROR
+        ) {
+          const f = t("GET_FORCE_REVERT");
+          if (
+            (h
+              .revert(Fe(n.options.server.url, n.options.server.revert), f)
+              .then(() => {
+                f &&
+                  e("ADD_ITEM", {
+                    source: s,
+                    index: r,
+                    interactionMethod: a,
+                    success: i,
+                    failure: l,
+                    options: o,
+                  });
+              })
+              .catch(() => {}),
+            f)
+          )
+            return;
+        }
+        e("REMOVE_ITEM", { query: h.id });
+      }
+      const d =
+          o.type === "local" ? $.LOCAL : o.type === "limbo" ? $.LIMBO : $.INPUT,
+        c = sa(d, d === $.INPUT ? null : s, o.file);
+      (Object.keys(o.metadata || {}).forEach((h) => {
+        c.setMetadata(h, o.metadata[h]);
+      }),
+        Ae("DID_CREATE_ITEM", c, { query: t, dispatch: e }));
+      const E = t("GET_ITEM_INSERT_LOCATION");
+      (n.options.itemInsertLocationFreedom ||
+        (r = E === "before" ? -1 : n.items.length),
+        xi(n.items, c, r),
+        ge(E) && s && pt(n, E));
+      const I = c.id;
+      (c.on("init", () => {
+        e("DID_INIT_ITEM", { id: I });
+      }),
+        c.on("load-init", () => {
+          e("DID_START_ITEM_LOAD", { id: I });
+        }),
+        c.on("load-meta", () => {
+          e("DID_UPDATE_ITEM_META", { id: I });
+        }),
+        c.on("load-progress", (h) => {
+          e("DID_UPDATE_ITEM_LOAD_PROGRESS", { id: I, progress: h });
+        }),
+        c.on("load-request-error", (h) => {
+          const f = $e(n.options.labelFileLoadError)(h);
+          if (h.code >= 400 && h.code < 500) {
+            (e("DID_THROW_ITEM_INVALID", {
+              id: I,
+              error: h,
+              status: { main: f, sub: `${h.code} (${h.body})` },
+            }),
+              l({ error: h, file: J(c) }));
+            return;
+          }
+          e("DID_THROW_ITEM_LOAD_ERROR", {
+            id: I,
+            error: h,
+            status: { main: f, sub: n.options.labelTapToRetry },
+          });
+        }),
+        c.on("load-file-error", (h) => {
+          (e("DID_THROW_ITEM_INVALID", {
+            id: I,
+            error: h.status,
+            status: h.status,
+          }),
+            l({ error: h.status, file: J(c) }));
+        }),
+        c.on("load-abort", () => {
+          e("REMOVE_ITEM", { query: I });
+        }),
+        c.on("load-skip", () => {
+          (c.on("metadata-update", (h) => {
+            Se(c.file) && e("DID_UPDATE_ITEM_METADATA", { id: I, change: h });
+          }),
+            e("COMPLETE_LOAD_ITEM", {
+              query: I,
+              item: c,
+              data: { source: s, success: i },
+            }));
+        }),
+        c.on("load", () => {
+          const h = (f) => {
+            if (!f) {
+              e("REMOVE_ITEM", { query: I });
+              return;
+            }
+            (c.on("metadata-update", (T) => {
+              e("DID_UPDATE_ITEM_METADATA", { id: I, change: T });
+            }),
+              oe("SHOULD_PREPARE_OUTPUT", !1, { item: c, query: t }).then(
+                (T) => {
+                  const R = t("GET_BEFORE_PREPARE_FILE");
+                  R && (T = R(c, T));
+                  const S = () => {
+                    (e("COMPLETE_LOAD_ITEM", {
+                      query: I,
+                      item: c,
+                      data: { source: s, success: i },
+                    }),
+                      ft(e, n));
+                  };
+                  if (T) {
+                    e(
+                      "REQUEST_PREPARE_OUTPUT",
+                      {
+                        query: I,
+                        item: c,
+                        success: (L) => {
+                          (e("DID_PREPARE_OUTPUT", { id: I, file: L }), S());
+                        },
+                      },
+                      !0,
+                    );
+                    return;
+                  }
+                  S();
+                },
+              ));
+          };
+          oe("DID_LOAD_ITEM", c, { query: t, dispatch: e })
+            .then(() => {
+              un(t("GET_BEFORE_ADD_FILE"), J(c)).then(h);
+            })
+            .catch((f) => {
+              if (!f || !f.error || !f.status) return h(!1);
+              e("DID_THROW_ITEM_INVALID", {
+                id: I,
+                error: f.error,
+                status: f.status,
+              });
+            });
+        }),
+        c.on("process-start", () => {
+          e("DID_START_ITEM_PROCESSING", { id: I });
+        }),
+        c.on("process-progress", (h) => {
+          e("DID_UPDATE_ITEM_PROCESS_PROGRESS", { id: I, progress: h });
+        }),
+        c.on("process-error", (h) => {
+          e("DID_THROW_ITEM_PROCESSING_ERROR", {
+            id: I,
+            error: h,
+            status: {
+              main: $e(n.options.labelFileProcessingError)(h),
+              sub: n.options.labelTapToRetry,
+            },
+          });
+        }),
+        c.on("process-revert-error", (h) => {
+          e("DID_THROW_ITEM_PROCESSING_REVERT_ERROR", {
+            id: I,
+            error: h,
+            status: {
+              main: $e(n.options.labelFileProcessingRevertError)(h),
+              sub: n.options.labelTapToRetry,
+            },
+          });
+        }),
+        c.on("process-complete", (h) => {
+          (e("DID_COMPLETE_ITEM_PROCESSING", {
+            id: I,
+            error: null,
+            serverFileReference: h,
+          }),
+            e("DID_DEFINE_VALUE", { id: I, value: h }));
+        }),
+        c.on("process-abort", () => {
+          e("DID_ABORT_ITEM_PROCESSING", { id: I });
+        }),
+        c.on("process-revert", () => {
+          (e("DID_REVERT_ITEM_PROCESSING", { id: I }),
+            e("DID_DEFINE_VALUE", { id: I, value: null }));
+        }),
+        e("DID_ADD_ITEM", { id: I, index: r, interactionMethod: a }),
+        ft(e, n));
+      const { url: p, load: u, restore: _, fetch: m } = n.options.server || {};
+      c.load(
+        s,
+        Zi(
+          d === $.INPUT
+            ? Z(s) && ia(s) && m
+              ? Et(p, m)
+              : cn
+            : d === $.LIMBO
+              ? Et(p, _)
+              : Et(p, u),
+        ),
+        (h, f, T) => {
+          oe("LOAD_FILE", h, { query: t }).then(f).catch(T);
+        },
+      );
+    },
+    REQUEST_PREPARE_OUTPUT: ({
+      item: s,
+      success: r,
+      failure: a = () => {},
+    }) => {
+      const i = { error: Y("error", 0, "Item not found"), file: null };
+      if (s.archived) return a(i);
+      oe("PREPARE_OUTPUT", s.file, { query: t, item: s }).then((l) => {
+        oe("COMPLETE_PREPARE_OUTPUT", l, { query: t, item: s }).then((o) => {
+          if (s.archived) return a(i);
+          r(o);
+        });
+      });
+    },
+    COMPLETE_LOAD_ITEM: ({ item: s, data: r }) => {
+      const { success: a, source: i } = r,
+        l = t("GET_ITEM_INSERT_LOCATION");
+      if (
+        (ge(l) && i && pt(n, l),
+        e("DID_LOAD_ITEM", {
+          id: s.id,
+          error: null,
+          serverFileReference: s.origin === $.INPUT ? null : i,
+        }),
+        a(J(s)),
+        s.origin === $.LOCAL)
+      ) {
+        e("DID_LOAD_LOCAL_ITEM", { id: s.id });
+        return;
+      }
+      if (s.origin === $.LIMBO) {
+        (e("DID_COMPLETE_ITEM_PROCESSING", {
+          id: s.id,
+          error: null,
+          serverFileReference: i,
+        }),
+          e("DID_DEFINE_VALUE", { id: s.id, value: s.serverId || i }));
+        return;
+      }
+      t("IS_ASYNC") &&
+        n.options.instantUpload &&
+        e("REQUEST_ITEM_PROCESSING", { query: s.id });
+    },
+    RETRY_ITEM_LOAD: re(n, (s) => {
+      s.retryLoad();
+    }),
+    REQUEST_ITEM_PREPARE: re(n, (s, r, a) => {
+      e(
+        "REQUEST_PREPARE_OUTPUT",
+        {
+          query: s.id,
+          item: s,
+          success: (i) => {
+            (e("DID_PREPARE_OUTPUT", { id: s.id, file: i }),
+              r({ file: s, output: i }));
+          },
+          failure: a,
+        },
+        !0,
+      );
+    }),
+    REQUEST_ITEM_PROCESSING: re(n, (s, r, a) => {
+      if (!(s.status === G.IDLE || s.status === G.PROCESSING_ERROR)) {
+        const l = () =>
+            e("REQUEST_ITEM_PROCESSING", { query: s, success: r, failure: a }),
+          o = () => (document.hidden ? l() : setTimeout(l, 32));
+        s.status === G.PROCESSING_COMPLETE ||
+        s.status === G.PROCESSING_REVERT_ERROR
+          ? s
+              .revert(
+                Fe(n.options.server.url, n.options.server.revert),
+                t("GET_FORCE_REVERT"),
+              )
+              .then(o)
+              .catch(() => {})
+          : s.status === G.PROCESSING && s.abortProcessing().then(o);
+        return;
+      }
+      s.status !== G.PROCESSING_QUEUED &&
+        (s.requestProcessing(),
+        e("DID_REQUEST_ITEM_PROCESSING", { id: s.id }),
+        e("PROCESS_ITEM", { query: s, success: r, failure: a }, !0));
+    }),
+    PROCESS_ITEM: re(n, (s, r, a) => {
+      const i = t("GET_MAX_PARALLEL_UPLOADS");
+      if (t("GET_ITEMS_BY_STATUS", G.PROCESSING).length === i) {
+        n.processingQueue.push({ id: s.id, success: r, failure: a });
+        return;
+      }
+      if (s.status === G.PROCESSING) return;
+      const o = () => {
+        const c = n.processingQueue.shift();
+        if (!c) return;
+        const { id: E, success: I, failure: p } = c,
+          u = he(n.items, E);
+        if (!u || u.archived) {
+          o();
+          return;
+        }
+        e("PROCESS_ITEM", { query: E, success: I, failure: p }, !0);
+      };
+      (s.onOnce("process-complete", () => {
+        (r(J(s)), o());
+        const c = n.options.server;
+        if (n.options.instantUpload && s.origin === $.LOCAL && ge(c.remove)) {
+          const p = () => {};
+          ((s.origin = $.LIMBO), n.options.server.remove(s.source, p, p));
+        }
+        t("GET_ITEMS_BY_STATUS", G.PROCESSING_COMPLETE).length ===
+          n.items.length && e("DID_COMPLETE_ITEM_PROCESSING_ALL");
+      }),
+        s.onOnce("process-error", (c) => {
+          (a({ error: c, file: J(s) }), o());
+        }));
+      const d = n.options;
+      s.process(
+        ta(
+          Ji(d.server.url, d.server.process, d.name, {
+            chunkTransferId: s.transferId,
+            chunkServer: d.server.patch,
+            chunkUploads: d.chunkUploads,
+            chunkForce: d.chunkForce,
+            chunkSize: d.chunkSize,
+            chunkRetryDelays: d.chunkRetryDelays,
+          }),
+          {
+            allowMinimumUploadDuration: t("GET_ALLOW_MINIMUM_UPLOAD_DURATION"),
+          },
+        ),
+        (c, E, I) => {
+          oe("PREPARE_OUTPUT", c, { query: t, item: s })
+            .then((p) => {
+              (e("DID_PREPARE_OUTPUT", { id: s.id, file: p }), E(p));
+            })
+            .catch(I);
+        },
+      );
+    }),
+    RETRY_ITEM_PROCESSING: re(n, (s) => {
+      e("REQUEST_ITEM_PROCESSING", { query: s });
+    }),
+    REQUEST_REMOVE_ITEM: re(n, (s) => {
+      un(t("GET_BEFORE_REMOVE_FILE"), J(s)).then((r) => {
+        r && e("REMOVE_ITEM", { query: s });
+      });
+    }),
+    RELEASE_ITEM: re(n, (s) => {
+      s.release();
+    }),
+    REMOVE_ITEM: re(n, (s, r, a, i) => {
+      const l = () => {
+          const d = s.id;
+          (ln(n.items, d).archive(),
+            e("DID_REMOVE_ITEM", { error: null, id: d, item: s }),
+            ft(e, n),
+            r(J(s)));
+        },
+        o = n.options.server;
+      s.origin === $.LOCAL && o && ge(o.remove) && i.remove !== !1
+        ? (e("DID_START_ITEM_REMOVE", { id: s.id }),
+          o.remove(
+            s.source,
+            () => l(),
+            (d) => {
+              e("DID_THROW_ITEM_REMOVE_ERROR", {
+                id: s.id,
+                error: Y("error", 0, d, null),
+                status: {
+                  main: $e(n.options.labelFileRemoveError)(d),
+                  sub: n.options.labelTapToRetry,
+                },
+              });
+            },
+          ))
+        : (((i.revert && s.origin !== $.LOCAL && s.serverId !== null) ||
+            (n.options.chunkUploads && s.file.size > n.options.chunkSize) ||
+            (n.options.chunkUploads && n.options.chunkForce)) &&
+            s.revert(
+              Fe(n.options.server.url, n.options.server.revert),
+              t("GET_FORCE_REVERT"),
+            ),
+          l());
+    }),
+    ABORT_ITEM_LOAD: re(n, (s) => {
+      s.abortLoad();
+    }),
+    ABORT_ITEM_PROCESSING: re(n, (s) => {
+      if (s.serverId) {
+        e("REVERT_ITEM_PROCESSING", { id: s.id });
+        return;
+      }
+      s.abortProcessing().then(() => {
+        n.options.instantUpload && e("REMOVE_ITEM", { query: s.id });
+      });
+    }),
+    REQUEST_REVERT_ITEM_PROCESSING: re(n, (s) => {
+      if (!n.options.instantUpload) {
+        e("REVERT_ITEM_PROCESSING", { query: s });
+        return;
+      }
+      const r = (l) => {
+          l && e("REVERT_ITEM_PROCESSING", { query: s });
+        },
+        a = t("GET_BEFORE_REMOVE_FILE");
+      if (!a) return r(!0);
+      const i = a(J(s));
+      if (i == null) return r(!0);
+      if (typeof i == "boolean") return r(i);
+      typeof i.then == "function" && i.then(r);
+    }),
+    REVERT_ITEM_PROCESSING: re(n, (s) => {
+      s.revert(
+        Fe(n.options.server.url, n.options.server.revert),
+        t("GET_FORCE_REVERT"),
+      )
+        .then(() => {
+          (n.options.instantUpload || aa(s)) &&
+            e("REMOVE_ITEM", { query: s.id });
+        })
+        .catch(() => {});
+    }),
+    SET_OPTIONS: ({ options: s }) => {
+      const r = Object.keys(s),
+        a = la.filter((l) => r.includes(l));
+      [...a, ...Object.keys(s).filter((l) => !a.includes(l))].forEach((l) => {
+        e(`SET_${it(l, "_").toUpperCase()}`, { value: s[l] });
+      });
+    },
+  }),
+  la = ["server"],
+  Nt = (e) => e,
+  pe = (e) => document.createElement(e),
+  W = (e, t) => {
+    let n = e.childNodes[0];
+    n
+      ? t !== n.nodeValue && (n.nodeValue = t)
+      : ((n = document.createTextNode(t)), e.appendChild(n));
+  },
+  En = (e, t, n, s) => {
+    const r = (((s % 360) - 90) * Math.PI) / 180;
+    return { x: e + n * Math.cos(r), y: t + n * Math.sin(r) };
+  },
+  ca = (e, t, n, s, r, a) => {
+    const i = En(e, t, n, r),
+      l = En(e, t, n, s);
+    return ["M", i.x, i.y, "A", n, n, 0, a, 0, l.x, l.y].join(" ");
+  },
+  da = (e, t, n, s, r) => {
+    let a = 1;
+    return (
+      r > s && r - s <= 0.5 && (a = 0),
+      s > r && s - r >= 0.5 && (a = 0),
+      ca(e, t, n, Math.min(0.9999, s) * 360, Math.min(0.9999, r) * 360, a)
+    );
+  },
+  ua = ({ root: e, props: t }) => {
+    ((t.spin = !1), (t.progress = 0), (t.opacity = 0));
+    const n = Je("svg");
+    ((e.ref.path = Je("path", {
+      "stroke-width": 2,
+      "stroke-linecap": "round",
+    })),
+      n.appendChild(e.ref.path),
+      (e.ref.svg = n),
+      e.appendChild(n));
+  },
+  Ea = ({ root: e, props: t }) => {
+    if (t.opacity === 0) return;
+    t.align && (e.element.dataset.align = t.align);
+    const n = parseInt(z(e.ref.path, "stroke-width"), 10),
+      s = e.rect.element.width * 0.5;
+    let r = 0,
+      a = 0;
+    t.spin ? ((r = 0), (a = 0.5)) : ((r = 0), (a = t.progress));
+    const i = da(s, s, s - n, r, a);
+    (z(e.ref.path, "d", i),
+      z(e.ref.path, "stroke-opacity", t.spin || t.progress > 0 ? 1 : 0));
+  },
+  fn = q({
+    tag: "div",
+    name: "progress-indicator",
+    ignoreRectUpdate: !0,
+    ignoreRect: !0,
+    create: ua,
+    write: Ea,
+    mixins: {
+      apis: ["progress", "spin", "align"],
+      styles: ["opacity"],
+      animations: {
+        opacity: { type: "tween", duration: 500 },
+        progress: { type: "spring", stiffness: 0.95, damping: 0.65, mass: 10 },
+      },
+    },
+  }),
+  fa = ({ root: e, props: t }) => {
+    ((e.element.innerHTML = (t.icon || "") + `<span>${t.label}</span>`),
+      (t.isDisabled = !1));
+  },
+  pa = ({ root: e, props: t }) => {
+    const { isDisabled: n } = t,
+      s = e.query("GET_DISABLED") || t.opacity === 0;
+    s && !n
+      ? ((t.isDisabled = !0), z(e.element, "disabled", "disabled"))
+      : !s && n && ((t.isDisabled = !1), e.element.removeAttribute("disabled"));
+  },
+  as = q({
+    tag: "button",
+    attributes: { type: "button" },
+    ignoreRect: !0,
+    ignoreRectUpdate: !0,
+    name: "file-action-button",
+    mixins: {
+      apis: ["label"],
+      styles: ["translateX", "translateY", "scaleX", "scaleY", "opacity"],
+      animations: {
+        scaleX: "spring",
+        scaleY: "spring",
+        translateX: "spring",
+        translateY: "spring",
+        opacity: { type: "tween", duration: 250 },
+      },
+      listeners: !0,
+    },
+    create: fa,
+    write: pa,
+  }),
+  os = (e, t = ".", n = 1e3, s = {}) => {
+    const {
+      labelBytes: r = "bytes",
+      labelKilobytes: a = "KB",
+      labelMegabytes: i = "MB",
+      labelGigabytes: l = "GB",
+    } = s;
+    e = Math.round(Math.abs(e));
+    const o = n,
+      d = n * n,
+      c = n * n * n;
+    return e < o
+      ? `${e} ${r}`
+      : e < d
+        ? `${Math.floor(e / o)} ${a}`
+        : e < c
+          ? `${pn(e / d, 1, t)} ${i}`
+          : `${pn(e / c, 2, t)} ${l}`;
+  },
+  pn = (e, t, n) =>
+    e
+      .toFixed(t)
+      .split(".")
+      .filter((s) => s !== "0")
+      .join(n),
+  Ia = ({ root: e, props: t }) => {
+    const n = pe("span");
+    ((n.className = "filepond--file-info-main"),
+      z(n, "aria-hidden", "true"),
+      e.appendChild(n),
+      (e.ref.fileName = n));
+    const s = pe("span");
+    ((s.className = "filepond--file-info-sub"),
+      e.appendChild(s),
+      (e.ref.fileSize = s),
+      W(s, e.query("GET_LABEL_FILE_WAITING_FOR_SIZE")),
+      W(n, Nt(e.query("GET_ITEM_NAME", t.id))));
+  },
+  Rt = ({ root: e, props: t }) => {
+    (W(
+      e.ref.fileSize,
+      os(
+        e.query("GET_ITEM_SIZE", t.id),
+        ".",
+        e.query("GET_FILE_SIZE_BASE"),
+        e.query("GET_FILE_SIZE_LABELS", e.query),
+      ),
+    ),
+      W(e.ref.fileName, Nt(e.query("GET_ITEM_NAME", t.id))));
+  },
+  In = ({ root: e, props: t }) => {
+    if (Ne(e.query("GET_ITEM_SIZE", t.id))) {
+      Rt({ root: e, props: t });
+      return;
+    }
+    W(e.ref.fileSize, e.query("GET_LABEL_FILE_SIZE_NOT_AVAILABLE"));
+  },
+  _a = q({
+    name: "file-info",
+    ignoreRect: !0,
+    ignoreRectUpdate: !0,
+    write: Q({
+      DID_LOAD_ITEM: Rt,
+      DID_UPDATE_ITEM_META: Rt,
+      DID_THROW_ITEM_LOAD_ERROR: In,
+      DID_THROW_ITEM_INVALID: In,
+    }),
+    didCreateView: (e) => {
+      Ae("CREATE_VIEW", { ...e, view: e });
+    },
+    create: Ia,
+    mixins: {
+      styles: ["translateX", "translateY"],
+      animations: { translateX: "spring", translateY: "spring" },
+    },
+  }),
+  ls = (e) => Math.round(e * 100),
+  Ta = ({ root: e }) => {
+    const t = pe("span");
+    ((t.className = "filepond--file-status-main"),
+      e.appendChild(t),
+      (e.ref.main = t));
+    const n = pe("span");
+    ((n.className = "filepond--file-status-sub"),
+      e.appendChild(n),
+      (e.ref.sub = n),
+      cs({ root: e, action: { progress: null } }));
+  },
+  cs = ({ root: e, action: t }) => {
+    const n =
+      t.progress === null
+        ? e.query("GET_LABEL_FILE_LOADING")
+        : `${e.query("GET_LABEL_FILE_LOADING")} ${ls(t.progress)}%`;
+    (W(e.ref.main, n), W(e.ref.sub, e.query("GET_LABEL_TAP_TO_CANCEL")));
+  },
+  ma = ({ root: e, action: t }) => {
+    const n =
+      t.progress === null
+        ? e.query("GET_LABEL_FILE_PROCESSING")
+        : `${e.query("GET_LABEL_FILE_PROCESSING")} ${ls(t.progress)}%`;
+    (W(e.ref.main, n), W(e.ref.sub, e.query("GET_LABEL_TAP_TO_CANCEL")));
+  },
+  ga = ({ root: e }) => {
+    (W(e.ref.main, e.query("GET_LABEL_FILE_PROCESSING")),
+      W(e.ref.sub, e.query("GET_LABEL_TAP_TO_CANCEL")));
+  },
+  ha = ({ root: e }) => {
+    (W(e.ref.main, e.query("GET_LABEL_FILE_PROCESSING_ABORTED")),
+      W(e.ref.sub, e.query("GET_LABEL_TAP_TO_RETRY")));
+  },
+  Ra = ({ root: e }) => {
+    (W(e.ref.main, e.query("GET_LABEL_FILE_PROCESSING_COMPLETE")),
+      W(e.ref.sub, e.query("GET_LABEL_TAP_TO_UNDO")));
+  },
+  _n = ({ root: e }) => {
+    (W(e.ref.main, ""), W(e.ref.sub, ""));
+  },
+  Be = ({ root: e, action: t }) => {
+    (W(e.ref.main, t.status.main), W(e.ref.sub, t.status.sub));
+  },
+  Oa = q({
+    name: "file-status",
+    ignoreRect: !0,
+    ignoreRectUpdate: !0,
+    write: Q({
+      DID_LOAD_ITEM: _n,
+      DID_REVERT_ITEM_PROCESSING: _n,
+      DID_REQUEST_ITEM_PROCESSING: ga,
+      DID_ABORT_ITEM_PROCESSING: ha,
+      DID_COMPLETE_ITEM_PROCESSING: Ra,
+      DID_UPDATE_ITEM_PROCESS_PROGRESS: ma,
+      DID_UPDATE_ITEM_LOAD_PROGRESS: cs,
+      DID_THROW_ITEM_LOAD_ERROR: Be,
+      DID_THROW_ITEM_INVALID: Be,
+      DID_THROW_ITEM_PROCESSING_ERROR: Be,
+      DID_THROW_ITEM_PROCESSING_REVERT_ERROR: Be,
+      DID_THROW_ITEM_REMOVE_ERROR: Be,
+    }),
+    didCreateView: (e) => {
+      Ae("CREATE_VIEW", { ...e, view: e });
+    },
+    create: Ta,
+    mixins: {
+      styles: ["translateX", "translateY", "opacity"],
+      animations: {
+        opacity: { type: "tween", duration: 250 },
+        translateX: "spring",
+        translateY: "spring",
+      },
+    },
+  }),
+  Ot = {
+    AbortItemLoad: {
+      label: "GET_LABEL_BUTTON_ABORT_ITEM_LOAD",
+      action: "ABORT_ITEM_LOAD",
+      className: "filepond--action-abort-item-load",
+      align: "LOAD_INDICATOR_POSITION",
+    },
+    RetryItemLoad: {
+      label: "GET_LABEL_BUTTON_RETRY_ITEM_LOAD",
+      action: "RETRY_ITEM_LOAD",
+      icon: "GET_ICON_RETRY",
+      className: "filepond--action-retry-item-load",
+      align: "BUTTON_PROCESS_ITEM_POSITION",
+    },
+    RemoveItem: {
+      label: "GET_LABEL_BUTTON_REMOVE_ITEM",
+      action: "REQUEST_REMOVE_ITEM",
+      icon: "GET_ICON_REMOVE",
+      className: "filepond--action-remove-item",
+      align: "BUTTON_REMOVE_ITEM_POSITION",
+    },
+    ProcessItem: {
+      label: "GET_LABEL_BUTTON_PROCESS_ITEM",
+      action: "REQUEST_ITEM_PROCESSING",
+      icon: "GET_ICON_PROCESS",
+      className: "filepond--action-process-item",
+      align: "BUTTON_PROCESS_ITEM_POSITION",
+    },
+    AbortItemProcessing: {
+      label: "GET_LABEL_BUTTON_ABORT_ITEM_PROCESSING",
+      action: "ABORT_ITEM_PROCESSING",
+      className: "filepond--action-abort-item-processing",
+      align: "BUTTON_PROCESS_ITEM_POSITION",
+    },
+    RetryItemProcessing: {
+      label: "GET_LABEL_BUTTON_RETRY_ITEM_PROCESSING",
+      action: "RETRY_ITEM_PROCESSING",
+      icon: "GET_ICON_RETRY",
+      className: "filepond--action-retry-item-processing",
+      align: "BUTTON_PROCESS_ITEM_POSITION",
+    },
+    RevertItemProcessing: {
+      label: "GET_LABEL_BUTTON_UNDO_ITEM_PROCESSING",
+      action: "REQUEST_REVERT_ITEM_PROCESSING",
+      icon: "GET_ICON_UNDO",
+      className: "filepond--action-revert-item-processing",
+      align: "BUTTON_PROCESS_ITEM_POSITION",
+    },
+  },
+  St = [];
+H(Ot, (e) => {
+  St.push(e);
+});
+const te = (e) => {
+    if (Dt(e) === "right") return 0;
+    const t = e.ref.buttonRemoveItem.rect.element;
+    return t.hidden ? null : t.width + t.left;
+  },
+  Sa = (e) => e.ref.buttonAbortItemLoad.rect.element.width,
+  ke = (e) => Math.floor(e.ref.buttonRemoveItem.rect.element.height / 4),
+  Da = (e) => Math.floor(e.ref.buttonRemoveItem.rect.element.left / 2),
+  Aa = (e) => e.query("GET_STYLE_LOAD_INDICATOR_POSITION"),
+  ya = (e) => e.query("GET_STYLE_PROGRESS_INDICATOR_POSITION"),
+  Dt = (e) => e.query("GET_STYLE_BUTTON_REMOVE_ITEM_POSITION"),
+  La = {
+    buttonAbortItemLoad: { opacity: 0 },
+    buttonRetryItemLoad: { opacity: 0 },
+    buttonRemoveItem: { opacity: 0 },
+    buttonProcessItem: { opacity: 0 },
+    buttonAbortItemProcessing: { opacity: 0 },
+    buttonRetryItemProcessing: { opacity: 0 },
+    buttonRevertItemProcessing: { opacity: 0 },
+    loadProgressIndicator: { opacity: 0, align: Aa },
+    processProgressIndicator: { opacity: 0, align: ya },
+    processingCompleteIndicator: { opacity: 0, scaleX: 0.75, scaleY: 0.75 },
+    info: { translateX: 0, translateY: 0, opacity: 0 },
+    status: { translateX: 0, translateY: 0, opacity: 0 },
+  },
+  Tn = {
+    buttonRemoveItem: { opacity: 1 },
+    buttonProcessItem: { opacity: 1 },
+    info: { translateX: te },
+    status: { translateX: te },
+  },
+  It = {
+    buttonAbortItemProcessing: { opacity: 1 },
+    processProgressIndicator: { opacity: 1 },
+    status: { opacity: 1 },
+  },
+  we = {
+    DID_THROW_ITEM_INVALID: {
+      buttonRemoveItem: { opacity: 1 },
+      info: { translateX: te },
+      status: { translateX: te, opacity: 1 },
+    },
+    DID_START_ITEM_LOAD: {
+      buttonAbortItemLoad: { opacity: 1 },
+      loadProgressIndicator: { opacity: 1 },
+      status: { opacity: 1 },
+    },
+    DID_THROW_ITEM_LOAD_ERROR: {
+      buttonRetryItemLoad: { opacity: 1 },
+      buttonRemoveItem: { opacity: 1 },
+      info: { translateX: te },
+      status: { opacity: 1 },
+    },
+    DID_START_ITEM_REMOVE: {
+      processProgressIndicator: { opacity: 1, align: Dt },
+      info: { translateX: te },
+      status: { opacity: 0 },
+    },
+    DID_THROW_ITEM_REMOVE_ERROR: {
+      processProgressIndicator: { opacity: 0, align: Dt },
+      buttonRemoveItem: { opacity: 1 },
+      info: { translateX: te },
+      status: { opacity: 1, translateX: te },
+    },
+    DID_LOAD_ITEM: Tn,
+    DID_LOAD_LOCAL_ITEM: {
+      buttonRemoveItem: { opacity: 1 },
+      info: { translateX: te },
+      status: { translateX: te },
+    },
+    DID_START_ITEM_PROCESSING: It,
+    DID_REQUEST_ITEM_PROCESSING: It,
+    DID_UPDATE_ITEM_PROCESS_PROGRESS: It,
+    DID_COMPLETE_ITEM_PROCESSING: {
+      buttonRevertItemProcessing: { opacity: 1 },
+      info: { opacity: 1 },
+      status: { opacity: 1 },
+    },
+    DID_THROW_ITEM_PROCESSING_ERROR: {
+      buttonRemoveItem: { opacity: 1 },
+      buttonRetryItemProcessing: { opacity: 1 },
+      status: { opacity: 1 },
+      info: { translateX: te },
+    },
+    DID_THROW_ITEM_PROCESSING_REVERT_ERROR: {
+      buttonRevertItemProcessing: { opacity: 1 },
+      status: { opacity: 1 },
+      info: { opacity: 1 },
+    },
+    DID_ABORT_ITEM_PROCESSING: {
+      buttonRemoveItem: { opacity: 1 },
+      buttonProcessItem: { opacity: 1 },
+      info: { translateX: te },
+      status: { opacity: 1 },
+    },
+    DID_REVERT_ITEM_PROCESSING: Tn,
+  },
+  Ma = q({
+    create: ({ root: e }) => {
+      e.element.innerHTML = e.query("GET_ICON_DONE");
+    },
+    name: "processing-complete-indicator",
+    ignoreRect: !0,
+    mixins: {
+      styles: ["scaleX", "scaleY", "opacity"],
+      animations: {
+        scaleX: "spring",
+        scaleY: "spring",
+        opacity: { type: "tween", duration: 250 },
+      },
+    },
+  }),
+  Pa = ({ root: e, props: t }) => {
+    const n = Object.keys(Ot).reduce((u, _) => ((u[_] = { ...Ot[_] }), u), {}),
+      { id: s } = t,
+      r = e.query("GET_ALLOW_REVERT"),
+      a = e.query("GET_ALLOW_REMOVE"),
+      i = e.query("GET_ALLOW_PROCESS"),
+      l = e.query("GET_INSTANT_UPLOAD"),
+      o = e.query("IS_ASYNC"),
+      d = e.query("GET_STYLE_BUTTON_REMOVE_ITEM_ALIGN");
+    let c;
+    o
+      ? i && !r
+        ? (c = (u) => !/RevertItemProcessing/.test(u))
+        : !i && r
+          ? (c = (u) =>
+              !/ProcessItem|RetryItemProcessing|AbortItemProcessing/.test(u))
+          : !i && !r && (c = (u) => !/Process/.test(u))
+      : (c = (u) => !/Process/.test(u));
+    const E = c ? St.filter(c) : St.concat();
+    if (
+      (l &&
+        r &&
+        ((n.RevertItemProcessing.label = "GET_LABEL_BUTTON_REMOVE_ITEM"),
+        (n.RevertItemProcessing.icon = "GET_ICON_REMOVE")),
+      o && !r)
+    ) {
+      const u = we.DID_COMPLETE_ITEM_PROCESSING;
+      ((u.info.translateX = Da),
+        (u.info.translateY = ke),
+        (u.status.translateY = ke),
+        (u.processingCompleteIndicator = { opacity: 1, scaleX: 1, scaleY: 1 }));
+    }
+    if (
+      (o &&
+        !i &&
+        ([
+          "DID_START_ITEM_PROCESSING",
+          "DID_REQUEST_ITEM_PROCESSING",
+          "DID_UPDATE_ITEM_PROCESS_PROGRESS",
+          "DID_THROW_ITEM_PROCESSING_ERROR",
+        ].forEach((u) => {
+          we[u].status.translateY = ke;
+        }),
+        (we.DID_THROW_ITEM_PROCESSING_ERROR.status.translateX = Sa)),
+      d && r)
+    ) {
+      n.RevertItemProcessing.align = "BUTTON_REMOVE_ITEM_POSITION";
+      const u = we.DID_COMPLETE_ITEM_PROCESSING;
+      ((u.info.translateX = te),
+        (u.status.translateY = ke),
+        (u.processingCompleteIndicator = { opacity: 1, scaleX: 1, scaleY: 1 }));
+    }
+    (a || (n.RemoveItem.disabled = !0),
+      H(n, (u, _) => {
+        const m = e.createChildView(as, {
+          label: e.query(_.label),
+          icon: e.query(_.icon),
+          opacity: 0,
+        });
+        (E.includes(u) && e.appendChildView(m),
+          _.disabled &&
+            (m.element.setAttribute("disabled", "disabled"),
+            m.element.setAttribute("hidden", "hidden")),
+          (m.element.dataset.align = e.query(`GET_STYLE_${_.align}`)),
+          m.element.classList.add(_.className),
+          m.on("click", (h) => {
+            (h.stopPropagation(),
+              !_.disabled && e.dispatch(_.action, { query: s }));
+          }),
+          (e.ref[`button${u}`] = m));
+      }),
+      (e.ref.processingCompleteIndicator = e.appendChildView(
+        e.createChildView(Ma),
+      )),
+      (e.ref.processingCompleteIndicator.element.dataset.align = e.query(
+        "GET_STYLE_BUTTON_PROCESS_ITEM_POSITION",
+      )),
+      (e.ref.info = e.appendChildView(e.createChildView(_a, { id: s }))),
+      (e.ref.status = e.appendChildView(e.createChildView(Oa, { id: s }))));
+    const I = e.appendChildView(
+      e.createChildView(fn, {
+        opacity: 0,
+        align: e.query("GET_STYLE_LOAD_INDICATOR_POSITION"),
+      }),
+    );
+    (I.element.classList.add("filepond--load-indicator"),
+      (e.ref.loadProgressIndicator = I));
+    const p = e.appendChildView(
+      e.createChildView(fn, {
+        opacity: 0,
+        align: e.query("GET_STYLE_PROGRESS_INDICATOR_POSITION"),
+      }),
+    );
+    (p.element.classList.add("filepond--process-indicator"),
+      (e.ref.processProgressIndicator = p),
+      (e.ref.activeStyles = []));
+  },
+  wa = ({ root: e, actions: t, props: n }) => {
+    Ca({ root: e, actions: t, props: n });
+    let s = t
+      .concat()
+      .filter((r) => /^DID_/.test(r.type))
+      .reverse()
+      .find((r) => we[r.type]);
+    if (s) {
+      e.ref.activeStyles = [];
+      const r = we[s.type];
+      H(La, (a, i) => {
+        const l = e.ref[a];
+        H(i, (o, d) => {
+          const c = r[a] && typeof r[a][o] < "u" ? r[a][o] : d;
+          e.ref.activeStyles.push({ control: l, key: o, value: c });
+        });
+      });
+    }
+    e.ref.activeStyles.forEach(({ control: r, key: a, value: i }) => {
+      r[a] = typeof i == "function" ? i(e) : i;
+    });
+  },
+  Ca = Q({
+    DID_SET_LABEL_BUTTON_ABORT_ITEM_PROCESSING: ({ root: e, action: t }) => {
+      e.ref.buttonAbortItemProcessing.label = t.value;
+    },
+    DID_SET_LABEL_BUTTON_ABORT_ITEM_LOAD: ({ root: e, action: t }) => {
+      e.ref.buttonAbortItemLoad.label = t.value;
+    },
+    DID_SET_LABEL_BUTTON_ABORT_ITEM_REMOVAL: ({ root: e, action: t }) => {
+      e.ref.buttonAbortItemRemoval.label = t.value;
+    },
+    DID_REQUEST_ITEM_PROCESSING: ({ root: e }) => {
+      ((e.ref.processProgressIndicator.spin = !0),
+        (e.ref.processProgressIndicator.progress = 0));
+    },
+    DID_START_ITEM_LOAD: ({ root: e }) => {
+      ((e.ref.loadProgressIndicator.spin = !0),
+        (e.ref.loadProgressIndicator.progress = 0));
+    },
+    DID_START_ITEM_REMOVE: ({ root: e }) => {
+      ((e.ref.processProgressIndicator.spin = !0),
+        (e.ref.processProgressIndicator.progress = 0));
+    },
+    DID_UPDATE_ITEM_LOAD_PROGRESS: ({ root: e, action: t }) => {
+      ((e.ref.loadProgressIndicator.spin = !1),
+        (e.ref.loadProgressIndicator.progress = t.progress));
+    },
+    DID_UPDATE_ITEM_PROCESS_PROGRESS: ({ root: e, action: t }) => {
+      ((e.ref.processProgressIndicator.spin = !1),
+        (e.ref.processProgressIndicator.progress = t.progress));
+    },
+  }),
+  ba = q({
+    create: Pa,
+    write: wa,
+    didCreateView: (e) => {
+      Ae("CREATE_VIEW", { ...e, view: e });
+    },
+    name: "file",
+  }),
+  Na = ({ root: e, props: t }) => {
+    ((e.ref.fileName = pe("legend")),
+      e.appendChild(e.ref.fileName),
+      (e.ref.file = e.appendChildView(e.createChildView(ba, { id: t.id }))),
+      (e.ref.data = !1));
+  },
+  va = ({ root: e, props: t }) => {
+    W(e.ref.fileName, Nt(e.query("GET_ITEM_NAME", t.id)));
+  },
+  Ga = q({
+    create: Na,
+    ignoreRect: !0,
+    write: Q({ DID_LOAD_ITEM: va }),
+    didCreateView: (e) => {
+      Ae("CREATE_VIEW", { ...e, view: e });
+    },
+    tag: "fieldset",
+    name: "file-wrapper",
+  }),
+  mn = { type: "spring", damping: 0.6, mass: 7 },
+  Fa = ({ root: e, props: t }) => {
+    ([
+      { name: "top" },
+      {
+        name: "center",
+        props: { translateY: null, scaleY: null },
+        mixins: {
+          animations: { scaleY: mn },
+          styles: ["translateY", "scaleY"],
+        },
+      },
+      {
+        name: "bottom",
+        props: { translateY: null },
+        mixins: { animations: { translateY: mn }, styles: ["translateY"] },
+      },
+    ].forEach((n) => {
+      Ba(e, n, t.name);
+    }),
+      e.element.classList.add(`filepond--${t.name}`),
+      (e.ref.scalable = null));
+  },
+  Ba = (e, t, n) => {
+    const s = q({
+        name: `panel-${t.name} filepond--${n}`,
+        mixins: t.mixins,
+        ignoreRectUpdate: !0,
+      }),
+      r = e.createChildView(s, t.props);
+    e.ref[t.name] = e.appendChildView(r);
+  },
+  Ua = ({ root: e, props: t }) => {
+    if (
+      ((e.ref.scalable === null || t.scalable !== e.ref.scalable) &&
+        ((e.ref.scalable = zn(t.scalable) ? t.scalable : !0),
+        (e.element.dataset.scalable = e.ref.scalable)),
+      !t.height)
+    )
+      return;
+    const n = e.ref.top.rect.element,
+      s = e.ref.bottom.rect.element,
+      r = Math.max(n.height + s.height, t.height);
+    ((e.ref.center.translateY = n.height),
+      (e.ref.center.scaleY = (r - n.height - s.height) / 100),
+      (e.ref.bottom.translateY = r - s.height));
+  },
+  ds = q({
+    name: "panel",
+    read: ({ root: e, props: t }) =>
+      (t.heightCurrent = e.ref.bottom.translateY),
+    write: Ua,
+    create: Fa,
+    ignoreRect: !0,
+    mixins: { apis: ["height", "heightCurrent", "scalable"] },
+  }),
+  xa = (e) => {
+    const t = e.map((s) => s.id);
+    let n;
+    return {
+      setIndex: (s) => {
+        n = s;
+      },
+      getIndex: () => n,
+      getItemIndex: (s) => t.indexOf(s.id),
+    };
+  },
+  gn = { type: "spring", stiffness: 0.75, damping: 0.45, mass: 10 },
+  hn = "spring",
+  Rn = {
+    DID_START_ITEM_LOAD: "busy",
+    DID_UPDATE_ITEM_LOAD_PROGRESS: "loading",
+    DID_THROW_ITEM_INVALID: "load-invalid",
+    DID_THROW_ITEM_LOAD_ERROR: "load-error",
+    DID_LOAD_ITEM: "idle",
+    DID_THROW_ITEM_REMOVE_ERROR: "remove-error",
+    DID_START_ITEM_REMOVE: "busy",
+    DID_START_ITEM_PROCESSING: "busy processing",
+    DID_REQUEST_ITEM_PROCESSING: "busy processing",
+    DID_UPDATE_ITEM_PROCESS_PROGRESS: "processing",
+    DID_COMPLETE_ITEM_PROCESSING: "processing-complete",
+    DID_THROW_ITEM_PROCESSING_ERROR: "processing-error",
+    DID_THROW_ITEM_PROCESSING_REVERT_ERROR: "processing-revert-error",
+    DID_ABORT_ITEM_PROCESSING: "cancelled",
+    DID_REVERT_ITEM_PROCESSING: "idle",
+  },
+  Va = ({ root: e, props: t }) => {
+    if (
+      ((e.ref.handleClick = (s) =>
+        e.dispatch("DID_ACTIVATE_ITEM", { id: t.id })),
+      (e.element.id = `filepond--item-${t.id}`),
+      e.element.addEventListener("click", e.ref.handleClick),
+      (e.ref.container = e.appendChildView(
+        e.createChildView(Ga, { id: t.id }),
+      )),
+      (e.ref.panel = e.appendChildView(
+        e.createChildView(ds, { name: "item-panel" }),
+      )),
+      (e.ref.panel.height = null),
+      (t.markedForRemoval = !1),
+      !e.query("GET_ALLOW_REORDER"))
+    )
+      return;
+    e.element.dataset.dragState = "idle";
+    const n = (s) => {
+      if (!s.isPrimary) return;
+      let r = !1;
+      const a = { x: s.pageX, y: s.pageY };
+      ((t.dragOrigin = { x: e.translateX, y: e.translateY }),
+        (t.dragCenter = { x: s.offsetX, y: s.offsetY }));
+      const i = xa(e.query("GET_ACTIVE_ITEMS"));
+      e.dispatch("DID_GRAB_ITEM", { id: t.id, dragState: i });
+      const l = (E) => {
+          if (!E.isPrimary) return;
+          (E.stopPropagation(),
+            E.preventDefault(),
+            (t.dragOffset = { x: E.pageX - a.x, y: E.pageY - a.y }),
+            t.dragOffset.x * t.dragOffset.x + t.dragOffset.y * t.dragOffset.y >
+              16 &&
+              !r &&
+              ((r = !0),
+              e.element.removeEventListener("click", e.ref.handleClick)),
+            e.dispatch("DID_DRAG_ITEM", { id: t.id, dragState: i }));
+        },
+        o = (E) => {
+          E.isPrimary &&
+            ((t.dragOffset = { x: E.pageX - a.x, y: E.pageY - a.y }), c());
+        },
+        d = () => {
+          c();
+        },
+        c = () => {
+          (document.removeEventListener("pointercancel", d),
+            document.removeEventListener("pointermove", l),
+            document.removeEventListener("pointerup", o),
+            e.dispatch("DID_DROP_ITEM", { id: t.id, dragState: i }),
+            r &&
+              setTimeout(
+                () => e.element.addEventListener("click", e.ref.handleClick),
+                0,
+              ));
+        };
+      (document.addEventListener("pointercancel", d),
+        document.addEventListener("pointermove", l),
+        document.addEventListener("pointerup", o));
+    };
+    e.element.addEventListener("pointerdown", n);
+  },
+  Ha = Q({
+    DID_UPDATE_PANEL_HEIGHT: ({ root: e, action: t }) => {
+      e.height = t.height;
+    },
+  }),
+  Ya = Q(
+    {
+      DID_GRAB_ITEM: ({ root: e, props: t }) => {
+        t.dragOrigin = { x: e.translateX, y: e.translateY };
+      },
+      DID_DRAG_ITEM: ({ root: e }) => {
+        e.element.dataset.dragState = "drag";
+      },
+      DID_DROP_ITEM: ({ root: e, props: t }) => {
+        ((t.dragOffset = null),
+          (t.dragOrigin = null),
+          (e.element.dataset.dragState = "drop"));
+      },
+    },
+    ({ root: e, actions: t, props: n, shouldOptimize: s }) => {
+      e.element.dataset.dragState === "drop" &&
+        e.scaleX <= 1 &&
+        (e.element.dataset.dragState = "idle");
+      let r = t
+        .concat()
+        .filter((i) => /^DID_/.test(i.type))
+        .reverse()
+        .find((i) => Rn[i.type]);
+      r &&
+        r.type !== n.currentState &&
+        ((n.currentState = r.type),
+        (e.element.dataset.filepondItemState = Rn[n.currentState] || ""));
+      const a =
+        e.query("GET_ITEM_PANEL_ASPECT_RATIO") ||
+        e.query("GET_PANEL_ASPECT_RATIO");
+      (a
+        ? s || (e.height = e.rect.element.width * a)
+        : (Ha({ root: e, actions: t, props: n }),
+          !e.height &&
+            e.ref.container.rect.element.height > 0 &&
+            (e.height = e.ref.container.rect.element.height)),
+        s && (e.ref.panel.height = null),
+        (e.ref.panel.height = e.height));
+    },
+  ),
+  Wa = q({
+    create: Va,
+    write: Ya,
+    destroy: ({ root: e, props: t }) => {
+      (e.element.removeEventListener("click", e.ref.handleClick),
+        e.dispatch("RELEASE_ITEM", { query: t.id }));
+    },
+    tag: "li",
+    name: "item",
+    mixins: {
+      apis: [
+        "id",
+        "interactionMethod",
+        "markedForRemoval",
+        "spawnDate",
+        "dragCenter",
+        "dragOrigin",
+        "dragOffset",
+      ],
+      styles: [
+        "translateX",
+        "translateY",
+        "scaleX",
+        "scaleY",
+        "opacity",
+        "height",
+      ],
+      animations: {
+        scaleX: hn,
+        scaleY: hn,
+        translateX: gn,
+        translateY: gn,
+        opacity: { type: "tween", duration: 150 },
+      },
+    },
+  });
+var vt = (e, t) => Math.max(1, Math.floor((e + 1) / t));
+const Gt = (e, t, n) => {
+    if (!n) return;
+    const s = e.rect.element.width,
+      r = t.length;
+    let a = null;
+    if (r === 0 || n.top < t[0].rect.element.top) return -1;
+    const l = t[0].rect.element,
+      o = l.marginLeft + l.marginRight,
+      d = l.width + o,
+      c = vt(s, d);
+    if (c === 1) {
+      for (let p = 0; p < r; p++) {
+        const u = t[p],
+          _ = u.rect.outer.top + u.rect.element.height * 0.5;
+        if (n.top < _) return p;
+      }
+      return r;
+    }
+    const E = l.marginTop + l.marginBottom,
+      I = l.height + E;
+    for (let p = 0; p < r; p++) {
+      const u = p % c,
+        _ = Math.floor(p / c),
+        m = u * d,
+        h = _ * I,
+        f = h - l.marginTop,
+        T = m + d,
+        R = h + I + l.marginBottom;
+      if (n.top < R && n.top > f) {
+        if (n.left < T) return p;
+        p !== r - 1 ? (a = p) : (a = null);
+      }
+    }
+    return a !== null ? a : r;
+  },
+  Xe = {
+    height: 0,
+    width: 0,
+    get getHeight() {
+      return this.height;
+    },
+    set setHeight(e) {
+      (this.height === 0 || e === 0) && (this.height = e);
+    },
+    get getWidth() {
+      return this.width;
+    },
+    set setWidth(e) {
+      (this.width === 0 || e === 0) && (this.width = e);
+    },
+  },
+  qa = ({ root: e }) => {
+    (z(e.element, "role", "list"), (e.ref.lastItemSpanwDate = Date.now()));
+  },
+  za = ({ root: e, action: t }) => {
+    const { id: n, index: s, interactionMethod: r } = t;
+    e.ref.addIndex = s;
+    const a = Date.now();
+    let i = a,
+      l = 1;
+    if (r !== ie.NONE) {
+      l = 0;
+      const o = e.query("GET_ITEM_INSERT_INTERVAL"),
+        d = a - e.ref.lastItemSpanwDate;
+      i = d < o ? a + (o - d) : a;
+    }
+    ((e.ref.lastItemSpanwDate = i),
+      e.appendChildView(
+        e.createChildView(Wa, {
+          spawnDate: i,
+          id: n,
+          opacity: l,
+          interactionMethod: r,
+        }),
+        s,
+      ));
+  },
+  On = (e, t, n, s = 0, r = 1) => {
+    e.dragOffset
+      ? ((e.translateX = null),
+        (e.translateY = null),
+        (e.translateX = e.dragOrigin.x + e.dragOffset.x),
+        (e.translateY = e.dragOrigin.y + e.dragOffset.y),
+        (e.scaleX = 1.025),
+        (e.scaleY = 1.025))
+      : ((e.translateX = t),
+        (e.translateY = n),
+        Date.now() > e.spawnDate &&
+          (e.opacity === 0 && $a(e, t, n, s, r),
+          (e.scaleX = 1),
+          (e.scaleY = 1),
+          (e.opacity = 1)));
+  },
+  $a = (e, t, n, s, r) => {
+    e.interactionMethod === ie.NONE
+      ? ((e.translateX = null),
+        (e.translateX = t),
+        (e.translateY = null),
+        (e.translateY = n))
+      : e.interactionMethod === ie.DROP
+        ? ((e.translateX = null),
+          (e.translateX = t - s * 20),
+          (e.translateY = null),
+          (e.translateY = n - r * 10),
+          (e.scaleX = 0.8),
+          (e.scaleY = 0.8))
+        : e.interactionMethod === ie.BROWSE
+          ? ((e.translateY = null), (e.translateY = n - 30))
+          : e.interactionMethod === ie.API &&
+            ((e.translateX = null),
+            (e.translateX = t - 30),
+            (e.translateY = null));
+  },
+  ka = ({ root: e, action: t }) => {
+    const { id: n } = t,
+      s = e.childViews.find((r) => r.id === n);
+    s &&
+      ((s.scaleX = 0.9),
+      (s.scaleY = 0.9),
+      (s.opacity = 0),
+      (s.markedForRemoval = !0));
+  },
+  _t = (e) =>
+    e.rect.element.height +
+    e.rect.element.marginBottom * 0.5 +
+    e.rect.element.marginTop * 0.5,
+  Xa = (e) =>
+    e.rect.element.width +
+    e.rect.element.marginLeft * 0.5 +
+    e.rect.element.marginRight * 0.5,
+  ja = ({ root: e, action: t }) => {
+    const { id: n, dragState: s } = t,
+      r = e.query("GET_ITEM", { id: n }),
+      a = e.childViews.find((m) => m.id === n),
+      i = e.childViews.length,
+      l = s.getItemIndex(r);
+    if (!a) return;
+    const o = {
+        x: a.dragOrigin.x + a.dragOffset.x + a.dragCenter.x,
+        y: a.dragOrigin.y + a.dragOffset.y + a.dragCenter.y,
+      },
+      d = _t(a),
+      c = Xa(a);
+    let E = Math.floor(e.rect.outer.width / c);
+    E > i && (E = i);
+    const I = Math.floor(i / E + 1);
+    ((Xe.setHeight = d * I), (Xe.setWidth = c * E));
+    var p = {
+      y: Math.floor(o.y / d),
+      x: Math.floor(o.x / c),
+      getGridIndex: function () {
+        return o.y > Xe.getHeight || o.y < 0 || o.x > Xe.getWidth || o.x < 0
+          ? l
+          : this.y * E + this.x;
+      },
+      getColIndex: function () {
+        const h = e.query("GET_ACTIVE_ITEMS"),
+          f = e.childViews.filter((P) => P.rect.element.height),
+          T = h.map((P) => f.find((w) => w.id === P.id)),
+          R = T.findIndex((P) => P === a),
+          S = _t(a),
+          L = T.length;
+        let b = L,
+          D = 0,
+          M = 0,
+          v = 0;
+        for (let P = 0; P < L; P++)
+          if (((D = _t(T[P])), (v = M), (M = v + D), o.y < M)) {
+            if (R > P) {
+              if (o.y < v + S) {
+                b = P;
+                break;
+              }
+              continue;
+            }
+            b = P;
+            break;
+          }
+        return b;
+      },
+    };
+    const u = E > 1 ? p.getGridIndex() : p.getColIndex();
+    e.dispatch("MOVE_ITEM", { query: a, index: u });
+    const _ = s.getIndex();
+    if (_ === void 0 || _ !== u) {
+      if ((s.setIndex(u), _ === void 0)) return;
+      e.dispatch("DID_REORDER_ITEMS", {
+        items: e.query("GET_ACTIVE_ITEMS"),
+        origin: l,
+        target: u,
+      });
+    }
+  },
+  Za = Q({ DID_ADD_ITEM: za, DID_REMOVE_ITEM: ka, DID_DRAG_ITEM: ja }),
+  Qa = ({ root: e, props: t, actions: n, shouldOptimize: s }) => {
+    Za({ root: e, props: t, actions: n });
+    const { dragCoordinates: r } = t,
+      a = e.rect.element.width,
+      i = e.childViews.filter((T) => T.rect.element.height),
+      l = e
+        .query("GET_ACTIVE_ITEMS")
+        .map((T) => i.find((R) => R.id === T.id))
+        .filter((T) => T),
+      o = r ? Gt(e, l, r) : null,
+      d = e.ref.addIndex || null;
+    e.ref.addIndex = null;
+    let c = 0,
+      E = 0,
+      I = 0;
+    if (l.length === 0) return;
+    const p = l[0].rect.element,
+      u = p.marginTop + p.marginBottom,
+      _ = p.marginLeft + p.marginRight,
+      m = p.width + _,
+      h = p.height + u,
+      f = vt(a, m);
+    if (f === 1) {
+      let T = 0,
+        R = 0;
+      l.forEach((S, L) => {
+        if (o) {
+          let M = L - o;
+          M === -2
+            ? (R = -u * 0.25)
+            : M === -1
+              ? (R = -u * 0.75)
+              : M === 0
+                ? (R = u * 0.75)
+                : M === 1
+                  ? (R = u * 0.25)
+                  : (R = 0);
+        }
+        (s && ((S.translateX = null), (S.translateY = null)),
+          S.markedForRemoval || On(S, 0, T + R));
+        let D =
+          (S.rect.element.height + u) * (S.markedForRemoval ? S.opacity : 1);
+        T += D;
+      });
+    } else {
+      let T = 0,
+        R = 0;
+      l.forEach((S, L) => {
+        (L === o && (c = 1),
+          L === d && (I += 1),
+          S.markedForRemoval && S.opacity < 0.5 && (E -= 1));
+        const b = L + I + c + E,
+          D = b % f,
+          M = Math.floor(b / f),
+          v = D * m,
+          P = M * h,
+          w = Math.sign(v - T),
+          x = Math.sign(P - R);
+        ((T = v),
+          (R = P),
+          !S.markedForRemoval &&
+            (s && ((S.translateX = null), (S.translateY = null)),
+            On(S, v, P, w, x)));
+      });
+    }
+  },
+  Ka = (e, t) =>
+    t.filter((n) => (n.data && n.data.id ? e.id === n.data.id : !0)),
+  Ja = q({
+    create: qa,
+    write: Qa,
+    tag: "ul",
+    name: "list",
+    didWriteView: ({ root: e }) => {
+      e.childViews
+        .filter((t) => t.markedForRemoval && t.opacity === 0 && t.resting)
+        .forEach((t) => {
+          (t._destroy(), e.removeChildView(t));
+        });
+    },
+    filterFrameActionsForChild: Ka,
+    mixins: { apis: ["dragCoordinates"] },
+  }),
+  eo = ({ root: e, props: t }) => {
+    ((e.ref.list = e.appendChildView(e.createChildView(Ja))),
+      (t.dragCoordinates = null),
+      (t.overflowing = !1));
+  },
+  to = ({ root: e, props: t, action: n }) => {
+    e.query("GET_ITEM_INSERT_LOCATION_FREEDOM") &&
+      (t.dragCoordinates = {
+        left: n.position.scopeLeft - e.ref.list.rect.element.left,
+        top:
+          n.position.scopeTop -
+          (e.rect.outer.top +
+            e.rect.element.marginTop +
+            e.rect.element.scrollTop),
+      });
+  },
+  no = ({ props: e }) => {
+    e.dragCoordinates = null;
+  },
+  so = Q({ DID_DRAG: to, DID_END_DRAG: no }),
+  ro = ({ root: e, props: t, actions: n }) => {
+    if (
+      (so({ root: e, props: t, actions: n }),
+      (e.ref.list.dragCoordinates = t.dragCoordinates),
+      t.overflowing &&
+        !t.overflow &&
+        ((t.overflowing = !1),
+        (e.element.dataset.state = ""),
+        (e.height = null)),
+      t.overflow)
+    ) {
+      const s = Math.round(t.overflow);
+      s !== e.height &&
+        ((t.overflowing = !0),
+        (e.element.dataset.state = "overflow"),
+        (e.height = s));
+    }
+  },
+  io = q({
+    create: eo,
+    write: ro,
+    name: "list-scroller",
+    mixins: {
+      apis: ["overflow", "dragCoordinates"],
+      styles: ["height", "translateY"],
+      animations: { translateY: "spring" },
+    },
+  }),
+  ce = (e, t, n, s = "") => {
+    n ? z(e, t, s) : e.removeAttribute(t);
+  },
+  ao = (e) => {
+    if (!(!e || e.value === "")) {
+      try {
+        e.value = "";
+      } catch {}
+      if (e.value) {
+        const t = pe("form"),
+          n = e.parentNode,
+          s = e.nextSibling;
+        (t.appendChild(e),
+          t.reset(),
+          s ? n.insertBefore(e, s) : n.appendChild(e));
+      }
+    }
+  },
+  oo = ({ root: e, props: t }) => {
+    ((e.element.id = `filepond--browser-${t.id}`),
+      z(e.element, "name", e.query("GET_NAME")),
+      z(e.element, "aria-controls", `filepond--assistant-${t.id}`),
+      z(e.element, "aria-labelledby", `filepond--drop-label-${t.id}`),
+      us({ root: e, action: { value: e.query("GET_ACCEPTED_FILE_TYPES") } }),
+      Es({ root: e, action: { value: e.query("GET_ALLOW_MULTIPLE") } }),
+      fs({ root: e, action: { value: e.query("GET_ALLOW_DIRECTORIES_ONLY") } }),
+      At({ root: e }),
+      ps({ root: e, action: { value: e.query("GET_REQUIRED") } }),
+      Is({ root: e, action: { value: e.query("GET_CAPTURE_METHOD") } }),
+      (e.ref.handleChange = (n) => {
+        if (!e.element.value) return;
+        const s = Array.from(e.element.files).map(
+          (r) => ((r._relativePath = r.webkitRelativePath), r),
+        );
+        setTimeout(() => {
+          (t.onload(s), ao(e.element));
+        }, 250);
+      }),
+      e.element.addEventListener("change", e.ref.handleChange));
+  },
+  us = ({ root: e, action: t }) => {
+    e.query("GET_ALLOW_SYNC_ACCEPT_ATTRIBUTE") &&
+      ce(e.element, "accept", !!t.value, t.value ? t.value.join(",") : "");
+  },
+  Es = ({ root: e, action: t }) => {
+    ce(e.element, "multiple", t.value);
+  },
+  fs = ({ root: e, action: t }) => {
+    ce(e.element, "webkitdirectory", t.value);
+  },
+  At = ({ root: e }) => {
+    const t = e.query("GET_DISABLED"),
+      n = e.query("GET_ALLOW_BROWSE"),
+      s = t || !n;
+    ce(e.element, "disabled", s);
+  },
+  ps = ({ root: e, action: t }) => {
+    t.value
+      ? e.query("GET_TOTAL_ITEMS") === 0 && ce(e.element, "required", !0)
+      : ce(e.element, "required", !1);
+  },
+  Is = ({ root: e, action: t }) => {
+    ce(e.element, "capture", !!t.value, t.value === !0 ? "" : t.value);
+  },
+  Sn = ({ root: e }) => {
+    const { element: t } = e;
+    if (e.query("GET_TOTAL_ITEMS") > 0) {
+      (ce(t, "required", !1), ce(t, "name", !1));
+      const n = e.query("GET_ACTIVE_ITEMS");
+      let s = !1;
+      for (let r = 0; r < n.length; r++)
+        n[r].status === G.LOAD_ERROR && (s = !0);
+      e.element.setCustomValidity(s ? e.query("GET_LABEL_INVALID_FIELD") : "");
+    } else
+      (ce(t, "name", !0, e.query("GET_NAME")),
+        e.query("GET_CHECK_VALIDITY") && t.setCustomValidity(""),
+        e.query("GET_REQUIRED") && ce(t, "required", !0));
+  },
+  lo = ({ root: e }) => {
+    e.query("GET_CHECK_VALIDITY") &&
+      e.element.setCustomValidity(e.query("GET_LABEL_INVALID_FIELD"));
+  },
+  co = q({
+    tag: "input",
+    name: "browser",
+    ignoreRect: !0,
+    ignoreRectUpdate: !0,
+    attributes: { type: "file" },
+    create: oo,
+    destroy: ({ root: e }) => {
+      e.element.removeEventListener("change", e.ref.handleChange);
+    },
+    write: Q({
+      DID_LOAD_ITEM: Sn,
+      DID_REMOVE_ITEM: Sn,
+      DID_THROW_ITEM_INVALID: lo,
+      DID_SET_DISABLED: At,
+      DID_SET_ALLOW_BROWSE: At,
+      DID_SET_ALLOW_DIRECTORIES_ONLY: fs,
+      DID_SET_ALLOW_MULTIPLE: Es,
+      DID_SET_ACCEPTED_FILE_TYPES: us,
+      DID_SET_CAPTURE_METHOD: Is,
+      DID_SET_REQUIRED: ps,
+    }),
+  }),
+  Dn = { ENTER: 13, SPACE: 32 },
+  uo = ({ root: e, props: t }) => {
+    const n = pe("label");
+    (z(n, "for", `filepond--browser-${t.id}`),
+      z(n, "id", `filepond--drop-label-${t.id}`),
+      (e.ref.handleKeyDown = (s) => {
+        (s.keyCode === Dn.ENTER || s.keyCode === Dn.SPACE) &&
+          (s.preventDefault(), e.ref.label.click());
+      }),
+      (e.ref.handleClick = (s) => {
+        s.target === n || n.contains(s.target) || e.ref.label.click();
+      }),
+      n.addEventListener("keydown", e.ref.handleKeyDown),
+      e.element.addEventListener("click", e.ref.handleClick),
+      _s(n, t.caption),
+      e.appendChild(n),
+      (e.ref.label = n));
+  },
+  _s = (e, t) => {
+    e.innerHTML = t;
+    const n = e.querySelector(".filepond--label-action");
+    return (n && z(n, "tabindex", "0"), t);
+  },
+  Eo = q({
+    name: "drop-label",
+    ignoreRect: !0,
+    create: uo,
+    destroy: ({ root: e }) => {
+      (e.ref.label.addEventListener("keydown", e.ref.handleKeyDown),
+        e.element.removeEventListener("click", e.ref.handleClick));
+    },
+    write: Q({
+      DID_SET_LABEL_IDLE: ({ root: e, action: t }) => {
+        _s(e.ref.label, t.value);
+      },
+    }),
+    mixins: {
+      styles: ["opacity", "translateX", "translateY"],
+      animations: {
+        opacity: { type: "tween", duration: 150 },
+        translateX: "spring",
+        translateY: "spring",
+      },
+    },
+  }),
+  fo = q({
+    name: "drip-blob",
+    ignoreRect: !0,
+    mixins: {
+      styles: ["translateX", "translateY", "scaleX", "scaleY", "opacity"],
+      animations: {
+        scaleX: "spring",
+        scaleY: "spring",
+        translateX: "spring",
+        translateY: "spring",
+        opacity: { type: "tween", duration: 250 },
+      },
+    },
+  }),
+  po = ({ root: e }) => {
+    const t = e.rect.element.width * 0.5,
+      n = e.rect.element.height * 0.5;
+    e.ref.blob = e.appendChildView(
+      e.createChildView(fo, {
+        opacity: 0,
+        scaleX: 2.5,
+        scaleY: 2.5,
+        translateX: t,
+        translateY: n,
+      }),
+    );
+  },
+  Io = ({ root: e, action: t }) => {
+    if (!e.ref.blob) {
+      po({ root: e });
+      return;
+    }
+    ((e.ref.blob.translateX = t.position.scopeLeft),
+      (e.ref.blob.translateY = t.position.scopeTop),
+      (e.ref.blob.scaleX = 1),
+      (e.ref.blob.scaleY = 1),
+      (e.ref.blob.opacity = 1));
+  },
+  _o = ({ root: e }) => {
+    e.ref.blob && (e.ref.blob.opacity = 0);
+  },
+  To = ({ root: e }) => {
+    e.ref.blob &&
+      ((e.ref.blob.scaleX = 2.5),
+      (e.ref.blob.scaleY = 2.5),
+      (e.ref.blob.opacity = 0));
+  },
+  mo = ({ root: e, props: t, actions: n }) => {
+    go({ root: e, props: t, actions: n });
+    const { blob: s } = e.ref;
+    n.length === 0 &&
+      s &&
+      s.opacity === 0 &&
+      (e.removeChildView(s), (e.ref.blob = null));
+  },
+  go = Q({ DID_DRAG: Io, DID_DROP: To, DID_END_DRAG: _o }),
+  ho = q({ ignoreRect: !0, ignoreRectUpdate: !0, name: "drip", write: mo }),
+  Ts = (e, t) => {
+    try {
+      const n = new DataTransfer();
+      (t.forEach((s) => {
+        s instanceof File
+          ? n.items.add(s)
+          : n.items.add(new File([s], s.name, { type: s.type }));
+      }),
+        (e.files = n.files));
+    } catch {
+      return !1;
+    }
+    return !0;
+  },
+  Ro = ({ root: e }) => {
+    e.ref.fields = {};
+    const t = document.createElement("legend");
+    ((t.textContent = "Files"), e.element.appendChild(t));
+  },
+  lt = (e, t) => e.ref.fields[t],
+  Ft = (e) => {
+    e.query("GET_ACTIVE_ITEMS").forEach((t) => {
+      e.ref.fields[t.id] && e.element.appendChild(e.ref.fields[t.id]);
+    });
+  },
+  An = ({ root: e }) => Ft(e),
+  Oo = ({ root: e, action: t }) => {
+    const r =
+        !(e.query("GET_ITEM", t.id).origin === $.LOCAL) &&
+        e.query("SHOULD_UPDATE_FILE_INPUT"),
+      a = pe("input");
+    ((a.type = r ? "file" : "hidden"),
+      (a.name = e.query("GET_NAME")),
+      (e.ref.fields[t.id] = a),
+      Ft(e));
+  },
+  So = ({ root: e, action: t }) => {
+    const n = lt(e, t.id);
+    if (
+      !n ||
+      (t.serverFileReference !== null && (n.value = t.serverFileReference),
+      !e.query("SHOULD_UPDATE_FILE_INPUT"))
+    )
+      return;
+    const s = e.query("GET_ITEM", t.id);
+    Ts(n, [s.file]);
+  },
+  Do = ({ root: e, action: t }) => {
+    e.query("SHOULD_UPDATE_FILE_INPUT") &&
+      setTimeout(() => {
+        const n = lt(e, t.id);
+        n && Ts(n, [t.file]);
+      }, 0);
+  },
+  Ao = ({ root: e }) => {
+    e.element.disabled = e.query("GET_DISABLED");
+  },
+  yo = ({ root: e, action: t }) => {
+    const n = lt(e, t.id);
+    n &&
+      (n.parentNode && n.parentNode.removeChild(n), delete e.ref.fields[t.id]);
+  },
+  Lo = ({ root: e, action: t }) => {
+    const n = lt(e, t.id);
+    n &&
+      (t.value === null
+        ? n.removeAttribute("value")
+        : n.type != "file" && (n.value = t.value),
+      Ft(e));
+  },
+  Mo = Q({
+    DID_SET_DISABLED: Ao,
+    DID_ADD_ITEM: Oo,
+    DID_LOAD_ITEM: So,
+    DID_REMOVE_ITEM: yo,
+    DID_DEFINE_VALUE: Lo,
+    DID_PREPARE_OUTPUT: Do,
+    DID_REORDER_ITEMS: An,
+    DID_SORT_ITEMS: An,
+  }),
+  Po = q({
+    tag: "fieldset",
+    name: "data",
+    create: Ro,
+    write: Mo,
+    ignoreRect: !0,
+  }),
+  wo = (e) => ("getRootNode" in e ? e.getRootNode() : document),
+  Co = ["jpg", "jpeg", "png", "gif", "bmp", "webp", "svg", "tiff"],
+  bo = ["css", "csv", "html", "txt"],
+  No = { zip: "zip|compressed", epub: "application/epub+zip" },
+  ms = (e = "") => (
+    (e = e.toLowerCase()),
+    Co.includes(e)
+      ? "image/" + (e === "jpg" ? "jpeg" : e === "svg" ? "svg+xml" : e)
+      : bo.includes(e)
+        ? "text/" + e
+        : No[e] || ""
+  ),
+  Bt = (e) =>
+    new Promise((t, n) => {
+      const s = Ho(e);
+      if (s.length && !vo(e)) return t(s);
+      Go(e).then(t);
+    }),
+  vo = (e) => (e.files ? e.files.length > 0 : !1),
+  Go = (e) =>
+    new Promise((t, n) => {
+      const s = (e.items ? Array.from(e.items) : [])
+        .filter((r) => Fo(r))
+        .map((r) => Bo(r));
+      if (!s.length) {
+        t(e.files ? Array.from(e.files) : []);
+        return;
+      }
+      Promise.all(s)
+        .then((r) => {
+          const a = [];
+          (r.forEach((i) => {
+            a.push.apply(a, i);
+          }),
+            t(
+              a
+                .filter((i) => i)
+                .map(
+                  (i) => (
+                    i._relativePath || (i._relativePath = i.webkitRelativePath),
+                    i
+                  ),
+                ),
+            ));
+        })
+        .catch(console.error);
+    }),
+  Fo = (e) => {
+    if (gs(e)) {
+      const t = Ut(e);
+      if (t) return t.isFile || t.isDirectory;
+    }
+    return e.kind === "file";
+  },
+  Bo = (e) =>
+    new Promise((t, n) => {
+      if (Vo(e)) {
+        Uo(Ut(e)).then(t).catch(n);
+        return;
+      }
+      t([e.getAsFile()]);
+    }),
+  Uo = (e) =>
+    new Promise((t, n) => {
+      const s = [];
+      let r = 0,
+        a = 0;
+      const i = () => {
+          a === 0 && r === 0 && t(s);
+        },
+        l = (o) => {
+          r++;
+          const d = o.createReader(),
+            c = () => {
+              d.readEntries((E) => {
+                if (E.length === 0) {
+                  (r--, i());
+                  return;
+                }
+                (E.forEach((I) => {
+                  I.isDirectory
+                    ? l(I)
+                    : (a++,
+                      I.file((p) => {
+                        const u = xo(p);
+                        (I.fullPath && (u._relativePath = I.fullPath),
+                          s.push(u),
+                          a--,
+                          i());
+                      }));
+                }),
+                  c());
+              }, n);
+            };
+          c();
+        };
+      l(e);
+    }),
+  xo = (e) => {
+    if (e.type.length) return e;
+    const t = e.lastModifiedDate,
+      n = e.name,
+      s = ms(ot(e.name));
+    return (
+      s.length &&
+        ((e = e.slice(0, e.size, s)), (e.name = n), (e.lastModifiedDate = t)),
+      e
+    );
+  },
+  Vo = (e) => gs(e) && (Ut(e) || {}).isDirectory,
+  gs = (e) => "webkitGetAsEntry" in e,
+  Ut = (e) => e.webkitGetAsEntry(),
+  Ho = (e) => {
+    let t = [];
+    try {
+      if (((t = Wo(e)), t.length)) return t;
+      t = Yo(e);
+    } catch {}
+    return t;
+  },
+  Yo = (e) => {
+    let t = e.getData("url");
+    return typeof t == "string" && t.length ? [t] : [];
+  },
+  Wo = (e) => {
+    let t = e.getData("text/html");
+    if (typeof t == "string" && t.length) {
+      const n = t.match(/src\s*=\s*"(.+?)"/);
+      if (n) return [n[1]];
+    }
+    return [];
+  },
+  tt = [],
+  De = (e) => ({
+    pageLeft: e.pageX,
+    pageTop: e.pageY,
+    scopeLeft: e.offsetX || e.layerX,
+    scopeTop: e.offsetY || e.layerY,
+  }),
+  qo = (e, t, n) => {
+    const s = zo(t),
+      r = {
+        element: e,
+        filterElement: n,
+        state: null,
+        ondrop: () => {},
+        onenter: () => {},
+        ondrag: () => {},
+        onexit: () => {},
+        onload: () => {},
+        allowdrop: () => {},
+      };
+    return ((r.destroy = s.addListener(r)), r);
+  },
+  zo = (e) => {
+    const t = tt.find((s) => s.element === e);
+    if (t) return t;
+    const n = $o(e);
+    return (tt.push(n), n);
+  },
+  $o = (e) => {
+    const t = [],
+      n = { dragenter: Xo, dragover: jo, dragleave: Qo, drop: Zo },
+      s = {};
+    H(n, (a, i) => {
+      ((s[a] = i(e, t)), e.addEventListener(a, s[a], !1));
+    });
+    const r = {
+      element: e,
+      addListener: (a) => (
+        t.push(a),
+        () => {
+          (t.splice(t.indexOf(a), 1),
+            t.length === 0 &&
+              (tt.splice(tt.indexOf(r), 1),
+              H(n, (i) => {
+                e.removeEventListener(i, s[i], !1);
+              })));
+        }
+      ),
+    };
+    return r;
+  },
+  ko = (e, t) => (
+    "elementFromPoint" in e || (e = document),
+    e.elementFromPoint(t.x, t.y)
+  ),
+  xt = (e, t) => {
+    const n = wo(t),
+      s = ko(n, {
+        x: e.pageX - window.pageXOffset,
+        y: e.pageY - window.pageYOffset,
+      });
+    return s === t || t.contains(s);
+  };
+let hs = null;
+const je = (e, t) => {
+    try {
+      e.dropEffect = t;
+    } catch {}
+  },
+  Xo = (e, t) => (n) => {
+    (n.preventDefault(),
+      (hs = n.target),
+      t.forEach((s) => {
+        const { element: r, onenter: a } = s;
+        xt(n, r) && ((s.state = "enter"), a(De(n)));
+      }));
+  },
+  jo = (e, t) => (n) => {
+    n.preventDefault();
+    const s = n.dataTransfer;
+    Bt(s).then((r) => {
+      let a = !1;
+      t.some((i) => {
+        const {
+          filterElement: l,
+          element: o,
+          onenter: d,
+          onexit: c,
+          ondrag: E,
+          allowdrop: I,
+        } = i;
+        je(s, "copy");
+        const p = I(r);
+        if (!p) {
+          je(s, "none");
+          return;
+        }
+        if (xt(n, o)) {
+          if (((a = !0), i.state === null)) {
+            ((i.state = "enter"), d(De(n)));
+            return;
+          }
+          if (((i.state = "over"), l && !p)) {
+            je(s, "none");
+            return;
+          }
+          E(De(n));
+        } else
+          (l && !a && je(s, "none"), i.state && ((i.state = null), c(De(n))));
+      });
+    });
+  },
+  Zo = (e, t) => (n) => {
+    n.preventDefault();
+    const s = n.dataTransfer;
+    Bt(s).then((r) => {
+      t.forEach((a) => {
+        const {
+          filterElement: i,
+          element: l,
+          ondrop: o,
+          onexit: d,
+          allowdrop: c,
+        } = a;
+        if (((a.state = null), !(i && !xt(n, l)))) {
+          if (!c(r)) return d(De(n));
+          o(De(n), r);
+        }
+      });
+    });
+  },
+  Qo = (e, t) => (n) => {
+    hs === n.target &&
+      t.forEach((s) => {
+        const { onexit: r } = s;
+        ((s.state = null), r(De(n)));
+      });
+  },
+  Ko = (e, t, n) => {
+    e.classList.add("filepond--hopper");
+    const {
+        catchesDropsOnPage: s,
+        requiresDropOnElement: r,
+        filterItems: a = (c) => c,
+      } = n,
+      i = qo(e, s ? document.documentElement : e, r);
+    let l = "",
+      o = "";
+    ((i.allowdrop = (c) => t(a(c))),
+      (i.ondrop = (c, E) => {
+        const I = a(E);
+        if (!t(I)) {
+          d.ondragend(c);
+          return;
+        }
+        ((o = "drag-drop"), d.onload(I, c));
+      }),
+      (i.ondrag = (c) => {
+        d.ondrag(c);
+      }),
+      (i.onenter = (c) => {
+        ((o = "drag-over"), d.ondragstart(c));
+      }),
+      (i.onexit = (c) => {
+        ((o = "drag-exit"), d.ondragend(c));
+      }));
+    const d = {
+      updateHopperState: () => {
+        l !== o && ((e.dataset.hopperState = o), (l = o));
+      },
+      onload: () => {},
+      ondragstart: () => {},
+      ondrag: () => {},
+      ondragend: () => {},
+      destroy: () => {
+        i.destroy();
+      },
+    };
+    return d;
+  };
+let yt = !1;
+const Ce = [],
+  Rs = (e) => {
+    const t = document.activeElement;
+    if (
+      t &&
+      (/textarea|input/i.test(t.nodeName) ||
+        t.getAttribute("contenteditable") === "true" ||
+        t.getAttribute("contenteditable") === "")
+    ) {
+      let s = !1,
+        r = t;
+      for (; r !== document.body; ) {
+        if (r.classList.contains("filepond--root")) {
+          s = !0;
+          break;
+        }
+        r = r.parentNode;
+      }
+      if (!s) return;
+    }
+    Bt(e.clipboardData).then((s) => {
+      s.length && Ce.forEach((r) => r(s));
+    });
+  },
+  Jo = (e) => {
+    Ce.includes(e) ||
+      (Ce.push(e), !yt && ((yt = !0), document.addEventListener("paste", Rs)));
+  },
+  el = (e) => {
+    (wt(Ce, Ce.indexOf(e)),
+      Ce.length === 0 &&
+        (document.removeEventListener("paste", Rs), (yt = !1)));
+  },
+  tl = () => {
+    const e = (n) => {
+        t.onload(n);
+      },
+      t = {
+        destroy: () => {
+          el(e);
+        },
+        onload: () => {},
+      };
+    return (Jo(e), t);
+  },
+  nl = ({ root: e, props: t }) => {
+    ((e.element.id = `filepond--assistant-${t.id}`),
+      z(e.element, "role", "alert"),
+      z(e.element, "aria-live", "polite"),
+      z(e.element, "aria-relevant", "additions"));
+  };
+let yn = null,
+  Ln = null;
+const Tt = [],
+  ct = (e, t) => {
+    e.element.textContent = t;
+  },
+  sl = (e) => {
+    e.element.textContent = "";
+  },
+  Os = (e, t, n) => {
+    const s = e.query("GET_TOTAL_ITEMS");
+    (ct(
+      e,
+      `${n} ${t}, ${s} ${s === 1 ? e.query("GET_LABEL_FILE_COUNT_SINGULAR") : e.query("GET_LABEL_FILE_COUNT_PLURAL")}`,
+    ),
+      clearTimeout(Ln),
+      (Ln = setTimeout(() => {
+        sl(e);
+      }, 1500)));
+  },
+  Ss = (e) => e.element.parentNode.contains(document.activeElement),
+  rl = ({ root: e, action: t }) => {
+    if (!Ss(e)) return;
+    e.element.textContent = "";
+    const n = e.query("GET_ITEM", t.id);
+    (Tt.push(n.filename),
+      clearTimeout(yn),
+      (yn = setTimeout(() => {
+        (Os(e, Tt.join(", "), e.query("GET_LABEL_FILE_ADDED")),
+          (Tt.length = 0));
+      }, 750)));
+  },
+  il = ({ root: e, action: t }) => {
+    if (!Ss(e)) return;
+    const n = t.item;
+    Os(e, n.filename, e.query("GET_LABEL_FILE_REMOVED"));
+  },
+  al = ({ root: e, action: t }) => {
+    const s = e.query("GET_ITEM", t.id).filename,
+      r = e.query("GET_LABEL_FILE_PROCESSING_COMPLETE");
+    ct(e, `${s} ${r}`);
+  },
+  Mn = ({ root: e, action: t }) => {
+    const s = e.query("GET_ITEM", t.id).filename,
+      r = e.query("GET_LABEL_FILE_PROCESSING_ABORTED");
+    ct(e, `${s} ${r}`);
+  },
+  Ze = ({ root: e, action: t }) => {
+    const s = e.query("GET_ITEM", t.id).filename;
+    ct(e, `${t.status.main} ${s} ${t.status.sub}`);
+  },
+  ol = q({
+    create: nl,
+    ignoreRect: !0,
+    ignoreRectUpdate: !0,
+    write: Q({
+      DID_LOAD_ITEM: rl,
+      DID_REMOVE_ITEM: il,
+      DID_COMPLETE_ITEM_PROCESSING: al,
+      DID_ABORT_ITEM_PROCESSING: Mn,
+      DID_REVERT_ITEM_PROCESSING: Mn,
+      DID_THROW_ITEM_REMOVE_ERROR: Ze,
+      DID_THROW_ITEM_LOAD_ERROR: Ze,
+      DID_THROW_ITEM_INVALID: Ze,
+      DID_THROW_ITEM_PROCESSING_ERROR: Ze,
+    }),
+    tag: "span",
+    name: "assistant",
+  }),
+  Ds = (e, t = "-") =>
+    e.replace(new RegExp(`${t}.`, "g"), (n) => n.charAt(1).toUpperCase()),
+  As = (e, t = 16, n = !0) => {
+    let s = Date.now(),
+      r = null;
+    return (...a) => {
+      clearTimeout(r);
+      const i = Date.now() - s,
+        l = () => {
+          ((s = Date.now()), e(...a));
+        };
+      i < t ? n || (r = setTimeout(l, t - i)) : l();
+    };
+  },
+  ll = 1e6,
+  nt = (e) => e.preventDefault(),
+  cl = ({ root: e, props: t }) => {
+    const n = e.query("GET_ID");
+    n && (e.element.id = n);
+    const s = e.query("GET_CLASS_NAME");
+    (s &&
+      s
+        .split(" ")
+        .filter((o) => o.length)
+        .forEach((o) => {
+          e.element.classList.add(o);
+        }),
+      (e.ref.label = e.appendChildView(
+        e.createChildView(Eo, {
+          ...t,
+          translateY: null,
+          caption: e.query("GET_LABEL_IDLE"),
+        }),
+      )),
+      (e.ref.list = e.appendChildView(
+        e.createChildView(io, { translateY: null }),
+      )),
+      (e.ref.panel = e.appendChildView(
+        e.createChildView(ds, { name: "panel-root" }),
+      )),
+      (e.ref.assistant = e.appendChildView(e.createChildView(ol, { ...t }))),
+      (e.ref.data = e.appendChildView(e.createChildView(Po, { ...t }))),
+      (e.ref.measure = pe("div")),
+      (e.ref.measure.style.height = "100%"),
+      e.element.appendChild(e.ref.measure),
+      (e.ref.bounds = null),
+      e
+        .query("GET_STYLES")
+        .filter((o) => !fe(o.value))
+        .map(({ name: o, value: d }) => {
+          e.element.dataset[o] = d;
+        }),
+      (e.ref.widthPrevious = null),
+      (e.ref.widthUpdated = As(() => {
+        ((e.ref.updateHistory = []), e.dispatch("DID_RESIZE_ROOT"));
+      }, 250)),
+      (e.ref.previousAspectRatio = null),
+      (e.ref.updateHistory = []));
+    const r = window.matchMedia("(pointer: fine) and (hover: hover)").matches,
+      a = "PointerEvent" in window;
+    e.query("GET_ALLOW_REORDER") &&
+      a &&
+      !r &&
+      (e.element.addEventListener("touchmove", nt, { passive: !1 }),
+      e.element.addEventListener("gesturestart", nt));
+    const i = e.query("GET_CREDITS");
+    if (i.length === 2) {
+      const o = document.createElement("a");
+      ((o.className = "filepond--credits"),
+        (o.href = i[0]),
+        (o.tabIndex = -1),
+        (o.target = "_blank"),
+        (o.rel = "noopener noreferrer nofollow"),
+        (o.textContent = i[1]),
+        e.element.appendChild(o),
+        (e.ref.credits = o));
+    }
+  },
+  dl = ({ root: e, props: t, actions: n }) => {
+    if (
+      (Il({ root: e, props: t, actions: n }),
+      n
+        .filter((L) => /^DID_SET_STYLE_/.test(L.type))
+        .filter((L) => !fe(L.data.value))
+        .map(({ type: L, data: b }) => {
+          const D = Ds(L.substring(8).toLowerCase(), "_");
+          ((e.element.dataset[D] = b.value), e.invalidateLayout());
+        }),
+      e.rect.element.hidden)
+    )
+      return;
+    e.rect.element.width !== e.ref.widthPrevious &&
+      ((e.ref.widthPrevious = e.rect.element.width), e.ref.widthUpdated());
+    let s = e.ref.bounds;
+    s ||
+      ((s = e.ref.bounds = fl(e)),
+      e.element.removeChild(e.ref.measure),
+      (e.ref.measure = null));
+    const { hopper: r, label: a, list: i, panel: l } = e.ref;
+    r && r.updateHopperState();
+    const o = e.query("GET_PANEL_ASPECT_RATIO"),
+      d = e.query("GET_ALLOW_MULTIPLE"),
+      c = e.query("GET_TOTAL_ITEMS"),
+      E = d ? e.query("GET_MAX_FILES") || ll : 1,
+      I = c === E,
+      p = n.find((L) => L.type === "DID_ADD_ITEM");
+    if (I && p) {
+      const L = p.data.interactionMethod;
+      ((a.opacity = 0),
+        d
+          ? (a.translateY = -40)
+          : L === ie.API
+            ? (a.translateX = 40)
+            : L === ie.BROWSE
+              ? (a.translateY = 40)
+              : (a.translateY = 30));
+    } else I || ((a.opacity = 1), (a.translateX = 0), (a.translateY = 0));
+    const u = ul(e),
+      _ = El(e),
+      m = a.rect.element.height,
+      h = !d || I ? 0 : m,
+      f = I ? i.rect.element.marginTop : 0,
+      T = c === 0 ? 0 : i.rect.element.marginBottom,
+      R = h + f + _.visual + T,
+      S = h + f + _.bounds + T;
+    if (
+      ((i.translateY = Math.max(0, h - i.rect.element.marginTop) - u.top), o)
+    ) {
+      const L = e.rect.element.width,
+        b = L * o;
+      o !== e.ref.previousAspectRatio &&
+        ((e.ref.previousAspectRatio = o), (e.ref.updateHistory = []));
+      const D = e.ref.updateHistory;
+      D.push(L);
+      const M = 2;
+      if (D.length > M * 2) {
+        const P = D.length,
+          w = P - 10;
+        let x = 0;
+        for (let y = P; y >= w; y--)
+          if ((D[y] === D[y - 2] && x++, x >= M)) return;
+      }
+      ((l.scalable = !1), (l.height = b));
+      const v = b - h - (T - u.bottom) - (I ? f : 0);
+      (_.visual > v ? (i.overflow = v) : (i.overflow = null), (e.height = b));
+    } else if (s.fixedHeight) {
+      l.scalable = !1;
+      const L = s.fixedHeight - h - (T - u.bottom) - (I ? f : 0);
+      _.visual > L ? (i.overflow = L) : (i.overflow = null);
+    } else if (s.cappedHeight) {
+      const L = R >= s.cappedHeight,
+        b = Math.min(s.cappedHeight, R);
+      ((l.scalable = !0), (l.height = L ? b : b - u.top - u.bottom));
+      const D = b - h - (T - u.bottom) - (I ? f : 0);
+      (R > s.cappedHeight && _.visual > D
+        ? (i.overflow = D)
+        : (i.overflow = null),
+        (e.height = Math.min(s.cappedHeight, S - u.top - u.bottom)));
+    } else {
+      const L = c > 0 ? u.top + u.bottom : 0;
+      ((l.scalable = !0),
+        (l.height = Math.max(m, R - L)),
+        (e.height = Math.max(m, S - L)));
+    }
+    e.ref.credits &&
+      l.heightCurrent &&
+      (e.ref.credits.style.transform = `translateY(${l.heightCurrent}px)`);
+  },
+  ul = (e) => {
+    const t = e.ref.list.childViews[0].childViews[0];
+    return t
+      ? { top: t.rect.element.marginTop, bottom: t.rect.element.marginBottom }
+      : { top: 0, bottom: 0 };
+  },
+  El = (e) => {
+    let t = 0,
+      n = 0;
+    const s = e.ref.list,
+      r = s.childViews[0],
+      a = r.childViews.filter((f) => f.rect.element.height),
+      i = e
+        .query("GET_ACTIVE_ITEMS")
+        .map((f) => a.find((T) => T.id === f.id))
+        .filter((f) => f);
+    if (i.length === 0) return { visual: t, bounds: n };
+    const l = r.rect.element.width,
+      o = Gt(r, i, s.dragCoordinates),
+      d = i[0].rect.element,
+      c = d.marginTop + d.marginBottom,
+      E = d.marginLeft + d.marginRight,
+      I = d.width + E,
+      p = d.height + c,
+      u = typeof o < "u" && o >= 0 ? 1 : 0,
+      _ = i.find((f) => f.markedForRemoval && f.opacity < 0.45) ? -1 : 0,
+      m = i.length + u + _,
+      h = vt(l, I);
+    return (
+      h === 1
+        ? i.forEach((f) => {
+            const T = f.rect.element.height + c;
+            ((n += T), (t += T * f.opacity));
+          })
+        : ((n = Math.ceil(m / h) * p), (t = n)),
+      { visual: t, bounds: n }
+    );
+  },
+  fl = (e) => {
+    const t = e.ref.measureHeight || null;
+    return {
+      cappedHeight: parseInt(e.style.maxHeight, 10) || null,
+      fixedHeight: t === 0 ? null : t,
+    };
+  },
+  Vt = (e, t) => {
+    const n = e.query("GET_ALLOW_REPLACE"),
+      s = e.query("GET_ALLOW_MULTIPLE"),
+      r = e.query("GET_TOTAL_ITEMS");
+    let a = e.query("GET_MAX_FILES");
+    const i = t.length;
+    return !s && i > 1
+      ? (e.dispatch("DID_THROW_MAX_FILES", {
+          source: t,
+          error: Y("warning", 0, "Max files"),
+        }),
+        !0)
+      : ((a = s ? a : 1),
+        !s && n
+          ? !1
+          : Ne(a) && r + i > a
+            ? (e.dispatch("DID_THROW_MAX_FILES", {
+                source: t,
+                error: Y("warning", 0, "Max files"),
+              }),
+              !0)
+            : !1);
+  },
+  pl = (e, t, n) => {
+    const s = e.childViews[0];
+    return Gt(s, t, {
+      left: n.scopeLeft - s.rect.element.left,
+      top:
+        n.scopeTop -
+        (e.rect.outer.top +
+          e.rect.element.marginTop +
+          e.rect.element.scrollTop),
+    });
+  },
+  Pn = (e) => {
+    const t = e.query("GET_ALLOW_DROP"),
+      n = e.query("GET_DISABLED"),
+      s = t && !n;
+    if (s && !e.ref.hopper) {
+      const r = Ko(
+        e.element,
+        (a) => {
+          const i = e.query("GET_BEFORE_DROP_FILE") || (() => !0);
+          return e.query("GET_DROP_VALIDATION")
+            ? a.every(
+                (o) =>
+                  Ae("ALLOW_HOPPER_ITEM", o, { query: e.query }).every(
+                    (d) => d === !0,
+                  ) && i(o),
+              )
+            : !0;
+        },
+        {
+          filterItems: (a) => {
+            const i = e.query("GET_IGNORED_FILES");
+            return a.filter((l) =>
+              Se(l) ? !i.includes(l.name.toLowerCase()) : !0,
+            );
+          },
+          catchesDropsOnPage: e.query("GET_DROP_ON_PAGE"),
+          requiresDropOnElement: e.query("GET_DROP_ON_ELEMENT"),
+        },
+      );
+      ((r.onload = (a, i) => {
+        const o = e.ref.list.childViews[0].childViews.filter(
+            (c) => c.rect.element.height,
+          ),
+          d = e
+            .query("GET_ACTIVE_ITEMS")
+            .map((c) => o.find((E) => E.id === c.id))
+            .filter((c) => c);
+        (oe("ADD_ITEMS", a, { dispatch: e.dispatch }).then((c) => {
+          if (Vt(e, c)) return !1;
+          e.dispatch("ADD_ITEMS", {
+            items: c,
+            index: pl(e.ref.list, d, i),
+            interactionMethod: ie.DROP,
+          });
+        }),
+          e.dispatch("DID_DROP", { position: i }),
+          e.dispatch("DID_END_DRAG", { position: i }));
+      }),
+        (r.ondragstart = (a) => {
+          e.dispatch("DID_START_DRAG", { position: a });
+        }),
+        (r.ondrag = As((a) => {
+          e.dispatch("DID_DRAG", { position: a });
+        })),
+        (r.ondragend = (a) => {
+          e.dispatch("DID_END_DRAG", { position: a });
+        }),
+        (e.ref.hopper = r),
+        (e.ref.drip = e.appendChildView(e.createChildView(ho))));
+    } else
+      !s &&
+        e.ref.hopper &&
+        (e.ref.hopper.destroy(),
+        (e.ref.hopper = null),
+        e.removeChildView(e.ref.drip));
+  },
+  wn = (e, t) => {
+    const n = e.query("GET_ALLOW_BROWSE"),
+      s = e.query("GET_DISABLED"),
+      r = n && !s;
+    r && !e.ref.browser
+      ? (e.ref.browser = e.appendChildView(
+          e.createChildView(co, {
+            ...t,
+            onload: (a) => {
+              oe("ADD_ITEMS", a, { dispatch: e.dispatch }).then((i) => {
+                if (Vt(e, i)) return !1;
+                e.dispatch("ADD_ITEMS", {
+                  items: i,
+                  index: -1,
+                  interactionMethod: ie.BROWSE,
+                });
+              });
+            },
+          }),
+          0,
+        ))
+      : !r &&
+        e.ref.browser &&
+        (e.removeChildView(e.ref.browser), (e.ref.browser = null));
+  },
+  Cn = (e) => {
+    const t = e.query("GET_ALLOW_PASTE"),
+      n = e.query("GET_DISABLED"),
+      s = t && !n;
+    s && !e.ref.paster
+      ? ((e.ref.paster = tl()),
+        (e.ref.paster.onload = (r) => {
+          oe("ADD_ITEMS", r, { dispatch: e.dispatch }).then((a) => {
+            if (Vt(e, a)) return !1;
+            e.dispatch("ADD_ITEMS", {
+              items: a,
+              index: -1,
+              interactionMethod: ie.PASTE,
+            });
+          });
+        }))
+      : !s && e.ref.paster && (e.ref.paster.destroy(), (e.ref.paster = null));
+  },
+  Il = Q({
+    DID_SET_ALLOW_BROWSE: ({ root: e, props: t }) => {
+      wn(e, t);
+    },
+    DID_SET_ALLOW_DROP: ({ root: e }) => {
+      Pn(e);
+    },
+    DID_SET_ALLOW_PASTE: ({ root: e }) => {
+      Cn(e);
+    },
+    DID_SET_DISABLED: ({ root: e, props: t }) => {
+      (Pn(e),
+        Cn(e),
+        wn(e, t),
+        e.query("GET_DISABLED")
+          ? (e.element.dataset.disabled = "disabled")
+          : e.element.removeAttribute("data-disabled"));
+    },
+  }),
+  _l = q({
+    name: "root",
+    read: ({ root: e }) => {
+      e.ref.measure && (e.ref.measureHeight = e.ref.measure.offsetHeight);
+    },
+    create: cl,
+    write: dl,
+    destroy: ({ root: e }) => {
+      (e.ref.paster && e.ref.paster.destroy(),
+        e.ref.hopper && e.ref.hopper.destroy(),
+        e.element.removeEventListener("touchmove", nt),
+        e.element.removeEventListener("gesturestart", nt));
+    },
+    mixins: { styles: ["height"] },
+  }),
+  Tl = (e = {}) => {
+    let t = null;
+    const n = et(),
+      s = br(Ti(n), [Fi, hi(n)], [oa, gi(n)]);
+    s.dispatch("SET_OPTIONS", { options: e });
+    const r = () => {
+      document.hidden || s.dispatch("KICK");
+    };
+    document.addEventListener("visibilitychange", r);
+    let a = null,
+      i = !1,
+      l = !1,
+      o = null,
+      d = null;
+    const c = () => {
+      (i || (i = !0),
+        clearTimeout(a),
+        (a = setTimeout(() => {
+          ((i = !1),
+            (o = null),
+            (d = null),
+            l && ((l = !1), s.dispatch("DID_STOP_RESIZE")));
+        }, 500)));
+    };
+    window.addEventListener("resize", c);
+    const E = _l(s, { id: Pt() });
+    let I = !1,
+      p = !1;
+    const u = {
+        _read: () => {
+          (i &&
+            ((d = window.innerWidth),
+            o || (o = d),
+            !l && d !== o && (s.dispatch("DID_START_RESIZE"), (l = !0))),
+            p && I && (I = E.element.offsetParent === null),
+            !I && (E._read(), (p = E.rect.element.hidden)));
+        },
+        _write: (O) => {
+          const A = s.processActionQueue().filter((C) => !/^SET_/.test(C.type));
+          (I && !A.length) ||
+            (f(A),
+            (I = E._write(O, A, l)),
+            Si(s.query("GET_ITEMS")),
+            I && s.processDispatchQueue());
+        },
+      },
+      _ = (O) => (A) => {
+        const C = { type: O };
+        if (!A) return C;
+        if (
+          (A.hasOwnProperty("error") &&
+            (C.error = A.error ? { ...A.error } : null),
+          A.status && (C.status = { ...A.status }),
+          A.file && (C.output = A.file),
+          A.source)
+        )
+          C.file = A.source;
+        else if (A.item || A.id) {
+          const N = A.item ? A.item : s.query("GET_ITEM", A.id);
+          C.file = N ? J(N) : null;
+        }
+        return (
+          A.items && (C.items = A.items.map(J)),
+          /progress/.test(O) && (C.progress = A.progress),
+          A.hasOwnProperty("origin") &&
+            A.hasOwnProperty("target") &&
+            ((C.origin = A.origin), (C.target = A.target)),
+          C
+        );
+      },
+      m = {
+        DID_DESTROY: _("destroy"),
+        DID_INIT: _("init"),
+        DID_THROW_MAX_FILES: _("warning"),
+        DID_INIT_ITEM: _("initfile"),
+        DID_START_ITEM_LOAD: _("addfilestart"),
+        DID_UPDATE_ITEM_LOAD_PROGRESS: _("addfileprogress"),
+        DID_LOAD_ITEM: _("addfile"),
+        DID_THROW_ITEM_INVALID: [_("error"), _("addfile")],
+        DID_THROW_ITEM_LOAD_ERROR: [_("error"), _("addfile")],
+        DID_THROW_ITEM_REMOVE_ERROR: [_("error"), _("removefile")],
+        DID_PREPARE_OUTPUT: _("preparefile"),
+        DID_START_ITEM_PROCESSING: _("processfilestart"),
+        DID_UPDATE_ITEM_PROCESS_PROGRESS: _("processfileprogress"),
+        DID_ABORT_ITEM_PROCESSING: _("processfileabort"),
+        DID_COMPLETE_ITEM_PROCESSING: _("processfile"),
+        DID_COMPLETE_ITEM_PROCESSING_ALL: _("processfiles"),
+        DID_REVERT_ITEM_PROCESSING: _("processfilerevert"),
+        DID_THROW_ITEM_PROCESSING_ERROR: [_("error"), _("processfile")],
+        DID_REMOVE_ITEM: _("removefile"),
+        DID_UPDATE_ITEMS: _("updatefiles"),
+        DID_ACTIVATE_ITEM: _("activatefile"),
+        DID_REORDER_ITEMS: _("reorderfiles"),
+      },
+      h = (O) => {
+        const A = { pond: B, ...O };
+        (delete A.type,
+          E.element.dispatchEvent(
+            new CustomEvent(`FilePond:${O.type}`, {
+              detail: A,
+              bubbles: !0,
+              cancelable: !0,
+              composed: !0,
+            }),
+          ));
+        const C = [];
+        (O.hasOwnProperty("error") && C.push(O.error),
+          O.hasOwnProperty("file") && C.push(O.file));
+        const N = ["type", "error", "file"];
+        (Object.keys(O)
+          .filter((F) => !N.includes(F))
+          .forEach((F) => C.push(O[F])),
+          B.fire(O.type, ...C));
+        const V = s.query(`GET_ON${O.type.toUpperCase()}`);
+        V && V(...C);
+      },
+      f = (O) => {
+        O.length &&
+          O.filter((A) => m[A.type]).forEach((A) => {
+            const C = m[A.type];
+            (Array.isArray(C) ? C : [C]).forEach((N) => {
+              A.type === "DID_INIT_ITEM"
+                ? h(N(A.data))
+                : setTimeout(() => {
+                    h(N(A.data));
+                  }, 0);
+            });
+          });
+      },
+      T = (O) => s.dispatch("SET_OPTIONS", { options: O }),
+      R = (O) => s.query("GET_ACTIVE_ITEM", O),
+      S = (O) =>
+        new Promise((A, C) => {
+          s.dispatch("REQUEST_ITEM_PREPARE", {
+            query: O,
+            success: (N) => {
+              A(N);
+            },
+            failure: (N) => {
+              C(N);
+            },
+          });
+        }),
+      L = (O, A = {}) =>
+        new Promise((C, N) => {
+          M([{ source: O, options: A }], { index: A.index })
+            .then((V) => C(V && V[0]))
+            .catch(N);
+        }),
+      b = (O) => O.file && O.id,
+      D = (O, A) => (
+        typeof O == "object" && !b(O) && !A && ((A = O), (O = void 0)),
+        s.dispatch("REMOVE_ITEM", { ...A, query: O }),
+        s.query("GET_ACTIVE_ITEM", O) === null
+      ),
+      M = (...O) =>
+        new Promise((A, C) => {
+          const N = [],
+            V = {};
+          if (st(O[0])) (N.push.apply(N, O[0]), Object.assign(V, O[1] || {}));
+          else {
+            const F = O[O.length - 1];
+            (typeof F == "object" &&
+              !(F instanceof Blob) &&
+              Object.assign(V, O.pop()),
+              N.push(...O));
+          }
+          s.dispatch("ADD_ITEMS", {
+            items: N,
+            index: V.index,
+            interactionMethod: ie.API,
+            success: A,
+            failure: C,
+          });
+        }),
+      v = () => s.query("GET_ACTIVE_ITEMS"),
+      P = (O) =>
+        new Promise((A, C) => {
+          s.dispatch("REQUEST_ITEM_PROCESSING", {
+            query: O,
+            success: (N) => {
+              A(N);
+            },
+            failure: (N) => {
+              C(N);
+            },
+          });
+        }),
+      w = (...O) => {
+        const A = Array.isArray(O[0]) ? O[0] : O,
+          C = A.length ? A : v();
+        return Promise.all(C.map(S));
+      },
+      x = (...O) => {
+        const A = Array.isArray(O[0]) ? O[0] : O;
+        if (!A.length) {
+          const C = v().filter(
+            (N) =>
+              !(N.status === G.IDLE && N.origin === $.LOCAL) &&
+              N.status !== G.PROCESSING &&
+              N.status !== G.PROCESSING_COMPLETE &&
+              N.status !== G.PROCESSING_REVERT_ERROR,
+          );
+          return Promise.all(C.map(P));
+        }
+        return Promise.all(A.map(P));
+      },
+      y = (...O) => {
+        const A = Array.isArray(O[0]) ? O[0] : O;
+        let C;
+        typeof A[A.length - 1] == "object"
+          ? (C = A.pop())
+          : Array.isArray(O[0]) && (C = O[1]);
+        const N = v();
+        return A.length
+          ? A.map((F) => (me(F) ? (N[F] ? N[F].id : null) : F))
+              .filter((F) => F)
+              .map((F) => D(F, C))
+          : Promise.all(N.map((F) => D(F, C)));
+      },
+      B = {
+        ...at(),
+        ...u,
+        ...mi(s, n),
+        setOptions: T,
+        addFile: L,
+        addFiles: M,
+        getFile: R,
+        processFile: P,
+        prepareFile: S,
+        removeFile: D,
+        moveFile: (O, A) => s.dispatch("MOVE_ITEM", { query: O, index: A }),
+        getFiles: v,
+        processFiles: x,
+        removeFiles: y,
+        prepareFiles: w,
+        sort: (O) => s.dispatch("SORT", { compare: O }),
+        browse: () => {
+          var O = E.element.querySelector("input[type=file]");
+          O && O.click();
+        },
+        destroy: () => {
+          (B.fire("destroy", E.element),
+            s.dispatch("ABORT_ALL"),
+            E._destroy(),
+            window.removeEventListener("resize", c),
+            document.removeEventListener("visibilitychange", r),
+            s.dispatch("DID_DESTROY"));
+        },
+        insertBefore: (O) => Jt(E.element, O),
+        insertAfter: (O) => en(E.element, O),
+        appendTo: (O) => O.appendChild(E.element),
+        replaceElement: (O) => {
+          (Jt(E.element, O), O.parentNode.removeChild(O), (t = O));
+        },
+        restoreElement: () => {
+          t &&
+            (en(t, E.element),
+            E.element.parentNode.removeChild(E.element),
+            (t = null));
+        },
+        isAttachedTo: (O) => E.element === O || t === O,
+        element: { get: () => E.element },
+        status: { get: () => s.query("GET_STATUS") },
+      };
+    return (s.dispatch("DID_INIT"), _e(B));
+  },
+  ys = (e = {}) => {
+    const t = {};
+    return (
+      H(et(), (s, r) => {
+        t[s] = r[0];
+      }),
+      Tl({ ...t, ...e })
+    );
+  },
+  ml = (e) => e.charAt(0).toLowerCase() + e.slice(1),
+  gl = (e) => Ds(e.replace(/^data-/, "")),
+  Ls = (e, t) => {
+    H(t, (n, s) => {
+      (H(e, (r, a) => {
+        const i = new RegExp(n);
+        if (!i.test(r) || (delete e[r], s === !1)) return;
+        if (Z(s)) {
+          e[s] = a;
+          return;
+        }
+        const o = s.group;
+        (k(s) && !e[o] && (e[o] = {}), (e[o][ml(r.replace(i, ""))] = a));
+      }),
+        s.mapping && Ls(e[s.group], s.mapping));
+    });
+  },
+  hl = (e, t = {}) => {
+    const n = [];
+    H(e.attributes, (r) => {
+      n.push(e.attributes[r]);
+    });
+    const s = n
+      .filter((r) => r.name)
+      .reduce((r, a) => {
+        const i = z(e, a.name);
+        return ((r[gl(a.name)] = i === a.name ? !0 : i), r);
+      }, {});
+    return (Ls(s, t), s);
+  },
+  Rl = (e, t = {}) => {
+    const n = {
+      "^class$": "className",
+      "^multiple$": "allowMultiple",
+      "^capture$": "captureMethod",
+      "^webkitdirectory$": "allowDirectoriesOnly",
+      "^server": {
+        group: "server",
+        mapping: {
+          "^process": { group: "process" },
+          "^revert": { group: "revert" },
+          "^fetch": { group: "fetch" },
+          "^restore": { group: "restore" },
+          "^load": { group: "load" },
+        },
+      },
+      "^type$": !1,
+      "^files$": !1,
+    };
+    Ae("SET_ATTRIBUTE_TO_OPTION_MAP", n);
+    const s = { ...t },
+      r = hl(
+        e.nodeName === "FIELDSET" ? e.querySelector("input[type=file]") : e,
+        n,
+      );
+    (Object.keys(r).forEach((i) => {
+      k(r[i])
+        ? (k(s[i]) || (s[i] = {}), Object.assign(s[i], r[i]))
+        : (s[i] = r[i]);
+    }),
+      (s.files = (t.files || []).concat(
+        Array.from(e.querySelectorAll("input:not([type=file])")).map((i) => ({
+          source: i.value,
+          options: { type: i.dataset.type },
+        })),
+      )));
+    const a = ys(s);
+    return (
+      e.files &&
+        Array.from(e.files).forEach((i) => {
+          a.addFile(i);
+        }),
+      a.replaceElement(e),
+      a
+    );
+  },
+  Ol = (...e) => (Cr(e[0]) ? Rl(...e) : ys(...e)),
+  Sl = ["fire", "_read", "_write"],
+  bn = (e) => {
+    const t = {};
+    return (jn(e, t, Sl), t);
+  },
+  Dl = (e, t) => e.replace(/(?:{([a-zA-Z]+)})/g, (n, s) => t[s]),
+  Al = (e) => {
+    const t = new Blob(["(", e.toString(), ")()"], {
+        type: "application/javascript",
+      }),
+      n = URL.createObjectURL(t),
+      s = new Worker(n);
+    return {
+      transfer: (r, a) => {},
+      post: (r, a, i) => {
+        const l = Pt();
+        ((s.onmessage = (o) => {
+          o.data.id === l && a(o.data.message);
+        }),
+          s.postMessage({ id: l, message: r }, i));
+      },
+      terminate: () => {
+        (s.terminate(), URL.revokeObjectURL(n));
+      },
+    };
+  },
+  yl = (e) =>
+    new Promise((t, n) => {
+      const s = new Image();
+      ((s.onload = () => {
+        t(s);
+      }),
+        (s.onerror = (r) => {
+          n(r);
+        }),
+        (s.src = e));
+    }),
+  Ms = (e, t) => {
+    const n = e.slice(0, e.size, e.type);
+    return ((n.lastModifiedDate = e.lastModifiedDate), (n.name = t), n);
+  },
+  Ll = (e) => Ms(e, e.name),
+  Nn = [],
+  Ml = (e) => {
+    if (Nn.includes(e)) return;
+    Nn.push(e);
+    const t = e({
+      addFilter: Ai,
+      utils: {
+        Type: g,
+        forin: H,
+        isString: Z,
+        isFile: Se,
+        toNaturalFileSize: os,
+        replaceInString: Dl,
+        getExtensionFromFilename: ot,
+        getFilenameWithoutExtension: rs,
+        guesstimateMimeType: ms,
+        getFileFromBlob: be,
+        getFilenameFromURL: He,
+        createRoute: Q,
+        createWorker: Al,
+        createView: q,
+        createItemAPI: J,
+        loadImage: yl,
+        copyFile: Ll,
+        renameFile: Ms,
+        createBlob: ts,
+        applyFilterChain: oe,
+        text: W,
+        getNumericAspectRatioFromString: Kn,
+      },
+      views: { fileActionButton: as },
+    });
+    yi(t.options);
+  },
+  Pl = () =>
+    Object.prototype.toString.call(window.operamini) === "[object OperaMini]",
+  wl = () => "Promise" in window,
+  Cl = () => "slice" in Blob.prototype,
+  bl = () => "URL" in window && "createObjectURL" in window.URL,
+  Nl = () => "visibilityState" in document,
+  vl = () => "performance" in window,
+  Gl = () => "supports" in (window.CSS || {}),
+  Fl = () => /MSIE|Trident/.test(window.navigator.userAgent),
+  Lt = (() => {
+    const e =
+      Wn() && !Pl() && Nl() && wl() && Cl() && bl() && vl() && (Gl() || Fl());
+    return () => e;
+  })(),
+  Ie = { apps: [] },
+  Bl = "filepond",
+  ye = () => {};
+let vn = {},
+  Ke = ye,
+  mt = ye,
+  Gn = ye,
+  Fn = ye,
+  Bn = ye,
+  Un = ye,
+  xn = ye;
+if (Lt()) {
+  si(
+    () => {
+      Ie.apps.forEach((n) => n._read());
+    },
+    (n) => {
+      Ie.apps.forEach((s) => s._write(n));
+    },
+  );
+  const e = () => {
+    (document.dispatchEvent(
+      new CustomEvent("FilePond:loaded", {
+        detail: {
+          supported: Lt,
+          create: Ke,
+          destroy: mt,
+          parse: Gn,
+          find: Fn,
+          registerPlugin: Bn,
+          setOptions: xn,
+        },
+      }),
+    ),
+      document.removeEventListener("DOMContentLoaded", e));
+  };
+  document.readyState !== "loading"
+    ? setTimeout(() => e(), 0)
+    : document.addEventListener("DOMContentLoaded", e);
+  const t = () =>
+    H(et(), (n, s) => {
+      vn[n] = s[1];
+    });
+  ((vn = {}),
+    t(),
+    (Ke = (...n) => {
+      const s = Ol(...n);
+      return (s.on("destroy", mt), Ie.apps.push(s), bn(s));
+    }),
+    (mt = (n) => {
+      const s = Ie.apps.findIndex((r) => r.isAttachedTo(n));
+      return s >= 0 ? (Ie.apps.splice(s, 1)[0].restoreElement(), !0) : !1;
+    }),
+    (Gn = (n) =>
+      Array.from(n.querySelectorAll(`.${Bl}`))
+        .filter((a) => !Ie.apps.find((i) => i.isAttachedTo(a)))
+        .map((a) => Ke(a))),
+    (Fn = (n) => {
+      const s = Ie.apps.find((r) => r.isAttachedTo(n));
+      return s ? bn(s) : null;
+    }),
+    (Bn = (...n) => {
+      (n.forEach(Ml), t());
+    }),
+    (Un = () => {
+      const n = {};
+      return (
+        H(et(), (s, r) => {
+          n[s] = r[0];
+        }),
+        n
+      );
+    }),
+    (xn = (n) => (
+      k(n) &&
+        (Ie.apps.forEach((s) => {
+          s.setOptions(n);
+        }),
+        Li(n)),
+      Un()
+    )));
+}
+/*!
  * react-filepond v7.1.3
  * A handy FilePond adapter component for React
- * 
+ *
  * Copyright (c) 2024 PQINA
  * https://pqina.nl/filepond
- * 
+ *
  * Licensed under the MIT license.
- */const Ul=Lt(),xl=["setOptions","on","off","onOnce","appendTo","insertAfter","insertBefore","isAttachedTo","replaceElement","restoreElement","destroy"];class Hl extends Ps.Component{constructor(t){super(t),this.allowFilesSync=!0}componentDidMount(){if(this._input=this._element.querySelector('input[type="file"]'),this._inputClone=this._input.cloneNode(),!Ul)return;const t=Object.assign({},this.props);if(t.onupdatefiles){const n=t.onupdatefiles;t.onupdatefiles=s=>{this.allowFilesSync=!1,n(s)}}this._pond=Ke(this._input,t),Object.keys(this._pond).filter(n=>!xl.includes(n)).forEach(n=>{this[n]=this._pond[n]})}componentWillUnmount(){if(!this._pond)return;const t=document.createElement("div");t.append(this._pond.element),t.id="foo",this._pond.destroy(),this._pond=void 0,this._element.append(this._inputClone)}shouldComponentUpdate(){return this.allowFilesSync?!0:(this.allowFilesSync=!0,!1)}componentDidUpdate(){if(!this._pond)return;const t=Object.assign({},this.props);delete t.onupdatefiles,this._pond.setOptions(t)}render(){const{id:t,name:n,className:s,allowMultiple:r,required:a,captureMethod:i,acceptedFileTypes:l}=this.props;return Ht.createElement("div",{className:"filepond--wrapper",ref:o=>this._element=o},Ht.createElement("input",{type:"file",name:n,id:t,accept:l,multiple:r,required:a,className:s,capture:i}))}}export{Hl as F,Ar as a,Pr as b,Lr as p,Bn as r};
+ */ const Ul = Lt(),
+  xl = [
+    "setOptions",
+    "on",
+    "off",
+    "onOnce",
+    "appendTo",
+    "insertAfter",
+    "insertBefore",
+    "isAttachedTo",
+    "replaceElement",
+    "restoreElement",
+    "destroy",
+  ];
+class Hl extends Ps.Component {
+  constructor(t) {
+    (super(t), (this.allowFilesSync = !0));
+  }
+  componentDidMount() {
+    if (
+      ((this._input = this._element.querySelector('input[type="file"]')),
+      (this._inputClone = this._input.cloneNode()),
+      !Ul)
+    )
+      return;
+    const t = Object.assign({}, this.props);
+    if (t.onupdatefiles) {
+      const n = t.onupdatefiles;
+      t.onupdatefiles = (s) => {
+        ((this.allowFilesSync = !1), n(s));
+      };
+    }
+    ((this._pond = Ke(this._input, t)),
+      Object.keys(this._pond)
+        .filter((n) => !xl.includes(n))
+        .forEach((n) => {
+          this[n] = this._pond[n];
+        }));
+  }
+  componentWillUnmount() {
+    if (!this._pond) return;
+    const t = document.createElement("div");
+    (t.append(this._pond.element),
+      (t.id = "foo"),
+      this._pond.destroy(),
+      (this._pond = void 0),
+      this._element.append(this._inputClone));
+  }
+  shouldComponentUpdate() {
+    return this.allowFilesSync ? !0 : ((this.allowFilesSync = !0), !1);
+  }
+  componentDidUpdate() {
+    if (!this._pond) return;
+    const t = Object.assign({}, this.props);
+    (delete t.onupdatefiles, this._pond.setOptions(t));
+  }
+  render() {
+    const {
+      id: t,
+      name: n,
+      className: s,
+      allowMultiple: r,
+      required: a,
+      captureMethod: i,
+      acceptedFileTypes: l,
+    } = this.props;
+    return Ht.createElement(
+      "div",
+      { className: "filepond--wrapper", ref: (o) => (this._element = o) },
+      Ht.createElement("input", {
+        type: "file",
+        name: n,
+        id: t,
+        accept: l,
+        multiple: r,
+        required: a,
+        className: s,
+        capture: i,
+      }),
+    );
+  }
+}
+export { Hl as F, Ar as a, Pr as b, Lr as p, Bn as r };

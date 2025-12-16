@@ -1,7 +1,182 @@
-import{i as N,q as S,r,j as e}from"./index-ADhmmBpU.js";import{P as V}from"./PageHeader-l3FtlNyv.js";import{P as E}from"./PageWrapper-D7EWSq9s.js";import{u as f,c as P}from"./button-Bp2lHjov-bkEUXTzY.js";import{l as w}from"./lodash-BI9_Ro3R.js";import{H as T}from"./index.es-BKLEAvF1.js";import{c as A,F as I}from"./F51Document-CWbEHOs7.js";import{u as q}from"./useLists-DBTxrMAi.js";import{F}from"./f51.constants-C9eI1nkf.js";import{u as K}from"./useF51Document-DMSV6a3I.js";import{u as M}from"./useDelete-DMNw96p5.js";import{M as H}from"./MyModal-3lICjm9q.js";import{D as L}from"./DocumentInfo-DZJr13Om.js";import{F as R}from"./MyAccordion-x3W9CRJW.js";import{L as h}from"./ListStatisticsCard-BcOJa2-j.js";import{C as _}from"./circle-plus-CJWL5GeC.js";import"./sidebar-C0lF1Npi.js";import"./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";import"./useQueryParams-Dns8Zny6.js";import"./createLucideIcon-B950nf2d-ChSZaRdU.js";import"./popover-HTqpqYpJ-CIljcfgV-Ob8cCMTy.js";import"./MySelect-CDOMHlry-CVNRsqeU.js";import"./badge-DGmo3xSE-Cderfv3F.js";import"./MyTooltip-DPJtpMhP.js";import"./eye-CW1pDi29.js";import"./trash-2-B_r_Bsxl.js";import"./useApi-BNT2PGFQ.js";import"./useGetOne-DA0KuYmv.js";import"./MutateRequestMethod-D0dsk-6r.js";import"./user-D-Egm9vv.js";const $=()=>{var b;const{t}=f(),s=N(),{toast:a}=S(),[i,n]=r.useState(!1),[d,c]=r.useState(null),{removeWithConfirm:m}=M([F]),{query:l,handleFilter:u,params:p}=q({url:[F]}),{f51DocumentQuery:C}=K(d),y=r.useCallback(()=>{s("/rtsi/f-51/create")},[s]),x=r.useCallback(o=>{s(`/rtsi/f-51/edit/${o}`)},[s]),g=r.useCallback(o=>{m(o).then(()=>{l.refetch(),a({variant:"success",title:t("Success"),description:t("F56 document successfully")})}).catch(v=>{a({variant:"destructive",title:t(`${w.get(v,"response.statusText","Error")}`),description:t(`${w.get(v,"response.data.message","An error occurred. Contact the administrator")}`)})})},[m,t,a]),j=r.useCallback(o=>{c(o),n(!0)},[]),k=r.useCallback(o=>{n(o),o||c(null)},[]),D=r.useMemo(()=>A(t,x,g,j),[g,x,j,t]);return{params:p,handleAdd:y,handleFilter:u,loading:l.isLoading,dataSource:l.data,columns:D,openView:i,currentItem:(b=C.data)==null?void 0:b.data,handleCloseView:k}},z=({open:t,onOpenChange:s,document:a})=>{const{t:i}=f();return e.jsx(H,{open:t,onOpenChange:s,size:"8xl",className:"overflow-auto",header:e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsx(R,{className:"h-5 w-5"}),e.jsx("span",{children:"F-51 document"})]}),children:e.jsxs("div",{className:"flex flex-1 flex-col xl:flex-row gap-4 overflow-hidden",children:[e.jsx("div",{className:`
+import { i as N, q as S, r, j as e } from "./index-ADhmmBpU.js";
+import { P as V } from "./PageHeader-l3FtlNyv.js";
+import { P as E } from "./PageWrapper-D7EWSq9s.js";
+import { u as f, c as P } from "./button-Bp2lHjov-bkEUXTzY.js";
+import { l as w } from "./lodash-BI9_Ro3R.js";
+import { H as T } from "./index.es-BKLEAvF1.js";
+import { c as A, F as I } from "./F51Document-CWbEHOs7.js";
+import { u as q } from "./useLists-DBTxrMAi.js";
+import { F } from "./f51.constants-C9eI1nkf.js";
+import { u as K } from "./useF51Document-DMSV6a3I.js";
+import { u as M } from "./useDelete-DMNw96p5.js";
+import { M as H } from "./MyModal-3lICjm9q.js";
+import { D as L } from "./DocumentInfo-DZJr13Om.js";
+import { F as R } from "./MyAccordion-x3W9CRJW.js";
+import { L as h } from "./ListStatisticsCard-BcOJa2-j.js";
+import { C as _ } from "./circle-plus-CJWL5GeC.js";
+import "./sidebar-C0lF1Npi.js";
+import "./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";
+import "./useQueryParams-Dns8Zny6.js";
+import "./createLucideIcon-B950nf2d-ChSZaRdU.js";
+import "./popover-HTqpqYpJ-CIljcfgV-Ob8cCMTy.js";
+import "./MySelect-CDOMHlry-CVNRsqeU.js";
+import "./badge-DGmo3xSE-Cderfv3F.js";
+import "./MyTooltip-DPJtpMhP.js";
+import "./eye-CW1pDi29.js";
+import "./trash-2-B_r_Bsxl.js";
+import "./useApi-BNT2PGFQ.js";
+import "./useGetOne-DA0KuYmv.js";
+import "./MutateRequestMethod-D0dsk-6r.js";
+import "./user-D-Egm9vv.js";
+const $ = () => {
+    var b;
+    const { t } = f(),
+      s = N(),
+      { toast: a } = S(),
+      [i, n] = r.useState(!1),
+      [d, c] = r.useState(null),
+      { removeWithConfirm: m } = M([F]),
+      { query: l, handleFilter: u, params: p } = q({ url: [F] }),
+      { f51DocumentQuery: C } = K(d),
+      y = r.useCallback(() => {
+        s("/rtsi/f-51/create");
+      }, [s]),
+      x = r.useCallback(
+        (o) => {
+          s(`/rtsi/f-51/edit/${o}`);
+        },
+        [s],
+      ),
+      g = r.useCallback(
+        (o) => {
+          m(o)
+            .then(() => {
+              (l.refetch(),
+                a({
+                  variant: "success",
+                  title: t("Success"),
+                  description: t("F56 document successfully"),
+                }));
+            })
+            .catch((v) => {
+              a({
+                variant: "destructive",
+                title: t(`${w.get(v, "response.statusText", "Error")}`),
+                description: t(
+                  `${w.get(v, "response.data.message", "An error occurred. Contact the administrator")}`,
+                ),
+              });
+            });
+        },
+        [m, t, a],
+      ),
+      j = r.useCallback((o) => {
+        (c(o), n(!0));
+      }, []),
+      k = r.useCallback((o) => {
+        (n(o), o || c(null));
+      }, []),
+      D = r.useMemo(() => A(t, x, g, j), [g, x, j, t]);
+    return {
+      params: p,
+      handleAdd: y,
+      handleFilter: u,
+      loading: l.isLoading,
+      dataSource: l.data,
+      columns: D,
+      openView: i,
+      currentItem: (b = C.data) == null ? void 0 : b.data,
+      handleCloseView: k,
+    };
+  },
+  z = ({ open: t, onOpenChange: s, document: a }) => {
+    const { t: i } = f();
+    return e.jsx(H, {
+      open: t,
+      onOpenChange: s,
+      size: "8xl",
+      className: "overflow-auto",
+      header: e.jsxs("div", {
+        className: "flex items-center gap-2",
+        children: [
+          e.jsx(R, { className: "h-5 w-5" }),
+          e.jsx("span", { children: "F-51 document" }),
+        ],
+      }),
+      children: e.jsxs("div", {
+        className: "flex flex-1 flex-col xl:flex-row gap-4 overflow-hidden",
+        children: [
+          e.jsx("div", {
+            className: `
             flex-4/5 border rounded-lg p-2
             overflow-visible
             xl:overflow-y-auto
             xl:max-h-[80vh]
             scrollbar-thin scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thumb-rounded-full
-          `,children:e.jsx(I,{document:a})}),e.jsx(L,{docType:i("F51"),onOpenChange:s,document:a})]})})},ve=()=>{const{t}=f(),{handleAdd:s,loading:a,dataSource:i,columns:n,params:d,handleFilter:c,openView:m,currentItem:l,handleCloseView:u}=$(),p=r.useMemo(()=>[{name:t("RTSI"),path:"/rtsi",isActive:!1},{name:t("F-51 document"),path:"/rtsi/f-51",isActive:!0}],[t]);return e.jsxs(e.Fragment,{children:[e.jsx(z,{open:m,onOpenChange:u,document:l}),e.jsx(V,{className:"sticky top-0",breadcrumbs:p,children:e.jsxs(P,{size:"sm",onClick:s,children:[e.jsx(_,{}),t("Add new")]})}),e.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3",children:[e.jsx(h,{title:t("Tasdiqlanganlar"),count:123}),e.jsx(h,{title:t("Ko'rib chiqilmoqda"),count:123}),e.jsx(h,{title:t("Rad etilganlar"),count:123})]}),e.jsx(E,{children:e.jsx(T,{tableKey:"f51-documents",hasNumbers:!0,hasSearch:!0,isStickyHeader:!0,loading:a,params:d,onParamChange:c,rowKey:"_id",dataSource:i,dataKey:"docs",columns:n})})]})};export{ve as default};
+          `,
+            children: e.jsx(I, { document: a }),
+          }),
+          e.jsx(L, { docType: i("F51"), onOpenChange: s, document: a }),
+        ],
+      }),
+    });
+  },
+  ve = () => {
+    const { t } = f(),
+      {
+        handleAdd: s,
+        loading: a,
+        dataSource: i,
+        columns: n,
+        params: d,
+        handleFilter: c,
+        openView: m,
+        currentItem: l,
+        handleCloseView: u,
+      } = $(),
+      p = r.useMemo(
+        () => [
+          { name: t("RTSI"), path: "/rtsi", isActive: !1 },
+          { name: t("F-51 document"), path: "/rtsi/f-51", isActive: !0 },
+        ],
+        [t],
+      );
+    return e.jsxs(e.Fragment, {
+      children: [
+        e.jsx(z, { open: m, onOpenChange: u, document: l }),
+        e.jsx(V, {
+          className: "sticky top-0",
+          breadcrumbs: p,
+          children: e.jsxs(P, {
+            size: "sm",
+            onClick: s,
+            children: [e.jsx(_, {}), t("Add new")],
+          }),
+        }),
+        e.jsxs("div", {
+          className: "grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3",
+          children: [
+            e.jsx(h, { title: t("Tasdiqlanganlar"), count: 123 }),
+            e.jsx(h, { title: t("Ko'rib chiqilmoqda"), count: 123 }),
+            e.jsx(h, { title: t("Rad etilganlar"), count: 123 }),
+          ],
+        }),
+        e.jsx(E, {
+          children: e.jsx(T, {
+            tableKey: "f51-documents",
+            hasNumbers: !0,
+            hasSearch: !0,
+            isStickyHeader: !0,
+            loading: a,
+            params: d,
+            onParamChange: c,
+            rowKey: "_id",
+            dataSource: i,
+            dataKey: "docs",
+            columns: n,
+          }),
+        }),
+      ],
+    });
+  };
+export { ve as default };
