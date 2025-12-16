@@ -1,1 +1,29 @@
-import{Q as r,r as o,j as s}from"./index-ADhmmBpU.js";import{P as m}from"./PageHeader-l3FtlNyv.js";import{P as i}from"./PageWrapper-D7EWSq9s.js";import"./lodash-BI9_Ro3R.js";import{u as p}from"./button-Bp2lHjov-bkEUXTzY.js";import"./sidebar-C0lF1Npi.js";const l=()=>{const{t}=p(),{id:e}=r(),a=o.useMemo(()=>[{name:t("RTSI"),path:"rtsi",isActive:!1},{name:t("F-51 document"),path:"f-51",isActive:!1},{name:t(e?"Edit":"Create"),path:e?`${e}/edit`:"create",isActive:!0}],[e,t]);return s.jsxs(s.Fragment,{children:[s.jsx(m,{className:"sticky top-0",breadcrumbs:a}),s.jsx(i,{})]})};export{l as default};
+import { Q as r, r as o, j as s } from "./index-ADhmmBpU.js";
+import { P as m } from "./PageHeader-l3FtlNyv.js";
+import { P as i } from "./PageWrapper-D7EWSq9s.js";
+import "./lodash-BI9_Ro3R.js";
+import { u as p } from "./button-Bp2lHjov-bkEUXTzY.js";
+import "./sidebar-C0lF1Npi.js";
+const l = () => {
+  const { t } = p(),
+    { id: e } = r(),
+    a = o.useMemo(
+      () => [
+        { name: t("RTSI"), path: "rtsi", isActive: !1 },
+        { name: t("F-51 document"), path: "f-51", isActive: !1 },
+        {
+          name: t(e ? "Edit" : "Create"),
+          path: e ? `${e}/edit` : "create",
+          isActive: !0,
+        },
+      ],
+      [e, t],
+    );
+  return s.jsxs(s.Fragment, {
+    children: [
+      s.jsx(m, { className: "sticky top-0", breadcrumbs: a }),
+      s.jsx(i, {}),
+    ],
+  });
+};
+export { l as default };

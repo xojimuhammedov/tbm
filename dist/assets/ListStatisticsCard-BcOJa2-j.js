@@ -1,1 +1,10 @@
-import{j as s}from"./index-ADhmmBpU.js";const a=({title:r,count:t})=>s.jsxs("div",{className:"rounded-lg p-6 shadow-sm border border-gray-200",children:[s.jsx("h3",{className:"text-sm font-medium mb-2",children:r}),s.jsx("p",{className:"text-3xl font-bold",children:t})]});export{a as L};
+import { j as s } from "./index-ADhmmBpU.js";
+const a = ({ title: r, count: t }) =>
+  s.jsxs("div", {
+    className: "rounded-lg p-6 shadow-sm border border-gray-200",
+    children: [
+      s.jsx("h3", { className: "text-sm font-medium mb-2", children: r }),
+      s.jsx("p", { className: "text-3xl font-bold", children: t }),
+    ],
+  });
+export { a as L };

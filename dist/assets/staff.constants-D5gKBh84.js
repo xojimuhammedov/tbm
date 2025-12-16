@@ -1,1 +1,2 @@
-const s="users";export{s as S};
+const s = "users";
+export { s as S };

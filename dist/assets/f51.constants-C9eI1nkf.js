@@ -1,1 +1,2 @@
-const o="f51";export{o as F};
+const o = "f51";
+export { o as F };

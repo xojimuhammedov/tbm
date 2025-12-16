@@ -1,1 +1,43 @@
-import{i as c,r as e,j as s}from"./index-ADhmmBpU.js";import{P as n}from"./PageHeader-l3FtlNyv.js";import{u as l,c as m}from"./button-Bp2lHjov-bkEUXTzY.js";import{L as a}from"./ListStatisticsCard-BcOJa2-j.js";import{C as d}from"./circle-plus-CJWL5GeC.js";import"./lodash-BI9_Ro3R.js";import"./sidebar-C0lF1Npi.js";const v=()=>{const{t}=l(),r=c(),i=e.useMemo(()=>[{name:t("RH-252"),path:"/rh-252",isActive:!1},{name:t("3_3 document"),path:"/rh-252/rh-3_3",isActive:!0}],[t]),o=e.useCallback(()=>{r("/rh-252/rh-3_3/create")},[r]);return s.jsxs(s.Fragment,{children:[s.jsx(n,{className:"sticky top-0",breadcrumbs:i,children:s.jsxs(m,{size:"sm",onClick:o,children:[s.jsx(d,{}),t("Add new")]})}),s.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3",children:[s.jsx(a,{title:t("Tasdiqlanganlar"),count:123}),s.jsx(a,{title:t("Ko'rib chiqilmoqda"),count:123}),s.jsx(a,{title:t("Rad etilganlar"),count:123})]})]})};export{v as default};
+import { i as c, r as e, j as s } from "./index-ADhmmBpU.js";
+import { P as n } from "./PageHeader-l3FtlNyv.js";
+import { u as l, c as m } from "./button-Bp2lHjov-bkEUXTzY.js";
+import { L as a } from "./ListStatisticsCard-BcOJa2-j.js";
+import { C as d } from "./circle-plus-CJWL5GeC.js";
+import "./lodash-BI9_Ro3R.js";
+import "./sidebar-C0lF1Npi.js";
+const v = () => {
+  const { t } = l(),
+    r = c(),
+    i = e.useMemo(
+      () => [
+        { name: t("RH-252"), path: "/rh-252", isActive: !1 },
+        { name: t("3_3 document"), path: "/rh-252/rh-3_3", isActive: !0 },
+      ],
+      [t],
+    ),
+    o = e.useCallback(() => {
+      r("/rh-252/rh-3_3/create");
+    }, [r]);
+  return s.jsxs(s.Fragment, {
+    children: [
+      s.jsx(n, {
+        className: "sticky top-0",
+        breadcrumbs: i,
+        children: s.jsxs(m, {
+          size: "sm",
+          onClick: o,
+          children: [s.jsx(d, {}), t("Add new")],
+        }),
+      }),
+      s.jsxs("div", {
+        className: "grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3",
+        children: [
+          s.jsx(a, { title: t("Tasdiqlanganlar"), count: 123 }),
+          s.jsx(a, { title: t("Ko'rib chiqilmoqda"), count: 123 }),
+          s.jsx(a, { title: t("Rad etilganlar"), count: 123 }),
+        ],
+      }),
+    ],
+  });
+};
+export { v as default };

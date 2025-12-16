@@ -1,7 +1,1057 @@
-import{T as te,U as G,W as ie,r as h,Y as ne,j as r,J as le,a as ce,M as oe,i as pe,q as me}from"./index-ADhmmBpU.js";import{P as de}from"./PageHeader-l3FtlNyv.js";import{P as xe}from"./PageWrapper-D7EWSq9s.js";import{w as Z,i as z,d as B,e as I,u as W,c as he}from"./button-Bp2lHjov-bkEUXTzY.js";import{l as J}from"./lodash-BI9_Ro3R.js";import{H as fe}from"./index.es-BKLEAvF1.js";import{M as ue}from"./MyModal-3lICjm9q.js";import{D as ve}from"./DocumentInfo-DZJr13Om.js";import{F as be}from"./MyAccordion-x3W9CRJW.js";import{u as je}from"./useLists-DBTxrMAi.js";import{u as Ne,O as Y}from"./useOperativeDocument-NGwAguQO.js";import{l as ge}from"./badge-DGmo3xSE-Cderfv3F.js";import{M}from"./MyTooltip-DPJtpMhP.js";import{F as ye}from"./file-8TEH2UwQ.js";import{E as Ee}from"./eye-CW1pDi29.js";import{S as ke,u as Ae}from"./useDelete-DMNw96p5.js";import{T as we}from"./trash-2-B_r_Bsxl.js";import{L as q}from"./ListStatisticsCard-BcOJa2-j.js";import{C as Ce}from"./circle-plus-CJWL5GeC.js";import"./sidebar-C0lF1Npi.js";import"./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";import"./useQueryParams-Dns8Zny6.js";import"./createLucideIcon-B950nf2d-ChSZaRdU.js";import"./popover-HTqpqYpJ-CIljcfgV-Ob8cCMTy.js";import"./MySelect-CDOMHlry-CVNRsqeU.js";import"./user-D-Egm9vv.js";import"./useApi-BNT2PGFQ.js";import"./useGetOne-DA0KuYmv.js";import"./MutateRequestMethod-D0dsk-6r.js";var H,Q;function Te(){return Q||(Q=1,H={area:!0,base:!0,br:!0,col:!0,embed:!0,hr:!0,img:!0,input:!0,link:!0,meta:!0,param:!0,source:!0,track:!0,wbr:!0}),H}var Oe=Te();const $e=te(Oe);var Ie=/\s([^'"/\s><]+?)[\s/>]|([^\s=]+)=\s?(".*?"|'.*?')/g;function X(s){var e={type:"tag",name:"",voidElement:!1,attrs:{},children:[]},a=s.match(/<\/?([^\s]+?)[/\s>]/);if(a&&(e.name=a[1],($e[a[1]]||s.charAt(s.length-2)==="/")&&(e.voidElement=!0),e.name.startsWith("!--"))){var t=s.indexOf("-->");return{type:"comment",comment:t!==-1?s.slice(4,t):""}}for(var i=new RegExp(Ie),n=null;(n=i.exec(s))!==null;)if(n[0].trim())if(n[1]){var m=n[1].trim(),d=[m,""];m.indexOf("=")>-1&&(d=m.split("=")),e.attrs[d[0]]=d[1],i.lastIndex--}else n[2]&&(e.attrs[n[2]]=n[3].trim().substring(1,n[3].length-1));return e}var Se=/<[a-zA-Z0-9\-\!\/](?:"[^"]*"|'[^']*'|[^'">])*>/g,Ve=/^\s*$/,De=Object.create(null);function ee(s,e){switch(e.type){case"text":return s+e.content;case"tag":return s+="<"+e.name+(e.attrs?function(a){var t=[];for(var i in a)t.push(i+'="'+a[i]+'"');return t.length?" "+t.join(" "):""}(e.attrs):"")+(e.voidElement?"/>":">"),e.voidElement?s:s+e.children.reduce(ee,"")+"</"+e.name+">";case"comment":return s+"<!--"+e.comment+"-->"}}var Pe={parse:function(s,e){e||(e={}),e.components||(e.components=De);var a,t=[],i=[],n=-1,m=!1;if(s.indexOf("<")!==0){var d=s.indexOf("<");t.push({type:"text",content:d===-1?s:s.substring(0,d)})}return s.replace(Se,function(x,j){if(m){if(x!=="</"+a.name+">")return;m=!1}var f,N=x.charAt(1)!=="/",y=x.startsWith("<!--"),b=j+x.length,o=s.charAt(b);if(y){var w=X(x);return n<0?(t.push(w),t):((f=i[n]).children.push(w),t)}if(N&&(n++,(a=X(x)).type==="tag"&&e.components[a.name]&&(a.type="component",m=!0),a.voidElement||m||!o||o==="<"||a.children.push({type:"text",content:s.slice(b,s.indexOf("<",b))}),n===0&&t.push(a),(f=i[n-1])&&f.children.push(a),i[n]=a),(!N||a.voidElement)&&(n>-1&&(a.voidElement||a.name===x.slice(2,-1))&&(n--,a=n===-1?t:i[n]),!m&&o!=="<"&&o)){f=n===-1?t:i[n].children;var u=s.indexOf("<",b),p=s.slice(b,u===-1?void 0:u);Ve.test(p)&&(p=" "),(u>-1&&n+f.length>=0||p!==" ")&&f.push({type:"text",content:p})}}),t},stringify:function(s){return s.reduce(function(e,a){return e+ee("",a)},"")}};const R=(s,e)=>{var t;if(!s)return!1;const a=((t=s.props)==null?void 0:t.children)??s.children;return e?a.length>0:!!a},U=s=>{var a,t;if(!s)return[];const e=((a=s.props)==null?void 0:a.children)??s.children;return(t=s.props)!=null&&t.i18nIsDynamicList?V(e):e},ze=s=>Array.isArray(s)&&s.every(h.isValidElement),V=s=>Array.isArray(s)?s:[s],_e=(s,e)=>{const a={...e};return a.props=Object.assign(s.props,e.props),a},se=(s,e,a,t)=>{if(!s)return"";let i="";const n=V(s),m=e!=null&&e.transSupportBasicHtmlNodes?e.transKeepBasicHtmlNodesFor??[]:[];return n.forEach((d,x)=>{if(z(d)){i+=`${d}`;return}if(h.isValidElement(d)){const{props:j,type:f}=d,N=Object.keys(j).length,y=m.indexOf(f)>-1,b=j.children;if(!b&&y&&!N){i+=`<${f}/>`;return}if(!b&&(!y||N)||j.i18nIsDynamicList){i+=`<${x}></${x}>`;return}if(y&&N===1&&z(b)){i+=`<${f}>${b}</${f}>`;return}const o=se(b,e,a,t);i+=`<${x}>${o}</${x}>`;return}if(d===null){B(a,"TRANS_NULL_VALUE","Passed in a null value as child",{i18nKey:t});return}if(I(d)){const{format:j,...f}=d,N=Object.keys(f);if(N.length===1){const y=j?`${N[0]}, ${j}`:N[0];i+=`{{${y}}}`;return}B(a,"TRANS_INVALID_OBJ","Invalid child - Object should only have keys {{ value, format }} (format is optional).",{i18nKey:t,child:d});return}B(a,"TRANS_INVALID_VAR","Passed in a variable like {number} - pass variables for interpolation as full objects like {{number}}.",{i18nKey:t,child:d})}),i},Fe=(s,e,a,t,i,n,m)=>{if(a==="")return[];const d=i.transKeepBasicHtmlNodesFor||[],x=a&&new RegExp(d.map(p=>`<${p}`).join("|")).test(a);if(!s&&!e&&!x&&!m)return[a];const j=e??{},f=p=>{V(p).forEach(c=>{z(c)||(R(c)?f(U(c)):I(c)&&!h.isValidElement(c)&&Object.assign(j,c))})};f(s);const N=Pe.parse(`<0>${a}</0>`),y={...j,...n},b=(p,E,c)=>{var v;const k=U(p),O=w(k,E.children,c);return ze(k)&&O.length===0||(v=p.props)!=null&&v.i18nIsDynamicList?k:O},o=(p,E,c,k,O)=>{p.dummy?(p.children=E,c.push(h.cloneElement(p,{key:k},O?void 0:E))):c.push(...h.Children.map([p],v=>{const l={...v.props};return delete l.i18nIsDynamicList,h.createElement(v.type,{...l,key:k,ref:v.props.ref??v.ref},O?null:E)}))},w=(p,E,c)=>{const k=V(p);return V(E).reduce((v,l,T)=>{var D,P;const $=((P=(D=l.children)==null?void 0:D[0])==null?void 0:P.content)&&t.services.interpolator.interpolate(l.children[0].content,y,t.language);if(l.type==="tag"){let C=k[parseInt(l.name,10)];!C&&e&&(C=e[l.name]),c.length===1&&!C&&(C=c[0][l.name]),C||(C={});const g=Object.keys(l.attrs).length!==0?_e({props:l.attrs},C):C,S=h.isValidElement(g),_=S&&R(l,!0)&&!l.voidElement,F=x&&I(g)&&g.dummy&&!S,L=I(e)&&Object.hasOwnProperty.call(e,l.name);if(z(g)){const A=t.services.interpolator.interpolate(g,y,t.language);v.push(A)}else if(R(g)||_){const A=b(g,l,c);o(g,A,v,T)}else if(F){const A=w(k,l.children,c);o(g,A,v,T)}else if(Number.isNaN(parseFloat(l.name)))if(L){const A=b(g,l,c);o(g,A,v,T,l.voidElement)}else if(i.transSupportBasicHtmlNodes&&d.indexOf(l.name)>-1)if(l.voidElement)v.push(h.createElement(l.name,{key:`${l.name}-${T}`}));else{const A=w(k,l.children,c);v.push(h.createElement(l.name,{key:`${l.name}-${T}`},A))}else if(l.voidElement)v.push(`<${l.name} />`);else{const A=w(k,l.children,c);v.push(`<${l.name}>${A}</${l.name}>`)}else if(I(g)&&!S){const A=l.children[0]?$:null;A&&v.push(A)}else o(g,$,v,T,l.children.length!==1||!$)}else if(l.type==="text"){const C=i.transWrapTextNodes,g=m?i.unescape(t.services.interpolator.interpolate(l.content,y,t.language)):t.services.interpolator.interpolate(l.content,y,t.language);C?v.push(h.createElement(C,{key:`${l.name}-${T}`},g)):v.push(g)}return v},[])},u=w([{dummy:!0,children:s||[]}],N,V(s||[]));return U(u[0])},re=(s,e,a)=>{const t=s.key||e,i=h.cloneElement(s,{key:t});if(!i.props||!i.props.children||a.indexOf(`${e}/>`)<0&&a.indexOf(`${e} />`)<0)return i;function n(){return h.createElement(h.Fragment,null,i)}return h.createElement(n,{key:t})},Le=(s,e)=>s.map((a,t)=>re(a,t,e)),Be=(s,e)=>{const a={};return Object.keys(s).forEach(t=>{Object.assign(a,{[t]:re(s[t],t,e)})}),a},Me=(s,e,a,t)=>s?Array.isArray(s)?Le(s,e):I(s)?Be(s,e):(Z(a,"TRANS_INVALID_COMPONENTS",'<Trans /> "components" prop expects an object or array',{i18nKey:t}),null):null,qe=s=>!I(s)||Array.isArray(s)?!1:Object.keys(s).reduce((e,a)=>e&&Number.isNaN(Number.parseFloat(a)),!0);function He({children:s,count:e,parent:a,i18nKey:t,context:i,tOptions:n={},values:m,defaults:d,components:x,ns:j,i18n:f,t:N,shouldUnescape:y,...b}){var S,_,F,L,A,K;const o=f||G();if(!o)return Z(o,"NO_I18NEXT_INSTANCE","Trans: You need to pass in an i18next instance using i18nextReactModule",{i18nKey:t}),s;const w=N||o.t.bind(o)||(ae=>ae),u={...ie(),...(S=o.options)==null?void 0:S.react};let p=j||w.ns||((_=o.options)==null?void 0:_.defaultNS);p=z(p)?[p]:p||["translation"];const E=se(s,u,o,t),c=d||E||u.transEmptyNodeValue||t,{hashTransKey:k}=u,O=t||(k?k(E||c):E||c);(L=(F=o.options)==null?void 0:F.interpolation)!=null&&L.defaultVariables&&(m=m&&Object.keys(m).length>0?{...m,...o.options.interpolation.defaultVariables}:{...o.options.interpolation.defaultVariables});const v=m||e!==void 0&&!((K=(A=o.options)==null?void 0:A.interpolation)!=null&&K.alwaysFormat)||!s?n.interpolation:{interpolation:{...n.interpolation,prefix:"#$?",suffix:"?$#"}},l={...n,context:i||n.context,count:e,...m,...v,defaultValue:c,ns:p},T=O?w(O,l):c,$=Me(x,T,o,t);let D=$||s,P=null;qe($)&&(P=$,D=s);const C=Fe(D,P,T,o,u,l,y),g=a??u.defaultTransParent;return g?h.createElement(g,b,C):C}function Re({children:s,count:e,parent:a,i18nKey:t,context:i,tOptions:n={},values:m,defaults:d,components:x,ns:j,i18n:f,t:N,shouldUnescape:y,...b}){var E;const{i18n:o,defaultNS:w}=h.useContext(ne)||{},u=f||o||G(),p=N||(u==null?void 0:u.t.bind(u));return He({children:s,count:e,parent:a,i18nKey:t,context:i,tOptions:n,values:m,defaults:d,components:x,ns:j||(p==null?void 0:p.ns)||w||((E=u==null?void 0:u.options)==null?void 0:E.defaultNS),i18n:u,t:N,shouldUnescape:y,...b})}const Ue=({title:s,document:e})=>r.jsxs("div",{className:"rounded-lg shadow-sm border p-6 space-y-3",children:[r.jsx("div",{className:"flex items-center justify-end",children:r.jsx("div",{className:"text-sm",children:s})}),r.jsxs("div",{className:"text-center mb-4",children:[r.jsx("h2",{className:"text-lg font-semibold mb-1",children:"D ilova"}),r.jsx("p",{className:"text-gray-400 mb-3",children:"(Majburiy)"}),r.jsx("p",{className:"text-sm",children:r.jsx(Re,{i18nKey:"Tezkor o'rtacha-sozlash ishlarini o'tkazish uchun <br /> talabnomaning shakli",components:{br:r.jsx("br",{})}})})]}),r.jsxs("div",{className:"text-center mb-6",children:[r.jsxs("div",{className:"flex justify-center items-center gap-4 mb-3",children:[r.jsx("div",{className:"",children:r.jsx("div",{className:"inline-block min-w-24 border-b text-sm px-2 py-1",children:(e==null?void 0:e.UbpNumber)||""})}),r.jsx("div",{className:"mt-1 text-sm",children:"UBPdan"})]}),r.jsx("div",{className:"mb-2 text-sm",children:"tezkor ta’mirlash-sozlash ishlarini o’tkazish uchun"}),r.jsxs("div",{className:"flex justify-center items-center gap-4 mb-3",children:[r.jsx("div",{className:"inline-block min-w-24 border-b text-sm px-2 py-1",children:(e==null?void 0:e.applicationNumber)||""}),r.jsx("div",{className:"mt-1 text-sm",children:"- son TALABNOMA"})]})]}),r.jsxs("div",{className:"space-y-3 text-sm",children:[r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"1. Ishlarni o'tkazish shartlari:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.workConditions)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"2. Sana va vaqt:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.date)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"3. Uchastka, stansiyalar:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.magistralName)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"4. NO nomeri:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.NoNumber)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"5. Al-9 kanallari:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.ai9Channels)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"6. Ishni bajarish sababi:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.reasonJob)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"7. Bajarilayotgan ishlar xususiyati:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.jobDescription)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"8. NO holati:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.NOStatus)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"9. AAG:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.aag)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"10. Rezervlashning boshqa usuli:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.reservation)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"11. Ishlarni o’tkazish uchun javobgar shaxs:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.responsiblePerson)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"12. “O’zbekiston” AK ekspluatasiya qiluvchi korxona texnik rahbari:"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.headOfTheEnterprise)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"13. AI-9 F.I.Sh. (Joylarda):"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.aiFullName)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"14. Talabnoma tuzuvchi (AP):"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.applicantAP)||" "})]}),r.jsxs("div",{className:"flex items-start gap-2",children:[r.jsx("div",{className:"min-w-48",children:"15. Talabnoma tuzuvchi (UBP):"}),r.jsx("div",{className:"flex-1 border-b text-gray-900",children:(e==null?void 0:e.applicantUBP)||" "})]})]})]}),We=({open:s,onOpenChange:e,document:a})=>{const{t}=W();return r.jsx(ue,{open:s,onOpenChange:e,size:"8xl",className:"overflow-auto",header:r.jsxs("div",{className:"flex items-center gap-2",children:[r.jsx(be,{className:"size-5"}),r.jsx("span",{children:(a==null?void 0:a.title)||"Operative document"})]}),children:r.jsxs("div",{className:"flex flex-1 flex-col xl:flex-row gap-4 overflow-hidden",children:[r.jsx("div",{className:`
+import {
+  T as te,
+  U as G,
+  W as ie,
+  r as h,
+  Y as ne,
+  j as r,
+  J as le,
+  a as ce,
+  M as oe,
+  i as pe,
+  q as me,
+} from "./index-ADhmmBpU.js";
+import { P as de } from "./PageHeader-l3FtlNyv.js";
+import { P as xe } from "./PageWrapper-D7EWSq9s.js";
+import {
+  w as Z,
+  i as z,
+  d as B,
+  e as I,
+  u as W,
+  c as he,
+} from "./button-Bp2lHjov-bkEUXTzY.js";
+import { l as J } from "./lodash-BI9_Ro3R.js";
+import { H as fe } from "./index.es-BKLEAvF1.js";
+import { M as ue } from "./MyModal-3lICjm9q.js";
+import { D as ve } from "./DocumentInfo-DZJr13Om.js";
+import { F as be } from "./MyAccordion-x3W9CRJW.js";
+import { u as je } from "./useLists-DBTxrMAi.js";
+import { u as Ne, O as Y } from "./useOperativeDocument-NGwAguQO.js";
+import { l as ge } from "./badge-DGmo3xSE-Cderfv3F.js";
+import { M } from "./MyTooltip-DPJtpMhP.js";
+import { F as ye } from "./file-8TEH2UwQ.js";
+import { E as Ee } from "./eye-CW1pDi29.js";
+import { S as ke, u as Ae } from "./useDelete-DMNw96p5.js";
+import { T as we } from "./trash-2-B_r_Bsxl.js";
+import { L as q } from "./ListStatisticsCard-BcOJa2-j.js";
+import { C as Ce } from "./circle-plus-CJWL5GeC.js";
+import "./sidebar-C0lF1Npi.js";
+import "./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";
+import "./useQueryParams-Dns8Zny6.js";
+import "./createLucideIcon-B950nf2d-ChSZaRdU.js";
+import "./popover-HTqpqYpJ-CIljcfgV-Ob8cCMTy.js";
+import "./MySelect-CDOMHlry-CVNRsqeU.js";
+import "./user-D-Egm9vv.js";
+import "./useApi-BNT2PGFQ.js";
+import "./useGetOne-DA0KuYmv.js";
+import "./MutateRequestMethod-D0dsk-6r.js";
+var H, Q;
+function Te() {
+  return (
+    Q ||
+      ((Q = 1),
+      (H = {
+        area: !0,
+        base: !0,
+        br: !0,
+        col: !0,
+        embed: !0,
+        hr: !0,
+        img: !0,
+        input: !0,
+        link: !0,
+        meta: !0,
+        param: !0,
+        source: !0,
+        track: !0,
+        wbr: !0,
+      })),
+    H
+  );
+}
+var Oe = Te();
+const $e = te(Oe);
+var Ie = /\s([^'"/\s><]+?)[\s/>]|([^\s=]+)=\s?(".*?"|'.*?')/g;
+function X(s) {
+  var e = { type: "tag", name: "", voidElement: !1, attrs: {}, children: [] },
+    a = s.match(/<\/?([^\s]+?)[/\s>]/);
+  if (
+    a &&
+    ((e.name = a[1]),
+    ($e[a[1]] || s.charAt(s.length - 2) === "/") && (e.voidElement = !0),
+    e.name.startsWith("!--"))
+  ) {
+    var t = s.indexOf("-->");
+    return { type: "comment", comment: t !== -1 ? s.slice(4, t) : "" };
+  }
+  for (var i = new RegExp(Ie), n = null; (n = i.exec(s)) !== null; )
+    if (n[0].trim())
+      if (n[1]) {
+        var m = n[1].trim(),
+          d = [m, ""];
+        (m.indexOf("=") > -1 && (d = m.split("=")),
+          (e.attrs[d[0]] = d[1]),
+          i.lastIndex--);
+      } else
+        n[2] && (e.attrs[n[2]] = n[3].trim().substring(1, n[3].length - 1));
+  return e;
+}
+var Se = /<[a-zA-Z0-9\-\!\/](?:"[^"]*"|'[^']*'|[^'">])*>/g,
+  Ve = /^\s*$/,
+  De = Object.create(null);
+function ee(s, e) {
+  switch (e.type) {
+    case "text":
+      return s + e.content;
+    case "tag":
+      return (
+        (s +=
+          "<" +
+          e.name +
+          (e.attrs
+            ? (function (a) {
+                var t = [];
+                for (var i in a) t.push(i + '="' + a[i] + '"');
+                return t.length ? " " + t.join(" ") : "";
+              })(e.attrs)
+            : "") +
+          (e.voidElement ? "/>" : ">")),
+        e.voidElement ? s : s + e.children.reduce(ee, "") + "</" + e.name + ">"
+      );
+    case "comment":
+      return s + "<!--" + e.comment + "-->";
+  }
+}
+var Pe = {
+  parse: function (s, e) {
+    (e || (e = {}), e.components || (e.components = De));
+    var a,
+      t = [],
+      i = [],
+      n = -1,
+      m = !1;
+    if (s.indexOf("<") !== 0) {
+      var d = s.indexOf("<");
+      t.push({ type: "text", content: d === -1 ? s : s.substring(0, d) });
+    }
+    return (
+      s.replace(Se, function (x, j) {
+        if (m) {
+          if (x !== "</" + a.name + ">") return;
+          m = !1;
+        }
+        var f,
+          N = x.charAt(1) !== "/",
+          y = x.startsWith("<!--"),
+          b = j + x.length,
+          o = s.charAt(b);
+        if (y) {
+          var w = X(x);
+          return n < 0 ? (t.push(w), t) : ((f = i[n]).children.push(w), t);
+        }
+        if (
+          (N &&
+            (n++,
+            (a = X(x)).type === "tag" &&
+              e.components[a.name] &&
+              ((a.type = "component"), (m = !0)),
+            a.voidElement ||
+              m ||
+              !o ||
+              o === "<" ||
+              a.children.push({
+                type: "text",
+                content: s.slice(b, s.indexOf("<", b)),
+              }),
+            n === 0 && t.push(a),
+            (f = i[n - 1]) && f.children.push(a),
+            (i[n] = a)),
+          (!N || a.voidElement) &&
+            (n > -1 &&
+              (a.voidElement || a.name === x.slice(2, -1)) &&
+              (n--, (a = n === -1 ? t : i[n])),
+            !m && o !== "<" && o))
+        ) {
+          f = n === -1 ? t : i[n].children;
+          var u = s.indexOf("<", b),
+            p = s.slice(b, u === -1 ? void 0 : u);
+          (Ve.test(p) && (p = " "),
+            ((u > -1 && n + f.length >= 0) || p !== " ") &&
+              f.push({ type: "text", content: p }));
+        }
+      }),
+      t
+    );
+  },
+  stringify: function (s) {
+    return s.reduce(function (e, a) {
+      return e + ee("", a);
+    }, "");
+  },
+};
+const R = (s, e) => {
+    var t;
+    if (!s) return !1;
+    const a = ((t = s.props) == null ? void 0 : t.children) ?? s.children;
+    return e ? a.length > 0 : !!a;
+  },
+  U = (s) => {
+    var a, t;
+    if (!s) return [];
+    const e = ((a = s.props) == null ? void 0 : a.children) ?? s.children;
+    return (t = s.props) != null && t.i18nIsDynamicList ? V(e) : e;
+  },
+  ze = (s) => Array.isArray(s) && s.every(h.isValidElement),
+  V = (s) => (Array.isArray(s) ? s : [s]),
+  _e = (s, e) => {
+    const a = { ...e };
+    return ((a.props = Object.assign(s.props, e.props)), a);
+  },
+  se = (s, e, a, t) => {
+    if (!s) return "";
+    let i = "";
+    const n = V(s),
+      m =
+        e != null && e.transSupportBasicHtmlNodes
+          ? (e.transKeepBasicHtmlNodesFor ?? [])
+          : [];
+    return (
+      n.forEach((d, x) => {
+        if (z(d)) {
+          i += `${d}`;
+          return;
+        }
+        if (h.isValidElement(d)) {
+          const { props: j, type: f } = d,
+            N = Object.keys(j).length,
+            y = m.indexOf(f) > -1,
+            b = j.children;
+          if (!b && y && !N) {
+            i += `<${f}/>`;
+            return;
+          }
+          if ((!b && (!y || N)) || j.i18nIsDynamicList) {
+            i += `<${x}></${x}>`;
+            return;
+          }
+          if (y && N === 1 && z(b)) {
+            i += `<${f}>${b}</${f}>`;
+            return;
+          }
+          const o = se(b, e, a, t);
+          i += `<${x}>${o}</${x}>`;
+          return;
+        }
+        if (d === null) {
+          B(a, "TRANS_NULL_VALUE", "Passed in a null value as child", {
+            i18nKey: t,
+          });
+          return;
+        }
+        if (I(d)) {
+          const { format: j, ...f } = d,
+            N = Object.keys(f);
+          if (N.length === 1) {
+            const y = j ? `${N[0]}, ${j}` : N[0];
+            i += `{{${y}}}`;
+            return;
+          }
+          B(
+            a,
+            "TRANS_INVALID_OBJ",
+            "Invalid child - Object should only have keys {{ value, format }} (format is optional).",
+            { i18nKey: t, child: d },
+          );
+          return;
+        }
+        B(
+          a,
+          "TRANS_INVALID_VAR",
+          "Passed in a variable like {number} - pass variables for interpolation as full objects like {{number}}.",
+          { i18nKey: t, child: d },
+        );
+      }),
+      i
+    );
+  },
+  Fe = (s, e, a, t, i, n, m) => {
+    if (a === "") return [];
+    const d = i.transKeepBasicHtmlNodesFor || [],
+      x = a && new RegExp(d.map((p) => `<${p}`).join("|")).test(a);
+    if (!s && !e && !x && !m) return [a];
+    const j = e ?? {},
+      f = (p) => {
+        V(p).forEach((c) => {
+          z(c) ||
+            (R(c)
+              ? f(U(c))
+              : I(c) && !h.isValidElement(c) && Object.assign(j, c));
+        });
+      };
+    f(s);
+    const N = Pe.parse(`<0>${a}</0>`),
+      y = { ...j, ...n },
+      b = (p, E, c) => {
+        var v;
+        const k = U(p),
+          O = w(k, E.children, c);
+        return (ze(k) && O.length === 0) ||
+          ((v = p.props) != null && v.i18nIsDynamicList)
+          ? k
+          : O;
+      },
+      o = (p, E, c, k, O) => {
+        p.dummy
+          ? ((p.children = E),
+            c.push(h.cloneElement(p, { key: k }, O ? void 0 : E)))
+          : c.push(
+              ...h.Children.map([p], (v) => {
+                const l = { ...v.props };
+                return (
+                  delete l.i18nIsDynamicList,
+                  h.createElement(
+                    v.type,
+                    { ...l, key: k, ref: v.props.ref ?? v.ref },
+                    O ? null : E,
+                  )
+                );
+              }),
+            );
+      },
+      w = (p, E, c) => {
+        const k = V(p);
+        return V(E).reduce((v, l, T) => {
+          var D, P;
+          const $ =
+            ((P = (D = l.children) == null ? void 0 : D[0]) == null
+              ? void 0
+              : P.content) &&
+            t.services.interpolator.interpolate(
+              l.children[0].content,
+              y,
+              t.language,
+            );
+          if (l.type === "tag") {
+            let C = k[parseInt(l.name, 10)];
+            (!C && e && (C = e[l.name]),
+              c.length === 1 && !C && (C = c[0][l.name]),
+              C || (C = {}));
+            const g =
+                Object.keys(l.attrs).length !== 0
+                  ? _e({ props: l.attrs }, C)
+                  : C,
+              S = h.isValidElement(g),
+              _ = S && R(l, !0) && !l.voidElement,
+              F = x && I(g) && g.dummy && !S,
+              L = I(e) && Object.hasOwnProperty.call(e, l.name);
+            if (z(g)) {
+              const A = t.services.interpolator.interpolate(g, y, t.language);
+              v.push(A);
+            } else if (R(g) || _) {
+              const A = b(g, l, c);
+              o(g, A, v, T);
+            } else if (F) {
+              const A = w(k, l.children, c);
+              o(g, A, v, T);
+            } else if (Number.isNaN(parseFloat(l.name)))
+              if (L) {
+                const A = b(g, l, c);
+                o(g, A, v, T, l.voidElement);
+              } else if (i.transSupportBasicHtmlNodes && d.indexOf(l.name) > -1)
+                if (l.voidElement)
+                  v.push(h.createElement(l.name, { key: `${l.name}-${T}` }));
+                else {
+                  const A = w(k, l.children, c);
+                  v.push(h.createElement(l.name, { key: `${l.name}-${T}` }, A));
+                }
+              else if (l.voidElement) v.push(`<${l.name} />`);
+              else {
+                const A = w(k, l.children, c);
+                v.push(`<${l.name}>${A}</${l.name}>`);
+              }
+            else if (I(g) && !S) {
+              const A = l.children[0] ? $ : null;
+              A && v.push(A);
+            } else o(g, $, v, T, l.children.length !== 1 || !$);
+          } else if (l.type === "text") {
+            const C = i.transWrapTextNodes,
+              g = m
+                ? i.unescape(
+                    t.services.interpolator.interpolate(
+                      l.content,
+                      y,
+                      t.language,
+                    ),
+                  )
+                : t.services.interpolator.interpolate(l.content, y, t.language);
+            C
+              ? v.push(h.createElement(C, { key: `${l.name}-${T}` }, g))
+              : v.push(g);
+          }
+          return v;
+        }, []);
+      },
+      u = w([{ dummy: !0, children: s || [] }], N, V(s || []));
+    return U(u[0]);
+  },
+  re = (s, e, a) => {
+    const t = s.key || e,
+      i = h.cloneElement(s, { key: t });
+    if (
+      !i.props ||
+      !i.props.children ||
+      (a.indexOf(`${e}/>`) < 0 && a.indexOf(`${e} />`) < 0)
+    )
+      return i;
+    function n() {
+      return h.createElement(h.Fragment, null, i);
+    }
+    return h.createElement(n, { key: t });
+  },
+  Le = (s, e) => s.map((a, t) => re(a, t, e)),
+  Be = (s, e) => {
+    const a = {};
+    return (
+      Object.keys(s).forEach((t) => {
+        Object.assign(a, { [t]: re(s[t], t, e) });
+      }),
+      a
+    );
+  },
+  Me = (s, e, a, t) =>
+    s
+      ? Array.isArray(s)
+        ? Le(s, e)
+        : I(s)
+          ? Be(s, e)
+          : (Z(
+              a,
+              "TRANS_INVALID_COMPONENTS",
+              '<Trans /> "components" prop expects an object or array',
+              { i18nKey: t },
+            ),
+            null)
+      : null,
+  qe = (s) =>
+    !I(s) || Array.isArray(s)
+      ? !1
+      : Object.keys(s).reduce(
+          (e, a) => e && Number.isNaN(Number.parseFloat(a)),
+          !0,
+        );
+function He({
+  children: s,
+  count: e,
+  parent: a,
+  i18nKey: t,
+  context: i,
+  tOptions: n = {},
+  values: m,
+  defaults: d,
+  components: x,
+  ns: j,
+  i18n: f,
+  t: N,
+  shouldUnescape: y,
+  ...b
+}) {
+  var S, _, F, L, A, K;
+  const o = f || G();
+  if (!o)
+    return (
+      Z(
+        o,
+        "NO_I18NEXT_INSTANCE",
+        "Trans: You need to pass in an i18next instance using i18nextReactModule",
+        { i18nKey: t },
+      ),
+      s
+    );
+  const w = N || o.t.bind(o) || ((ae) => ae),
+    u = { ...ie(), ...((S = o.options) == null ? void 0 : S.react) };
+  let p = j || w.ns || ((_ = o.options) == null ? void 0 : _.defaultNS);
+  p = z(p) ? [p] : p || ["translation"];
+  const E = se(s, u, o, t),
+    c = d || E || u.transEmptyNodeValue || t,
+    { hashTransKey: k } = u,
+    O = t || (k ? k(E || c) : E || c);
+  (L = (F = o.options) == null ? void 0 : F.interpolation) != null &&
+    L.defaultVariables &&
+    (m =
+      m && Object.keys(m).length > 0
+        ? { ...m, ...o.options.interpolation.defaultVariables }
+        : { ...o.options.interpolation.defaultVariables });
+  const v =
+      m ||
+      (e !== void 0 &&
+        !(
+          (K = (A = o.options) == null ? void 0 : A.interpolation) != null &&
+          K.alwaysFormat
+        )) ||
+      !s
+        ? n.interpolation
+        : {
+            interpolation: { ...n.interpolation, prefix: "#$?", suffix: "?$#" },
+          },
+    l = {
+      ...n,
+      context: i || n.context,
+      count: e,
+      ...m,
+      ...v,
+      defaultValue: c,
+      ns: p,
+    },
+    T = O ? w(O, l) : c,
+    $ = Me(x, T, o, t);
+  let D = $ || s,
+    P = null;
+  qe($) && ((P = $), (D = s));
+  const C = Fe(D, P, T, o, u, l, y),
+    g = a ?? u.defaultTransParent;
+  return g ? h.createElement(g, b, C) : C;
+}
+function Re({
+  children: s,
+  count: e,
+  parent: a,
+  i18nKey: t,
+  context: i,
+  tOptions: n = {},
+  values: m,
+  defaults: d,
+  components: x,
+  ns: j,
+  i18n: f,
+  t: N,
+  shouldUnescape: y,
+  ...b
+}) {
+  var E;
+  const { i18n: o, defaultNS: w } = h.useContext(ne) || {},
+    u = f || o || G(),
+    p = N || (u == null ? void 0 : u.t.bind(u));
+  return He({
+    children: s,
+    count: e,
+    parent: a,
+    i18nKey: t,
+    context: i,
+    tOptions: n,
+    values: m,
+    defaults: d,
+    components: x,
+    ns:
+      j ||
+      (p == null ? void 0 : p.ns) ||
+      w ||
+      ((E = u == null ? void 0 : u.options) == null ? void 0 : E.defaultNS),
+    i18n: u,
+    t: N,
+    shouldUnescape: y,
+    ...b,
+  });
+}
+const Ue = ({ title: s, document: e }) =>
+    r.jsxs("div", {
+      className: "rounded-lg shadow-sm border p-6 space-y-3",
+      children: [
+        r.jsx("div", {
+          className: "flex items-center justify-end",
+          children: r.jsx("div", { className: "text-sm", children: s }),
+        }),
+        r.jsxs("div", {
+          className: "text-center mb-4",
+          children: [
+            r.jsx("h2", {
+              className: "text-lg font-semibold mb-1",
+              children: "D ilova",
+            }),
+            r.jsx("p", {
+              className: "text-gray-400 mb-3",
+              children: "(Majburiy)",
+            }),
+            r.jsx("p", {
+              className: "text-sm",
+              children: r.jsx(Re, {
+                i18nKey:
+                  "Tezkor o'rtacha-sozlash ishlarini o'tkazish uchun <br /> talabnomaning shakli",
+                components: { br: r.jsx("br", {}) },
+              }),
+            }),
+          ],
+        }),
+        r.jsxs("div", {
+          className: "text-center mb-6",
+          children: [
+            r.jsxs("div", {
+              className: "flex justify-center items-center gap-4 mb-3",
+              children: [
+                r.jsx("div", {
+                  className: "",
+                  children: r.jsx("div", {
+                    className:
+                      "inline-block min-w-24 border-b text-sm px-2 py-1",
+                    children: (e == null ? void 0 : e.UbpNumber) || "",
+                  }),
+                }),
+                r.jsx("div", { className: "mt-1 text-sm", children: "UBPdan" }),
+              ],
+            }),
+            r.jsx("div", {
+              className: "mb-2 text-sm",
+              children: "tezkor ta’mirlash-sozlash ishlarini o’tkazish uchun",
+            }),
+            r.jsxs("div", {
+              className: "flex justify-center items-center gap-4 mb-3",
+              children: [
+                r.jsx("div", {
+                  className: "inline-block min-w-24 border-b text-sm px-2 py-1",
+                  children: (e == null ? void 0 : e.applicationNumber) || "",
+                }),
+                r.jsx("div", {
+                  className: "mt-1 text-sm",
+                  children: "- son TALABNOMA",
+                }),
+              ],
+            }),
+          ],
+        }),
+        r.jsxs("div", {
+          className: "space-y-3 text-sm",
+          children: [
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "1. Ishlarni o'tkazish shartlari:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.workConditions) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "2. Sana va vaqt:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.date) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "3. Uchastka, stansiyalar:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.magistralName) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "4. NO nomeri:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.NoNumber) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "5. Al-9 kanallari:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.ai9Channels) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "6. Ishni bajarish sababi:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.reasonJob) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "7. Bajarilayotgan ishlar xususiyati:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.jobDescription) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "8. NO holati:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.NOStatus) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", { className: "min-w-48", children: "9. AAG:" }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.aag) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "10. Rezervlashning boshqa usuli:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.reservation) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "11. Ishlarni o’tkazish uchun javobgar shaxs:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.responsiblePerson) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children:
+                    "12. “O’zbekiston” AK ekspluatasiya qiluvchi korxona texnik rahbari:",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.headOfTheEnterprise) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "13. AI-9 F.I.Sh. (Joylarda):",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.aiFullName) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "14. Talabnoma tuzuvchi (AP):",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.applicantAP) || " ",
+                }),
+              ],
+            }),
+            r.jsxs("div", {
+              className: "flex items-start gap-2",
+              children: [
+                r.jsx("div", {
+                  className: "min-w-48",
+                  children: "15. Talabnoma tuzuvchi (UBP):",
+                }),
+                r.jsx("div", {
+                  className: "flex-1 border-b text-gray-900",
+                  children: (e == null ? void 0 : e.applicantUBP) || " ",
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    }),
+  We = ({ open: s, onOpenChange: e, document: a }) => {
+    const { t } = W();
+    return r.jsx(ue, {
+      open: s,
+      onOpenChange: e,
+      size: "8xl",
+      className: "overflow-auto",
+      header: r.jsxs("div", {
+        className: "flex items-center gap-2",
+        children: [
+          r.jsx(be, { className: "size-5" }),
+          r.jsx("span", {
+            children: (a == null ? void 0 : a.title) || "Operative document",
+          }),
+        ],
+      }),
+      children: r.jsxs("div", {
+        className: "flex flex-1 flex-col xl:flex-row gap-4 overflow-hidden",
+        children: [
+          r.jsx("div", {
+            className: `
             flex-1 border rounded-lg p-2
             overflow-visible
             xl:overflow-y-auto
             xl:max-h-[80vh]
             scrollbar-thin scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thumb-rounded-full
-          `,children:r.jsx(Ue,{title:a==null?void 0:a.title,document:a})}),r.jsx(ve,{docType:t("Operativ"),onOpenChange:e,document:a})]})})},Ke=s=>{switch(s){case"approved":return"green-outlined";case"sent":return"blue-outlined";case"rejected":return"red-outlined";default:return"gray-outlined"}},Je=(s,e,a,t)=>[{key:"title",dataIndex:"title",name:s("Document"),render:(i,n)=>r.jsxs("a",{className:"flex items-center gap-2 cursor-pointer",href:`${ce.BASE_PATH}${n.files[0]}`,target:"_blank",children:[r.jsx(ye,{size:15})," ",i]})},{key:"created_at",dataIndex:"created_at",name:s("Sent time"),render:i=>le(i,oe)},{key:"sender",dataIndex:"creatorId",name:s("Sender"),render:i=>r.jsxs("div",{children:[i.first_name," ",i.second_name]})},{key:"status",dataIndex:"status",name:s("Status"),render:i=>r.jsx(ge,{variant:Ke(i),children:i})},{key:"actions",dataIndex:"_id",name:"",render:i=>r.jsxs("div",{className:"flex items-center gap-2",children:[r.jsx(M,{content:s("View"),children:r.jsx(Ee,{className:"size-4 cursor-pointer",onClick:()=>t(i)})}),r.jsx(M,{content:s("Edit"),children:r.jsx(ke,{className:"size-4 cursor-pointer",onClick:()=>e(i)})}),r.jsx(M,{content:s("Delete"),children:r.jsx(we,{className:"size-4 cursor-pointer",onClick:()=>a(i)})})]})}],Ye=()=>{var E;const{t:s}=W(),e=pe(),{toast:a}=me(),[t,i]=h.useState(!1),[n,m]=h.useState(null),{removeWithConfirm:d}=Ae([Y]),{query:x,handleFilter:j,params:f}=je({url:[Y]}),{operativeDocumentQuery:N}=Ne(n),y=h.useCallback(()=>{e("/operational-work/create")},[e]),b=h.useCallback(c=>{e(`/operational-work/edit/${c}`)},[e]),o=h.useCallback(c=>{m(c),i(!0)},[]),w=h.useCallback(c=>{i(c),c||m(null)},[]),u=h.useCallback(c=>{d(c).then(()=>{x.refetch(),a({variant:"success",title:s("Success"),description:s("F56 document successfully")})}).catch(k=>{a({variant:"destructive",title:s(`${J.get(k,"response.statusText","Error")}`),description:s(`${J.get(k,"response.data.message","An error occurred. Contact the administrator")}`)})})},[d,s,a]),p=h.useMemo(()=>Je(s,b,u,o),[u,b,o,s]);return{params:f,handleAdd:y,handleFilter:j,loading:x.isLoading,dataSource:x.data,columns:p,openView:t,currentItem:(E=N.data)==null?void 0:E.data,handleCloseView:w}},As=()=>{const{t:s}=W(),{handleAdd:e,loading:a,dataSource:t,columns:i,params:n,handleFilter:m,currentItem:d,handleCloseView:x,openView:j}=Ye(),f=h.useMemo(()=>[{name:s("Operational work"),path:"/operational-work",isActive:!0}],[s]);return r.jsxs(r.Fragment,{children:[r.jsx(We,{open:j,onOpenChange:x,document:d}),r.jsx(de,{className:"sticky top-0",breadcrumbs:f,children:r.jsxs(he,{size:"sm",onClick:e,children:[r.jsx(Ce,{}),s("Add new")]})}),r.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3",children:[r.jsx(q,{title:s("Tasdiqlanganlar"),count:123}),r.jsx(q,{title:s("Ko'rib chiqilmoqda"),count:123}),r.jsx(q,{title:s("Rad etilganlar"),count:123})]}),r.jsx(xe,{children:r.jsx(fe,{tableKey:"operative-documents",hasNumbers:!0,hasSearch:!0,isStickyHeader:!0,loading:a,params:n,onParamChange:m,rowKey:"_id",dataSource:t,dataKey:"docs",columns:i})})]})};export{As as default};
+          `,
+            children: r.jsx(Ue, {
+              title: a == null ? void 0 : a.title,
+              document: a,
+            }),
+          }),
+          r.jsx(ve, { docType: t("Operativ"), onOpenChange: e, document: a }),
+        ],
+      }),
+    });
+  },
+  Ke = (s) => {
+    switch (s) {
+      case "approved":
+        return "green-outlined";
+      case "sent":
+        return "blue-outlined";
+      case "rejected":
+        return "red-outlined";
+      default:
+        return "gray-outlined";
+    }
+  },
+  Je = (s, e, a, t) => [
+    {
+      key: "title",
+      dataIndex: "title",
+      name: s("Document"),
+      render: (i, n) =>
+        r.jsxs("a", {
+          className: "flex items-center gap-2 cursor-pointer",
+          href: `${ce.BASE_PATH}${n.files[0]}`,
+          target: "_blank",
+          children: [r.jsx(ye, { size: 15 }), " ", i],
+        }),
+    },
+    {
+      key: "created_at",
+      dataIndex: "created_at",
+      name: s("Sent time"),
+      render: (i) => le(i, oe),
+    },
+    {
+      key: "sender",
+      dataIndex: "creatorId",
+      name: s("Sender"),
+      render: (i) =>
+        r.jsxs("div", { children: [i.first_name, " ", i.second_name] }),
+    },
+    {
+      key: "status",
+      dataIndex: "status",
+      name: s("Status"),
+      render: (i) => r.jsx(ge, { variant: Ke(i), children: i }),
+    },
+    {
+      key: "actions",
+      dataIndex: "_id",
+      name: "",
+      render: (i) =>
+        r.jsxs("div", {
+          className: "flex items-center gap-2",
+          children: [
+            r.jsx(M, {
+              content: s("View"),
+              children: r.jsx(Ee, {
+                className: "size-4 cursor-pointer",
+                onClick: () => t(i),
+              }),
+            }),
+            r.jsx(M, {
+              content: s("Edit"),
+              children: r.jsx(ke, {
+                className: "size-4 cursor-pointer",
+                onClick: () => e(i),
+              }),
+            }),
+            r.jsx(M, {
+              content: s("Delete"),
+              children: r.jsx(we, {
+                className: "size-4 cursor-pointer",
+                onClick: () => a(i),
+              }),
+            }),
+          ],
+        }),
+    },
+  ],
+  Ye = () => {
+    var E;
+    const { t: s } = W(),
+      e = pe(),
+      { toast: a } = me(),
+      [t, i] = h.useState(!1),
+      [n, m] = h.useState(null),
+      { removeWithConfirm: d } = Ae([Y]),
+      { query: x, handleFilter: j, params: f } = je({ url: [Y] }),
+      { operativeDocumentQuery: N } = Ne(n),
+      y = h.useCallback(() => {
+        e("/operational-work/create");
+      }, [e]),
+      b = h.useCallback(
+        (c) => {
+          e(`/operational-work/edit/${c}`);
+        },
+        [e],
+      ),
+      o = h.useCallback((c) => {
+        (m(c), i(!0));
+      }, []),
+      w = h.useCallback((c) => {
+        (i(c), c || m(null));
+      }, []),
+      u = h.useCallback(
+        (c) => {
+          d(c)
+            .then(() => {
+              (x.refetch(),
+                a({
+                  variant: "success",
+                  title: s("Success"),
+                  description: s("F56 document successfully"),
+                }));
+            })
+            .catch((k) => {
+              a({
+                variant: "destructive",
+                title: s(`${J.get(k, "response.statusText", "Error")}`),
+                description: s(
+                  `${J.get(k, "response.data.message", "An error occurred. Contact the administrator")}`,
+                ),
+              });
+            });
+        },
+        [d, s, a],
+      ),
+      p = h.useMemo(() => Je(s, b, u, o), [u, b, o, s]);
+    return {
+      params: f,
+      handleAdd: y,
+      handleFilter: j,
+      loading: x.isLoading,
+      dataSource: x.data,
+      columns: p,
+      openView: t,
+      currentItem: (E = N.data) == null ? void 0 : E.data,
+      handleCloseView: w,
+    };
+  },
+  As = () => {
+    const { t: s } = W(),
+      {
+        handleAdd: e,
+        loading: a,
+        dataSource: t,
+        columns: i,
+        params: n,
+        handleFilter: m,
+        currentItem: d,
+        handleCloseView: x,
+        openView: j,
+      } = Ye(),
+      f = h.useMemo(
+        () => [
+          {
+            name: s("Operational work"),
+            path: "/operational-work",
+            isActive: !0,
+          },
+        ],
+        [s],
+      );
+    return r.jsxs(r.Fragment, {
+      children: [
+        r.jsx(We, { open: j, onOpenChange: x, document: d }),
+        r.jsx(de, {
+          className: "sticky top-0",
+          breadcrumbs: f,
+          children: r.jsxs(he, {
+            size: "sm",
+            onClick: e,
+            children: [r.jsx(Ce, {}), s("Add new")],
+          }),
+        }),
+        r.jsxs("div", {
+          className: "grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3",
+          children: [
+            r.jsx(q, { title: s("Tasdiqlanganlar"), count: 123 }),
+            r.jsx(q, { title: s("Ko'rib chiqilmoqda"), count: 123 }),
+            r.jsx(q, { title: s("Rad etilganlar"), count: 123 }),
+          ],
+        }),
+        r.jsx(xe, {
+          children: r.jsx(fe, {
+            tableKey: "operative-documents",
+            hasNumbers: !0,
+            hasSearch: !0,
+            isStickyHeader: !0,
+            loading: a,
+            params: n,
+            onParamChange: m,
+            rowKey: "_id",
+            dataSource: t,
+            dataKey: "docs",
+            columns: i,
+          }),
+        }),
+      ],
+    });
+  };
+export { As as default };

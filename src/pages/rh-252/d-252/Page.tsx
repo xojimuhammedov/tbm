@@ -1,26 +1,20 @@
 import { useTranslation } from "react-i18next";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
+import { PageWrapper } from "@/shared/components/containers/page";
+import { DataTable } from "dgz-ui-shared/components/datatable";
+import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
 import { CirclePlusIcon } from "lucide-react";
-import ListStatisticsCard from "@/shared/components/moleculas/card/ListStatisticsCard.tsx";
-import { useNavigate } from "react-router-dom";
+import KEYS from "@/shared/constants/keys";
+import useDApplication from "@/pages/rh-252/d-252/hooks/useDApplication.ts";
+import { DApplicationInterface } from "@/pages/rh-252/d-252/interfaces/d-252.interface.ts";
 
-const Page = () => {
+const DApplicationPage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  // const {
-  //   handleAdd,
-  //   loading,
-  //   dataSource,
-  //   columns,
-  //   params,
-  //   handleFilter,
-  //   openView,
-  //   currentItem,
-  //   handleCloseView,
-  // } = useF51Documents();
+  const { loading, columns, dataSource, handleFilter, params, handleAdd } =
+    useDApplication();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
@@ -30,7 +24,7 @@ const Page = () => {
         isActive: false,
       },
       {
-        name: t("3_3 document"),
+        name: t("D Application"),
         path: "/rh-252/d-252",
         isActive: true,
       },
@@ -38,37 +32,24 @@ const Page = () => {
     [t],
   );
 
-  const handleAdd = useCallback(() => {
-    navigate("/rh-252/d-252/create");
-  }, [navigate]);
-
   return (
     <>
-      {/* <F51DocumentView
-        open={openView}
-        onOpenChange={handleCloseView}
-        document={currentItem}
-      /> */}
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <Button size={"sm"} onClick={handleAdd}>
-          <CirclePlusIcon />
+          <CirclePlusIcon className="mr-2 h-4 w-4" />
           {t("Add new")}
         </Button>
       </PageHeader>
-      <div className={"grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mt-3"}>
-        <ListStatisticsCard title={t("Tasdiqlanganlar")} count={123} />
-        <ListStatisticsCard title={t("Ko'rib chiqilmoqda")} count={123} />
-        <ListStatisticsCard title={t("Rad etilganlar")} count={123} />
-      </div>
-      {/* <PageWrapper>
+      <PageWrapper>
         <DataTable<
-          F51DocumentInterface,
-          PaginationInterface<F51DocumentInterface>
+          DApplicationInterface,
+          PaginationInterface<DApplicationInterface>
         >
-          tableKey={"f51-documents"}
+          tableKey={KEYS.RH_D_Application}
           hasNumbers
           hasSearch
           isStickyHeader
+          hasPagination
           loading={loading}
           params={params}
           onParamChange={handleFilter}
@@ -77,9 +58,9 @@ const Page = () => {
           dataKey={"docs"}
           columns={columns}
         />
-      </PageWrapper> */}
+      </PageWrapper>
     </>
   );
 };
 
-export default Page;
+export default DApplicationPage;

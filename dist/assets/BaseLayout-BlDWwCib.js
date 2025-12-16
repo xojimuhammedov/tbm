@@ -1,84 +1,328 @@
-import{c as N,r as a,R as T,j as c,a as _e,u as St,b as G,L as X,d as Dt,e as Be,O as $t}from"./index-ADhmmBpU.js";import{j as Z,h as S,n as ve,w as pe,g as fe,y as j,a as en,b as De,k as $e,o as nn,i as It,r as Et,R as ae,M as At,c as Ot,d as Ft,C as Tt,e as Pt,S as Lt,f as zt,s as Kt,l as Gt,u as xe,m as Ut,p as tn,q as rn,t as on,v as Vt,x as Bt,z as Ht,A as qt,B as Xt,D as Zt,E as Wt,F as He,G as Yt,H as Jt,I as Qt,J as er,K as nr}from"./sidebar-C0lF1Npi.js";import{a as i,m as I,j as tr,x as F,g as Re,b as an,u as ge,c as sn}from"./button-Bp2lHjov-bkEUXTzY.js";import{U as rr}from"./user-D-Egm9vv.js";import{u as or}from"./useLogin-CjUIlf4N.js";import{M as ke}from"./MyTooltip-DPJtpMhP.js";import{v as ar}from"./index.es-DO3gsPMY.js";import{r as sr,p as ir,a as cr,b as lr}from"./react-filepond.esm-B2oG36mQ.js";import"./useMutate-B2j67kPQ.js";import"./useApi-BNT2PGFQ.js";import"./lodash-BI9_Ro3R.js";import"./MutateRequestMethod-D0dsk-6r.js";import"./zod-BQt-Wj8X.js";import"./useGetOne-DA0KuYmv.js";import"./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";import"./createLucideIcon-B950nf2d-ChSZaRdU.js";/**
+import {
+  c as N,
+  r as a,
+  R as T,
+  j as c,
+  a as _e,
+  u as St,
+  b as G,
+  L as X,
+  d as Dt,
+  e as Be,
+  O as $t,
+} from "./index-ADhmmBpU.js";
+import {
+  j as Z,
+  h as S,
+  n as ve,
+  w as pe,
+  g as fe,
+  y as j,
+  a as en,
+  b as De,
+  k as $e,
+  o as nn,
+  i as It,
+  r as Et,
+  R as ae,
+  M as At,
+  c as Ot,
+  d as Ft,
+  C as Tt,
+  e as Pt,
+  S as Lt,
+  f as zt,
+  s as Kt,
+  l as Gt,
+  u as xe,
+  m as Ut,
+  p as tn,
+  q as rn,
+  t as on,
+  v as Vt,
+  x as Bt,
+  z as Ht,
+  A as qt,
+  B as Xt,
+  D as Zt,
+  E as Wt,
+  F as He,
+  G as Yt,
+  H as Jt,
+  I as Qt,
+  J as er,
+  K as nr,
+} from "./sidebar-C0lF1Npi.js";
+import {
+  a as i,
+  m as I,
+  j as tr,
+  x as F,
+  g as Re,
+  b as an,
+  u as ge,
+  c as sn,
+} from "./button-Bp2lHjov-bkEUXTzY.js";
+import { U as rr } from "./user-D-Egm9vv.js";
+import { u as or } from "./useLogin-CjUIlf4N.js";
+import { M as ke } from "./MyTooltip-DPJtpMhP.js";
+import { v as ar } from "./index.es-DO3gsPMY.js";
+import {
+  r as sr,
+  p as ir,
+  a as cr,
+  b as lr,
+} from "./react-filepond.esm-B2oG36mQ.js";
+import "./useMutate-B2j67kPQ.js";
+import "./useApi-BNT2PGFQ.js";
+import "./lodash-BI9_Ro3R.js";
+import "./MutateRequestMethod-D0dsk-6r.js";
+import "./zod-BQt-Wj8X.js";
+import "./useGetOne-DA0KuYmv.js";
+import "./dropdown-menu-BPBcxHRB-EjT0ADL9-BtVDbh7T.js";
+import "./createLucideIcon-B950nf2d-ChSZaRdU.js";
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const dr=[["path",{d:"M10.268 21a2 2 0 0 0 3.464 0",key:"vwvbt9"}],["path",{d:"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326",key:"11g9vi"}]],ur=N("bell",dr);/**
+ */ const dr = [
+    ["path", { d: "M10.268 21a2 2 0 0 0 3.464 0", key: "vwvbt9" }],
+    [
+      "path",
+      {
+        d: "M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326",
+        key: "11g9vi",
+      },
+    ],
+  ],
+  ur = N("bell", dr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const pr=[["path",{d:"M3 3v16a2 2 0 0 0 2 2h16",key:"c24i48"}],["rect",{x:"7",y:"13",width:"9",height:"4",rx:"1",key:"1iip1u"}],["rect",{x:"7",y:"5",width:"12",height:"4",rx:"1",key:"1anskk"}]],qe=N("chart-bar-big",pr);/**
+ */ const pr = [
+    ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
+    [
+      "rect",
+      { x: "7", y: "13", width: "9", height: "4", rx: "1", key: "1iip1u" },
+    ],
+    [
+      "rect",
+      { x: "7", y: "5", width: "12", height: "4", rx: "1", key: "1anskk" },
+    ],
+  ],
+  qe = N("chart-bar-big", pr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const fr=[["path",{d:"M3 3v16a2 2 0 0 0 2 2h16",key:"c24i48"}],["path",{d:"M18 17V9",key:"2bz60n"}],["path",{d:"M13 17V5",key:"1frdt8"}],["path",{d:"M8 17v-3",key:"17ska0"}]],mr=N("chart-column",fr);/**
+ */ const fr = [
+    ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
+    ["path", { d: "M18 17V9", key: "2bz60n" }],
+    ["path", { d: "M13 17V5", key: "1frdt8" }],
+    ["path", { d: "M8 17v-3", key: "17ska0" }],
+  ],
+  mr = N("chart-column", fr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const hr=[["path",{d:"m9 18 6-6-6-6",key:"mthhwq"}]],vr=N("chevron-right",hr);/**
+ */ const hr = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]],
+  vr = N("chevron-right", hr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const xr=[["path",{d:"m7 15 5 5 5-5",key:"1hf1tw"}],["path",{d:"m7 9 5-5 5 5",key:"sgt6xg"}]],gr=N("chevrons-up-down",xr);/**
+ */ const xr = [
+    ["path", { d: "m7 15 5 5 5-5", key: "1hf1tw" }],
+    ["path", { d: "m7 9 5-5 5 5", key: "sgt6xg" }],
+  ],
+  gr = N("chevrons-up-down", xr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const yr=[["ellipse",{cx:"12",cy:"5",rx:"9",ry:"3",key:"msslwz"}],["path",{d:"M3 5V19A9 3 0 0 0 21 19V5",key:"1wlel7"}],["path",{d:"M3 12A9 3 0 0 0 21 12",key:"mv7ke4"}]],ne=N("database",yr);/**
+ */ const yr = [
+    ["ellipse", { cx: "12", cy: "5", rx: "9", ry: "3", key: "msslwz" }],
+    ["path", { d: "M3 5V19A9 3 0 0 0 21 19V5", key: "1wlel7" }],
+    ["path", { d: "M3 12A9 3 0 0 0 21 12", key: "mv7ke4" }],
+  ],
+  ne = N("database", yr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const wr=[["path",{d:"M21.54 15H17a2 2 0 0 0-2 2v4.54",key:"1djwo0"}],["path",{d:"M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17",key:"1tzkfa"}],["path",{d:"M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05",key:"14pb5j"}],["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}]],cn=N("earth",wr);/**
+ */ const wr = [
+    ["path", { d: "M21.54 15H17a2 2 0 0 0-2 2v4.54", key: "1djwo0" }],
+    [
+      "path",
+      {
+        d: "M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17",
+        key: "1tzkfa",
+      },
+    ],
+    [
+      "path",
+      {
+        d: "M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05",
+        key: "14pb5j",
+      },
+    ],
+    ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ],
+  cn = N("earth", wr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const br=[["path",{d:"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z",key:"1rqfz7"}],["rect",{width:"8",height:"6",x:"8",y:"12",rx:"1",key:"3yr8at"}],["path",{d:"M10 12v-2a2 2 0 1 1 4 0v2",key:"j4i8d"}]],jr=N("file-lock",br);/**
+ */ const br = [
+    [
+      "path",
+      {
+        d: "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z",
+        key: "1rqfz7",
+      },
+    ],
+    [
+      "rect",
+      { width: "8", height: "6", x: "8", y: "12", rx: "1", key: "3yr8at" },
+    ],
+    ["path", { d: "M10 12v-2a2 2 0 1 1 4 0v2", key: "j4i8d" }],
+  ],
+  jr = N("file-lock", br);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const _r=[["path",{d:"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z",key:"1kt360"}]],Xe=N("folder",_r);/**
+ */ const _r = [
+    [
+      "path",
+      {
+        d: "M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z",
+        key: "1kt360",
+      },
+    ],
+  ],
+  Xe = N("folder", _r);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Mr=[["path",{d:"m16 17 5-5-5-5",key:"1bji2h"}],["path",{d:"M21 12H9",key:"dn1m92"}],["path",{d:"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4",key:"1uf3rs"}]],Nr=N("log-out",Mr);/**
+ */ const Mr = [
+    ["path", { d: "m16 17 5-5-5-5", key: "1bji2h" }],
+    ["path", { d: "M21 12H9", key: "dn1m92" }],
+    ["path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4", key: "1uf3rs" }],
+  ],
+  Nr = N("log-out", Mr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Rr=[["path",{d:"M18 5h4",key:"1lhgn2"}],["path",{d:"M20 3v4",key:"1olli1"}],["path",{d:"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401",key:"kfwtm"}]],kr=N("moon-star",Rr);/**
+ */ const Rr = [
+    ["path", { d: "M18 5h4", key: "1lhgn2" }],
+    ["path", { d: "M20 3v4", key: "1olli1" }],
+    [
+      "path",
+      {
+        d: "M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401",
+        key: "kfwtm",
+      },
+    ],
+  ],
+  kr = N("moon-star", Rr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Cr=[["path",{d:"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915",key:"1i5ecw"}],["circle",{cx:"12",cy:"12",r:"3",key:"1v7zrd"}]],Sr=N("settings",Cr);/**
+ */ const Cr = [
+    [
+      "path",
+      {
+        d: "M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915",
+        key: "1i5ecw",
+      },
+    ],
+    ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }],
+  ],
+  Sr = N("settings", Cr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Dr=[["path",{d:"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",key:"oel41y"}],["path",{d:"M6.376 18.91a6 6 0 0 1 11.249.003",key:"hnjrf2"}],["circle",{cx:"12",cy:"11",r:"4",key:"1gt34v"}]],$r=N("shield-user",Dr);/**
+ */ const Dr = [
+    [
+      "path",
+      {
+        d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+        key: "oel41y",
+      },
+    ],
+    ["path", { d: "M6.376 18.91a6 6 0 0 1 11.249.003", key: "hnjrf2" }],
+    ["circle", { cx: "12", cy: "11", r: "4", key: "1gt34v" }],
+  ],
+  $r = N("shield-user", Dr);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Ir=[["rect",{width:"14",height:"20",x:"5",y:"2",rx:"2",ry:"2",key:"1yt0o3"}],["path",{d:"M12.667 8 10 12h4l-2.667 4",key:"h9lk2d"}]],Er=N("smartphone-charging",Ir);/**
+ */ const Ir = [
+    [
+      "rect",
+      {
+        width: "14",
+        height: "20",
+        x: "5",
+        y: "2",
+        rx: "2",
+        ry: "2",
+        key: "1yt0o3",
+      },
+    ],
+    ["path", { d: "M12.667 8 10 12h4l-2.667 4", key: "h9lk2d" }],
+  ],
+  Er = N("smartphone-charging", Ir);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Ar=[["path",{d:"m17 2-5 5-5-5",key:"16satq"}],["rect",{width:"20",height:"15",x:"2",y:"7",rx:"2",key:"1e6viu"}]],Or=N("tv",Ar);/**
+ */ const Ar = [
+    ["path", { d: "m17 2-5 5-5-5", key: "16satq" }],
+    [
+      "rect",
+      { width: "20", height: "15", x: "2", y: "7", rx: "2", key: "1e6viu" },
+    ],
+  ],
+  Or = N("tv", Ar);
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Fr=[["path",{d:"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2",key:"1yyitq"}],["path",{d:"M16 3.128a4 4 0 0 1 0 7.744",key:"16gr8j"}],["path",{d:"M22 21v-2a4 4 0 0 0-3-3.87",key:"kshegd"}],["circle",{cx:"9",cy:"7",r:"4",key:"nufk8"}]],Tr=N("users",Fr);var Ze={exports:{}},Me={};/**
+ */ const Fr = [
+    ["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", key: "1yyitq" }],
+    ["path", { d: "M16 3.128a4 4 0 0 1 0 7.744", key: "16gr8j" }],
+    ["path", { d: "M22 21v-2a4 4 0 0 0-3-3.87", key: "kshegd" }],
+    ["circle", { cx: "9", cy: "7", r: "4", key: "nufk8" }],
+  ],
+  Tr = N("users", Fr);
+var Ze = { exports: {} },
+  Me = {};
+/**
  * @license React
  * use-sync-external-store-shim.production.js
  *
@@ -86,19 +330,2135 @@ import{c as N,r as a,R as T,j as c,a as _e,u as St,b as G,L as X,d as Dt,e as Be
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */var We;function Pr(){if(We)return Me;We=1;var e=T;function n(l,f){return l===f&&(l!==0||1/l===1/f)||l!==l&&f!==f}var t=typeof Object.is=="function"?Object.is:n,r=e.useState,o=e.useEffect,s=e.useLayoutEffect,d=e.useDebugValue;function u(l,f){var w=f(),g=r({inst:{value:w,getSnapshot:f}}),b=g[0].inst,v=g[1];return s(function(){b.value=w,b.getSnapshot=f,m(b)&&v({inst:b})},[l,w,f]),o(function(){return m(b)&&v({inst:b}),l(function(){m(b)&&v({inst:b})})},[l]),d(w),w}function m(l){var f=l.getSnapshot;l=l.value;try{var w=f();return!t(l,w)}catch{return!0}}function h(l,f){return f()}var p=typeof window>"u"||typeof window.document>"u"||typeof window.document.createElement>"u"?h:u;return Me.useSyncExternalStore=e.useSyncExternalStore!==void 0?e.useSyncExternalStore:p,Me}var Ye;function Lr(){return Ye||(Ye=1,Ze.exports=Pr()),Ze.exports}var zr=Lr();function Kr(){return zr.useSyncExternalStore(Gr,()=>!0,()=>!1)}function Gr(){return()=>{}}var Ie="Avatar",[Ur,ss]=Z(Ie),[Vr,ln]=Ur(Ie),dn=a.forwardRef((e,n)=>{const{__scopeAvatar:t,...r}=e,[o,s]=a.useState("idle");return i.jsx(Vr,{scope:t,imageLoadingStatus:o,onImageLoadingStatusChange:s,children:i.jsx(S.span,{...r,ref:n})})});dn.displayName=Ie;var un="AvatarImage",pn=a.forwardRef((e,n)=>{const{__scopeAvatar:t,src:r,onLoadingStatusChange:o=()=>{},...s}=e,d=ln(un,t),u=Br(r,s),m=ve(h=>{o(h),d.onImageLoadingStatusChange(h)});return pe(()=>{u!=="idle"&&m(u)},[u,m]),u==="loaded"?i.jsx(S.img,{...s,ref:n,src:r}):null});pn.displayName=un;var fn="AvatarFallback",mn=a.forwardRef((e,n)=>{const{__scopeAvatar:t,delayMs:r,...o}=e,s=ln(fn,t),[d,u]=a.useState(r===void 0);return a.useEffect(()=>{if(r!==void 0){const m=window.setTimeout(()=>u(!0),r);return()=>window.clearTimeout(m)}},[r]),d&&s.imageLoadingStatus!=="loaded"?i.jsx(S.span,{...o,ref:n}):null});mn.displayName=fn;function Je(e,n){return e?n?(e.src!==n&&(e.src=n),e.complete&&e.naturalWidth>0?"loaded":"loading"):"error":"idle"}function Br(e,{referrerPolicy:n,crossOrigin:t}){const r=Kr(),o=a.useRef(null),s=r?(o.current||(o.current=new window.Image),o.current):null,[d,u]=a.useState(()=>Je(s,e));return pe(()=>{u(Je(s,e))},[s,e]),pe(()=>{const m=l=>()=>{u(l)};if(!s)return;const h=m("loaded"),p=m("error");return s.addEventListener("load",h),s.addEventListener("error",p),n&&(s.referrerPolicy=n),typeof t=="string"&&(s.crossOrigin=t),()=>{s.removeEventListener("load",h),s.removeEventListener("error",p)}},[s,t,n]),d}var hn=dn,vn=pn,xn=mn;const Hr=tr("relative flex shrink-0 overflow-hidden rounded-full",{variants:{size:{sm:"size-8",default:"size-10",md:"size-13",lg:"size-16",xl:"size-20"}},defaultVariants:{size:"default"}}),gn=a.forwardRef(({className:e,size:n,...t},r)=>i.jsx(hn,{ref:r,className:I(Hr({size:n}),e),...t}));gn.displayName=hn.displayName;const qr=a.forwardRef(({className:e,...n},t)=>i.jsx(vn,{ref:t,className:I("aspect-square size-full",e),...n}));qr.displayName=vn.displayName;const yn=a.forwardRef(({className:e,...n},t)=>i.jsx(xn,{ref:t,className:I("bg-muted flex size-full items-center justify-center rounded-full",e),...n}));yn.displayName=xn.displayName;function wn(e){const n=e+"CollectionProvider",[t,r]=Z(n),[o,s]=t(n,{collectionRef:{current:null},itemMap:new Map}),d=b=>{const{scope:v,children:_}=b,y=T.useRef(null),M=T.useRef(new Map).current;return i.jsx(o,{scope:v,itemMap:M,collectionRef:y,children:_})};d.displayName=n;const u=e+"CollectionSlot",m=Re(u),h=T.forwardRef((b,v)=>{const{scope:_,children:y}=b,M=s(u,_),D=F(v,M.collectionRef);return i.jsx(m,{ref:D,children:y})});h.displayName=u;const p=e+"CollectionItemSlot",l="data-radix-collection-item",f=Re(p),w=T.forwardRef((b,v)=>{const{scope:_,children:y,...M}=b,D=T.useRef(null),P=F(v,D),L=s(p,_);return T.useEffect(()=>(L.itemMap.set(D,{ref:D,...M}),()=>void L.itemMap.delete(D))),i.jsx(f,{[l]:"",ref:P,children:y})});w.displayName=p;function g(b){const v=s(e+"CollectionConsumer",b);return T.useCallback(()=>{const _=v.collectionRef.current;if(!_)return[];const y=Array.from(_.querySelectorAll(`[${l}]`));return Array.from(v.itemMap.values()).sort((M,D)=>y.indexOf(M.ref.current)-y.indexOf(D.ref.current))},[v.collectionRef,v.itemMap])}return[{Provider:d,Slot:h,ItemSlot:w},g,r]}var Ne="rovingFocusGroup.onEntryFocus",Xr={bubbles:!1,cancelable:!0},se="RovingFocusGroup",[Ce,bn,Zr]=wn(se),[Wr,jn]=Z(se,[Zr]),[Yr,Jr]=Wr(se),_n=a.forwardRef((e,n)=>i.jsx(Ce.Provider,{scope:e.__scopeRovingFocusGroup,children:i.jsx(Ce.Slot,{scope:e.__scopeRovingFocusGroup,children:i.jsx(Qr,{...e,ref:n})})}));_n.displayName=se;var Qr=a.forwardRef((e,n)=>{const{__scopeRovingFocusGroup:t,orientation:r,loop:o=!1,dir:s,currentTabStopId:d,defaultCurrentTabStopId:u,onCurrentTabStopIdChange:m,onEntryFocus:h,preventScrollOnEntryFocus:p=!1,...l}=e,f=a.useRef(null),w=F(n,f),g=en(s),[b,v]=De({prop:d,defaultProp:u??null,onChange:m,caller:se}),[_,y]=a.useState(!1),M=ve(h),D=bn(t),P=a.useRef(!1),[L,z]=a.useState(0);return a.useEffect(()=>{const R=f.current;if(R)return R.addEventListener(Ne,M),()=>R.removeEventListener(Ne,M)},[M]),i.jsx(Yr,{scope:t,orientation:r,dir:g,loop:o,currentTabStopId:b,onItemFocus:a.useCallback(R=>v(R),[v]),onItemShiftTab:a.useCallback(()=>y(!0),[]),onFocusableItemAdd:a.useCallback(()=>z(R=>R+1),[]),onFocusableItemRemove:a.useCallback(()=>z(R=>R-1),[]),children:i.jsx(S.div,{tabIndex:_||L===0?-1:0,"data-orientation":r,...l,ref:w,style:{outline:"none",...e.style},onMouseDown:j(e.onMouseDown,()=>{P.current=!0}),onFocus:j(e.onFocus,R=>{const B=!P.current;if(R.target===R.currentTarget&&B&&!_){const K=new CustomEvent(Ne,Xr);if(R.currentTarget.dispatchEvent(K),!K.defaultPrevented){const W=D().filter(E=>E.focusable),Y=W.find(E=>E.active),le=W.find(E=>E.id===b),J=[Y,le,...W].filter(Boolean).map(E=>E.ref.current);Rn(J,p)}}P.current=!1}),onBlur:j(e.onBlur,()=>y(!1))})})}),Mn="RovingFocusGroupItem",Nn=a.forwardRef((e,n)=>{const{__scopeRovingFocusGroup:t,focusable:r=!0,active:o=!1,tabStopId:s,children:d,...u}=e,m=fe(),h=s||m,p=Jr(Mn,t),l=p.currentTabStopId===h,f=bn(t),{onFocusableItemAdd:w,onFocusableItemRemove:g,currentTabStopId:b}=p;return a.useEffect(()=>{if(r)return w(),()=>g()},[r,w,g]),i.jsx(Ce.ItemSlot,{scope:t,id:h,focusable:r,active:o,children:i.jsx(S.span,{tabIndex:l?0:-1,"data-orientation":p.orientation,...u,ref:n,onMouseDown:j(e.onMouseDown,v=>{r?p.onItemFocus(h):v.preventDefault()}),onFocus:j(e.onFocus,()=>p.onItemFocus(h)),onKeyDown:j(e.onKeyDown,v=>{if(v.key==="Tab"&&v.shiftKey){p.onItemShiftTab();return}if(v.target!==v.currentTarget)return;const _=to(v,p.orientation,p.dir);if(_!==void 0){if(v.metaKey||v.ctrlKey||v.altKey||v.shiftKey)return;v.preventDefault();let y=f().filter(M=>M.focusable).map(M=>M.ref.current);if(_==="last")y.reverse();else if(_==="prev"||_==="next"){_==="prev"&&y.reverse();const M=y.indexOf(v.currentTarget);y=p.loop?ro(y,M+1):y.slice(M+1)}setTimeout(()=>Rn(y))}}),children:typeof d=="function"?d({isCurrentTabStop:l,hasTabStop:b!=null}):d})})});Nn.displayName=Mn;var eo={ArrowLeft:"prev",ArrowUp:"prev",ArrowRight:"next",ArrowDown:"next",PageUp:"first",Home:"first",PageDown:"last",End:"last"};function no(e,n){return n!=="rtl"?e:e==="ArrowLeft"?"ArrowRight":e==="ArrowRight"?"ArrowLeft":e}function to(e,n,t){const r=no(e.key,t);if(!(n==="vertical"&&["ArrowLeft","ArrowRight"].includes(r))&&!(n==="horizontal"&&["ArrowUp","ArrowDown"].includes(r)))return eo[r]}function Rn(e,n=!1){const t=document.activeElement;for(const r of e)if(r===t||(r.focus({preventScroll:n}),document.activeElement!==t))return}function ro(e,n){return e.map((t,r)=>e[(n+r)%e.length])}var oo=_n,ao=Nn;/**
+ */ var We;
+function Pr() {
+  if (We) return Me;
+  We = 1;
+  var e = T;
+  function n(l, f) {
+    return (l === f && (l !== 0 || 1 / l === 1 / f)) || (l !== l && f !== f);
+  }
+  var t = typeof Object.is == "function" ? Object.is : n,
+    r = e.useState,
+    o = e.useEffect,
+    s = e.useLayoutEffect,
+    d = e.useDebugValue;
+  function u(l, f) {
+    var w = f(),
+      g = r({ inst: { value: w, getSnapshot: f } }),
+      b = g[0].inst,
+      v = g[1];
+    return (
+      s(
+        function () {
+          ((b.value = w), (b.getSnapshot = f), m(b) && v({ inst: b }));
+        },
+        [l, w, f],
+      ),
+      o(
+        function () {
+          return (
+            m(b) && v({ inst: b }),
+            l(function () {
+              m(b) && v({ inst: b });
+            })
+          );
+        },
+        [l],
+      ),
+      d(w),
+      w
+    );
+  }
+  function m(l) {
+    var f = l.getSnapshot;
+    l = l.value;
+    try {
+      var w = f();
+      return !t(l, w);
+    } catch {
+      return !0;
+    }
+  }
+  function h(l, f) {
+    return f();
+  }
+  var p =
+    typeof window > "u" ||
+    typeof window.document > "u" ||
+    typeof window.document.createElement > "u"
+      ? h
+      : u;
+  return (
+    (Me.useSyncExternalStore =
+      e.useSyncExternalStore !== void 0 ? e.useSyncExternalStore : p),
+    Me
+  );
+}
+var Ye;
+function Lr() {
+  return (Ye || ((Ye = 1), (Ze.exports = Pr())), Ze.exports);
+}
+var zr = Lr();
+function Kr() {
+  return zr.useSyncExternalStore(
+    Gr,
+    () => !0,
+    () => !1,
+  );
+}
+function Gr() {
+  return () => {};
+}
+var Ie = "Avatar",
+  [Ur, ss] = Z(Ie),
+  [Vr, ln] = Ur(Ie),
+  dn = a.forwardRef((e, n) => {
+    const { __scopeAvatar: t, ...r } = e,
+      [o, s] = a.useState("idle");
+    return i.jsx(Vr, {
+      scope: t,
+      imageLoadingStatus: o,
+      onImageLoadingStatusChange: s,
+      children: i.jsx(S.span, { ...r, ref: n }),
+    });
+  });
+dn.displayName = Ie;
+var un = "AvatarImage",
+  pn = a.forwardRef((e, n) => {
+    const {
+        __scopeAvatar: t,
+        src: r,
+        onLoadingStatusChange: o = () => {},
+        ...s
+      } = e,
+      d = ln(un, t),
+      u = Br(r, s),
+      m = ve((h) => {
+        (o(h), d.onImageLoadingStatusChange(h));
+      });
+    return (
+      pe(() => {
+        u !== "idle" && m(u);
+      }, [u, m]),
+      u === "loaded" ? i.jsx(S.img, { ...s, ref: n, src: r }) : null
+    );
+  });
+pn.displayName = un;
+var fn = "AvatarFallback",
+  mn = a.forwardRef((e, n) => {
+    const { __scopeAvatar: t, delayMs: r, ...o } = e,
+      s = ln(fn, t),
+      [d, u] = a.useState(r === void 0);
+    return (
+      a.useEffect(() => {
+        if (r !== void 0) {
+          const m = window.setTimeout(() => u(!0), r);
+          return () => window.clearTimeout(m);
+        }
+      }, [r]),
+      d && s.imageLoadingStatus !== "loaded"
+        ? i.jsx(S.span, { ...o, ref: n })
+        : null
+    );
+  });
+mn.displayName = fn;
+function Je(e, n) {
+  return e
+    ? n
+      ? (e.src !== n && (e.src = n),
+        e.complete && e.naturalWidth > 0 ? "loaded" : "loading")
+      : "error"
+    : "idle";
+}
+function Br(e, { referrerPolicy: n, crossOrigin: t }) {
+  const r = Kr(),
+    o = a.useRef(null),
+    s = r ? (o.current || (o.current = new window.Image()), o.current) : null,
+    [d, u] = a.useState(() => Je(s, e));
+  return (
+    pe(() => {
+      u(Je(s, e));
+    }, [s, e]),
+    pe(() => {
+      const m = (l) => () => {
+        u(l);
+      };
+      if (!s) return;
+      const h = m("loaded"),
+        p = m("error");
+      return (
+        s.addEventListener("load", h),
+        s.addEventListener("error", p),
+        n && (s.referrerPolicy = n),
+        typeof t == "string" && (s.crossOrigin = t),
+        () => {
+          (s.removeEventListener("load", h), s.removeEventListener("error", p));
+        }
+      );
+    }, [s, t, n]),
+    d
+  );
+}
+var hn = dn,
+  vn = pn,
+  xn = mn;
+const Hr = tr("relative flex shrink-0 overflow-hidden rounded-full", {
+    variants: {
+      size: {
+        sm: "size-8",
+        default: "size-10",
+        md: "size-13",
+        lg: "size-16",
+        xl: "size-20",
+      },
+    },
+    defaultVariants: { size: "default" },
+  }),
+  gn = a.forwardRef(({ className: e, size: n, ...t }, r) =>
+    i.jsx(hn, { ref: r, className: I(Hr({ size: n }), e), ...t }),
+  );
+gn.displayName = hn.displayName;
+const qr = a.forwardRef(({ className: e, ...n }, t) =>
+  i.jsx(vn, { ref: t, className: I("aspect-square size-full", e), ...n }),
+);
+qr.displayName = vn.displayName;
+const yn = a.forwardRef(({ className: e, ...n }, t) =>
+  i.jsx(xn, {
+    ref: t,
+    className: I(
+      "bg-muted flex size-full items-center justify-center rounded-full",
+      e,
+    ),
+    ...n,
+  }),
+);
+yn.displayName = xn.displayName;
+function wn(e) {
+  const n = e + "CollectionProvider",
+    [t, r] = Z(n),
+    [o, s] = t(n, { collectionRef: { current: null }, itemMap: new Map() }),
+    d = (b) => {
+      const { scope: v, children: _ } = b,
+        y = T.useRef(null),
+        M = T.useRef(new Map()).current;
+      return i.jsx(o, { scope: v, itemMap: M, collectionRef: y, children: _ });
+    };
+  d.displayName = n;
+  const u = e + "CollectionSlot",
+    m = Re(u),
+    h = T.forwardRef((b, v) => {
+      const { scope: _, children: y } = b,
+        M = s(u, _),
+        D = F(v, M.collectionRef);
+      return i.jsx(m, { ref: D, children: y });
+    });
+  h.displayName = u;
+  const p = e + "CollectionItemSlot",
+    l = "data-radix-collection-item",
+    f = Re(p),
+    w = T.forwardRef((b, v) => {
+      const { scope: _, children: y, ...M } = b,
+        D = T.useRef(null),
+        P = F(v, D),
+        L = s(p, _);
+      return (
+        T.useEffect(
+          () => (
+            L.itemMap.set(D, { ref: D, ...M }),
+            () => void L.itemMap.delete(D)
+          ),
+        ),
+        i.jsx(f, { [l]: "", ref: P, children: y })
+      );
+    });
+  w.displayName = p;
+  function g(b) {
+    const v = s(e + "CollectionConsumer", b);
+    return T.useCallback(() => {
+      const _ = v.collectionRef.current;
+      if (!_) return [];
+      const y = Array.from(_.querySelectorAll(`[${l}]`));
+      return Array.from(v.itemMap.values()).sort(
+        (M, D) => y.indexOf(M.ref.current) - y.indexOf(D.ref.current),
+      );
+    }, [v.collectionRef, v.itemMap]);
+  }
+  return [{ Provider: d, Slot: h, ItemSlot: w }, g, r];
+}
+var Ne = "rovingFocusGroup.onEntryFocus",
+  Xr = { bubbles: !1, cancelable: !0 },
+  se = "RovingFocusGroup",
+  [Ce, bn, Zr] = wn(se),
+  [Wr, jn] = Z(se, [Zr]),
+  [Yr, Jr] = Wr(se),
+  _n = a.forwardRef((e, n) =>
+    i.jsx(Ce.Provider, {
+      scope: e.__scopeRovingFocusGroup,
+      children: i.jsx(Ce.Slot, {
+        scope: e.__scopeRovingFocusGroup,
+        children: i.jsx(Qr, { ...e, ref: n }),
+      }),
+    }),
+  );
+_n.displayName = se;
+var Qr = a.forwardRef((e, n) => {
+    const {
+        __scopeRovingFocusGroup: t,
+        orientation: r,
+        loop: o = !1,
+        dir: s,
+        currentTabStopId: d,
+        defaultCurrentTabStopId: u,
+        onCurrentTabStopIdChange: m,
+        onEntryFocus: h,
+        preventScrollOnEntryFocus: p = !1,
+        ...l
+      } = e,
+      f = a.useRef(null),
+      w = F(n, f),
+      g = en(s),
+      [b, v] = De({ prop: d, defaultProp: u ?? null, onChange: m, caller: se }),
+      [_, y] = a.useState(!1),
+      M = ve(h),
+      D = bn(t),
+      P = a.useRef(!1),
+      [L, z] = a.useState(0);
+    return (
+      a.useEffect(() => {
+        const R = f.current;
+        if (R)
+          return (
+            R.addEventListener(Ne, M),
+            () => R.removeEventListener(Ne, M)
+          );
+      }, [M]),
+      i.jsx(Yr, {
+        scope: t,
+        orientation: r,
+        dir: g,
+        loop: o,
+        currentTabStopId: b,
+        onItemFocus: a.useCallback((R) => v(R), [v]),
+        onItemShiftTab: a.useCallback(() => y(!0), []),
+        onFocusableItemAdd: a.useCallback(() => z((R) => R + 1), []),
+        onFocusableItemRemove: a.useCallback(() => z((R) => R - 1), []),
+        children: i.jsx(S.div, {
+          tabIndex: _ || L === 0 ? -1 : 0,
+          "data-orientation": r,
+          ...l,
+          ref: w,
+          style: { outline: "none", ...e.style },
+          onMouseDown: j(e.onMouseDown, () => {
+            P.current = !0;
+          }),
+          onFocus: j(e.onFocus, (R) => {
+            const B = !P.current;
+            if (R.target === R.currentTarget && B && !_) {
+              const K = new CustomEvent(Ne, Xr);
+              if ((R.currentTarget.dispatchEvent(K), !K.defaultPrevented)) {
+                const W = D().filter((E) => E.focusable),
+                  Y = W.find((E) => E.active),
+                  le = W.find((E) => E.id === b),
+                  J = [Y, le, ...W].filter(Boolean).map((E) => E.ref.current);
+                Rn(J, p);
+              }
+            }
+            P.current = !1;
+          }),
+          onBlur: j(e.onBlur, () => y(!1)),
+        }),
+      })
+    );
+  }),
+  Mn = "RovingFocusGroupItem",
+  Nn = a.forwardRef((e, n) => {
+    const {
+        __scopeRovingFocusGroup: t,
+        focusable: r = !0,
+        active: o = !1,
+        tabStopId: s,
+        children: d,
+        ...u
+      } = e,
+      m = fe(),
+      h = s || m,
+      p = Jr(Mn, t),
+      l = p.currentTabStopId === h,
+      f = bn(t),
+      {
+        onFocusableItemAdd: w,
+        onFocusableItemRemove: g,
+        currentTabStopId: b,
+      } = p;
+    return (
+      a.useEffect(() => {
+        if (r) return (w(), () => g());
+      }, [r, w, g]),
+      i.jsx(Ce.ItemSlot, {
+        scope: t,
+        id: h,
+        focusable: r,
+        active: o,
+        children: i.jsx(S.span, {
+          tabIndex: l ? 0 : -1,
+          "data-orientation": p.orientation,
+          ...u,
+          ref: n,
+          onMouseDown: j(e.onMouseDown, (v) => {
+            r ? p.onItemFocus(h) : v.preventDefault();
+          }),
+          onFocus: j(e.onFocus, () => p.onItemFocus(h)),
+          onKeyDown: j(e.onKeyDown, (v) => {
+            if (v.key === "Tab" && v.shiftKey) {
+              p.onItemShiftTab();
+              return;
+            }
+            if (v.target !== v.currentTarget) return;
+            const _ = to(v, p.orientation, p.dir);
+            if (_ !== void 0) {
+              if (v.metaKey || v.ctrlKey || v.altKey || v.shiftKey) return;
+              v.preventDefault();
+              let y = f()
+                .filter((M) => M.focusable)
+                .map((M) => M.ref.current);
+              if (_ === "last") y.reverse();
+              else if (_ === "prev" || _ === "next") {
+                _ === "prev" && y.reverse();
+                const M = y.indexOf(v.currentTarget);
+                y = p.loop ? ro(y, M + 1) : y.slice(M + 1);
+              }
+              setTimeout(() => Rn(y));
+            }
+          }),
+          children:
+            typeof d == "function"
+              ? d({ isCurrentTabStop: l, hasTabStop: b != null })
+              : d,
+        }),
+      })
+    );
+  });
+Nn.displayName = Mn;
+var eo = {
+  ArrowLeft: "prev",
+  ArrowUp: "prev",
+  ArrowRight: "next",
+  ArrowDown: "next",
+  PageUp: "first",
+  Home: "first",
+  PageDown: "last",
+  End: "last",
+};
+function no(e, n) {
+  return n !== "rtl"
+    ? e
+    : e === "ArrowLeft"
+      ? "ArrowRight"
+      : e === "ArrowRight"
+        ? "ArrowLeft"
+        : e;
+}
+function to(e, n, t) {
+  const r = no(e.key, t);
+  if (
+    !(n === "vertical" && ["ArrowLeft", "ArrowRight"].includes(r)) &&
+    !(n === "horizontal" && ["ArrowUp", "ArrowDown"].includes(r))
+  )
+    return eo[r];
+}
+function Rn(e, n = !1) {
+  const t = document.activeElement;
+  for (const r of e)
+    if (
+      r === t ||
+      (r.focus({ preventScroll: n }), document.activeElement !== t)
+    )
+      return;
+}
+function ro(e, n) {
+  return e.map((t, r) => e[(n + r) % e.length]);
+}
+var oo = _n,
+  ao = Nn;
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const so=[["path",{d:"M20 6 9 17l-5-5",key:"1gmf2c"}]],io=$e("check",so);/**
+ */ const so = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]],
+  io = $e("check", so);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const co=[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}]],lo=$e("circle",co);/**
+ */ const co = [["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]],
+  lo = $e("circle", co);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const uo=[["path",{d:"m9 18 6-6-6-6",key:"mthhwq"}]],po=$e("chevron-right",uo);var Se=["Enter"," "],fo=["ArrowDown","PageUp","Home"],kn=["ArrowUp","PageDown","End"],mo=[...fo,...kn],ho={ltr:[...Se,"ArrowRight"],rtl:[...Se,"ArrowLeft"]},vo={ltr:["ArrowLeft"],rtl:["ArrowRight"]},ie="Menu",[re,xo,go]=wn(ie),[U,Cn]=Z(ie,[go,nn,jn]),ye=nn(),Sn=jn(),[yo,V]=U(ie),[wo,ce]=U(ie),Dn=e=>{const{__scopeMenu:n,open:t=!1,children:r,dir:o,onOpenChange:s,modal:d=!0}=e,u=ye(n),[m,h]=a.useState(null),p=a.useRef(!1),l=ve(s),f=en(o);return a.useEffect(()=>{const w=()=>{p.current=!0,document.addEventListener("pointerdown",g,{capture:!0,once:!0}),document.addEventListener("pointermove",g,{capture:!0,once:!0})},g=()=>p.current=!1;return document.addEventListener("keydown",w,{capture:!0}),()=>{document.removeEventListener("keydown",w,{capture:!0}),document.removeEventListener("pointerdown",g,{capture:!0}),document.removeEventListener("pointermove",g,{capture:!0})}},[]),i.jsx(It,{...u,children:i.jsx(yo,{scope:n,open:t,onOpenChange:l,content:m,onContentChange:h,children:i.jsx(wo,{scope:n,onClose:a.useCallback(()=>l(!1),[l]),isUsingKeyboardRef:p,dir:f,modal:d,children:r})})})};Dn.displayName=ie;var bo="MenuAnchor",Ee=a.forwardRef((e,n)=>{const{__scopeMenu:t,...r}=e,o=ye(t);return i.jsx(Et,{...o,...r,ref:n})});Ee.displayName=bo;var Ae="MenuPortal",[jo,$n]=U(Ae,{forceMount:void 0}),In=e=>{const{__scopeMenu:n,forceMount:t,children:r,container:o}=e,s=V(Ae,n);return i.jsx(jo,{scope:n,forceMount:t,children:i.jsx(ae,{present:t||s.open,children:i.jsx(At,{asChild:!0,container:o,children:r})})})};In.displayName=Ae;var $="MenuContent",[_o,Oe]=U($),En=a.forwardRef((e,n)=>{const t=$n($,e.__scopeMenu),{forceMount:r=t.forceMount,...o}=e,s=V($,e.__scopeMenu),d=ce($,e.__scopeMenu);return i.jsx(re.Provider,{scope:e.__scopeMenu,children:i.jsx(ae,{present:r||s.open,children:i.jsx(re.Slot,{scope:e.__scopeMenu,children:d.modal?i.jsx(Mo,{...o,ref:n}):i.jsx(No,{...o,ref:n})})})})}),Mo=a.forwardRef((e,n)=>{const t=V($,e.__scopeMenu),r=a.useRef(null),o=F(n,r);return a.useEffect(()=>{const s=r.current;if(s)return Ot(s)},[]),i.jsx(Fe,{...e,ref:o,trapFocus:t.open,disableOutsidePointerEvents:t.open,disableOutsideScroll:!0,onFocusOutside:j(e.onFocusOutside,s=>s.preventDefault(),{checkForDefaultPrevented:!1}),onDismiss:()=>t.onOpenChange(!1)})}),No=a.forwardRef((e,n)=>{const t=V($,e.__scopeMenu);return i.jsx(Fe,{...e,ref:n,trapFocus:!1,disableOutsidePointerEvents:!1,disableOutsideScroll:!1,onDismiss:()=>t.onOpenChange(!1)})}),Ro=Re("MenuContent.ScrollLock"),Fe=a.forwardRef((e,n)=>{const{__scopeMenu:t,loop:r=!1,trapFocus:o,onOpenAutoFocus:s,onCloseAutoFocus:d,disableOutsidePointerEvents:u,onEntryFocus:m,onEscapeKeyDown:h,onPointerDownOutside:p,onFocusOutside:l,onInteractOutside:f,onDismiss:w,disableOutsideScroll:g,...b}=e,v=V($,t),_=ce($,t),y=ye(t),M=Sn(t),D=xo(t),[P,L]=a.useState(null),z=a.useRef(null),R=F(n,z,v.onContentChange),B=a.useRef(0),K=a.useRef(""),W=a.useRef(0),Y=a.useRef(null),le=a.useRef("right"),J=a.useRef(0),E=g?Pt:a.Fragment,Nt=g?{as:Ro,allowPinchZoom:!0}:void 0,Rt=x=>{var k,A;const q=K.current+x,Q=D().filter(O=>!O.disabled),de=document.activeElement,ee=(k=Q.find(O=>O.ref.current===de))==null?void 0:k.textValue,kt=Q.map(O=>O.textValue),Ct=Po(kt,q,ee),Ue=(A=Q.find(O=>O.textValue===Ct))==null?void 0:A.ref.current;(function O(Ve){K.current=Ve,window.clearTimeout(B.current),Ve!==""&&(B.current=window.setTimeout(()=>O(""),1e3))})(q),Ue&&setTimeout(()=>Ue.focus())};a.useEffect(()=>()=>window.clearTimeout(B.current),[]),Tt();const H=a.useCallback(x=>{var k,A;return le.current===((k=Y.current)==null?void 0:k.side)&&zo(x,(A=Y.current)==null?void 0:A.area)},[]);return i.jsx(_o,{scope:t,searchRef:K,onItemEnter:a.useCallback(x=>{H(x)&&x.preventDefault()},[H]),onItemLeave:a.useCallback(x=>{var k;H(x)||((k=z.current)==null||k.focus(),L(null))},[H]),onTriggerLeave:a.useCallback(x=>{H(x)&&x.preventDefault()},[H]),pointerGraceTimerRef:W,onPointerGraceIntentChange:a.useCallback(x=>{Y.current=x},[]),children:i.jsx(E,{...Nt,children:i.jsx(Lt,{asChild:!0,trapped:o,onMountAutoFocus:j(s,x=>{var k;x.preventDefault(),(k=z.current)==null||k.focus({preventScroll:!0})}),onUnmountAutoFocus:d,children:i.jsx(zt,{asChild:!0,disableOutsidePointerEvents:u,onEscapeKeyDown:h,onPointerDownOutside:p,onFocusOutside:l,onInteractOutside:f,onDismiss:w,children:i.jsx(oo,{asChild:!0,...M,dir:_.dir,orientation:"vertical",loop:r,currentTabStopId:P,onCurrentTabStopIdChange:L,onEntryFocus:j(m,x=>{_.isUsingKeyboardRef.current||x.preventDefault()}),preventScrollOnEntryFocus:!0,children:i.jsx(Kt,{role:"menu","aria-orientation":"vertical","data-state":Zn(v.open),"data-radix-menu-content":"",dir:_.dir,...y,...b,ref:R,style:{outline:"none",...b.style},onKeyDown:j(b.onKeyDown,x=>{const k=x.target.closest("[data-radix-menu-content]")===x.currentTarget,A=x.ctrlKey||x.altKey||x.metaKey,q=x.key.length===1;k&&(x.key==="Tab"&&x.preventDefault(),!A&&q&&Rt(x.key));const Q=z.current;if(x.target!==Q||!mo.includes(x.key))return;x.preventDefault();const de=D().filter(ee=>!ee.disabled).map(ee=>ee.ref.current);kn.includes(x.key)&&de.reverse(),Fo(de)}),onBlur:j(e.onBlur,x=>{x.currentTarget.contains(x.target)||(window.clearTimeout(B.current),K.current="")}),onPointerMove:j(e.onPointerMove,oe(x=>{const k=x.target,A=J.current!==x.clientX;if(x.currentTarget.contains(k)&&A){const q=x.clientX>J.current?"right":"left";le.current=q,J.current=x.clientX}}))})})})})})})});En.displayName=$;var ko="MenuGroup",Te=a.forwardRef((e,n)=>{const{__scopeMenu:t,...r}=e;return i.jsx(S.div,{role:"group",...r,ref:n})});Te.displayName=ko;var Co="MenuLabel",An=a.forwardRef((e,n)=>{const{__scopeMenu:t,...r}=e;return i.jsx(S.div,{...r,ref:n})});An.displayName=Co;var me="MenuItem",Qe="menu.itemSelect",we=a.forwardRef((e,n)=>{const{disabled:t=!1,onSelect:r,...o}=e,s=a.useRef(null),d=ce(me,e.__scopeMenu),u=Oe(me,e.__scopeMenu),m=F(n,s),h=a.useRef(!1),p=()=>{const l=s.current;if(!t&&l){const f=new CustomEvent(Qe,{bubbles:!0,cancelable:!0});l.addEventListener(Qe,w=>r==null?void 0:r(w),{once:!0}),Ft(l,f),f.defaultPrevented?h.current=!1:d.onClose()}};return i.jsx(On,{...o,ref:m,disabled:t,onClick:j(e.onClick,p),onPointerDown:l=>{var f;(f=e.onPointerDown)==null||f.call(e,l),h.current=!0},onPointerUp:j(e.onPointerUp,l=>{var f;h.current||(f=l.currentTarget)==null||f.click()}),onKeyDown:j(e.onKeyDown,l=>{const f=u.searchRef.current!=="";t||f&&l.key===" "||Se.includes(l.key)&&(l.currentTarget.click(),l.preventDefault())})})});we.displayName=me;var On=a.forwardRef((e,n)=>{const{__scopeMenu:t,disabled:r=!1,textValue:o,...s}=e,d=Oe(me,t),u=Sn(t),m=a.useRef(null),h=F(n,m),[p,l]=a.useState(!1),[f,w]=a.useState("");return a.useEffect(()=>{const g=m.current;g&&w((g.textContent??"").trim())},[s.children]),i.jsx(re.ItemSlot,{scope:t,disabled:r,textValue:o??f,children:i.jsx(ao,{asChild:!0,...u,focusable:!r,children:i.jsx(S.div,{role:"menuitem","data-highlighted":p?"":void 0,"aria-disabled":r||void 0,"data-disabled":r?"":void 0,...s,ref:h,onPointerMove:j(e.onPointerMove,oe(g=>{r?d.onItemLeave(g):(d.onItemEnter(g),g.defaultPrevented||g.currentTarget.focus({preventScroll:!0}))})),onPointerLeave:j(e.onPointerLeave,oe(g=>d.onItemLeave(g))),onFocus:j(e.onFocus,()=>l(!0)),onBlur:j(e.onBlur,()=>l(!1))})})})}),So="MenuCheckboxItem",Fn=a.forwardRef((e,n)=>{const{checked:t=!1,onCheckedChange:r,...o}=e;return i.jsx(Kn,{scope:e.__scopeMenu,checked:t,children:i.jsx(we,{role:"menuitemcheckbox","aria-checked":he(t)?"mixed":t,...o,ref:n,"data-state":Le(t),onSelect:j(o.onSelect,()=>r==null?void 0:r(he(t)?!0:!t),{checkForDefaultPrevented:!1})})})});Fn.displayName=So;var Tn="MenuRadioGroup",[Do,$o]=U(Tn,{value:void 0,onValueChange:()=>{}}),Pn=a.forwardRef((e,n)=>{const{value:t,onValueChange:r,...o}=e,s=ve(r);return i.jsx(Do,{scope:e.__scopeMenu,value:t,onValueChange:s,children:i.jsx(Te,{...o,ref:n})})});Pn.displayName=Tn;var Ln="MenuRadioItem",zn=a.forwardRef((e,n)=>{const{value:t,...r}=e,o=$o(Ln,e.__scopeMenu),s=t===o.value;return i.jsx(Kn,{scope:e.__scopeMenu,checked:s,children:i.jsx(we,{role:"menuitemradio","aria-checked":s,...r,ref:n,"data-state":Le(s),onSelect:j(r.onSelect,()=>{var d;return(d=o.onValueChange)==null?void 0:d.call(o,t)},{checkForDefaultPrevented:!1})})})});zn.displayName=Ln;var Pe="MenuItemIndicator",[Kn,Io]=U(Pe,{checked:!1}),Gn=a.forwardRef((e,n)=>{const{__scopeMenu:t,forceMount:r,...o}=e,s=Io(Pe,t);return i.jsx(ae,{present:r||he(s.checked)||s.checked===!0,children:i.jsx(S.span,{...o,ref:n,"data-state":Le(s.checked)})})});Gn.displayName=Pe;var Eo="MenuSeparator",Un=a.forwardRef((e,n)=>{const{__scopeMenu:t,...r}=e;return i.jsx(S.div,{role:"separator","aria-orientation":"horizontal",...r,ref:n})});Un.displayName=Eo;var Ao="MenuArrow",Vn=a.forwardRef((e,n)=>{const{__scopeMenu:t,...r}=e,o=ye(t);return i.jsx(Gt,{...o,...r,ref:n})});Vn.displayName=Ao;var Oo="MenuSub",[is,Bn]=U(Oo),te="MenuSubTrigger",Hn=a.forwardRef((e,n)=>{const t=V(te,e.__scopeMenu),r=ce(te,e.__scopeMenu),o=Bn(te,e.__scopeMenu),s=Oe(te,e.__scopeMenu),d=a.useRef(null),{pointerGraceTimerRef:u,onPointerGraceIntentChange:m}=s,h={__scopeMenu:e.__scopeMenu},p=a.useCallback(()=>{d.current&&window.clearTimeout(d.current),d.current=null},[]);return a.useEffect(()=>p,[p]),a.useEffect(()=>{const l=u.current;return()=>{window.clearTimeout(l),m(null)}},[u,m]),i.jsx(Ee,{asChild:!0,...h,children:i.jsx(On,{id:o.triggerId,"aria-haspopup":"menu","aria-expanded":t.open,"aria-controls":o.contentId,"data-state":Zn(t.open),...e,ref:an(n,o.onTriggerChange),onClick:l=>{var f;(f=e.onClick)==null||f.call(e,l),!(e.disabled||l.defaultPrevented)&&(l.currentTarget.focus(),t.open||t.onOpenChange(!0))},onPointerMove:j(e.onPointerMove,oe(l=>{s.onItemEnter(l),!l.defaultPrevented&&!e.disabled&&!t.open&&!d.current&&(s.onPointerGraceIntentChange(null),d.current=window.setTimeout(()=>{t.onOpenChange(!0),p()},100))})),onPointerLeave:j(e.onPointerLeave,oe(l=>{var f,w;p();const g=(f=t.content)==null?void 0:f.getBoundingClientRect();if(g){const b=(w=t.content)==null?void 0:w.dataset.side,v=b==="right",_=v?-5:5,y=g[v?"left":"right"],M=g[v?"right":"left"];s.onPointerGraceIntentChange({area:[{x:l.clientX+_,y:l.clientY},{x:y,y:g.top},{x:M,y:g.top},{x:M,y:g.bottom},{x:y,y:g.bottom}],side:b}),window.clearTimeout(u.current),u.current=window.setTimeout(()=>s.onPointerGraceIntentChange(null),300)}else{if(s.onTriggerLeave(l),l.defaultPrevented)return;s.onPointerGraceIntentChange(null)}})),onKeyDown:j(e.onKeyDown,l=>{var f;const w=s.searchRef.current!=="";e.disabled||w&&l.key===" "||ho[r.dir].includes(l.key)&&(t.onOpenChange(!0),(f=t.content)==null||f.focus(),l.preventDefault())})})})});Hn.displayName=te;var qn="MenuSubContent",Xn=a.forwardRef((e,n)=>{const t=$n($,e.__scopeMenu),{forceMount:r=t.forceMount,...o}=e,s=V($,e.__scopeMenu),d=ce($,e.__scopeMenu),u=Bn(qn,e.__scopeMenu),m=a.useRef(null),h=F(n,m);return i.jsx(re.Provider,{scope:e.__scopeMenu,children:i.jsx(ae,{present:r||s.open,children:i.jsx(re.Slot,{scope:e.__scopeMenu,children:i.jsx(Fe,{id:u.contentId,"aria-labelledby":u.triggerId,...o,ref:h,align:"start",side:d.dir==="rtl"?"left":"right",disableOutsidePointerEvents:!1,disableOutsideScroll:!1,trapFocus:!1,onOpenAutoFocus:p=>{var l;d.isUsingKeyboardRef.current&&((l=m.current)==null||l.focus()),p.preventDefault()},onCloseAutoFocus:p=>p.preventDefault(),onFocusOutside:j(e.onFocusOutside,p=>{p.target!==u.trigger&&s.onOpenChange(!1)}),onEscapeKeyDown:j(e.onEscapeKeyDown,p=>{d.onClose(),p.preventDefault()}),onKeyDown:j(e.onKeyDown,p=>{var l;const f=p.currentTarget.contains(p.target),w=vo[d.dir].includes(p.key);f&&w&&(s.onOpenChange(!1),(l=u.trigger)==null||l.focus(),p.preventDefault())})})})})})});Xn.displayName=qn;function Zn(e){return e?"open":"closed"}function he(e){return e==="indeterminate"}function Le(e){return he(e)?"indeterminate":e?"checked":"unchecked"}function Fo(e){const n=document.activeElement;for(const t of e)if(t===n||(t.focus(),document.activeElement!==n))return}function To(e,n){return e.map((t,r)=>e[(n+r)%e.length])}function Po(e,n,t){const r=n.length>1&&Array.from(n).every(u=>u===n[0])?n[0]:n,o=t?e.indexOf(t):-1;let s=To(e,Math.max(o,0));r.length===1&&(s=s.filter(u=>u!==t));const d=s.find(u=>u.toLowerCase().startsWith(r.toLowerCase()));return d!==t?d:void 0}function Lo(e,n){const{x:t,y:r}=e;let o=!1;for(let s=0,d=n.length-1;s<n.length;d=s++){const u=n[s],m=n[d],h=u.x,p=u.y,l=m.x,f=m.y;p>r!=f>r&&t<(l-h)*(r-p)/(f-p)+h&&(o=!o)}return o}function zo(e,n){if(!n)return!1;const t={x:e.clientX,y:e.clientY};return Lo(t,n)}function oe(e){return n=>n.pointerType==="mouse"?e(n):void 0}var Ko=Dn,Go=Ee,Uo=In,Vo=En,Bo=Te,Ho=An,qo=we,Xo=Fn,Zo=Pn,Wo=zn,Yo=Gn,Jo=Un,Qo=Vn,ea=Hn,na=Xn,be="DropdownMenu",[ta,cs]=Z(be,[Cn]),C=Cn(),[ra,Wn]=ta(be),Yn=e=>{const{__scopeDropdownMenu:n,children:t,dir:r,open:o,defaultOpen:s,onOpenChange:d,modal:u=!0}=e,m=C(n),h=a.useRef(null),[p,l]=De({prop:o,defaultProp:s??!1,onChange:d,caller:be});return i.jsx(ra,{scope:n,triggerId:fe(),triggerRef:h,contentId:fe(),open:p,onOpenChange:l,onOpenToggle:a.useCallback(()=>l(f=>!f),[l]),modal:u,children:i.jsx(Ko,{...m,open:p,onOpenChange:l,dir:r,modal:u,children:t})})};Yn.displayName=be;var Jn="DropdownMenuTrigger",Qn=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,disabled:r=!1,...o}=e,s=Wn(Jn,t),d=C(t);return i.jsx(Go,{asChild:!0,...d,children:i.jsx(S.button,{type:"button",id:s.triggerId,"aria-haspopup":"menu","aria-expanded":s.open,"aria-controls":s.open?s.contentId:void 0,"data-state":s.open?"open":"closed","data-disabled":r?"":void 0,disabled:r,...o,ref:an(n,s.triggerRef),onPointerDown:j(e.onPointerDown,u=>{!r&&u.button===0&&u.ctrlKey===!1&&(s.onOpenToggle(),s.open||u.preventDefault())}),onKeyDown:j(e.onKeyDown,u=>{r||(["Enter"," "].includes(u.key)&&s.onOpenToggle(),u.key==="ArrowDown"&&s.onOpenChange(!0),["Enter"," ","ArrowDown"].includes(u.key)&&u.preventDefault())})})})});Qn.displayName=Jn;var oa="DropdownMenuPortal",et=e=>{const{__scopeDropdownMenu:n,...t}=e,r=C(n);return i.jsx(Uo,{...r,...t})};et.displayName=oa;var nt="DropdownMenuContent",tt=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=Wn(nt,t),s=C(t),d=a.useRef(!1);return i.jsx(Vo,{id:o.contentId,"aria-labelledby":o.triggerId,...s,...r,ref:n,onCloseAutoFocus:j(e.onCloseAutoFocus,u=>{var m;d.current||(m=o.triggerRef.current)==null||m.focus(),d.current=!1,u.preventDefault()}),onInteractOutside:j(e.onInteractOutside,u=>{const m=u.detail.originalEvent,h=m.button===0&&m.ctrlKey===!0,p=m.button===2||h;(!o.modal||p)&&(d.current=!0)}),style:{...e.style,"--radix-dropdown-menu-content-transform-origin":"var(--radix-popper-transform-origin)","--radix-dropdown-menu-content-available-width":"var(--radix-popper-available-width)","--radix-dropdown-menu-content-available-height":"var(--radix-popper-available-height)","--radix-dropdown-menu-trigger-width":"var(--radix-popper-anchor-width)","--radix-dropdown-menu-trigger-height":"var(--radix-popper-anchor-height)"}})});tt.displayName=nt;var aa="DropdownMenuGroup",sa=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(Bo,{...o,...r,ref:n})});sa.displayName=aa;var ia="DropdownMenuLabel",rt=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(Ho,{...o,...r,ref:n})});rt.displayName=ia;var ca="DropdownMenuItem",ot=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(qo,{...o,...r,ref:n})});ot.displayName=ca;var la="DropdownMenuCheckboxItem",at=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(Xo,{...o,...r,ref:n})});at.displayName=la;var da="DropdownMenuRadioGroup",ua=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(Zo,{...o,...r,ref:n})});ua.displayName=da;var pa="DropdownMenuRadioItem",st=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(Wo,{...o,...r,ref:n})});st.displayName=pa;var fa="DropdownMenuItemIndicator",it=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(Yo,{...o,...r,ref:n})});it.displayName=fa;var ma="DropdownMenuSeparator",ct=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(Jo,{...o,...r,ref:n})});ct.displayName=ma;var ha="DropdownMenuArrow",va=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(Qo,{...o,...r,ref:n})});va.displayName=ha;var xa="DropdownMenuSubTrigger",lt=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(ea,{...o,...r,ref:n})});lt.displayName=xa;var ga="DropdownMenuSubContent",dt=a.forwardRef((e,n)=>{const{__scopeDropdownMenu:t,...r}=e,o=C(t);return i.jsx(na,{...o,...r,ref:n,style:{...e.style,"--radix-dropdown-menu-content-transform-origin":"var(--radix-popper-transform-origin)","--radix-dropdown-menu-content-available-width":"var(--radix-popper-available-width)","--radix-dropdown-menu-content-available-height":"var(--radix-popper-available-height)","--radix-dropdown-menu-trigger-width":"var(--radix-popper-anchor-width)","--radix-dropdown-menu-trigger-height":"var(--radix-popper-anchor-height)"}})});dt.displayName=ga;var ya=Yn,wa=Qn,ba=et,ut=tt,pt=rt,ft=ot,mt=at,ht=st,vt=it,xt=ct,gt=lt,yt=dt;const ja=ya,_a=wa,Ma=a.forwardRef(({className:e,inset:n,children:t,...r},o)=>i.jsxs(gt,{ref:o,className:I("focus:bg-accent data-[state=open]:bg-accent flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none select-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",n&&"pl-8",e),...r,children:[t,i.jsx(po,{className:"ml-auto"})]}));Ma.displayName=gt.displayName;const Na=a.forwardRef(({className:e,...n},t)=>i.jsx(yt,{ref:t,className:I("bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg",e),...n}));Na.displayName=yt.displayName;const wt=a.forwardRef(({className:e,sideOffset:n=4,...t},r)=>i.jsx(ba,{children:i.jsx(ut,{ref:r,sideOffset:n,className:I("bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md",e),...t})}));wt.displayName=ut.displayName;const ue=a.forwardRef(({className:e,inset:n,...t},r)=>i.jsx(ft,{ref:r,className:I("focus:bg-accent focus:text-accent-foreground relative flex cursor-default cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",n&&"pl-8",e),...t}));ue.displayName=ft.displayName;const Ra=a.forwardRef(({className:e,children:n,checked:t,...r},o)=>i.jsxs(mt,{ref:o,className:I("focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center rounded-sm py-1.5 pr-2 pl-8 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",e),checked:t,...r,children:[i.jsx("span",{className:"absolute left-2 flex h-3.5 w-3.5 items-center justify-center",children:i.jsx(vt,{children:i.jsx(io,{className:"h-4 w-4"})})}),n]}));Ra.displayName=mt.displayName;const ka=a.forwardRef(({className:e,children:n,...t},r)=>i.jsxs(ht,{ref:r,className:I("focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center rounded-sm py-1.5 pr-2 pl-8 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",e),...t,children:[i.jsx("span",{className:"absolute left-2 flex h-3.5 w-3.5 items-center justify-center",children:i.jsx(vt,{children:i.jsx(lo,{className:"h-2 w-2 fill-current"})})}),n]}));ka.displayName=ht.displayName;const Ca=a.forwardRef(({className:e,inset:n,...t},r)=>i.jsx(pt,{ref:r,className:I("px-2 py-1.5 text-sm font-semibold",n&&"pl-8",e),...t}));Ca.displayName=pt.displayName;const Sa=a.forwardRef(({className:e,...n},t)=>i.jsx(xt,{ref:t,className:I("bg-muted -mx-1 my-1 h-px",e),...n}));Sa.displayName=xt.displayName;var je="Collapsible",[Da,ls]=Z(je),[$a,ze]=Da(je),bt=a.forwardRef((e,n)=>{const{__scopeCollapsible:t,open:r,defaultOpen:o,disabled:s,onOpenChange:d,...u}=e,[m,h]=De({prop:r,defaultProp:o??!1,onChange:d,caller:je});return i.jsx($a,{scope:t,disabled:s,contentId:fe(),open:m,onOpenToggle:a.useCallback(()=>h(p=>!p),[h]),children:i.jsx(S.div,{"data-state":Ge(m),"data-disabled":s?"":void 0,...u,ref:n})})});bt.displayName=je;var jt="CollapsibleTrigger",_t=a.forwardRef((e,n)=>{const{__scopeCollapsible:t,...r}=e,o=ze(jt,t);return i.jsx(S.button,{type:"button","aria-controls":o.contentId,"aria-expanded":o.open||!1,"data-state":Ge(o.open),"data-disabled":o.disabled?"":void 0,disabled:o.disabled,...r,ref:n,onClick:j(e.onClick,o.onOpenToggle)})});_t.displayName=jt;var Ke="CollapsibleContent",Mt=a.forwardRef((e,n)=>{const{forceMount:t,...r}=e,o=ze(Ke,e.__scopeCollapsible);return i.jsx(ae,{present:t||o.open,children:({present:s})=>i.jsx(Ia,{...r,ref:n,present:s})})});Mt.displayName=Ke;var Ia=a.forwardRef((e,n)=>{const{__scopeCollapsible:t,present:r,children:o,...s}=e,d=ze(Ke,t),[u,m]=a.useState(r),h=a.useRef(null),p=F(n,h),l=a.useRef(0),f=l.current,w=a.useRef(0),g=w.current,b=d.open||u,v=a.useRef(b),_=a.useRef(void 0);return a.useEffect(()=>{const y=requestAnimationFrame(()=>v.current=!1);return()=>cancelAnimationFrame(y)},[]),pe(()=>{const y=h.current;if(y){_.current=_.current||{transitionDuration:y.style.transitionDuration,animationName:y.style.animationName},y.style.transitionDuration="0s",y.style.animationName="none";const M=y.getBoundingClientRect();l.current=M.height,w.current=M.width,v.current||(y.style.transitionDuration=_.current.transitionDuration,y.style.animationName=_.current.animationName),m(r)}},[d.open,r]),i.jsx(S.div,{"data-state":Ge(d.open),"data-disabled":d.disabled?"":void 0,id:d.contentId,hidden:!b,...s,ref:p,style:{"--radix-collapsible-content-height":f?`${f}px`:void 0,"--radix-collapsible-content-width":g?`${g}px`:void 0,...e.style},children:b&&o})});function Ge(e){return e?"open":"closed"}var Ea=bt;function Aa({...e}){return i.jsx(Ea,{"data-slot":"collapsible",...e})}function Oa({...e}){return i.jsx(_t,{"data-slot":"collapsible-trigger",...e})}function Fa({...e}){return i.jsx(Mt,{"data-slot":"collapsible-content",...e})}const Ta=()=>{const{menuOpen:e}=xe(),{t:n}=ge();return c.jsx(Ut,{className:"border-border-alpha-light flex h-16 flex-row items-center justify-between gap-3 border-b py-2",children:c.jsx(tn,{children:c.jsx(rn,{children:c.jsx("div",{className:"data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex items-center gap-2",children:_e.SIGNED&&c.jsxs(c.Fragment,{children:[c.jsxs("div",{className:"aspect-auto items-center justify-center rounded-lg flex gap-3",children:[c.jsx("img",{className:"size-12",src:e?_e.APP.LOGO:_e.APP.LOGO_MIN,alt:""}),e&&c.jsx("span",{className:"text-headline-sm-bold",children:n("TBM docs")})]}),e&&c.jsx(ur,{size:18,className:"ml-auto"})]})})})})})},Pa=(e,n)=>[{title:e("NM information"),items:[{title:e("RTSI"),url:"rtsi",icon:qe,isActive:n("rtsi"),children:[{title:e("Application"),url:"application"},{title:e("F-51 document"),url:"f-51"},{title:e("F-56 document"),url:"f-56"},{title:e("F-54 document"),url:"f-54"}]},{title:e("RH"),url:"rh",icon:mr,isActive:n("rtsi"),children:[{title:e("RH-143"),url:"rh-143"},{title:e("RH-091"),url:"rh-091"},{title:e("RH-218"),url:"rh-218"},{title:e("RH-249"),url:"rh-249"},{title:e("RH-251"),url:"rh-251"}]},{title:e("RTTSI"),url:"rttsi",icon:Er,isActive:n("rttsi")},{title:e("Operational work"),url:"operational-work",icon:jr,isActive:n("operational-work")},{title:e("Television"),url:"television",icon:Or,isActive:n("television")}]},{title:e("NM information"),items:[{title:e("RH-252"),url:"rh-252",icon:qe,isActive:n("rh-252"),children:[{title:e("A-Application"),url:"a-252"},{title:e("3.3 Application"),url:"rh-3_3"},{title:e("C Application"),url:"c-252"}]}]},{title:e("NM information"),items:[]},{title:e("Resource Database"),items:[{title:e("Channels(5_3)"),url:"channels-5_3",icon:ne,isActive:n("channels-5_3")},{title:e("Channels ID"),url:"channels-id",icon:ne,isActive:n("channels-id")},{title:e("Flows(5_1)"),url:"flows-5_1",icon:ne,isActive:n("flows-5_1")},{title:e("Flows ID"),url:"flows-id",icon:ne,isActive:n("flows-id")},{title:e("Card index"),url:"card-indexes",icon:ne,isActive:n("card-indexes")}]},{title:e("Administration"),items:[{title:e("Staff"),url:"staff",icon:rr,isActive:n("staff")},{title:e("Groups"),url:"groups",icon:Tr,isActive:n("groups")},{title:e("Settings"),url:"settings",icon:Sr,isActive:n("settings"),children:[{title:e("Roles"),url:"roles",icon:$r}]}]}],La=()=>{const{pathname:e}=St(),n=a.useCallback(o=>e.search(o)>-1,[e]),t=a.useCallback(o=>e.search(o)===0,[e]),r=a.useMemo(()=>e.split("/").filter(Boolean).pop(),[e]);return{isActive:n,isMainMenuActive:t,lastSegment:r}},za=()=>{const{t:e}=ge(),{isActive:n}=La();return{groups:a.useMemo(()=>Pa(e,n),[e,n])}};function Ka(){const{t:e,i18n:n}=ge(),{menuOpen:t}=xe();return c.jsxs(ja,{children:[c.jsx(_a,{asChild:!0,children:c.jsx(sn,{variant:t?"ghost":"tertiary",size:t?"default":"icon",className:G("p-0",!t&&"size-8"),children:t?c.jsxs(c.Fragment,{children:[n.language===X.UZ&&e("Uzbek"),n.language===X.EN&&e("English"),n.language===X.RU&&e("Russian"),c.jsx(gr,{className:"ml-auto"})]}):c.jsx(cn,{})})}),c.jsxs(wt,{align:"start",side:"right",sideOffset:0,children:[c.jsx(ue,{onClick:()=>n.changeLanguage(X.UZ),children:e("Uzbek")}),c.jsx(ue,{onClick:()=>n.changeLanguage(X.EN),children:e("English")}),c.jsx(ue,{onClick:()=>n.changeLanguage(X.RU),children:e("Russian")})]})]})}const Ga=()=>{var s;const{me:e}=Dt(),{logout:n}=or(),{t}=ge(),{menuOpen:r}=xe(),o=on();return c.jsxs(Vt,{className:G("flex flex-col items-center justify-between px-4 py-3",!r&&"p-3"),children:[c.jsxs("div",{className:"flex w-full items-center justify-between",children:[(o||r)&&c.jsxs("div",{className:"flex items-center gap-2",children:[c.jsx(cn,{size:16}),c.jsx("span",{className:"text-sm",children:t("Language")})]}),c.jsx(Ka,{})]}),c.jsxs("div",{className:"flex w-full items-center justify-between",children:[(o||r)&&c.jsxs("div",{className:"flex items-center gap-2",children:[c.jsx(kr,{size:16}),c.jsx("span",{className:"text-sm",children:t("Theme switch")})]}),c.jsx(ar,{className:G(!r&&"size-8 p-2")})]}),c.jsxs("div",{className:G("flex w-full items-center justify-between border-t border-gray-300/30 pt-2",!(o||r)&&"flex-col-reverse gap-2"),children:[c.jsxs("div",{className:"flex items-center gap-2",children:[c.jsx(ke,{show:!(o||r),side:"right",align:"end",content:c.jsxs(c.Fragment,{children:[c.jsx("h5",{className:"text-base font-semibold",children:e==null?void 0:e.first_name}),c.jsx("h6",{className:"text-xs font-medium",children:e==null?void 0:e.role.name})]}),children:c.jsx(gn,{className:G("rounded-lg border",!r&&"h-7 w-7"),children:c.jsx(yn,{children:(s=e==null?void 0:e.first_name)==null?void 0:s.slice(0,2)})})}),(o||r)&&c.jsxs("div",{children:[c.jsx("h5",{className:"text-sm font-semibold md:text-base",children:e==null?void 0:e.first_name}),c.jsx("h6",{className:"text-xs font-medium",children:e==null?void 0:e.role.name})]})]}),c.jsx("div",{className:G("flex items-center gap-2",!(o||r)&&"flex-col gap-2"),children:c.jsx(ke,{side:"right",align:"end",content:t("Logout"),children:c.jsx(sn,{asChild:!0,variant:"tertiary",size:"icon",className:G("px-3",!r&&"size-8 p-2"),onClick:()=>n(),children:c.jsx(Nr,{size:18})})})})]})]})},Ua=()=>{const{groups:e}=za(),{menuOpen:n}=xe(),t=on();return c.jsxs(Bt,{collapsible:"icon",children:[c.jsx(Ta,{}),c.jsx(Ht,{children:e.map(({title:r,items:o},s)=>c.jsx(qt,{className:"px-0",children:c.jsxs(Xt,{className:"space-y-2",children:[r?n&&c.jsx(Zt,{className:"text-secondary uppercase",children:r}):!!s&&c.jsx(Wt,{className:"bg-item-tertiary mx-0 h-1"}),c.jsx(tn,{className:"px-2",children:o.map((d,u)=>{var m;return c.jsx(Aa,{asChild:!0,defaultOpen:!!d.isActive,className:"group/collapsible",children:c.jsx(rn,{children:d.children?c.jsxs(c.Fragment,{children:[c.jsx(Oa,{asChild:!0,children:c.jsxs(He,{tooltip:d.title,isActive:d.isActive,children:[d.icon&&c.jsx(d.icon,{})||!(n||t)&&c.jsx(Xe,{}),c.jsx("span",{children:d.title}),c.jsx(vr,{className:"ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"})]})}),c.jsx(Fa,{children:c.jsx(Yt,{children:(m=d.children)==null?void 0:m.map((h,p)=>c.jsx(Jt,{children:c.jsx(Qt,{asChild:!0,isActive:h.isActive,children:c.jsxs("div",{className:"flex items-center py-1",children:[h.icon&&c.jsx(h.icon,{}),c.jsx(Be,{to:[d.url,h.url].join("/"),children:c.jsx("span",{children:h.title})})]})})},p))})})]}):c.jsx(ke,{show:!(n||t),side:"right",align:"end",content:c.jsx("span",{children:d.title}),children:c.jsx(He,{className:"h-10",asChild:!0,isActive:d.isActive,children:c.jsxs(Be,{to:d.url,children:[d.icon&&c.jsx(d.icon,{})||!(n||t)&&c.jsx(Xe,{}),c.jsx("span",{children:d.title})]})})})})},u)})})]})},s))}),c.jsx(Ga,{})]})};sr(ir,cr,lr);const ds=()=>c.jsxs(er,{children:[c.jsx(Ua,{}),c.jsx(nr,{className:"bg-bg flex h-screen flex-1 flex-col overflow-auto",children:c.jsx($t,{})})]});export{ds as default};
+ */ const uo = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]],
+  po = $e("chevron-right", uo);
+var Se = ["Enter", " "],
+  fo = ["ArrowDown", "PageUp", "Home"],
+  kn = ["ArrowUp", "PageDown", "End"],
+  mo = [...fo, ...kn],
+  ho = { ltr: [...Se, "ArrowRight"], rtl: [...Se, "ArrowLeft"] },
+  vo = { ltr: ["ArrowLeft"], rtl: ["ArrowRight"] },
+  ie = "Menu",
+  [re, xo, go] = wn(ie),
+  [U, Cn] = Z(ie, [go, nn, jn]),
+  ye = nn(),
+  Sn = jn(),
+  [yo, V] = U(ie),
+  [wo, ce] = U(ie),
+  Dn = (e) => {
+    const {
+        __scopeMenu: n,
+        open: t = !1,
+        children: r,
+        dir: o,
+        onOpenChange: s,
+        modal: d = !0,
+      } = e,
+      u = ye(n),
+      [m, h] = a.useState(null),
+      p = a.useRef(!1),
+      l = ve(s),
+      f = en(o);
+    return (
+      a.useEffect(() => {
+        const w = () => {
+            ((p.current = !0),
+              document.addEventListener("pointerdown", g, {
+                capture: !0,
+                once: !0,
+              }),
+              document.addEventListener("pointermove", g, {
+                capture: !0,
+                once: !0,
+              }));
+          },
+          g = () => (p.current = !1);
+        return (
+          document.addEventListener("keydown", w, { capture: !0 }),
+          () => {
+            (document.removeEventListener("keydown", w, { capture: !0 }),
+              document.removeEventListener("pointerdown", g, { capture: !0 }),
+              document.removeEventListener("pointermove", g, { capture: !0 }));
+          }
+        );
+      }, []),
+      i.jsx(It, {
+        ...u,
+        children: i.jsx(yo, {
+          scope: n,
+          open: t,
+          onOpenChange: l,
+          content: m,
+          onContentChange: h,
+          children: i.jsx(wo, {
+            scope: n,
+            onClose: a.useCallback(() => l(!1), [l]),
+            isUsingKeyboardRef: p,
+            dir: f,
+            modal: d,
+            children: r,
+          }),
+        }),
+      })
+    );
+  };
+Dn.displayName = ie;
+var bo = "MenuAnchor",
+  Ee = a.forwardRef((e, n) => {
+    const { __scopeMenu: t, ...r } = e,
+      o = ye(t);
+    return i.jsx(Et, { ...o, ...r, ref: n });
+  });
+Ee.displayName = bo;
+var Ae = "MenuPortal",
+  [jo, $n] = U(Ae, { forceMount: void 0 }),
+  In = (e) => {
+    const { __scopeMenu: n, forceMount: t, children: r, container: o } = e,
+      s = V(Ae, n);
+    return i.jsx(jo, {
+      scope: n,
+      forceMount: t,
+      children: i.jsx(ae, {
+        present: t || s.open,
+        children: i.jsx(At, { asChild: !0, container: o, children: r }),
+      }),
+    });
+  };
+In.displayName = Ae;
+var $ = "MenuContent",
+  [_o, Oe] = U($),
+  En = a.forwardRef((e, n) => {
+    const t = $n($, e.__scopeMenu),
+      { forceMount: r = t.forceMount, ...o } = e,
+      s = V($, e.__scopeMenu),
+      d = ce($, e.__scopeMenu);
+    return i.jsx(re.Provider, {
+      scope: e.__scopeMenu,
+      children: i.jsx(ae, {
+        present: r || s.open,
+        children: i.jsx(re.Slot, {
+          scope: e.__scopeMenu,
+          children: d.modal
+            ? i.jsx(Mo, { ...o, ref: n })
+            : i.jsx(No, { ...o, ref: n }),
+        }),
+      }),
+    });
+  }),
+  Mo = a.forwardRef((e, n) => {
+    const t = V($, e.__scopeMenu),
+      r = a.useRef(null),
+      o = F(n, r);
+    return (
+      a.useEffect(() => {
+        const s = r.current;
+        if (s) return Ot(s);
+      }, []),
+      i.jsx(Fe, {
+        ...e,
+        ref: o,
+        trapFocus: t.open,
+        disableOutsidePointerEvents: t.open,
+        disableOutsideScroll: !0,
+        onFocusOutside: j(e.onFocusOutside, (s) => s.preventDefault(), {
+          checkForDefaultPrevented: !1,
+        }),
+        onDismiss: () => t.onOpenChange(!1),
+      })
+    );
+  }),
+  No = a.forwardRef((e, n) => {
+    const t = V($, e.__scopeMenu);
+    return i.jsx(Fe, {
+      ...e,
+      ref: n,
+      trapFocus: !1,
+      disableOutsidePointerEvents: !1,
+      disableOutsideScroll: !1,
+      onDismiss: () => t.onOpenChange(!1),
+    });
+  }),
+  Ro = Re("MenuContent.ScrollLock"),
+  Fe = a.forwardRef((e, n) => {
+    const {
+        __scopeMenu: t,
+        loop: r = !1,
+        trapFocus: o,
+        onOpenAutoFocus: s,
+        onCloseAutoFocus: d,
+        disableOutsidePointerEvents: u,
+        onEntryFocus: m,
+        onEscapeKeyDown: h,
+        onPointerDownOutside: p,
+        onFocusOutside: l,
+        onInteractOutside: f,
+        onDismiss: w,
+        disableOutsideScroll: g,
+        ...b
+      } = e,
+      v = V($, t),
+      _ = ce($, t),
+      y = ye(t),
+      M = Sn(t),
+      D = xo(t),
+      [P, L] = a.useState(null),
+      z = a.useRef(null),
+      R = F(n, z, v.onContentChange),
+      B = a.useRef(0),
+      K = a.useRef(""),
+      W = a.useRef(0),
+      Y = a.useRef(null),
+      le = a.useRef("right"),
+      J = a.useRef(0),
+      E = g ? Pt : a.Fragment,
+      Nt = g ? { as: Ro, allowPinchZoom: !0 } : void 0,
+      Rt = (x) => {
+        var k, A;
+        const q = K.current + x,
+          Q = D().filter((O) => !O.disabled),
+          de = document.activeElement,
+          ee =
+            (k = Q.find((O) => O.ref.current === de)) == null
+              ? void 0
+              : k.textValue,
+          kt = Q.map((O) => O.textValue),
+          Ct = Po(kt, q, ee),
+          Ue =
+            (A = Q.find((O) => O.textValue === Ct)) == null
+              ? void 0
+              : A.ref.current;
+        ((function O(Ve) {
+          ((K.current = Ve),
+            window.clearTimeout(B.current),
+            Ve !== "" && (B.current = window.setTimeout(() => O(""), 1e3)));
+        })(q),
+          Ue && setTimeout(() => Ue.focus()));
+      };
+    (a.useEffect(() => () => window.clearTimeout(B.current), []), Tt());
+    const H = a.useCallback((x) => {
+      var k, A;
+      return (
+        le.current === ((k = Y.current) == null ? void 0 : k.side) &&
+        zo(x, (A = Y.current) == null ? void 0 : A.area)
+      );
+    }, []);
+    return i.jsx(_o, {
+      scope: t,
+      searchRef: K,
+      onItemEnter: a.useCallback(
+        (x) => {
+          H(x) && x.preventDefault();
+        },
+        [H],
+      ),
+      onItemLeave: a.useCallback(
+        (x) => {
+          var k;
+          H(x) || ((k = z.current) == null || k.focus(), L(null));
+        },
+        [H],
+      ),
+      onTriggerLeave: a.useCallback(
+        (x) => {
+          H(x) && x.preventDefault();
+        },
+        [H],
+      ),
+      pointerGraceTimerRef: W,
+      onPointerGraceIntentChange: a.useCallback((x) => {
+        Y.current = x;
+      }, []),
+      children: i.jsx(E, {
+        ...Nt,
+        children: i.jsx(Lt, {
+          asChild: !0,
+          trapped: o,
+          onMountAutoFocus: j(s, (x) => {
+            var k;
+            (x.preventDefault(),
+              (k = z.current) == null || k.focus({ preventScroll: !0 }));
+          }),
+          onUnmountAutoFocus: d,
+          children: i.jsx(zt, {
+            asChild: !0,
+            disableOutsidePointerEvents: u,
+            onEscapeKeyDown: h,
+            onPointerDownOutside: p,
+            onFocusOutside: l,
+            onInteractOutside: f,
+            onDismiss: w,
+            children: i.jsx(oo, {
+              asChild: !0,
+              ...M,
+              dir: _.dir,
+              orientation: "vertical",
+              loop: r,
+              currentTabStopId: P,
+              onCurrentTabStopIdChange: L,
+              onEntryFocus: j(m, (x) => {
+                _.isUsingKeyboardRef.current || x.preventDefault();
+              }),
+              preventScrollOnEntryFocus: !0,
+              children: i.jsx(Kt, {
+                role: "menu",
+                "aria-orientation": "vertical",
+                "data-state": Zn(v.open),
+                "data-radix-menu-content": "",
+                dir: _.dir,
+                ...y,
+                ...b,
+                ref: R,
+                style: { outline: "none", ...b.style },
+                onKeyDown: j(b.onKeyDown, (x) => {
+                  const k =
+                      x.target.closest("[data-radix-menu-content]") ===
+                      x.currentTarget,
+                    A = x.ctrlKey || x.altKey || x.metaKey,
+                    q = x.key.length === 1;
+                  k &&
+                    (x.key === "Tab" && x.preventDefault(),
+                    !A && q && Rt(x.key));
+                  const Q = z.current;
+                  if (x.target !== Q || !mo.includes(x.key)) return;
+                  x.preventDefault();
+                  const de = D()
+                    .filter((ee) => !ee.disabled)
+                    .map((ee) => ee.ref.current);
+                  (kn.includes(x.key) && de.reverse(), Fo(de));
+                }),
+                onBlur: j(e.onBlur, (x) => {
+                  x.currentTarget.contains(x.target) ||
+                    (window.clearTimeout(B.current), (K.current = ""));
+                }),
+                onPointerMove: j(
+                  e.onPointerMove,
+                  oe((x) => {
+                    const k = x.target,
+                      A = J.current !== x.clientX;
+                    if (x.currentTarget.contains(k) && A) {
+                      const q = x.clientX > J.current ? "right" : "left";
+                      ((le.current = q), (J.current = x.clientX));
+                    }
+                  }),
+                ),
+              }),
+            }),
+          }),
+        }),
+      }),
+    });
+  });
+En.displayName = $;
+var ko = "MenuGroup",
+  Te = a.forwardRef((e, n) => {
+    const { __scopeMenu: t, ...r } = e;
+    return i.jsx(S.div, { role: "group", ...r, ref: n });
+  });
+Te.displayName = ko;
+var Co = "MenuLabel",
+  An = a.forwardRef((e, n) => {
+    const { __scopeMenu: t, ...r } = e;
+    return i.jsx(S.div, { ...r, ref: n });
+  });
+An.displayName = Co;
+var me = "MenuItem",
+  Qe = "menu.itemSelect",
+  we = a.forwardRef((e, n) => {
+    const { disabled: t = !1, onSelect: r, ...o } = e,
+      s = a.useRef(null),
+      d = ce(me, e.__scopeMenu),
+      u = Oe(me, e.__scopeMenu),
+      m = F(n, s),
+      h = a.useRef(!1),
+      p = () => {
+        const l = s.current;
+        if (!t && l) {
+          const f = new CustomEvent(Qe, { bubbles: !0, cancelable: !0 });
+          (l.addEventListener(Qe, (w) => (r == null ? void 0 : r(w)), {
+            once: !0,
+          }),
+            Ft(l, f),
+            f.defaultPrevented ? (h.current = !1) : d.onClose());
+        }
+      };
+    return i.jsx(On, {
+      ...o,
+      ref: m,
+      disabled: t,
+      onClick: j(e.onClick, p),
+      onPointerDown: (l) => {
+        var f;
+        ((f = e.onPointerDown) == null || f.call(e, l), (h.current = !0));
+      },
+      onPointerUp: j(e.onPointerUp, (l) => {
+        var f;
+        h.current || (f = l.currentTarget) == null || f.click();
+      }),
+      onKeyDown: j(e.onKeyDown, (l) => {
+        const f = u.searchRef.current !== "";
+        t ||
+          (f && l.key === " ") ||
+          (Se.includes(l.key) && (l.currentTarget.click(), l.preventDefault()));
+      }),
+    });
+  });
+we.displayName = me;
+var On = a.forwardRef((e, n) => {
+    const { __scopeMenu: t, disabled: r = !1, textValue: o, ...s } = e,
+      d = Oe(me, t),
+      u = Sn(t),
+      m = a.useRef(null),
+      h = F(n, m),
+      [p, l] = a.useState(!1),
+      [f, w] = a.useState("");
+    return (
+      a.useEffect(() => {
+        const g = m.current;
+        g && w((g.textContent ?? "").trim());
+      }, [s.children]),
+      i.jsx(re.ItemSlot, {
+        scope: t,
+        disabled: r,
+        textValue: o ?? f,
+        children: i.jsx(ao, {
+          asChild: !0,
+          ...u,
+          focusable: !r,
+          children: i.jsx(S.div, {
+            role: "menuitem",
+            "data-highlighted": p ? "" : void 0,
+            "aria-disabled": r || void 0,
+            "data-disabled": r ? "" : void 0,
+            ...s,
+            ref: h,
+            onPointerMove: j(
+              e.onPointerMove,
+              oe((g) => {
+                r
+                  ? d.onItemLeave(g)
+                  : (d.onItemEnter(g),
+                    g.defaultPrevented ||
+                      g.currentTarget.focus({ preventScroll: !0 }));
+              }),
+            ),
+            onPointerLeave: j(
+              e.onPointerLeave,
+              oe((g) => d.onItemLeave(g)),
+            ),
+            onFocus: j(e.onFocus, () => l(!0)),
+            onBlur: j(e.onBlur, () => l(!1)),
+          }),
+        }),
+      })
+    );
+  }),
+  So = "MenuCheckboxItem",
+  Fn = a.forwardRef((e, n) => {
+    const { checked: t = !1, onCheckedChange: r, ...o } = e;
+    return i.jsx(Kn, {
+      scope: e.__scopeMenu,
+      checked: t,
+      children: i.jsx(we, {
+        role: "menuitemcheckbox",
+        "aria-checked": he(t) ? "mixed" : t,
+        ...o,
+        ref: n,
+        "data-state": Le(t),
+        onSelect: j(
+          o.onSelect,
+          () => (r == null ? void 0 : r(he(t) ? !0 : !t)),
+          { checkForDefaultPrevented: !1 },
+        ),
+      }),
+    });
+  });
+Fn.displayName = So;
+var Tn = "MenuRadioGroup",
+  [Do, $o] = U(Tn, { value: void 0, onValueChange: () => {} }),
+  Pn = a.forwardRef((e, n) => {
+    const { value: t, onValueChange: r, ...o } = e,
+      s = ve(r);
+    return i.jsx(Do, {
+      scope: e.__scopeMenu,
+      value: t,
+      onValueChange: s,
+      children: i.jsx(Te, { ...o, ref: n }),
+    });
+  });
+Pn.displayName = Tn;
+var Ln = "MenuRadioItem",
+  zn = a.forwardRef((e, n) => {
+    const { value: t, ...r } = e,
+      o = $o(Ln, e.__scopeMenu),
+      s = t === o.value;
+    return i.jsx(Kn, {
+      scope: e.__scopeMenu,
+      checked: s,
+      children: i.jsx(we, {
+        role: "menuitemradio",
+        "aria-checked": s,
+        ...r,
+        ref: n,
+        "data-state": Le(s),
+        onSelect: j(
+          r.onSelect,
+          () => {
+            var d;
+            return (d = o.onValueChange) == null ? void 0 : d.call(o, t);
+          },
+          { checkForDefaultPrevented: !1 },
+        ),
+      }),
+    });
+  });
+zn.displayName = Ln;
+var Pe = "MenuItemIndicator",
+  [Kn, Io] = U(Pe, { checked: !1 }),
+  Gn = a.forwardRef((e, n) => {
+    const { __scopeMenu: t, forceMount: r, ...o } = e,
+      s = Io(Pe, t);
+    return i.jsx(ae, {
+      present: r || he(s.checked) || s.checked === !0,
+      children: i.jsx(S.span, { ...o, ref: n, "data-state": Le(s.checked) }),
+    });
+  });
+Gn.displayName = Pe;
+var Eo = "MenuSeparator",
+  Un = a.forwardRef((e, n) => {
+    const { __scopeMenu: t, ...r } = e;
+    return i.jsx(S.div, {
+      role: "separator",
+      "aria-orientation": "horizontal",
+      ...r,
+      ref: n,
+    });
+  });
+Un.displayName = Eo;
+var Ao = "MenuArrow",
+  Vn = a.forwardRef((e, n) => {
+    const { __scopeMenu: t, ...r } = e,
+      o = ye(t);
+    return i.jsx(Gt, { ...o, ...r, ref: n });
+  });
+Vn.displayName = Ao;
+var Oo = "MenuSub",
+  [is, Bn] = U(Oo),
+  te = "MenuSubTrigger",
+  Hn = a.forwardRef((e, n) => {
+    const t = V(te, e.__scopeMenu),
+      r = ce(te, e.__scopeMenu),
+      o = Bn(te, e.__scopeMenu),
+      s = Oe(te, e.__scopeMenu),
+      d = a.useRef(null),
+      { pointerGraceTimerRef: u, onPointerGraceIntentChange: m } = s,
+      h = { __scopeMenu: e.__scopeMenu },
+      p = a.useCallback(() => {
+        (d.current && window.clearTimeout(d.current), (d.current = null));
+      }, []);
+    return (
+      a.useEffect(() => p, [p]),
+      a.useEffect(() => {
+        const l = u.current;
+        return () => {
+          (window.clearTimeout(l), m(null));
+        };
+      }, [u, m]),
+      i.jsx(Ee, {
+        asChild: !0,
+        ...h,
+        children: i.jsx(On, {
+          id: o.triggerId,
+          "aria-haspopup": "menu",
+          "aria-expanded": t.open,
+          "aria-controls": o.contentId,
+          "data-state": Zn(t.open),
+          ...e,
+          ref: an(n, o.onTriggerChange),
+          onClick: (l) => {
+            var f;
+            ((f = e.onClick) == null || f.call(e, l),
+              !(e.disabled || l.defaultPrevented) &&
+                (l.currentTarget.focus(), t.open || t.onOpenChange(!0)));
+          },
+          onPointerMove: j(
+            e.onPointerMove,
+            oe((l) => {
+              (s.onItemEnter(l),
+                !l.defaultPrevented &&
+                  !e.disabled &&
+                  !t.open &&
+                  !d.current &&
+                  (s.onPointerGraceIntentChange(null),
+                  (d.current = window.setTimeout(() => {
+                    (t.onOpenChange(!0), p());
+                  }, 100))));
+            }),
+          ),
+          onPointerLeave: j(
+            e.onPointerLeave,
+            oe((l) => {
+              var f, w;
+              p();
+              const g =
+                (f = t.content) == null ? void 0 : f.getBoundingClientRect();
+              if (g) {
+                const b = (w = t.content) == null ? void 0 : w.dataset.side,
+                  v = b === "right",
+                  _ = v ? -5 : 5,
+                  y = g[v ? "left" : "right"],
+                  M = g[v ? "right" : "left"];
+                (s.onPointerGraceIntentChange({
+                  area: [
+                    { x: l.clientX + _, y: l.clientY },
+                    { x: y, y: g.top },
+                    { x: M, y: g.top },
+                    { x: M, y: g.bottom },
+                    { x: y, y: g.bottom },
+                  ],
+                  side: b,
+                }),
+                  window.clearTimeout(u.current),
+                  (u.current = window.setTimeout(
+                    () => s.onPointerGraceIntentChange(null),
+                    300,
+                  )));
+              } else {
+                if ((s.onTriggerLeave(l), l.defaultPrevented)) return;
+                s.onPointerGraceIntentChange(null);
+              }
+            }),
+          ),
+          onKeyDown: j(e.onKeyDown, (l) => {
+            var f;
+            const w = s.searchRef.current !== "";
+            e.disabled ||
+              (w && l.key === " ") ||
+              (ho[r.dir].includes(l.key) &&
+                (t.onOpenChange(!0),
+                (f = t.content) == null || f.focus(),
+                l.preventDefault()));
+          }),
+        }),
+      })
+    );
+  });
+Hn.displayName = te;
+var qn = "MenuSubContent",
+  Xn = a.forwardRef((e, n) => {
+    const t = $n($, e.__scopeMenu),
+      { forceMount: r = t.forceMount, ...o } = e,
+      s = V($, e.__scopeMenu),
+      d = ce($, e.__scopeMenu),
+      u = Bn(qn, e.__scopeMenu),
+      m = a.useRef(null),
+      h = F(n, m);
+    return i.jsx(re.Provider, {
+      scope: e.__scopeMenu,
+      children: i.jsx(ae, {
+        present: r || s.open,
+        children: i.jsx(re.Slot, {
+          scope: e.__scopeMenu,
+          children: i.jsx(Fe, {
+            id: u.contentId,
+            "aria-labelledby": u.triggerId,
+            ...o,
+            ref: h,
+            align: "start",
+            side: d.dir === "rtl" ? "left" : "right",
+            disableOutsidePointerEvents: !1,
+            disableOutsideScroll: !1,
+            trapFocus: !1,
+            onOpenAutoFocus: (p) => {
+              var l;
+              (d.isUsingKeyboardRef.current &&
+                ((l = m.current) == null || l.focus()),
+                p.preventDefault());
+            },
+            onCloseAutoFocus: (p) => p.preventDefault(),
+            onFocusOutside: j(e.onFocusOutside, (p) => {
+              p.target !== u.trigger && s.onOpenChange(!1);
+            }),
+            onEscapeKeyDown: j(e.onEscapeKeyDown, (p) => {
+              (d.onClose(), p.preventDefault());
+            }),
+            onKeyDown: j(e.onKeyDown, (p) => {
+              var l;
+              const f = p.currentTarget.contains(p.target),
+                w = vo[d.dir].includes(p.key);
+              f &&
+                w &&
+                (s.onOpenChange(!1),
+                (l = u.trigger) == null || l.focus(),
+                p.preventDefault());
+            }),
+          }),
+        }),
+      }),
+    });
+  });
+Xn.displayName = qn;
+function Zn(e) {
+  return e ? "open" : "closed";
+}
+function he(e) {
+  return e === "indeterminate";
+}
+function Le(e) {
+  return he(e) ? "indeterminate" : e ? "checked" : "unchecked";
+}
+function Fo(e) {
+  const n = document.activeElement;
+  for (const t of e)
+    if (t === n || (t.focus(), document.activeElement !== n)) return;
+}
+function To(e, n) {
+  return e.map((t, r) => e[(n + r) % e.length]);
+}
+function Po(e, n, t) {
+  const r = n.length > 1 && Array.from(n).every((u) => u === n[0]) ? n[0] : n,
+    o = t ? e.indexOf(t) : -1;
+  let s = To(e, Math.max(o, 0));
+  r.length === 1 && (s = s.filter((u) => u !== t));
+  const d = s.find((u) => u.toLowerCase().startsWith(r.toLowerCase()));
+  return d !== t ? d : void 0;
+}
+function Lo(e, n) {
+  const { x: t, y: r } = e;
+  let o = !1;
+  for (let s = 0, d = n.length - 1; s < n.length; d = s++) {
+    const u = n[s],
+      m = n[d],
+      h = u.x,
+      p = u.y,
+      l = m.x,
+      f = m.y;
+    p > r != f > r && t < ((l - h) * (r - p)) / (f - p) + h && (o = !o);
+  }
+  return o;
+}
+function zo(e, n) {
+  if (!n) return !1;
+  const t = { x: e.clientX, y: e.clientY };
+  return Lo(t, n);
+}
+function oe(e) {
+  return (n) => (n.pointerType === "mouse" ? e(n) : void 0);
+}
+var Ko = Dn,
+  Go = Ee,
+  Uo = In,
+  Vo = En,
+  Bo = Te,
+  Ho = An,
+  qo = we,
+  Xo = Fn,
+  Zo = Pn,
+  Wo = zn,
+  Yo = Gn,
+  Jo = Un,
+  Qo = Vn,
+  ea = Hn,
+  na = Xn,
+  be = "DropdownMenu",
+  [ta, cs] = Z(be, [Cn]),
+  C = Cn(),
+  [ra, Wn] = ta(be),
+  Yn = (e) => {
+    const {
+        __scopeDropdownMenu: n,
+        children: t,
+        dir: r,
+        open: o,
+        defaultOpen: s,
+        onOpenChange: d,
+        modal: u = !0,
+      } = e,
+      m = C(n),
+      h = a.useRef(null),
+      [p, l] = De({ prop: o, defaultProp: s ?? !1, onChange: d, caller: be });
+    return i.jsx(ra, {
+      scope: n,
+      triggerId: fe(),
+      triggerRef: h,
+      contentId: fe(),
+      open: p,
+      onOpenChange: l,
+      onOpenToggle: a.useCallback(() => l((f) => !f), [l]),
+      modal: u,
+      children: i.jsx(Ko, {
+        ...m,
+        open: p,
+        onOpenChange: l,
+        dir: r,
+        modal: u,
+        children: t,
+      }),
+    });
+  };
+Yn.displayName = be;
+var Jn = "DropdownMenuTrigger",
+  Qn = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, disabled: r = !1, ...o } = e,
+      s = Wn(Jn, t),
+      d = C(t);
+    return i.jsx(Go, {
+      asChild: !0,
+      ...d,
+      children: i.jsx(S.button, {
+        type: "button",
+        id: s.triggerId,
+        "aria-haspopup": "menu",
+        "aria-expanded": s.open,
+        "aria-controls": s.open ? s.contentId : void 0,
+        "data-state": s.open ? "open" : "closed",
+        "data-disabled": r ? "" : void 0,
+        disabled: r,
+        ...o,
+        ref: an(n, s.triggerRef),
+        onPointerDown: j(e.onPointerDown, (u) => {
+          !r &&
+            u.button === 0 &&
+            u.ctrlKey === !1 &&
+            (s.onOpenToggle(), s.open || u.preventDefault());
+        }),
+        onKeyDown: j(e.onKeyDown, (u) => {
+          r ||
+            (["Enter", " "].includes(u.key) && s.onOpenToggle(),
+            u.key === "ArrowDown" && s.onOpenChange(!0),
+            ["Enter", " ", "ArrowDown"].includes(u.key) && u.preventDefault());
+        }),
+      }),
+    });
+  });
+Qn.displayName = Jn;
+var oa = "DropdownMenuPortal",
+  et = (e) => {
+    const { __scopeDropdownMenu: n, ...t } = e,
+      r = C(n);
+    return i.jsx(Uo, { ...r, ...t });
+  };
+et.displayName = oa;
+var nt = "DropdownMenuContent",
+  tt = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = Wn(nt, t),
+      s = C(t),
+      d = a.useRef(!1);
+    return i.jsx(Vo, {
+      id: o.contentId,
+      "aria-labelledby": o.triggerId,
+      ...s,
+      ...r,
+      ref: n,
+      onCloseAutoFocus: j(e.onCloseAutoFocus, (u) => {
+        var m;
+        (d.current || (m = o.triggerRef.current) == null || m.focus(),
+          (d.current = !1),
+          u.preventDefault());
+      }),
+      onInteractOutside: j(e.onInteractOutside, (u) => {
+        const m = u.detail.originalEvent,
+          h = m.button === 0 && m.ctrlKey === !0,
+          p = m.button === 2 || h;
+        (!o.modal || p) && (d.current = !0);
+      }),
+      style: {
+        ...e.style,
+        "--radix-dropdown-menu-content-transform-origin":
+          "var(--radix-popper-transform-origin)",
+        "--radix-dropdown-menu-content-available-width":
+          "var(--radix-popper-available-width)",
+        "--radix-dropdown-menu-content-available-height":
+          "var(--radix-popper-available-height)",
+        "--radix-dropdown-menu-trigger-width":
+          "var(--radix-popper-anchor-width)",
+        "--radix-dropdown-menu-trigger-height":
+          "var(--radix-popper-anchor-height)",
+      },
+    });
+  });
+tt.displayName = nt;
+var aa = "DropdownMenuGroup",
+  sa = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(Bo, { ...o, ...r, ref: n });
+  });
+sa.displayName = aa;
+var ia = "DropdownMenuLabel",
+  rt = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(Ho, { ...o, ...r, ref: n });
+  });
+rt.displayName = ia;
+var ca = "DropdownMenuItem",
+  ot = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(qo, { ...o, ...r, ref: n });
+  });
+ot.displayName = ca;
+var la = "DropdownMenuCheckboxItem",
+  at = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(Xo, { ...o, ...r, ref: n });
+  });
+at.displayName = la;
+var da = "DropdownMenuRadioGroup",
+  ua = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(Zo, { ...o, ...r, ref: n });
+  });
+ua.displayName = da;
+var pa = "DropdownMenuRadioItem",
+  st = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(Wo, { ...o, ...r, ref: n });
+  });
+st.displayName = pa;
+var fa = "DropdownMenuItemIndicator",
+  it = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(Yo, { ...o, ...r, ref: n });
+  });
+it.displayName = fa;
+var ma = "DropdownMenuSeparator",
+  ct = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(Jo, { ...o, ...r, ref: n });
+  });
+ct.displayName = ma;
+var ha = "DropdownMenuArrow",
+  va = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(Qo, { ...o, ...r, ref: n });
+  });
+va.displayName = ha;
+var xa = "DropdownMenuSubTrigger",
+  lt = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(ea, { ...o, ...r, ref: n });
+  });
+lt.displayName = xa;
+var ga = "DropdownMenuSubContent",
+  dt = a.forwardRef((e, n) => {
+    const { __scopeDropdownMenu: t, ...r } = e,
+      o = C(t);
+    return i.jsx(na, {
+      ...o,
+      ...r,
+      ref: n,
+      style: {
+        ...e.style,
+        "--radix-dropdown-menu-content-transform-origin":
+          "var(--radix-popper-transform-origin)",
+        "--radix-dropdown-menu-content-available-width":
+          "var(--radix-popper-available-width)",
+        "--radix-dropdown-menu-content-available-height":
+          "var(--radix-popper-available-height)",
+        "--radix-dropdown-menu-trigger-width":
+          "var(--radix-popper-anchor-width)",
+        "--radix-dropdown-menu-trigger-height":
+          "var(--radix-popper-anchor-height)",
+      },
+    });
+  });
+dt.displayName = ga;
+var ya = Yn,
+  wa = Qn,
+  ba = et,
+  ut = tt,
+  pt = rt,
+  ft = ot,
+  mt = at,
+  ht = st,
+  vt = it,
+  xt = ct,
+  gt = lt,
+  yt = dt;
+const ja = ya,
+  _a = wa,
+  Ma = a.forwardRef(({ className: e, inset: n, children: t, ...r }, o) =>
+    i.jsxs(gt, {
+      ref: o,
+      className: I(
+        "focus:bg-accent data-[state=open]:bg-accent flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none select-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+        n && "pl-8",
+        e,
+      ),
+      ...r,
+      children: [t, i.jsx(po, { className: "ml-auto" })],
+    }),
+  );
+Ma.displayName = gt.displayName;
+const Na = a.forwardRef(({ className: e, ...n }, t) =>
+  i.jsx(yt, {
+    ref: t,
+    className: I(
+      "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg",
+      e,
+    ),
+    ...n,
+  }),
+);
+Na.displayName = yt.displayName;
+const wt = a.forwardRef(({ className: e, sideOffset: n = 4, ...t }, r) =>
+  i.jsx(ba, {
+    children: i.jsx(ut, {
+      ref: r,
+      sideOffset: n,
+      className: I(
+        "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md",
+        e,
+      ),
+      ...t,
+    }),
+  }),
+);
+wt.displayName = ut.displayName;
+const ue = a.forwardRef(({ className: e, inset: n, ...t }, r) =>
+  i.jsx(ft, {
+    ref: r,
+    className: I(
+      "focus:bg-accent focus:text-accent-foreground relative flex cursor-default cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+      n && "pl-8",
+      e,
+    ),
+    ...t,
+  }),
+);
+ue.displayName = ft.displayName;
+const Ra = a.forwardRef(({ className: e, children: n, checked: t, ...r }, o) =>
+  i.jsxs(mt, {
+    ref: o,
+    className: I(
+      "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center rounded-sm py-1.5 pr-2 pl-8 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      e,
+    ),
+    checked: t,
+    ...r,
+    children: [
+      i.jsx("span", {
+        className:
+          "absolute left-2 flex h-3.5 w-3.5 items-center justify-center",
+        children: i.jsx(vt, { children: i.jsx(io, { className: "h-4 w-4" }) }),
+      }),
+      n,
+    ],
+  }),
+);
+Ra.displayName = mt.displayName;
+const ka = a.forwardRef(({ className: e, children: n, ...t }, r) =>
+  i.jsxs(ht, {
+    ref: r,
+    className: I(
+      "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center rounded-sm py-1.5 pr-2 pl-8 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      e,
+    ),
+    ...t,
+    children: [
+      i.jsx("span", {
+        className:
+          "absolute left-2 flex h-3.5 w-3.5 items-center justify-center",
+        children: i.jsx(vt, {
+          children: i.jsx(lo, { className: "h-2 w-2 fill-current" }),
+        }),
+      }),
+      n,
+    ],
+  }),
+);
+ka.displayName = ht.displayName;
+const Ca = a.forwardRef(({ className: e, inset: n, ...t }, r) =>
+  i.jsx(pt, {
+    ref: r,
+    className: I("px-2 py-1.5 text-sm font-semibold", n && "pl-8", e),
+    ...t,
+  }),
+);
+Ca.displayName = pt.displayName;
+const Sa = a.forwardRef(({ className: e, ...n }, t) =>
+  i.jsx(xt, { ref: t, className: I("bg-muted -mx-1 my-1 h-px", e), ...n }),
+);
+Sa.displayName = xt.displayName;
+var je = "Collapsible",
+  [Da, ls] = Z(je),
+  [$a, ze] = Da(je),
+  bt = a.forwardRef((e, n) => {
+    const {
+        __scopeCollapsible: t,
+        open: r,
+        defaultOpen: o,
+        disabled: s,
+        onOpenChange: d,
+        ...u
+      } = e,
+      [m, h] = De({ prop: r, defaultProp: o ?? !1, onChange: d, caller: je });
+    return i.jsx($a, {
+      scope: t,
+      disabled: s,
+      contentId: fe(),
+      open: m,
+      onOpenToggle: a.useCallback(() => h((p) => !p), [h]),
+      children: i.jsx(S.div, {
+        "data-state": Ge(m),
+        "data-disabled": s ? "" : void 0,
+        ...u,
+        ref: n,
+      }),
+    });
+  });
+bt.displayName = je;
+var jt = "CollapsibleTrigger",
+  _t = a.forwardRef((e, n) => {
+    const { __scopeCollapsible: t, ...r } = e,
+      o = ze(jt, t);
+    return i.jsx(S.button, {
+      type: "button",
+      "aria-controls": o.contentId,
+      "aria-expanded": o.open || !1,
+      "data-state": Ge(o.open),
+      "data-disabled": o.disabled ? "" : void 0,
+      disabled: o.disabled,
+      ...r,
+      ref: n,
+      onClick: j(e.onClick, o.onOpenToggle),
+    });
+  });
+_t.displayName = jt;
+var Ke = "CollapsibleContent",
+  Mt = a.forwardRef((e, n) => {
+    const { forceMount: t, ...r } = e,
+      o = ze(Ke, e.__scopeCollapsible);
+    return i.jsx(ae, {
+      present: t || o.open,
+      children: ({ present: s }) => i.jsx(Ia, { ...r, ref: n, present: s }),
+    });
+  });
+Mt.displayName = Ke;
+var Ia = a.forwardRef((e, n) => {
+  const { __scopeCollapsible: t, present: r, children: o, ...s } = e,
+    d = ze(Ke, t),
+    [u, m] = a.useState(r),
+    h = a.useRef(null),
+    p = F(n, h),
+    l = a.useRef(0),
+    f = l.current,
+    w = a.useRef(0),
+    g = w.current,
+    b = d.open || u,
+    v = a.useRef(b),
+    _ = a.useRef(void 0);
+  return (
+    a.useEffect(() => {
+      const y = requestAnimationFrame(() => (v.current = !1));
+      return () => cancelAnimationFrame(y);
+    }, []),
+    pe(() => {
+      const y = h.current;
+      if (y) {
+        ((_.current = _.current || {
+          transitionDuration: y.style.transitionDuration,
+          animationName: y.style.animationName,
+        }),
+          (y.style.transitionDuration = "0s"),
+          (y.style.animationName = "none"));
+        const M = y.getBoundingClientRect();
+        ((l.current = M.height),
+          (w.current = M.width),
+          v.current ||
+            ((y.style.transitionDuration = _.current.transitionDuration),
+            (y.style.animationName = _.current.animationName)),
+          m(r));
+      }
+    }, [d.open, r]),
+    i.jsx(S.div, {
+      "data-state": Ge(d.open),
+      "data-disabled": d.disabled ? "" : void 0,
+      id: d.contentId,
+      hidden: !b,
+      ...s,
+      ref: p,
+      style: {
+        "--radix-collapsible-content-height": f ? `${f}px` : void 0,
+        "--radix-collapsible-content-width": g ? `${g}px` : void 0,
+        ...e.style,
+      },
+      children: b && o,
+    })
+  );
+});
+function Ge(e) {
+  return e ? "open" : "closed";
+}
+var Ea = bt;
+function Aa({ ...e }) {
+  return i.jsx(Ea, { "data-slot": "collapsible", ...e });
+}
+function Oa({ ...e }) {
+  return i.jsx(_t, { "data-slot": "collapsible-trigger", ...e });
+}
+function Fa({ ...e }) {
+  return i.jsx(Mt, { "data-slot": "collapsible-content", ...e });
+}
+const Ta = () => {
+    const { menuOpen: e } = xe(),
+      { t: n } = ge();
+    return c.jsx(Ut, {
+      className:
+        "border-border-alpha-light flex h-16 flex-row items-center justify-between gap-3 border-b py-2",
+      children: c.jsx(tn, {
+        children: c.jsx(rn, {
+          children: c.jsx("div", {
+            className:
+              "data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex items-center gap-2",
+            children:
+              _e.SIGNED &&
+              c.jsxs(c.Fragment, {
+                children: [
+                  c.jsxs("div", {
+                    className:
+                      "aspect-auto items-center justify-center rounded-lg flex gap-3",
+                    children: [
+                      c.jsx("img", {
+                        className: "size-12",
+                        src: e ? _e.APP.LOGO : _e.APP.LOGO_MIN,
+                        alt: "",
+                      }),
+                      e &&
+                        c.jsx("span", {
+                          className: "text-headline-sm-bold",
+                          children: n("TBM docs"),
+                        }),
+                    ],
+                  }),
+                  e && c.jsx(ur, { size: 18, className: "ml-auto" }),
+                ],
+              }),
+          }),
+        }),
+      }),
+    });
+  },
+  Pa = (e, n) => [
+    {
+      title: e("NM information"),
+      items: [
+        {
+          title: e("RTSI"),
+          url: "rtsi",
+          icon: qe,
+          isActive: n("rtsi"),
+          children: [
+            { title: e("Application"), url: "application" },
+            { title: e("F-51 document"), url: "f-51" },
+            { title: e("F-56 document"), url: "f-56" },
+            { title: e("F-54 document"), url: "f-54" },
+          ],
+        },
+        {
+          title: e("RH"),
+          url: "rh",
+          icon: mr,
+          isActive: n("rtsi"),
+          children: [
+            { title: e("RH-143"), url: "rh-143" },
+            { title: e("RH-091"), url: "rh-091" },
+            { title: e("RH-218"), url: "rh-218" },
+            { title: e("RH-249"), url: "rh-249" },
+            { title: e("RH-251"), url: "rh-251" },
+          ],
+        },
+        { title: e("RTTSI"), url: "rttsi", icon: Er, isActive: n("rttsi") },
+        {
+          title: e("Operational work"),
+          url: "operational-work",
+          icon: jr,
+          isActive: n("operational-work"),
+        },
+        {
+          title: e("Television"),
+          url: "television",
+          icon: Or,
+          isActive: n("television"),
+        },
+      ],
+    },
+    {
+      title: e("NM information"),
+      items: [
+        {
+          title: e("RH-252"),
+          url: "rh-252",
+          icon: qe,
+          isActive: n("rh-252"),
+          children: [
+            { title: e("A-Application"), url: "a-252" },
+            { title: e("3.3 Application"), url: "rh-3_3" },
+            { title: e("C Application"), url: "c-252" },
+          ],
+        },
+      ],
+    },
+    { title: e("NM information"), items: [] },
+    {
+      title: e("Resource Database"),
+      items: [
+        {
+          title: e("Channels(5_3)"),
+          url: "channels-5_3",
+          icon: ne,
+          isActive: n("channels-5_3"),
+        },
+        {
+          title: e("Channels ID"),
+          url: "channels-id",
+          icon: ne,
+          isActive: n("channels-id"),
+        },
+        {
+          title: e("Flows(5_1)"),
+          url: "flows-5_1",
+          icon: ne,
+          isActive: n("flows-5_1"),
+        },
+        {
+          title: e("Flows ID"),
+          url: "flows-id",
+          icon: ne,
+          isActive: n("flows-id"),
+        },
+        {
+          title: e("Card index"),
+          url: "card-indexes",
+          icon: ne,
+          isActive: n("card-indexes"),
+        },
+      ],
+    },
+    {
+      title: e("Administration"),
+      items: [
+        { title: e("Staff"), url: "staff", icon: rr, isActive: n("staff") },
+        { title: e("Groups"), url: "groups", icon: Tr, isActive: n("groups") },
+        {
+          title: e("Settings"),
+          url: "settings",
+          icon: Sr,
+          isActive: n("settings"),
+          children: [{ title: e("Roles"), url: "roles", icon: $r }],
+        },
+      ],
+    },
+  ],
+  La = () => {
+    const { pathname: e } = St(),
+      n = a.useCallback((o) => e.search(o) > -1, [e]),
+      t = a.useCallback((o) => e.search(o) === 0, [e]),
+      r = a.useMemo(() => e.split("/").filter(Boolean).pop(), [e]);
+    return { isActive: n, isMainMenuActive: t, lastSegment: r };
+  },
+  za = () => {
+    const { t: e } = ge(),
+      { isActive: n } = La();
+    return { groups: a.useMemo(() => Pa(e, n), [e, n]) };
+  };
+function Ka() {
+  const { t: e, i18n: n } = ge(),
+    { menuOpen: t } = xe();
+  return c.jsxs(ja, {
+    children: [
+      c.jsx(_a, {
+        asChild: !0,
+        children: c.jsx(sn, {
+          variant: t ? "ghost" : "tertiary",
+          size: t ? "default" : "icon",
+          className: G("p-0", !t && "size-8"),
+          children: t
+            ? c.jsxs(c.Fragment, {
+                children: [
+                  n.language === X.UZ && e("Uzbek"),
+                  n.language === X.EN && e("English"),
+                  n.language === X.RU && e("Russian"),
+                  c.jsx(gr, { className: "ml-auto" }),
+                ],
+              })
+            : c.jsx(cn, {}),
+        }),
+      }),
+      c.jsxs(wt, {
+        align: "start",
+        side: "right",
+        sideOffset: 0,
+        children: [
+          c.jsx(ue, {
+            onClick: () => n.changeLanguage(X.UZ),
+            children: e("Uzbek"),
+          }),
+          c.jsx(ue, {
+            onClick: () => n.changeLanguage(X.EN),
+            children: e("English"),
+          }),
+          c.jsx(ue, {
+            onClick: () => n.changeLanguage(X.RU),
+            children: e("Russian"),
+          }),
+        ],
+      }),
+    ],
+  });
+}
+const Ga = () => {
+    var s;
+    const { me: e } = Dt(),
+      { logout: n } = or(),
+      { t } = ge(),
+      { menuOpen: r } = xe(),
+      o = on();
+    return c.jsxs(Vt, {
+      className: G(
+        "flex flex-col items-center justify-between px-4 py-3",
+        !r && "p-3",
+      ),
+      children: [
+        c.jsxs("div", {
+          className: "flex w-full items-center justify-between",
+          children: [
+            (o || r) &&
+              c.jsxs("div", {
+                className: "flex items-center gap-2",
+                children: [
+                  c.jsx(cn, { size: 16 }),
+                  c.jsx("span", {
+                    className: "text-sm",
+                    children: t("Language"),
+                  }),
+                ],
+              }),
+            c.jsx(Ka, {}),
+          ],
+        }),
+        c.jsxs("div", {
+          className: "flex w-full items-center justify-between",
+          children: [
+            (o || r) &&
+              c.jsxs("div", {
+                className: "flex items-center gap-2",
+                children: [
+                  c.jsx(kr, { size: 16 }),
+                  c.jsx("span", {
+                    className: "text-sm",
+                    children: t("Theme switch"),
+                  }),
+                ],
+              }),
+            c.jsx(ar, { className: G(!r && "size-8 p-2") }),
+          ],
+        }),
+        c.jsxs("div", {
+          className: G(
+            "flex w-full items-center justify-between border-t border-gray-300/30 pt-2",
+            !(o || r) && "flex-col-reverse gap-2",
+          ),
+          children: [
+            c.jsxs("div", {
+              className: "flex items-center gap-2",
+              children: [
+                c.jsx(ke, {
+                  show: !(o || r),
+                  side: "right",
+                  align: "end",
+                  content: c.jsxs(c.Fragment, {
+                    children: [
+                      c.jsx("h5", {
+                        className: "text-base font-semibold",
+                        children: e == null ? void 0 : e.first_name,
+                      }),
+                      c.jsx("h6", {
+                        className: "text-xs font-medium",
+                        children: e == null ? void 0 : e.role.name,
+                      }),
+                    ],
+                  }),
+                  children: c.jsx(gn, {
+                    className: G("rounded-lg border", !r && "h-7 w-7"),
+                    children: c.jsx(yn, {
+                      children:
+                        (s = e == null ? void 0 : e.first_name) == null
+                          ? void 0
+                          : s.slice(0, 2),
+                    }),
+                  }),
+                }),
+                (o || r) &&
+                  c.jsxs("div", {
+                    children: [
+                      c.jsx("h5", {
+                        className: "text-sm font-semibold md:text-base",
+                        children: e == null ? void 0 : e.first_name,
+                      }),
+                      c.jsx("h6", {
+                        className: "text-xs font-medium",
+                        children: e == null ? void 0 : e.role.name,
+                      }),
+                    ],
+                  }),
+              ],
+            }),
+            c.jsx("div", {
+              className: G(
+                "flex items-center gap-2",
+                !(o || r) && "flex-col gap-2",
+              ),
+              children: c.jsx(ke, {
+                side: "right",
+                align: "end",
+                content: t("Logout"),
+                children: c.jsx(sn, {
+                  asChild: !0,
+                  variant: "tertiary",
+                  size: "icon",
+                  className: G("px-3", !r && "size-8 p-2"),
+                  onClick: () => n(),
+                  children: c.jsx(Nr, { size: 18 }),
+                }),
+              }),
+            }),
+          ],
+        }),
+      ],
+    });
+  },
+  Ua = () => {
+    const { groups: e } = za(),
+      { menuOpen: n } = xe(),
+      t = on();
+    return c.jsxs(Bt, {
+      collapsible: "icon",
+      children: [
+        c.jsx(Ta, {}),
+        c.jsx(Ht, {
+          children: e.map(({ title: r, items: o }, s) =>
+            c.jsx(
+              qt,
+              {
+                className: "px-0",
+                children: c.jsxs(Xt, {
+                  className: "space-y-2",
+                  children: [
+                    r
+                      ? n &&
+                        c.jsx(Zt, {
+                          className: "text-secondary uppercase",
+                          children: r,
+                        })
+                      : !!s &&
+                        c.jsx(Wt, { className: "bg-item-tertiary mx-0 h-1" }),
+                    c.jsx(tn, {
+                      className: "px-2",
+                      children: o.map((d, u) => {
+                        var m;
+                        return c.jsx(
+                          Aa,
+                          {
+                            asChild: !0,
+                            defaultOpen: !!d.isActive,
+                            className: "group/collapsible",
+                            children: c.jsx(rn, {
+                              children: d.children
+                                ? c.jsxs(c.Fragment, {
+                                    children: [
+                                      c.jsx(Oa, {
+                                        asChild: !0,
+                                        children: c.jsxs(He, {
+                                          tooltip: d.title,
+                                          isActive: d.isActive,
+                                          children: [
+                                            (d.icon && c.jsx(d.icon, {})) ||
+                                              (!(n || t) && c.jsx(Xe, {})),
+                                            c.jsx("span", {
+                                              children: d.title,
+                                            }),
+                                            c.jsx(vr, {
+                                              className:
+                                                "ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90",
+                                            }),
+                                          ],
+                                        }),
+                                      }),
+                                      c.jsx(Fa, {
+                                        children: c.jsx(Yt, {
+                                          children:
+                                            (m = d.children) == null
+                                              ? void 0
+                                              : m.map((h, p) =>
+                                                  c.jsx(
+                                                    Jt,
+                                                    {
+                                                      children: c.jsx(Qt, {
+                                                        asChild: !0,
+                                                        isActive: h.isActive,
+                                                        children: c.jsxs(
+                                                          "div",
+                                                          {
+                                                            className:
+                                                              "flex items-center py-1",
+                                                            children: [
+                                                              h.icon &&
+                                                                c.jsx(
+                                                                  h.icon,
+                                                                  {},
+                                                                ),
+                                                              c.jsx(Be, {
+                                                                to: [
+                                                                  d.url,
+                                                                  h.url,
+                                                                ].join("/"),
+                                                                children: c.jsx(
+                                                                  "span",
+                                                                  {
+                                                                    children:
+                                                                      h.title,
+                                                                  },
+                                                                ),
+                                                              }),
+                                                            ],
+                                                          },
+                                                        ),
+                                                      }),
+                                                    },
+                                                    p,
+                                                  ),
+                                                ),
+                                        }),
+                                      }),
+                                    ],
+                                  })
+                                : c.jsx(ke, {
+                                    show: !(n || t),
+                                    side: "right",
+                                    align: "end",
+                                    content: c.jsx("span", {
+                                      children: d.title,
+                                    }),
+                                    children: c.jsx(He, {
+                                      className: "h-10",
+                                      asChild: !0,
+                                      isActive: d.isActive,
+                                      children: c.jsxs(Be, {
+                                        to: d.url,
+                                        children: [
+                                          (d.icon && c.jsx(d.icon, {})) ||
+                                            (!(n || t) && c.jsx(Xe, {})),
+                                          c.jsx("span", { children: d.title }),
+                                        ],
+                                      }),
+                                    }),
+                                  }),
+                            }),
+                          },
+                          u,
+                        );
+                      }),
+                    }),
+                  ],
+                }),
+              },
+              s,
+            ),
+          ),
+        }),
+        c.jsx(Ga, {}),
+      ],
+    });
+  };
+sr(ir, cr, lr);
+const ds = () =>
+  c.jsxs(er, {
+    children: [
+      c.jsx(Ua, {}),
+      c.jsx(nr, {
+        className: "bg-bg flex h-screen flex-1 flex-col overflow-auto",
+        children: c.jsx($t, {}),
+      }),
+    ],
+  });
+export { ds as default };

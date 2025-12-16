@@ -1,1 +1,2 @@
-const _="channels";export{_ as C};
+const _ = "channels";
+export { _ as C };

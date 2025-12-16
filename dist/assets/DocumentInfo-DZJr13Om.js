@@ -1,12 +1,196 @@
-import{c as x,j as s,J as l,M as c}from"./index-ADhmmBpU.js";import{C as n,M as h}from"./MyAccordion-x3W9CRJW.js";import{u as j,c as r}from"./button-Bp2lHjov-bkEUXTzY.js";import{U as m}from"./user-D-Egm9vv.js";/**
+import { c as x, j as s, J as l, M as c } from "./index-ADhmmBpU.js";
+import { C as n, M as h } from "./MyAccordion-x3W9CRJW.js";
+import { u as j, c as r } from "./button-Bp2lHjov-bkEUXTzY.js";
+import { U as m } from "./user-D-Egm9vv.js";
+/**
  * @license lucide-react v0.535.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const o=[["path",{d:"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",key:"1a8usu"}],["path",{d:"m15 5 4 4",key:"1mk7zo"}]],v=x("pencil",o),y=({docType:d,onOpenChange:t,document:e})=>{const{t:a}=j();return s.jsxs("div",{className:`
+ */ const o = [
+    [
+      "path",
+      {
+        d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
+        key: "1a8usu",
+      },
+    ],
+    ["path", { d: "m15 5 4 4", key: "1mk7zo" }],
+  ],
+  v = x("pencil", o),
+  y = ({ docType: d, onOpenChange: t, document: e }) => {
+    const { t: a } = j();
+    return s.jsxs("div", {
+      className: `
             w-full xl:w-1/2 flex flex-col border rounded-lg
             xl:max-h-[80vh]
-          `,children:[s.jsxs("div",{className:`
+          `,
+      children: [
+        s.jsxs("div", {
+          className: `
               flex-1 overflow-y-auto p-4 space-y-4
               scrollbar-thin scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thumb-rounded-full
-            `,children:[s.jsxs("div",{children:[s.jsx("span",{className:"font-medium text-base",children:a("Ariza haqida")}),s.jsxs("div",{className:"border rounded-lg p-4 space-y-2 mt-2",children:[s.jsxs("div",{className:"grid grid-cols-2 gap-4 mb-4",children:[s.jsxs("div",{children:[s.jsx("div",{className:"text-xs mb-1",children:a("Ariza yuboruvchi")}),s.jsxs("div",{className:"flex items-center gap-2",children:[s.jsx("div",{className:"w-6 h-6 rounded-full flex items-center justify-center",children:s.jsx(m,{className:"size-5"})}),s.jsx("span",{className:"text-sm font-medium",children:e==null?void 0:e.creatorId.first_name})]})]}),s.jsxs("div",{children:[s.jsx("div",{className:"text-xs mb-1",children:a("Yuborilgan vaqt")}),s.jsx("div",{className:"text-sm",children:l(e==null?void 0:e.created_at,c)})]})]}),s.jsxs("div",{children:[s.jsx("div",{className:"text-xs mb-1",children:a("Hujjat turi")}),s.jsx("div",{className:"text-sm font-medium",children:d})]})]})]}),s.jsxs("div",{children:[s.jsx("div",{className:"font-medium text-base",children:a("Hujjat yuborilish tarixi")}),e==null?void 0:e.recipientIds.map(i=>s.jsxs("div",{className:"border rounded-lg p-2 mt-2",children:[s.jsxs("div",{className:"flex items-center justify-between",children:[s.jsxs("div",{className:"flex items-center gap-1",children:[s.jsx(n,{className:"size-7 text-white",fill:"green"}),s.jsx("span",{children:a("Hujjat yuborildi")})]}),s.jsx("span",{className:"text-body-sm-medium text-secondary",children:l(e==null?void 0:e.created_at,c)})]}),s.jsx(h,{title:s.jsxs("div",{className:"flex justify-between w-full cursor-pointer px-3",children:[s.jsxs("div",{children:[i.first_name," ",i.second_name]}),s.jsx("div",{children:"Izoh"})]}),children:s.jsx("div",{className:"space-y-1 text-sm text-gray-700 px-4 py-2",children:e==null?void 0:e.description})})]},i._id))]})]}),s.jsxs("div",{className:"border-t sticky bottom-0 p-3 flex justify-between",children:[s.jsx(r,{className:"bg-secondary",onClick:()=>t(!1),children:a("Yopish")}),s.jsxs("div",{className:"flex gap-2",children:[s.jsxs(r,{variant:"secondary",children:[s.jsx(v,{className:"size-3"})," ",a("Izoh yozish")]}),s.jsx(r,{variant:"secondary",children:a("Tahrirlash")})]})]})]})};export{y as D};
+            `,
+          children: [
+            s.jsxs("div", {
+              children: [
+                s.jsx("span", {
+                  className: "font-medium text-base",
+                  children: a("Ariza haqida"),
+                }),
+                s.jsxs("div", {
+                  className: "border rounded-lg p-4 space-y-2 mt-2",
+                  children: [
+                    s.jsxs("div", {
+                      className: "grid grid-cols-2 gap-4 mb-4",
+                      children: [
+                        s.jsxs("div", {
+                          children: [
+                            s.jsx("div", {
+                              className: "text-xs mb-1",
+                              children: a("Ariza yuboruvchi"),
+                            }),
+                            s.jsxs("div", {
+                              className: "flex items-center gap-2",
+                              children: [
+                                s.jsx("div", {
+                                  className:
+                                    "w-6 h-6 rounded-full flex items-center justify-center",
+                                  children: s.jsx(m, { className: "size-5" }),
+                                }),
+                                s.jsx("span", {
+                                  className: "text-sm font-medium",
+                                  children:
+                                    e == null ? void 0 : e.creatorId.first_name,
+                                }),
+                              ],
+                            }),
+                          ],
+                        }),
+                        s.jsxs("div", {
+                          children: [
+                            s.jsx("div", {
+                              className: "text-xs mb-1",
+                              children: a("Yuborilgan vaqt"),
+                            }),
+                            s.jsx("div", {
+                              className: "text-sm",
+                              children: l(e == null ? void 0 : e.created_at, c),
+                            }),
+                          ],
+                        }),
+                      ],
+                    }),
+                    s.jsxs("div", {
+                      children: [
+                        s.jsx("div", {
+                          className: "text-xs mb-1",
+                          children: a("Hujjat turi"),
+                        }),
+                        s.jsx("div", {
+                          className: "text-sm font-medium",
+                          children: d,
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+            s.jsxs("div", {
+              children: [
+                s.jsx("div", {
+                  className: "font-medium text-base",
+                  children: a("Hujjat yuborilish tarixi"),
+                }),
+                e == null
+                  ? void 0
+                  : e.recipientIds.map((i) =>
+                      s.jsxs(
+                        "div",
+                        {
+                          className: "border rounded-lg p-2 mt-2",
+                          children: [
+                            s.jsxs("div", {
+                              className: "flex items-center justify-between",
+                              children: [
+                                s.jsxs("div", {
+                                  className: "flex items-center gap-1",
+                                  children: [
+                                    s.jsx(n, {
+                                      className: "size-7 text-white",
+                                      fill: "green",
+                                    }),
+                                    s.jsx("span", {
+                                      children: a("Hujjat yuborildi"),
+                                    }),
+                                  ],
+                                }),
+                                s.jsx("span", {
+                                  className:
+                                    "text-body-sm-medium text-secondary",
+                                  children: l(
+                                    e == null ? void 0 : e.created_at,
+                                    c,
+                                  ),
+                                }),
+                              ],
+                            }),
+                            s.jsx(h, {
+                              title: s.jsxs("div", {
+                                className:
+                                  "flex justify-between w-full cursor-pointer px-3",
+                                children: [
+                                  s.jsxs("div", {
+                                    children: [
+                                      i.first_name,
+                                      " ",
+                                      i.second_name,
+                                    ],
+                                  }),
+                                  s.jsx("div", { children: "Izoh" }),
+                                ],
+                              }),
+                              children: s.jsx("div", {
+                                className:
+                                  "space-y-1 text-sm text-gray-700 px-4 py-2",
+                                children: e == null ? void 0 : e.description,
+                              }),
+                            }),
+                          ],
+                        },
+                        i._id,
+                      ),
+                    ),
+              ],
+            }),
+          ],
+        }),
+        s.jsxs("div", {
+          className: "border-t sticky bottom-0 p-3 flex justify-between",
+          children: [
+            s.jsx(r, {
+              className: "bg-secondary",
+              onClick: () => t(!1),
+              children: a("Yopish"),
+            }),
+            s.jsxs("div", {
+              className: "flex gap-2",
+              children: [
+                s.jsxs(r, {
+                  variant: "secondary",
+                  children: [
+                    s.jsx(v, { className: "size-3" }),
+                    " ",
+                    a("Izoh yozish"),
+                  ],
+                }),
+                s.jsx(r, { variant: "secondary", children: a("Tahrirlash") }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    });
+  };
+export { y as D };
