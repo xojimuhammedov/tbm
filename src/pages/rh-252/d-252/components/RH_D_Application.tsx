@@ -138,8 +138,7 @@ const RHDApplication = () => {
                     <Button
                         size={"sm"}
                         variant={"ghost"}
-                        type={"button"}
-                    >
+                        type={"button"}>
                         <ArrowLeftIcon />
                         {t("Back")}
                     </Button>
