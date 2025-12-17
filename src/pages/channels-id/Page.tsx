@@ -1,18 +1,20 @@
 import { useTranslation } from "react-i18next";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import { CirclePlusIcon } from "lucide-react";
+import { CirclePlusIcon, UploadIcon } from "lucide-react";
 import { CHANNELS_ID_QUERY_KEY } from "@/pages/channels-id/constants/channels.constants.ts";
 import { ChannelInterface } from "@/pages/channels-id/interfaces/channel.interface.ts";
 import useChannels from "@/pages/channels-id/hooks/useChannels.ts";
+import ImportChannelsModal from "./components/ImportChannelsModal";
 
 const Page = () => {
   const { t } = useTranslation();
+  const [importModalOpen, setImportModalOpen] = useState(false);
   const { loading, columns, dataSource, handleFilter, params, handleAdd } =
     useChannels();
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
@@ -29,10 +31,17 @@ const Page = () => {
   return (
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-        <Button size={"sm"} onClick={handleAdd}>
-          <CirclePlusIcon />
-          {t("Add new")}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
+            <UploadIcon className="size-4" />
+            {t("Import")}
+          </Button>
+
+          <Button size={"sm"} onClick={handleAdd}>
+            <CirclePlusIcon />
+            {t("Add new")}
+          </Button>
+        </div>
       </PageHeader>
 
       <PageWrapper>
@@ -51,6 +60,11 @@ const Page = () => {
           columns={columns}
         />
       </PageWrapper>
+
+      <ImportChannelsModal
+        open={importModalOpen}
+        onOpenChange={setImportModalOpen}
+      />
     </>
   );
 };

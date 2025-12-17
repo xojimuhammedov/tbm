@@ -37,12 +37,10 @@ const DApplicationView = ({
             overflow-visible
             xl:overflow-y-auto
             xl:max-h-[80vh]
-            scrollbar-thin scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thumb-rounded-full
-          "
+            scrollbar-thin scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thumb-rounded-full"
         >
           <F51Document document={document} />
         </div>
-
         <DocumentInfo
           docType={t("F51")}
           onOpenChange={onOpenChange}
