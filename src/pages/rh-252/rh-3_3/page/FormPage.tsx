@@ -8,24 +8,26 @@ import { useToast } from "@/shared/hooks/useToast";
 import { get } from "lodash";
 import URLS from "@/shared/constants/urls";
 import KEYS from "@/shared/constants/keys";
+import { useNavigate } from "react-router-dom";
 
 const Num3ApplicationPage = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const navigate = useNavigate()
 
   const form = useForm<any>({
     defaultValues: {
-      requestNumber: "",
-      APInput: "",
-      UBPInput: "",
+      request_number: "",
+      ap_input: "",
+      ubp_input: "",
+      action_type: ["create", "update"],
       data: [
         {
-          orderNumberAndDate: "",
-          specifiedDeadline: "",
-          actualCompletion: "",
-          responsibleExecutor: "",
-          customerDetails: "",
-          failureReason: "",
+          order_code: "",
+          execution_status: "",
+          responsible_executor: "",
+          customer_details: "",
+          failure_reason: "",
           comment: "",
         },
       ],
@@ -39,12 +41,11 @@ const Num3ApplicationPage = () => {
 
   const handleAppend = () => {
     append({
-      orderNumberAndDate: "",
-      specifiedDeadline: "",
-      actualCompletion: "",
-      responsibleExecutor: "",
-      customerDetails: "",
-      failureReason: "",
+      order_code: "",
+      execution_status: "",
+      responsible_executor: "",
+      customer_details: "",
+      failure_reason: "",
       comment: "",
     });
   };
@@ -62,6 +63,7 @@ const Num3ApplicationPage = () => {
       {
         onSuccess: () => {
           form.reset();
+          navigate("/rh-252/rh-3_3")
           toast({
             variant: "success",
             title: t(`Success`),
@@ -98,7 +100,7 @@ const Num3ApplicationPage = () => {
               <MyInput
                 control={form.control}
                 placeholder={t("")}
-                name={"requestNumber"}
+                name={"request_number"}
                 className="border border-t-0 border-l-0 border-r-0 rounded-none w-[100px]"
               />{" "}
               сон МАЪЛУМОТ
@@ -119,12 +121,6 @@ const Num3ApplicationPage = () => {
                 className="border border-gray-300 px-4 py-3 text-xs text-center"
               >
                 «ЎзТТБРМ» ДУК фармойишининг сони ва сана
-              </th>
-              <th
-                rowSpan={2}
-                className="border border-gray-300 px-4 py-3 text-xs text-center"
-              >
-                Фармойишда кўрсатилган бажариш муддати
               </th>
               <th
                 rowSpan={2}
@@ -166,48 +162,47 @@ const Num3ApplicationPage = () => {
                 </td>
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
-                    {...form.register(`data.${index}.orderNumberAndDate`)}
+                    name={`data.${index}.order_code`}
+                    control={form.control}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="Order #12345 - 2025-12-10"
                   />
                 </td>
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
-                    {...form.register(`data.${index}.specifiedDeadline`)}
-                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
-                    placeholder="2025-12-20"
-                  />
-                </td>
-                <td className="border border-gray-300 px-2 py-2">
-                  <MyInput
-                    {...form.register(`data.${index}.actualCompletion`)}
+                    name={`data.${index}.execution_status`}
+                    control={form.control}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="Completed"
                   />
                 </td>
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
-                    {...form.register(`data.${index}.responsibleExecutor`)}
+                    name={`data.${index}.responsible_executor`}
+                    control={form.control}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="John Doe"
                   />
                 </td>
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
-                    {...form.register(`data.${index}.customerDetails`)}
+                    name={`data.${index}.customer_details`}
+                    control={form.control}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="Customer ABC"
                   />
                 </td>
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
-                    {...form.register(`data.${index}.failureReason`)}
+                    name={`data.${index}.failure_reason`}
+                    control={form.control}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                   />
                 </td>
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
-                    {...form.register(`data.${index}.comment`)}
+                    name={`data.${index}.comment`}
+                    control={form.control}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="No issues"
                   />
@@ -240,12 +235,14 @@ const Num3ApplicationPage = () => {
         <div className="mt-4 text-sm">
           <MyInput
             placeholder={t("")}
-            {...form.register("APInput")}
+            name="ap_input"
+            control={form.control}
             label="АП номери, бажарувчининг исм-шарифи, фамилияси ва сана"
             className="w-1/3"
           />
           <MyInput
-            {...form.register("UBPInput")}
+            name="ubp_input"
+            control={form.control}
             label="УБП номери, бажарувчининг исм-шарифи, фамилияси ва сана"
             placeholder={t("")}
             className="w-1/3"

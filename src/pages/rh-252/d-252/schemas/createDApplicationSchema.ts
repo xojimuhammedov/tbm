@@ -5,7 +5,7 @@ export const createDApplicationSchema = (
   t: (...args: TranslationArgsType) => string,
 ) => {
   return z.object({
-    requestNumber: z
+    request_number: z
       .string()
       .min(1, { message: t("Majburiy maydon") }) // Required field
       .trim(),
@@ -21,7 +21,7 @@ export const createDApplicationSchema = (
       .string()
       .min(1, { message: t("Majburiy maydon") })
       .trim(),
-    actionType: z
+    action_type: z
       .array(z.string())
       .min(1, { message: t("Kamida bitta harakat turini tanlang") }),
   });

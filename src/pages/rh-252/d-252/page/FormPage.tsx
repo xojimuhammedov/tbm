@@ -9,15 +9,17 @@ import usePostQuery from "@/shared/hooks/query/usePostQuery.ts";
 import KEYS from "@/shared/constants/keys.ts";
 import URLS from "@/shared/constants/urls.ts";
 import { get } from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const RHDApplication = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const navigate = useNavigate()
 
   const form = useForm<any>({
     defaultValues: {
-      requestNumber: "",
-      actionType: ["create", "update"],
+      request_number: "",
+      action_type: ["create", "update"],
       sender: "",
       recipient: "",
       leader: "",
@@ -37,6 +39,7 @@ const RHDApplication = () => {
       {
         onSuccess: () => {
           form.reset();
+          navigate('/rh-252/d-252')
           toast({
             variant: "success",
             title: t(`Success`),
@@ -59,7 +62,7 @@ const RHDApplication = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="max-w-4xl mx-auto p-8 bg-white font-serif text-black">
+        <div className="max-w-4xl mx-auto p-8 bg-white text-black">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold">RH 45-252:2013</h1>
             <p className="text-lg mt-4">D илова</p>
@@ -101,7 +104,7 @@ const RHDApplication = () => {
                 <MyInput
                   control={form.control}
                   placeholder={t("")}
-                  name={"requestNumber"}
+                  name={"request_number"}
                   className="border border-t-0 border-l-0 border-r-0 rounded-none"
                 />
               </div>

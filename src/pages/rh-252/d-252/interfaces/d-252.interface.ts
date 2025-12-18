@@ -1,10 +1,10 @@
 export interface DApplicationInterface {
   _id: string;
   id: string;
-  actionType: string[];
+  action_type: string[];
   leader: string;
   recipient: string;
-  requestNumber: string;
+  request_number: string;
   sender: string;
   created_at: string;
 }

@@ -5,23 +5,19 @@ export const createFApplicationSchema = (
   t: (...args: TranslationArgsType) => string,
 ) => {
   return z.object({
-    requestNumber: z
+    request_number: z
       .string()
       .min(1, { message: t("Majburiy maydon") })
       .trim(),
-    sender: z
+    ubp_input: z
       .string()
       .min(1, { message: t("Majburiy maydon") })
       .trim(),
-    recipient: z
+    ap_input: z
       .string()
       .min(1, { message: t("Majburiy maydon") })
       .trim(),
-    leader: z
-      .string()
-      .min(1, { message: t("Majburiy maydon") })
-      .trim(),
-    actionType: z
+    action_type: z
       .array(z.string())
       .min(1, { message: t("Kamida bitta harakat turini tanlang") }),
   });

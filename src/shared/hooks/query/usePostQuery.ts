@@ -20,16 +20,21 @@ type PostVariables = {
 
 type PostResponse = AxiosResponse<{ message?: string }>;
 
-const API_PREFIX = import.meta.env.VITE_BASE_URL;
+const API_PREFIX = "/api";
 
 const normalizeUrl = (url: string | Array<string | number>) => {
-  if (Array.isArray(url)) {
-    return [API_PREFIX, ...url]
-      .map((segment) => String(segment).replace(/^\/+/, "").replace(/\/+$/, ""))
-      .join("/")
-      .replace(/\/{2,}/g, "/");
+  const segments = Array.isArray(url) ? url : [url];
+
+  const normalized = segments
+    .map((segment) => String(segment).replace(/^\/+|\/+$/g, ""))
+    .filter(Boolean);
+
+  // agar allaqachon api bo‘lsa, qayta qo‘shmaymiz
+  if (normalized[0] === "api") {
+    return "/" + normalized.join("/");
   }
-  return url;
+
+  return "/" + [API_PREFIX.replace(/^\/+|\/+$/g, ""), ...normalized].join("/");
 };
 
 const postRequest = (

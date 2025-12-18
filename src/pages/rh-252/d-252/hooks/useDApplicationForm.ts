@@ -28,7 +28,7 @@ const useDApplicationForm = ({ id, onSave }: RequestFormProps) => {
   const form = useForm<DApplicationDto>({
     resolver: zodResolver(schema),
     defaultValues: {
-      actionType: [],
+      action_type: [],
     },
   });
 
@@ -69,11 +69,11 @@ const useDApplicationForm = ({ id, onSave }: RequestFormProps) => {
 
     if (item) {
       form.reset({
-        requestNumber: item.requestNumber,
+        request_number: item.request_number,
         sender: item.sender,
         recipient: item.recipient,
         leader: item.leader,
-        actionType: item.actionType,
+        action_type: item.action_type,
       });
     }
   }, [query.data, form]);

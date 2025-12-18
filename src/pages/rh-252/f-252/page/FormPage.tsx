@@ -16,15 +16,15 @@ const RH_F_Application = () => {
 
   const form = useForm<any>({
     defaultValues: {
-      requestNumber: "",
-      actionType: ["create", "update"],
-      APInput: "",
-      UBPInput: "",
+      request_number: "",
+      action_type: ["create", "update"],
+      ap_input: "",
+      ubp_input: "",
       data: [
         {
-          orderNumberAndDate: "",
-          connectionEstablishedDate: "",
-          connectionRouteDetails: "",
+          order_code: "",
+          connection_established_date: "",
+          connection_route_details: "",
           comment: "",
         },
       ],
@@ -38,9 +38,9 @@ const RH_F_Application = () => {
 
   const handleAppend = () => {
     append({
-      orderNumberAndDate: "",
-      connectionEstablishedDate: "",
-      connectionRouteDetails: "",
+      order_code: "",
+      connection_established_date: "",
+      connection_route_details: "",
       comment: "",
     });
   };
@@ -97,7 +97,7 @@ const RH_F_Application = () => {
               <MyInput
                 control={form.control}
                 placeholder={t("")}
-                name={"requestNumber"}
+                name={"request_number"}
                 className="border border-t-0 border-l-0 border-r-0 rounded-none w-[100px]"
               />{" "}
               {t("сон МАЪЛУМОТ")}
@@ -148,7 +148,7 @@ const RH_F_Application = () => {
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
                     control={form.control}
-                    name={`data.${index}.orderNumberAndDate`}
+                    name={`data.${index}.order_code`}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="Order #12345 - 2025-12-10"
                   />
@@ -156,7 +156,7 @@ const RH_F_Application = () => {
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
                     control={form.control}
-                    name={`data.${index}.connectionEstablishedDate`}
+                    name={`data.${index}.connection_established_date`}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="2025-12-20"
                   />
@@ -164,7 +164,7 @@ const RH_F_Application = () => {
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
                     control={form.control}
-                    name={`data.${index}.connectionRouteDetails`}
+                    name={`data.${index}.connection_route_details`}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="Completed"
                   />
@@ -206,13 +206,13 @@ const RH_F_Application = () => {
           <MyInput
             placeholder={t("")}
             control={form.control}
-            name="APInput"
+            name="ap_input"
             label="АП номери, бажарувчининг исм-шарифи, фамилияси ва сана"
             className="w-1/3"
           />
           <MyInput
             control={form.control}
-            name="UBPInput"
+            name="ubp_input"
             label="УБП номери, бажарувчининг исм-шарифи, фамилияси ва сана"
             placeholder={t("")}
             className="w-1/3"

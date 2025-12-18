@@ -26,8 +26,8 @@ const createDApplicationColumns = (
   handleView: (id: string) => void,
 ): ColumnType<DApplicationInterface>[] => [
   {
-    key: "requestNumber",
-    dataIndex: "requestNumber",
+    key: "request_number",
+    dataIndex: "request_number",
     name: t("So'rov raqami"),
     render: (value) => <span className="font-medium">{value}</span>,
   },
@@ -47,8 +47,8 @@ const createDApplicationColumns = (
     name: t("Rahbar"),
   },
   {
-    key: "actionType",
-    dataIndex: "actionType",
+    key: "action_type",
+    dataIndex: "action_type",
     name: t("Harakat turi"),
     render: (types) => (
       <div className="flex flex-wrap gap-1">

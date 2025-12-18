@@ -4,7 +4,7 @@ import { dateFormatter } from "@/shared/utils/utils.ts";
 import { Badge } from "dgz-ui/badge";
 import { EditIcon, EyeIcon, Trash2Icon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
-import { DApplicationInterface } from "@/pages/rh-252/d-252/interfaces/d-252.interface.ts";
+import { Num3ApplicationInterface } from "../interfaces/Num3.interface";
 
 const getActionVariant = (type: string) => {
   switch (type) {
@@ -24,31 +24,26 @@ const createNum3ApplicationColumns = (
   handleEdit: (id: string) => void,
   handleDelete: (id: string) => void,
   handleView: (id: string) => void,
-): ColumnType<DApplicationInterface>[] => [
+): ColumnType<Num3ApplicationInterface>[] => [
   {
-    key: "requestNumber",
-    dataIndex: "requestNumber",
+    key: "request_number",
+    dataIndex: "request_number",
     name: t("So'rov raqami"),
     render: (value) => <span className="font-medium">{value}</span>,
   },
   {
-    key: "sender",
-    dataIndex: "sender",
+    key: "ap_input",
+    dataIndex: "ap_input",
     name: t("Yuboruvchi"),
   },
   {
-    key: "recipient",
-    dataIndex: "recipient",
+    key: "ubp_input",
+    dataIndex: "ubp_input",
     name: t("Qabul qiluvchi"),
   },
   {
-    key: "leader",
-    dataIndex: "leader",
-    name: t("Rahbar"),
-  },
-  {
-    key: "actionType",
-    dataIndex: "actionType",
+    key: "action_type",
+    dataIndex: "action_type",
     name: t("Harakat turi"),
     render: (types) => (
       <div className="flex flex-wrap gap-1">
@@ -63,12 +58,6 @@ const createNum3ApplicationColumns = (
         )}
       </div>
     ),
-  },
-  {
-    key: "created_at",
-    dataIndex: "created_at",
-    name: t("Yaratilgan vaqt"),
-    render: (val) => dateFormatter(val, DATE_TIME),
   },
   {
     key: "actions",

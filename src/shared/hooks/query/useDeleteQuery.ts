@@ -3,7 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-const deleteRequest = (url: string) => request.delete(url);
+const deleteRequest = (url: string) => {
+  const normalizedUrl = url.startsWith("/api")
+    ? url
+    : `/api${url.startsWith("/") ? "" : "/"}${url}`;
+
+  return request.delete(normalizedUrl);
+};
 
 const useDeleteQuery = ({ listKeyId }: any) => {
   const queryClient = useQueryClient();

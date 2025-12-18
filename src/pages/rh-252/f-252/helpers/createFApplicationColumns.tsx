@@ -26,29 +26,24 @@ const createFApplicationColumns = (
   handleView: (id: string) => void,
 ): ColumnType<FApplicationInterface>[] => [
   {
-    key: "requestNumber",
-    dataIndex: "requestNumber",
+    key: "request_number",
+    dataIndex: "request_number",
     name: t("So'rov raqami"),
     render: (value) => <span className="font-medium">{value}</span>,
   },
   {
     key: "sender",
-    dataIndex: "sender",
+    dataIndex: "ap_input",
     name: t("Yuboruvchi"),
   },
   {
     key: "recipient",
-    dataIndex: "recipient",
+    dataIndex: "ubp_input",
     name: t("Qabul qiluvchi"),
   },
   {
-    key: "leader",
-    dataIndex: "leader",
-    name: t("Rahbar"),
-  },
-  {
     key: "actionType",
-    dataIndex: "actionType",
+    dataIndex: "action_type",
     name: t("Harakat turi"),
     render: (types) => (
       <div className="flex flex-wrap gap-1">
@@ -63,12 +58,6 @@ const createFApplicationColumns = (
         )}
       </div>
     ),
-  },
-  {
-    key: "created_at",
-    dataIndex: "created_at",
-    name: t("Yaratilgan vaqt"),
-    render: (val) => dateFormatter(val, DATE_TIME),
   },
   {
     key: "actions",
