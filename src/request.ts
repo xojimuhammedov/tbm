@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 
 const request = axios.create({
   headers: {
-    "Content-Type": "application/json, multipart/form-data",
+    "Content-Type": "application/json",
   },
   baseURL: API_ROOT,
   params: {},

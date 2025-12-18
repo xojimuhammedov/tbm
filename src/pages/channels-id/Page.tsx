@@ -56,7 +56,7 @@ const Page = () => {
           onParamChange={handleFilter}
           rowKey={"_id"}
           dataSource={dataSource}
-          dataKey={"docs"}
+          dataKey={"data"}
           columns={columns}
         />
       </PageWrapper>

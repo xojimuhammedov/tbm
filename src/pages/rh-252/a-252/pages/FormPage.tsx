@@ -36,11 +36,7 @@ const RH231AFormPage = () => {
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs} />
       <PageWrapper>
-        <ApplicationDocumentForm
-          id={id}
-          onSave={() => navigate("/rtsi/application")}
-          onCancel={() => navigate("/rtsi/application")}
-        />
+        <ApplicationDocumentForm />
       </PageWrapper>
     </>
   );
