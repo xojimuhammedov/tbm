@@ -1,31 +1,30 @@
 import { useCallback, useMemo, useState } from "react";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { useTranslation } from "react-i18next";
-import { ApplicationDocumentInterface } from "@/pages/rtsi/application/interfaces/applicationDocument.interface.ts";
 import useLists from "@/shared/hooks/useLists.ts";
-import { APPLICATION_QUERY_KEY } from "@/pages/rtsi/application/constants/application.constants.ts";
 import { useNavigate } from "react-router-dom";
-import createApplicationColumns from "@/pages/rtsi/application/helpers/createApplicationColumns.tsx";
-import useApplicationDocument from "@/pages/rtsi/application/hooks/useApplicationDocument.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import useDelete from "@/shared/hooks/api/useDelete.ts";
 import { get } from "lodash";
+import URLS from "@/shared/constants/urls";
+import KEYS from "@/shared/constants/keys";
+import { OrderApplication } from "../interfaces/order.interface";
+import createOrderColumns from "../helpers/createApplicationColumns";
+import useOrderDocument from "./useApplicationDocument";
 
 const useApplicationDocuments = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [openView, setOpenView] = useState(false);
-  const [viewId, setViewId] = useState<
-    ApplicationDocumentInterface["_id"] | null
-  >(null);
-  const { removeWithConfirm } = useDelete([APPLICATION_QUERY_KEY]);
-  const { query, handleFilter, params } =
-    useLists<ApplicationDocumentInterface>({
-      url: [APPLICATION_QUERY_KEY],
-    });
+  const [viewId, setViewId] = useState<OrderApplication["_id"] | null>(null);
+  const { removeWithConfirm } = useDelete([KEYS.RH_Order_Application]);
+  const { query, handleFilter, params } = useLists<OrderApplication>({
+    url: [URLS.RH_Order_Application],
+    queryKey: [KEYS.RH_Order_Application],
+  });
 
-  const { applicationDocumentQuery } = useApplicationDocument(viewId as string);
+  const { applicationDocumentQuery } = useOrderDocument(viewId as string);
 
   const handleAdd = useCallback(() => {
     navigate("/rh-252/a-252/create");
@@ -49,7 +48,7 @@ const useApplicationDocuments = () => {
   }, []);
 
   const handleDelete = useCallback(
-    (id: ApplicationDocumentInterface["_id"]) => {
+    (id: OrderApplication["_id"]) => {
       removeWithConfirm(id)
         .then(() => {
           query.refetch();
@@ -72,19 +71,15 @@ const useApplicationDocuments = () => {
     [query, removeWithConfirm, t, toast],
   );
 
-  const columns: ColumnType<ApplicationDocumentInterface>[] = useMemo(
+  const columns: ColumnType<OrderApplication>[] = useMemo(
     () =>
-      createApplicationColumns(
+      createOrderColumns(
         t as unknown as (...args: TranslationArgsType) => string,
         handleEdit,
         handleDelete,
         handleView,
-        [APPLICATION_QUERY_KEY],
-        () => {
-          query.refetch();
-        },
       ),
-    [handleDelete, handleEdit, handleView, query, t],
+    [handleDelete, handleEdit, handleView, t],
   );
 
   return {

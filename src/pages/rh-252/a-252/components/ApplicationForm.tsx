@@ -1,4 +1,4 @@
-import { Form, MyInput } from "dgz-ui-shared/components/form";
+import { Form, MyInput, MySelect } from "dgz-ui-shared/components/form";
 import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import KEYS from "@/shared/constants/keys";
@@ -12,31 +12,60 @@ import { Button, cn } from "dgz-ui";
 import { ArrowLeftIcon, PlusSquare, Trash2 } from "lucide-react";
 import { request } from "@/request";
 import DynamicIdInput from "./DynamicDeleteInput";
+import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
+import { useNavigate } from "react-router-dom";
+
+export const selectType = [
+  {
+    id: 1,
+    label: "Tashkil etish",
+    value: "create",
+  },
+  {
+    id: 2,
+    label: "O'chirish",
+    value: "delete",
+  },
+  {
+    id: 3,
+    label: "Ko'chirish",
+    value: "update",
+  },
+];
 
 const ApplicationDocumentForm = () => {
   const [currentIds, setCurrentIds] = useState<string[]>([]);
+  const { staffOptions } = useStaffOptions();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useTranslation();
   const lastCheckedIds = useRef<Record<number, string>>({});
 
   const form = useForm<any>({
+    shouldUnregister: false,
     defaultValues: {
-      order_date: "",
       code: "",
+      order_date: "",
+      responsible: "",
+      from: "TBM",
       to: "",
-      count: 0,
-      rows: [],
+      count: "",
+      dead_line: "",
+      create: {
+        flow_ids: [],
+      },
+      actions: [],
     },
   });
 
   const { fields, replace, append, remove } = useFieldArray({
     control: form.control,
-    name: "rows",
+    name: "create.flow_ids",
   });
 
   const watchedRows = useWatch({
     control: form.control,
-    name: "rows",
+    name: "create.flow_ids",
   });
 
   const incrementId = (base: string, index: number) => {
@@ -47,12 +76,19 @@ const ApplicationDocumentForm = () => {
 
   const handleAddRow = () => {
     append({
-      id_number: "",
+      code: "",
       point_a: stationA || "",
       point_b: stationB || "",
+      port_a: "",
+      port_b: "",
+      device_a: "",
+      device_b: "",
       signal_level: "",
-      portA: "",
-      portB: "",
+      organization_order_number: "",
+      deciphering_order_number: "",
+      deciphering_archive: "",
+      organization_archive: "",
+      note: "",
       id_exist: null,
     });
   };
@@ -71,19 +107,33 @@ const ApplicationDocumentForm = () => {
   });
 
   const onSubmit = (data: any) => {
+    const payload = {
+      code: data.code,
+      order_date: data.order_date,
+      responsible: data.responsible,
+      from: data.from,
+      to: data.to,
+      count: data.count,
+      dead_line: data.dead_line,
+
+      create: {
+        flow_ids: data.create?.flow_ids?.map(
+          ({ id_exist, ...rest }: any) => rest,
+        ),
+      },
+      delete: {
+        flows_ids: currentIds,
+      },
+    };
     mutate(
       {
         url: URLS.RH_Order_Application,
-        attributes: {
-          delete: {
-            flow_ids: currentIds,
-          },
-          ...data,
-        },
+        attributes: payload,
       },
       {
         onSuccess: () => {
           form.reset();
+          navigate("/rh-252/a-252");
           toast({
             variant: "success",
             title: t(`Success`),
@@ -107,26 +157,28 @@ const ApplicationDocumentForm = () => {
     if (!count || !startId) return;
 
     const rows = Array.from({ length: count }).map((_, i) => ({
-      id_number: incrementId(startId, i),
+      code: incrementId(startId, i),
       point_a: stationA || "",
       point_b: stationB || "",
       signal_level: "",
-      portA: "",
-      portB: "",
+      port_a: "",
+      port_b: "",
+      device_a: "",
+      device_b: "",
       id_exist: null,
     }));
 
     replace(rows);
 
     rows.forEach((row, index) => {
-      checkIdExist(row.id_number, index);
+      checkIdExist(row.code, index);
     });
   };
 
   useEffect(() => {
     fields.forEach((_, i) => {
-      form.setValue(`rows.${i}.point_a`, stationA || "");
-      form.setValue(`rows.${i}.point_b`, stationB || "");
+      form.setValue(`create.flow_ids.${i}.point_a`, stationA || "");
+      form.setValue(`create.flow_ids.${i}.point_b`, stationB || "");
     });
   }, [stationA, stationB]);
 
@@ -134,23 +186,21 @@ const ApplicationDocumentForm = () => {
     if (!id) return;
 
     try {
-      const res = await request.get(`/api/flows-id/${id}`);
+      const res = await request.get(`/api/flows-id/check-duplicate/${id}`);
       const json = await res.data;
 
-      form.setValue(`rows.${index}.id_exist`, json?.data?.exist);
+      form.setValue(`create.flow_ids.${index}.id_exist`, json?.data?.exist);
     } catch (e) {
-      form.setValue(`rows.${index}.id_exist`, false);
+      form.setValue(`create.flow_ids.${index}.id_exist`, false);
     }
   };
 
   useEffect(() => {
     watchedRows?.forEach((row: any, index: any) => {
-      if (!row?.id_number) return;
-
-      // faqat o‘zgarganini tekshirish uchun
-      if (row.id_number !== lastCheckedIds.current[index]) {
-        lastCheckedIds.current[index] = row.id_number;
-        checkIdExist(row.id_number, index);
+      if (!row?.code) return;
+      if (row.code !== lastCheckedIds.current[index]) {
+        lastCheckedIds.current[index] = row.code;
+        checkIdExist(row.code, index);
       }
     });
   }, [watchedRows]);
@@ -218,7 +268,7 @@ const ApplicationDocumentForm = () => {
             </p>
           </div>
 
-          <div className="text-lg leading-relaxed mb-10 text-justify">
+          <div className="text-lg leading-relaxed text-justify">
             <p className="mb-4 flex flex-wrap items-end">
               “O‘zTTBRM” DUK mintaqaviy boshqaruv bog‘lamasining 2-oktabrdagi
               18-bildirgisiga binoan “O‘zbektelekom” G‘arbiy filialiga tegishli
@@ -232,36 +282,70 @@ const ApplicationDocumentForm = () => {
               tarmoqdan o‘chirilganligi tasdiqlansin va texnologik hujjatlarga
               tegishli o‘zgartirishlar kiritilsin:
             </p>
-            <DynamicIdInput
-              onIdsChange={(ids) => {
-                setCurrentIds(ids);
-              }}
-              initialIds={[]}
+          </div>
+
+          <div className="flex justify-end">
+            <MySelect
+              options={selectType}
+              placeholder={t("Channel")}
+              className="w-[290px]"
+              control={form.control}
+              name="actions"
+              isMulti
             />
           </div>
 
-          <div className="grid grid-cols-4 gap-4">
-            <MyInput
-              control={form.control}
-              name="point_a"
-              placeholder="A-stansiya"
-            />
-            <MyInput
-              control={form.control}
-              name="point_b"
-              placeholder="B-stansiya"
-            />
-            <MyInput control={form.control} name="count" placeholder="Count" />
-            <MyInput
-              control={form.control}
-              name="startId"
-              placeholder="Start ID (ID2345)"
-            />
+          <div className="mt-6 border p-4 rounded-xl">
+            {form.watch("actions")?.includes("delete") && (
+              <>
+                <DynamicIdInput
+                  onIdsChange={(ids) => {
+                    setCurrentIds(ids);
+                  }}
+                  initialIds={[]}
+                />
+              </>
+            )}
           </div>
-          <div className="flex justify-end">
-            <Button type="button" className="mt-4" onClick={handleGenerate}>
-              Yaratish
-            </Button>
+
+          <div className="mt-6 border p-4 rounded-lg">
+            {form.watch("actions")?.includes("create") && (
+              <>
+                <h3 className="font-semibold mb-2 mt-4">Tashkil etish</h3>
+
+                <div className="grid grid-cols-4 gap-4">
+                  <MyInput
+                    control={form.control}
+                    name={`point_a`}
+                    placeholder="A-stansiya"
+                  />
+                  <MyInput
+                    control={form.control}
+                    name={`point_b`}
+                    placeholder="B-stansiya"
+                  />
+                  <MyInput
+                    control={form.control}
+                    name={`count`}
+                    placeholder="Count"
+                  />
+                  <MyInput
+                    control={form.control}
+                    name={`startId`}
+                    placeholder="Start ID"
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <Button
+                    type="button"
+                    className="mt-4"
+                    onClick={handleGenerate}
+                  >
+                    Yaratish
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
 
           {fields.map((field, index) => {
@@ -270,15 +354,15 @@ const ApplicationDocumentForm = () => {
             return (
               <div
                 key={field.id}
-                className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-4 my-2 w-full items-center"
+                className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto] gap-4 my-2 w-full items-center"
               >
                 <MyInput
                   control={form.control}
-                  name={`rows.${index}.id_number`}
+                  name={`create.flow_ids.${index}.code`}
                   placeholder="ID Number"
                   className={cn(
                     "border border-t-0 border-l-0 border-r-0 rounded-none",
-                    form.watch(`rows.${index}.id_exist`) === true
+                    form.watch(`create.flow_ids.${index}.id_exist`) === true
                       ? "bg-red-100"
                       : "",
                   )}
@@ -286,22 +370,36 @@ const ApplicationDocumentForm = () => {
 
                 <MyInput
                   control={form.control}
-                  name={`rows.${index}.signal_level`}
+                  name={`create.flow_ids.${index}.signal_level`}
                   placeholder="Signal level"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
 
                 <MyInput
                   control={form.control}
-                  name={`rows.${index}.portA`}
+                  name={`create.flow_ids.${index}.port_a`}
                   placeholder="Port A"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
 
                 <MyInput
                   control={form.control}
-                  name={`rows.${index}.portB`}
+                  name={`create.flow_ids.${index}.port_b`}
                   placeholder="Port B"
+                  className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                />
+
+                <MyInput
+                  control={form.control}
+                  name={`create.flow_ids.${index}.device_a`}
+                  placeholder="Device A"
+                  className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                />
+
+                <MyInput
+                  control={form.control}
+                  name={`create.flow_ids.${index}.device_b`}
+                  placeholder="Device B"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
 
@@ -325,6 +423,16 @@ const ApplicationDocumentForm = () => {
               </div>
             );
           })}
+
+          <MySelect
+            control={form.control}
+            name={"responsible"}
+            options={staffOptions || []}
+            label={t("Yuboriladigan xodimlar")}
+            placeholder={t("Select staffs")}
+            isClearable
+            required
+          />
         </div>
 
         <FormContainerFooter>

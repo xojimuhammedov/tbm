@@ -11,8 +11,8 @@ const createFlowColumns = (
   handleEdit: (id: string) => void,
 ): ColumnType<FlowInterface>[] => [
   {
-    key: "id_number",
-    dataIndex: "id_number",
+    key: "code",
+    dataIndex: "code",
     name: t("ID nomer"),
   },
   {

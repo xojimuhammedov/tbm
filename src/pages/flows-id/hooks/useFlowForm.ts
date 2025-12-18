@@ -64,7 +64,7 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
     if (item) {
       form.reset({
         consumer_id_point_a: item.consumer_id_point_a,
-        id_number: item.id_number,
+        code: item.code,
         consumer_name_point_b: item.consumer_name_point_b,
         point_a: item.point_a,
         point_b: item.point_b,

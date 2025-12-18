@@ -4,7 +4,7 @@ import { config } from "@/shared/utils/config.ts";
 
 export const createFlowSchema = (t: (...args: TranslationArgsType) => string) =>
   z.object({
-    id_number: z.string().nonempty(
+    code: z.string().nonempty(
       t("required {{field}}", {
         field: t("Column 1"),
         ns: config.LANG.NS.VALIDATION,

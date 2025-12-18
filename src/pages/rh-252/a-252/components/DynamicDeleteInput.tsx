@@ -56,6 +56,7 @@ const DynamicIdInput: React.FC<IdInputProps> = ({
 
   return (
     <div className="w-full">
+      <h2 className="text-xl font-semibold">O'chirish to'g'risida</h2>
       <label className="block text-sm font-medium text-gray-700 mb-2">
         ID lar (Enter bosib yangi qator qo'shing)
       </label>

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PageWrapper } from "@/shared/components/containers/page";
@@ -8,7 +8,6 @@ import ApplicationDocumentForm from "@/pages/rh-252/a-252/components/Application
 
 const RH231AFormPage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(

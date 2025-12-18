@@ -4,13 +4,26 @@ import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { Button } from "dgz-ui/button";
 import { CirclePlusIcon } from "lucide-react";
-import ApplicationDocumentView from "@/pages/rh-252/a-252/components/ApplicationDocumentView.tsx";
 import useApplicationDocuments from "@/pages/rh-252/a-252/hooks/useApplicationDocuments.ts";
+import { PageWrapper } from "@/shared/components/containers/page";
+import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
+import { DataTable } from "dgz-ui-shared/components/datatable";
+import { OrderApplication } from "./interfaces/order.interface";
+import ApplicationDocumentView from "./components/ApplicationDocumentView";
 
 const Page = () => {
   const { t } = useTranslation();
-  const { handleAdd, currentItem, handleCloseView, openView } =
-    useApplicationDocuments();
+  const {
+    handleAdd,
+    loading,
+    params,
+    dataSource,
+    handleFilter,
+    columns,
+    currentItem,
+    handleCloseView,
+    openView,
+  } = useApplicationDocuments();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
@@ -42,11 +55,8 @@ const Page = () => {
           {t("Add new")}
         </Button>
       </PageHeader>
-      {/* <PageWrapper>
-        <DataTable<
-          ApplicationDocumentInterface,
-          PaginationInterface<ApplicationDocumentInterface>
-        >
+      <PageWrapper>
+        <DataTable<OrderApplication, PaginationInterface<OrderApplication>>
           tableKey={"application-documents"}
           hasNumbers
           hasSearch
@@ -59,7 +69,7 @@ const Page = () => {
           dataKey={"docs"}
           columns={columns}
         />
-      </PageWrapper> */}
+      </PageWrapper>
     </>
   );
 };

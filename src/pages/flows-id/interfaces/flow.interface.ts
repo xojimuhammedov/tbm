@@ -1,7 +1,7 @@
 export interface FlowInterface {
   _id: string;
   consumer_id_point_a: string;
-  id_number: string;
+  code: string;
   interest_level: string;
   updated_at: string;
   consumer_name_point_b: string;

@@ -1,12 +1,12 @@
 import useGetOne from "@/shared/hooks/api/useGetOne.ts";
-import { APPLICATION_QUERY_KEY } from "@/pages/rtsi/application/constants/application.constants.ts";
-import { ApplicationDocumentInterface } from "@/pages/rtsi/application/interfaces/applicationDocument.interface.ts";
+import URLS from "@/shared/constants/urls";
+import { OrderApplication } from "../interfaces/order.interface";
 
-const useApplicationDocument = (id: string) => {
+const useOrderDocument = (id: string) => {
   const applicationDocumentQuery = useGetOne<{
-    data: ApplicationDocumentInterface;
+    data: OrderApplication;
   }>({
-    url: [APPLICATION_QUERY_KEY, id || ""],
+    url: [URLS.RH_Order_Application, id || ""],
     options: {
       enabled: Boolean(id),
     },
@@ -17,4 +17,4 @@ const useApplicationDocument = (id: string) => {
   };
 };
 
-export default useApplicationDocument;
+export default useOrderDocument;

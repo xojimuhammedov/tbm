@@ -28,7 +28,7 @@ const FlowForm = ({ id, onSave, readOnly = false }: FlowFormProps) => {
         <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
           <MyInput<FlowDto>
             control={form.control}
-            name={"id_number"}
+            name={"code"}
             label={t("ID nomer")}
             placeholder={t("Enter ID nomer")}
             required
