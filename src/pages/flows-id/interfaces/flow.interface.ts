@@ -13,4 +13,6 @@ export interface FlowInterface {
   note: string;
   deciphering_archive: string;
   organization_archive: string;
+  name_point_a?: string;
+  name_point_b?: string;
 }

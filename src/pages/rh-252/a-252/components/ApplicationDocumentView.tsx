@@ -15,8 +15,7 @@ const ApplicationDocumentView = ({
   onOpenChange,
   document,
 }: ApplicationDocumentViewProps) => {
-
-  console.log(document);
+ 
   return (
     <MyModal
       open={open}

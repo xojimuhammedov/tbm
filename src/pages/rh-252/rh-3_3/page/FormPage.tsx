@@ -17,6 +17,76 @@ const Num3ApplicationPage = () => {
     handleRemove,
     onSubmit,
   } = useNum3ApplicationForm();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const form = useForm<any>({
+    defaultValues: {
+      request_number: "",
+      ap_input: "",
+      ubp_input: "",
+      action_type: ["create", "update"],
+      data: [
+        {
+          order_code: "",
+          execution_status: "",
+          responsible_executor: "",
+          customer_details: "",
+          failure_reason: "",
+          comment: "",
+        },
+      ],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "data",
+  });
+
+  const handleAppend = () => {
+    append({
+      order_code: "",
+      execution_status: "",
+      responsible_executor: "",
+      customer_details: "",
+      failure_reason: "",
+      comment: "",
+    });
+  };
+
+  const { mutate } = usePostQuery({
+    listKeyId: KEYS.RH_B_Application,
+  });
+
+  const onSubmit = (data: any) => {
+    mutate(
+      {
+        url: URLS.RH_B_Application,
+        attributes: data,
+      },
+      {
+        onSuccess: () => {
+          form.reset();
+          navigate("/rh-252/rh-3_3");
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Application created successfully`),
+          });
+        },
+        onError: (error: any) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
+        },
+      },
+    );
+  };
 
   return (
       <Form {...form}>

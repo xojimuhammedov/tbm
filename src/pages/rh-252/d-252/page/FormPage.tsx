@@ -41,33 +41,29 @@ const RHDApplication = () => {
 
   const onSubmit = (data: DApplicationDto) => {
     mutate(
-        {
-          url: URLS.RH_D_Application,
-          attributes: data,
+      {
+        url: URLS.RH_D_Application,
+        attributes: data,
+      },
+      {
+        onSuccess: () => {
+          form.reset();
+          navigate("/rh-252/d-252");
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Application created successfully`),
+          });
         },
-        {
-          onSuccess: () => {
-            form.reset();
-            navigate("/rh-252/d-252");
-            toast({
-              variant: "success",
-              title: t(`Success`),
-              description: t(`Application created successfully`),
-            });
-          },
-          onError: (error: unknown) => {
-            toast({
-              variant: "destructive",
-              title: t(`${get(error, "response.statusText", "Error")}`),
-              description: t(
-                  `${get(
-                      error,
-                      "response.data.message",
-                      "An error occurred. Contact the administrator"
-                  )}`
-              ),
-            });
-          },
+        onError: (error: any) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
+        },
         }
     );
   };

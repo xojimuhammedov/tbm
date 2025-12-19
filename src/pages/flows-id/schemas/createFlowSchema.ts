@@ -10,13 +10,13 @@ export const createFlowSchema = (t: (...args: TranslationArgsType) => string) =>
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    consumer_id_point_a: z.string().nonempty(
+    name_point_a: z.string().nonempty(
       t("required {{field}}", {
         field: t("Consumer ID point A"),
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    consumer_name_point_b: z.string().nonempty(
+    name_point_b: z.string().nonempty(
       t("required {{field}}", {
         field: t("International"),
         ns: config.LANG.NS.VALIDATION,
