@@ -16,7 +16,8 @@ const useNum3Application = () => {
   const { toast } = useToast();
   const { removeWithConfirm } = useDelete([URLS.RH_B_Application]);
   const [viewModalOpen, setViewModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<Num3ApplicationInterface | null>(null);
+  const [selectedItem, setSelectedItem] =
+    useState<Num3ApplicationInterface | null>(null);
 
   const { query, handleFilter, params } = useLists<Num3ApplicationInterface>({
     url: [URLS.RH_B_Application],
@@ -24,25 +25,27 @@ const useNum3Application = () => {
   });
 
   const handleDelete = useCallback(
-      (id: string) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Success"),
-                description: t("Successfully deleted"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(`${get(error, "response.data.message", "An error occurred")}`),
-              });
-            });
-      },
-      [removeWithConfirm, t, toast, query],
+    (id: string) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Success"),
+            description: t("Successfully deleted"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred")}`,
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, t, toast, query],
   );
 
   const handleAdd = useCallback(() => {
@@ -50,30 +53,30 @@ const useNum3Application = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/rh-252/rh-3_3/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/rh-252/rh-3_3/edit/${id}`);
+    },
+    [navigate],
   );
   const handleView = useCallback(
-      (id: string) => {
-        const item = query.data?.docs?.find((d: any) => d._id === id);
-        if (item) {
-          setSelectedItem(item);
-          setViewModalOpen(true);
-        }
-      },
-      [query.data],
+    (id: string) => {
+      const item = query.data?.docs?.find((d: any) => d._id === id);
+      if (item) {
+        setSelectedItem(item);
+        setViewModalOpen(true);
+      }
+    },
+    [query.data],
   );
 
-    const handleCloseView = useCallback((open: boolean) => {
-        setViewModalOpen(open);
-        if (!open) setSelectedItem(null);
-    }, []);
+  const handleCloseView = useCallback((open: boolean) => {
+    setViewModalOpen(open);
+    if (!open) setSelectedItem(null);
+  }, []);
 
   const columns = useMemo(
-      () => createNum3ApplicationColumns(t, handleEdit, handleDelete, handleView),
-      [t, handleEdit, handleDelete, handleView],
+    () => createNum3ApplicationColumns(t, handleEdit, handleDelete, handleView),
+    [t, handleEdit, handleDelete, handleView],
   );
 
   return {
@@ -83,7 +86,7 @@ const useNum3Application = () => {
     params,
     handleFilter,
     handleAdd,
-      handleCloseView,
+    handleCloseView,
     viewModalOpen,
     setViewModalOpen,
     selectedItem,

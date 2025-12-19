@@ -20,12 +20,12 @@ const useNum3ApplicationForm = ({ onSave }: Num3ApplicationFormProps = {}) => {
 
   // Action options
   const actionOptions = useMemo(
-      () => [
-        { label: "Tashkil etish", value: "create" },
-        { label: "Ko'chirish", value: "update" },
-        { label: "O'chirish", value: "delete" },
-      ],
-      []
+    () => [
+      { label: "Tashkil etish", value: "create" },
+      { label: "Ko'chirish", value: "update" },
+      { label: "O'chirish", value: "delete" },
+    ],
+    [],
   );
 
   // Form initialization
@@ -34,7 +34,7 @@ const useNum3ApplicationForm = ({ onSave }: Num3ApplicationFormProps = {}) => {
       request_number: "",
       ap_input: "",
       ubp_input: "",
-      action_type: ["create", "update"],
+      action_type: [],
       data: [
         {
           order_code: "",
@@ -73,46 +73,46 @@ const useNum3ApplicationForm = ({ onSave }: Num3ApplicationFormProps = {}) => {
 
   // Handle remove row
   const handleRemove = useCallback(
-      (index: number) => {
-        if (fields.length > 1) {
-          remove(index);
-        }
-      },
-      [remove, fields.length]
+    (index: number) => {
+      if (fields.length > 1) {
+        remove(index);
+      }
+    },
+    [remove, fields.length],
   );
 
   // Submit handler
   const onSubmit = useCallback(
-      (data: any) => {
-        mutate(
-            {
-              url: URLS.RH_B_Application,
-              attributes: data,
-            },
-            {
-              onSuccess: () => {
-                form.reset();
-                navigate("/rh-252/rh-3_3");
-                toast({
-                  variant: "success",
-                  title: t(`Success`),
-                  description: t(`Application created successfully`),
-                });
-                onSave?.();
-              },
-              onError: (error: any) => {
-                toast({
-                  variant: "destructive",
-                  title: t(`${get(error, "response.statusText", "Error")}`),
-                  description: t(
-                      `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`
-                  ),
-                });
-              },
-            }
-        );
-      },
-      [mutate, form, navigate, toast, t, onSave]
+    (data: any) => {
+      mutate(
+        {
+          url: URLS.RH_B_Application,
+          attributes: data,
+        },
+        {
+          onSuccess: () => {
+            form.reset();
+            navigate("/rh-252/rh-3_3");
+            toast({
+              variant: "success",
+              title: t(`Success`),
+              description: t(`Application created successfully`),
+            });
+            onSave?.();
+          },
+          onError: (error: any) => {
+            toast({
+              variant: "destructive",
+              title: t(`${get(error, "response.statusText", "Error")}`),
+              description: t(
+                `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+              ),
+            });
+          },
+        },
+      );
+    },
+    [mutate, form, navigate, toast, t, onSave],
   );
 
   return {

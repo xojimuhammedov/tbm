@@ -29,27 +29,27 @@ const useFApplication = () => {
   }, [query.data, viewId]);
 
   const handleDelete = useCallback(
-      (id: string) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Success"),
-                description: t("Successfully deleted"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred")}`,
-                ),
-              });
-            });
-      },
-      [removeWithConfirm, t, toast, query],
+    (id: string) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Success"),
+            description: t("Successfully deleted"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred")}`,
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, t, toast, query],
   );
 
   const handleAdd = useCallback(() => {
@@ -57,10 +57,10 @@ const useFApplication = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/rh-252/f-252/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/rh-252/f-252/edit/${id}`);
+    },
+    [navigate],
   );
 
   const handleView = useCallback((docId: string) => {
@@ -74,8 +74,8 @@ const useFApplication = () => {
   }, []);
 
   const columns = useMemo(
-      () => createFApplicationColumns(t, handleEdit, handleDelete, handleView),
-      [t, handleEdit, handleDelete, handleView],
+    () => createFApplicationColumns(t, handleEdit, handleDelete, handleView),
+    [t, handleEdit, handleDelete, handleView],
   );
 
   return {

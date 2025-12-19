@@ -11,4 +11,3 @@ export interface DApplicationInterface {
   isDeleted: boolean;
   deletedAt: string | null;
 }
-

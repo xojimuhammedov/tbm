@@ -7,9 +7,7 @@ export interface FApplicationInterface {
   request_number: string;
   created_at: string;
   data: ConnectionData[];
-
 }
-
 
 export interface ConnectionData {
   order_code: string;
@@ -17,5 +15,3 @@ export interface ConnectionData {
   connection_route_details: string;
   comment: string;
 }
-
-

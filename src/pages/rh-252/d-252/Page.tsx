@@ -13,73 +13,72 @@ import { DApplicationInterface } from "@/pages/rh-252/d-252/interfaces/d-252.int
 import DApplicationView from "./components/DApplicationView";
 
 const DApplicationPage = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
+  const {
+    loading,
+    columns,
+    dataSource,
+    handleFilter,
+    params,
+    handleAdd,
+    openView,
+    handleCloseView,
+    currentItem,
+  } = useDApplication();
 
-    const {
-        loading,
-        columns,
-        dataSource,
-        handleFilter,
-        params,
-        handleAdd,
-        openView,
-        handleCloseView,
-        currentItem
-    } = useDApplication();
+  const breadcrumbs = useMemo<BreadcrumbInterface[]>(
+    () => [
+      {
+        name: t("RH-252"),
+        path: "/rh-252",
+        isActive: false,
+      },
+      {
+        name: t("D Application"),
+        path: "/rh-252/d-252",
+        isActive: true,
+      },
+    ],
+    [t],
+  );
 
-    const breadcrumbs = useMemo<BreadcrumbInterface[]>(
-        () => [
-            {
-                name: t("RH-252"),
-                path: "/rh-252",
-                isActive: false,
-            },
-            {
-                name: t("D Application"),
-                path: "/rh-252/d-252",
-                isActive: true,
-            },
-        ],
-        [t],
-    );
+  return (
+    <>
+      <DApplicationView
+        open={openView}
+        onOpenChange={handleCloseView}
+        document={currentItem}
+      />
 
-    return (
-        <>
-            <DApplicationView
-                open={openView}
-                onOpenChange={handleCloseView}
-                document={currentItem}
-            />
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+        <Button size={"sm"} onClick={handleAdd}>
+          <CirclePlusIcon className="mr-2 h-4 w-4" />
+          {t("Add new")}
+        </Button>
+      </PageHeader>
 
-            <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-                <Button size={"sm"} onClick={handleAdd}>
-                    <CirclePlusIcon className="mr-2 h-4 w-4" />
-                    {t("Add new")}
-                </Button>
-            </PageHeader>
-
-            <PageWrapper>
-                <DataTable<
-                        DApplicationInterface,
-                        PaginationInterface<DApplicationInterface>
-                    >
-                    tableKey={KEYS.RH_D_Application}
-                    hasNumbers
-                    hasSearch
-                    isStickyHeader
-                    hasPagination
-                    loading={loading}
-                    params={params}
-                    onParamChange={handleFilter}
-                    rowKey={"_id"}
-                    dataSource={dataSource}
-                    dataKey={"docs"}
-                    columns={columns}
-                />
-            </PageWrapper>
-        </>
-    );
+      <PageWrapper>
+        <DataTable<
+          DApplicationInterface,
+          PaginationInterface<DApplicationInterface>
+        >
+          tableKey={KEYS.RH_D_Application}
+          hasNumbers
+          hasSearch
+          isStickyHeader
+          hasPagination
+          loading={loading}
+          params={params}
+          onParamChange={handleFilter}
+          rowKey={"_id"}
+          dataSource={dataSource}
+          dataKey={"docs"}
+          columns={columns}
+        />
+      </PageWrapper>
+    </>
+  );
 };
 
 export default DApplicationPage;

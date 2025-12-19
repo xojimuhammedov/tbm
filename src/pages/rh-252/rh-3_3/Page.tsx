@@ -14,10 +14,17 @@ import BApplicationDocumentView from "@/pages/rh-252/rh-3_3/components/B-Applica
 
 const Num3ApplicationPage = () => {
   const { t } = useTranslation();
-  const { loading, columns, dataSource, handleFilter, params, handleAdd ,viewModalOpen,
-      handleCloseView,
-      selectedItem} =
-    useNum3Application();
+  const {
+    loading,
+    columns,
+    dataSource,
+    handleFilter,
+    params,
+    handleAdd,
+    viewModalOpen,
+    handleCloseView,
+    selectedItem,
+  } = useNum3Application();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
@@ -37,11 +44,11 @@ const Num3ApplicationPage = () => {
 
   return (
     <>
-        <BApplicationDocumentView
-            open={viewModalOpen}
-            onOpenChange={handleCloseView}
-            document={selectedItem}
-        />
+      <BApplicationDocumentView
+        open={viewModalOpen}
+        onOpenChange={handleCloseView}
+        document={selectedItem}
+      />
 
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <Button size={"sm"} onClick={handleAdd}>
