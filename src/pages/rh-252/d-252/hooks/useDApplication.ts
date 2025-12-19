@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { get } from "lodash";
@@ -14,6 +14,9 @@ const useDApplication = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [openView, setOpenView] = useState(false);
+  const [viewId, setViewId] = useState<string | null>(null);
+
   const { removeWithConfirm } = useDelete([URLS.RH_D_Application]);
 
   const { query, handleFilter, params } = useLists<DApplicationInterface>({
@@ -21,28 +24,32 @@ const useDApplication = () => {
     queryKey: [KEYS.RH_D_Application],
   });
 
+  const currentItem = useMemo(() => {
+    return query.data?.docs?.find((doc) => doc._id === viewId) || null;
+  }, [query.data, viewId]);
+
   const handleDelete = useCallback(
-    (id: string) => {
-      removeWithConfirm(id)
-        .then(() => {
-          query.refetch();
-          toast({
-            variant: "success",
-            title: t("Success"),
-            description: t("Successfully deleted"),
-          });
-        })
-        .catch((error) => {
-          toast({
-            variant: "destructive",
-            title: t(`${get(error, "response.statusText", "Error")}`),
-            description: t(
-              `${get(error, "response.data.message", "An error occurred")}`,
-            ),
-          });
-        });
-    },
-    [removeWithConfirm, t, toast, query],
+      (id: string) => {
+        removeWithConfirm(id)
+            .then(() => {
+              query.refetch();
+              toast({
+                variant: "success",
+                title: t("Success"),
+                description: t("Successfully deleted"),
+              });
+            })
+            .catch((error) => {
+              toast({
+                variant: "destructive",
+                title: t(`${get(error, "response.statusText", "Error")}`),
+                description: t(
+                    `${get(error, "response.data.message", "An error occurred")}`,
+                ),
+              });
+            });
+      },
+      [removeWithConfirm, t, toast, query],
   );
 
   const handleAdd = useCallback(() => {
@@ -50,22 +57,25 @@ const useDApplication = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-    (id: string) => {
-      navigate(`/rh-252/d-252/edit/${id}`);
-    },
-    [navigate],
+      (id: string) => {
+        navigate(`/rh-252/d-252/edit/${id}`);
+      },
+      [navigate],
   );
 
-  const handleView = useCallback(
-    (id: string) => {
-      navigate(`/rh-252/d-252/view/${id}`);
-    },
-    [navigate],
-  );
+  const handleView = useCallback((docId: string) => {
+    setViewId(docId);
+    setOpenView(true);
+  }, []);
+
+  const handleCloseView = useCallback((open: boolean) => {
+    setOpenView(open);
+    if (!open) setViewId(null);
+  }, []);
 
   const columns = useMemo(
-    () => createDApplicationColumns(t, handleEdit, handleDelete, handleView),
-    [t, handleEdit, handleDelete, handleView],
+      () => createDApplicationColumns(t, handleEdit, handleDelete, handleView),
+      [t, handleEdit, handleDelete, handleView],
   );
 
   return {
@@ -75,6 +85,9 @@ const useDApplication = () => {
     params,
     handleFilter,
     handleAdd,
+    openView,
+    currentItem,
+    handleCloseView,
   };
 };
 

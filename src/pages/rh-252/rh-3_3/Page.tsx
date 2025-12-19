@@ -10,10 +10,13 @@ import { CirclePlusIcon } from "lucide-react";
 import KEYS from "@/shared/constants/keys";
 import { Num3ApplicationInterface } from "./interfaces/Num3.interface";
 import useNum3Application from "@/pages/rh-252/rh-3_3/hooks/useNum3Application.ts";
+import BApplicationDocumentView from "@/pages/rh-252/rh-3_3/components/B-ApplicationDocumentView.tsx";
 
 const Num3ApplicationPage = () => {
   const { t } = useTranslation();
-  const { loading, columns, dataSource, handleFilter, params, handleAdd } =
+  const { loading, columns, dataSource, handleFilter, params, handleAdd ,viewModalOpen,
+      handleCloseView,
+      selectedItem} =
     useNum3Application();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
@@ -34,6 +37,12 @@ const Num3ApplicationPage = () => {
 
   return (
     <>
+        <BApplicationDocumentView
+            open={viewModalOpen}
+            onOpenChange={handleCloseView}
+            document={selectedItem}
+        />
+
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <Button size={"sm"} onClick={handleAdd}>
           <CirclePlusIcon className="mr-2 h-4 w-4" />

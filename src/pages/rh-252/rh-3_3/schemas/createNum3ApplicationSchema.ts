@@ -5,7 +5,7 @@ export const createNum3ApplicationSchema = (
   t: (...args: TranslationArgsType) => string,
 ) => {
   return z.object({
-    request_number: z
+    requestNumber: z
       .string()
       .min(1, { message: t("Majburiy maydon") })
       .trim(),
@@ -17,7 +17,7 @@ export const createNum3ApplicationSchema = (
       .string()
       .min(1, { message: t("Majburiy maydon") })
       .trim(),
-    action_type: z
+    actionType: z
       .array(z.string())
       .min(1, { message: t("Kamida bitta harakat turini tanlang") }),
   });

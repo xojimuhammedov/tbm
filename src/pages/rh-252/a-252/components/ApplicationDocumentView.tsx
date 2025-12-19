@@ -15,6 +15,7 @@ const ApplicationDocumentView = ({
   onOpenChange,
   document,
 }: ApplicationDocumentViewProps) => {
+ 
   return (
     <MyModal
       open={open}
@@ -61,7 +62,7 @@ const ApplicationDocumentView = ({
                 {document?.order_date
                   ? dateFormatter(document?.order_date, DATE)
                   : ""}
-              </span>
+              </span>q
             </div>
             <div className="font-bold underline">{document?.code}</div>
             <div className="border-2 border-black rounded-full px-4 py-1 flex items-center gap-2">

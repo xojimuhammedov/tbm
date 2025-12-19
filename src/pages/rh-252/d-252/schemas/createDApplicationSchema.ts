@@ -7,7 +7,7 @@ export const createDApplicationSchema = (
   return z.object({
     request_number: z
       .string()
-      .min(1, { message: t("Majburiy maydon") }) // Required field
+      .min(1, { message: t("Majburiy maydon") })
       .trim(),
     sender: z
       .string()
