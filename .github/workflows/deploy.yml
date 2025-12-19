@@ -9,74 +9,62 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
+      - name: 📦 Kodni yuklab olish
+        uses: actions/checkout@v4
+      
+      - name: 🧰 Node.js o'rnatish
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Install dependencies
+          cache: 'npm'  # ✨ Tezroq ishlashi uchun
+      
+      - name: 📥 Dependency o'rnatish
         run: npm ci
-
-      - name: Build
+      
+      - name: 🏗️ Build yaratish
         run: npm run build
-
-      - name: Upload build artifact
+      
+      - name: 📤 Kodni yuklash
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist
+          path: dist/  # dist/** o'rniga dist/ yetarli
           if-no-files-found: error
+          retention-days: 1  # ✨ Artifact faqat 1 kun saqlanadi
 
   deploy:
     name: Deploy to Server
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/main'
-
-    env:
-      REMOTE_PATH: ${{ secrets.SSH_TARGET }}
-      HOST: ${{ secrets.SSH_HOST }}
-      USERNAME: ${{ secrets.SSH_USERNAME }}
-      PORT: ${{ secrets.SSH_PORT }}
-      SSH_SECRET_KEY: ${{ secrets.SSH_SECRET_KEY }}
-
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
     steps:
-      - name: Download build artifact
+      - name: 📥 Build artifactni yuklab olish
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
-
-      - name: Prepare SSH
+      
+      - name: 🔐 SSH kalitni tayyorlash
         run: |
-          sudo apt-get update
-          sudo apt-get install -y rsync openssh-client
-
           mkdir -p ~/.ssh
-          echo "$SSH_SECRET_KEY" > ~/.ssh/id_ed25519
+          echo "${{ secrets.SSH_SECRET_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-
-          ssh-keyscan -p "$PORT" "$HOST" >> ~/.ssh/known_hosts
-
-      - name: Ensure remote directory exists
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+      
+      - name: 📁 Remote papkani tekshirish
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p "$PORT" \
-            "$USERNAME@$HOST" "mkdir -p '$REMOTE_PATH'"
-
-      - name: Sync build to server
+          ssh -i ~/.ssh/id_ed25519 -p "${{ secrets.SSH_PORT }}" \
+            -o StrictHostKeyChecking=no \
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" \
+            "mkdir -p '${{ secrets.SSH_TARGET }}'"
+      
+      - name: 🚀 Serverga deploy qilish
         run: |
-          set -e
-
-          if ! command -v rsync >/dev/null 2>&1; then
-            echo "rsync not found, installing..."
-            sudo apt-get update
-            sudo apt-get install -y rsync
-          fi
-
-          rsync -az --delete \
-            --checksum \
-            -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
-            dist/ "$USERNAME@$HOST:$REMOTE_PATH/"
-
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
+            dist/ "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_TARGET }}/"
+      
+      - name: 🧹 SSH kalitni tozalash
+        if: always()
+        run: rm -f ~/.ssh/id_ed25519
