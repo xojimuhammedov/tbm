@@ -10,30 +10,30 @@ export const createFlowSchema = (t: (...args: TranslationArgsType) => string) =>
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    consumer_id_point_a: z.string().nonempty(
+    name_point_a: z.string().nonempty(
       t("required {{field}}", {
         field: t("Consumer ID point A"),
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    consumer_name_point_b: z.string().nonempty(
+    name_point_b: z.string().nonempty(
       t("required {{field}}", {
         field: t("International"),
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    point_a: z.string().nonempty(
-      t("required {{field}}", {
-        field: t("Forward"),
-        ns: config.LANG.NS.VALIDATION,
-      }),
-    ),
-    point_b: z.string().nonempty(
-      t("required {{field}}", {
-        field: t("Reverse"),
-        ns: config.LANG.NS.VALIDATION,
-      }),
-    ),
+    // point_a: z.string().nonempty(
+    //   t("required {{field}}", {
+    //     field: t("Forward"),
+    //     ns: config.LANG.NS.VALIDATION,
+    //   }),
+    // ),
+    // point_b: z.string().nonempty(
+    //   t("required {{field}}", {
+    //     field: t("Reverse"),
+    //     ns: config.LANG.NS.VALIDATION,
+    //   }),
+    // ),
     signal_level: z.string().nonempty(
       t("required {{field}}", {
         field: t("Start"),

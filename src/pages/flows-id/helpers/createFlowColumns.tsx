@@ -1,6 +1,4 @@
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import { DATE_TIME } from "@/shared/constants/date.constants.ts";
-import { dateFormatter } from "@/shared/utils/utils.ts";
 import { EditIcon, Trash2Icon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface.ts";
@@ -16,15 +14,19 @@ const createFlowColumns = (
     name: t("ID nomer"),
   },
   {
-    key: "consumer_id_point_a",
-    dataIndex: "consumer_id_point_a",
-    name: t("Наименование A"),
+    key: "name_point_a",
+    dataIndex: "name_point_a",
+    name: t("Point A"),
   },
   {
-    key: "updated_at",
-    dataIndex: "updated_at",
-    name: t("Updated date"),
-    render: (updated_at) => dateFormatter(updated_at, DATE_TIME),
+    key: "name_point_b",
+    dataIndex: "name_point_b",
+    name: t("Point B"),
+  },
+  {
+    key: "organization_order_number",
+    dataIndex: "organization_order_number",
+    name: t("Organization order number"),
   },
   {
     key: "_id",
