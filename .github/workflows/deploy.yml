@@ -65,6 +65,9 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_ed25519 -p "$PORT" "$USERNAME@$HOST" "mkdir -p '$REMOTE_PATH'"
 
+      - name: Install rsync
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
       - name: Sync build to server
         run: |
           rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" dist/ "$USERNAME@$HOST:$REMOTE_PATH/"
