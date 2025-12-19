@@ -5,7 +5,7 @@ export interface DApplicationInterface {
   actionType: string[];
   leader: string;
   recipient: string;
-  requestNumber: string;
+  request_number: string;
   sender: string;
   created_at: string;
   isDeleted: boolean;
