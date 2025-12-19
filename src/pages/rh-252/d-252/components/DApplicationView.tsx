@@ -24,7 +24,7 @@ const DApplicationView = ({
 
   const handlePrint = useReactToPrint({
     contentRef: contentRef,
-    documentTitle: `Talabnoma_${document?.requestNumber || "D-Ilova"}`,
+    documentTitle: `Talabnoma_${document?.request_number || "D-Ilova"}`,
   });
 
   return (
@@ -124,7 +124,7 @@ const DApplicationView = ({
             <p>
               №{" "}
               <span className="border-b border-black min-w-[120px] inline-block text-center font-bold">
-                {document?.requestNumber || "__________"}
+                {document?.request_number || "__________"}
               </span>
             </p>
           </div>

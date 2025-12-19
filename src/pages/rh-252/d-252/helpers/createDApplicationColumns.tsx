@@ -28,8 +28,8 @@ const createDApplicationColumns = (
   handleView: (id: string) => void,
 ): ColumnType<DApplicationInterface>[] => [
   {
-    key: "requestNumber",
-    dataIndex: "requestNumber",
+    key: "request_number",
+    dataIndex: "request_number",
     name: t("So'rov raqami"),
     render: (value) => <span className="font-medium">{value || "---"}</span>,
   },
