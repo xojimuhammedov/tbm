@@ -22,18 +22,18 @@ export const createFlowSchema = (t: (...args: TranslationArgsType) => string) =>
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    // point_a: z.string().nonempty(
-    //   t("required {{field}}", {
-    //     field: t("Forward"),
-    //     ns: config.LANG.NS.VALIDATION,
-    //   }),
-    // ),
-    // point_b: z.string().nonempty(
-    //   t("required {{field}}", {
-    //     field: t("Reverse"),
-    //     ns: config.LANG.NS.VALIDATION,
-    //   }),
-    // ),
+    point_a: z.string().nonempty(
+      t("required {{field}}", {
+        field: t("Forward"),
+        ns: config.LANG.NS.VALIDATION,
+      }),
+    ),
+    point_b: z.string().nonempty(
+      t("required {{field}}", {
+        field: t("Reverse"),
+        ns: config.LANG.NS.VALIDATION,
+      }),
+    ),
     signal_level: z.string().nonempty(
       t("required {{field}}", {
         field: t("Start"),

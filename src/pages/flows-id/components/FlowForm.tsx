@@ -36,7 +36,7 @@ const FlowForm = ({ id, onSave, readOnly = false }: FlowFormProps) => {
           />
           <MyInput<FlowDto>
             control={form.control}
-            name={"consumer_id_point_a"}
+            name={"name_point_a"}
             label={t("Наименование A")}
             placeholder={t("Наименование A")}
             required
@@ -44,7 +44,7 @@ const FlowForm = ({ id, onSave, readOnly = false }: FlowFormProps) => {
           />
           <MyInput<FlowDto>
             control={form.control}
-            name={"consumer_name_point_b"}
+            name={"name_point_b"}
             label={t("Наименование B")}
             placeholder={t("Наименование B")}
             required
