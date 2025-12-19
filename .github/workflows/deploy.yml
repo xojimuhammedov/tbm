@@ -45,9 +45,6 @@ jobs:
           name: dist
           path: dist
       
-      - name: 📦 rsync o'rnatish
-        run: sudo apt-get update && sudo apt-get install -y rsync
-      
       - name: 🔐 SSH kalitni tayyorlash
         run: |
           mkdir -p ~/.ssh
@@ -55,18 +52,23 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
       
-      - name: 📁 Remote papkani tekshirish
+      - name: 📁 Remote papka ruxsatlarini sozlash
         run: |
           ssh -i ~/.ssh/id_ed25519 -p "${{ secrets.SSH_PORT }}" \
             -o StrictHostKeyChecking=no \
             "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" \
-            "mkdir -p '${{ secrets.SSH_TARGET }}'"
+            "mkdir -p '${{ secrets.SSH_TARGET }}' && chmod 755 '${{ secrets.SSH_TARGET }}'"
       
       - name: 🚀 Serverga deploy qilish
         run: |
           rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='node_modules' \
             -e "ssh -i ~/.ssh/id_ed25519 -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
             dist/ "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_TARGET }}/"
+      
+      - name: ✅ Deploy muvaffaqiyatli
+        run: echo "Deploy completed successfully!"
       
       - name: 🧹 SSH kalitni tozalash
         if: always()
