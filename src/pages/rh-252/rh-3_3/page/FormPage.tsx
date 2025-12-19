@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 const Num3ApplicationPage = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const form = useForm<any>({
     defaultValues: {
@@ -63,7 +63,7 @@ const Num3ApplicationPage = () => {
       {
         onSuccess: () => {
           form.reset();
-          navigate("/rh-252/rh-3_3")
+          navigate("/rh-252/rh-3_3");
           toast({
             variant: "success",
             title: t(`Success`),

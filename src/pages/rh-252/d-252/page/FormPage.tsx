@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const RHDApplication = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const form = useForm<any>({
     defaultValues: {
@@ -39,7 +39,7 @@ const RHDApplication = () => {
       {
         onSuccess: () => {
           form.reset();
-          navigate('/rh-252/d-252')
+          navigate("/rh-252/d-252");
           toast({
             variant: "success",
             title: t(`Success`),

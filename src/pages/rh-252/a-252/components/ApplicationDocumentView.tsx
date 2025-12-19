@@ -1,6 +1,5 @@
 import { MyModal } from "@/shared/components/moleculas/modal";
 import { FileTextIcon } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { dateFormatter } from "@/shared/utils/utils";
 import { DATE } from "@/shared/constants/date.constants";
 import { OrderApplication } from "../interfaces/order.interface";
@@ -16,9 +15,6 @@ const ApplicationDocumentView = ({
   onOpenChange,
   document,
 }: ApplicationDocumentViewProps) => {
-  const { t } = useTranslation();
-
-  console.log(document);
   return (
     <MyModal
       open={open}
