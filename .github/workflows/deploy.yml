@@ -67,7 +67,16 @@ jobs:
 
       - name: Sync build to server
         run: |
+          set -e
+
+          if ! command -v rsync >/dev/null 2>&1; then
+            echo "rsync not found, installing..."
+            sudo apt-get update
+            sudo apt-get install -y rsync
+          fi
+
           rsync -az --delete \
             --checksum \
             -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
             dist/ "$USERNAME@$HOST:$REMOTE_PATH/"
+
