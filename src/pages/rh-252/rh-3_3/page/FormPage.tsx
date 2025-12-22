@@ -3,10 +3,11 @@ import { Button } from "dgz-ui/button";
 import { Form, MyInput, MySelect } from "dgz-ui-shared/components/form";
 import { Plus, Trash2 } from "lucide-react";
 import useNum3ApplicationForm from "@/pages/rh-252/rh-3_3/hooks/useNum3ApplicationForm.ts";
+import {useParams} from "react-router-dom";
 
 const Num3ApplicationPage = () => {
   const { t } = useTranslation();
-
+  const { id } = useParams();
   const {
     form,
     fields,
@@ -15,7 +16,7 @@ const Num3ApplicationPage = () => {
     handleAppend,
     handleRemove,
     onSubmit,
-  } = useNum3ApplicationForm();
+  } = useNum3ApplicationForm({id});
 
   return (
     <Form {...form}>
