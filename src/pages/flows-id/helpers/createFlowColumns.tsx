@@ -15,17 +15,17 @@ const createFlowColumns = (
   },
   {
     key: "name_point_a",
-    dataIndex: "name_point_a",
+    dataIndex: "point_a",
     name: t("Point A"),
   },
   {
     key: "name_point_b",
-    dataIndex: "name_point_b",
+    dataIndex: "point_b",
     name: t("Point B"),
   },
   {
-    key: "organization_order_number",
-    dataIndex: "organization_order_number",
+    key: "organization_order",
+    dataIndex: "organization_order",
     name: t("Organization order number"),
   },
   {

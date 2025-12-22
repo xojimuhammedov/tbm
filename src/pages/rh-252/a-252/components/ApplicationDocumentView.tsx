@@ -56,15 +56,14 @@ const ApplicationDocumentView = ({
           </div>
           <div className="flex justify-between items-center mb-6 text-sm">
             <div>
-              <span className="font-bold underline">
+              <span className="font-bold">
                 SANA:{" "}
                 {document?.order_date
                   ? dateFormatter(document?.order_date, DATE)
                   : ""}
               </span>
-              q
             </div>
-            <div className="font-bold underline">{document?.code}</div>
+            <div className="font-bold">{document?.code}</div>
             <div className="border-2 border-black rounded-full px-4 py-1 flex items-center gap-2">
               <span className="font-bold">SONI: 1</span>
             </div>
@@ -90,8 +89,7 @@ const ApplicationDocumentView = ({
                   ? dateFormatter(document?.dead_line, DATE)
                   : ""}
               </span>{" "}
-              tarmoqdan o‘chirilganligi tasdiqlansin va texnologik hujjatlarga
-              tegishli o‘zgartirishlar kiritilsin:
+              {document?.content}
             </p>
           </div>
 
@@ -116,7 +114,7 @@ const ApplicationDocumentView = ({
           <p className="mb-4">
             Tashkil qilingan:{" "}
             {document?.create?.flow_ids?.map((item) => (
-              <span className="font-bold">{item}</span>
+              <span className="font-bold">{item}, {" "}</span>
             ))}
           </p>
         </div>

@@ -40,7 +40,7 @@ export const createFlowSchema = (t: (...args: TranslationArgsType) => string) =>
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    organization_order_number: z.string().nonempty(
+    organization_order: z.string().nonempty(
       t("required {{field}}", {
         field: t("Port A"),
         ns: config.LANG.NS.VALIDATION,

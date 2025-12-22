@@ -20,6 +20,7 @@ export interface OrderApplication {
   created_at: string;
   dead_line: string;
   to: string;
+  content: string;
   create: {
     flows: FlowsIdsOrder[];
     flow_ids: string[];

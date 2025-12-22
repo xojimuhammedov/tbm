@@ -8,7 +8,7 @@ export interface FlowInterface {
   point_a: string;
   point_b: string;
   signal_level: string;
-  organization_order_number: string;
+  organization_order: string;
   deciphering_order_number: string;
   note: string;
   deciphering_archive: string;

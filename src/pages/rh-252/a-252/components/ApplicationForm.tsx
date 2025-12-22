@@ -1,6 +1,6 @@
-import { Form, MyInput, MySelect } from "dgz-ui-shared/components/form";
-import { useEffect, useRef, useState } from "react";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import { Form, MyDatePicker, MyInput, MySelect } from "dgz-ui-shared/components/form";
+import { useMemo, useState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
 import KEYS from "@/shared/constants/keys";
 import usePostQuery from "@/shared/hooks/query/usePostQuery";
 import { useToast } from "@/shared/hooks/useToast";
@@ -39,40 +39,36 @@ const ApplicationDocumentForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useTranslation();
-  const lastCheckedIds = useRef<Record<number, string>>({});
+  // const lastCheckedIds = useRef<Record<number, string>>({});
 
   const form = useForm<any>({
     shouldUnregister: false,
     defaultValues: {
       code: "",
-      order_date: "",
       responsible: "",
       from: "TBM",
       to: "",
       count: "",
       dead_line: "",
+      content: "tarmoqdan o‘chirilganligi tasdiqlansin va texnologik hujjatlarga tegishli o‘zgartirishlar kiritilsin:",
+      signal_level: "",
       create: {
         flow_ids: [],
       },
       actions: [],
+      action_type: [],
     },
   });
 
-  const { fields, replace, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "create.flow_ids",
   });
 
-  const watchedRows = useWatch({
-    control: form.control,
-    name: "create.flow_ids",
-  });
-
-  const incrementId = (base: string, index: number) => {
-    const match = base.match(/(.*?)(\d+)$/);
-    if (!match) return base;
-    return `${match[1]}${Number(match[2]) + index}`;
-  };
+  // const watchedRows = useWatch({
+  //   control: form.control,
+  //   name: "create.flow_ids",
+  // });
 
   const handleAddRow = () => {
     append({
@@ -98,7 +94,6 @@ const ApplicationDocumentForm = () => {
   };
 
   const count = form.watch("count");
-  const startId = form.watch("startId");
   const stationA = form.watch("point_a");
   const stationB = form.watch("point_b");
 
@@ -115,6 +110,9 @@ const ApplicationDocumentForm = () => {
       to: data.to,
       count: data.count,
       dead_line: data.dead_line,
+      action_type: data.action_type,
+      signal_level: data.signal_level,
+      content: data.content,
 
       create: {
         flow_ids: data.create?.flow_ids?.map(
@@ -154,56 +152,67 @@ const ApplicationDocumentForm = () => {
   };
 
   const handleGenerate = async () => {
-    if (!count || !startId) return;
-
-    const rows = Array.from({ length: count }).map((_, i) => ({
-      code: incrementId(startId, i),
-      point_a: stationA || "",
-      point_b: stationB || "",
-      signal_level: "",
-      port_a: "",
-      port_b: "",
-      device_a: "",
-      device_b: "",
-      id_exist: null,
-    }));
-
-    replace(rows);
-
-    rows.forEach((row, index) => {
-      checkIdExist(row.code, index);
-    });
-  };
-
-  useEffect(() => {
-    fields.forEach((_, i) => {
-      form.setValue(`create.flow_ids.${i}.point_a`, stationA || "");
-      form.setValue(`create.flow_ids.${i}.point_b`, stationB || "");
-    });
-  }, [stationA, stationB]);
-
-  const checkIdExist = async (id: string, index: number) => {
-    if (!id) return;
+    if (!count || Number(count) <= 0) return;
 
     try {
-      const res = await request.get(`/api/flows-id/check-duplicate/${id}`);
-      const json = await res.data;
+      const res = await request.get(
+        `/api/flows-id/empty-id-numbers?count=${count}`
+      );
+      const result = await res.data;
 
-      form.setValue(`create.flow_ids.${index}.id_exist`, json?.data?.exist);
-    } catch (e) {
-      form.setValue(`create.flow_ids.${index}.id_exist`, false);
+      const ids: string[] = result.data || [];
+
+      const rows = Array.from({ length: count }).map((_, i) => ({
+        code: ids[i] || "",
+        point_a: stationA || "",
+        point_b: stationB || "",
+        signal_level: "",
+        port_a: "",
+        port_b: "",
+        device_a: "",
+        device_b: "",
+        id_exist: null,
+      }));
+
+      append(rows);
+    } catch (error) {
+      console.error("ID generate error:", error);
     }
   };
 
-  useEffect(() => {
-    watchedRows?.forEach((row: any, index: any) => {
-      if (!row?.code) return;
-      if (row.code !== lastCheckedIds.current[index]) {
-        lastCheckedIds.current[index] = row.code;
-        checkIdExist(row.code, index);
-      }
-    });
-  }, [watchedRows]);
+  const actionOptions = useMemo(
+    () => [
+      { label: "Tashkil etish", value: "create" },
+      { label: "Ko'chirish", value: "update" },
+      { label: "O'chirish", value: "delete" },
+    ],
+    [],
+  );
+
+
+  // const checkIdExist = async (id: string, index: number) => {
+  //   if (!id) return;
+
+  //   try {
+  //     const res = await request.get(`/api/flows-id/check-duplicate/${id}`);
+  //     const json = await res.data;
+
+  //     form.setValue(`create.flow_ids.${index}.id_exist`, json?.data?.exist);
+  //   } catch (e) {
+  //     form.setValue(`create.flow_ids.${index}.id_exist`, false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   watchedRows?.forEach((row: any, index: any) => {
+  //     if (!row?.code) return;
+  //     if (row.code !== lastCheckedIds.current[index]) {
+  //       lastCheckedIds.current[index] = row.code;
+  //       checkIdExist(row.code, index);
+  //     }
+  //   });
+  // }, [watchedRows]);
+
 
   return (
     <Form {...form}>
@@ -232,12 +241,11 @@ const ApplicationDocumentForm = () => {
           </div>
 
           <div className="flex justify-between items-center mb-8 text-lg">
-            <div className="flex items-end">
+            <div className="flex items-center gap-2">
               <span>SANA:</span>
-              <MyInput
+              <MyDatePicker
                 name={"order_date"}
                 control={form.control}
-                className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
               />
             </div>
             <div>
@@ -262,29 +270,49 @@ const ApplicationDocumentForm = () => {
             />
           </div>
 
-          <div className="text-center mb-8">
-            <p className="text-xl font-semibold underline">
-              2Mbit/s oqimlarni tarmoqdan o‘chirish to‘g‘risida.
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <MyInput
+              control={form.control}
+              placeholder="Signal level"
+              name="signal_level"
+              className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+            />
+            <p className="text-xl font-semibold">
+              oqimlarni tarmoqdan
             </p>
+            <div className="w-[380px] text-left">
+              <MySelect
+                control={form.control}
+                name="action_type"
+                options={actionOptions}
+                placeholder={t("Tanlang...")}
+                isClearable
+                isMulti
+                required
+              />
+            </div>
           </div>
 
-          <div className="text-lg leading-relaxed text-justify">
-            <p className="mb-4 flex flex-wrap items-end">
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="mb-4">
               “O‘zTTBRM” DUK mintaqaviy boshqaruv bog‘lamasining 2-oktabrdagi
               18-bildirgisiga binoan “O‘zbektelekom” G‘arbiy filialiga tegishli
-              bo‘lgan quyidagi 51x2Mbit/s oqimlarni
-              <MyInput
-                name={"dead_line"}
-                control={form.control}
-                placeholder="Muddati"
-                className="border border-t-0 border-l-0 border-r-0 rounded-none w-[240px]"
-              />
-              tarmoqdan o‘chirilganligi tasdiqlansin va texnologik hujjatlarga
-              tegishli o‘zgartirishlar kiritilsin:
+              bo‘lgan quyidagi oqimlarni
             </p>
+            <MyDatePicker
+              name={"dead_line"}
+              control={form.control}
+            />
+            <div className="w-full">
+              <MyInput
+                control={form.control}
+                name={`content`}
+                className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-full"
+              />
+            </div>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-4">
             <MySelect
               options={selectType}
               placeholder={t("Channel")}
@@ -294,63 +322,50 @@ const ApplicationDocumentForm = () => {
               isMulti
             />
           </div>
-
-          <div className="mt-6 border p-4 rounded-xl">
-            {form.watch("actions")?.includes("delete") && (
-              <>
-                <DynamicIdInput
-                  onIdsChange={(ids) => {
-                    setCurrentIds(ids);
-                  }}
-                  initialIds={[]}
+          {form.watch("actions")?.includes("delete") && (
+            <div className="mt-6 border p-4 rounded-xl">
+              <DynamicIdInput
+                onIdsChange={(ids) => {
+                  setCurrentIds(ids);
+                }}
+                initialIds={[]}
+              />
+            </div>
+          )}
+          {form.watch("actions")?.includes("create") && (
+            <div className="mt-6 border p-4 rounded-lg">
+              <h3 className="font-semibold mb-2 mt-4">Tashkil etish</h3>
+              <div className="grid grid-cols-4 gap-4">
+                <MyInput
+                  control={form.control}
+                  name={`point_a`}
+                  placeholder="A-stansiya"
                 />
-              </>
-            )}
-          </div>
-
-          <div className="mt-6 border p-4 rounded-lg">
-            {form.watch("actions")?.includes("create") && (
-              <>
-                <h3 className="font-semibold mb-2 mt-4">Tashkil etish</h3>
-
-                <div className="grid grid-cols-4 gap-4">
-                  <MyInput
-                    control={form.control}
-                    name={`point_a`}
-                    placeholder="A-stansiya"
-                  />
-                  <MyInput
-                    control={form.control}
-                    name={`point_b`}
-                    placeholder="B-stansiya"
-                  />
-                  <MyInput
-                    control={form.control}
-                    name={`count`}
-                    placeholder="Count"
-                  />
-                  <MyInput
-                    control={form.control}
-                    name={`startId`}
-                    placeholder="Start ID"
-                  />
-                </div>
-                <div className="flex justify-end">
-                  <Button
-                    type="button"
-                    className="mt-4"
-                    onClick={handleGenerate}
-                  >
-                    Yaratish
-                  </Button>
-                </div>
-              </>
-            )}
-          </div>
+                <MyInput
+                  control={form.control}
+                  name={`point_b`}
+                  placeholder="B-stansiya"
+                />
+                <MyInput
+                  control={form.control}
+                  name={`count`}
+                  placeholder="Count"
+                />
+              </div>
+              <div className="flex justify-end">
+                <Button
+                  type="button"
+                  className="mt-4"
+                  onClick={handleGenerate}
+                >
+                  Yaratish
+                </Button>
+              </div>
+            </div>
+          )}
 
           {fields.map((field, index) => {
             const isLast = index === fields.length - 1;
-
             return (
               <div
                 key={field.id}
@@ -361,48 +376,42 @@ const ApplicationDocumentForm = () => {
                   name={`create.flow_ids.${index}.code`}
                   placeholder="ID Number"
                   className={cn(
-                    "border border-t-0 border-l-0 border-r-0 rounded-none",
+                    "border border-t-0 border-l-0 border-r-0 rounded-none h-7",
                     form.watch(`create.flow_ids.${index}.id_exist`) === true
                       ? "bg-red-100"
                       : "",
                   )}
                 />
-
                 <MyInput
                   control={form.control}
                   name={`create.flow_ids.${index}.signal_level`}
                   placeholder="Signal level"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
-
                 <MyInput
                   control={form.control}
                   name={`create.flow_ids.${index}.port_a`}
                   placeholder="Port A"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
-
                 <MyInput
                   control={form.control}
                   name={`create.flow_ids.${index}.port_b`}
                   placeholder="Port B"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
-
                 <MyInput
                   control={form.control}
                   name={`create.flow_ids.${index}.device_a`}
                   placeholder="Device A"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
-
                 <MyInput
                   control={form.control}
                   name={`create.flow_ids.${index}.device_b`}
                   placeholder="Device B"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
-
                 <div className="flex gap-2">
                   {isLast && (
                     <PlusSquare

@@ -78,7 +78,7 @@ const FlowForm = ({ id, onSave, readOnly = false }: FlowFormProps) => {
 
           <MyInput<FlowDto>
             control={form.control}
-            name={"organization_order_number"}
+            name={"organization_order"}
             label={t("Номер распоряжения на организацию")}
             placeholder={t("Номер распоряжения на организацию")}
             required

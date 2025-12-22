@@ -408,6 +408,10 @@ function Router() {
           element: <FlowsIdCreatePage />,
         },
         {
+          path: "flows-id/edit/:id",
+          element: <FlowsIdCreatePage />,
+        },
+        {
           path: "channels-id",
           element: <ChannelsIdPage />,
         },

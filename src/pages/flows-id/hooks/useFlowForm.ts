@@ -69,7 +69,7 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
         point_a: item.point_a,
         point_b: item.point_b,
         signal_level: item.signal_level,
-        organization_order_number: item.organization_order_number,
+        organization_order: item.organization_order,
         deciphering_order_number: item.deciphering_order_number,
         note: item.note,
         deciphering_archive: item.deciphering_archive,
