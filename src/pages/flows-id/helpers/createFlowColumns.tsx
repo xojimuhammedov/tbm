@@ -26,7 +26,7 @@ const createFlowColumns = (
   {
     key: "organization_order",
     dataIndex: "organization_order",
-    name: t("Organization order number"),
+    name: t("Organization order"),
   },
   {
     key: "_id",

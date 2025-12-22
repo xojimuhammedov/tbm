@@ -114,7 +114,7 @@ const ApplicationDocumentView = ({
           <p className="mb-4">
             Tashkil qilingan:{" "}
             {document?.create?.flow_ids?.map((item) => (
-              <span className="font-bold">{item}, {" "}</span>
+              <span className="font-bold">{item}, </span>
             ))}
           </p>
         </div>

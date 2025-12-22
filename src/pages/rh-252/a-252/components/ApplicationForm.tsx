@@ -1,4 +1,9 @@
-import { Form, MyDatePicker, MyInput, MySelect } from "dgz-ui-shared/components/form";
+import {
+  Form,
+  MyDatePicker,
+  MyInput,
+  MySelect,
+} from "dgz-ui-shared/components/form";
 import { useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import KEYS from "@/shared/constants/keys";
@@ -50,7 +55,8 @@ const ApplicationDocumentForm = () => {
       to: "",
       count: "",
       dead_line: "",
-      content: "tarmoqdan o‘chirilganligi tasdiqlansin va texnologik hujjatlarga tegishli o‘zgartirishlar kiritilsin:",
+      content:
+        "tarmoqdan o‘chirilganligi tasdiqlansin va texnologik hujjatlarga tegishli o‘zgartirishlar kiritilsin:",
       signal_level: "",
       create: {
         flow_ids: [],
@@ -156,7 +162,7 @@ const ApplicationDocumentForm = () => {
 
     try {
       const res = await request.get(
-        `/api/flows-id/empty-id-numbers?count=${count}`
+        `/api/flows-id/empty-id-numbers?count=${count}`,
       );
       const result = await res.data;
 
@@ -189,7 +195,6 @@ const ApplicationDocumentForm = () => {
     [],
   );
 
-
   // const checkIdExist = async (id: string, index: number) => {
   //   if (!id) return;
 
@@ -212,7 +217,6 @@ const ApplicationDocumentForm = () => {
   //     }
   //   });
   // }, [watchedRows]);
-
 
   return (
     <Form {...form}>
@@ -243,10 +247,7 @@ const ApplicationDocumentForm = () => {
           <div className="flex justify-between items-center mb-8 text-lg">
             <div className="flex items-center gap-2">
               <span>SANA:</span>
-              <MyDatePicker
-                name={"order_date"}
-                control={form.control}
-              />
+              <MyDatePicker name={"order_date"} control={form.control} />
             </div>
             <div>
               <MyInput
@@ -277,9 +278,7 @@ const ApplicationDocumentForm = () => {
               name="signal_level"
               className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
             />
-            <p className="text-xl font-semibold">
-              oqimlarni tarmoqdan
-            </p>
+            <p className="text-xl font-semibold">oqimlarni tarmoqdan</p>
             <div className="w-[380px] text-left">
               <MySelect
                 control={form.control}
@@ -299,10 +298,7 @@ const ApplicationDocumentForm = () => {
               18-bildirgisiga binoan “O‘zbektelekom” G‘arbiy filialiga tegishli
               bo‘lgan quyidagi oqimlarni
             </p>
-            <MyDatePicker
-              name={"dead_line"}
-              control={form.control}
-            />
+            <MyDatePicker name={"dead_line"} control={form.control} />
             <div className="w-full">
               <MyInput
                 control={form.control}
@@ -353,11 +349,7 @@ const ApplicationDocumentForm = () => {
                 />
               </div>
               <div className="flex justify-end">
-                <Button
-                  type="button"
-                  className="mt-4"
-                  onClick={handleGenerate}
-                >
+                <Button type="button" className="mt-4" onClick={handleGenerate}>
                   Yaratish
                 </Button>
               </div>
