@@ -11,12 +11,26 @@ import { FLOWS_ID_QUERY_KEY } from "@/pages/flows-id/constants/flows.constants.t
 import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface.ts";
 import useFlows from "@/pages/flows-id/hooks/useFlows.ts";
 import ImportFlowModal from "./components/ImportFlowModal";
+import {FilterInterface} from "dgz-ui-shared/components/filters";
 
 const Page = () => {
   const { t } = useTranslation();
   const { loading, columns, dataSource, handleFilter, params, handleAdd } =
     useFlows();
   const [importModalOpen, setImportModalOpen] = useState(false);
+
+    const filters: FilterInterface[] = useMemo(() => [
+        {
+            name: "status_filter",
+            label: t("Status"),
+            placeholder: t("Select status"),
+            options: [
+                { label: t("Active"), value: "active" },
+                { label: t("Inactive"), value: "inactive" },
+                { label: t("Inactive 3 years"), value: "inactive_3years" },
+            ],
+        },
+    ], [t]);
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
@@ -36,7 +50,6 @@ const Page = () => {
             <UploadIcon className="size-4" />
             {t("Import")}
           </Button>
-
           <Button size={"sm"} onClick={handleAdd}>
             <CirclePlusIcon />
             {t("Add new")}
@@ -54,10 +67,15 @@ const Page = () => {
           loading={loading}
           params={params}
           onParamChange={handleFilter}
+          filters={filters}
+          handleFilterChange={(filterParams) => {
+              handleFilter({ ...params, ...filterParams, page: 1 });
+          }}
           rowKey={"_id"}
           dataSource={dataSource}
           dataKey={"docs"}
           columns={columns}
+
         />
       </PageWrapper>
 
