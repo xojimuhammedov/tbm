@@ -8,7 +8,7 @@ import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts
 import { Button } from "dgz-ui/button";
 import { CirclePlusIcon } from "lucide-react";
 import KEYS from "@/shared/constants/keys";
-import useDApplication from "@/pages/rh-252/d-252/hooks/useDApplication.ts";
+import useDApplications from "@/pages/rh-252/d-252/hooks/useDApplications.ts";
 import { DApplicationInterface } from "@/pages/rh-252/d-252/interfaces/d-252.interface.ts";
 import DApplicationView from "./components/DApplicationView";
 
@@ -25,7 +25,7 @@ const DApplicationPage = () => {
     openView,
     handleCloseView,
     currentItem,
-  } = useDApplication();
+  } = useDApplications();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
