@@ -6,7 +6,7 @@ export const createChannelSchema = (
   t: (...args: TranslationArgsType) => string,
 ) =>
   z.object({
-    id_number: z.string().nonempty(
+    code: z.string().nonempty(
       t("required {{field}}", {
         field: t("Code"),
         ns: config.LANG.NS.VALIDATION,

@@ -9,8 +9,8 @@ const createChannelColumns = (
   handleEdit: (id: string) => void,
 ): ColumnType<ChannelInterface>[] => [
   {
-    key: "id_number",
-    dataIndex: "id_number",
+    key: "code",
+    dataIndex: "code",
     name: t("Code"),
   },
   {

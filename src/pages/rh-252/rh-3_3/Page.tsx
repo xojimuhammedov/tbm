@@ -13,71 +13,71 @@ import useNum3Application from "@/pages/rh-252/rh-3_3/hooks/useNum3Application.t
 import BApplicationDocumentView from "@/pages/rh-252/rh-3_3/components/B-ApplicationDocumentView.tsx";
 
 const Num3ApplicationPage = () => {
-    const { t } = useTranslation();
-    const {
-        loading,
-        columns,
-        dataSource,
-        handleFilter,
-        params,
-        handleAdd,
-        openView,
-        handleCloseView,
-        currentItem,
-    } = useNum3Application();
+  const { t } = useTranslation();
+  const {
+    loading,
+    columns,
+    dataSource,
+    handleFilter,
+    params,
+    handleAdd,
+    openView,
+    handleCloseView,
+    currentItem,
+  } = useNum3Application();
 
-    const breadcrumbs = useMemo<BreadcrumbInterface[]>(
-        () => [
-            {
-                name: t("RH-252"),
-                path: "/rh-252",
-                isActive: false,
-            },
-            {
-                name: t("3.3 Application"),
-                path: "/rh-252/3.3",
-                isActive: true,
-            },
-        ],
-        [t],
-    );
+  const breadcrumbs = useMemo<BreadcrumbInterface[]>(
+    () => [
+      {
+        name: t("RH-252"),
+        path: "/rh-252",
+        isActive: false,
+      },
+      {
+        name: t("3.3 Application"),
+        path: "/rh-252/3.3",
+        isActive: true,
+      },
+    ],
+    [t],
+  );
 
-    return (
-        <>
-            <BApplicationDocumentView
-                open={openView}
-                onOpenChange={handleCloseView}
-                document={currentItem}
-            />
+  return (
+    <>
+      <BApplicationDocumentView
+        open={openView}
+        onOpenChange={handleCloseView}
+        document={currentItem}
+      />
 
-            <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-                <Button size={"sm"} onClick={handleAdd}>
-                    <CirclePlusIcon className="mr-2 h-4 w-4" />
-                    {t("Add new")}
-                </Button>
-            </PageHeader>
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+        <Button size={"sm"} onClick={handleAdd}>
+          <CirclePlusIcon className="mr-2 h-4 w-4" />
+          {t("Add new")}
+        </Button>
+      </PageHeader>
 
-            <PageWrapper>
-                <DataTable<
-                        Num3ApplicationInterface,
-                        PaginationInterface<Num3ApplicationInterface>
-                    >
-                    tableKey={KEYS.RH_B_Application}
-                    hasNumbers
-                    hasSearch
-                    isStickyHeader
-                    hasPagination
-                    loading={loading}
-                    params={params}
-                    onParamChange={handleFilter}
-                    rowKey={"_id"}
-                    dataSource={dataSource}
-                    dataKey={"docs"}
-                    columns={columns}
-                />
-            </PageWrapper>
-        </>
-    );
+      <PageWrapper>
+        <DataTable<
+          Num3ApplicationInterface,
+          PaginationInterface<Num3ApplicationInterface>
+        >
+          tableKey={KEYS.RH_B_Application}
+          hasNumbers
+          hasSearch
+          isStickyHeader
+          hasPagination
+          loading={loading}
+          params={params}
+          onParamChange={handleFilter}
+          rowKey={"_id"}
+          dataSource={dataSource}
+          dataKey={"docs"}
+          columns={columns}
+        />
+      </PageWrapper>
+    </>
+  );
 };
 
 export default Num3ApplicationPage;

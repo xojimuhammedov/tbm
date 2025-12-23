@@ -31,18 +31,21 @@ const Page = () => {
 
     const [importModalOpen, setImportModalOpen] = useState(false);
 
-    const filters: FilterInterface[] = useMemo(() => [
-        {
-            name: "status_filter",
-            label: t("Status"),
-            placeholder: t("Select status"),
-            options: [
-                { label: t("Active"), value: "active" },
-                { label: t("Inactive"), value: "inactive" },
-                { label: t("Inactive 3 years"), value: "inactive_3years" },
-            ],
-        },
-    ], [t]);
+  const filters: FilterInterface[] = useMemo(
+    () => [
+      {
+        name: "status_filter",
+        label: t("Status"),
+        placeholder: t("Select status"),
+        options: [
+          { label: t("Active"), value: "active" },
+          { label: t("Inactive"), value: "inactive" },
+          { label: t("Inactive 3 years"), value: "inactive_3years" },
+        ],
+      },
+    ],
+    [t],
+  );
 
     const breadcrumbs = useMemo<BreadcrumbInterface[]>(
         () => [
@@ -62,7 +65,6 @@ const Page = () => {
                 onOpenChange={handleCloseView}
                 document={currentItem}
             />
-
             <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
                 <div className="flex items-center gap-2">
                     <Button size={"sm"} onClick={() => setImportModalOpen(true)}>

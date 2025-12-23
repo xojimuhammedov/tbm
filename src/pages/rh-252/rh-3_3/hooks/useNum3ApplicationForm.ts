@@ -20,19 +20,22 @@ export interface Num3ApplicationFormProps {
   onSave?: () => void;
 }
 
-const useNum3ApplicationForm = ({ id, onSave }: Num3ApplicationFormProps = {}) => {
+const useNum3ApplicationForm = ({
+  id,
+  onSave,
+}: Num3ApplicationFormProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const navigate = useNavigate();
   const { applicationDocumentQuery } = useApplicationDocumentB(id as string);
 
   const actionOptions = useMemo(
-      () => [
-        { label: t("Tashkil etish"), value: "create" },
-        { label: t("Ko'chirish"), value: "update" },
-        { label: t("O'chirish"), value: "delete" },
-      ],
-      [t],
+    () => [
+      { label: t("Tashkil etish"), value: "create" },
+      { label: t("Ko'chirish"), value: "update" },
+      { label: t("O'chirish"), value: "delete" },
+    ],
+    [t],
   );
 
   const form = useForm<Num3ApplicationDto>({
@@ -68,16 +71,19 @@ const useNum3ApplicationForm = ({ id, onSave }: Num3ApplicationFormProps = {}) =
         ap_input: item.ap_input || "",
         ubp_input: item.ubp_input || "",
         action_type: item.action_type || [],
-        data: item.data?.length > 0 ? item.data : [
-          {
-            order_code: "",
-            execution_status: "",
-            responsible_executor: "",
-            customer_details: "",
-            failure_reason: "",
-            comment: "",
-          },
-        ],
+        data:
+          item.data?.length > 0
+            ? item.data
+            : [
+                {
+                  order_code: "",
+                  execution_status: "",
+                  responsible_executor: "",
+                  customer_details: "",
+                  failure_reason: "",
+                  comment: "",
+                },
+              ],
       });
     }
   }, [applicationDocumentQuery.data, id, form]);
@@ -92,8 +98,8 @@ const useNum3ApplicationForm = ({ id, onSave }: Num3ApplicationFormProps = {}) =
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("Application updated successfully")
-              : t("Application created successfully"),
+            ? t("Application updated successfully")
+            : t("Application created successfully"),
         });
         onSave?.();
         navigate("/rh-252/rh-3_3");
@@ -104,13 +110,13 @@ const useNum3ApplicationForm = ({ id, onSave }: Num3ApplicationFormProps = {}) =
           variant: "destructive",
           title: t(`${get(axiosError, "response.statusText", "Error")}`),
           description: t(
-              `${get(axiosError, "response.data.message", "An error occurred")}`,
+            `${get(axiosError, "response.data.message", "An error occurred")}`,
           ),
         });
       },
     },
   });
-// ...
+  // ...
 
   const handleAppend = useCallback(() => {
     append({
@@ -124,19 +130,19 @@ const useNum3ApplicationForm = ({ id, onSave }: Num3ApplicationFormProps = {}) =
   }, [append]);
 
   const handleRemove = useCallback(
-      (index: number) => {
-        if (fields.length > 1) {
-          remove(index);
-        }
-      },
-      [remove, fields.length],
+    (index: number) => {
+      if (fields.length > 1) {
+        remove(index);
+      }
+    },
+    [remove, fields.length],
   );
 
   const onSubmit = useCallback(
-      (values: Num3ApplicationDto) => {
-        save.mutate(values);
-      },
-      [save],
+    (values: Num3ApplicationDto) => {
+      save.mutate(values);
+    },
+    [save],
   );
 
   return {
