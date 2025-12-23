@@ -12,26 +12,28 @@ import createNum3ApplicationColumns from "@/pages/rh-252/rh-3_3/helpers/createNu
 import useApplicationDocumentB from "@/pages/rh-252/rh-3_3/hooks/useBApplication.ts";
 import URLS from "@/shared/constants/urls.ts";
 
-  const useNum3Application = () => {
+const useNum3Application = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [openView, setOpenView] = useState(false);
   const [viewId, setViewId] = useState<string | null>(null);
-    const { removeWithConfirm } = useDelete([URLS.RH_B_Application]);
-    const { query, handleFilter, params } = useLists<Num3ApplicationInterface>({
-      url: [URLS.RH_B_Application],
-      queryKey: [KEYS.RH_B_Application],
-    });
-  const { applicationDocumentQuery } = useApplicationDocumentB(viewId as string);
+  const { removeWithConfirm } = useDelete([URLS.RH_B_Application]);
+  const { query, handleFilter, params } = useLists<Num3ApplicationInterface>({
+    url: [URLS.RH_B_Application],
+    queryKey: [KEYS.RH_B_Application],
+  });
+  const { applicationDocumentQuery } = useApplicationDocumentB(
+    viewId as string,
+  );
   const handleAdd = useCallback(() => {
     navigate("/rh-252/rh-3_3/create");
   }, [navigate]);
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/rh-252/rh-3_3/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/rh-252/rh-3_3/edit/${id}`);
+    },
+    [navigate],
   );
   const handleView = useCallback((id: string) => {
     setViewId(id);
@@ -42,40 +44,38 @@ import URLS from "@/shared/constants/urls.ts";
     if (!open) setViewId(null);
   }, []);
   const handleDelete = useCallback(
-      (id: string) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Success"),
-                description: t("Successfully deleted"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred")}`,
-                ),
-              });
-            });
-      },
-      [query, removeWithConfirm, t, toast],
+    (id: string) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Success"),
+            description: t("Successfully deleted"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred")}`,
+            ),
+          });
+        });
+    },
+    [query, removeWithConfirm, t, toast],
   );
 
   const columns: ColumnType<Num3ApplicationInterface>[] = useMemo(
-      () =>
-          createNum3ApplicationColumns(
-              t as unknown as (...args: TranslationArgsType) => string,
-              handleEdit,
-              handleDelete,
-              handleView,
-
-
-          ),
-      [handleDelete, handleEdit, handleView, t],
+    () =>
+      createNum3ApplicationColumns(
+        t as unknown as (...args: TranslationArgsType) => string,
+        handleEdit,
+        handleDelete,
+        handleView,
+      ),
+    [handleDelete, handleEdit, handleView, t],
   );
 
   return {

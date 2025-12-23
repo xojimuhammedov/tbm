@@ -12,7 +12,7 @@ const useChannelsOptions = () => {
   const channelOptions = useMemo(
     () =>
       query.data?.docs?.map((item) => ({
-        label: item.id_number,
+        label: item.code,
         value: item._id,
       })),
     [query.data],

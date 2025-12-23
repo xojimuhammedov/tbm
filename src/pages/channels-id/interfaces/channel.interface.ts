@@ -1,6 +1,6 @@
 export interface ChannelInterface {
   _id: string;
-  id_number: string;
+  code: string;
   consumer_name: string;
   connection_number: string;
   point_a: string;

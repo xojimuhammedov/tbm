@@ -65,7 +65,7 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
     const item = query.data?.data;
     if (item) {
       form.reset({
-        id_number: item.id_number,
+        code: item.code,
         consumer_name: item.consumer_name,
         connection_number: item.connection_number,
         point_a: item.point_a,
