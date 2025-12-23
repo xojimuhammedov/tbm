@@ -1,90 +1,149 @@
 import { useCallback, useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "react-i18next";
 import { get } from "lodash";
-import useGetOne from "@/shared/hooks/api/useGetOne.ts";
+import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
-import { useToast } from "@/shared/hooks/useToast.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
-import URLS from "@/shared/constants/urls";
+import { useToast } from "@/shared/hooks/useToast.ts";
 import {
   createFApplicationSchema,
   FApplicationDto,
 } from "../schemas/createFApplicationSchema";
-import { FApplicationInterface } from "../interfaces/f-252.interface";
+import URLS from "@/shared/constants/urls";
+import useFApplication from "@/pages/rh-252/f-252/hooks/useFApplication.ts";
 
-export type RequestFormProps = {
-  id: string | null;
+export interface FApplicationFormProps {
+  id?: string | null;
   onSave?: () => void;
-};
+}
 
-const useFApplicationForm = ({ id, onSave }: RequestFormProps) => {
+const useFApplicationForm = ({ id, onSave }: FApplicationFormProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-
-  const schema = useMemo(() => createFApplicationSchema(t), [t]);
+  const navigate = useNavigate();
+  const { applicationDocumentQuery } = useFApplication(id as string);
+  const actionOptions = useMemo(
+      () => [
+        { label: t("Tashkil etish"), value: "create" },
+        { label: t("Ko'chirish"), value: "update" },
+        { label: t("O'chirish"), value: "delete" },
+      ],
+      [t],
+  );
 
   const form = useForm<FApplicationDto>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createFApplicationSchema(t)),
+    mode: "onChange",
     defaultValues: {
+      request_number: "",
+      ap_input: "",
+      ubp_input: "",
       action_type: [],
+      data: [
+        {
+          order_code: "",
+          connection_established_date: "",
+          connection_route_details: "",
+          comment: "",
+        },
+      ],
     },
   });
 
-  const query = useGetOne<{ data: FApplicationInterface }>({
-    url: [URLS.RH_F_Application, id || ""],
-    options: { enabled: Boolean(id) },
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "data",
   });
+
+  useEffect(() => {
+    const item = applicationDocumentQuery.data?.data;
+    if (item && id) {
+      form.reset({
+        request_number: item.request_number || "",
+        ap_input: item.ap_input || "",
+        ubp_input: item.ubp_input || "",
+        action_type: item.action_type || [],
+        data:
+            item.data?.length > 0
+                ? item.data
+                : [
+                  {
+                    order_code: "",
+                    connection_established_date: "",
+                    connection_route_details: "",
+                    comment: "",
+                  },
+                ],
+      });
+    }
+  }, [applicationDocumentQuery.data, id, form]);
 
   const { query: save } = useMutate({
     url: [URLS.RH_F_Application, id || ""],
     method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
     options: {
-      onError: (error) => {
-        toast({
-          variant: "destructive",
-          title: t(`${get(error, "response.statusText", "Error")}`),
-          description: t(
-            `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-          ),
-        });
-      },
       onSuccess: () => {
-        form.reset();
-        onSave?.();
+        if (!id) form.reset();
         toast({
           variant: "success",
-          title: t(`Success`),
+          title: t("Success"),
           description: id
-            ? t(`Request updated successfully`)
-            : t(`Request created successfully`),
+              ? t("Request updated successfully")
+              : t("Request created successfully"),
+        });
+        onSave?.();
+        navigate("/rh-252/f-252");
+      },
+      onError: (error: unknown) => {
+        const axiosError = error as AxiosError<{ message?: string }>;
+        toast({
+          variant: "destructive",
+          title: t(`${get(axiosError, "response.statusText", "Error")}`),
+          description: t(
+              `${get(axiosError, "response.data.message", "An error occurred. Contact the administrator")}`,
+          ),
         });
       },
     },
   });
 
-  useEffect(() => {
-    const item = query.data?.data;
+  const handleAppend = useCallback(() => {
+    append({
+      order_code: "",
+      connection_established_date: "",
+      connection_route_details: "",
+      comment: "",
+    });
+  }, [append]);
 
-    if (item) {
-      form.reset({
-        request_number: item.request_number,
-        ap_input: item.ap_input,
-        ubp_input: item.ubp_input,
-        action_type: item.action_type,
-      });
-    }
-  }, [query.data, form]);
-
-  const onSubmit = useCallback(
-    (data: FApplicationDto) => {
-      save.mutate(data);
-    },
-    [save],
+  const handleRemove = useCallback(
+      (index: number) => {
+        if (fields.length > 1) {
+          remove(index);
+        }
+      },
+      [remove, fields.length],
   );
 
-  return { form, onSubmit, isLoading: query.isLoading || save.isPending };
+  const onSubmit = useCallback(
+      (values: FApplicationDto) => {
+        save.mutate(values);
+      },
+      [save],
+  );
+
+  return {
+    form,
+    fields,
+    actionOptions,
+    isLoading: save.isPending || applicationDocumentQuery.isFetching,
+    handleAppend,
+    handleRemove,
+    onSubmit,
+  };
 };
 
 export default useFApplicationForm;

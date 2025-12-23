@@ -68,7 +68,6 @@ const useNum3Application = () => {
   );
 
   const columns: ColumnType<Num3ApplicationInterface>[] = useMemo(
-    () =>
       createNum3ApplicationColumns(
         t as unknown as (...args: TranslationArgsType) => string,
         handleEdit,

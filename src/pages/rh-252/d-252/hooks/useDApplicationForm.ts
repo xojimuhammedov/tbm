@@ -1,91 +1,106 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "react-i18next";
 import { get } from "lodash";
-import useGetOne from "@/shared/hooks/api/useGetOne.ts";
+import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
-import { useToast } from "@/shared/hooks/useToast.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
-import URLS from "@/shared/constants/urls";
-import { DApplicationInterface } from "@/pages/rh-252/d-252/interfaces/d-252.interface.ts";
+import { useToast } from "@/shared/hooks/useToast.ts";
 import {
   createDApplicationSchema,
   DApplicationDto,
 } from "@/pages/rh-252/d-252/schemas/createDApplicationSchema.ts";
+import URLS from "@/shared/constants/urls";
+import useDApplication from "@/pages/rh-252/d-252/hooks/useDApplication.ts";
 
-export type RequestFormProps = {
-  id: string | null;
+export interface DApplicationFormProps {
+  id?: string | null;
   onSave?: () => void;
-};
+}
 
-const useDApplicationForm = ({ id, onSave }: RequestFormProps) => {
+const useDApplicationForm = ({ id, onSave }: DApplicationFormProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-
-  const schema = useMemo(() => createDApplicationSchema(t), [t]);
+  const navigate = useNavigate();
+  const { applicationDocumentQuery } = useDApplication(id as string);
+  const actionOptions = useMemo(
+      () => [
+        { label: t("Tashkil etish"), value: "create" },
+        { label: t("Ko'chirish"), value: "update" },
+        { label: t("O'chirish"), value: "delete" },
+      ],
+      [t],
+  );
 
   const form = useForm<DApplicationDto>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createDApplicationSchema(t)),
+    mode: "onChange",
     defaultValues: {
+      request_number: "",
+      sender: "",
+      recipient: "",
+      leader: "",
       action_type: [],
     },
   });
 
-  const query = useGetOne<{ data: DApplicationInterface }>({
-    url: [URLS.RH_D_Application, id || ""],
-    options: { enabled: Boolean(id) },
-  });
+  useEffect(() => {
+    const item = applicationDocumentQuery.data?.data;
+    if (item && id) {
+      form.reset({
+        request_number: item.request_number || "",
+        sender: item.sender || "",
+        recipient: item.recipient || "",
+        leader: item.leader || "",
+        action_type: item.action_type || [],
+      });
+    }
+  }, [applicationDocumentQuery.data, id, form]);
 
   const { query: save } = useMutate({
     url: [URLS.RH_D_Application, id || ""],
     method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
     options: {
-      onError: (error) => {
-        toast({
-          variant: "destructive",
-          title: t(`${get(error, "response.statusText", "Error")}`),
-          description: t(
-            `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-          ),
-        });
-      },
       onSuccess: () => {
-        form.reset();
-        onSave?.();
+        if (!id) form.reset();
         toast({
           variant: "success",
-          title: t(`Success`),
+          title: t("Success"),
           description: id
-            ? t(`Request updated successfully`)
-            : t(`Request created successfully`),
+              ? t("Request updated successfully")
+              : t("Request created successfully"),
+        });
+        onSave?.();
+        navigate("/rh-252/d-252");
+      },
+      onError: (error: unknown) => {
+        const axiosError = error as AxiosError<{ message?: string }>;
+        toast({
+          variant: "destructive",
+          title: t(`${get(axiosError, "response.statusText", "Error")}`),
+          description: t(
+              `${get(axiosError, "response.data.message", "An error occurred. Contact the administrator")}`,
+          ),
         });
       },
     },
   });
 
-  useEffect(() => {
-    const item = query.data?.data;
-
-    if (item) {
-      form.reset({
-        request_number: item.request_number,
-        sender: item.sender,
-        recipient: item.recipient,
-        leader: item.leader,
-        action_type: item.action_type,
-      });
-    }
-  }, [query.data, form]);
-
   const onSubmit = useCallback(
-    (data: DApplicationDto) => {
-      save.mutate(data);
-    },
-    [save],
+      (values: DApplicationDto) => {
+        save.mutate(values);
+      },
+      [save],
   );
 
-  return { form, onSubmit, isLoading: query.isLoading || save.isPending };
+  return {
+    form,
+    actionOptions,
+    isLoading: save.isPending || applicationDocumentQuery.isFetching,
+    onSubmit,
+  };
 };
 
 export default useDApplicationForm;

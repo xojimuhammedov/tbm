@@ -9,7 +9,7 @@ import { Button } from "dgz-ui/button";
 import { CirclePlusIcon } from "lucide-react";
 import KEYS from "@/shared/constants/keys";
 import { FApplicationInterface } from "./interfaces/f-252.interface";
-import useFApplication from "@/pages/rh-252/f-252/hooks/useFApplication.ts";
+import useFApplications from "@/pages/rh-252/f-252/hooks/useFApplications.ts";
 import FApplicationView from "@/pages/rh-252/f-252/components/FApplicationView.tsx";
 
 const FApplicationPage = () => {
@@ -25,7 +25,7 @@ const FApplicationPage = () => {
     openView,
     handleCloseView,
     currentItem,
-  } = useFApplication();
+  } = useFApplications();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
