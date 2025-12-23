@@ -12,7 +12,7 @@ import createFApplicationColumns from "@/pages/rh-252/f-252/helpers/createFAppli
 import URLS from "@/shared/constants/urls";
 import useFApplication from "@/pages/rh-252/f-252/hooks/useFApplication.ts";
 
-  const useFApplications = () => {
+const useFApplications = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -30,10 +30,10 @@ import useFApplication from "@/pages/rh-252/f-252/hooks/useFApplication.ts";
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/rh-252/f-252/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/rh-252/f-252/edit/${id}`);
+    },
+    [navigate],
   );
 
   const handleView = useCallback((id: string) => {
@@ -47,38 +47,38 @@ import useFApplication from "@/pages/rh-252/f-252/hooks/useFApplication.ts";
   }, []);
 
   const handleDelete = useCallback(
-      (id: string) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Success"),
-                description: t("Successfully deleted"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred")}`,
-                ),
-              });
-            });
-      },
-      [query, removeWithConfirm, t, toast],
+    (id: string) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Success"),
+            description: t("Successfully deleted"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred")}`,
+            ),
+          });
+        });
+    },
+    [query, removeWithConfirm, t, toast],
   );
 
   const columns: ColumnType<FApplicationInterface>[] = useMemo(
-      () =>
-          createFApplicationColumns(
-              t as unknown as (...args: TranslationArgsType) => string,
-              handleEdit,
-              handleDelete,
-              handleView,
-          ),
-      [handleDelete, handleEdit, handleView, t],
+    () =>
+      createFApplicationColumns(
+        t as unknown as (...args: TranslationArgsType) => string,
+        handleEdit,
+        handleDelete,
+        handleView,
+      ),
+    [handleDelete, handleEdit, handleView, t],
   );
 
   return {

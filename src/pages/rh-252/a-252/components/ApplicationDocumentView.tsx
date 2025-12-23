@@ -15,7 +15,6 @@ const ApplicationDocumentView = ({
   onOpenChange,
   document,
 }: ApplicationDocumentViewProps) => {
-
   const groupedFlows = document?.create?.flows?.reduce(
     (acc, item) => {
       const key = `${item.point_a}-${item.point_b}`;
@@ -27,7 +26,7 @@ const ApplicationDocumentView = ({
       acc[key].push(item);
       return acc;
     },
-    {} as Record<string, typeof document.create.flows>
+    {} as Record<string, typeof document.create.flows>,
   );
   return (
     <MyModal
@@ -115,22 +114,21 @@ const ApplicationDocumentView = ({
               return (
                 <div key={index} className="flex flex-col gap-2 border-b pb-4">
                   <p className="mt-4">
-                    <span className="font-bold">{first.point_a}</span> stansiyasida
-                    (0601)
+                    <span className="font-bold">{first.point_a}</span>{" "}
+                    stansiyasida (0601)
                     <span className="font-bold"> {first.device_a}:</span>
                     <span className="font-bold">{first.port_a}</span> portlar
                   </p>
 
                   <p className="mb-4">
-                    <span className="font-bold">{last.point_b}</span> stansiyasida
-                    (0607)
+                    <span className="font-bold">{last.point_b}</span>{" "}
+                    stansiyasida (0607)
                     <span className="font-bold"> {last.device_b}:</span>
                     <span className="font-bold">{last.port_b}</span> portga
                   </p>
                 </div>
               );
             })}
-
 
           <p className="mb-4">
             Tashkil qilingan:{" "}

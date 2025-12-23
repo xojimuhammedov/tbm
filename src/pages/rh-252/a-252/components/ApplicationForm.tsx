@@ -384,7 +384,9 @@ const ApplicationDocumentForm = () => {
                   control={form.control}
                   name={`create.flow_ids.${index}.point_a`}
                   placeholder="Point A"
-                  className={"border border-t-0 border-l-0 border-r-0 rounded-none h-7"}
+                  className={
+                    "border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                  }
                 />
                 <MyInput
                   control={form.control}
@@ -402,7 +404,9 @@ const ApplicationDocumentForm = () => {
                   control={form.control}
                   name={`create.flow_ids.${index}.point_b`}
                   placeholder="Point B"
-                  className={"border border-t-0 border-l-0 border-r-0 rounded-none h-7"}
+                  className={
+                    "border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                  }
                 />
                 <MyInput
                   control={form.control}

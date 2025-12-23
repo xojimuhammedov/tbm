@@ -26,12 +26,12 @@ const useFApplicationForm = ({ id, onSave }: FApplicationFormProps = {}) => {
   const navigate = useNavigate();
   const { applicationDocumentQuery } = useFApplication(id as string);
   const actionOptions = useMemo(
-      () => [
-        { label: t("Tashkil etish"), value: "create" },
-        { label: t("Ko'chirish"), value: "update" },
-        { label: t("O'chirish"), value: "delete" },
-      ],
-      [t],
+    () => [
+      { label: t("Tashkil etish"), value: "create" },
+      { label: t("Ko'chirish"), value: "update" },
+      { label: t("O'chirish"), value: "delete" },
+    ],
+    [t],
   );
 
   const form = useForm<FApplicationDto>({
@@ -67,16 +67,16 @@ const useFApplicationForm = ({ id, onSave }: FApplicationFormProps = {}) => {
         ubp_input: item.ubp_input || "",
         action_type: item.action_type || [],
         data:
-            item.data?.length > 0
-                ? item.data
-                : [
-                  {
-                    order_code: "",
-                    connection_established_date: "",
-                    connection_route_details: "",
-                    comment: "",
-                  },
-                ],
+          item.data?.length > 0
+            ? item.data
+            : [
+                {
+                  order_code: "",
+                  connection_established_date: "",
+                  connection_route_details: "",
+                  comment: "",
+                },
+              ],
       });
     }
   }, [applicationDocumentQuery.data, id, form]);
@@ -91,8 +91,8 @@ const useFApplicationForm = ({ id, onSave }: FApplicationFormProps = {}) => {
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("Request updated successfully")
-              : t("Request created successfully"),
+            ? t("Request updated successfully")
+            : t("Request created successfully"),
         });
         onSave?.();
         navigate("/rh-252/f-252");
@@ -103,7 +103,7 @@ const useFApplicationForm = ({ id, onSave }: FApplicationFormProps = {}) => {
           variant: "destructive",
           title: t(`${get(axiosError, "response.statusText", "Error")}`),
           description: t(
-              `${get(axiosError, "response.data.message", "An error occurred. Contact the administrator")}`,
+            `${get(axiosError, "response.data.message", "An error occurred. Contact the administrator")}`,
           ),
         });
       },
@@ -120,19 +120,19 @@ const useFApplicationForm = ({ id, onSave }: FApplicationFormProps = {}) => {
   }, [append]);
 
   const handleRemove = useCallback(
-      (index: number) => {
-        if (fields.length > 1) {
-          remove(index);
-        }
-      },
-      [remove, fields.length],
+    (index: number) => {
+      if (fields.length > 1) {
+        remove(index);
+      }
+    },
+    [remove, fields.length],
   );
 
   const onSubmit = useCallback(
-      (values: FApplicationDto) => {
-        save.mutate(values);
-      },
-      [save],
+    (values: FApplicationDto) => {
+      save.mutate(values);
+    },
+    [save],
   );
 
   return {

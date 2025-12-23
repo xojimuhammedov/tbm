@@ -28,7 +28,7 @@ const ChannelForm = ({ id, onSave, readOnly = false }: ChannelFormProps) => {
         <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
           <MyInput<ChannelDto>
             control={form.control}
-            name={"id_number"}
+            name={"code"}
             label={t("ID номера")}
             placeholder={t("ID номера")}
             required

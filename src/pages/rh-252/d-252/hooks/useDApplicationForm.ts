@@ -26,12 +26,12 @@ const useDApplicationForm = ({ id, onSave }: DApplicationFormProps = {}) => {
   const navigate = useNavigate();
   const { applicationDocumentQuery } = useDApplication(id as string);
   const actionOptions = useMemo(
-      () => [
-        { label: t("Tashkil etish"), value: "create" },
-        { label: t("Ko'chirish"), value: "update" },
-        { label: t("O'chirish"), value: "delete" },
-      ],
-      [t],
+    () => [
+      { label: t("Tashkil etish"), value: "create" },
+      { label: t("Ko'chirish"), value: "update" },
+      { label: t("O'chirish"), value: "delete" },
+    ],
+    [t],
   );
 
   const form = useForm<DApplicationDto>({
@@ -69,8 +69,8 @@ const useDApplicationForm = ({ id, onSave }: DApplicationFormProps = {}) => {
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("Request updated successfully")
-              : t("Request created successfully"),
+            ? t("Request updated successfully")
+            : t("Request created successfully"),
         });
         onSave?.();
         navigate("/rh-252/d-252");
@@ -81,7 +81,7 @@ const useDApplicationForm = ({ id, onSave }: DApplicationFormProps = {}) => {
           variant: "destructive",
           title: t(`${get(axiosError, "response.statusText", "Error")}`),
           description: t(
-              `${get(axiosError, "response.data.message", "An error occurred. Contact the administrator")}`,
+            `${get(axiosError, "response.data.message", "An error occurred. Contact the administrator")}`,
           ),
         });
       },
@@ -89,10 +89,10 @@ const useDApplicationForm = ({ id, onSave }: DApplicationFormProps = {}) => {
   });
 
   const onSubmit = useCallback(
-      (values: DApplicationDto) => {
-        save.mutate(values);
-      },
-      [save],
+    (values: DApplicationDto) => {
+      save.mutate(values);
+    },
+    [save],
   );
 
   return {

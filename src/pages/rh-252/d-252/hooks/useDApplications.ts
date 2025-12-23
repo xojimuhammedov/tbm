@@ -32,10 +32,10 @@ const useDApplications = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/rh-252/d-252/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/rh-252/d-252/edit/${id}`);
+    },
+    [navigate],
   );
 
   const handleView = useCallback((id: string) => {
@@ -49,38 +49,38 @@ const useDApplications = () => {
   }, []);
 
   const handleDelete = useCallback(
-      (id: string) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Success"),
-                description: t("Successfully deleted"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred")}`,
-                ),
-              });
-            });
-      },
-      [query, removeWithConfirm, t, toast],
+    (id: string) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Success"),
+            description: t("Successfully deleted"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred")}`,
+            ),
+          });
+        });
+    },
+    [query, removeWithConfirm, t, toast],
   );
 
   const columns: ColumnType<DApplicationInterface>[] = useMemo(
-      () =>
-          createDApplicationColumns(
-              t as unknown as (...args: TranslationArgsType) => string,
-              handleEdit,
-              handleDelete,
-              handleView,
-          ),
-      [handleDelete, handleEdit, handleView, t],
+    () =>
+      createDApplicationColumns(
+        t as unknown as (...args: TranslationArgsType) => string,
+        handleEdit,
+        handleDelete,
+        handleView,
+      ),
+    [handleDelete, handleEdit, handleView, t],
   );
 
   return {

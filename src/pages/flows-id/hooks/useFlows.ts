@@ -22,32 +22,32 @@ const useFlows = () => {
   });
   const currentItem = useMemo(() => {
     if (!viewId || !query.data) return null;
-    const list = query.data.docs || get(query.data, 'data.docs') || [];
+    const list = query.data.docs || get(query.data, "data.docs") || [];
     return list.find((item: FlowInterface) => item._id === viewId);
   }, [query.data, viewId]);
 
   const handleDelete = useCallback(
-      (id: FlowInterface["_id"]) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t(`Success`),
-                description: t(`Flow removed successfully`),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-                ),
-              });
-            });
-      },
-      [removeWithConfirm, t, toast, query],
+    (id: FlowInterface["_id"]) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Flow removed successfully`),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, t, toast, query],
   );
 
   const handleAdd = useCallback(() => {
@@ -55,10 +55,10 @@ const useFlows = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/flows-id/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/flows-id/edit/${id}`);
+    },
+    [navigate],
   );
 
   const handleView = useCallback((id: string) => {
@@ -72,8 +72,8 @@ const useFlows = () => {
   }, []);
 
   const columns = useMemo(
-      () => createFlowColumns(t, handleDelete, handleEdit, handleView),
-      [t, handleDelete, handleEdit, handleView],
+    () => createFlowColumns(t, handleDelete, handleEdit, handleView),
+    [t, handleDelete, handleEdit, handleView],
   );
 
   return {
