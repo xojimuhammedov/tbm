@@ -15,6 +15,20 @@ const ApplicationDocumentView = ({
   onOpenChange,
   document,
 }: ApplicationDocumentViewProps) => {
+
+  const groupedFlows = document?.create?.flows?.reduce(
+    (acc, item) => {
+      const key = `${item.point_a}-${item.point_b}`;
+
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+
+      acc[key].push(item);
+      return acc;
+    },
+    {} as Record<string, typeof document.create.flows>
+  );
   return (
     <MyModal
       open={open}
@@ -93,23 +107,30 @@ const ApplicationDocumentView = ({
             </p>
           </div>
 
-          {document?.create?.flows?.map((item) => (
-            <div className="flex flex-col gap-2">
-              <p className="mt-4">
-                <span className="font-bold">{item?.point_a}</span> stansiyasida
-                (0601)
-                <span className="font-bold">{item?.device_a}:</span>
-                <span className="font-bold">{item.port_a}</span> portlar
-              </p>
+          {groupedFlows &&
+            Object.values(groupedFlows).map((group, index) => {
+              const first = group[0];
+              const last = group[group.length - 1];
 
-              <p className="mb-4">
-                <span className="font-bold">{item?.point_b}</span> stansiyasida
-                (0607)
-                <span className="font-bold">{item?.device_b}:</span>
-                <span className="font-bold">{item.port_b}</span> portga
-              </p>
-            </div>
-          ))}
+              return (
+                <div key={index} className="flex flex-col gap-2 border-b pb-4">
+                  <p className="mt-4">
+                    <span className="font-bold">{first.point_a}</span> stansiyasida
+                    (0601)
+                    <span className="font-bold"> {first.device_a}:</span>
+                    <span className="font-bold">{first.port_a}</span> portlar
+                  </p>
+
+                  <p className="mb-4">
+                    <span className="font-bold">{last.point_b}</span> stansiyasida
+                    (0607)
+                    <span className="font-bold"> {last.device_b}:</span>
+                    <span className="font-bold">{last.port_b}</span> portga
+                  </p>
+                </div>
+              );
+            })}
+
 
           <p className="mb-4">
             Tashkil qilingan:{" "}
@@ -119,25 +140,6 @@ const ApplicationDocumentView = ({
           </p>
         </div>
       </div>
-      {/* <div className="flex flex-1 flex-col xl:flex-row gap-4 overflow-hidden">
-        <div
-          className="
-            flex-1 border rounded-lg p-2
-            overflow-visible
-            xl:overflow-y-auto
-            xl:max-h-[80vh]
-            scrollbar-thin scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thumb-rounded-full
-          "
-        >
-          <ApplicationDocument title={document?.title} document={document} />
-        </div>
-
-        <DocumentInfo
-          docType={t("Application")}
-          onOpenChange={onOpenChange}
-          document={document}
-        />
-      </div> */}
     </MyModal>
   );
 };

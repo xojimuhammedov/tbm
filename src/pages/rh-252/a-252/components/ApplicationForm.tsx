@@ -361,8 +361,14 @@ const ApplicationDocumentForm = () => {
             return (
               <div
                 key={field.id}
-                className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto] gap-4 my-2 w-full items-center"
+                className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_auto] gap-4 my-2 w-full items-center"
               >
+                <MyInput
+                  control={form.control}
+                  name={`create.flow_ids.${index}.signal_level`}
+                  placeholder="Signal level"
+                  className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                />
                 <MyInput
                   control={form.control}
                   name={`create.flow_ids.${index}.code`}
@@ -376,9 +382,9 @@ const ApplicationDocumentForm = () => {
                 />
                 <MyInput
                   control={form.control}
-                  name={`create.flow_ids.${index}.signal_level`}
-                  placeholder="Signal level"
-                  className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                  name={`create.flow_ids.${index}.point_a`}
+                  placeholder="Point A"
+                  className={"border border-t-0 border-l-0 border-r-0 rounded-none h-7"}
                 />
                 <MyInput
                   control={form.control}
@@ -388,14 +394,20 @@ const ApplicationDocumentForm = () => {
                 />
                 <MyInput
                   control={form.control}
-                  name={`create.flow_ids.${index}.port_b`}
-                  placeholder="Port B"
+                  name={`create.flow_ids.${index}.device_a`}
+                  placeholder="Device A"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
                 <MyInput
                   control={form.control}
-                  name={`create.flow_ids.${index}.device_a`}
-                  placeholder="Device A"
+                  name={`create.flow_ids.${index}.point_b`}
+                  placeholder="Point B"
+                  className={"border border-t-0 border-l-0 border-r-0 rounded-none h-7"}
+                />
+                <MyInput
+                  control={form.control}
+                  name={`create.flow_ids.${index}.port_b`}
+                  placeholder="Port B"
                   className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                 />
                 <MyInput

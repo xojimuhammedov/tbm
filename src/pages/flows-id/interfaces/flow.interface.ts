@@ -15,4 +15,6 @@ export interface FlowInterface {
   organization_archive: string;
   name_point_a?: string;
   name_point_b?: string;
+  device_a?: string;
+  device_b?: string;
 }
