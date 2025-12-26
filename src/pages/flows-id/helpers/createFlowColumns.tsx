@@ -28,6 +28,13 @@ const createFlowColumns = (
     key: "organization_order",
     dataIndex: "organization_order",
     name: t("Organization order"),
+    render: (value) => {
+      if (!value) return "-";
+      if (Array.isArray(value)) {
+        return value.map((item) => item.order_code).join(", ");
+      }
+      return value.toString();
+    },
   },
   {
     key: "_id",

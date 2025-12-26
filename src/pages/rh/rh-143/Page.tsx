@@ -1,7 +1,7 @@
 import PdfViewer from "@/components/ui/pdfViewer.tsx";
 
-const RhFirstPage = () => {
+const Rh_143_Page = () => {
   return <PdfViewer file="/file/rh-143.pdf" />;
 };
 
-export default RhFirstPage;
+export default Rh_143_Page;
