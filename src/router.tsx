@@ -40,12 +40,14 @@ const ApplicationFormPage = lazy(
 );
 
 // RH menu section
-const RhFirstPage = lazy(() => import("@/pages/rh/rh-143/Page.tsx"));
-const RhSecondPage = lazy(() => import("@/pages/rh/rh-091/Page.tsx"));
-const RhThirdPage = lazy(() => import("@/pages/rh/rh-218/Page.tsx"));
-const RhFourthPage = lazy(() => import("@/pages/rh/rh-249/Page.tsx"));
-const RhFifthPage = lazy(() => import("@/pages/rh/rh-251/Page.tsx"));
-
+const Rh_143_Page = lazy(() => import("@/pages/rh/rh-143/Page.tsx"));
+const Rh_091_Page = lazy(() => import("@/pages/rh/rh-091/Page.tsx"));
+const Rh_218_Page = lazy(() => import("@/pages/rh/rh-218/Page.tsx"));
+const Rh_249_Page = lazy(() => import("@/pages/rh/rh-249/Page.tsx"));
+const Rh_251_Page = lazy(() => import("@/pages/rh/rh-251/Page.tsx"));
+const Rh_226_1_Page=lazy(() => import("@/pages/rh/rh-226-1/Page.tsx"));
+const Rh_226_2_Page=lazy(() => import("@/pages/rh/rh-226-2/Page.tsx"));
+const Rh_260_Page=lazy(() => import("@/pages/rh/rh-260/Page.tsx"));
 // Resource Database Pages
 const NokiaPage = lazy(() => import("@/pages/staff/Page"));
 const ZTEPage = lazy(() => import("@/pages/staff/Page"));
@@ -207,24 +209,36 @@ function Router() {
         // RH files section
         {
           path: "rh/rh-143",
-          element: <RhFirstPage />,
+          element: <Rh_143_Page />,
         },
         {
           path: "rh/rh-091",
-          element: <RhSecondPage />,
+          element: <Rh_091_Page />,
         },
 
         {
           path: "rh/rh-218",
-          element: <RhThirdPage />,
+          element: <Rh_218_Page />,
         },
         {
           path: "rh/rh-249",
-          element: <RhFourthPage />,
+          element: <Rh_249_Page />,
         },
         {
           path: "rh/rh-251",
-          element: <RhFifthPage />,
+          element: <Rh_251_Page />,
+        },
+        {
+          path: "rh/rh-226-1",
+          element: <Rh_226_1_Page />,
+        },
+        {
+          path: "rh/rh-226-2",
+          element: <Rh_226_2_Page />,
+        },
+        {
+          path: "rh/rh-260",
+          element: <Rh_260_Page />,
         },
 
         // RTTSI sectioni

@@ -92,12 +92,24 @@ const createSidebarGroups = (
             url: "rh-218",
           },
           {
+            title: t("RH-226-1"),
+            url: "rh-226-1",
+          },
+          {
+            title: t("RH-226-2"),
+            url: "rh-226-2",
+          },
+          {
             title: t("RH-249"),
             url: "rh-249",
           },
           {
             title: t("RH-251"),
             url: "rh-251",
+          },
+          {
+            title: t("RH-260"),
+            url: "rh-260",
           },
         ],
       },
