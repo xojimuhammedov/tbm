@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { MyModal } from "@/shared/components/moleculas/modal";
-import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface";
 
 interface FlowViewProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  document?: FlowInterface | null;
+  document?: any | null;
 }
 const FlowView = ({ open, onOpenChange, document }: FlowViewProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
+
 
   return (
     <MyModal
@@ -52,22 +52,6 @@ const FlowView = ({ open, onOpenChange, document }: FlowViewProps) => {
                 </tr>
                 <tr>
                   <td className="border border-black p-3 bg-gray-50 font-bold">
-                    Device A (Nomi):
-                  </td>
-                  <td className="border border-black p-3">
-                    {document?.device_a || document?.device_a || "---"}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-black p-3 bg-gray-50 font-bold">
-                    Device B (Nomi):
-                  </td>
-                  <td className="border border-black p-3">
-                    {document?.device_b || document?.device_b || "---"}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-black p-3 bg-gray-50 font-bold">
                     Signal darajasi:
                   </td>
                   <td className="border border-black p-3">
@@ -77,48 +61,82 @@ const FlowView = ({ open, onOpenChange, document }: FlowViewProps) => {
               </tbody>
             </table>
           </div>
-          <div className="mb-8">
-            <h3 className="font-bold text-base mb-3 underline">
-              Tashkiliy asoslar:
-            </h3>
-            <div className="grid grid-cols-2 gap-4 text-base">
-              <div className="border border-black p-3">
-                <p className="font-bold mb-1">Tashkilot buyrug'i:</p>
-                <p>{document?.organization_order || "Mavjud emas"}</p>
-              </div>
-              <div className="border border-black p-3">
-                <p className="font-bold mb-1">Deshifrovka buyruq raqami:</p>
-                <p>{document?.deciphering_order_number || "Mavjud emas"}</p>
+
+          {document?.organization_order?.length > 0 && (
+            <div className="mb-8">
+              <h3 className="font-bold text-base mb-3 underline">
+                Oxirgi yaratilgan farmoyish:
+              </h3>
+              <div className="grid grid-cols-2 gap-4 text-base">
+                <div className="border border-black p-3">
+                  <p className="font-bold mb-1">Farmoyish sanasi:</p>
+                  <p>{document?.organization_order?.[0]?.order_date || "Mavjud emas"}</p>
+                </div>
+                <div className="border border-black p-3">
+                  <p className="font-bold mb-1">Farmoyish raqami:</p>
+                  <p>{document?.organization_order?.[0]?.order_code || "Mavjud emas"}</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="mb-8">
-            <h3 className="font-bold text-base mb-3 underline">
-              Arxiv ma'lumotlari:
-            </h3>
-            <table className="w-full border-collapse border border-black text-base">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="border border-black p-2 text-left">
-                    Tashkilot arxivi
-                  </th>
-                  <th className="border border-black p-2 text-left">
-                    Deshifrovka arxivi
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border border-black p-3">
-                    {document?.organization_archive || "---"}
-                  </td>
-                  <td className="border border-black p-3">
-                    {document?.deciphering_archive || "---"}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          )}
+          {document?.organization_order?.length > 1 && (
+            <div className="mb-8">
+              <h3 className="font-bold text-base mb-3 underline">
+                Arxivdagi farmoyishlar:
+              </h3>
+              {document?.organization_order?.slice(1)?.map((item: any) => (
+                <div className="grid grid-cols-2 my-4 text-base">
+                  <div className="border border-black p-3">
+                    <p className="font-bold mb-1">Farmoyish sanasi:</p>
+                    <p>{item?.order_date || "Mavjud emas"}</p>
+                  </div>
+                  <div className="border border-black p-3">
+                    <p className="font-bold mb-1">Farmoyish raqami:</p>
+                    <p>{item?.order_code || "Mavjud emas"}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {document?.dissolution_order?.length > 0 && (
+            <div className="mb-8">
+              <h3 className="font-bold text-base mb-3 underline">
+                 Bekor qilingan oxirgi farmoyish:
+              </h3>
+                <div className="grid grid-cols-2 my-4 text-base">
+                  <div className="border border-black p-3">
+                    <p className="font-bold mb-1">Farmoyish sanasi:</p>
+                    <p>{document?.dissolution_order?.[0]?.order_date || "Mavjud emas"}</p>
+                  </div>
+                  <div className="border border-black p-3">
+                    <p className="font-bold mb-1">Farmoyish raqami:</p>
+                    <p>{document?.dissolution_order?.[0]?.order_code || "Mavjud emas"}</p>
+                  </div>
+                </div>
+            </div>
+          )}
+
+
+          {document?.dissolution_order?.length > 1 && (
+            <div className="mb-8">
+              <h3 className="font-bold text-base mb-3 underline">
+                Bekor qilingan arxivdagi farmoyishlar:
+              </h3>
+              {document?.dissolution_order?.slice(1)?.map((item: any) => (
+                <div className="grid grid-cols-2 my-4 text-base">
+                  <div className="border border-black p-3">
+                    <p className="font-bold mb-1">Farmoyish sanasi:</p>
+                    <p>{item?.order_date || "Mavjud emas"}</p>
+                  </div>
+                  <div className="border border-black p-3">
+                    <p className="font-bold mb-1">Farmoyish raqami:</p>
+                    <p>{item?.order_code || "Mavjud emas"}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
           {document?.note && (
             <div className="mb-10">
               <p className="font-bold text-base mb-1">Izoh:</p>
