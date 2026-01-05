@@ -1,20 +1,22 @@
 import { useTranslation } from "react-i18next";
-import { useMemo } from "react";
+import {useMemo, useState} from "react";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import { CirclePlusIcon } from "lucide-react";
+import {CirclePlusIcon, UploadIcon} from "lucide-react";
 import { FLOWS_5_1_QUERY_KEY } from "@/pages/flows-5_1/constants/flows.constants.ts";
 import { FlowInterface } from "@/pages/flows-5_1/interfaces/flow.interface.ts";
 import useFlows from "@/pages/flows-5_1/hooks/useFlows.ts";
+import ImportFlow_5_1_Modal from "@/pages/flows-5_1/components/ImportFlow_5_1_Modal.tsx";
 
 const Page = () => {
   const { t } = useTranslation();
   const { loading, columns, dataSource, handleFilter, params, handleAdd } =
     useFlows();
+    const [importModalOpen, setImportModalOpen] = useState(false);
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
@@ -28,10 +30,16 @@ const Page = () => {
   return (
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-        <Button size={"sm"} onClick={handleAdd}>
-          <CirclePlusIcon />
-          {t("Add new")}
-        </Button>
+          <div className="flex items-center gap-2">
+              <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
+                  <UploadIcon className="size-4" />
+                  {t("Import")}
+              </Button>
+              <Button size={"sm"} onClick={handleAdd}>
+                  <CirclePlusIcon />
+                  {t("Add new")}
+              </Button>
+          </div>
       </PageHeader>
       <PageWrapper>
         <DataTable<FlowInterface, PaginationInterface<FlowInterface>>
@@ -49,6 +57,11 @@ const Page = () => {
           columns={columns}
         />
       </PageWrapper>
+
+        <ImportFlow_5_1_Modal
+            open={importModalOpen}
+            onOpenChange={setImportModalOpen}
+        />
     </>
   );
 };
