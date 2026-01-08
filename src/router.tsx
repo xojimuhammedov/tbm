@@ -15,6 +15,17 @@ const LoginPage = lazy(() => import("./layouts/auth/login/Login"));
 // Dashboard Pages
 const DashboardPage = lazy(() => import("./pages/dashboard/Page"));
 
+
+// External incoming documents
+const Eid_17_96_Page = lazy(() => import("@/pages/eid/17-96 document/Page.tsx"))
+const Eid_17_96_FormPage = lazy(() => import("@/pages/eid/17-96 document/pages/FormPage.tsx"));
+const Eid_17_97 = lazy(() => import("@/pages/eid/17-97 document/Page.tsx"))
+const Eid_17_97_FormPage = lazy(() => import("@/pages/eid/17-97 document/pages/FormPage.tsx"));
+const Eid_17_98 = lazy(() => import("@/pages/eid/17-98 document/Page.tsx"))
+const Eid_17_98_FormPage = lazy(() => import("@/pages/eid/17-98 document/pages/FormPage.tsx"));
+const Eid_17_99 = lazy(() => import("@/pages/eid/17-99 document/Page.tsx"))
+const Eid_17_99_FormPage = lazy(() => import("@/pages/eid/17-99 document/pages/FormPage.tsx"));
+
 // NM Information Pages
 const ReceivedDocumentsPage = lazy(() => import("@/pages/inbox/Page"));
 const RTSIPage = lazy(() => import("@/pages/staff/Page"));
@@ -74,10 +85,6 @@ const ChannelsCreatePage = lazy(
   () => import("@/pages/channels-id/pages/FormPage"),
 );
 
-const A231Page = lazy(() => import("@/pages/gras/a-231/Page"));
-const A231FormPage = lazy(
-  () => import("@/pages/gras/a-231/pages/FormPage.tsx"),
-);
 const B231Page = lazy(() => import("@/pages/gras/b-231/Page"));
 const B231FormPage = lazy(() => import("@/pages/gras/b-231/page/FormPage.tsx"));
 const C231Page = lazy(() => import("@/pages/gras/c-231/Page"));
@@ -93,6 +100,10 @@ const E231FormPage = lazy(
 
 const A252Page = lazy(() => import("@/pages/rh-252/a-252/Page"));
 const A252FormPage = lazy(() => import("@/pages/rh-252/a-252/pages/FormPage"));
+
+const A231Page = lazy(() => import("@/pages/rh-231/a-231/Page.tsx"));
+const A231FormPage = lazy(() => import("@/pages/rh-231/a-231/pages/FormPage.tsx"));
+
 
 const RH3_3Page = lazy(() => import("@/pages/rh-252/rh-3_3/Page"));
 const RH3_3FormPage = lazy(() => import("@/pages/rh-252/rh-3_3/page/FormPage"));
@@ -148,6 +159,40 @@ function Router() {
         {
           path: "dashboard",
           element: <DashboardPage />,
+        },
+          //External incoming documents
+
+        {
+          path: "eid/eid-96",
+          element: <Eid_17_96_Page/>,
+        },
+        {
+          path: "eid/eid-96/create",
+          element: <Eid_17_96_FormPage />,
+        },
+        {
+          path: "eid/eid-97",
+          element: <Eid_17_97/>,
+        },
+        {
+          path: "eid/eid-97/create",
+          element: <Eid_17_97_FormPage />,
+        },
+        {
+          path: "eid/eid-98",
+          element: <Eid_17_98/>,
+        },
+        {
+          path: "eid/eid-98/create",
+          element: <Eid_17_98_FormPage />,
+        },
+        {
+          path: "eid/eid-99",
+          element: <Eid_17_99/>,
+        },
+        {
+          path: "eid/eid-99/create",
+          element: <Eid_17_99_FormPage />,
         },
         // NM Information Routes
         {
@@ -441,6 +486,15 @@ function Router() {
           path: "rh-252/a-252/create",
           element: <A252FormPage />,
         },
+        {
+          path: "rh-231/a-231",
+          element: <A231Page />,
+        },
+        {
+          path: "rh-231/a-231/create",
+          element: <A231FormPage />,
+        },
+
         {
           path: "rh-252/rh-3_3",
           element: <RH3_3Page />,

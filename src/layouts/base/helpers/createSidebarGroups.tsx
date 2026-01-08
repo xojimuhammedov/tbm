@@ -11,12 +11,42 @@ import {
   User,
   Users,
   BarChart3,
+    Inbox,
 } from "lucide-react";
 
 const createSidebarGroups = (
   t: (...args: TranslationArgsType) => string,
   isActive: (path: string) => boolean,
 ): MenuGroupInterface[] => [
+  {
+    title: t("External incoming documents"),
+    items: [
+      {
+        title: t("EID"),
+        url: "eid",
+        icon: Inbox,
+        isActive: isActive("eid"),
+        children: [
+          {
+            title: t("17-96 document"),
+            url: "eid-96",
+          },
+          {
+            title: t("17-97 document"),
+            url: "eid-97",
+          },
+          {
+            title: t("17-98 document"),
+            url: "eid-98",
+          },
+          {
+            title: t("17-99 document"),
+            url: "eid-99",
+          },
+        ]
+      }
+    ]
+  },
   {
     title: t("NM information"),
     items: [
@@ -47,6 +77,10 @@ const createSidebarGroups = (
           {
             title: t("F-54 document"),
             url: "f-54",
+          },
+          {
+            title: t("17-96 document"),
+            url: "eid-96",
           },
         ],
       },
@@ -146,6 +180,18 @@ const createSidebarGroups = (
           },
         ],
       },
+      {
+        title: t("RH-231"),
+        url: "rh-231",
+        icon: ChartBarBig,
+        isActive: isActive("rh-231"),
+        children: [
+          {
+            title: t("A-Application"),
+            url: "a-231",
+          },
+        ]
+      }
     ],
   },
   // {
