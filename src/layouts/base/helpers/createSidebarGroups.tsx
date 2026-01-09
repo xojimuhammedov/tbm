@@ -19,29 +19,29 @@ const createSidebarGroups = (
   isActive: (path: string) => boolean,
 ): MenuGroupInterface[] => [
   {
-    title: t("External incoming documents"),
+    title: t("Incoming / Outgoing Documents"),
     items: [
       {
-        title: t("EID"),
-        url: "eid",
+        title: t("In & Out Documents"),
+        url: "inout",
         icon: Inbox,
-        isActive: isActive("eid"),
+        isActive: isActive("inout"),
         children: [
           {
-            title: t("17-96 document"),
-            url: "eid-96",
+            title: t("17-96 ex/in document"),
+            url: "exin-96",
           },
           {
-            title: t("17-97 document"),
-            url: "eid-97",
+            title: t("17-97 ex/out document"),
+            url: "exout-97",
           },
           {
-            title: t("17-98 document"),
-            url: "eid-98",
+            title: t("17-98 loc/in document"),
+            url: "locin-98",
           },
           {
-            title: t("17-99 document"),
-            url: "eid-99",
+            title: t("17-99 loc/out document"),
+            url: "locout-99",
           },
         ]
       }

@@ -17,14 +17,14 @@ const DashboardPage = lazy(() => import("./pages/dashboard/Page"));
 
 
 // External incoming documents
-const Eid_17_96_Page = lazy(() => import("@/pages/eid/17-96 document/Page.tsx"))
-const Eid_17_96_FormPage = lazy(() => import("@/pages/eid/17-96 document/pages/FormPage.tsx"));
-const Eid_17_97 = lazy(() => import("@/pages/eid/17-97 document/Page.tsx"))
-const Eid_17_97_FormPage = lazy(() => import("@/pages/eid/17-97 document/pages/FormPage.tsx"));
-const Eid_17_98 = lazy(() => import("@/pages/eid/17-98 document/Page.tsx"))
-const Eid_17_98_FormPage = lazy(() => import("@/pages/eid/17-98 document/pages/FormPage.tsx"));
-const Eid_17_99 = lazy(() => import("@/pages/eid/17-99 document/Page.tsx"))
-const Eid_17_99_FormPage = lazy(() => import("@/pages/eid/17-99 document/pages/FormPage.tsx"));
+const Eid_17_96_Page = lazy(() => import("@/pages/in & out documents/17-96 external inbound document/Page.tsx"))
+const Eid_17_96_FormPage = lazy(() => import("@/pages/in & out documents/17-96 external inbound document/pages/FormPage.tsx"));
+const Eid_17_97 = lazy(() => import("@/pages/in & out documents/17-97 external outbound document/Page.tsx"))
+const Eid_17_97_FormPage = lazy(() => import("@/pages/in & out documents/17-97 external outbound document/pages/FormPage.tsx"));
+const Eid_17_98 = lazy(() => import("@/pages/in & out documents/17-98 local inbound document/Page.tsx"))
+const Eid_17_98_FormPage = lazy(() => import("@/pages/in & out documents/17-98 local inbound document/pages/FormPage.tsx"));
+const Eid_17_99 = lazy(() => import("@/pages/in & out documents/17-99 local outbound document/Page.tsx"))
+const Eid_17_99_FormPage = lazy(() => import("@/pages/in & out documents/17-99 local outbound document/pages/FormPage.tsx"));
 
 // NM Information Pages
 const ReceivedDocumentsPage = lazy(() => import("@/pages/inbox/Page"));
@@ -163,35 +163,51 @@ function Router() {
           //External incoming documents
 
         {
-          path: "eid/eid-96",
+          path: "inout/exin-96",
           element: <Eid_17_96_Page/>,
         },
         {
-          path: "eid/eid-96/create",
+          path: "inout/exin-96/create",
           element: <Eid_17_96_FormPage />,
         },
         {
-          path: "eid/eid-97",
+          path: "inout/exin-96/edit/:id",
+          element: <Eid_17_96_FormPage />,
+        },
+        {
+          path: "inout/exout-97",
           element: <Eid_17_97/>,
         },
         {
-          path: "eid/eid-97/create",
+          path: "inout/exout-97/create",
           element: <Eid_17_97_FormPage />,
         },
         {
-          path: "eid/eid-98",
+          path: "inout/exout-97/edit/:id",
+          element: <Eid_17_97_FormPage />,
+        },
+        {
+          path: "inout/locin-98",
           element: <Eid_17_98/>,
         },
         {
-          path: "eid/eid-98/create",
+          path: "inout/locin-98/create",
           element: <Eid_17_98_FormPage />,
         },
         {
-          path: "eid/eid-99",
+          path: "inout/locin-98/edit/:id",
+          element: <Eid_17_98_FormPage />,
+        },
+        {
+          path: "inout/locout-99",
           element: <Eid_17_99/>,
         },
         {
-          path: "eid/eid-99/create",
+          path: "inout/locout-99/create",
+          element: <Eid_17_99_FormPage />,
+        },
+        {
+          path: "inout/locout-99/edit/:id",
           element: <Eid_17_99_FormPage />,
         },
         // NM Information Routes
