@@ -29,11 +29,9 @@ const ImportLocalInboundModal = ({
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<File[]>([]);
-  const [status, setStatus] = useState<"active" | "inactive">("active");
   const [progress, setProgress] = useState(0);
 
   const { handleUpload, loading } = useLocalInboundImport({
-    status,
     onSuccess: () => {
       setProgress(100);
       setTimeout(() => {
@@ -175,46 +173,6 @@ const ImportLocalInboundModal = ({
             </div>
           </div>
         )}
-
-        <div className="p-4 rounded-lg border flex flex-col gap-4 bg-gray-50 border-gray-200 dark:bg-gray-900/40 dark:border-gray-800">
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {t("Select Status")}
-            </label>
-            <div className="flex gap-6">
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input
-                  type="radio"
-                  name="status"
-                  value="active"
-                  checked={status === "active"}
-                  onChange={(e) =>
-                    setStatus(e.target.value as "active" | "inactive")
-                  }
-                  className="w-4 h-4 text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600"
-                />
-                <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {t("Active")}
-                </span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input
-                  type="radio"
-                  name="status"
-                  value="inactive"
-                  checked={status === "inactive"}
-                  onChange={(e) =>
-                    setStatus(e.target.value as "active" | "inactive")
-                  }
-                  className="w-4 h-4 text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600"
-                />
-                <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {t("Inactive")}
-                </span>
-              </label>
-            </div>
-          </div>
-        </div>
 
         <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 mt-2">
           <Button

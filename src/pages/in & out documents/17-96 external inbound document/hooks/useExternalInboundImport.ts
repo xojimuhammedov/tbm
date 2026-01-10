@@ -13,7 +13,6 @@ export type FlowImportProps = {
 };
 
 const useExternalInboundImport = ({
-  status = "active",
   onSuccess,
 }: FlowImportProps = {}) => {
   const { t } = useTranslation();
@@ -22,7 +21,7 @@ const useExternalInboundImport = ({
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return request.post(`${EXTERNAL_INBOUND_IMPORT_API}/${status}`, formData, {
+      return request.post(EXTERNAL_INBOUND_IMPORT_API, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -9,12 +9,10 @@ import {
 } from "@/pages/in & out documents/17-98 local inbound document/constants/local.inbound.constants.ts";
 
 export type FlowImportProps = {
-  status?: string;
   onSuccess?: () => void;
 };
 
 const useLocalInboundImport = ({
-  status = "active",
   onSuccess,
 }: FlowImportProps = {}) => {
   const { t } = useTranslation();
@@ -23,7 +21,7 @@ const useLocalInboundImport = ({
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return request.post(`${LOCAL_INBOUND_IMPORT_API}/${status}`, formData, {
+      return request.post(LOCAL_INBOUND_IMPORT_API, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

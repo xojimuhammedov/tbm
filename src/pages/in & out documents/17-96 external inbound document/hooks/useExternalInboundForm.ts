@@ -24,14 +24,14 @@ export type ExternalInboundFormProps = {
 };
 
 const useExternalInboundForm = ({
-                                  id,
-                                  onSave,
-                                }: ExternalInboundFormProps) => {
+  id,
+  onSave,
+}: ExternalInboundFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const schema = useMemo(
-      () => createExternalInboundSchema(t),
-      [t],
+    () => createExternalInboundSchema(t),
+    [t],
   );
   const form = useForm<ExternalInboundDto>({
     resolver: zodResolver(schema),
@@ -45,21 +45,21 @@ const useExternalInboundForm = ({
   const { query: save } = useMutate({
     url: [EXTERNAL_INBOUND_QUERY_KEY, id || ""],
     method: id
-        ? MutateRequestMethod.PUT
-        : MutateRequestMethod.POST,
+      ? MutateRequestMethod.PUT
+      : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
         toast({
           variant: "destructive",
           title: t(
-              get(error, "response.statusText", "Error"),
+            get(error, "response.statusText", "Error"),
           ),
           description: t(
-              get(
-                  error,
-                  "response.data.message",
-                  "An error occurred. Contact the administrator",
-              ),
+            get(
+              error,
+              "response.data.message",
+              "An error occurred. Contact the administrator",
+            ),
           ),
         });
       },
@@ -70,8 +70,8 @@ const useExternalInboundForm = ({
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("External inbound updated successfully")
-              : t("External inbound created successfully"),
+            ? t("External inbound updated successfully")
+            : t("External inbound created successfully"),
         });
       },
     },
@@ -103,10 +103,10 @@ const useExternalInboundForm = ({
     }
   }, [query.data, form]);
   const onSubmit = useCallback(
-      (data: ExternalInboundDto) => {
-        save.mutate(data);
-      },
-      [save],
+    (data: ExternalInboundDto) => {
+      save.mutate(data);
+    },
+    [save],
   );
   return {
     form,

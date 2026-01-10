@@ -8,12 +8,10 @@ import {
   LOCAL_OUTBOUND_IMPORT_API, LOCAL_OUTBOUND_QUERY_KEY
 } from "@/pages/in & out documents/17-99 local outbound document/constants/local.outbound.constants.ts";
 export type FlowImportProps = {
-  status?: string;
   onSuccess?: () => void;
 };
 
 const useLocalOutboundImport = ({
-  status = "active",
   onSuccess,
 }: FlowImportProps = {}) => {
   const { t } = useTranslation();
@@ -22,7 +20,7 @@ const useLocalOutboundImport = ({
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return request.post(`${LOCAL_OUTBOUND_IMPORT_API}/${status}`, formData, {
+      return request.post(LOCAL_OUTBOUND_IMPORT_API, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
