@@ -3,5 +3,9 @@ const URLS = {
   RH_F_Application: "rh-252/f-app",
   RH_B_Application: "rh-252/b-app",
   RH_Order_Application: "rh-252/order",
+
+  // RH-231
+  RH_231_Application: "rh-231/a-app",
+
 };
 export default URLS;

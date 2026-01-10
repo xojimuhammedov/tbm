@@ -15,6 +15,17 @@ const LoginPage = lazy(() => import("./layouts/auth/login/Login"));
 // Dashboard Pages
 const DashboardPage = lazy(() => import("./pages/dashboard/Page"));
 
+
+// External incoming documents
+const Eid_17_96_Page = lazy(() => import("@/pages/in & out documents/17-96 external inbound document/Page.tsx"))
+const Eid_17_96_FormPage = lazy(() => import("@/pages/in & out documents/17-96 external inbound document/pages/FormPage.tsx"));
+const Eid_17_97 = lazy(() => import("@/pages/in & out documents/17-97 external outbound document/Page.tsx"))
+const Eid_17_97_FormPage = lazy(() => import("@/pages/in & out documents/17-97 external outbound document/pages/FormPage.tsx"));
+const Eid_17_98 = lazy(() => import("@/pages/in & out documents/17-98 local inbound document/Page.tsx"))
+const Eid_17_98_FormPage = lazy(() => import("@/pages/in & out documents/17-98 local inbound document/pages/FormPage.tsx"));
+const Eid_17_99 = lazy(() => import("@/pages/in & out documents/17-99 local outbound document/Page.tsx"))
+const Eid_17_99_FormPage = lazy(() => import("@/pages/in & out documents/17-99 local outbound document/pages/FormPage.tsx"));
+
 // NM Information Pages
 const ReceivedDocumentsPage = lazy(() => import("@/pages/inbox/Page"));
 const RTSIPage = lazy(() => import("@/pages/staff/Page"));
@@ -74,10 +85,6 @@ const ChannelsCreatePage = lazy(
   () => import("@/pages/channels-id/pages/FormPage"),
 );
 
-const A231Page = lazy(() => import("@/pages/gras/a-231/Page"));
-const A231FormPage = lazy(
-  () => import("@/pages/gras/a-231/pages/FormPage.tsx"),
-);
 const B231Page = lazy(() => import("@/pages/gras/b-231/Page"));
 const B231FormPage = lazy(() => import("@/pages/gras/b-231/page/FormPage.tsx"));
 const C231Page = lazy(() => import("@/pages/gras/c-231/Page"));
@@ -93,6 +100,10 @@ const E231FormPage = lazy(
 
 const A252Page = lazy(() => import("@/pages/rh-252/a-252/Page"));
 const A252FormPage = lazy(() => import("@/pages/rh-252/a-252/pages/FormPage"));
+
+const A231Page = lazy(() => import("@/pages/rh-231/a-231/Page.tsx"));
+const A231FormPage = lazy(() => import("@/pages/rh-231/a-231/pages/FormPage.tsx"));
+
 
 const RH3_3Page = lazy(() => import("@/pages/rh-252/rh-3_3/Page"));
 const RH3_3FormPage = lazy(() => import("@/pages/rh-252/rh-3_3/page/FormPage"));
@@ -148,6 +159,56 @@ function Router() {
         {
           path: "dashboard",
           element: <DashboardPage />,
+        },
+          //External incoming documents
+
+        {
+          path: "inout/exin-96",
+          element: <Eid_17_96_Page/>,
+        },
+        {
+          path: "inout/exin-96/create",
+          element: <Eid_17_96_FormPage />,
+        },
+        {
+          path: "inout/exin-96/edit/:id",
+          element: <Eid_17_96_FormPage />,
+        },
+        {
+          path: "inout/exout-97",
+          element: <Eid_17_97/>,
+        },
+        {
+          path: "inout/exout-97/create",
+          element: <Eid_17_97_FormPage />,
+        },
+        {
+          path: "inout/exout-97/edit/:id",
+          element: <Eid_17_97_FormPage />,
+        },
+        {
+          path: "inout/locin-98",
+          element: <Eid_17_98/>,
+        },
+        {
+          path: "inout/locin-98/create",
+          element: <Eid_17_98_FormPage />,
+        },
+        {
+          path: "inout/locin-98/edit/:id",
+          element: <Eid_17_98_FormPage />,
+        },
+        {
+          path: "inout/locout-99",
+          element: <Eid_17_99/>,
+        },
+        {
+          path: "inout/locout-99/create",
+          element: <Eid_17_99_FormPage />,
+        },
+        {
+          path: "inout/locout-99/edit/:id",
+          element: <Eid_17_99_FormPage />,
         },
         // NM Information Routes
         {
@@ -441,6 +502,15 @@ function Router() {
           path: "rh-252/a-252/create",
           element: <A252FormPage />,
         },
+        {
+          path: "rh-231/a-231",
+          element: <A231Page />,
+        },
+        {
+          path: "rh-231/a-231/create",
+          element: <A231FormPage />,
+        },
+
         {
           path: "rh-252/rh-3_3",
           element: <RH3_3Page />,
