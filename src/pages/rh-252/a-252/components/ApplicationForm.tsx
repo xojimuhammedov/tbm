@@ -73,11 +73,14 @@ const ApplicationDocumentForm = () => {
     name: "create.flow_ids",
   });
 
-  const { fields: updateFields, append: appendUpdate, remove: removeUpdate, } = useFieldArray({
+  const {
+    fields: updateFields,
+    append: appendUpdate,
+    remove: removeUpdate,
+  } = useFieldArray({
     control: form.control,
     name: "update.flow_ids",
   });
-
 
   // const watchedRows = useWatch({
   //   control: form.control,
@@ -450,7 +453,6 @@ const ApplicationDocumentForm = () => {
             );
           })}
 
-
           {form.watch("action_type").includes("update") && (
             <div className="flex flex-col gap-4">
               {updateFields.map((field, index) => (
@@ -485,7 +487,9 @@ const ApplicationDocumentForm = () => {
 
                   {/* To */}
                   <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-gray-700">To (Yangi holat)</h4>
+                    <h4 className="text-sm font-medium text-gray-700">
+                      To (Yangi holat)
+                    </h4>
                     <div className="grid grid-cols-4 gap-3">
                       <MyInput
                         control={form.control}
@@ -514,7 +518,9 @@ const ApplicationDocumentForm = () => {
                     </div>
                   </div>
                   <Trash2
-                    className={"cursor-pointer absolute right-[10px] top-[10px]"}
+                    className={
+                      "cursor-pointer absolute right-[10px] top-[10px]"
+                    }
                     size={24}
                     color={"red"}
                     onClick={() => removeUpdate(index)}
@@ -525,15 +531,17 @@ const ApplicationDocumentForm = () => {
                 className={"cursor-pointer"}
                 size={24}
                 color={"blue"}
-                onClick={() => appendUpdate({
-                  point_a: "",
-                  point_b: "",
-                  id_or_channel: "",
-                  new_point_a: "",
-                  new_point_b: "",
-                  new_id_or_channel: "",
-                  new_port: "",
-                })}
+                onClick={() =>
+                  appendUpdate({
+                    point_a: "",
+                    point_b: "",
+                    id_or_channel: "",
+                    new_point_a: "",
+                    new_point_b: "",
+                    new_id_or_channel: "",
+                    new_port: "",
+                  })
+                }
               />
             </div>
           )}

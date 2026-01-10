@@ -9,30 +9,20 @@ import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import {
   createLocalOutboundSchema,
-  LocalOutboundDto
+  LocalOutboundDto,
 } from "@/pages/in & out documents/17-99 local outbound document/schemas/createChannelSchema.ts";
-import {
-  LocalOutboundInterface
-} from "@/pages/in & out documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
-import {
-  LOCAL_OUTBOUND_QUERY_KEY
-} from "@/pages/in & out documents/17-99 local outbound document/constants/local.outbound.constants.ts";
+import { LocalOutboundInterface } from "@/pages/in & out documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
+import { LOCAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-99 local outbound document/constants/local.outbound.constants.ts";
 
 export type ExternalOutboundFormProps = {
   id: string | null;
   onSave?: () => void;
 };
 
-const useLocalOutboundForm = ({
-                                  id,
-                                  onSave,
-                                }: ExternalOutboundFormProps) => {
+const useLocalOutboundForm = ({ id, onSave }: ExternalOutboundFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const schema = useMemo(
-      () => createLocalOutboundSchema(t),
-      [t],
-  );
+  const schema = useMemo(() => createLocalOutboundSchema(t), [t]);
   const form = useForm<LocalOutboundDto>({
     resolver: zodResolver(schema),
   });
@@ -44,22 +34,18 @@ const useLocalOutboundForm = ({
   });
   const { query: save } = useMutate({
     url: [LOCAL_OUTBOUND_QUERY_KEY, id || ""],
-    method: id
-        ? MutateRequestMethod.PUT
-        : MutateRequestMethod.POST,
+    method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
         toast({
           variant: "destructive",
-          title: t(
-              get(error, "response.statusText", "Error"),
-          ),
+          title: t(get(error, "response.statusText", "Error")),
           description: t(
-              get(
-                  error,
-                  "response.data.message",
-                  "An error occurred. Contact the administrator",
-              ),
+            get(
+              error,
+              "response.data.message",
+              "An error occurred. Contact the administrator",
+            ),
           ),
         });
       },
@@ -70,8 +56,8 @@ const useLocalOutboundForm = ({
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("Local outbound updated successfully")
-              : t("Local outbound created successfully"),
+            ? t("Local outbound updated successfully")
+            : t("Local outbound created successfully"),
         });
       },
     },
@@ -95,10 +81,10 @@ const useLocalOutboundForm = ({
     }
   }, [query.data, form]);
   const onSubmit = useCallback(
-      (data: LocalOutboundDto) => {
-        save.mutate(data);
-      },
-      [save],
+    (data: LocalOutboundDto) => {
+      save.mutate(data);
+    },
+    [save],
   );
   return {
     form,

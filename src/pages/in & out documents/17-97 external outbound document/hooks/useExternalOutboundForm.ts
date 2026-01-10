@@ -7,31 +7,22 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
+import { EXTERNAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-97 external outbound document/constants/external.outbound.constants.ts";
 import {
-  EXTERNAL_OUTBOUND_QUERY_KEY
-} from "@/pages/in & out documents/17-97 external outbound document/constants/external.outbound.constants.ts";
-import {
-  createExternalOutboundSchema, ExternalOutboundDto
+  createExternalOutboundSchema,
+  ExternalOutboundDto,
 } from "@/pages/in & out documents/17-97 external outbound document/schemas/createExternalOutboundSchema.ts";
-import {
-  ExternalOutboundInterface
-} from "@/pages/in & out documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
+import { ExternalOutboundInterface } from "@/pages/in & out documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
 
 export type ExternalOutboundFormProps = {
   id: string | null;
   onSave?: () => void;
 };
 
-const useExternalOutboundForm = ({
-                                  id,
-                                  onSave,
-                                }: ExternalOutboundFormProps) => {
+const useExternalOutboundForm = ({ id, onSave }: ExternalOutboundFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const schema = useMemo(
-      () => createExternalOutboundSchema(t),
-      [t],
-  );
+  const schema = useMemo(() => createExternalOutboundSchema(t), [t]);
   const form = useForm<ExternalOutboundDto>({
     resolver: zodResolver(schema),
   });
@@ -43,22 +34,18 @@ const useExternalOutboundForm = ({
   });
   const { query: save } = useMutate({
     url: [EXTERNAL_OUTBOUND_QUERY_KEY, id || ""],
-    method: id
-        ? MutateRequestMethod.PUT
-        : MutateRequestMethod.POST,
+    method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
         toast({
           variant: "destructive",
-          title: t(
-              get(error, "response.statusText", "Error"),
-          ),
+          title: t(get(error, "response.statusText", "Error")),
           description: t(
-              get(
-                  error,
-                  "response.data.message",
-                  "An error occurred. Contact the administrator",
-              ),
+            get(
+              error,
+              "response.data.message",
+              "An error occurred. Contact the administrator",
+            ),
           ),
         });
       },
@@ -69,8 +56,8 @@ const useExternalOutboundForm = ({
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("External outbound updated successfully")
-              : t("External outbound created successfully"),
+            ? t("External outbound updated successfully")
+            : t("External outbound created successfully"),
         });
       },
     },
@@ -94,10 +81,10 @@ const useExternalOutboundForm = ({
     }
   }, [query.data, form]);
   const onSubmit = useCallback(
-      (data: ExternalOutboundDto) => {
-        save.mutate(data);
-      },
-      [save],
+    (data: ExternalOutboundDto) => {
+      save.mutate(data);
+    },
+    [save],
   );
   return {
     form,

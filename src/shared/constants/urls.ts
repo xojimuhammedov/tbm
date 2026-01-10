@@ -6,6 +6,5 @@ const URLS = {
 
   // RH-231
   RH_231_Application: "rh-231/a-app",
-
 };
 export default URLS;

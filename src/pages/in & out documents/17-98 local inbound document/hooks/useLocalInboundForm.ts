@@ -9,30 +9,20 @@ import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import {
   createLocalInboundSchema,
-  LocalInboundDto
+  LocalInboundDto,
 } from "@/pages/in & out documents/17-98 local inbound document/schemas/createLocalInboundSchema.ts";
-import {
-  LocalInboundInterface
-} from "@/pages/in & out documents/17-98 local inbound document/interfaces/local.inbound.interface.ts";
-import {
-  LOCAL_INBOUND_QUERY_KEY
-} from "@/pages/in & out documents/17-98 local inbound document/constants/local.inbound.constants.ts";
+import { LocalInboundInterface } from "@/pages/in & out documents/17-98 local inbound document/interfaces/local.inbound.interface.ts";
+import { LOCAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-98 local inbound document/constants/local.inbound.constants.ts";
 
 export type LocalInboundFormProps = {
   id: string | null;
   onSave?: () => void;
 };
 
-const useLocalInboundForm = ({
-                                  id,
-                                  onSave,
-                                }: LocalInboundFormProps) => {
+const useLocalInboundForm = ({ id, onSave }: LocalInboundFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const schema = useMemo(
-      () => createLocalInboundSchema(t),
-      [t],
-  );
+  const schema = useMemo(() => createLocalInboundSchema(t), [t]);
   const form = useForm<LocalInboundDto>({
     resolver: zodResolver(schema),
   });
@@ -44,22 +34,18 @@ const useLocalInboundForm = ({
   });
   const { query: save } = useMutate({
     url: [LOCAL_INBOUND_QUERY_KEY, id || ""],
-    method: id
-        ? MutateRequestMethod.PUT
-        : MutateRequestMethod.POST,
+    method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
         toast({
           variant: "destructive",
-          title: t(
-              get(error, "response.statusText", "Error"),
-          ),
+          title: t(get(error, "response.statusText", "Error")),
           description: t(
-              get(
-                  error,
-                  "response.data.message",
-                  "An error occurred. Contact the administrator",
-              ),
+            get(
+              error,
+              "response.data.message",
+              "An error occurred. Contact the administrator",
+            ),
           ),
         });
       },
@@ -70,8 +56,8 @@ const useLocalInboundForm = ({
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("Local inbound updated successfully")
-              : t("Local inbound created successfully"),
+            ? t("Local inbound updated successfully")
+            : t("Local inbound created successfully"),
         });
       },
     },
@@ -95,10 +81,10 @@ const useLocalInboundForm = ({
     }
   }, [query.data, form]);
   const onSubmit = useCallback(
-      (data: LocalInboundDto) => {
-        save.mutate(data);
-      },
-      [save],
+    (data: LocalInboundDto) => {
+      save.mutate(data);
+    },
+    [save],
   );
   return {
     form,

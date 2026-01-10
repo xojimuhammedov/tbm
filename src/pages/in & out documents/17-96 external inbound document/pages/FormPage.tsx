@@ -4,8 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PageWrapper } from "@/shared/components/containers/page";
-import ExternalInboundForm
-    from "@/pages/in & out documents/17-96 external inbound document/components/ExternalInboundForm.tsx";
+import ExternalInboundForm from "@/pages/in & out documents/17-96 external inbound document/components/ExternalInboundForm.tsx";
 
 const Eid_17_96_FormPage = () => {
   const { t } = useTranslation();

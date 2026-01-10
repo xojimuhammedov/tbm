@@ -1,14 +1,14 @@
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { EditIcon, Trash2Icon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
-import {
-  LocalInboundInterface
-} from "@/pages/in & out documents/17-98 local inbound document/interfaces/local.inbound.interface.ts";
+import { LocalInboundInterface } from "@/pages/in & out documents/17-98 local inbound document/interfaces/local.inbound.interface.ts";
+import { dateFormatter } from "@/shared/utils/utils";
+import { DATE } from "@/shared/constants/date.constants";
 
 const createLocalInboundColumns = (
-    t: (...args: TranslationArgsType) => string,
-    handleDelete: (id: string) => void,
-    handleEdit: (id: string) => void,
+  t: (...args: TranslationArgsType) => string,
+  handleDelete: (id: string) => void,
+  handleEdit: (id: string) => void,
 ): ColumnType<LocalInboundInterface>[] => [
   {
     key: "reg_num",
@@ -19,6 +19,7 @@ const createLocalInboundColumns = (
     key: "reg_date",
     dataIndex: "reg_date",
     name: t("Sana"),
+    render: (val) => dateFormatter(val, DATE),
   },
   {
     key: "journal_index",
@@ -45,20 +46,20 @@ const createLocalInboundColumns = (
     dataIndex: "_id",
     name: t("Amallar"),
     render: (id) => (
-        <div className={"flex items-center gap-2"}>
-          <MyTooltip content={t("Tahrirlash")}>
-            <EditIcon
-                className={"size-4 cursor-pointer text-blue-500"}
-                onClick={() => handleEdit(id)}
-            />
-          </MyTooltip>
-          <MyTooltip content={t("O'chirish")}>
-            <Trash2Icon
-                className={"size-4 cursor-pointer text-red-500"}
-                onClick={() => handleDelete(id)}
-            />
-          </MyTooltip>
-        </div>
+      <div className={"flex items-center gap-2"}>
+        <MyTooltip content={t("Tahrirlash")}>
+          <EditIcon
+            className={"size-4 cursor-pointer text-blue-500"}
+            onClick={() => handleEdit(id)}
+          />
+        </MyTooltip>
+        <MyTooltip content={t("O'chirish")}>
+          <Trash2Icon
+            className={"size-4 cursor-pointer text-red-500"}
+            onClick={() => handleDelete(id)}
+          />
+        </MyTooltip>
+      </div>
     ),
   },
 ];

@@ -5,16 +5,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { request } from "@/request";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import {
-  EXTERNAL_INBOUND_IMPORT_API, EXTERNAL_INBOUND_QUERY_KEY
+  EXTERNAL_INBOUND_IMPORT_API,
+  EXTERNAL_INBOUND_QUERY_KEY,
 } from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
 export type FlowImportProps = {
   status?: string;
   onSuccess?: () => void;
 };
 
-const useExternalInboundImport = ({
-  onSuccess,
-}: FlowImportProps = {}) => {
+const useExternalInboundImport = ({ onSuccess }: FlowImportProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();

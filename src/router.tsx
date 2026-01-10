@@ -15,16 +15,51 @@ const LoginPage = lazy(() => import("./layouts/auth/login/Login"));
 // Dashboard Pages
 const DashboardPage = lazy(() => import("./pages/dashboard/Page"));
 
-
 // External incoming documents
-const Eid_17_96_Page = lazy(() => import("@/pages/in & out documents/17-96 external inbound document/Page.tsx"))
-const Eid_17_96_FormPage = lazy(() => import("@/pages/in & out documents/17-96 external inbound document/pages/FormPage.tsx"));
-const Eid_17_97 = lazy(() => import("@/pages/in & out documents/17-97 external outbound document/Page.tsx"))
-const Eid_17_97_FormPage = lazy(() => import("@/pages/in & out documents/17-97 external outbound document/pages/FormPage.tsx"));
-const Eid_17_98 = lazy(() => import("@/pages/in & out documents/17-98 local inbound document/Page.tsx"))
-const Eid_17_98_FormPage = lazy(() => import("@/pages/in & out documents/17-98 local inbound document/pages/FormPage.tsx"));
-const Eid_17_99 = lazy(() => import("@/pages/in & out documents/17-99 local outbound document/Page.tsx"))
-const Eid_17_99_FormPage = lazy(() => import("@/pages/in & out documents/17-99 local outbound document/pages/FormPage.tsx"));
+const Eid_17_96_Page = lazy(
+  () =>
+    import(
+      "@/pages/in & out documents/17-96 external inbound document/Page.tsx"
+    ),
+);
+const Eid_17_96_FormPage = lazy(
+  () =>
+    import(
+      "@/pages/in & out documents/17-96 external inbound document/pages/FormPage.tsx"
+    ),
+);
+const Eid_17_97 = lazy(
+  () =>
+    import(
+      "@/pages/in & out documents/17-97 external outbound document/Page.tsx"
+    ),
+);
+const Eid_17_97_FormPage = lazy(
+  () =>
+    import(
+      "@/pages/in & out documents/17-97 external outbound document/pages/FormPage.tsx"
+    ),
+);
+const Eid_17_98 = lazy(
+  () =>
+    import("@/pages/in & out documents/17-98 local inbound document/Page.tsx"),
+);
+const Eid_17_98_FormPage = lazy(
+  () =>
+    import(
+      "@/pages/in & out documents/17-98 local inbound document/pages/FormPage.tsx"
+    ),
+);
+const Eid_17_99 = lazy(
+  () =>
+    import("@/pages/in & out documents/17-99 local outbound document/Page.tsx"),
+);
+const Eid_17_99_FormPage = lazy(
+  () =>
+    import(
+      "@/pages/in & out documents/17-99 local outbound document/pages/FormPage.tsx"
+    ),
+);
 
 // NM Information Pages
 const ReceivedDocumentsPage = lazy(() => import("@/pages/inbox/Page"));
@@ -102,8 +137,9 @@ const A252Page = lazy(() => import("@/pages/rh-252/a-252/Page"));
 const A252FormPage = lazy(() => import("@/pages/rh-252/a-252/pages/FormPage"));
 
 const A231Page = lazy(() => import("@/pages/rh-231/a-231/Page.tsx"));
-const A231FormPage = lazy(() => import("@/pages/rh-231/a-231/pages/FormPage.tsx"));
-
+const A231FormPage = lazy(
+  () => import("@/pages/rh-231/a-231/pages/FormPage.tsx"),
+);
 
 const RH3_3Page = lazy(() => import("@/pages/rh-252/rh-3_3/Page"));
 const RH3_3FormPage = lazy(() => import("@/pages/rh-252/rh-3_3/page/FormPage"));
@@ -160,11 +196,11 @@ function Router() {
           path: "dashboard",
           element: <DashboardPage />,
         },
-          //External incoming documents
+        //External incoming documents
 
         {
           path: "inout/exin-96",
-          element: <Eid_17_96_Page/>,
+          element: <Eid_17_96_Page />,
         },
         {
           path: "inout/exin-96/create",
@@ -176,7 +212,7 @@ function Router() {
         },
         {
           path: "inout/exout-97",
-          element: <Eid_17_97/>,
+          element: <Eid_17_97 />,
         },
         {
           path: "inout/exout-97/create",
@@ -188,7 +224,7 @@ function Router() {
         },
         {
           path: "inout/locin-98",
-          element: <Eid_17_98/>,
+          element: <Eid_17_98 />,
         },
         {
           path: "inout/locin-98/create",
@@ -200,7 +236,7 @@ function Router() {
         },
         {
           path: "inout/locout-99",
-          element: <Eid_17_99/>,
+          element: <Eid_17_99 />,
         },
         {
           path: "inout/locout-99/create",

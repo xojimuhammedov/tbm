@@ -9,12 +9,8 @@ import { Button } from "dgz-ui/button";
 import { CirclePlusIcon, UploadIcon } from "lucide-react";
 import useExternalInbounds from "@/pages/in & out documents/17-96 external inbound document/hooks/useExternalInbounds.ts";
 import ImportExternalInboundModal from "./components/ImportExternalInboundModal.tsx";
-import {
-    EXTERNAL_INBOUND_QUERY_KEY
-} from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
-import {
-    ExternalInboundDocument
-} from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
+import { EXTERNAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
+import { ExternalInboundDocument } from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -49,7 +45,10 @@ const Page = () => {
       </PageHeader>
 
       <PageWrapper>
-        <DataTable<ExternalInboundDocument, PaginationInterface<ExternalInboundDocument>>
+        <DataTable<
+          ExternalInboundDocument,
+          PaginationInterface<ExternalInboundDocument>
+        >
           tableKey={EXTERNAL_INBOUND_QUERY_KEY}
           hasNumbers
           hasSearch

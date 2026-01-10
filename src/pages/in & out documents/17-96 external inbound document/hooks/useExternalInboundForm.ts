@@ -7,32 +7,22 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import {
-  EXTERNAL_INBOUND_QUERY_KEY,
-} from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
+import { EXTERNAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
 import {
   createExternalInboundSchema,
   ExternalInboundDto,
 } from "@/pages/in & out documents/17-96 external inbound document/schemas/createExternalInboundSchema.ts";
-import {
-  ExternalInboundDocument,
-} from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
+import { ExternalInboundDocument } from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
 
 export type ExternalInboundFormProps = {
   id: string | null;
   onSave?: () => void;
 };
 
-const useExternalInboundForm = ({
-  id,
-  onSave,
-}: ExternalInboundFormProps) => {
+const useExternalInboundForm = ({ id, onSave }: ExternalInboundFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const schema = useMemo(
-    () => createExternalInboundSchema(t),
-    [t],
-  );
+  const schema = useMemo(() => createExternalInboundSchema(t), [t]);
   const form = useForm<ExternalInboundDto>({
     resolver: zodResolver(schema),
   });
@@ -44,16 +34,12 @@ const useExternalInboundForm = ({
   });
   const { query: save } = useMutate({
     url: [EXTERNAL_INBOUND_QUERY_KEY, id || ""],
-    method: id
-      ? MutateRequestMethod.PUT
-      : MutateRequestMethod.POST,
+    method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
         toast({
           variant: "destructive",
-          title: t(
-            get(error, "response.statusText", "Error"),
-          ),
+          title: t(get(error, "response.statusText", "Error")),
           description: t(
             get(
               error,

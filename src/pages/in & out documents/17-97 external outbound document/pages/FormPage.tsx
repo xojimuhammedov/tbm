@@ -4,8 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PageWrapper } from "@/shared/components/containers/page";
-import ExternalOutboundForm
-    from "@/pages/in & out documents/17-97 external outbound document/components/ExternalOutboundForm.tsx";
+import ExternalOutboundForm from "@/pages/in & out documents/17-97 external outbound document/components/ExternalOutboundForm.tsx";
 
 const Channels51FormPage = () => {
   const { t } = useTranslation();

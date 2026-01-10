@@ -3,8 +3,7 @@ import { MyModal } from "@/shared/components/moleculas/modal";
 import { UploadCloudIcon, FileTextIcon, XIcon, Trash2Icon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "dgz-ui/button";
-import useLocalOutboundImport
-  from "@/pages/in & out documents/17-99 local outbound document/hooks/useLocalOutboundImport.ts";
+import useLocalOutboundImport from "@/pages/in & out documents/17-99 local outbound document/hooks/useLocalOutboundImport.ts";
 
 interface ImportFlowModalProps {
   open: boolean;

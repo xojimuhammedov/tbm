@@ -16,4 +16,3 @@ export interface ExternalInboundDocument {
   status: "pending" | "completed" | "in_process" | "rejected";
   reply_order_date: string | null;
 }
-

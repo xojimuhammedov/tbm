@@ -8,20 +8,15 @@ import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts
 import { Button } from "dgz-ui/button";
 import { CirclePlusIcon, UploadIcon } from "lucide-react";
 import useLocalOutbounds from "@/pages/in & out documents/17-99 local outbound document/hooks/useLocalOutbounds.ts";
-import {
-    LocalOutboundInterface
-} from "@/pages/in & out documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
-import {
-    LOCAL_OUTBOUND_QUERY_KEY
-} from "@/pages/in & out documents/17-99 local outbound document/constants/local.outbound.constants.ts";
-import ImportLocalOutboundModal
-    from "@/pages/in & out documents/17-99 local outbound document/components/ImportLocalOutboundModal.tsx";
+import { LocalOutboundInterface } from "@/pages/in & out documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
+import { LOCAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-99 local outbound document/constants/local.outbound.constants.ts";
+import ImportLocalOutboundModal from "@/pages/in & out documents/17-99 local outbound document/components/ImportLocalOutboundModal.tsx";
 
 const Page = () => {
   const { t } = useTranslation();
   const [importModalOpen, setImportModalOpen] = useState(false);
   const { loading, columns, dataSource, handleFilter, params, handleAdd } =
-      useLocalOutbounds();
+    useLocalOutbounds();
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
@@ -50,7 +45,10 @@ const Page = () => {
       </PageHeader>
 
       <PageWrapper>
-        <DataTable<LocalOutboundInterface, PaginationInterface<LocalOutboundInterface>>
+        <DataTable<
+          LocalOutboundInterface,
+          PaginationInterface<LocalOutboundInterface>
+        >
           tableKey={LOCAL_OUTBOUND_QUERY_KEY}
           hasNumbers
           hasSearch

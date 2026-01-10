@@ -7,4 +7,3 @@ export interface LocalOutboundInterface {
   summary: string;
   notes: string;
 }
-

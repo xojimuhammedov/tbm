@@ -7,22 +7,16 @@ import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
 import { CirclePlusIcon, UploadIcon } from "lucide-react";
-import useExternalOutbounds
-    from "@/pages/in & out documents/17-97 external outbound document/hooks/useExternalOutbounds.ts";
-import {
-    ExternalOutboundInterface
-} from "@/pages/in & out documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
-import {
-    EXTERNAL_OUTBOUND_QUERY_KEY
-} from "@/pages/in & out documents/17-97 external outbound document/constants/external.outbound.constants.ts";
-import ImportExternalOutboundModal
-    from "@/pages/in & out documents/17-97 external outbound document/components/ImportExternalOutboundModal.tsx";
+import useExternalOutbounds from "@/pages/in & out documents/17-97 external outbound document/hooks/useExternalOutbounds.ts";
+import { ExternalOutboundInterface } from "@/pages/in & out documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
+import { EXTERNAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-97 external outbound document/constants/external.outbound.constants.ts";
+import ImportExternalOutboundModal from "@/pages/in & out documents/17-97 external outbound document/components/ImportExternalOutboundModal.tsx";
 
 const Page = () => {
   const { t } = useTranslation();
   const [importModalOpen, setImportModalOpen] = useState(false);
   const { loading, columns, dataSource, handleFilter, params, handleAdd } =
-      useExternalOutbounds();
+    useExternalOutbounds();
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
@@ -51,7 +45,10 @@ const Page = () => {
       </PageHeader>
 
       <PageWrapper>
-        <DataTable<ExternalOutboundInterface, PaginationInterface<ExternalOutboundInterface>>
+        <DataTable<
+          ExternalOutboundInterface,
+          PaginationInterface<ExternalOutboundInterface>
+        >
           tableKey={EXTERNAL_OUTBOUND_QUERY_KEY}
           hasNumbers
           hasSearch

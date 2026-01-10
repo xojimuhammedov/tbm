@@ -4,8 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PageWrapper } from "@/shared/components/containers/page";
-import LocalOutboundForm
-    from "@/pages/in & out documents/17-99 local outbound document/components/LocalOutboundForm.tsx";
+import LocalOutboundForm from "@/pages/in & out documents/17-99 local outbound document/components/LocalOutboundForm.tsx";
 const Channels51FormPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();

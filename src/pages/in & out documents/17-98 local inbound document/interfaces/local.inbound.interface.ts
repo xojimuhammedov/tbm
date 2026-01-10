@@ -7,4 +7,3 @@ export interface LocalInboundInterface {
   summary: string;
   order_id: string;
 }
-

@@ -11,7 +11,7 @@ import {
   User,
   Users,
   BarChart3,
-    Inbox,
+  Inbox,
 } from "lucide-react";
 
 const createSidebarGroups = (
@@ -43,9 +43,9 @@ const createSidebarGroups = (
             title: t("17-99 loc/out document"),
             url: "locout-99",
           },
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
   {
     title: t("NM information"),
@@ -190,8 +190,8 @@ const createSidebarGroups = (
             title: t("A-Application"),
             url: "a-231",
           },
-        ]
-      }
+        ],
+      },
     ],
   },
   // {
