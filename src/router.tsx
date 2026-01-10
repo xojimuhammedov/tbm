@@ -136,10 +136,6 @@ const E231FormPage = lazy(
 const A252Page = lazy(() => import("@/pages/rh-252/a-252/Page"));
 const A252FormPage = lazy(() => import("@/pages/rh-252/a-252/pages/FormPage"));
 
-const A231Page = lazy(() => import("@/pages/rh-231/a-231/Page.tsx"));
-const A231FormPage = lazy(
-  () => import("@/pages/rh-231/a-231/pages/FormPage.tsx"),
-);
 
 const RH3_3Page = lazy(() => import("@/pages/rh-252/rh-3_3/Page"));
 const RH3_3FormPage = lazy(() => import("@/pages/rh-252/rh-3_3/page/FormPage"));
@@ -451,18 +447,6 @@ function Router() {
         //   element: <GrasPage />,
         // },
         {
-          path: "gras/a-231",
-          element: <A231Page />,
-        },
-        {
-          path: "gras/a-231/create",
-          element: <A231FormPage />,
-        },
-        {
-          path: "gras/a-231/edit/:id",
-          element: <A231FormPage />,
-        },
-        {
           path: "gras/b-231",
           element: <B231Page />,
         },
@@ -538,15 +522,6 @@ function Router() {
           path: "rh-252/a-252/create",
           element: <A252FormPage />,
         },
-        {
-          path: "rh-231/a-231",
-          element: <A231Page />,
-        },
-        {
-          path: "rh-231/a-231/create",
-          element: <A231FormPage />,
-        },
-
         {
           path: "rh-252/rh-3_3",
           element: <RH3_3Page />,
