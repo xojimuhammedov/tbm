@@ -9,7 +9,6 @@ interface FlowViewProps {
 const FlowView = ({ open, onOpenChange, document }: FlowViewProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-
   return (
     <MyModal
       open={open}
@@ -70,11 +69,17 @@ const FlowView = ({ open, onOpenChange, document }: FlowViewProps) => {
               <div className="grid grid-cols-2 gap-4 text-base">
                 <div className="border border-black p-3">
                   <p className="font-bold mb-1">Farmoyish sanasi:</p>
-                  <p>{document?.organization_order?.[0]?.order_date || "Mavjud emas"}</p>
+                  <p>
+                    {document?.organization_order?.[0]?.order_date ||
+                      "Mavjud emas"}
+                  </p>
                 </div>
                 <div className="border border-black p-3">
                   <p className="font-bold mb-1">Farmoyish raqami:</p>
-                  <p>{document?.organization_order?.[0]?.order_code || "Mavjud emas"}</p>
+                  <p>
+                    {document?.organization_order?.[0]?.order_code ||
+                      "Mavjud emas"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -102,21 +107,26 @@ const FlowView = ({ open, onOpenChange, document }: FlowViewProps) => {
           {document?.dissolution_order?.length > 0 && (
             <div className="mb-8">
               <h3 className="font-bold text-base mb-3 underline">
-                 Bekor qilingan oxirgi farmoyish:
+                Bekor qilingan oxirgi farmoyish:
               </h3>
-                <div className="grid grid-cols-2 my-4 text-base">
-                  <div className="border border-black p-3">
-                    <p className="font-bold mb-1">Farmoyish sanasi:</p>
-                    <p>{document?.dissolution_order?.[0]?.order_date || "Mavjud emas"}</p>
-                  </div>
-                  <div className="border border-black p-3">
-                    <p className="font-bold mb-1">Farmoyish raqami:</p>
-                    <p>{document?.dissolution_order?.[0]?.order_code || "Mavjud emas"}</p>
-                  </div>
+              <div className="grid grid-cols-2 my-4 text-base">
+                <div className="border border-black p-3">
+                  <p className="font-bold mb-1">Farmoyish sanasi:</p>
+                  <p>
+                    {document?.dissolution_order?.[0]?.order_date ||
+                      "Mavjud emas"}
+                  </p>
                 </div>
+                <div className="border border-black p-3">
+                  <p className="font-bold mb-1">Farmoyish raqami:</p>
+                  <p>
+                    {document?.dissolution_order?.[0]?.order_code ||
+                      "Mavjud emas"}
+                  </p>
+                </div>
+              </div>
             </div>
           )}
-
 
           {document?.dissolution_order?.length > 1 && (
             <div className="mb-8">

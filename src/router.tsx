@@ -56,9 +56,9 @@ const Rh_091_Page = lazy(() => import("@/pages/rh/rh-091/Page.tsx"));
 const Rh_218_Page = lazy(() => import("@/pages/rh/rh-218/Page.tsx"));
 const Rh_249_Page = lazy(() => import("@/pages/rh/rh-249/Page.tsx"));
 const Rh_251_Page = lazy(() => import("@/pages/rh/rh-251/Page.tsx"));
-const Rh_226_1_Page=lazy(() => import("@/pages/rh/rh-226-1/Page.tsx"));
-const Rh_226_2_Page=lazy(() => import("@/pages/rh/rh-226-2/Page.tsx"));
-const Rh_260_Page=lazy(() => import("@/pages/rh/rh-260/Page.tsx"));
+const Rh_226_1_Page = lazy(() => import("@/pages/rh/rh-226-1/Page.tsx"));
+const Rh_226_2_Page = lazy(() => import("@/pages/rh/rh-226-2/Page.tsx"));
+const Rh_260_Page = lazy(() => import("@/pages/rh/rh-260/Page.tsx"));
 // Resource Database Pages
 const NokiaPage = lazy(() => import("@/pages/staff/Page"));
 const ZTEPage = lazy(() => import("@/pages/staff/Page"));

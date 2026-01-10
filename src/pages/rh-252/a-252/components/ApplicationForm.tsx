@@ -61,8 +61,10 @@ const ApplicationDocumentForm = () => {
       create: {
         flow_ids: [],
       },
-      actions: [],
       action_type: [],
+      update: {
+        flow_ids: [],
+      },
     },
   });
 
@@ -70,6 +72,12 @@ const ApplicationDocumentForm = () => {
     control: form.control,
     name: "create.flow_ids",
   });
+
+  const { fields: updateFields, append: appendUpdate, remove: removeUpdate, } = useFieldArray({
+    control: form.control,
+    name: "update.flow_ids",
+  });
+
 
   // const watchedRows = useWatch({
   //   control: form.control,
@@ -126,7 +134,7 @@ const ApplicationDocumentForm = () => {
         ),
       },
       delete: {
-        flows_ids: currentIds,
+        elements: currentIds,
       },
     };
     mutate(
@@ -292,7 +300,7 @@ const ApplicationDocumentForm = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 my-8">
             <p className="mb-4">
               “O‘zTTBRM” DUK mintaqaviy boshqaruv bog‘lamasining 2-oktabrdagi
               18-bildirgisiga binoan “O‘zbektelekom” G‘arbiy filialiga tegishli
@@ -308,7 +316,7 @@ const ApplicationDocumentForm = () => {
             </div>
           </div>
 
-          <div className="flex justify-end mt-4">
+          {/* <div className="flex justify-end mt-4">
             <MySelect
               options={selectType}
               placeholder={t("Channel")}
@@ -317,9 +325,10 @@ const ApplicationDocumentForm = () => {
               name="actions"
               isMulti
             />
-          </div>
-          {form.watch("actions")?.includes("delete") && (
-            <div className="mt-6 border p-4 rounded-xl">
+          </div> */}
+
+          {form.watch("action_type")?.includes("delete") && (
+            <div className="mt-6 border p-4 my-2 rounded-xl">
               <DynamicIdInput
                 onIdsChange={(ids) => {
                   setCurrentIds(ids);
@@ -328,7 +337,7 @@ const ApplicationDocumentForm = () => {
               />
             </div>
           )}
-          {form.watch("actions")?.includes("create") && (
+          {form.watch("action_type")?.includes("create") && (
             <div className="mt-6 border p-4 rounded-lg">
               <h3 className="font-semibold mb-2 mt-4">Tashkil etish</h3>
               <div className="grid grid-cols-4 gap-4">
@@ -440,6 +449,94 @@ const ApplicationDocumentForm = () => {
               </div>
             );
           })}
+
+
+          {form.watch("action_type").includes("update") && (
+            <div className="flex flex-col gap-4">
+              {updateFields.map((field, index) => (
+                <div
+                  key={field.id}
+                  className="relative grid grid-cols-1 md:grid-cols-2 gap-5 border border-gray-200 p-5 rounded-xl bg-white shadow-sm"
+                >
+                  {/* From */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-gray-700">From</h4>
+                    <div className="grid grid-cols-3 gap-3">
+                      <MyInput
+                        control={form.control}
+                        name={`update.flow_ids.${index}.point_a`}
+                        placeholder="Point A"
+                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                      />
+                      <MyInput
+                        control={form.control}
+                        name={`update.flow_ids.${index}.point_b`}
+                        placeholder="Point B"
+                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                      />
+                      <MyInput
+                        control={form.control}
+                        name={`update.flow_ids.${index}.id_or_channel`}
+                        placeholder="ID / Channel"
+                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                      />
+                    </div>
+                  </div>
+
+                  {/* To */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-gray-700">To (Yangi holat)</h4>
+                    <div className="grid grid-cols-4 gap-3">
+                      <MyInput
+                        control={form.control}
+                        name={`update.flow_ids.${index}.new_point_a`}
+                        placeholder="New Point A"
+                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                      />
+                      <MyInput
+                        control={form.control}
+                        name={`update.flow_ids.${index}.new_point_b`}
+                        placeholder="New Point B"
+                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                      />
+                      <MyInput
+                        control={form.control}
+                        name={`update.flow_ids.${index}.new_id_or_channel`}
+                        placeholder="New ID / Channel"
+                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                      />
+                      <MyInput
+                        control={form.control}
+                        name={`update.flow_ids.${index}.new_port`}
+                        placeholder="New Port"
+                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                      />
+                    </div>
+                  </div>
+                  <Trash2
+                    className={"cursor-pointer absolute right-[10px] top-[10px]"}
+                    size={24}
+                    color={"red"}
+                    onClick={() => removeUpdate(index)}
+                  />
+                </div>
+              ))}
+              <PlusSquare
+                className={"cursor-pointer"}
+                size={24}
+                color={"blue"}
+                onClick={() => appendUpdate({
+                  point_a: "",
+                  point_b: "",
+                  id_or_channel: "",
+                  new_point_a: "",
+                  new_point_b: "",
+                  new_id_or_channel: "",
+                  new_port: "",
+                })}
+              />
+            </div>
+          )}
 
           <MySelect
             control={form.control}

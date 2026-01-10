@@ -12,9 +12,7 @@ import {
 export type FlowImportProps = {
   onSuccess?: () => void;
 };
-const useChannelImport = ({
-                              onSuccess,
-                            }: FlowImportProps = {}) => {
+const useChannelImport = ({ onSuccess }: FlowImportProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -31,11 +29,11 @@ const useChannelImport = ({
         variant: "destructive",
         title: t(get(error, "response.statusText", "Error")),
         description: t(
-            get(
-                error,
-                "response.data.message",
-                "Fayl yuklashda xatolik yuz berdi",
-            ),
+          get(
+            error,
+            "response.data.message",
+            "Fayl yuklashda xatolik yuz berdi",
+          ),
         ),
       });
     },
@@ -50,13 +48,13 @@ const useChannelImport = ({
     },
   });
   const handleUpload = useCallback(
-      (file: File) => {
-        const formData = new FormData();
-        formData.append("file", file);
+    (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
 
-        mutation.mutate(formData);
-      },
-      [mutation],
+      mutation.mutate(formData);
+    },
+    [mutation],
   );
   return {
     handleUpload,
