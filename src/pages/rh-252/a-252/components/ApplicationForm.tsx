@@ -63,6 +63,7 @@ const ApplicationDocumentForm = () => {
       },
       action_type: [],
       update: {
+        update_type: "",
         flow_ids: [],
       },
     },
@@ -73,6 +74,7 @@ const ApplicationDocumentForm = () => {
     name: "create.flow_ids",
   });
 
+
   const {
     fields: updateFields,
     append: appendUpdate,
@@ -82,11 +84,29 @@ const ApplicationDocumentForm = () => {
     name: "update.flow_ids",
   });
 
+  const currentUpdateType = form.watch("update.update_type");
+
   // const watchedRows = useWatch({
   //   control: form.control,
   //   name: "create.flow_ids",
   // });
 
+
+  const handleAddUpdateRow = () => {
+    if (currentUpdateType === "channels") {
+      appendUpdate({ id_or_channel: "", new_id_or_channel: "" });
+    } else {
+      appendUpdate({
+        id_or_channel: "",
+        point_a: "",
+        point_b: "",
+        device_a: "",
+        device_b: "",
+        port_a: "",
+        port_b: "",
+      });
+    }
+  };
   const handleAddRow = () => {
     append({
       code: "",
@@ -118,14 +138,44 @@ const ApplicationDocumentForm = () => {
     listKeyId: KEYS.RH_Order_Application,
   });
 
+  const updateTypeOptions = [
+    { label: "Channels", value: "channels" },
+    { label: "Flows", value: "flows" },
+  ];
+
+
   const onSubmit = (data: any) => {
+    const updatePayload: any = {};
+    if (data.update?.flow_ids?.length > 0) {
+      const channels = data.update.flow_ids
+          .filter((item: any) => item.update_type === "channels")
+          .map((item: any) => ({
+            old: item.id_or_channel,
+            new: item.new_id_or_channel,
+          }));
+
+      const flows = data.update.flow_ids
+          .filter((item: any) => item.update_type === "flows")
+          .map((item: any) => ({
+            code: item.id_or_channel,
+            point_a: item.point_a,
+            point_b: item.point_b,
+            device_a: item.device_a,
+            device_b: item.device_b,
+            port_a: item.port_a,
+            port_b: item.port_b,
+          }));
+
+      if (channels.length > 0) updatePayload.channels = channels;
+      if (flows.length > 0) updatePayload.flows = flows;
+    }
     const payload = {
       code: data.code,
       order_date: data.order_date,
       responsible: data.responsible,
       from: data.from,
       to: data.to,
-      count: data.count,
+      count: data.count ? Number(data.count) : 0,
       dead_line: data.dead_line,
       action_type: data.action_type,
       signal_level: data.signal_level,
@@ -139,6 +189,7 @@ const ApplicationDocumentForm = () => {
       delete: {
         elements: currentIds,
       },
+      update: updatePayload,
     };
     mutate(
       {
@@ -319,16 +370,102 @@ const ApplicationDocumentForm = () => {
             </div>
           </div>
 
-          {/* <div className="flex justify-end mt-4">
-            <MySelect
-              options={selectType}
-              placeholder={t("Channel")}
-              className="w-[290px]"
-              control={form.control}
-              name="actions"
-              isMulti
-            />
-          </div> */}
+
+
+          {form.watch("action_type")?.includes("update") && (
+              <div className="mt-6 flex flex-col gap-4 border p-4 rounded-xl ">
+                <div className="flex items-center justify-between border-b pb-4">
+                  <h3 className="font-bold text-lg">Ko‘chirish (Update)</h3>
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm font-medium text-gray-600">Turini tanlang:</span>
+                    <MySelect
+                        control={form.control}
+                        name="update.update_type"
+                        options={updateTypeOptions}
+                        placeholder="Turini tanlang"
+                        className="w-48"
+                    />
+                  </div>
+                </div>
+
+                {updateFields.length > 0 && (
+                    <div className={cn(
+                        "grid gap-2 px-2 font-semibold text-xs text-gray-500",
+                        currentUpdateType === "channels" ? "grid-cols-[1fr_1fr_40px]" : "grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr_40px]"
+                    )}>
+                      {currentUpdateType === "channels" ? (
+                          <>
+                            <div>Eski (Old)</div>
+                            <div>Yangi (New)</div>
+                          </>
+                      ) : (
+                          <>
+                            <div>Code</div>
+                            <div>Point A</div>
+                            <div>Point B</div>
+                            <div>Device A</div>
+                            <div>Device B</div>
+                            <div>Port A</div>
+                            <div>Port B</div>
+                          </>
+                      )}
+                      <div></div>
+                    </div>
+                )}
+
+                <div className="flex flex-col gap-2">
+                  {updateFields.map((field, index) => (
+                      <div key={field.id} className="flex items-center gap-2">
+                        {currentUpdateType === "channels" ? (
+                            <div className="grid grid-cols-2 gap-2 flex-1">
+                              <MyInput
+                                  control={form.control}
+                                  name={`update.flow_ids.${index}.id_or_channel`}
+                                  placeholder="ID01/1"
+                              />
+                              <MyInput
+                                  control={form.control}
+                                  name={`update.flow_ids.${index}.new_id_or_channel`}
+                                  placeholder="ID0168/1"
+                              />
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr] gap-2 flex-1">
+                              <MyInput control={form.control} name={`update.flow_ids.${index}.id_or_channel`} placeholder="Code" className="h-9 text-xs" />
+                              <MyInput control={form.control} name={`update.flow_ids.${index}.point_a`} placeholder="Point A" className="h-9 text-xs" />
+                              <MyInput control={form.control} name={`update.flow_ids.${index}.point_b`} placeholder="Point B" className="h-9 text-xs" />
+                              <MyInput control={form.control} name={`update.flow_ids.${index}.device_a`} placeholder="Device A" className="h-9 text-xs" />
+                              <MyInput control={form.control} name={`update.flow_ids.${index}.device_b`} placeholder="Device B" className="h-9 text-xs" />
+                              <MyInput control={form.control} name={`update.flow_ids.${index}.port_a`} placeholder="Port A" className="h-9 text-xs" />
+                              <MyInput control={form.control} name={`update.flow_ids.${index}.port_b`} placeholder="Port B" className="h-9 text-xs" />
+                            </div>
+                        )}
+
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeUpdate(index)}
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        >
+                          <Trash2 size={18} />
+                        </Button>
+                      </div>
+                  ))}
+                </div>
+
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="w-fit gap-2 mt-2"
+                    onClick={handleAddUpdateRow}
+                >
+                  <PlusSquare size={18} /> Qator qo‘shish
+                </Button>
+              </div>
+          )}
+
+
 
           {form.watch("action_type")?.includes("delete") && (
             <div className="mt-6 border p-4 my-2 rounded-xl">
@@ -452,99 +589,6 @@ const ApplicationDocumentForm = () => {
               </div>
             );
           })}
-
-          {form.watch("action_type").includes("update") && (
-            <div className="flex flex-col gap-4">
-              {updateFields.map((field, index) => (
-                <div
-                  key={field.id}
-                  className="relative grid grid-cols-1 md:grid-cols-2 gap-5 border border-gray-200 p-5 rounded-xl bg-white shadow-sm"
-                >
-                  {/* From */}
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-gray-700">From</h4>
-                    <div className="grid grid-cols-3 gap-3">
-                      <MyInput
-                        control={form.control}
-                        name={`update.flow_ids.${index}.point_a`}
-                        placeholder="Point A"
-                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                      />
-                      <MyInput
-                        control={form.control}
-                        name={`update.flow_ids.${index}.point_b`}
-                        placeholder="Point B"
-                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                      />
-                      <MyInput
-                        control={form.control}
-                        name={`update.flow_ids.${index}.id_or_channel`}
-                        placeholder="ID / Channel"
-                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                      />
-                    </div>
-                  </div>
-
-                  {/* To */}
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-gray-700">
-                      To (Yangi holat)
-                    </h4>
-                    <div className="grid grid-cols-4 gap-3">
-                      <MyInput
-                        control={form.control}
-                        name={`update.flow_ids.${index}.new_point_a`}
-                        placeholder="New Point A"
-                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                      />
-                      <MyInput
-                        control={form.control}
-                        name={`update.flow_ids.${index}.new_point_b`}
-                        placeholder="New Point B"
-                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                      />
-                      <MyInput
-                        control={form.control}
-                        name={`update.flow_ids.${index}.new_id_or_channel`}
-                        placeholder="New ID / Channel"
-                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                      />
-                      <MyInput
-                        control={form.control}
-                        name={`update.flow_ids.${index}.new_port`}
-                        placeholder="New Port"
-                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                      />
-                    </div>
-                  </div>
-                  <Trash2
-                    className={
-                      "cursor-pointer absolute right-[10px] top-[10px]"
-                    }
-                    size={24}
-                    color={"red"}
-                    onClick={() => removeUpdate(index)}
-                  />
-                </div>
-              ))}
-              <PlusSquare
-                className={"cursor-pointer"}
-                size={24}
-                color={"blue"}
-                onClick={() =>
-                  appendUpdate({
-                    point_a: "",
-                    point_b: "",
-                    id_or_channel: "",
-                    new_point_a: "",
-                    new_point_b: "",
-                    new_id_or_channel: "",
-                    new_port: "",
-                  })
-                }
-              />
-            </div>
-          )}
 
           <MySelect
             control={form.control}
