@@ -4,99 +4,107 @@ import { debounce } from "lodash";
 import { request } from "@/request";
 
 interface UseFlowValidationProps {
-    control: Control<any>;
-    updateType: string;
+  control: Control<any>;
+  updateType: string;
 }
 
 interface ValidationStates {
-    [key: string]: boolean;
+  [key: string]: boolean;
 }
 
-export const useFlowValidation = ({ control, updateType }: UseFlowValidationProps) => {
-    const [validationStates, setValidationStates] = useState<ValidationStates>({});
+export const useFlowValidation = ({
+  control,
+  updateType,
+}: UseFlowValidationProps) => {
+  const [validationStates, setValidationStates] = useState<ValidationStates>(
+    {},
+  );
 
-    const watchedUpdateFlowIds = useWatch({
-        control,
-        name: "update.flow_ids",
+  const watchedUpdateFlowIds = useWatch({
+    control,
+    name: "update.flow_ids",
+  });
+
+  // Validation checker function
+  const checkValidation = async (
+    value: string,
+    isEmpty: boolean,
+    key: string,
+  ) => {
+    if (!value || value.trim() === "") {
+      setValidationStates((prev) => {
+        const newState = { ...prev };
+        delete newState[key];
+        return newState;
+      });
+      return;
+    }
+
+    try {
+      const res = await request.get(
+        `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${isEmpty}`,
+      );
+      const isValid = res.data?.valid !== false;
+
+      setValidationStates((prev) => ({
+        ...prev,
+        [key]: isValid,
+      }));
+    } catch (error) {
+      console.error("Validation error:", error);
+      setValidationStates((prev) => ({
+        ...prev,
+        [key]: false,
+      }));
+    }
+  };
+
+  // Debounced validation checker
+  const debouncedCheck = useRef(
+    debounce((value: string, isEmpty: boolean, key: string) => {
+      checkValidation(value, isEmpty, key);
+    }, 500),
+  ).current;
+
+  // Clear validation states when update type changes
+  useEffect(() => {
+    setValidationStates({});
+  }, [updateType]);
+  useEffect(() => {
+    if (!watchedUpdateFlowIds || watchedUpdateFlowIds.length === 0) return;
+
+    watchedUpdateFlowIds.forEach((item: any, index: number) => {
+      if (updateType === "channels") {
+        if (item?.id_or_channel) {
+          const key = `update-${index}-id_or_channel`;
+          debouncedCheck(item.id_or_channel, false, key);
+        }
+        if (item?.new_id_or_channel) {
+          const key = `update-${index}-new_id_or_channel`;
+          debouncedCheck(item.new_id_or_channel, true, key);
+        }
+      } else if (updateType === "flows") {
+        if (item?.id_or_channel) {
+          const key = `update-${index}-id_or_channel`;
+          debouncedCheck(item.id_or_channel, false, key);
+        }
+      }
     });
+  }, [watchedUpdateFlowIds, updateType, debouncedCheck]);
 
-    // Validation checker function
-    const checkValidation = async (value: string, isEmpty: boolean, key: string) => {
-        if (!value || value.trim() === "") {
-            setValidationStates(prev => {
-                const newState = { ...prev };
-                delete newState[key];
-                return newState;
-            });
-            return;
-        }
+  const getValidationClass = (index: number, field: string): string => {
+    const key = `update-${index}-${field}`;
+    return validationStates[key] === false ? "bg-red-100 border-red-300" : "";
+  };
 
-        try {
-            const res = await request.get(
-                `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${isEmpty}`
-            );
-            const isValid = res.data?.valid !== false;
-
-            setValidationStates(prev => ({
-                ...prev,
-                [key]: isValid
-            }));
-        } catch (error) {
-            console.error("Validation error:", error);
-            setValidationStates(prev => ({
-                ...prev,
-                [key]: false
-            }));
-        }
-    };
-
-    // Debounced validation checker
-    const debouncedCheck = useRef(
-        debounce((value: string, isEmpty: boolean, key: string) => {
-            checkValidation(value, isEmpty, key);
-        }, 500)
-    ).current;
-
-    // Clear validation states when update type changes
-    useEffect(() => {
-        setValidationStates({});
-
-    }, [updateType]);
-    useEffect(() => {
-        if (!watchedUpdateFlowIds || watchedUpdateFlowIds.length === 0) return;
-
-        watchedUpdateFlowIds.forEach((item: any, index: number) => {
-            if (updateType === "channels") {
-                if (item?.id_or_channel) {
-                    const key = `update-${index}-id_or_channel`;
-                    debouncedCheck(item.id_or_channel, false, key);
-                }
-                if (item?.new_id_or_channel) {
-                    const key = `update-${index}-new_id_or_channel`;
-                    debouncedCheck(item.new_id_or_channel, true, key);
-                }
-            } else if (updateType === "flows") {
-                if (item?.id_or_channel) {
-                    const key = `update-${index}-id_or_channel`;
-                    debouncedCheck(item.id_or_channel, false, key);
-                }
-            }
-        });
-    }, [watchedUpdateFlowIds, updateType, debouncedCheck]);
-
-    const getValidationClass = (index: number, field: string): string => {
-        const key = `update-${index}-${field}`;
-        return validationStates[key] === false ? "bg-red-100 border-red-300" : "";
-    };
-
-    const isFieldInvalid = (index: number, field: string): boolean => {
-        const key = `update-${index}-${field}`;
-        return validationStates[key] === false;
-    };
-    return {
-        validationStates,
-        getValidationClass,
-        isFieldInvalid,
-        clearValidation: () => setValidationStates({}),
-    };
+  const isFieldInvalid = (index: number, field: string): boolean => {
+    const key = `update-${index}-${field}`;
+    return validationStates[key] === false;
+  };
+  return {
+    validationStates,
+    getValidationClass,
+    isFieldInvalid,
+    clearValidation: () => setValidationStates({}),
+  };
 };
