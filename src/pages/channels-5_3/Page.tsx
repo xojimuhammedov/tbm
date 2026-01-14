@@ -43,12 +43,10 @@ const Page = () => {
             <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
                 <div className="flex items-center gap-2">
 
-                    {selectedRowKeys.length > 0 && (
-                        <Button size={"sm"} variant="destructive" onClick={handleDeleteMany}>
-                            <Trash2Icon className="size-4" />
-                            {t("Delete")} ({selectedRowKeys.length})
-                        </Button>
-                    )}
+                    <Button size={"sm"} disabled={selectedRowKeys.length === 0} variant="destructive" onClick={handleDeleteMany}>
+                        <Trash2Icon className="size-4" />
+                        {t("Delete")} ({selectedRowKeys.length})
+                    </Button>
 
                     <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
                         <UploadIcon className="size-4" />
