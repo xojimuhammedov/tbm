@@ -27,7 +27,6 @@ export interface OrderApplication {
   };
 }
 
-
 // export interface ChannelDetail {
 //   code: string;
 //   international_stream_number: string;

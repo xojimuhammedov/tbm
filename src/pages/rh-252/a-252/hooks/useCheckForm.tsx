@@ -4,16 +4,21 @@ import { debounce } from "lodash";
 import { request } from "@/request";
 
 interface UseFlowValidationProps {
-    control: Control<any>;
-    updateType: string;
+  control: Control<any>;
+  updateType: string;
 }
 
 interface ValidationStates {
-    [key: string]: boolean;
+  [key: string]: boolean;
 }
 
-export const useFlowValidation = ({ control, updateType }: UseFlowValidationProps) => {
-    const [validationStates, setValidationStates] = useState<ValidationStates>({});
+export const useFlowValidation = ({
+  control,
+  updateType,
+}: UseFlowValidationProps) => {
+  const [validationStates, setValidationStates] = useState<ValidationStates>(
+    {},
+  );
 
     const watchedUpdateFlowIds = useWatch({
         control,
@@ -36,24 +41,26 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
             return;
         }
 
-        try {
-            const res = await request.get(
-                `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${isEmpty}`
-            );
-            const isValid = res.data?.valid !== false;
+  // Validation checker function
+  const checkValidation = async (
+    value: string,
+    isEmpty: boolean,
+    key: string,
+  ) => {
+    if (!value || value.trim() === "") {
+      setValidationStates((prev) => {
+        const newState = { ...prev };
+        delete newState[key];
+        return newState;
+      });
+      return;
+    }
 
-            setValidationStates(prev => ({
-                ...prev,
-                [key]: isValid
-            }));
-        } catch (error) {
-            console.error("Validation error:", error);
-            setValidationStates(prev => ({
-                ...prev,
-                [key]: false
-            }));
-        }
-    };
+    try {
+      const res = await request.get(
+        `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${isEmpty}`,
+      );
+      const isValid = res.data?.valid !== false;
 
     // Validation checker function for original number
     const checkOriginalNum = async (value: string) => {
@@ -107,25 +114,51 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
     // Validate flow IDs
     useEffect(() => {
         if (!watchedUpdateFlowIds || watchedUpdateFlowIds.length === 0) return;
+      setValidationStates((prev) => ({
+        ...prev,
+        [key]: isValid,
+      }));
+    } catch (error) {
+      console.error("Validation error:", error);
+      setValidationStates((prev) => ({
+        ...prev,
+        [key]: false,
+      }));
+    }
+  };
 
-        watchedUpdateFlowIds.forEach((item: any, index: number) => {
-            if (updateType === "channels") {
-                if (item?.id_or_channel) {
-                    const key = `update-${index}-id_or_channel`;
-                    debouncedCheck(item.id_or_channel, false, key);
-                }
-                if (item?.new_id_or_channel) {
-                    const key = `update-${index}-new_id_or_channel`;
-                    debouncedCheck(item.new_id_or_channel, true, key);
-                }
-            } else if (updateType === "flows") {
-                if (item?.id_or_channel) {
-                    const key = `update-${index}-id_or_channel`;
-                    debouncedCheck(item.id_or_channel, false, key);
-                }
-            }
-        });
-    }, [watchedUpdateFlowIds, updateType, debouncedCheck]);
+  // Debounced validation checker
+  const debouncedCheck = useRef(
+    debounce((value: string, isEmpty: boolean, key: string) => {
+      checkValidation(value, isEmpty, key);
+    }, 500),
+  ).current;
+
+  // Clear validation states when update type changes
+  useEffect(() => {
+    setValidationStates({});
+  }, [updateType]);
+  useEffect(() => {
+    if (!watchedUpdateFlowIds || watchedUpdateFlowIds.length === 0) return;
+
+    watchedUpdateFlowIds.forEach((item: any, index: number) => {
+      if (updateType === "channels") {
+        if (item?.id_or_channel) {
+          const key = `update-${index}-id_or_channel`;
+          debouncedCheck(item.id_or_channel, false, key);
+        }
+        if (item?.new_id_or_channel) {
+          const key = `update-${index}-new_id_or_channel`;
+          debouncedCheck(item.new_id_or_channel, true, key);
+        }
+      } else if (updateType === "flows") {
+        if (item?.id_or_channel) {
+          const key = `update-${index}-id_or_channel`;
+          debouncedCheck(item.id_or_channel, false, key);
+        }
+      }
+    });
+  }, [watchedUpdateFlowIds, updateType, debouncedCheck]);
 
     // Validate original number
     useEffect(() => {
@@ -160,4 +193,21 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
         isOriginalNumInvalid,
         clearValidation: () => setValidationStates({}),
     };
+};
+=======
+  const getValidationClass = (index: number, field: string): string => {
+    const key = `update-${index}-${field}`;
+    return validationStates[key] === false ? "bg-red-100 border-red-300" : "";
+  };
+
+  const isFieldInvalid = (index: number, field: string): boolean => {
+    const key = `update-${index}-${field}`;
+    return validationStates[key] === false;
+  };
+  return {
+    validationStates,
+    getValidationClass,
+    isFieldInvalid,
+    clearValidation: () => setValidationStates({}),
+  };
 };

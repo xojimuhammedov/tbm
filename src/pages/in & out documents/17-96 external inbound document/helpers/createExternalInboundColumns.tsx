@@ -47,9 +47,9 @@ const createExternalInboundColumns = (
     dataIndex: "status",
     name: t("Holat"),
     render: (status) => (
-        <span className={`status-badge status-${status}`}>
-    {status ? t(status.charAt(0).toUpperCase() + status.slice(1)) : ""}
-  </span>
+      <span className={`status-badge status-${status}`}>
+        {status ? t(status.charAt(0).toUpperCase() + status.slice(1)) : ""}
+      </span>
     ),
   },
   {
