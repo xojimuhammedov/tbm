@@ -11,14 +11,14 @@ import {
 import { ChannelInterface } from "@/pages/channels-5_3/interfaces/channel.interface.ts";
 import createChannelColumns from "@/pages/channels-5_3/helpers/createChannelColumns.tsx";
 import { useNavigate } from "react-router-dom";
-import {CHANNELS_ID_DELETE} from "@/pages/channels-id/constants/channels.constants.ts";
+import { CHANNELS_ID_DELETE } from "@/pages/channels-id/constants/channels.constants.ts";
 
 const useChannels = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { removeWithConfirm, remove } = useDelete([CHANNELS_5_3_QUERY_KEY]);
   const { toast } = useToast();
-  const { confirm } = useConfirm();
+  const { confirm }: any = useConfirm();
 
   const { query, handleFilter, params } = useLists<ChannelInterface>({
     url: [CHANNELS_5_3_QUERY_KEY],
@@ -28,7 +28,7 @@ const useChannels = () => {
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
-        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   }, []);
 
@@ -37,32 +37,32 @@ const useChannels = () => {
   }, []);
 
   const allIds = useMemo(
-      () => query.data?.docs?.map((item) => item._id) || [],
-      [query.data]
+    () => query.data?.docs?.map((item) => item._id) || [],
+    [query.data]
   );
 
   const handleDelete = useCallback(
-      (id: ChannelInterface["_id"]) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t(`Success`),
-                description: t(`Channel removed successfully`),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`
-                ),
-              });
-            });
-      },
-      [removeWithConfirm, t, toast, query]
+    (id: ChannelInterface["_id"]) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Channel removed successfully`),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, t, toast, query]
   );
 
   const handleDeleteMany = useCallback(() => {
@@ -82,26 +82,26 @@ const useChannels = () => {
       }),
       onConfirm: () => {
         remove(CHANNELS_ID_DELETE, { ids: selectedRowKeys })
-            .then(() => {
-              toast({
-                variant: "success",
-                title: t("Muvaffaqiyatli"),
-                description: t("{{count}} ta kanal o'chirildi", {
-                  count: selectedRowKeys.length,
-                }),
-              });
-              setSelectedRowKeys([]);
-              query.refetch();
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred.")}`
-                ),
-              });
+          .then(() => {
+            toast({
+              variant: "success",
+              title: t("Muvaffaqiyatli"),
+              description: t("{{count}} ta kanal o'chirildi", {
+                count: selectedRowKeys.length,
+              }),
             });
+            setSelectedRowKeys([]);
+            query.refetch();
+          })
+          .catch((error) => {
+            toast({
+              variant: "destructive",
+              title: t(`${get(error, "response.statusText", "Error")}`),
+              description: t(
+                `${get(error, "response.data.message", "An error occurred.")}`
+              ),
+            });
+          });
       },
     });
   }, [selectedRowKeys, remove, confirm, query, t, toast]);
@@ -111,24 +111,24 @@ const useChannels = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/channels-5_3/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/channels-5_3/edit/${id}`);
+    },
+    [navigate],
   );
 
   const columns = useMemo(
-      () =>
-          createChannelColumns(
-              t,
-              handleDelete,
-              handleEdit,
-              selectedRowKeys,
-              toggleSelectRow,
-              toggleSelectAll,
-              allIds
-          ),
-      [t, handleDelete, handleEdit, selectedRowKeys, toggleSelectRow, toggleSelectAll, allIds]
+    () =>
+      createChannelColumns(
+        t,
+        handleDelete,
+        handleEdit,
+        selectedRowKeys,
+        toggleSelectRow,
+        toggleSelectAll,
+        allIds
+      ),
+    [t, handleDelete, handleEdit, selectedRowKeys, toggleSelectRow, toggleSelectAll, allIds]
   );
 
   return {

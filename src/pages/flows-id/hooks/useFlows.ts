@@ -18,7 +18,7 @@ const useFlows = () => {
   const navigate = useNavigate();
   const { removeWithConfirm, remove } = useDelete([FLOWS_ID_QUERY_KEY]);
   const { toast } = useToast();
-  const { confirm } = useConfirm();
+  const { confirm }: any = useConfirm();
 
   const [openView, setOpenView] = useState(false);
   const [viewId, setViewId] = useState<string | null>(null);
