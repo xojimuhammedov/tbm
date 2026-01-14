@@ -50,6 +50,7 @@ const ApplicationDocumentForm = () => {
     shouldUnregister: false,
     defaultValues: {
       code: "",
+      original_num: "",
       responsible: "",
       from: "TBM",
       to: "",
@@ -86,10 +87,11 @@ const ApplicationDocumentForm = () => {
   const currentUpdateType = form.watch("update.update_type");
 
   // Use validation hook
-  const { getValidationClass, clearValidation } = useFlowValidation({
-    control: form.control,
-    updateType: currentUpdateType,
-  });
+  const {
+    getValidationClass,
+    getOriginalNumValidationClass,
+    clearValidation
+  } = useFlowValidation({
 
   // clear
   useEffect(() => {
@@ -188,6 +190,7 @@ const ApplicationDocumentForm = () => {
     }
     const payload = {
       code: data.code,
+      original_num: data.original_num,
       order_date: data.order_date,
       responsible: data.responsible,
       from: data.from,
@@ -305,6 +308,25 @@ const ApplicationDocumentForm = () => {
               <span>SANA:</span>
               <MyDatePicker name={"order_date"} control={form.control} />
             </div>
+
+            {/* New Original Number Input */}
+            <div className="mb-8">
+              <p className="text-sm font-semibold mb-2">Hujjat raqami:</p>
+              <MyInput
+                  name={"original_num"}
+                  control={form.control}
+                  placeholder="UBP-10975"
+                  className={cn(
+                      "border border-t-0 border-l-0 border-r-0 rounded-none h-9",
+                      getOriginalNumValidationClass()
+                  )}
+              />
+            </div>
+
+            <div className="mb-8 text-lg">
+              <p>
+                <strong>Kimga:</strong>
+              </p>
             <div>
               <MyInput
                 name={"code"}
