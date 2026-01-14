@@ -11,7 +11,7 @@ import {
 import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface.ts";
 import createFlowColumns from "@/pages/flows-id/helpers/createFlowColumns.tsx";
 import { useNavigate } from "react-router-dom";
-import {CHANNELS_ID_DELETE} from "@/pages/channels-id/constants/channels.constants.ts";
+import { CHANNELS_ID_DELETE } from "@/pages/channels-id/constants/channels.constants.ts";
 
 const useFlows = () => {
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ const useFlows = () => {
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
-        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   }, []);
 
@@ -40,8 +40,8 @@ const useFlows = () => {
   }, []);
 
   const allIds = useMemo(
-      () => query.data?.docs?.map((item) => item._id) || [],
-      [query.data]
+    () => query.data?.docs?.map((item) => item._id) || [],
+    [query.data]
   );
 
   const currentItem = useMemo(() => {
@@ -51,27 +51,27 @@ const useFlows = () => {
   }, [query.data, viewId]);
 
   const handleDelete = useCallback(
-      (id: FlowInterface["_id"]) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t(`Success`),
-                description: t(`Flow removed successfully`),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-                ),
-              });
-            });
-      },
-      [removeWithConfirm, t, toast, query],
+    (id: FlowInterface["_id"]) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Flow removed successfully`),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, t, toast, query],
   );
 
   const handleDeleteMany = useCallback(() => {
@@ -91,26 +91,26 @@ const useFlows = () => {
       }),
       onConfirm: () => {
         remove(CHANNELS_ID_DELETE, { ids: selectedRowKeys })
-            .then(() => {
-              toast({
-                variant: "success",
-                title: t("Muvaffaqiyatli"),
-                description: t("{{count}} ta oqim o'chirildi", {
-                  count: selectedRowKeys.length,
-                }),
-              });
-              setSelectedRowKeys([]);
-              query.refetch();
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred.")}`
-                ),
-              });
+          .then(() => {
+            toast({
+              variant: "success",
+              title: t("Muvaffaqiyatli"),
+              description: t("{{count}} ta oqim o'chirildi", {
+                count: selectedRowKeys.length,
+              }),
             });
+            setSelectedRowKeys([]);
+            query.refetch();
+          })
+          .catch((error) => {
+            toast({
+              variant: "destructive",
+              title: t(`${get(error, "response.statusText", "Error")}`),
+              description: t(
+                `${get(error, "response.data.message", "An error occurred.")}`
+              ),
+            });
+          });
       },
     });
   }, [selectedRowKeys, remove, confirm, query, t, toast]);
@@ -120,10 +120,10 @@ const useFlows = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/flows-id/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/flows-id/edit/${id}`);
+    },
+    [navigate],
   );
 
   const handleView = useCallback((id: string) => {
@@ -137,18 +137,18 @@ const useFlows = () => {
   }, []);
 
   const columns = useMemo(
-      () =>
-          createFlowColumns(
-              t,
-              handleDelete,
-              handleEdit,
-              handleView,
-              selectedRowKeys,
-              toggleSelectRow,
-              toggleSelectAll,
-              allIds
-          ),
-      [t, handleDelete, handleEdit, handleView, selectedRowKeys, toggleSelectRow, toggleSelectAll, allIds],
+    () =>
+      createFlowColumns(
+        t,
+        handleDelete,
+        handleEdit,
+        handleView,
+        selectedRowKeys,
+        toggleSelectRow,
+        toggleSelectAll,
+        allIds
+      ),
+    [t, handleDelete, handleEdit, handleView, selectedRowKeys, toggleSelectRow, toggleSelectAll, allIds],
   );
 
   return {
