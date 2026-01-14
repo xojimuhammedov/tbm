@@ -12,8 +12,13 @@ interface ValidationStates {
   [key: string]: boolean;
 }
 
-export const useFlowValidation = ({ control, updateType }: UseFlowValidationProps) => {
-  const [validationStates, setValidationStates] = useState<ValidationStates>({});
+export const useFlowValidation = ({
+  control,
+  updateType,
+}: UseFlowValidationProps) => {
+  const [validationStates, setValidationStates] = useState<ValidationStates>(
+    {},
+  );
 
   const watchedUpdateFlowIds = useWatch({
     control,
@@ -26,9 +31,13 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
   });
 
   // Validation checker function for flow IDs
-  const checkValidation = async (value: string, isEmpty: boolean, key: string) => {
+  const checkValidation = async (
+    value: string,
+    isEmpty: boolean,
+    key: string,
+  ) => {
     if (!value || value.trim() === "") {
-      setValidationStates(prev => {
+      setValidationStates((prev) => {
         const newState = { ...prev };
         delete newState[key];
         return newState;
@@ -38,19 +47,19 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
 
     try {
       const res = await request.get(
-        `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${isEmpty}`
+        `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${isEmpty}`,
       );
       const isValid = res.data?.valid !== false;
 
-      setValidationStates(prev => ({
+      setValidationStates((prev) => ({
         ...prev,
-        [key]: isValid
+        [key]: isValid,
       }));
     } catch (error) {
       console.error("Validation error:", error);
-      setValidationStates(prev => ({
+      setValidationStates((prev) => ({
         ...prev,
-        [key]: false
+        [key]: false,
       }));
     }
   };
@@ -58,9 +67,9 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
   // Validation checker function for original number
   const checkOriginalNum = async (value: string) => {
     if (!value || value.trim() === "") {
-      setValidationStates(prev => {
+      setValidationStates((prev) => {
         const newState = { ...prev };
-        delete newState['original_num'];
+        delete newState["original_num"];
         return newState;
       });
       return;
@@ -68,19 +77,19 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
 
     try {
       const res = await request.get(
-        `/api/registration-doc/external-inbound/check-original-num?original_num=${encodeURIComponent(value)}`
+        `/api/registration-doc/external-inbound/check-original-num?original_num=${encodeURIComponent(value)}`,
       );
       const isValid = res.data?.valid !== false;
 
-      setValidationStates(prev => ({
+      setValidationStates((prev) => ({
         ...prev,
-        original_num: isValid
+        original_num: isValid,
       }));
     } catch (error) {
       console.error("Original number validation error:", error);
-      setValidationStates(prev => ({
+      setValidationStates((prev) => ({
         ...prev,
-        original_num: false
+        original_num: false,
       }));
     }
   };
@@ -89,14 +98,14 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
   const debouncedCheck = useRef(
     debounce((value: string, isEmpty: boolean, key: string) => {
       checkValidation(value, isEmpty, key);
-    }, 500)
+    }, 500),
   ).current;
 
   // Debounced validation checker for original number
   const debouncedCheckOriginalNum = useRef(
     debounce((value: string) => {
       checkOriginalNum(value);
-    }, 500)
+    }, 500),
   ).current;
 
   // Clear validation states when update type changes
@@ -140,7 +149,9 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
   };
 
   const getOriginalNumValidationClass = (): string => {
-    return validationStates['original_num'] === false ? "bg-red-100 border-red-300" : "";
+    return validationStates["original_num"] === false
+      ? "bg-red-100 border-red-300"
+      : "";
   };
 
   const isFieldInvalid = (index: number, field: string): boolean => {
@@ -149,7 +160,7 @@ export const useFlowValidation = ({ control, updateType }: UseFlowValidationProp
   };
 
   const isOriginalNumInvalid = (): boolean => {
-    return validationStates['original_num'] === false;
+    return validationStates["original_num"] === false;
   };
 
   return {

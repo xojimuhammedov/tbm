@@ -9,28 +9,28 @@ const Rh_226_1_Page = () => {
   const { t } = useTranslation();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
-      () => [
-        {
-          name: t("RH 226-1"),
-          path: "/rh-226-1",
-          isActive: true,
-        },
-      ],
-      [t],
+    () => [
+      {
+        name: t("RH 226-1"),
+        path: "/rh-226-1",
+        isActive: true,
+      },
+    ],
+    [t],
   );
 
   return (
-      <>
-        <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs} />
-        <PageWrapper>
-          <div
-              className="pdf-viewer-container"
-              style={{ height: 'calc(100vh - 150px)' }}
-          >
-            <PdfViewer file="/file/rh-226-1.pdf" />
-          </div>
-        </PageWrapper>
-      </>
+    <>
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs} />
+      <PageWrapper>
+        <div
+          className="pdf-viewer-container"
+          style={{ height: "calc(100vh - 150px)" }}
+        >
+          <PdfViewer file="/file/rh-226-1.pdf" />
+        </div>
+      </PageWrapper>
+    </>
   );
 };
 
