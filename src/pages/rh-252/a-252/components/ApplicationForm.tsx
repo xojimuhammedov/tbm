@@ -21,6 +21,7 @@ import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
 import { useNavigate } from "react-router-dom";
 import { useFlowValidation } from "@/pages/rh-252/a-252/hooks/useCheckForm.tsx";
 
+
 export const selectType = [
   {
     id: 1,
@@ -92,6 +93,9 @@ const ApplicationDocumentForm = () => {
     getOriginalNumValidationClass,
     clearValidation
   } = useFlowValidation({
+    control: form.control,
+    updateType: currentUpdateType,
+  });
 
   // clear
   useEffect(() => {
@@ -308,25 +312,6 @@ const ApplicationDocumentForm = () => {
               <span>SANA:</span>
               <MyDatePicker name={"order_date"} control={form.control} />
             </div>
-
-            {/* New Original Number Input */}
-            <div className="mb-8">
-              <p className="text-sm font-semibold mb-2">Hujjat raqami:</p>
-              <MyInput
-                  name={"original_num"}
-                  control={form.control}
-                  placeholder="UBP-10975"
-                  className={cn(
-                      "border border-t-0 border-l-0 border-r-0 rounded-none h-9",
-                      getOriginalNumValidationClass()
-                  )}
-              />
-            </div>
-
-            <div className="mb-8 text-lg">
-              <p>
-                <strong>Kimga:</strong>
-              </p>
             <div>
               <MyInput
                 name={"code"}
@@ -336,6 +321,20 @@ const ApplicationDocumentForm = () => {
               />
             </div>
             <div className="font-bold">SONI:1</div>
+          </div>
+
+          {/* New Original Number Input */}
+          <div className="mb-8">
+            <p className="text-sm font-semibold mb-2">Hujjat raqami:</p>
+            <MyInput
+              name={"original_num"}
+              control={form.control}
+              placeholder="UBP-10975"
+              className={cn(
+                "border border-t-0 border-l-0 border-r-0 rounded-none h-9",
+                getOriginalNumValidationClass()
+              )}
+            />
           </div>
 
           <div className="mb-8 text-lg">
@@ -391,9 +390,7 @@ const ApplicationDocumentForm = () => {
               <div className="flex items-center justify-between border-b pb-4">
                 <h3 className="font-bold text-lg">Ko'chirish (Update)</h3>
                 <div className="flex items-center gap-4">
-                  <span className="text-sm font-medium text-gray-600">
-                    Turini tanlang:
-                  </span>
+                  <span className="text-sm font-medium text-gray-600">Turini tanlang:</span>
                   <MySelect
                     control={form.control}
                     name="update.update_type"
@@ -405,14 +402,10 @@ const ApplicationDocumentForm = () => {
               </div>
 
               {updateFields.length > 0 && (
-                <div
-                  className={cn(
-                    "grid gap-2 px-2 font-semibold text-xs text-gray-500",
-                    currentUpdateType === "channels"
-                      ? "grid-cols-[1fr_1fr_40px]"
-                      : "grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr_40px]",
-                  )}
-                >
+                <div className={cn(
+                  "grid gap-2 px-2 font-semibold text-xs text-gray-500",
+                  currentUpdateType === "channels" ? "grid-cols-[1fr_1fr_40px]" : "grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr_40px]"
+                )}>
                   {currentUpdateType === "channels" ? (
                     <>
                       <div>Eski (Old)</div>
@@ -443,7 +436,7 @@ const ApplicationDocumentForm = () => {
                           name={`update.flow_ids.${index}.id_or_channel`}
                           placeholder="ID01/1"
                           className={cn(
-                            getValidationClass(index, "id_or_channel"),
+                            getValidationClass(index, "id_or_channel")
                           )}
                         />
                         <MyInput
@@ -451,7 +444,7 @@ const ApplicationDocumentForm = () => {
                           name={`update.flow_ids.${index}.new_id_or_channel`}
                           placeholder="ID0168/1"
                           className={cn(
-                            getValidationClass(index, "new_id_or_channel"),
+                            getValidationClass(index, "new_id_or_channel")
                           )}
                         />
                       </div>
@@ -463,45 +456,15 @@ const ApplicationDocumentForm = () => {
                           placeholder="Code"
                           className={cn(
                             "h-9 text-xs",
-                            getValidationClass(index, "id_or_channel"),
+                            getValidationClass(index, "id_or_channel")
                           )}
                         />
-                        <MyInput
-                          control={form.control}
-                          name={`update.flow_ids.${index}.point_a`}
-                          placeholder="Point A"
-                          className="h-9 text-xs"
-                        />
-                        <MyInput
-                          control={form.control}
-                          name={`update.flow_ids.${index}.point_b`}
-                          placeholder="Point B"
-                          className="h-9 text-xs"
-                        />
-                        <MyInput
-                          control={form.control}
-                          name={`update.flow_ids.${index}.device_a`}
-                          placeholder="Device A"
-                          className="h-9 text-xs"
-                        />
-                        <MyInput
-                          control={form.control}
-                          name={`update.flow_ids.${index}.device_b`}
-                          placeholder="Device B"
-                          className="h-9 text-xs"
-                        />
-                        <MyInput
-                          control={form.control}
-                          name={`update.flow_ids.${index}.port_a`}
-                          placeholder="Port A"
-                          className="h-9 text-xs"
-                        />
-                        <MyInput
-                          control={form.control}
-                          name={`update.flow_ids.${index}.port_b`}
-                          placeholder="Port B"
-                          className="h-9 text-xs"
-                        />
+                        <MyInput control={form.control} name={`update.flow_ids.${index}.point_a`} placeholder="Point A" className="h-9 text-xs" />
+                        <MyInput control={form.control} name={`update.flow_ids.${index}.point_b`} placeholder="Point B" className="h-9 text-xs" />
+                        <MyInput control={form.control} name={`update.flow_ids.${index}.device_a`} placeholder="Device A" className="h-9 text-xs" />
+                        <MyInput control={form.control} name={`update.flow_ids.${index}.device_b`} placeholder="Device B" className="h-9 text-xs" />
+                        <MyInput control={form.control} name={`update.flow_ids.${index}.port_a`} placeholder="Port A" className="h-9 text-xs" />
+                        <MyInput control={form.control} name={`update.flow_ids.${index}.port_b`} placeholder="Port B" className="h-9 text-xs" />
                       </div>
                     )}
 
