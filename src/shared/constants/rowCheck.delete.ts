@@ -1,0 +1,1 @@
+export const ROW_CHECK_DELETE = "delete-many";
