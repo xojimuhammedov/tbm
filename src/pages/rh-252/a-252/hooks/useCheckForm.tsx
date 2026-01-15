@@ -30,7 +30,6 @@ export const useFlowValidation = ({
     name: "original_num",
   });
 
-  // Validation checker function for flow IDs
   const checkValidation = async (
     value: string,
     isEmpty: boolean,
@@ -64,7 +63,6 @@ export const useFlowValidation = ({
     }
   };
 
-  // Validation checker function for original number
   const checkOriginalNum = async (value: string) => {
     if (!value || value.trim() === "") {
       setValidationStates((prev) => {
@@ -94,26 +92,22 @@ export const useFlowValidation = ({
     }
   };
 
-  // Debounced validation checker for flow IDs
   const debouncedCheck = useRef(
     debounce((value: string, isEmpty: boolean, key: string) => {
       checkValidation(value, isEmpty, key);
     }, 500),
   ).current;
 
-  // Debounced validation checker for original number
   const debouncedCheckOriginalNum = useRef(
     debounce((value: string) => {
       checkOriginalNum(value);
     }, 500),
   ).current;
 
-  // Clear validation states when update type changes
   useEffect(() => {
     setValidationStates({});
   }, [updateType]);
 
-  // Validate flow IDs
   useEffect(() => {
     if (!watchedUpdateFlowIds || watchedUpdateFlowIds.length === 0) return;
 
@@ -136,7 +130,6 @@ export const useFlowValidation = ({
     });
   }, [watchedUpdateFlowIds, updateType, debouncedCheck]);
 
-  // Validate original number
   useEffect(() => {
     if (watchedOriginalNum) {
       debouncedCheckOriginalNum(watchedOriginalNum);
