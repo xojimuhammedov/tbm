@@ -4,12 +4,12 @@ import {
     MyInput,
     MySelect,
 } from "dgz-ui-shared/components/form";
-import {useMemo} from "react";
-import {useFieldArray} from "react-hook-form";
-import {useTranslation} from "react-i18next";
-import {FormContainerFooter} from "@/shared/components/templates/form";
-import {Button, cn} from "dgz-ui";
-import {ArrowLeftIcon} from "lucide-react";
+import { useMemo } from "react";
+import { useFieldArray } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { FormContainerFooter } from "@/shared/components/templates/form";
+import { Button, cn } from "dgz-ui";
+import { ArrowLeftIcon } from "lucide-react";
 import DynamicIdInput from "./DynamicDeleteInput";
 import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
 import useApplicationDocumentForm from "@/pages/rh-252/a-252/hooks/useApplicationDocumentForm";
@@ -18,8 +18,8 @@ import CreateFlowSection from "@/pages/rh-252/a-252/components/form/ CreateFlowS
 
 
 const ApplicationDocumentForm = () => {
-    const {staffOptions} = useStaffOptions();
-    const {t} = useTranslation();
+    const { staffOptions } = useStaffOptions();
+    const { t } = useTranslation();
 
     const {
         form,
@@ -31,7 +31,7 @@ const ApplicationDocumentForm = () => {
         currentUpdateType,
     } = useApplicationDocumentForm({});
 
-    const {fields, append, remove} = useFieldArray({
+    const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "create.flow_ids",
     });
@@ -47,7 +47,7 @@ const ApplicationDocumentForm = () => {
 
     const handleAddUpdateRow = () => {
         if (currentUpdateType === "channels") {
-            appendUpdate({id_or_channel: "", new_id_or_channel: ""});
+            appendUpdate({ id_or_channel: "", new_id_or_channel: "" });
         } else {
             appendUpdate({
                 id_or_channel: "",
@@ -91,9 +91,9 @@ const ApplicationDocumentForm = () => {
 
     const actionOptions = useMemo(
         () => [
-            {label: "Tashkil etish", value: "create"},
-            {label: "Ko'chirish", value: "update"},
-            {label: "O'chirish", value: "delete"},
+            { label: "Tashkil etish", value: "create" },
+            { label: "Ko'chirish", value: "update" },
+            { label: "O'chirish", value: "delete" },
         ],
         [],
     );
@@ -128,7 +128,7 @@ const ApplicationDocumentForm = () => {
                     <div className="flex justify-between items-center mb-8 text-lg">
                         <div className="flex items-center gap-2">
                             <span>SANA:</span>
-                            <MyDatePicker name="order_date" control={form.control}/>
+                            <MyDatePicker name="order_date" control={form.control} />
                         </div>
                         <div>
                             <MyInput
@@ -192,7 +192,7 @@ const ApplicationDocumentForm = () => {
                             18-bildirgisiga binoan "O'zbektelekom" G'arbiy filialiga tegishli
                             bo'lgan quyidagi oqimlarni
                         </p>
-                        <MyDatePicker name="dead_line" control={form.control}/>
+                        <MyDatePicker name="dead_line" control={form.control} />
                         <div className="w-full">
                             <MyInput
                                 control={form.control}
@@ -246,7 +246,7 @@ const ApplicationDocumentForm = () => {
 
                 <FormContainerFooter>
                     <Button size="sm" variant="ghost" type="button">
-                        <ArrowLeftIcon/>
+                        <ArrowLeftIcon />
                         {t("Back")}
                     </Button>
                 </FormContainerFooter>
