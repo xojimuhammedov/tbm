@@ -9,9 +9,10 @@
     responsible: string;
     to: string[];
     copy: string[];
+    payload_model?: string;
   }
 
-  // --- 17-45 uchun xos bo'lgan turlar (Networking/Flows) ---
+  // --- 17-45 uchun
   export interface FlowsIdsOrder {
     code: string;
     point_a: string;
@@ -50,7 +51,7 @@
     };
   }
 
-  // --- 17-54 uchun xos bo'lgan turlar (Events/VPN) ---
+  // --- 17-54 uchun
   export interface EventSchedule {
     date: string;
     duration: string;

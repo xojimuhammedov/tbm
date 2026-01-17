@@ -33,11 +33,9 @@ const useApplicationDocumentForm = ({
       to: [],
       copy: [],
       responsible: "",
-      // Temporary fields for generation
       point_a: "",
       point_b: "",
       count: "",
-      // Payload structure
       payload: {
         basic: {
           organization_name: "",
@@ -142,8 +140,6 @@ const useApplicationDocumentForm = ({
   const handleSubmit = useCallback(
       (data: any) => {
         const code = data.code;
-
-        // 17-45 uchun payload
         if (code === "17-45") {
           const updatePayload: any = {};
 
@@ -232,7 +228,6 @@ const useApplicationDocumentForm = ({
               },
           );
         }
-        // 17-54 uchun payload
         else if (code === "17-54") {
           const payload = {
             code: data.code,

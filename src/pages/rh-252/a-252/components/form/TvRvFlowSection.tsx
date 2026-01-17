@@ -70,7 +70,6 @@ const TvRvFlowSection = ({ control }: TvRvFlowSectionProps) => {
                     />
                 </div>
 
-                {/* Jadval */}
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
                         <thead className="bg-gray-50">
@@ -105,7 +104,6 @@ const TvRvFlowSection = ({ control }: TvRvFlowSectionProps) => {
                     </table>
                 </div>
 
-                {/* Satr qo'shish tugmasi */}
                 <div className="mt-4">
                     <Button
                         type="button"
