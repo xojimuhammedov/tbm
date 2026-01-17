@@ -1,11 +1,11 @@
-import {MyInput} from "dgz-ui-shared/components/form";
-import {Button, cn} from "dgz-ui";
-import {PlusSquare, Trash2} from "lucide-react";
-import {Control, FieldArrayWithId, UseFormWatch} from "react-hook-form";
+import { MyInput } from "dgz-ui-shared/components/form";
+import { Button, cn } from "dgz-ui";
+import { PlusSquare, Trash2 } from "lucide-react";
+import { Control, FieldArrayWithId, UseFormWatch } from "react-hook-form";
 
 interface CreateFlowSectionProps {
     control: Control<any>;
-    fields: FieldArrayWithId<any, "create.flow_ids", "id">[];
+    fields: FieldArrayWithId<any, "payload.create.flow_ids", "id">[];
     onAddRow: () => void;
     onRemoveRow: (index: number) => void;
     onGenerate: () => void;
@@ -53,54 +53,54 @@ const CreateFlowSection = ({
                     >
                         <MyInput
                             control={control}
-                            name={`create.flow_ids.${index}.signal_level`}
+                            name={`payload.create.flow_ids.${index}.signal_level`}
                             placeholder="Signal level"
                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                         />
                         <MyInput
                             control={control}
-                            name={`create.flow_ids.${index}.code`}
+                            name={`payload.create.flow_ids.${index}.code`}
                             placeholder="ID Number"
                             className={cn(
                                 "border border-t-0 border-l-0 border-r-0 rounded-none h-7",
-                                watch(`create.flow_ids.${index}.id_exist`) === true
+                                watch(`payload.create.flow_ids.${index}.id_exist`) === true
                                     ? "bg-red-100"
                                     : "",
                             )}
                         />
                         <MyInput
                             control={control}
-                            name={`create.flow_ids.${index}.point_a`}
+                            name={`payload.create.flow_ids.${index}.point_a`}
                             placeholder="Point A"
                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                         />
                         <MyInput
                             control={control}
-                            name={`create.flow_ids.${index}.port_a`}
+                            name={`payload.create.flow_ids.${index}.port_a`}
                             placeholder="Port A"
                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                         />
                         <MyInput
                             control={control}
-                            name={`create.flow_ids.${index}.device_a`}
+                            name={`payload.create.flow_ids.${index}.device_a`}
                             placeholder="Device A"
                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                         />
                         <MyInput
                             control={control}
-                            name={`create.flow_ids.${index}.point_b`}
+                            name={`payload.create.flow_ids.${index}.point_b`}
                             placeholder="Point B"
                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                         />
                         <MyInput
                             control={control}
-                            name={`create.flow_ids.${index}.port_b`}
+                            name={`payload.create.flow_ids.${index}.port_b`}
                             placeholder="Port B"
                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                         />
                         <MyInput
                             control={control}
-                            name={`create.flow_ids.${index}.device_b`}
+                            name={`payload.create.flow_ids.${index}.device_b`}
                             placeholder="Device B"
                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                         />
