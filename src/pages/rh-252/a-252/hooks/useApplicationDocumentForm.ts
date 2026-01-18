@@ -28,27 +28,41 @@ const useApplicationDocumentForm = ({
     shouldUnregister: false,
     defaultValues: {
       code: "",
-      original_num: "",
+      document_index: "",
+      order_date: null,
+      to: [],
+      copy: [],
       responsible: "",
-      from: "TBM",
-      to: "",
+      point_a: "",
+      point_b: "",
       count: "",
-      dead_line: "",
-      content:
-          "tarmoqdan o'chirilganligi tasdiqlansin va texnologik hujjatlarga tegishli o'zgartirishlar kiritilsin:",
-      signal_level: "",
-      create: {
-        flow_ids: [],
-      },
-      action_type: [],
-      update: {
-        update_type: "",
-        flow_ids: [],
+      payload: {
+        basic: {
+          organization_name: "",
+          request_number: "",
+          request_date: null,
+          deadline: null,
+          justification: "",
+          signal_level: "",
+          actions: [],
+          context: "",
+        },
+        create: {
+          flow_ids: [],
+        },
+        update: {
+          update_type: "",
+          flow_ids: [],
+        },
+        delete: {
+          elements: [],
+        },
+        events: [],
       },
     },
   });
 
-  const currentUpdateType = form.watch("update.update_type");
+  const currentUpdateType = form.watch("payload.update.update_type");
   const count = form.watch("count");
   const stationA = form.watch("point_a");
   const stationB = form.watch("point_b");
@@ -62,25 +76,31 @@ const useApplicationDocumentForm = ({
   const { mutate } = usePostQuery({
     listKeyId: KEYS.RH_Order_Application,
   });
-  
+
   useEffect(() => {
     if (!currentUpdateType) return;
-
-    const currentFlows = form.getValues("update.flow_ids");
+    const currentFlows = form.getValues("payload.update.flow_ids");
     if (currentFlows && currentFlows.length > 0) {
       const clearedFlows = currentFlows.map(() => {
         if (currentUpdateType === "channels") {
-          return { id_or_channel: "", new_id_or_channel: "" };
+          return { old: "", new: "" };
         } else {
           return {
-            id_or_channel: "",
+            code: "",
+            point_a: "",
+            point_b: "",
+            device_a: "",
+            device_b: "",
+            port_a: "",
+            port_b: "",
+            signal_level: "",
           };
         }
       });
-      form.setValue("update.flow_ids", clearedFlows);
+      form.setValue("payload.update.flow_ids", clearedFlows);
     }
     clearValidation();
-  }, [clearValidation, currentUpdateType, form]);
+  }, [currentUpdateType, form]);
 
   const handleGenerate = useCallback(async () => {
     if (!count || Number(count) <= 0) return;
@@ -93,7 +113,7 @@ const useApplicationDocumentForm = ({
 
       const ids: string[] = result.data || [];
 
-      const rows = Array.from({ length: count }).map((_, i) => ({
+      const rows = Array.from({ length: Number(count) }).map((_, i) => ({
         code: ids[i] || "",
         point_a: stationA || "",
         point_b: stationB || "",
@@ -119,81 +139,143 @@ const useApplicationDocumentForm = ({
 
   const handleSubmit = useCallback(
       (data: any) => {
-        const updatePayload: any = {};
-        if (data.update?.flow_ids?.length > 0) {
-          const channels = data.update.flow_ids
-              .filter((item: any) => item.update_type === "channels")
-              .map((item: any) => ({
-                old: item.id_or_channel,
-                new: item.new_id_or_channel,
-              }));
+        const code = data.code;
+        if (code === "17-45") {
+          const updatePayload: any = {};
 
-          const flows = data.update.flow_ids
-              .filter((item: any) => item.update_type === "flows")
-              .map((item: any) => ({
-                code: item.id_or_channel,
+          if (data.payload?.update?.flow_ids?.length > 0) {
+            const updateType = data.payload.update.update_type;
+
+            if (updateType === "channels") {
+              updatePayload.channels = data.payload.update.flow_ids.map((item: any) => ({
+                old: item.old,
+                new: item.new,
+              }));
+            } else if (updateType === "flows") {
+              updatePayload.flows = data.payload.update.flow_ids.map((item: any) => ({
+                code: item.code,
                 point_a: item.point_a,
                 point_b: item.point_b,
                 device_a: item.device_a,
                 device_b: item.device_b,
                 port_a: item.port_a,
                 port_b: item.port_b,
+                signal_level: item.signal_level,
               }));
+            }
+          }
 
-          if (channels.length > 0) updatePayload.channels = channels;
-          if (flows.length > 0) updatePayload.flows = flows;
+          const payload = {
+            code: data.code,
+            document_index: data.document_index,
+            order_date: data.order_date,
+            to: data.to,
+            copy: data.copy,
+            responsible: data.responsible,
+            payload: {
+              basic: {
+                organization_name: data.payload.basic.organization_name,
+                request_number: data.payload.basic.request_number,
+                request_date: data.payload.basic.request_date,
+                deadline: data.payload.basic.deadline,
+                justification: data.payload.basic.justification,
+                signal_level: data.payload.basic.signal_level,
+                actions: data.payload.basic.actions,
+              },
+              create: data.payload.basic.actions?.includes("create")
+                  ? {
+                    flow_ids: data.payload.create?.flow_ids?.map(
+                        ({ id_exist, ...rest }: any) => rest,
+                    ) || [],
+                  }
+                  : undefined,
+              update: data.payload.basic.actions?.includes("update")
+                  ? updatePayload
+                  : undefined,
+              delete: data.payload.basic.actions?.includes("delete")
+                  ? {
+                    elements: currentIds,
+                  }
+                  : undefined,
+            },
+          };
+
+          mutate(
+              {
+                url: URLS.RH_Order_Application,
+                attributes: payload,
+              },
+              {
+                onSuccess: () => {
+                  form.reset();
+                  navigate("/rh-252/a-252");
+                  onSave?.();
+                  toast({
+                    variant: "success",
+                    title: t("Success"),
+                    description: t("Application created successfully"),
+                  });
+                },
+                onError: (error: any) => {
+                  toast({
+                    variant: "destructive",
+                    title: t(`${get(error, "response.statusText", "Error")}`),
+                    description: t(
+                        `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+                    ),
+                  });
+                },
+              },
+          );
         }
-
-        const payload = {
-          code: data.code,
-          original_num: data.original_num,
-          order_date: data.order_date,
-          responsible: data.responsible,
-          from: data.from,
-          to: data.to,
-          count: data.count ? Number(data.count) : 0,
-          dead_line: data.dead_line,
-          action_type: data.action_type,
-          signal_level: data.signal_level,
-          content: data.content,
-          create: {
-            flow_ids: data.create?.flow_ids?.map(
-                ({ id_exist, ...rest }: any) => rest,
-            ),
-          },
-          delete: {
-            elements: currentIds,
-          },
-          update: updatePayload,
-        };
-
-        mutate(
-            {
-              url: URLS.RH_Order_Application,
-              attributes: payload,
-            },
-            {
-              onSuccess: () => {
-                form.reset();
-                navigate("/rh-252/a-252");
-                onSave?.();
-                toast({
-                  variant: "success",
-                  title: t("Success"),
-                  description: t("Application created successfully"),
-                });
+        else if (code === "17-54") {
+          const payload = {
+            code: data.code,
+            document_index: data.document_index,
+            order_date: data.order_date,
+            to: data.to,
+            copy: data.copy,
+            responsible: data.responsible,
+            payload: {
+              basic: {
+                organization_name: data.payload.basic.organization_name,
+                request_number: data.payload.basic.request_number,
+                request_date: data.payload.basic.request_date,
+                justification: data.payload.basic.justification,
+                context: data.payload.basic.context,
               },
-              onError: (error: any) => {
-                toast({
-                  variant: "destructive",
-                  title: t(`${get(error, "response.statusText", "Error")}`),
-                  description: t(
-                      `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-                  ),
-                });
-              },
+              events: data.payload.events || [],
             },
-        );
+          };
+
+          mutate(
+              {
+                url: URLS.RH_Order_Application,
+                attributes: payload,
+              },
+              {
+                onSuccess: () => {
+                  form.reset();
+                  navigate("/rh-252/a-252");
+                  onSave?.();
+                  toast({
+                    variant: "success",
+                    title: t("Success"),
+                    description: t("Application created successfully"),
+                  });
+                },
+                onError: (error: any) => {
+                  toast({
+                    variant: "destructive",
+                    title: t(`${get(error, "response.statusText", "Error")}`),
+                    description: t(
+                        `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+                    ),
+                  });
+                },
+              },
+          );
+        }
       },
       [currentIds, mutate, navigate, onSave, toast, t, form],
   );

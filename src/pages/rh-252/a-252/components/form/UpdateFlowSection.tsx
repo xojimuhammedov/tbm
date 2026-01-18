@@ -1,11 +1,11 @@
-import {MyInput, MySelect} from "dgz-ui-shared/components/form";
-import {Button, cn} from "dgz-ui";
-import {PlusSquare, Trash2} from "lucide-react";
-import {Control, FieldArrayWithId} from "react-hook-form";
+import { MyInput, MySelect } from "dgz-ui-shared/components/form";
+import { Button, cn } from "dgz-ui";
+import { Plus, Trash2 } from "lucide-react";
+import { Control, FieldArrayWithId } from "react-hook-form";
 
 interface UpdateFlowSectionProps {
     control: Control<any>;
-    fields: FieldArrayWithId<any, "update.flow_ids", "id">[];
+    fields: FieldArrayWithId<any, "payload.update.flow_ids", "id">[];
     currentUpdateType: string;
     onAddRow: () => void;
     onRemoveRow: (index: number) => void;
@@ -21,8 +21,8 @@ const UpdateFlowSection = ({
                                getValidationClass,
                            }: UpdateFlowSectionProps) => {
     const updateTypeOptions = [
-        {label: "Channels", value: "channels"},
-        {label: "Flows", value: "flows"},
+        { label: "Channels", value: "channels" },
+        { label: "Flows", value: "flows" },
     ];
 
     return (
@@ -30,12 +30,12 @@ const UpdateFlowSection = ({
             <div className="flex items-center justify-between border-b pb-4">
                 <h3 className="font-bold text-lg">Ko'chirish (Update)</h3>
                 <div className="flex items-center gap-4">
-          <span className="text-sm font-medium text-gray-600">
-            Turini tanlang:
-          </span>
+                    <span className="text-sm font-medium text-gray-600">
+                        Turini tanlang:
+                    </span>
                     <MySelect
                         control={control}
-                        name="update.update_type"
+                        name="payload.update.update_type"
                         options={updateTypeOptions}
                         placeholder="Turini tanlang"
                         className="w-48"
@@ -49,7 +49,7 @@ const UpdateFlowSection = ({
                         "grid gap-2 px-2 font-semibold text-xs text-gray-500",
                         currentUpdateType === "channels"
                             ? "grid-cols-[1fr_1fr_40px]"
-                            : "grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr_40px]",
+                            : "grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr_1fr_40px]",
                     )}
                 >
                     {currentUpdateType === "channels" ? (
@@ -66,6 +66,7 @@ const UpdateFlowSection = ({
                             <div>Device B</div>
                             <div>Port A</div>
                             <div>Port B</div>
+                            <div>Signal Level</div>
                         </>
                     )}
                     <div></div>
@@ -79,62 +80,68 @@ const UpdateFlowSection = ({
                             <div className="grid grid-cols-2 gap-2 flex-1">
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.id_or_channel`}
+                                    name={`payload.update.flow_ids.${index}.old`}
                                     placeholder="ID01/1"
-                                    className={cn(getValidationClass(index, "id_or_channel"))}
+                                    className={cn(getValidationClass(index, "old"))}
                                 />
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.new_id_or_channel`}
+                                    name={`payload.update.flow_ids.${index}.new`}
                                     placeholder="ID0168/1"
-                                    className={cn(getValidationClass(index, "new_id_or_channel"))}
+                                    className={cn(getValidationClass(index, "new"))}
                                 />
                             </div>
                         ) : (
-                            <div className="grid grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr] gap-2 flex-1">
+                            <div className="grid grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-2 flex-1">
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.id_or_channel`}
+                                    name={`payload.update.flow_ids.${index}.code`}
                                     placeholder="Code"
                                     className={cn(
                                         "h-9 text-xs",
-                                        getValidationClass(index, "id_or_channel"),
+                                        getValidationClass(index, "code"),
                                     )}
                                 />
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.point_a`}
+                                    name={`payload.update.flow_ids.${index}.point_a`}
                                     placeholder="Point A"
                                     className="h-9 text-xs"
                                 />
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.point_b`}
+                                    name={`payload.update.flow_ids.${index}.point_b`}
                                     placeholder="Point B"
                                     className="h-9 text-xs"
                                 />
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.device_a`}
+                                    name={`payload.update.flow_ids.${index}.device_a`}
                                     placeholder="Device A"
                                     className="h-9 text-xs"
                                 />
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.device_b`}
+                                    name={`payload.update.flow_ids.${index}.device_b`}
                                     placeholder="Device B"
                                     className="h-9 text-xs"
                                 />
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.port_a`}
+                                    name={`payload.update.flow_ids.${index}.port_a`}
                                     placeholder="Port A"
                                     className="h-9 text-xs"
                                 />
                                 <MyInput
                                     control={control}
-                                    name={`update.flow_ids.${index}.port_b`}
+                                    name={`payload.update.flow_ids.${index}.port_b`}
                                     placeholder="Port B"
+                                    className="h-9 text-xs"
+                                />
+                                <MyInput
+                                    control={control}
+                                    name={`payload.update.flow_ids.${index}.signal_level`}
+                                    placeholder="Signal"
                                     className="h-9 text-xs"
                                 />
                             </div>
@@ -147,7 +154,7 @@ const UpdateFlowSection = ({
                             onClick={() => onRemoveRow(index)}
                             className="text-red-500 hover:text-red-700 hover:bg-red-50"
                         >
-                            <Trash2 size={18}/>
+                            <Trash2 size={18} />
                         </Button>
                     </div>
                 ))}
@@ -156,10 +163,11 @@ const UpdateFlowSection = ({
             <Button
                 type="button"
                 variant="secondary"
-                className="w-fit gap-2 mt-2"
+                className="w-fit mt-2 flex items-center gap-2 border-dashed border-2 border-blue-400 text-blue-600 hover:bg-blue-50"
                 onClick={onAddRow}
+                size="sm"
             >
-                <PlusSquare size={18}/> Qator qo'shish
+                <Plus size={16} /> Qator qo'shish
             </Button>
         </div>
     );

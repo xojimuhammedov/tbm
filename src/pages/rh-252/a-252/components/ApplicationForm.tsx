@@ -8,14 +8,14 @@ import { useMemo } from "react";
 import { useFieldArray } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainerFooter } from "@/shared/components/templates/form";
-import { Button, cn } from "dgz-ui";
+import { Button } from "dgz-ui";
 import { ArrowLeftIcon } from "lucide-react";
 import DynamicIdInput from "./DynamicDeleteInput";
 import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
 import useApplicationDocumentForm from "@/pages/rh-252/a-252/hooks/useApplicationDocumentForm";
 import UpdateFlowSection from "@/pages/rh-252/a-252/components/form/UpdateFlowSection.tsx";
+import TvRvFlowSection from "@/pages/rh-252/a-252/components/form/TvRvFlowSection.tsx";
 import CreateFlowSection from "@/pages/rh-252/a-252/components/form/ CreateFlowSection.tsx";
-
 
 const ApplicationDocumentForm = () => {
     const { staffOptions } = useStaffOptions();
@@ -27,13 +27,12 @@ const ApplicationDocumentForm = () => {
         handleGenerate,
         setCurrentIds,
         getValidationClass,
-        getOriginalNumValidationClass,
         currentUpdateType,
     } = useApplicationDocumentForm({});
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: "create.flow_ids",
+        name: "payload.create.flow_ids",
     });
 
     const {
@@ -42,21 +41,27 @@ const ApplicationDocumentForm = () => {
         remove: removeUpdate,
     } = useFieldArray({
         control: form.control,
-        name: "update.flow_ids",
+        name: "payload.update.flow_ids",
     });
+
+    const selectedCode = form.watch("code");
+    const selectedActions = form.watch("payload.basic.actions") || [];
+    const isTvRvMode = selectedCode === "17-54";
+    const isNormalMode = selectedCode === "17-45";
 
     const handleAddUpdateRow = () => {
         if (currentUpdateType === "channels") {
-            appendUpdate({ id_or_channel: "", new_id_or_channel: "" });
+            appendUpdate({ old: "", new: "" });
         } else {
             appendUpdate({
-                id_or_channel: "",
+                code: "",
                 point_a: "",
                 point_b: "",
                 device_a: "",
                 device_b: "",
                 port_a: "",
                 port_b: "",
+                signal_level: "",
             });
         }
     };
@@ -73,11 +78,6 @@ const ApplicationDocumentForm = () => {
             device_a: "",
             device_b: "",
             signal_level: "",
-            organization_order_number: "",
-            deciphering_order_number: "",
-            deciphering_archive: "",
-            organization_archive: "",
-            note: "",
             id_exist: null,
         });
     };
@@ -97,6 +97,11 @@ const ApplicationDocumentForm = () => {
         ],
         [],
     );
+
+    const prefixOptions = [
+        { label: "17-54 (TV-RV)", value: "17-54" },
+        { label: "17-45 (Flows)", value: "17-45" },
+    ];
 
     return (
         <Form {...form}>
@@ -130,28 +135,26 @@ const ApplicationDocumentForm = () => {
                             <span>SANA:</span>
                             <MyDatePicker name="order_date" control={form.control} />
                         </div>
-                        <div>
-                            <MyInput
-                                name="code"
-                                control={form.control}
-                                placeholder="Farmoyish nomeri"
-                                className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                            />
+                        <div className="flex items-end gap-2">
+                            <div className="w-[150px]">
+                                <MySelect
+                                    name="code"
+                                    control={form.control}
+                                    options={prefixOptions}
+                                    placeholder="Kod"
+                                    className="border-t-0 border-l-0 border-r-0 rounded-none h-7 min-h-[28px]"
+                                />
+                            </div>
+                            <div className="w-[150px]">
+                                <MyInput
+                                    name="document_index"
+                                    control={form.control}
+                                    placeholder="Farmoyish nomeri"
+                                    className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                                />
+                            </div>
                         </div>
                         <div className="font-bold">SONI:1</div>
-                    </div>
-
-                    <div className="mb-8">
-                        <p className="text-sm font-semibold mb-2">Hujjat raqami:</p>
-                        <MyInput
-                            name="original_num"
-                            control={form.control}
-                            placeholder="UBP-10975"
-                            className={cn(
-                                "border border-t-0 border-l-0 border-r-0 rounded-none h-9",
-                                getOriginalNumValidationClass(),
-                            )}
-                        />
                     </div>
 
                     <div className="mb-8 text-lg">
@@ -165,44 +168,85 @@ const ApplicationDocumentForm = () => {
                         />
                     </div>
 
-                    <div className="flex items-center justify-center gap-4 mb-8">
-                        <MyInput
-                            control={form.control}
-                            placeholder="Signal level"
-                            name="signal_level"
-                            className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
-                        />
-                        <p className="text-xl font-semibold">oqimlarni tarmoqdan</p>
-                        <div className="w-[380px] text-left">
-                            <MySelect
-                                control={form.control}
-                                name="action_type"
-                                options={actionOptions}
-                                placeholder={t("Tanlang...")}
-                                isClearable
-                                isMulti
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-2 my-8">
-                        <p className="mb-4">
-                            "O'zTTBRM" DUK mintaqaviy boshqaruv bog'lamasining 2-oktabrdagi
-                            18-bildirgisiga binoan "O'zbektelekom" G'arbiy filialiga tegishli
-                            bo'lgan quyidagi oqimlarni
+                    <div className="mb-8 text-lg">
+                        <p>
+                            <strong>Nusxasi:</strong>
                         </p>
-                        <MyDatePicker name="dead_line" control={form.control} />
-                        <div className="w-full">
-                            <MyInput
-                                control={form.control}
-                                name="content"
-                                className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-full"
-                            />
-                        </div>
+                        <MyInput
+                            name="copy"
+                            control={form.control}
+                            className="border border-t-0 border-l-0 border-r-0 rounded-none"
+                        />
                     </div>
 
-                    {form.watch("action_type")?.includes("update") && (
+                    {/* Form 17-45 ga xos bo'lgan qism */}
+                    {isNormalMode && (
+                        <>
+                            <div className="flex items-center justify-center gap-4 mb-8">
+                                <MyInput
+                                    control={form.control}
+                                    placeholder="Signal level"
+                                    name="payload.basic.signal_level"
+                                    className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                                />
+                                <p className="text-xl font-semibold">oqimlarni tarmoqdan</p>
+                                <div className="w-[380px] text-left">
+                                    <MySelect
+                                        control={form.control}
+                                        name="payload.basic.actions"
+                                        options={actionOptions}
+                                        placeholder={t("Tanlang...")}
+                                        isClearable
+                                        isMulti
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-2 my-8">
+                                <MyInput
+                                    control={form.control}
+                                    name="payload.basic.organization_name"
+                                    placeholder="O'zTTBRM DUK"
+                                    className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-[300px]"
+                                />
+                                <p>mintaqaviy boshqaruv bog'lamasining</p>
+                                <div className="w-[120px]">
+                                    <MyDatePicker name="payload.basic.request_date" control={form.control} />
+                                </div>
+                                <p>dagi va</p>
+                                <div className="w-[100px]">
+                                    <MyInput
+                                        name="payload.basic.request_number"
+                                        control={form.control}
+                                        placeholder="№"
+                                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-6 py-0"
+                                    />
+                                </div>
+                                <p>-bildirgisiga binoan</p>
+                                <div className="w-[250px]">
+                                    <MyInput
+                                        name="payload.basic.justification"
+                                        control={form.control}
+                                        placeholder="Asoslash"
+                                        className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+                                    />
+                                </div>
+                                <div className="flex items-center gap-2 w-[150px] ml-auto">
+                                    <span>Deadline</span>
+                                    <MyDatePicker name="payload.basic.deadline" control={form.control} />
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    {/* Form 17-54 ga xos bo'lgan qism */}
+                    {isTvRvMode && (
+                        <TvRvFlowSection control={form.control} watch={form.watch} />
+                    )}
+
+                    {/* Update section - faqat 17-45 uchun */}
+                    {isNormalMode && selectedActions.includes("update") && (
                         <UpdateFlowSection
                             control={form.control}
                             fields={updateFields}
@@ -213,8 +257,10 @@ const ApplicationDocumentForm = () => {
                         />
                     )}
 
-                    {form.watch("action_type")?.includes("delete") && (
+                    {/* Delete section - faqat 17-45 uchun */}
+                    {isNormalMode && selectedActions.includes("delete") && (
                         <div className="mt-6 border p-4 my-2 rounded-xl">
+                            <h3 className="font-semibold mb-2">O'chirish</h3>
                             <DynamicIdInput
                                 onIdsChange={(ids) => setCurrentIds(ids)}
                                 initialIds={[]}
@@ -222,7 +268,8 @@ const ApplicationDocumentForm = () => {
                         </div>
                     )}
 
-                    {form.watch("action_type")?.includes("create") && (
+                    {/* Create section - faqat 17-45 uchun */}
+                    {isNormalMode && selectedActions.includes("create") && (
                         <CreateFlowSection
                             control={form.control}
                             fields={fields}
@@ -237,7 +284,7 @@ const ApplicationDocumentForm = () => {
                         control={form.control}
                         name="responsible"
                         options={staffOptions || []}
-                        label={t("Yuboriladigan xodimlar")}
+                        label={t("Mas'ul xodim")}
                         placeholder={t("Select staffs")}
                         isClearable
                         required
@@ -248,6 +295,9 @@ const ApplicationDocumentForm = () => {
                     <Button size="sm" variant="ghost" type="button">
                         <ArrowLeftIcon />
                         {t("Back")}
+                    </Button>
+                    <Button size="sm" type="submit">
+                        {t("Submit")}
                     </Button>
                 </FormContainerFooter>
             </form>
