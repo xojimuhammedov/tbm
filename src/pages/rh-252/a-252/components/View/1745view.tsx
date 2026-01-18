@@ -6,7 +6,7 @@ import { dateFormatter } from "@/shared/utils/utils";
 import { DATE } from "@/shared/constants/date.constants";
 import { useReactToPrint } from "react-to-print";
 import { Button } from "dgz-ui/button";
-import {OrderApplication} from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
+import { OrderApplication } from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
 
 interface OrderApplicationViewProps {
     open: boolean;
@@ -15,10 +15,10 @@ interface OrderApplicationViewProps {
 }
 
 const OrderApplicationView1745 = ({
-                                  open,
-                                  onOpenChange,
-                                  document,
-                              }: OrderApplicationViewProps) => {
+    open,
+    onOpenChange,
+    document,
+}: OrderApplicationViewProps) => {
     const { t } = useTranslation();
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -41,8 +41,8 @@ const OrderApplicationView1745 = ({
                     <div className="flex items-center gap-2">
                         <FileTextIcon className="size-5 text-blue-600" />
                         <span className="font-semibold text-gray-800">
-              {t("Farmoyishni ko'rish")} ({document?.code})
-            </span>
+                            {t("Farmoyishni ko'rish")} ({document?.code})
+                        </span>
                     </div>
 
                     <Button
@@ -117,8 +117,8 @@ const OrderApplicationView1745 = ({
                             {payload?.basic?.request_date ? dateFormatter(payload.basic.request_date, "yyyy-yil d-martdagi") : ""}{" "}
                             {payload?.basic?.request_number}-son murojaatiga binoan, {payload?.basic?.justification} uchun{" "}
                             <span className="font-bold underline italic">
-                {document?.order_date ? dateFormatter(document.order_date, "yyyy-yil d-martdan") : ""}
-              </span>{" "}
+                                {document?.order_date ? dateFormatter(document.order_date, "yyyy-yil d-martdan") : ""}
+                            </span>{" "}
                             quyidagi ishlar amalga oshirilsin:
                         </p>
 
@@ -151,18 +151,6 @@ const OrderApplicationView1745 = ({
                                     </div>
                                 );
                             })}
-                        </div>
-                    </div>
-
-                    <div className="mt-20 flex justify-between items-end border-t border-dashed border-gray-400 pt-8">
-                        <div className="w-1/3">
-                            <p className="font-bold uppercase text-[14px]">Boshliq</p>
-                        </div>
-                        <div className="w-1/3 border-b border-black mb-1 mx-4 italic text-center text-[12px] text-gray-500">
-                            (imzo)
-                        </div>
-                        <div className="w-1/3 text-right">
-                            <p className="font-bold text-[15px] uppercase">A. Axmedov</p>
                         </div>
                     </div>
                 </div>
