@@ -1,0 +1,124 @@
+import { useFieldArray, Control } from "react-hook-form";
+import { MyInput, MyDatePicker } from "dgz-ui-shared/components/form";
+import { Button } from "dgz-ui";
+import { Plus, Trash2, Hash } from "lucide-react";
+
+interface AAGBackupDeleteSectionProps {
+    control: Control<any>;
+}
+
+const AAGBackupDeleteSection = ({ control }: AAGBackupDeleteSectionProps) => {
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "payload.basic.delete.elements",
+    });
+
+    const handleAddId = () => {
+        append("");
+    };
+
+    return (
+        <div className=" ">
+            <div className="text-center mb-8">
+                <h2 className="text-xl font-bold mb-6 uppercase tracking-wide">
+                    Zaxira AAG kanallarni o‘chirish to‘g‘risida
+                </h2>
+
+                <div className="text-gray-800 leading-relaxed text-justify p-4 ">
+                    <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-block w-64">
+              <MyInput
+                  control={control}
+                  name="payload.basic.organization_name"
+                  placeholder="1-Mintaqaviy boshqaruv bog‘lamasining"
+                  className="border-t-0 border-l-0 border-r-0 rounded-none h-7 bg-transparent"
+              />
+            </span>
+                        <span>2025-yil</span>
+                        <span className="inline-block w-40">
+               <MyDatePicker control={control} name="payload.basic.request_date" />
+            </span>
+                        <span>dagi</span>
+                        <span className="inline-block w-20">
+              <MyInput
+                  control={control}
+                  name="payload.basic.request_number"
+                  placeholder="31-son"
+                  className="border-t-0 border-l-0 border-r-0 rounded-none h-7 bg-transparent"
+              />
+            </span>
+                        <span>bildirgisiga binoan tarmoqda tashkil qilingan 13x64 Kbit/s </span>
+                        <span> asosiy kanallar o‘chirilganligi sababli</span>
+                        <span className="inline-block w-40">
+               <MyDatePicker control={control} name="payload.basic.deadline" />
+            </span>
+                        <span>dan ushbu kanallar uchun ishlagan quyidagi zaxira (AAG) kanallari o‘chirilsin.</span>
+                    </div>
+
+                    <div className="mt-4">
+                        <MyInput
+                            control={control}
+                            name="payload.basic.justification"
+                            placeholder="Asoslantirish (ixtiyoriy)..."
+                            className="w-full border-t-0 border-l-0 border-r-0 rounded-none h-7 bg-transparent italic text-sm"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-8">
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                        <Hash className="w-5 h-5 text-blue-600" />
+                        O'chirilishi kerak bo'lgan ID raqamlar
+                    </h3>
+                    <Button
+                        type="button"
+                        onClick={handleAddId}
+                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md transition-all text-sm"
+                    >
+                        <Plus className="w-4 h-4" />
+                        ID qo'shish
+                    </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {fields.map((field, index) => (
+                        <div
+                            key={field.id}
+                            className="flex items-center gap-2 p-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:border-blue-300 transition-colors"
+                        >
+                            <div className="bg-gray-100 text-gray-500 text-xs font-mono px-2 py-1 rounded">
+                                #{index + 1}
+                            </div>
+                            <div className="flex-1">
+                                <MyInput
+                                    control={control}
+                                    name={`payload.basic.delete.elements.${index}`}
+                                    placeholder="ID-3623"
+                                    className="border-none focus:ring-0 h-8 text-sm font-medium"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => remove(index)}
+                                className="text-red-400 hover:text-red-600 p-1 transition-colors"
+                                title="O'chirish"
+                            >
+                                <Trash2 className="w-4 h-4" />
+                            </button>
+                        </div>
+                    ))}
+                </div>
+
+                {fields.length === 0 && (
+                    <div className="text-center py-10 border-2 border-dashed border-gray-200 rounded-lg text-gray-400">
+                        Hali hech qanday ID kiritilmadi. "ID qo'shish" tugmasini bosing.
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default AAGBackupDeleteSection;
