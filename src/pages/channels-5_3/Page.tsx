@@ -13,70 +13,74 @@ import useChannels from "@/pages/channels-5_3/hooks/useChannels.ts";
 import ChannelImport from "@/pages/channels-5_3/components/ChannelImport.tsx";
 
 const Page = () => {
-    const { t } = useTranslation();
-    const {
-        loading,
-        columns,
-        dataSource,
-        handleFilter,
-        params,
-        handleAdd,
-        selectedRowKeys,
-        handleDeleteMany
-    } = useChannels();
+  const { t } = useTranslation();
+  const {
+    loading,
+    columns,
+    dataSource,
+    handleFilter,
+    params,
+    handleAdd,
+    selectedRowKeys,
+    handleDeleteMany,
+  } = useChannels();
 
-    const [importModalOpen, setImportModalOpen] = useState(false);
+  const [importModalOpen, setImportModalOpen] = useState(false);
 
-    const breadcrumbs = useMemo<BreadcrumbInterface[]>(
-        () => [
-            {
-                name: t("Channels(5_3)"),
-                path: "/channels-5_3",
-                isActive: true,
-            },
-        ],
-        [t],
-    );
+  const breadcrumbs = useMemo<BreadcrumbInterface[]>(
+    () => [
+      {
+        name: t("Channels(5_3)"),
+        path: "/channels-5_3",
+        isActive: true,
+      },
+    ],
+    [t],
+  );
 
-    return (
-        <>
-            <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-                <div className="flex items-center gap-2">
+  return (
+    <>
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+        <div className="flex items-center gap-2">
+          <Button
+            size={"sm"}
+            disabled={selectedRowKeys.length === 0}
+            variant="destructive"
+            onClick={handleDeleteMany}
+          >
+            <Trash2Icon className="size-4" />
+            {t("Delete")} ({selectedRowKeys.length})
+          </Button>
 
-                    <Button size={"sm"} disabled={selectedRowKeys.length === 0} variant="destructive" onClick={handleDeleteMany}>
-                        <Trash2Icon className="size-4" />
-                        {t("Delete")} ({selectedRowKeys.length})
-                    </Button>
-
-                    <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
-                        <UploadIcon className="size-4" />
-                        {t("Import")}
-                    </Button>
-                    <Button size={"sm"} onClick={handleAdd}>
-                        <CirclePlusIcon />
-                        {t("Add new")}
-                    </Button>
-                </div>
-            </PageHeader>
-            <PageWrapper>
-                <DataTable<ChannelInterface, PaginationInterface<ChannelInterface>>
-                    tableKey={CHANNELS_5_3_QUERY_KEY}
-                    hasNumbers
-                    hasSearch
-                    isStickyHeader
-                    hasPagination
-                    loading={loading}
-                    params={params}
-                    onParamChange={handleFilter}
-                    rowKey={"_id"}
-                    dataSource={dataSource}
-                    dataKey={"docs"}
-                    columns={columns}
-                />
-            </PageWrapper>
-            <ChannelImport open={importModalOpen} onOpenChange={setImportModalOpen} />
-        </>
-    );
+          <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
+            <UploadIcon className="size-4" />
+            {t("Import")}
+          </Button>
+          <Button size={"sm"} onClick={handleAdd}>
+            <CirclePlusIcon />
+            {t("Add new")}
+          </Button>
+        </div>
+      </PageHeader>
+      <PageWrapper>
+        <DataTable<ChannelInterface, PaginationInterface<ChannelInterface>>
+          tableKey={CHANNELS_5_3_QUERY_KEY}
+          hasNumbers
+          hasSearch
+          isStickyHeader
+          hasPagination
+          loading={loading}
+          params={params}
+          onParamChange={handleFilter}
+          rowKey={"_id"}
+          dataSource={dataSource}
+          dataKey={"docs"}
+          columns={columns}
+        />
+      </PageWrapper>
+      <ChannelImport open={importModalOpen} onOpenChange={setImportModalOpen} />
+    </>
+  );
 };
 
 export default Page;

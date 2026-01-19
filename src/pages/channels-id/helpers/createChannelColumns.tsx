@@ -10,26 +10,26 @@ const createChannelColumns = (
   selectedRowKeys: string[],
   onSelectRow: (id: string) => void,
   onSelectAll: (ids: string[]) => void,
-  allIds: string[]
+  allIds: string[],
 ): ColumnType<ChannelInterface>[] => [
   {
     key: "selection",
     dataIndex: "_id",
     name: (
-        <input
-            type="checkbox"
-            className="cursor-pointer size-4"
-            onChange={(e) => onSelectAll(e.target.checked ? allIds : [])}
-            checked={allIds.length > 0 && selectedRowKeys.length === allIds.length}
-        />
+      <input
+        type="checkbox"
+        className="cursor-pointer size-4"
+        onChange={(e) => onSelectAll(e.target.checked ? allIds : [])}
+        checked={allIds.length > 0 && selectedRowKeys.length === allIds.length}
+      />
     ),
     render: (id: string) => (
-        <input
-            type="checkbox"
-            className="cursor-pointer size-4"
-            checked={selectedRowKeys.includes(id)}
-            onChange={() => onSelectRow(id)}
-        />
+      <input
+        type="checkbox"
+        className="cursor-pointer size-4"
+        checked={selectedRowKeys.includes(id)}
+        onChange={() => onSelectRow(id)}
+      />
     ),
   },
   {

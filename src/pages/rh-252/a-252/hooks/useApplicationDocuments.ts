@@ -12,7 +12,6 @@ import { OrderApplication } from "../interfaces/order.interface";
 import createOrderColumns from "../helpers/createApplicationColumns";
 import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument.ts";
 
-
 const useApplicationDocuments = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -32,10 +31,10 @@ const useApplicationDocuments = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (docId: string) => {
-        navigate(`/rh-252/a-252/edit/${docId}`);
-      },
-      [navigate],
+    (docId: string) => {
+      navigate(`/rh-252/a-252/edit/${docId}`);
+    },
+    [navigate],
   );
 
   const handleView = useCallback((docId: string) => {
@@ -49,39 +48,39 @@ const useApplicationDocuments = () => {
   }, []);
 
   const handleDelete = useCallback(
-      (id: OrderApplication["_id"]) => {
-        if (!id) return;
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t(`Success`),
-                description: t(`Application document successfully deleted`),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-                ),
-              });
-            });
-      },
-      [query, removeWithConfirm, t, toast],
+    (id: OrderApplication["_id"]) => {
+      if (!id) return;
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Application document successfully deleted`),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
+        });
+    },
+    [query, removeWithConfirm, t, toast],
   );
 
   const columns: ColumnType<OrderApplication>[] = useMemo(
-      () =>
-          createOrderColumns(
-              t as unknown as (...args: TranslationArgsType) => string,
-              handleEdit,
-              handleDelete,
-              handleView,
-          ),
-      [handleDelete, handleEdit, handleView, t],
+    () =>
+      createOrderColumns(
+        t as unknown as (...args: TranslationArgsType) => string,
+        handleEdit,
+        handleDelete,
+        handleView,
+      ),
+    [handleDelete, handleEdit, handleView, t],
   );
 
   return {
