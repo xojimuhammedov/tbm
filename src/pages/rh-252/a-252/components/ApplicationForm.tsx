@@ -16,6 +16,7 @@ import useApplicationDocumentForm from "@/pages/rh-252/a-252/hooks/useApplicatio
 import UpdateFlowSection from "@/pages/rh-252/a-252/components/form/UpdateFlowSection.tsx";
 import TvRvFlowSection from "@/pages/rh-252/a-252/components/form/TvRvFlowSection.tsx";
 import CreateFlowSection from "@/pages/rh-252/a-252/components/form/ CreateFlowSection.tsx";
+import AAGBackupDeleteSection from "@/pages/rh-252/a-252/components/form/ReserveChannelDeleteSection.tsx";
 
 const ApplicationDocumentForm = () => {
   const { staffOptions } = useStaffOptions();
@@ -48,6 +49,7 @@ const ApplicationDocumentForm = () => {
   const selectedActions = form.watch("payload.basic.actions") || [];
   const isTvRvMode = selectedCode === "17-54";
   const isNormalMode = selectedCode === "17-45";
+  const isReserveChannelDeleteMode = selectedCode === "17-33";
 
   const handleAddUpdateRow = () => {
     if (currentUpdateType === "channels") {
@@ -101,13 +103,14 @@ const ApplicationDocumentForm = () => {
   const prefixOptions = [
     { label: "17-54 (TV-RV)", value: "17-54" },
     { label: "17-45 (Flows)", value: "17-45" },
+    { label: "17-33 (Flows)", value: "17-33" },
+
   ];
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} action="">
         <div className="p-8 bg-white shadow-lg text-black">
-          {/* Header */}
           <div className="text-center mb-8">
             <p className="text-xs mb-2">
               IDRO.GOV.UZ tizimi orqali ЭРИ bilan tasdiqlangan, Xujjat kodi:
@@ -246,45 +249,55 @@ const ApplicationDocumentForm = () => {
             </>
           )}
 
+          {/* Update section - faqat 17-45 uchun */}
+          {isNormalMode && selectedActions.includes("update") && (
+              <UpdateFlowSection
+                  control={form.control}
+                  fields={updateFields}
+                  currentUpdateType={currentUpdateType}
+                  onAddRow={handleAddUpdateRow}
+                  onRemoveRow={removeUpdate}
+                  getValidationClass={getValidationClass}
+              />
+          )}
+
+          {/* Delete section - faqat 17-45 uchun */}
+          {isNormalMode && selectedActions.includes("delete") && (
+              <div className="mt-6 border p-4 my-2 rounded-xl">
+                <h3 className="font-semibold mb-2">O'chirish</h3>
+                <DynamicIdInput
+                    onIdsChange={(ids) => setCurrentIds(ids)}
+                    initialIds={[]}
+                />
+              </div>
+          )}
+
+          {/* Create section - faqat 17-45 uchun */}
+          {isNormalMode && selectedActions.includes("create") && (
+              <CreateFlowSection
+                  control={form.control}
+                  fields={fields}
+                  onAddRow={handleAddRow}
+                  onRemoveRow={remove}
+                  onGenerate={handleGenerateClick}
+                  watch={form.watch}
+              />
+          )}
+
           {/* Form 17-54 ga xos bo'lgan qism */}
           {isTvRvMode && (
             <TvRvFlowSection control={form.control} watch={form.watch} />
           )}
 
-          {/* Update section - faqat 17-45 uchun */}
-          {isNormalMode && selectedActions.includes("update") && (
-            <UpdateFlowSection
-              control={form.control}
-              fields={updateFields}
-              currentUpdateType={currentUpdateType}
-              onAddRow={handleAddUpdateRow}
-              onRemoveRow={removeUpdate}
-              getValidationClass={getValidationClass}
-            />
-          )}
+          {/* Form 17-33 ga xos bo'lgan qism */}
+          {isReserveChannelDeleteMode && (
+              <AAGBackupDeleteSection control={form.control}/>
+          )
 
-          {/* Delete section - faqat 17-45 uchun */}
-          {isNormalMode && selectedActions.includes("delete") && (
-            <div className="mt-6 border p-4 my-2 rounded-xl">
-              <h3 className="font-semibold mb-2">O'chirish</h3>
-              <DynamicIdInput
-                onIdsChange={(ids) => setCurrentIds(ids)}
-                initialIds={[]}
-              />
-            </div>
-          )}
+          }
 
-          {/* Create section - faqat 17-45 uchun */}
-          {isNormalMode && selectedActions.includes("create") && (
-            <CreateFlowSection
-              control={form.control}
-              fields={fields}
-              onAddRow={handleAddRow}
-              onRemoveRow={remove}
-              onGenerate={handleGenerateClick}
-              watch={form.watch}
-            />
-          )}
+
+
 
           <MySelect
             control={form.control}

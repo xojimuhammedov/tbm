@@ -74,8 +74,24 @@ export interface Payload1754 {
   events: OrderEvent[];
 }
 
+export interface Payload1733 {
+  basic: {
+    organization_name: string;
+    request_number: string;
+    request_date: string;
+    justification: string;
+    context: string;
+    delete?: {
+      elements: string[];
+    };
+  };
+
+}
+
 // Bu interfeys "code" maydoniga qarab payloadni avtomatik ajratib beradi
 
 export type OrderApplication =
   | (BaseOrder & { code: "17-45"; payload: Payload1745 })
-  | (BaseOrder & { code: "17-54"; payload: Payload1754 });
+  | (BaseOrder & { code: "17-54"; payload: Payload1754 })
+    | (BaseOrder & { code: "17-33"; payload: Payload1733 });
+
