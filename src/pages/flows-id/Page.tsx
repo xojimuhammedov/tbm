@@ -15,111 +15,111 @@ import { FilterInterface } from "dgz-ui-shared/components/filters";
 import FlowView from "@/pages/flows-id/components/FlowIdView.tsx";
 
 const Page = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    const {
-        loading,
-        columns,
-        dataSource,
-        handleFilter,
-        params,
-        handleAdd,
-        openView,
-        handleCloseView,
-        currentItem,
-        selectedRowKeys,
-        handleDeleteMany,
-    } = useFlows();
+  const {
+    loading,
+    columns,
+    dataSource,
+    handleFilter,
+    params,
+    handleAdd,
+    openView,
+    handleCloseView,
+    currentItem,
+    selectedRowKeys,
+    handleDeleteMany,
+  } = useFlows();
 
-    const [importModalOpen, setImportModalOpen] = useState(false);
+  const [importModalOpen, setImportModalOpen] = useState(false);
 
-    const filters: FilterInterface[] = useMemo(
-        () => [
-            {
-                name: "status_filter",
-                label: t("Status"),
-                placeholder: t("Select status"),
-                options: [
-                    { label: t("Active"), value: "active" },
-                    { label: t("Inactive"), value: "inactive" },
-                    { label: t("Inactive 3 years"), value: "inactive_3years" },
-                ],
-            },
+  const filters: FilterInterface[] = useMemo(
+    () => [
+      {
+        name: "status_filter",
+        label: t("Status"),
+        placeholder: t("Select status"),
+        options: [
+          { label: t("Active"), value: "active" },
+          { label: t("Inactive"), value: "inactive" },
+          { label: t("Inactive 3 years"), value: "inactive_3years" },
         ],
-        [t],
-    );
+      },
+    ],
+    [t],
+  );
 
-    const breadcrumbs = useMemo<BreadcrumbInterface[]>(
-        () => [
-            {
-                name: t("Flows ID"),
-                path: "/flows-id",
-                isActive: true,
-            },
-        ],
-        [t],
-    );
+  const breadcrumbs = useMemo<BreadcrumbInterface[]>(
+    () => [
+      {
+        name: t("Flows ID"),
+        path: "/flows-id",
+        isActive: true,
+      },
+    ],
+    [t],
+  );
 
-    return (
-        <>
-            <FlowView
-                open={openView}
-                onOpenChange={handleCloseView}
-                document={currentItem}
-            />
-            <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-                <div className="flex items-center gap-2">
-                    {/* {selectedRowKeys.length > 0 && ( */}
-                        <Button
-                            size={"sm"}
-                            variant="destructive"
-                            onClick={handleDeleteMany}
-                            disabled={selectedRowKeys.length === 0}
-                            className="btn-delete"
-                        >
-                            <Trash2Icon className="size-4" />
-                            {t("Delete")} ({selectedRowKeys.length})
-                        </Button>
-                    {/* // )} */}
+  return (
+    <>
+      <FlowView
+        open={openView}
+        onOpenChange={handleCloseView}
+        document={currentItem}
+      />
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+        <div className="flex items-center gap-2">
+          {/* {selectedRowKeys.length > 0 && ( */}
+          <Button
+            size={"sm"}
+            variant="destructive"
+            onClick={handleDeleteMany}
+            disabled={selectedRowKeys.length === 0}
+            className="btn-delete"
+          >
+            <Trash2Icon className="size-4" />
+            {t("Delete")} ({selectedRowKeys.length})
+          </Button>
+          {/* // )} */}
 
-                    <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
-                        <UploadIcon className="size-4" />
-                        {t("Import")}
-                    </Button>
-                    <Button size={"sm"} onClick={handleAdd}>
-                        <CirclePlusIcon className="size-4" />
-                        {t("Add new")}
-                    </Button>
-                </div>
-            </PageHeader>
+          <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
+            <UploadIcon className="size-4" />
+            {t("Import")}
+          </Button>
+          <Button size={"sm"} onClick={handleAdd}>
+            <CirclePlusIcon className="size-4" />
+            {t("Add new")}
+          </Button>
+        </div>
+      </PageHeader>
 
-            <PageWrapper>
-                <DataTable<FlowInterface, PaginationInterface<FlowInterface>>
-                    tableKey={FLOWS_ID_QUERY_KEY}
-                    hasNumbers
-                    hasSearch
-                    isStickyHeader
-                    hasPagination
-                    loading={loading}
-                    params={params}
-                    onParamChange={handleFilter}
-                    filters={filters}
-                    handleFilterChange={(filterParams) => {
-                        handleFilter({ ...params, ...filterParams, page: 1 });
-                    }}
-                    rowKey={"_id"}
-                    dataSource={dataSource}
-                    dataKey={"docs"}
-                    columns={columns}
-                />
-            </PageWrapper>
+      <PageWrapper>
+        <DataTable<FlowInterface, PaginationInterface<FlowInterface>>
+          tableKey={FLOWS_ID_QUERY_KEY}
+          hasNumbers
+          hasSearch
+          isStickyHeader
+          hasPagination
+          loading={loading}
+          params={params}
+          onParamChange={handleFilter}
+          filters={filters}
+          handleFilterChange={(filterParams) => {
+            handleFilter({ ...params, ...filterParams, page: 1 });
+          }}
+          rowKey={"_id"}
+          dataSource={dataSource}
+          dataKey={"docs"}
+          columns={columns}
+        />
+      </PageWrapper>
 
-            <ImportFlowModal
-                open={importModalOpen}
-                onOpenChange={setImportModalOpen}
-            />
-        </>
-    );
+      <ImportFlowModal
+        open={importModalOpen}
+        onOpenChange={setImportModalOpen}
+      />
+    </>
+  );
 };
 
 export default Page;

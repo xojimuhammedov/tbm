@@ -6,10 +6,10 @@ import { dateFormatter } from "@/shared/utils/utils";
 import { DATE } from "@/shared/constants/date.constants";
 
 const createOrderColumns = (
-    t: (...args: TranslationArgsType) => string,
-    handleEdit: (id: string) => void,
-    handleDelete: (id: string) => void,
-    handleView: (id: string) => void,
+  t: (...args: TranslationArgsType) => string,
+  handleEdit: (id: string) => void,
+  handleDelete: (id: string) => void,
+  handleView: (id: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
     key: "code",
@@ -34,10 +34,12 @@ const createOrderColumns = (
     render: (to: string[]) => {
       if (!to || to.length === 0) return "-";
       return (
-          <div className="max-w-xs truncate" title={to.join(", ")}>
-            {to.slice(0, 2).join(", ")}
-            {to.length > 2 && <span className="text-gray-500 font-medium"> +{to.length - 2}</span>}
-          </div>
+        <div className="max-w-xs truncate" title={to.join(", ")}>
+          {to.slice(0, 2).join(", ")}
+          {to.length > 2 && (
+            <span className="text-gray-500 font-medium"> +{to.length - 2}</span>
+          )}
+        </div>
       );
     },
   },
@@ -49,26 +51,32 @@ const createOrderColumns = (
     render: (id: string | undefined) => {
       if (!id) return null;
       return (
-          <div className={"flex items-center gap-2"}>
-            <MyTooltip content={t("View")}>
-              <EyeIcon
-                  className={"size-4 cursor-pointer text-slate-500 hover:text-blue-600 transition-colors"}
-                  onClick={() => handleView(id)}
-              />
-            </MyTooltip>
-            <MyTooltip content={t("Edit")}>
-              <EditIcon
-                  className={"size-4 cursor-pointer text-slate-500 hover:text-green-600 transition-colors"}
-                  onClick={() => handleEdit(id)}
-              />
-            </MyTooltip>
-            <MyTooltip content={t("Delete")}>
-              <Trash2Icon
-                  className={"size-4 cursor-pointer text-slate-500 hover:text-red-600 transition-colors"}
-                  onClick={() => handleDelete(id)}
-              />
-            </MyTooltip>
-          </div>
+        <div className={"flex items-center gap-2"}>
+          <MyTooltip content={t("View")}>
+            <EyeIcon
+              className={
+                "size-4 cursor-pointer text-slate-500 hover:text-blue-600 transition-colors"
+              }
+              onClick={() => handleView(id)}
+            />
+          </MyTooltip>
+          <MyTooltip content={t("Edit")}>
+            <EditIcon
+              className={
+                "size-4 cursor-pointer text-slate-500 hover:text-green-600 transition-colors"
+              }
+              onClick={() => handleEdit(id)}
+            />
+          </MyTooltip>
+          <MyTooltip content={t("Delete")}>
+            <Trash2Icon
+              className={
+                "size-4 cursor-pointer text-slate-500 hover:text-red-600 transition-colors"
+              }
+              onClick={() => handleDelete(id)}
+            />
+          </MyTooltip>
+        </div>
       );
     },
   },
