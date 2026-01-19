@@ -24,7 +24,7 @@ const Page = () => {
     currentItem,
     handleCloseView,
     openView,
-  }: any = useApplicationDocuments();
+  } = useApplicationDocuments();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
