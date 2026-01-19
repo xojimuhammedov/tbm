@@ -89,7 +89,7 @@ const useApplicationDocuments = () => {
     handleAdd,
     handleFilter,
     loading: query.isLoading,
-    dataSource: query.data?.data,
+    dataSource: query.data,
     columns,
     openView,
     currentItem: applicationDocumentQuery.data?.data,
