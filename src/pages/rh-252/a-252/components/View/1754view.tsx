@@ -49,11 +49,32 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
             }
         >
             <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
+
                 <div
                     ref={contentRef}
                     style={{ fontFamily: '"Times New Roman", Times, serif' }}
                     className="bg-white w-full max-w-[950px] shadow-2xl p-12 relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
                 >
+                    <div className="flex justify-between items-start mb-12 pb-6">
+                        <div className="w-1/3 flex items-center h-full">
+                            <div className="flex flex-col">
+                                <h1 className="text-[48px] font-black leading-none text-blue-700 tracking-tighter">
+                                    TBM
+                                </h1>
+                            </div>
+                        </div>
+
+                        <div className="w-2/3 text-right flex flex-col gap-3">
+                            <div className="text-[13px] font-bold text-blue-700 uppercase leading-[1.3]">
+                                “O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish<br/>
+                                respublika markazi” davlat unitar korxonasi
+                            </div>
+                            <div className="text-[11px] font-bold text-blue-900 italic leading-[1.3]">
+                                “Republican telecommunications management center of<br/>
+                                Uzbekistan” government unitary enterprise
+                            </div>
+                        </div>
+                    </div>
                     <div className="text-center uppercase font-bold text-[15px] mb-2 leading-tight">
                         <p>“O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish</p>
                         <p>respublika markazi” davlat unitar korxonasi</p>
@@ -99,35 +120,38 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
                     <div className="overflow-x-auto mb-8">
                         <table className="w-full border-collapse border border-black text-[14px]">
                             <tbody>
-                                {payload?.events?.map((event: any, eventIdx: number) => (
-                                    <tr key={eventIdx}>
-                                        <td className="border border-black p-3 w-1/4 text-center align-middle">
-                                            {event.location}
-                                        </td>
-                                        <td className="border border-black p-3 w-1/6 text-center align-middle font-bold">
-                                            {event.connection_spec}
-                                        </td>
-                                        <td className="border border-black p-0">
-                                            <table className="w-full h-full border-none">
-                                                <tbody>
-                                                    {event.schedule?.map((item: any, itemIdx: number) => (
-                                                        <tr key={itemIdx} className={itemIdx !== event.schedule.length - 1 ? "border-b border-black" : ""}>
-                                                            <td className="p-2 border-black w-1/3 text-center">
-                                                                {dateFormatter(item.date, "YYYY-yil d-MMMM")}
-                                                            </td>
-                                                            <td className="p-2 border-black w-1/3  text-center font-bold">
-                                                                {item.duration}
-                                                            </td>
-                                                            <td className={`p-2 text-center ${item.event_type === "Jonli efir" ? "font-bold" : ""}`}>
-                                                                {item.event_type}
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                ))}
+                            {payload?.events?.map((event: any, eventIdx: number) => (
+                                <tr key={eventIdx}>
+                                    <td className="border border-black p-3 w-1/4 text-center align-middle">
+                                        {event.location}
+                                    </td>
+                                    <td className="border border-black p-3 w-1/6 text-center align-middle font-bold">
+                                        {event.connection_spec}
+                                    </td>
+                                    <td className="border border-black p-0 h-px">
+                                        <table className="w-full h-full border-collapse">
+                                            <tbody className="h-full">
+                                            {event.schedule?.map((item: any, itemIdx: number) => (
+                                                <tr
+                                                    key={itemIdx}
+                                                    className={itemIdx !== event.schedule.length - 1 ? "border-b border-black" : ""}
+                                                >
+                                                    <td className="p-2 border-r border-black w-1/3 text-center">
+                                                        {dateFormatter(item.date, "YYYY-yil D-MMMM")}
+                                                    </td>
+                                                    <td className="p-2 border-r border-black  w-1/3 text-center font-bold">
+                                                        {item.duration}
+                                                    </td>
+                                                    <td className={`p-2 text-center ${item.event_type === "Jonli efir" ? "font-bold" : ""}`}>
+                                                        {item.event_type}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            ))}
                             </tbody>
                         </table>
                     </div>
