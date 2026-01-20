@@ -1,17 +1,25 @@
-export type OrderCode = "17-45" | "17-54";
+export type OrderCode = "17-45" | "17-54" | "17-33";
 
 export interface BaseOrder {
   _id?: string;
   code: OrderCode;
   document_index: string;
   order_date: string;
-  responsible: string;
+  responsible: ResponsibleUser;
   to: string[];
   copy: string[];
   payload_model?: string;
 }
 
-// --- 17-45 uchun
+export interface ResponsibleUser {
+  _id: string;
+  first_name: string;
+  second_name: string;
+  middle_name: string;
+  email: string;
+  phone: string;
+}
+
 export interface FlowsIdsOrder {
   code: string;
   point_a: string;
@@ -50,7 +58,6 @@ export interface Payload1745 {
   };
 }
 
-// --- 17-54 uchun
 export interface EventSchedule {
   date: string;
   duration: string;
@@ -79,16 +86,15 @@ export interface Payload1733 {
     organization_name: string;
     request_number: string;
     request_date: string;
+    deadline: string;
     justification: string;
-    context: string;
-    delete?: {
-      elements: string[];
-    };
+  };
+  delete: {
+    elements: string[];
   };
 
 }
 
-// Bu interfeys "code" maydoniga qarab payloadni avtomatik ajratib beradi
 
 export type OrderApplication =
   | (BaseOrder & { code: "17-45"; payload: Payload1745 })

@@ -3,13 +3,13 @@ import { config } from "@/shared/utils/config.ts";
 import { z } from "zod";
 
 export const createOrderSchema = (
-  t: (...args: TranslationArgsType) => string,
+    t: (...args: TranslationArgsType) => string,
 ) => {
   const requiredMsg = (fieldKey: string) =>
-    t("required {{field}}", {
-      field: t(fieldKey),
-      ns: config.LANG.NS.VALIDATION,
-    });
+      t("required {{field}}", {
+        field: t(fieldKey),
+        ns: config.LANG.NS.VALIDATION,
+      });
 
   const flowSchema = z.object({
     code: z.string().min(1, requiredMsg("Code")),
@@ -40,6 +40,7 @@ export const createOrderSchema = (
     responsible: z.string().min(1, requiredMsg("Responsible")),
     to: z.array(z.string()).min(1, requiredMsg("To")),
     copy: z.array(z.string()).min(1, requiredMsg("Copy")),
+    payload_model: z.string().optional(),
   });
 
   const payload1745Schema = z.object({
@@ -54,13 +55,13 @@ export const createOrderSchema = (
     }),
     create: z.object({ flow_ids: z.array(flowSchema) }).optional(),
     update: z
-      .object({
-        channels: z
-          .array(z.object({ old: z.string(), new: z.string() }))
-          .optional(),
-        flows: z.array(flowSchema).optional(),
-      })
-      .optional(),
+        .object({
+          channels: z
+              .array(z.object({ old: z.string(), new: z.string() }))
+              .optional(),
+          flows: z.array(flowSchema).optional(),
+        })
+        .optional(),
     delete: z.object({ elements: z.array(z.string()) }).optional(),
   });
 
@@ -75,6 +76,19 @@ export const createOrderSchema = (
     events: z.array(orderEventSchema).min(1),
   });
 
+  const payload1733Schema = z.object({
+    basic: z.object({
+      organization_name: z.string().min(1, requiredMsg("Organization")),
+      request_number: z.string().min(1, requiredMsg("Request number")),
+      request_date: z.string().min(1, requiredMsg("Request date")),
+      deadline: z.string().min(1, requiredMsg("Deadline")),
+      justification: z.string().min(1, requiredMsg("Justification")),
+      delete: z.object({
+        elements: z.array(z.string()).min(1, requiredMsg("Elements")),
+      }),
+    }),
+  });
+
   return z.discriminatedUnion("code", [
     baseSchema.extend({
       code: z.literal("17-45"),
@@ -83,6 +97,10 @@ export const createOrderSchema = (
     baseSchema.extend({
       code: z.literal("17-54"),
       payload: payload1754Schema,
+    }),
+    baseSchema.extend({
+      code: z.literal("17-33"),
+      payload: payload1733Schema,
     }),
   ]);
 };

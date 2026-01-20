@@ -17,10 +17,12 @@ import UpdateFlowSection from "@/pages/rh-252/a-252/components/form/UpdateFlowSe
 import TvRvFlowSection from "@/pages/rh-252/a-252/components/form/TvRvFlowSection.tsx";
 import CreateFlowSection from "@/pages/rh-252/a-252/components/form/ CreateFlowSection.tsx";
 import AAGBackupDeleteSection from "@/pages/rh-252/a-252/components/form/ReserveChannelDeleteSection.tsx";
+import { useNavigate } from "react-router-dom";
 
 const ApplicationDocumentForm = () => {
   const { staffOptions } = useStaffOptions();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const {
     form,
@@ -288,17 +290,11 @@ const ApplicationDocumentForm = () => {
           {isTvRvMode && (
             <TvRvFlowSection control={form.control} watch={form.watch} />
           )}
-
           {/* Form 17-33 ga xos bo'lgan qism */}
           {isReserveChannelDeleteMode && (
               <AAGBackupDeleteSection control={form.control}/>
           )
-
           }
-
-
-
-
           <MySelect
             control={form.control}
             name="responsible"
@@ -311,12 +307,10 @@ const ApplicationDocumentForm = () => {
         </div>
 
         <FormContainerFooter>
-          <Button size="sm" variant="ghost" type="button">
+          <Button size="sm" variant="ghost" type="button"  onClick={() => navigate(-1)}>
             <ArrowLeftIcon />
             {t("Back")}
-          </Button>
-          <Button size="sm" type="submit">
-            {t("Submit")}
+
           </Button>
         </FormContainerFooter>
       </form>
