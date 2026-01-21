@@ -106,7 +106,6 @@ const ApplicationDocumentForm = () => {
     { label: "17-54 (TV-RV)", value: "17-54" },
     { label: "17-45 (Flows)", value: "17-45" },
     { label: "17-33 (Flows)", value: "17-33" },
-
   ];
 
   return (
@@ -253,37 +252,37 @@ const ApplicationDocumentForm = () => {
 
           {/* Update section - faqat 17-45 uchun */}
           {isNormalMode && selectedActions.includes("update") && (
-              <UpdateFlowSection
-                  control={form.control}
-                  fields={updateFields}
-                  currentUpdateType={currentUpdateType}
-                  onAddRow={handleAddUpdateRow}
-                  onRemoveRow={removeUpdate}
-                  getValidationClass={getValidationClass}
-              />
+            <UpdateFlowSection
+              control={form.control}
+              fields={updateFields}
+              currentUpdateType={currentUpdateType}
+              onAddRow={handleAddUpdateRow}
+              onRemoveRow={removeUpdate}
+              getValidationClass={getValidationClass}
+            />
           )}
 
           {/* Delete section - faqat 17-45 uchun */}
           {isNormalMode && selectedActions.includes("delete") && (
-              <div className="mt-6 border p-4 my-2 rounded-xl">
-                <h3 className="font-semibold mb-2">O'chirish</h3>
-                <DynamicIdInput
-                    onIdsChange={(ids) => setCurrentIds(ids)}
-                    initialIds={[]}
-                />
-              </div>
+            <div className="mt-6 border p-4 my-2 rounded-xl">
+              <h3 className="font-semibold mb-2">O'chirish</h3>
+              <DynamicIdInput
+                onIdsChange={(ids) => setCurrentIds(ids)}
+                initialIds={[]}
+              />
+            </div>
           )}
 
           {/* Create section - faqat 17-45 uchun */}
           {isNormalMode && selectedActions.includes("create") && (
-              <CreateFlowSection
-                  control={form.control}
-                  fields={fields}
-                  onAddRow={handleAddRow}
-                  onRemoveRow={remove}
-                  onGenerate={handleGenerateClick}
-                  watch={form.watch}
-              />
+            <CreateFlowSection
+              control={form.control}
+              fields={fields}
+              onAddRow={handleAddRow}
+              onRemoveRow={remove}
+              onGenerate={handleGenerateClick}
+              watch={form.watch}
+            />
           )}
 
           {/* Form 17-54 ga xos bo'lgan qism */}
@@ -292,9 +291,8 @@ const ApplicationDocumentForm = () => {
           )}
           {/* Form 17-33 ga xos bo'lgan qism */}
           {isReserveChannelDeleteMode && (
-              <AAGBackupDeleteSection control={form.control}/>
-          )
-          }
+            <AAGBackupDeleteSection control={form.control} />
+          )}
           <MySelect
             control={form.control}
             name="responsible"
@@ -307,10 +305,14 @@ const ApplicationDocumentForm = () => {
         </div>
 
         <FormContainerFooter>
-          <Button size="sm" variant="ghost" type="button"  onClick={() => navigate(-1)}>
+          <Button
+            size="sm"
+            variant="ghost"
+            type="button"
+            onClick={() => navigate(-1)}
+          >
             <ArrowLeftIcon />
             {t("Back")}
-
           </Button>
         </FormContainerFooter>
       </form>

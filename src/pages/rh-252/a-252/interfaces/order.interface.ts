@@ -92,12 +92,9 @@ export interface Payload1733 {
   delete: {
     elements: string[];
   };
-
 }
-
 
 export type OrderApplication =
   | (BaseOrder & { code: "17-45"; payload: Payload1745 })
   | (BaseOrder & { code: "17-54"; payload: Payload1754 })
-    | (BaseOrder & { code: "17-33"; payload: Payload1733 });
-
+  | (BaseOrder & { code: "17-33"; payload: Payload1733 });
