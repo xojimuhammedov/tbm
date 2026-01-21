@@ -37,9 +37,9 @@ export const createOrderSchema = (
   const baseSchema = z.object({
     document_index: z.string().min(1, requiredMsg("Document Index")),
     order_date: z.string().min(1, requiredMsg("Order date")),
-    responsible: z.string().min(1, requiredMsg("Responsible")),
+    responsible: z.string().min(1, requiredMsg("Responsible")), // Agar bu ID bo'lsa string, ob'ekt bo'lsa z.object({...}) bo'lishi kerak
     to: z.array(z.string()).min(1, requiredMsg("To")),
-    copy: z.array(z.string()).min(1, requiredMsg("Copy")),
+    copy: z.array(z.string()),
     payload_model: z.string().optional(),
   });
 
@@ -54,14 +54,10 @@ export const createOrderSchema = (
       actions: z.array(z.enum(["create", "update", "delete"])),
     }),
     create: z.object({ flow_ids: z.array(flowSchema) }).optional(),
-    update: z
-        .object({
-          channels: z
-              .array(z.object({ old: z.string(), new: z.string() }))
-              .optional(),
-          flows: z.array(flowSchema).optional(),
-        })
-        .optional(),
+    update: z.object({
+      channels: z.array(z.object({ old: z.string(), new: z.string() })).optional(),
+      flows: z.array(flowSchema).optional(),
+    }).optional(),
     delete: z.object({ elements: z.array(z.string()) }).optional(),
   });
 
@@ -83,11 +79,27 @@ export const createOrderSchema = (
       request_date: z.string().min(1, requiredMsg("Request date")),
       deadline: z.string().min(1, requiredMsg("Deadline")),
       justification: z.string().min(1, requiredMsg("Justification")),
-      delete: z.object({
-        elements: z.array(z.string()).min(1, requiredMsg("Elements")),
-      }),
+    }),
+    delete: z.object({
+      elements: z.array(z.string()).min(1, requiredMsg("Elements")),
     }),
   });
+
+  const payload1770Schema = z.object({
+    basic: z.object({
+      organization_name: z.string().min(1, requiredMsg("Organization")),
+      request_number: z.string().min(1, requiredMsg("Request number")),
+      request_date: z.string().min(1, requiredMsg("Request date")),
+      title: z.string().min(1, requiredMsg("Title")),
+      connection_closure_type: z.string().min(1, requiredMsg("Closure Type")),
+      max_duration_minutes: z.number().min(1, requiredMsg("Duration")),
+      start_time: z.string().min(1, requiredMsg("Start time")),
+      end_time: z.string().min(1, requiredMsg("End time")),
+      timezone: z.string().min(1, requiredMsg("Timezone")),
+    }),
+    flow_ids: z.array(z.string()).min(1, requiredMsg("Flow IDs")),
+  });
+
 
   return z.discriminatedUnion("code", [
     baseSchema.extend({
@@ -101,6 +113,10 @@ export const createOrderSchema = (
     baseSchema.extend({
       code: z.literal("17-33"),
       payload: payload1733Schema,
+    }),
+    baseSchema.extend({
+      code: z.literal("17-70"),
+      payload: payload1770Schema,
     }),
   ]);
 };

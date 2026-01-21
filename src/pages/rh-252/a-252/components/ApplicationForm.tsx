@@ -18,6 +18,7 @@ import TvRvFlowSection from "@/pages/rh-252/a-252/components/form/TvRvFlowSectio
 import CreateFlowSection from "@/pages/rh-252/a-252/components/form/ CreateFlowSection.tsx";
 import AAGBackupDeleteSection from "@/pages/rh-252/a-252/components/form/ReserveChannelDeleteSection.tsx";
 import { useNavigate } from "react-router-dom";
+import TelegraphPlannedWorkSection from "@/pages/rh-252/a-252/components/form/TelegraphPlannedWorkSection.tsx";
 
 const ApplicationDocumentForm = () => {
   const { staffOptions } = useStaffOptions();
@@ -52,6 +53,9 @@ const ApplicationDocumentForm = () => {
   const isTvRvMode = selectedCode === "17-54";
   const isNormalMode = selectedCode === "17-45";
   const isReserveChannelDeleteMode = selectedCode === "17-33";
+  const isTelegraphPlannedWorkMode = selectedCode === "17-70";
+
+
 
   const handleAddUpdateRow = () => {
     if (currentUpdateType === "channels") {
@@ -106,6 +110,7 @@ const ApplicationDocumentForm = () => {
     { label: "17-54 (TV-RV)", value: "17-54" },
     { label: "17-45 (Flows)", value: "17-45" },
     { label: "17-33 (Flows)", value: "17-33" },
+    { label: "17-70 (Flows)", value: "17-70" },
 
   ];
 
@@ -294,6 +299,13 @@ const ApplicationDocumentForm = () => {
           {isReserveChannelDeleteMode && (
               <AAGBackupDeleteSection control={form.control}/>
           )
+          }
+
+          {/* Form 17-70 ga xos bo'lgan qism  */}
+          {
+            isTelegraphPlannedWorkMode && (
+                <TelegraphPlannedWorkSection control={form.control}/>
+              )
           }
           <MySelect
             control={form.control}
