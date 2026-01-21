@@ -17,6 +17,9 @@ const useApplicationDocuments = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [openView, setOpenView] = useState(false);
+  const [openEditCode, setOpenEditCode] = useState(false);
+  const [editCodeId, setEditCodeId] = useState<string | null>(null);
+  const [editCodeValue, setEditCodeValue] = useState<string>("");
   const [viewId, setViewId] = useState<OrderApplication["_id"] | null>(null);
   const { removeWithConfirm } = useDelete([KEYS.RH_Order_Application]);
   const { query, handleFilter, params } = useLists<OrderApplication>({
@@ -31,11 +34,29 @@ const useApplicationDocuments = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-    (docId: string) => {
-      navigate(`/rh-252/a-252/edit/${docId}`);
-    },
-    [navigate],
+      (docId: string) => {
+        navigate(`/rh-252/a-252/edit/${docId}`);
+      },
+      [navigate],
   );
+
+  const handleEditCode = useCallback((docId: string, currentCode: string) => {
+    setEditCodeId(docId);
+    setEditCodeValue(currentCode);
+    setOpenEditCode(true);
+  }, []);
+
+  const handleCloseEditCode = useCallback((open: boolean) => {
+    setOpenEditCode(open);
+    if (!open) {
+      setEditCodeId(null);
+      setEditCodeValue("");
+    }
+  }, []);
+
+  const handleEditCodeSuccess = useCallback(() => {
+    query.refetch();
+  }, [query]);
 
   const handleView = useCallback((docId: string) => {
     setViewId(docId);
@@ -48,39 +69,40 @@ const useApplicationDocuments = () => {
   }, []);
 
   const handleDelete = useCallback(
-    (id: OrderApplication["_id"]) => {
-      if (!id) return;
-      removeWithConfirm(id)
-        .then(() => {
-          query.refetch();
-          toast({
-            variant: "success",
-            title: t(`Success`),
-            description: t(`Application document successfully deleted`),
-          });
-        })
-        .catch((error) => {
-          toast({
-            variant: "destructive",
-            title: t(`${get(error, "response.statusText", "Error")}`),
-            description: t(
-              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-            ),
-          });
-        });
-    },
-    [query, removeWithConfirm, t, toast],
+      (id: OrderApplication["_id"]) => {
+        if (!id) return;
+        removeWithConfirm(id)
+            .then(() => {
+              query.refetch();
+              toast({
+                variant: "success",
+                title: t(`Success`),
+                description: t(`Application document successfully deleted`),
+              });
+            })
+            .catch((error) => {
+              toast({
+                variant: "destructive",
+                title: t(`${get(error, "response.statusText", "Error")}`),
+                description: t(
+                    `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+                ),
+              });
+            });
+      },
+      [query, removeWithConfirm, t, toast],
   );
 
   const columns: ColumnType<OrderApplication>[] = useMemo(
-    () =>
-      createOrderColumns(
-        t as unknown as (...args: TranslationArgsType) => string,
-        handleEdit,
-        handleDelete,
-        handleView,
-      ),
-    [handleDelete, handleEdit, handleView, t],
+      () =>
+          createOrderColumns(
+              t as unknown as (...args: TranslationArgsType) => string,
+              handleEdit,
+              handleDelete,
+              handleView,
+              handleEditCode,
+          ),
+      [handleDelete, handleEdit, handleView, handleEditCode, t],
   );
 
   return {
@@ -93,6 +115,11 @@ const useApplicationDocuments = () => {
     openView,
     currentItem: applicationDocumentQuery.data?.data,
     handleCloseView,
+    openEditCode,
+    editCodeId,
+    editCodeValue,
+    handleCloseEditCode,
+    handleEditCodeSuccess,
   };
 };
 

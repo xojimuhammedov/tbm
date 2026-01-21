@@ -522,6 +522,10 @@ function Router() {
           element: <A252FormPage />,
         },
         {
+          path: "rh-252/a-252/edit/:id",
+          element: <A252FormPage />,
+        },
+        {
           path: "rh-252/rh-3_3",
           element: <RH3_3Page />,
         },
