@@ -52,9 +52,30 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
 
                 <div
                     ref={contentRef}
-                    style={{ fontFamily: '"Times New Roman", Times, serif' }}
-                    className="bg-white w-full max-w-[950px] shadow-2xl p-12 relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
+                    style={{
+                        fontFamily: '"Times New Roman", Times, serif',
+                        paddingLeft: '3cm',
+                        paddingRight: '3cm',
+                        paddingTop: '1.5cm',
+                        paddingBottom: '1.5cm'
+                    }}
+                    className="bg-white w-full max-w-[950px] shadow-2xl  relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
                 >
+                    <style dangerouslySetInnerHTML={{ __html: `
+                        @page {
+                            size: auto;
+                            margin: 0;
+                        }
+                        @media print {
+                            body { margin: 0; }
+                            div[ref="contentRef"] {
+                                padding-left: 3cm !important;
+                                padding-right: 3cm !important;
+                                padding-top: 1.5cm !important;
+                                padding-bottom: 1.5cm !important;
+                            }
+                        }
+                    `}} />
                     <div className="flex justify-between items-start mb-12 pb-6">
                         <div className="w-1/3 flex items-center h-full">
                             <div className="flex flex-col">
