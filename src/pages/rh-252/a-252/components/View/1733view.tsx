@@ -6,6 +6,7 @@ import {dateFormatter} from "@/shared/utils/utils";
 import {useReactToPrint} from "react-to-print";
 import {Button} from "dgz-ui/button";
 import {OrderApplication} from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
+import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
 interface Props {
     open: boolean;
@@ -81,23 +82,8 @@ const OrderApplicationView1733 = ({open, onOpenChange, document}: Props) => {
                             }
                         }
                     `}} />
-                    <div className="flex justify-between items-start mb-10 pb-6">
-                        <div className="w-1/3">
-                            <h1 className="text-[48px] font-black leading-none text-blue-700 tracking-tighter">
-                                TBM
-                            </h1>
-                        </div>
-                        <div className="w-2/3 text-right flex flex-col gap-2">
-                            <div className="text-[13px] font-bold text-blue-700 uppercase leading-tight">
-                                “O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish<br/>
-                                respublika markazi” davlat unitar korxonasi
-                            </div>
-                            <div className="text-[11px] font-bold text-blue-900 italic leading-tight">
-                                “Republican telecommunications management center of<br/>
-                                Uzbekistan” government unitary enterprise
-                            </div>
-                        </div>
-                    </div>
+
+                    <DocumentHeader />
                     <div className="text-center uppercase font-bold text-[15px] mb-4 leading-tight">
                         <p>“O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish</p>
                         <p>respublika markazi” davlat unitar korxonasi</p>

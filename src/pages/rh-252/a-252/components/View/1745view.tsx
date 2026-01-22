@@ -7,6 +7,7 @@ import { DATE } from "@/shared/constants/date.constants";
 import { useReactToPrint } from "react-to-print";
 import { Button } from "dgz-ui/button";
 import { OrderApplication } from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
+import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
 interface OrderApplicationViewProps {
   open: boolean;
@@ -62,9 +63,31 @@ const OrderApplicationView1745 = ({
       <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
         <div
           ref={contentRef}
-          style={{ fontFamily: '"Times New Roman", Times, serif' }}
+          style={{
+            fontFamily: '"Times New Roman", Times, serif',
+            paddingLeft: "3cm",
+            paddingRight: "3cm",
+            paddingTop: "1.5cm",
+            paddingBottom: "1.5cm",
+          }}
           className="bg-white w-full max-w-[900px] shadow-2xl p-12 relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-snug"
         >
+          <style dangerouslySetInnerHTML={{ __html: `
+                        @page {
+                            size: auto;
+                            margin: 0;
+                        }
+                        @media print {
+                            body { margin: 0; }
+                            div[ref="contentRef"] {
+                                padding-left: 3cm !important;
+                                padding-right: 3cm !important;
+                                padding-top: 1.5cm !important;
+                                padding-bottom: 1.5cm !important;
+                            }
+                        }
+                    `}} />
+          <DocumentHeader />
           <div className="text-center uppercase font-bold text-[13px] border-b-2 border-black pb-2 mb-1">
             <p>O‘ZBEKISTON RESPUBLIKASI RAQAMLI TEXNOLOGIYALAR VAZIRLIGI</p>
             <p className="text-[15px] mt-1">
