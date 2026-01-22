@@ -1,9 +1,9 @@
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { EditIcon, EyeIcon, Trash2Icon, PencilLineIcon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
-import { OrderApplication } from "../interfaces/order.interface";
+import {OrderApplication, ResponsibleUser} from "../interfaces/order.interface";
 import { dateFormatter } from "@/shared/utils/utils";
-import { DATE } from "@/shared/constants/date.constants";
+import {DATE, DATE_TIME} from "@/shared/constants/date.constants";
 
 const createOrderColumns = (
     t: (...args: TranslationArgsType) => string,
@@ -35,11 +35,6 @@ const createOrderColumns = (
     },
   },
   {
-    key: "document_index",
-    dataIndex: "document_index",
-    name: t("Document Index"),
-  },
-  {
     key: "order_date",
     dataIndex: "order_date",
     name: t("Order date"),
@@ -61,6 +56,18 @@ const createOrderColumns = (
       );
     },
   },
+    {
+        key: "first_name",
+        dataIndex: "responsible",
+        name: t("Mas'ul xodim"),
+        render: (responsible: ResponsibleUser) => responsible?.first_name || "---",
+    },
+    {
+        key: "created_at",
+        dataIndex: "created_at",
+        name: t("Yaratilgan vaqt"),
+        render: (val: string | number | Date | undefined) => (val ? dateFormatter(val, DATE_TIME) : "---"),
+    },
 
   {
     key: "actions",

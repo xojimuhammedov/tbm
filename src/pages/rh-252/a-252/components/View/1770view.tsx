@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { dateFormatter } from "@/shared/utils/utils";
 import { useReactToPrint } from "react-to-print";
 import { Button } from "dgz-ui/button";
+import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
 interface Props {
     open: boolean;
@@ -85,33 +86,33 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                             }
                         }
                     `}} />
-                    <div className="text-right text-[12px] mb-2">TTMQvaBX/44 shakl</div>
-                    <div className="text-center font-bold text-[14px] uppercase mb-1">
+                    <DocumentHeader />
+                    <div className="text-center font-bold text-[14px] uppercase ">
                         O‘ZBEKISTON RESPUBLIKASI RAQAMLI TEXNOLOGIYALAR VAZIRLIGI
                     </div>
-                    <div className="text-center font-bold text-[15px] uppercase mb-1">
+                    <div className="text-center font-bold text-[15px] uppercase ">
                         “O‘ZBEKISTON TELEKOMMUNIKATSIYA TARMOQLARINI
                     </div>
-                    <div className="text-center font-bold text-[15px] uppercase mb-1">
+                    <div className="text-center font-bold text-[15px] uppercase">
                         BOSHQARISH RESPUBLIKA MARKAZI”
                     </div>
                     <div className="text-center font-bold text-[14px] uppercase mb-4">
                         DAVLAT UNITAR KORXONASI
                     </div>
 
-                    <div className="border-t-2 border-black mb-1"></div>
-                    <div className="text-center text-[10px] leading-tight mb-4 italic">
+                    <div className="border-t-2 border-black mb-2"></div>
+                    <div className="text-center text-[10px] leading-tight mb-1 italic">
                         O‘zbekiston Respublikasi, Toshkent sh., 100019, Olmazor tumani, Sebzor dahasi, 18 «A» -uy
                         <br />
                         ☎: +998 71 240 27 72 📠: +998 71 240 54 19
                         <br />
                         E-mail: tmc@rtmc.uz
                     </div>
-                    <div className="border-t border-black mb-6"></div>
-                    <div className="text-center font-bold text-[18px] tracking-[0.3em] mb-6">
+                    <div className="border-t-2 border-black mb-5"></div>
+                    <div className="text-center font-bold text-[18px] tracking-[0.3em] mb-5">
                         XABARNOMA
                     </div>
-                    <div className="flex justify-between font-bold text-[15px] mb-2  pb-1">
+                    <div className="flex justify-between font-bold text-[15px]">
                         <div className="flex gap-1">
                             SANA: <span className=" decoration-1">
                 {document?.order_date ? dateFormatter(document.order_date, "YYYY-yil D-MMMM") : "____-yil __-________"}
@@ -121,15 +122,15 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                         <div>SONI: 1</div>
                     </div>
 
-                    <div className="grid grid-cols-[100px_1fr] gap-y-1 mb-8 text-[15px] mt-4">
-                        <span className="font-bold italic">Kimga:</span>
+                    <div className="grid grid-cols-[60px_1fr]  mb-8 text-[15px] ">
+                        <span className="font-bold ">Kimga:</span>
                         <div className="font-bold">
                             {document?.to?.map((item: string, i: number) => (
                                 <span key={i}>{item}{i !== (document?.to?.length - 1) ? ", " : ""}</span>
                             )) || "________________"}
                         </div>
 
-                        <span className="font-bold italic">Nusxasi:</span>
+                        <span className="font-bold ">Nusxasi:</span>
                         <div className="font-bold uppercase">
                             {document?.copy?.map((item: string, i: number) => (
                                 <span key={i}>{item}{i !== (document?.copy?.length - 1) ? ", " : ""}</span>

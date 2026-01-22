@@ -6,6 +6,7 @@ import { dateFormatter } from "@/shared/utils/utils";
 import { useReactToPrint } from "react-to-print";
 import { Button } from "dgz-ui/button";
 import { OrderApplication } from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
+import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
 interface Props {
     open: boolean;
@@ -76,26 +77,7 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
                             }
                         }
                     `}} />
-                    <div className="flex justify-between items-start mb-12 pb-6">
-                        <div className="w-1/3 flex items-center h-full">
-                            <div className="flex flex-col">
-                                <h1 className="text-[48px] font-black leading-none text-blue-700 tracking-tighter">
-                                    TBM
-                                </h1>
-                            </div>
-                        </div>
-
-                        <div className="w-2/3 text-right flex flex-col gap-3">
-                            <div className="text-[13px] font-bold text-blue-700 uppercase leading-[1.3]">
-                                “O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish<br/>
-                                respublika markazi” davlat unitar korxonasi
-                            </div>
-                            <div className="text-[11px] font-bold text-blue-900 italic leading-[1.3]">
-                                “Republican telecommunications management center of<br/>
-                                Uzbekistan” government unitary enterprise
-                            </div>
-                        </div>
-                    </div>
+                    <DocumentHeader />
                     <div className="text-center uppercase font-bold text-[15px] mb-2 leading-tight">
                         <p>“O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish</p>
                         <p>respublika markazi” davlat unitar korxonasi</p>
