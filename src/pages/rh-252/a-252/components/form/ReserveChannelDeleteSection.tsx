@@ -1,7 +1,7 @@
 import { useFieldArray, Control, useWatch } from "react-hook-form";
 import { MyInput, MyDatePicker } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui";
-import { Plus, Trash2, Hash, AlertCircle, CheckCircle } from "lucide-react";
+import {Plus, Trash2, AlertCircle, CheckCircle, Trash} from "lucide-react";
 import { useEffect, useRef } from "react";
 import { debounce } from "lodash";
 import { request } from "@/request";
@@ -138,7 +138,7 @@ const AAGBackupDeleteSection = ({ control }: AAGBackupDeleteSectionProps) => {
             <div className="mt-8">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2">
-                        <Hash className="w-5 h-5 text-blue-600" />
+                        <Trash className="w-5 h-5 text-blue-600" />
                         O'chirilishi kerak bo'lgan ID raqamlar
                     </h3>
                     <Button
@@ -166,7 +166,7 @@ const AAGBackupDeleteSection = ({ control }: AAGBackupDeleteSectionProps) => {
                                 }`}
                             >
                                 <div className="bg-gray-100 text-gray-500 text-xs font-mono px-2 py-1 rounded">
-                                    #{index + 1}
+                                    {index + 1}.
                                 </div>
                                 <div className="flex-1">
                                     <MyInput

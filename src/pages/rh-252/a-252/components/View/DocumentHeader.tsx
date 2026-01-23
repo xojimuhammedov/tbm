@@ -3,13 +3,13 @@
 const DocumentHeader = () => {
     return (
         <div className="flex justify-between items-center w-full mb-4 ">
-                    <div className="relative   ">
-                        <img
-                            src="/public/images/tbm_logo_doc.png"
-                            alt="TBM Globus"
-                            className="object-contain w-full h-full"
-                        />
-                    </div>
+            <div className="w-90 h-auto">
+                <img
+                    src="/public/images/tbm_logo_doc.png"
+                    alt="TBM Globus"
+                    className="w-full h-auto object-contain"
+                />
+            </div>
             <div className="text-right max-w-[300px]">
                 <p className="text-[#0070C0] text-[11px] mb-5 text-center font-bold leading-tight">
                     “O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish respublika markazi” davlat unitar korxonasi

@@ -92,9 +92,35 @@ export interface Payload1733 {
     };
     delete: {
         elements: string[];
+        flow_ids?: FlowsIds1733[];
+        channels?: Channels1733[];
     };
+
 }
 
+export interface FlowsIds1733 {
+    _id: string;
+    code: string;
+    name_point_a: string;
+    name_point_b: string;
+    point_a: string;
+    point_b: string;
+    signal_level: string;
+    status: string;
+    is_deleted: boolean;
+    created_at: string;
+    updated_at: string;
+}
+export interface Channels1733 {
+    _id: string;
+    code: string;
+    international_stream_number: string;
+    channel_number_in_stream: string;
+    flow_id: {
+        _id: string;
+        code: string;
+    };
+}
 export interface Payload1770 {
     basic: {
         organization_name: string;
