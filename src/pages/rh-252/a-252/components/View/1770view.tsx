@@ -139,7 +139,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                     </div>
                     <div className="text-center space-y-2 mb-10">
                         <p className="font-bold text-[16px]">
-                            “{basic?.title || "Telegraph"}” tarmog‘ida rejalashtirilgan ishlar to‘g‘risida xabarnoma
+                            “{basic?.title || "Telegraph"}”
                         </p>
                         <p className="text-[14px]">
                             (Asos: “{basic?.title || "Telegraph"}”ning {basic?.request_date ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM") : "____-yil"}dagi {basic?.request_number || "TT38546"}-son xabarnomasi)

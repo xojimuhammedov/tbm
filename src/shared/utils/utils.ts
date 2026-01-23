@@ -6,7 +6,6 @@ import { TranslationArgsType } from "dgz-ui-shared/types";
 import { Option } from "dgz-ui/form";
 import i18n from "i18next";
 
-
 import "dayjs/locale/uz-latn";
 import "dayjs/locale/ru";
 import "dayjs/locale/en";
@@ -14,6 +13,7 @@ import "dayjs/locale/en";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
 
 export const dateFormatter = (
     date?: Date | number | string,
@@ -33,21 +33,24 @@ export const dateFormatter = (
   const targetLocale = localeMap[currentLang] || "uz-latn";
   let finalFormat = format;
 
-  if (currentLang === 'ru') {
+  if (currentLang === "ru") {
     finalFormat = format.replace("-yil", " [г.]").replace("yil", "[г.]");
-  } else if (currentLang === 'en') {
+  } else if (currentLang === "en") {
     finalFormat = format.replace("-yil", " [year]").replace("yil", "[year]");
+  } else if (currentLang === "uz") {
+    finalFormat = format.replace("yil", "[yil]");
   }
-  if (currentLang === 'uz') {
-    finalFormat = finalFormat.replace("yil", "[yil]");
+  const formattedDate = dayjs(date).locale(targetLocale).format(finalFormat);
+  if (currentLang === "uz" || currentLang === "ru") {
+    return formattedDate.toLowerCase();
   }
 
-  return dayjs(date).locale(targetLocale).format(finalFormat);
+  return formattedDate;
 };
 
 export const createOptions = (
     arg: Record<string, string>,
-    t: (...args: TranslationArgsType) => string,
+    t: (...args: TranslationArgsType) => string
 ): Option[] => {
   return Object.entries(arg).map(([key, value]) => ({
     value,

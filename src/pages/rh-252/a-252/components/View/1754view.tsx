@@ -78,49 +78,48 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
                         }
                     `}} />
                     <DocumentHeader />
-                    <div className="text-center uppercase font-bold text-[15px] mb-2 leading-tight">
+                    <div className="text-center font-bold text-[17px] mb-2 leading-tight">
                         <p>“O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish</p>
                         <p>respublika markazi” davlat unitar korxonasi</p>
                         <p className="mt-2 tracking-[0.2em] text-[18px]">FARMOYISHI</p>
                     </div>
-                    <div className="flex justify-between font-bold py-1 mb-6 text-[14px]">
+                    <div className="flex justify-between font-bold py-1 mb-1 text-[14px]">
                         <div>
                             SANA:{" "}
                             <span className="">
-                                {document?.order_date ? dateFormatter(document.order_date, "YYYY-MM-DD") : "____-yil __-________"}
+                                {document?.order_date
+                                    ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz")
+                                    : "____-yil __-________"}
                             </span>
                         </div>
                         <div>№ {document?.code || "17-54"}</div>
                         <div>SONI: 1</div>
                     </div>
-                    <div className="grid grid-cols-[100px_1fr] gap-y-2 mb-8 text-[15px]">
-                        <span className="font-bold italic">Kimga:</span>
+                    <div className="grid grid-cols-[70px_1fr] gap-y-1 mb-5 text-[15px]">
+                        <span className="font-bold">Kimga:</span>
                         <div className="font-bold uppercase">
                             {document?.to?.length ? document.to.map((item, i) => (
                                 <p key={i}>{item}</p>
                             )) : "________________"}
                         </div>
-
-                        <span className="font-bold italic">Nusxasi:</span>
+                        <span className="font-bold">Nusxasi:</span>
                         <div>
                             {document?.copy?.length ? document.copy.map((item, i) => (
                                 <p key={i}>{item}</p>
                             )) : "________________"}
                         </div>
                     </div>
-
-                    <div className="text-center font-bold text-[16px] mb-8 uppercase">
+                    <div className="text-center font-bold text-[16px] mb-5 uppercase">
                         TV-RV chiqishlar to‘g‘risida
                     </div>
-
-                    <div className="text-[15px] text-justify space-y-4 mb-6 leading-relaxed">
+                    <div className="text-[15px] text-justify space-y-4 mb-5">
                         <p className="indent-12">
                             {payload?.basic?.organization_name || "________________"}ning{" "}
-                            {payload?.basic?.request_date ? dateFormatter(payload.basic.request_date, "YYYY-yil DD-MMMM") : "____-yil __-________dagi"}dagi{" "}
+                            {payload?.basic?.request_date ? dateFormatter(payload.basic.request_date, "YYYY-yil DD-MMMM" , "uz") : "____-yil __-________dagi"}dagi{" "}
                             {payload?.basic?.request_number || "____"}-son xatiga muvofiq {payload?.basic?.justification || ""} {payload?.basic?.context || ""}
                         </p>
                     </div>
-                    <div className="overflow-x-auto mb-8">
+                    <div className="overflow-x-auto mb-4">
                         <table className="w-full border-collapse border border-black text-[14px]">
                             <tbody>
                             {payload?.events?.map((event: any, eventIdx: number) => (
@@ -140,7 +139,7 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
                                                     className={itemIdx !== event.schedule.length - 1 ? "border-b border-black" : ""}
                                                 >
                                                     <td className="p-2 border-r border-black w-1/3 text-center">
-                                                        {dateFormatter(item.date, "YYYY-yil D-MMMM")}
+                                                        {dateFormatter(item.date, "YYYY-yil D-MMMM", "uz")}
                                                     </td>
                                                     <td className="p-2 border-r border-black  w-1/3 text-center font-bold">
                                                         {item.duration}

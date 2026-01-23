@@ -67,7 +67,8 @@ const OrderApplicationView1733 = ({open, onOpenChange, document}: Props) => {
                     className="bg-white w-full max-w-[950px] shadow-2xl  relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
                 >
 
-                    <style dangerouslySetInnerHTML={{ __html: `
+                    <style dangerouslySetInnerHTML={{
+                        __html: `
                         @page {
                             size: auto;
                             margin: 0;
@@ -81,39 +82,40 @@ const OrderApplicationView1733 = ({open, onOpenChange, document}: Props) => {
                                 padding-bottom: 1.5cm !important;
                             }
                         }
-                    `}} />
+                    `
+                    }}/>
 
-                    <DocumentHeader />
-                    <div className="text-center uppercase font-bold text-[15px] mb-4 leading-tight">
+                    <DocumentHeader/>
+                    <div className="text-center font-bold text-[17px] mb-4 leading-tight">
                         <p>“O‘zbekiston telekommunikatsiya tarmoqlarini boshqarish</p>
                         <p>respublika markazi” davlat unitar korxonasi</p>
                         <p className="mt-4 tracking-[0.2em] text-[18px]">FARMOYISHI</p>
                     </div>
-                    <div className="flex justify-between font-bold py-1 mb-6 text-[14px] border-b border-black pb-2">
+                    <div className="flex justify-between font-bold py-1 mb-1 text-[14px] ">
                         <div>
-                            SANA: {document?.order_date ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM") : "____-yil __-________"}
+                            SANA: {document?.order_date ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz") : "____-yil __-________"}
                         </div>
                         <div className="uppercase">
                             № {document?.code || "17-33-26/2276"}
                         </div>
                         <div>SONI: 1</div>
                     </div>
-                    <div className="grid grid-cols-[100px_1fr] gap-y-2 mb-8 text-[15px]">
-                        <span className="font-bold italic">Kimga:</span>
+                    <div className="grid grid-cols-[60px_1fr] gap-y-2 mb-5 text-[15px]">
+                        <span className="font-bold ">Kimga:</span>
                         <div className="font-bold uppercase">
                             {document?.to?.map((item: string, i: number) => (
                                 <p key={i} className="mb-1">{item}</p>
                             )) || "________________"}
                         </div>
                     </div>
-                    <div className="text-center font-bold text-[16px] mb-8 uppercase">
+                    <div className="text-center font-bold text-[17px] mb-2">
                         Zaxira AAG kanallarni o‘chirish to‘g‘risida
                     </div>
-                    <div className="text-[15px] text-justify space-y-4 mb-6 leading-relaxed">
+                    <div className="text-[15px] text-justify space-y-4 mb-6">
                         <p className="indent-12">
-                            {basic?.organization_name || "________________"}ning {basic?.request_date ? dateFormatter(basic.request_date, "YYYY-yil DD-MMMM") : "____-yil __-________"}dagi {basic?.request_number || "____"}-son
-                            bildirgisiga binoan tarmoqda tashkil qilingan asosiy kanallar o‘chirilganligi sababli
-                            {basic?.deadline ? dateFormatter(basic.deadline, "YYYY-yil DD-MMMM") : "____-yildan"} boshlab
+                            {basic?.organization_name || "________________"}ning {basic?.request_date ? dateFormatter(basic.request_date, "YYYY-yil DD-MMMM", "uz") : "____-yil __-________"}dagi {basic?.request_number || "____"}ga
+                            binoan {basic?.justification || "___________________________________"}
+                             {basic?.deadline ? dateFormatter(basic.deadline, " YYYY-yil DD-MMMM", "uz") : "____-yildan"} boshlab
                             ushbu kanallar uchun ishlagan quyidagi zaxira (AAG) kanallari o‘chirilsin:
                         </p>
                     </div>
