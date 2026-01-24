@@ -11,6 +11,8 @@ export const createOrderSchema = (
         ns: config.LANG.NS.VALIDATION,
       });
 
+  // --- Reusable Schemas ---
+
   const flowSchema = z.object({
     code: z.string().min(1, requiredMsg("Code")),
     point_a: z.string().min(1, requiredMsg("Point A")),
@@ -34,14 +36,33 @@ export const createOrderSchema = (
     schedule: z.array(eventScheduleSchema).min(1),
   });
 
+  const stoppedFlowSchema = z.object({
+    _id: z.string().optional(),
+    code: z.string().min(1, requiredMsg("Code")),
+    point_a: z.string().min(1, requiredMsg("Point A")),
+    point_b: z.string().min(1, requiredMsg("Point B")),
+  });
+
+  // Interface bo'yicha ResponsibleUser ob'ekt
+  const responsibleSchema = z.object({
+    _id: z.string(),
+    first_name: z.string(),
+    second_name: z.string(),
+    middle_name: z.string(),
+    email: z.string().email(),
+    phone: z.string(),
+  });
+
   const baseSchema = z.object({
     document_index: z.string().min(1, requiredMsg("Document Index")),
     order_date: z.string().min(1, requiredMsg("Order date")),
-    responsible: z.string().min(1, requiredMsg("Responsible")), // Agar bu ID bo'lsa string, ob'ekt bo'lsa z.object({...}) bo'lishi kerak
+    responsible: responsibleSchema,
     to: z.array(z.string()).min(1, requiredMsg("To")),
     copy: z.array(z.string()),
     payload_model: z.string().optional(),
   });
+
+  // --- Payload Schemas ---
 
   const payload1745Schema = z.object({
     basic: z.object({
@@ -82,6 +103,8 @@ export const createOrderSchema = (
     }),
     delete: z.object({
       elements: z.array(z.string()).min(1, requiredMsg("Elements")),
+      flow_ids: z.array(z.any()).optional(), // Interface'da FlowsIds1733[]
+      channels: z.array(z.any()).optional(), // Interface'da Channels1733[]
     }),
   });
 
@@ -98,6 +121,23 @@ export const createOrderSchema = (
       timezone: z.string().min(1, requiredMsg("Timezone")),
     }),
     flow_ids: z.array(z.string()).min(1, requiredMsg("Flow IDs")),
+  });
+
+  // Yangi 17-48 Payload
+  const payload1748Schema = z.object({
+    basic: z.object({
+      title: z.string().min(1, requiredMsg("Title")),
+      start_time: z.string().min(1, requiredMsg("Start time")),
+      end_time: z.string().min(1, requiredMsg("End time")),
+    }),
+    content: z.string().min(1, requiredMsg("Content")),
+    reserve_routes: z.string().min(1, requiredMsg("Reserve routes")),
+    main_routes: z.string().min(1, requiredMsg("Main routes")),
+    stopped_flows: z.array(stoppedFlowSchema),
+    including: z.string().min(1, requiredMsg("Including")),
+    responsible_person: z.string().min(1, requiredMsg("Responsible person")),
+    concert_text: z.string().min(1, requiredMsg("Concert text")),
+    basis: z.string().min(1, requiredMsg("Basis")),
   });
 
 
@@ -117,6 +157,10 @@ export const createOrderSchema = (
     baseSchema.extend({
       code: z.literal("17-70"),
       payload: payload1770Schema,
+    }),
+    baseSchema.extend({
+      code: z.literal("17-48"),
+      payload: payload1748Schema,
     }),
   ]);
 };
