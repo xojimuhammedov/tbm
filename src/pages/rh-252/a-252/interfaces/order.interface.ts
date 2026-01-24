@@ -1,4 +1,4 @@
-export type OrderCode = "17-45" | "17-54" | "17-33" | "17-70";
+export type OrderCode = "17-45" | "17-54" | "17-33" | "17-70" | "17-48";
 
 export interface BaseOrder {
     _id?: string;
@@ -137,9 +137,33 @@ export interface Payload1770 {
 }
 
 
+export interface Payload1748 {
+    basic: {
+        title: string;
+        start_time: string;
+        end_time: string;
+    };
+    content: string;
+    reserve_routes : string;
+    main_routes : string;
+    stopped_flows: StoppedFlow[];
+    including: string;
+    responsible_person: string;
+    concert_text: string;
+    basis: string;
+}
+
+export interface StoppedFlow {
+    _id: string;
+    code: string;
+    point_a: string;
+    point_b: string;
+}
+
 export type OrderApplication =
     | (BaseOrder & { code: "17-45"; payload: Payload1745 })
     | (BaseOrder & { code: "17-54"; payload: Payload1754 })
     | (BaseOrder & { code: "17-33"; payload: Payload1733 })
-    | (BaseOrder & { code: "17-70"; payload: Payload1770 });
+    | (BaseOrder & { code: "17-70"; payload: Payload1770 })
+    | (BaseOrder & { code: "17-48"; payload: Payload1748 });
 

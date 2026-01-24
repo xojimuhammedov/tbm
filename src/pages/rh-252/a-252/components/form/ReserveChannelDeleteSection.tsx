@@ -20,9 +20,7 @@ const AAGBackupDeleteSection = ({ control }: AAGBackupDeleteSectionProps) => {
         control,
         name: "payload.delete.elements",
     });
-
     const [validationStates, setValidationStates] = useState<ValidationStates>({});
-
     const watchedElements = useWatch({
         control,
         name: "payload.delete.elements",
@@ -41,7 +39,6 @@ const AAGBackupDeleteSection = ({ control }: AAGBackupDeleteSectionProps) => {
             });
             return;
         }
-
         try {
             const res = await request.get(
                 `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${false}`,
@@ -134,7 +131,6 @@ const AAGBackupDeleteSection = ({ control }: AAGBackupDeleteSectionProps) => {
                     </div>
                 </div>
             </div>
-
             <div className="mt-8">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2">
@@ -150,7 +146,6 @@ const AAGBackupDeleteSection = ({ control }: AAGBackupDeleteSectionProps) => {
                         ID qo'shish
                     </Button>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {fields.map((field, index) => {
                         const status = getValidationStatus(index);

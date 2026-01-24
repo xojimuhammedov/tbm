@@ -65,6 +65,14 @@ const useApplicationDocumentForm = ({
         },
         events: [],
         flow_ids: [],
+        content: "",
+        including: "",
+        main_routes: "",
+        reserve_routes: "",
+        stopped_flows: [],
+        responsible_person: "",
+        concert_text: "",
+        basis: "",
       },
     },
   });
@@ -157,6 +165,7 @@ const useApplicationDocumentForm = ({
     const today = new Date().toISOString().split('T')[0];
     return `${today}T${timeStr}:00.000Z`;
   };
+
   const createPayload1745 = (data: any) => {
     const updatePayload: any = {};
     if (data.payload?.update?.flow_ids?.length > 0) {
@@ -263,6 +272,26 @@ const useApplicationDocumentForm = ({
       flow_ids: data.payload.flow_ids || [],
     },
   });
+
+  const createPayload1748 = (data: any) => ({
+    ...createBasePayload(data),
+    payload: {
+      basic: {
+        title: data.payload.basic.title,
+        start_time: formatToISO(data.payload.basic.start_time),
+        end_time: formatToISO(data.payload.basic.end_time),
+      },
+      content: data.payload.content,
+      including: data.payload.including,
+      main_routes: data.payload.main_routes,
+      reserve_routes: data.payload.reserve_routes,
+      stopped_flows: data.payload.stopped_flows || [],
+      responsible_person: data.payload.responsible_person,
+      concert_text: data.payload.concert_text,
+      basis: data.payload.basis,
+    },
+  });
+
   const submitPayload = (payload: any) => {
     mutate(
         {
@@ -310,6 +339,9 @@ const useApplicationDocumentForm = ({
             break;
           case "17-70":
             payload = createPayload1770(data);
+            break;
+          case "17-48":
+            payload = createPayload1748(data);
             break;
           default:
             console.error("Unknown code:", code);

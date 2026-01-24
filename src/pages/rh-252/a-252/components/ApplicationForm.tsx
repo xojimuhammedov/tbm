@@ -19,6 +19,7 @@ import CreateFlowSection from "@/pages/rh-252/a-252/components/form/ CreateFlowS
 import AAGBackupDeleteSection from "@/pages/rh-252/a-252/components/form/ReserveChannelDeleteSection.tsx";
 import { useNavigate } from "react-router-dom";
 import TelegraphPlannedWorkSection from "@/pages/rh-252/a-252/components/form/TelegraphPlannedWorkSection.tsx";
+import SettingsDocSection from "@/pages/rh-252/a-252/components/form/SettingsDocSection.tsx";
 
 const ApplicationDocumentForm = () => {
   const { staffOptions } = useStaffOptions();
@@ -54,6 +55,8 @@ const ApplicationDocumentForm = () => {
   const isNormalMode = selectedCode === "17-45";
   const isReserveChannelDeleteMode = selectedCode === "17-33";
   const isTelegraphPlannedWorkMode = selectedCode === "17-70";
+  const isSettingsDocMode = selectedCode === "17-48";
+
 
 
 
@@ -102,6 +105,7 @@ const ApplicationDocumentForm = () => {
       { label: "Tashkil etish", value: "create" },
       { label: "Ko'chirish", value: "update" },
       { label: "O'chirish", value: "delete" },
+
     ],
     [],
   );
@@ -111,6 +115,7 @@ const ApplicationDocumentForm = () => {
     { label: "17-45 (Flows)", value: "17-45" },
     { label: "17-33 (Flows)", value: "17-33" },
     { label: "17-70 (Flows)", value: "17-70" },
+    { label: "17-48 (Flows)", value: "17-48" },
 
   ];
 
@@ -307,6 +312,14 @@ const ApplicationDocumentForm = () => {
                 <TelegraphPlannedWorkSection control={form.control}/>
               )
           }
+
+          {/* Form 167-48 ha xos bo'lgan qism */}
+          {isSettingsDocMode && (
+              <SettingsDocSection
+                  control={form.control}
+                  setValue={form.setValue}
+              />
+          )}
           <MySelect
             control={form.control}
             name="responsible"
