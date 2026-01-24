@@ -20,6 +20,7 @@ import AAGBackupDeleteSection from "@/pages/rh-252/a-252/components/form/Reserve
 import { useNavigate } from "react-router-dom";
 import TelegraphPlannedWorkSection from "@/pages/rh-252/a-252/components/form/TelegraphPlannedWorkSection.tsx";
 import SettingsDocSection from "@/pages/rh-252/a-252/components/form/SettingsDocSection.tsx";
+import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
 
 const ApplicationDocumentForm = () => {
   const { staffOptions } = useStaffOptions();
@@ -56,6 +57,7 @@ const ApplicationDocumentForm = () => {
   const isReserveChannelDeleteMode = selectedCode === "17-33";
   const isTelegraphPlannedWorkMode = selectedCode === "17-70";
   const isSettingsDocMode = selectedCode === "17-48";
+  const isNetworkDocMode = selectedCode === "17-31";
 
 
 
@@ -116,6 +118,8 @@ const ApplicationDocumentForm = () => {
     { label: "17-33 (Flows)", value: "17-33" },
     { label: "17-70 (Flows)", value: "17-70" },
     { label: "17-48 (Flows)", value: "17-48" },
+    { label: "17-31 (Flows)", value: "17-31" },
+
 
   ];
 
@@ -313,13 +317,22 @@ const ApplicationDocumentForm = () => {
               )
           }
 
-          {/* Form 167-48 ha xos bo'lgan qism */}
+          {/* Form 17-48 ha xos bo'lgan qism */}
           {isSettingsDocMode && (
               <SettingsDocSection
                   control={form.control}
                   setValue={form.setValue}
               />
           )}
+
+          {/* Form 17-31 ha xos bo'lgan qism */}
+          {isNetworkDocMode && (
+              <IDSection1731
+                  control={form.control}
+              />
+          )}
+
+
           <MySelect
             control={form.control}
             name="responsible"
