@@ -76,7 +76,7 @@ const SettingsDocSection = ({control, setValue}: SettingsDocSectionProps) => {
 
     useEffect(() => {
         if (!watchedFlows) return;
-        watchedFlows.forEach((value: string, index: number) => {
+        watchedFlows.forEach((value: any, index: number) => {
             if (value) debouncedCheck(value, `flow-${index}`);
         });
     }, [watchedFlows]);
