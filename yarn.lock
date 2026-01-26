@@ -295,11 +295,6 @@
   resolved "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.25.8.tgz"
   integrity sha512-Jw0mxgIaYX6R8ODrdkLLPwBqHTtYHJSmzzd+QeytSugzQ0Vg4c5rDky5VgkoowbZQahCbsv1rT1KW72MPIkevw==
 
-"@esbuild/win32-x64@0.25.8":
-  version "0.25.8"
-  resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.25.8.tgz"
-  integrity sha512-cn3Yr7+OaaZq1c+2pe+8yxC8E144SReCQjN6/2ynubzYjvyqZjTXfQJpAcQpsdJq3My7XADANiYGHoFC69pLQw==
-
 "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.7.0":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.7.0.tgz"
@@ -1188,11 +1183,6 @@
   resolved "https://registry.npmjs.org/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.45.1.tgz"
   integrity sha512-FSncqHvqTm3lC6Y13xncsdOYfxGSLnP+73k815EfNmpewPs+EyM49haPS105Rh4aF5mJKywk9X0ogzLXZzN9lA==
 
-"@rollup/rollup-win32-x64-msvc@4.45.1":
-  version "4.45.1"
-  resolved "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.45.1.tgz"
-  integrity sha512-M/fKi4sasCdM8i0aWJjCSFm2qEnYRR8AMLG2kxp6wD13+tMGA4Z1tVAuHkNRjud5SW2EM3naLuK35w9twvf6aA==
-
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.2"
   resolved "https://registry.npmjs.org/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz"
@@ -1207,11 +1197,6 @@
   version "1.13.2"
   resolved "https://registry.npmjs.org/@swc/core-darwin-arm64/-/core-darwin-arm64-1.13.2.tgz"
   integrity sha512-44p7ivuLSGFJ15Vly4ivLJjg3ARo4879LtEBAabcHhSZygpmkP8eyjyWxrH3OxkY1eRZSIJe8yRZPFw4kPXFPw==
-
-"@swc/core-win32-x64-msvc@1.13.2":
-  version "1.13.2"
-  resolved "https://registry.npmjs.org/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.13.2.tgz"
-  integrity sha512-qlmMkFZJus8cYuBURx1a3YAG2G7IW44i+FEYV5/32ylKkzGNAr9tDJSA53XNnNXkAB5EXSPsOz7bn5C3JlEtdQ==
 
 "@swc/core@^1.12.11":
   version "1.13.2"
@@ -1261,11 +1246,6 @@
   version "4.1.11"
   resolved "https://registry.npmjs.org/@tailwindcss/oxide-darwin-arm64/-/oxide-darwin-arm64-4.1.11.tgz"
   integrity sha512-ESgStEOEsyg8J5YcMb1xl8WFOXfeBmrhAwGsFxxB2CxY9evy63+AtpbDLAyRkJnxLy2WsD1qF13E97uQyP1lfQ==
-
-"@tailwindcss/oxide-win32-x64-msvc@4.1.11":
-  version "4.1.11"
-  resolved "https://registry.npmjs.org/@tailwindcss/oxide-win32-x64-msvc/-/oxide-win32-x64-msvc-4.1.11.tgz"
-  integrity sha512-YfHoggn1j0LK7wR82TOucWc5LDCguHnoS879idHekmmiR7g9HUtMw9MI0NHatS28u/Xlkfi9w5RJWgz2Dl+5Qg==
 
 "@tailwindcss/oxide@4.1.11":
   version "4.1.11"
@@ -2683,11 +2663,6 @@ fs-mkdirp-stream@^2.0.1:
     graceful-fs "^4.2.8"
     streamx "^2.12.0"
 
-fsevents@~2.3.2, fsevents@~2.3.3:
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
-  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
-
 function-bind@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz"
@@ -3213,11 +3188,6 @@ lightningcss-darwin-arm64@1.30.1:
   resolved "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.30.1.tgz"
   integrity sha512-c8JK7hyE65X1MHMN+Viq9n11RRC7hgin3HhYKhrMyaXflk5GVplZ60IxyoVtzILeKr+xAJwg6zK6sjTBJ0FKYQ==
 
-lightningcss-win32-x64-msvc@1.30.1:
-  version "1.30.1"
-  resolved "https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.30.1.tgz"
-  integrity sha512-PVqXh48wh4T53F/1CCu8PIPCxLzWyCnn/9T5W1Jpmdy5h9Cwd+0YQS6/LwhHXSafuc61/xg9Lv5OrCby6a++jg==
-
 lightningcss@^1.21.0, lightningcss@1.30.1:
   version "1.30.1"
   resolved "https://registry.npmjs.org/lightningcss/-/lightningcss-1.30.1.tgz"
@@ -3487,12 +3457,7 @@ pako@^2.1.0:
   resolved "https://registry.npmjs.org/pako/-/pako-2.1.0.tgz"
   integrity sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==
 
-parchment@^1.1.2:
-  version "1.1.4"
-  resolved "https://registry.npmjs.org/parchment/-/parchment-1.1.4.tgz"
-  integrity sha512-J5FBQt/pM2inLzg4hEWmzQx/8h8D0CiDxaG3vyp9rKrQRSDgBlhjdP5jQGgosEajXPSQouXGHOmVdgo7QmJuOg==
-
-parchment@^1.1.4:
+parchment@^1.1.2, parchment@^1.1.4:
   version "1.1.4"
   resolved "https://registry.npmjs.org/parchment/-/parchment-1.1.4.tgz"
   integrity sha512-J5FBQt/pM2inLzg4hEWmzQx/8h8D0CiDxaG3vyp9rKrQRSDgBlhjdP5jQGgosEajXPSQouXGHOmVdgo7QmJuOg==
@@ -3720,7 +3685,7 @@ react-day-picker@^9.5.1, react-day-picker@^9.7.0:
     date-fns "4.1.0"
     date-fns-jalali "4.1.0-0"
 
-"react-dom@^16 || ^17 || ^18", "react-dom@^16 || ^17 || ^18 || ^19", "react-dom@^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc", "react-dom@^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc", "react-dom@^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^18 || ^19", "react-dom@^18 || ^19 || ^19.0.0-rc", "react-dom@^18.0.0 || ^19.0.0 || ^19.0.0-rc", react-dom@^19.0.0, react-dom@^19.1.0, "react-dom@>= 16.8.0", react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, react-dom@>=18, "react-dom@16 - 19":
+"react-dom@^16 || ^17 || ^18 || ^19", "react-dom@^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc", "react-dom@^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc", "react-dom@^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^18 || ^19", "react-dom@^18 || ^19 || ^19.0.0-rc", "react-dom@^18.0.0 || ^19.0.0 || ^19.0.0-rc", react-dom@^19.0.0, react-dom@^19.1.0, "react-dom@>= 16.8.0", react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, react-dom@>=18, "react-dom@16 - 19":
   version "19.1.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-19.1.0.tgz"
   integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
@@ -3905,7 +3870,7 @@ react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^15.0.0 || >=16.0.0", "react@^16 || ^17 || ^18", "react@^16 || ^17 || ^18 || ^19", "react@^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc", "react@^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc", "react@^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ~19", "react@^18 || ^19", "react@^18 || ^19 || ^19.0.0-rc", "react@^18.0.0 || ^19.0.0 || ^19.0.0-rc", react@^19.0.1, react@^19.1.0, "react@>= 16.3.0", "react@>= 16.8.0", react@>=0.14.0, react@>=16, react@>=16.0.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=18, react@>=18.0.0, react@>=18.2.0, "react@0.14 || 15 || 16 || 17 || 18 || 19", "react@16 - 19":
+"react@^15.0.0 || >=16.0.0", "react@^16 || ^17 || ^18 || ^19", "react@^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc", "react@^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc", "react@^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ~19", "react@^18 || ^19", "react@^18 || ^19 || ^19.0.0-rc", "react@^18.0.0 || ^19.0.0 || ^19.0.0-rc", react@^19.0.1, react@^19.1.0, "react@>= 16.3.0", "react@>= 16.8.0", react@>=0.14.0, react@>=16, react@>=16.0.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=18, react@>=18.0.0, react@>=18.2.0, "react@0.14 || 15 || 16 || 17 || 18 || 19", "react@16 - 19":
   version "19.1.0"
   resolved "https://registry.npmjs.org/react/-/react-19.1.0.tgz"
   integrity sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==
