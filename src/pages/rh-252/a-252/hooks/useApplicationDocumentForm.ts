@@ -292,6 +292,13 @@ const useApplicationDocumentForm = ({
     },
   });
 
+  const createPayload1731 = (data: any) => ({
+    ...createBasePayload(data),
+    payload: {
+      flow_ids: data.payload.flow_ids || [],
+    },
+  });
+
   const submitPayload = (payload: any) => {
     mutate(
         {
@@ -342,6 +349,9 @@ const useApplicationDocumentForm = ({
             break;
           case "17-48":
             payload = createPayload1748(data);
+            break;
+          case "17-31":
+            payload = createPayload1731(data);
             break;
           default:
             console.error("Unknown code:", code);

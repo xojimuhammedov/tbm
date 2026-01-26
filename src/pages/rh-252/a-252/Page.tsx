@@ -15,6 +15,7 @@ import OrderApplicationView1733 from "@/pages/rh-252/a-252/components/View/1733v
 import OrderApplicationView1770 from "@/pages/rh-252/a-252/components/View/1770view.tsx";
 import EditCodeModal from "@/pages/rh-252/a-252/components/edit/OrderEdit.tsx";
 import OrderView1748 from "@/pages/rh-252/a-252/components/View/1748view.tsx";
+import OrderApplicationView1731 from "@/pages/rh-252/a-252/components/View/1731view.tsx";
 
 const Page = () => {
     const { t } = useTranslation();
@@ -86,6 +87,15 @@ const Page = () => {
         if (model === "17_48_payloads") {
             return (
                 <OrderView1748
+                    open={openView}
+                    onOpenChange={handleCloseView}
+                    document={currentItem}
+                />
+            );
+        }
+        if (model === "17_31_payloads") {
+            return (
+                <OrderApplicationView1731
                     open={openView}
                     onOpenChange={handleCloseView}
                     document={currentItem}
