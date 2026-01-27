@@ -73,17 +73,11 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                 >
                     <style dangerouslySetInnerHTML={{ __html: `
                         @page {
-                            size: auto;
-                            margin: 0;
-                        }
+                        
+                    }
                         @media print {
                             body { margin: 0; }
-                            div[ref="contentRef"] {
-                                padding-left: 3cm !important;
-                                padding-right: 3cm !important;
-                                padding-top: 1.5cm !important;
-                                padding-bottom: 1.5cm !important;
-                            }
+                          
                         }
                     `}} />
                     <DocumentHeader />
@@ -137,7 +131,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                             )) || "TPB"}
                         </div>
                     </div>
-                    <div className="text-center space-y-2 mb-10">
+                    <div className="text-center space-y-2 mb-6">
                         <p className="font-bold text-[16px]">
                             “{basic?.title || "Telegraph"}”
                         </p>
@@ -151,7 +145,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                             {basic?.start_time ? dateFormatter(basic.start_time, "YYYY-yil D-MMMM") : "____-yil"} {formatTime(basic?.start_time)}dan {formatTime(basic?.end_time)} gacha (UTC{basic?.timezone || "+5"})
                         </p>
                     </div>
-                    <div className="space-y-4 mb-20 text-[15px] font-medium italic">
+                    <div className="space-y-4 mb-15 text-[15px] font-medium italic">
                         {flowIds.map((flow: any, idx: number) => (
                             <p key={idx}>
                                 {flow.code || "IDXXXX"} &nbsp; Bukhara_UZTEL/UZB-Moscow/9_TLGR42/RUS100Gen9

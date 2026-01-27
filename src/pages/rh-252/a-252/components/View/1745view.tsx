@@ -74,17 +74,11 @@ const OrderApplicationView1745 = ({
         >
           <style dangerouslySetInnerHTML={{ __html: `
                         @page {
-                            size: auto;
-                            margin: 0;
-                        }
+                        
+                    }
                         @media print {
                             body { margin: 0; }
-                            div[ref="contentRef"] {
-                                padding-left: 3cm !important;
-                                padding-right: 3cm !important;
-                                padding-top: 1.5cm !important;
-                                padding-bottom: 1.5cm !important;
-                            }
+                          
                         }
                     `}} />
           <DocumentHeader />

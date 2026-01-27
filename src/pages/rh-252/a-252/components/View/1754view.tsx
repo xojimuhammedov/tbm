@@ -64,17 +64,11 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
                 >
                     <style dangerouslySetInnerHTML={{ __html: `
                         @page {
-                            size: auto;
-                            margin: 0;
-                        }
+                        
+                    }
                         @media print {
                             body { margin: 0; }
-                            div[ref="contentRef"] {
-                                padding-left: 3cm !important;
-                                padding-right: 3cm !important;
-                                padding-top: 1.5cm !important;
-                                padding-bottom: 1.5cm !important;
-                            }
+                          
                         }
                     `}} />
                     <DocumentHeader />
@@ -95,7 +89,7 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
                         <div>№ {document?.code || "17-54"}</div>
                         <div>SONI: 1</div>
                     </div>
-                    <div className="grid grid-cols-[70px_1fr] gap-y-1 mb-5 text-[15px]">
+                    <div className="grid grid-cols-[60px_1fr] gap-y-1 mb-5 text-[15px]">
                         <span className="font-bold">Kimga:</span>
                         <div className="font-bold uppercase">
                             {document?.to?.length ? document.to.map((item, i) => (
@@ -109,7 +103,7 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
                             )) : "________________"}
                         </div>
                     </div>
-                    <div className="text-center font-bold text-[16px] mb-5 uppercase">
+                    <div className="text-center font-bold text-[16px] mb-4 uppercase">
                         TV-RV chiqishlar to‘g‘risida
                     </div>
                     <div className="text-[15px] text-justify space-y-4 mb-5">
