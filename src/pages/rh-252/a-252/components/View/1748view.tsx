@@ -142,18 +142,15 @@ const OrderView1748 = ({open, onOpenChange, document}: Props) => {
                     }}
                     className="bg-white w-full max-w-[950px] shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
                 >
-                    <style
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                @page { size: auto; margin: 0; }
-                @media print { body { margin: 0; } }
-                .indent-12 { text-indent: 3rem; }
-                .u-pre { white-space: pre-line; }
-                .html-content p { margin: 0.35rem 0; }
-                .html-content ul { margin: 0.35rem 0 0.35rem 1.25rem; }
-              `,
-                        }}
-                    />
+                    <style dangerouslySetInnerHTML={{ __html: `
+                        @page {
+                        
+                    }
+                        @media print {
+                            body { margin: 0; }
+                          
+                        }
+                    `}} />
 
                     <DocumentHeader/>
 
