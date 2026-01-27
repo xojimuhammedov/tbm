@@ -1,16 +1,19 @@
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { EditIcon, EyeIcon, Trash2Icon, PencilLineIcon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
-import {OrderApplication, ResponsibleUser} from "../interfaces/order.interface";
+import {
+  OrderApplication,
+  ResponsibleUser,
+} from "../interfaces/order.interface";
 import { dateFormatter } from "@/shared/utils/utils";
-import {DATE, DATE_TIME} from "@/shared/constants/date.constants";
+import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
 
 const createOrderColumns = (
-    t: (...args: TranslationArgsType) => string,
-    handleEdit: (id: string) => void,
-    handleDelete: (id: string) => void,
-    handleView: (id: string) => void,
-    handleEditCode: (id: string, code: string) => void,
+  t: (...args: TranslationArgsType) => string,
+  handleEdit: (id: string) => void,
+  handleDelete: (id: string) => void,
+  handleView: (id: string) => void,
+  handleEditCode: (id: string, code: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
     key: "code",
@@ -19,18 +22,18 @@ const createOrderColumns = (
     render: (code: string | undefined, record: OrderApplication) => {
       if (!code || !record._id) return code || "-";
       return (
-          <div className="flex items-center gap-2">
-            <span>{code}</span>
-            <MyTooltip content={t("Edit code")}>
-              <PencilLineIcon
-                  className="size-3.5 cursor-pointer text-slate-400 hover:text-blue-600 transition-colors"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditCode(record._id!, code);
-                  }}
-              />
-            </MyTooltip>
-          </div>
+        <div className="flex items-center gap-2">
+          <span>{code}</span>
+          <MyTooltip content={t("Edit code")}>
+            <PencilLineIcon
+              className="size-3.5 cursor-pointer text-slate-400 hover:text-blue-600 transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEditCode(record._id!, code);
+              }}
+            />
+          </MyTooltip>
+        </div>
       );
     },
   },
@@ -47,27 +50,28 @@ const createOrderColumns = (
     render: (to: string[]) => {
       if (!to || to.length === 0) return "-";
       return (
-          <div className="max-w-xs truncate" title={to.join(", ")}>
-            {to.slice(0, 2).join(", ")}
-            {to.length > 2 && (
-                <span className="text-gray-500 font-medium"> +{to.length - 2}</span>
-            )}
-          </div>
+        <div className="max-w-xs truncate" title={to.join(", ")}>
+          {to.slice(0, 2).join(", ")}
+          {to.length > 2 && (
+            <span className="text-gray-500 font-medium"> +{to.length - 2}</span>
+          )}
+        </div>
       );
     },
   },
-    {
-        key: "first_name",
-        dataIndex: "responsible",
-        name: t("Mas'ul xodim"),
-        render: (responsible: ResponsibleUser) => responsible?.first_name || "---",
-    },
-    {
-        key: "created_at",
-        dataIndex: "created_at",
-        name: t("Yaratilgan vaqt"),
-        render: (val: string | number | Date | undefined) => (val ? dateFormatter(val, DATE_TIME) : "---"),
-    },
+  {
+    key: "first_name",
+    dataIndex: "responsible",
+    name: t("Mas'ul xodim"),
+    render: (responsible: ResponsibleUser) => responsible?.first_name || "---",
+  },
+  {
+    key: "created_at",
+    dataIndex: "created_at",
+    name: t("Yaratilgan vaqt"),
+    render: (val: string | number | Date | undefined) =>
+      val ? dateFormatter(val, DATE_TIME) : "---",
+  },
 
   {
     key: "actions",
@@ -76,32 +80,32 @@ const createOrderColumns = (
     render: (id: string | undefined) => {
       if (!id) return null;
       return (
-          <div className={"flex items-center gap-2"}>
-            <MyTooltip content={t("View")}>
-              <EyeIcon
-                  className={
-                    "size-4 cursor-pointer text-slate-500 hover:text-blue-600 transition-colors"
-                  }
-                  onClick={() => handleView(id)}
-              />
-            </MyTooltip>
-            <MyTooltip content={t("Edit")}>
-              <EditIcon
-                  className={
-                    "size-4 cursor-pointer text-slate-500 hover:text-green-600 transition-colors"
-                  }
-                  onClick={() => handleEdit(id)}
-              />
-            </MyTooltip>
-            <MyTooltip content={t("Delete")}>
-              <Trash2Icon
-                  className={
-                    "size-4 cursor-pointer text-slate-500 hover:text-red-600 transition-colors"
-                  }
-                  onClick={() => handleDelete(id)}
-              />
-            </MyTooltip>
-          </div>
+        <div className={"flex items-center gap-2"}>
+          <MyTooltip content={t("View")}>
+            <EyeIcon
+              className={
+                "size-4 cursor-pointer text-slate-500 hover:text-blue-600 transition-colors"
+              }
+              onClick={() => handleView(id)}
+            />
+          </MyTooltip>
+          <MyTooltip content={t("Edit")}>
+            <EditIcon
+              className={
+                "size-4 cursor-pointer text-slate-500 hover:text-green-600 transition-colors"
+              }
+              onClick={() => handleEdit(id)}
+            />
+          </MyTooltip>
+          <MyTooltip content={t("Delete")}>
+            <Trash2Icon
+              className={
+                "size-4 cursor-pointer text-slate-500 hover:text-red-600 transition-colors"
+              }
+              onClick={() => handleDelete(id)}
+            />
+          </MyTooltip>
+        </div>
       );
     },
   },

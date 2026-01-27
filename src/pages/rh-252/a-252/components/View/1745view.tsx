@@ -72,7 +72,9 @@ const OrderApplicationView1745 = ({
           }}
           className="bg-white w-full max-w-[900px] shadow-2xl p-12 relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-snug"
         >
-          <style dangerouslySetInnerHTML={{ __html: `
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
                         @page {
                         
                     }
@@ -80,7 +82,9 @@ const OrderApplicationView1745 = ({
                             body { margin: 0; }
                           
                         }
-                    `}} />
+                    `,
+            }}
+          />
           <DocumentHeader />
           <div className="text-center uppercase font-bold text-[13px] border-b-2 border-black pb-2 mb-1">
             <p>O‘ZBEKISTON RESPUBLIKASI RAQAMLI TEXNOLOGIYALAR VAZIRLIGI</p>

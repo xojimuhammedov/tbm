@@ -16,9 +16,9 @@ export interface UseApplicationDocumentFormParams {
 }
 
 const useApplicationDocumentForm = ({
-                                      id,
-                                      onSave,
-                                    }: UseApplicationDocumentFormParams) => {
+  id,
+  onSave,
+}: UseApplicationDocumentFormParams) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -83,10 +83,10 @@ const useApplicationDocumentForm = ({
   const stationB = form.watch("point_b");
 
   const { getValidationClass, getOriginalNumValidationClass, clearValidation } =
-      useFlowValidation({
-        control: form.control,
-        updateType: currentUpdateType,
-      });
+    useFlowValidation({
+      control: form.control,
+      updateType: currentUpdateType,
+    });
 
   const { mutate } = usePostQuery({
     listKeyId: KEYS.RH_Order_Application,
@@ -121,7 +121,7 @@ const useApplicationDocumentForm = ({
     if (!count || Number(count) <= 0) return;
     try {
       const res = await request.get(
-          `/api/flows-id/empty-id-numbers?count=${count}`,
+        `/api/flows-id/empty-id-numbers?count=${count}`,
       );
       const result = await res.data;
 
@@ -161,8 +161,8 @@ const useApplicationDocumentForm = ({
 
   const formatToISO = (timeStr: string) => {
     if (!timeStr) return null;
-    if (timeStr.includes('T')) return timeStr;
-    const today = new Date().toISOString().split('T')[0];
+    if (timeStr.includes("T")) return timeStr;
+    const today = new Date().toISOString().split("T")[0];
     return `${today}T${timeStr}:00.000Z`;
   };
 
@@ -172,24 +172,22 @@ const useApplicationDocumentForm = ({
       const updateType = data.payload.update.update_type;
       if (updateType === "channels") {
         updatePayload.channels = data.payload.update.flow_ids.map(
-            (item: any) => ({
-              old: item.old,
-              new: item.new,
-            }),
+          (item: any) => ({
+            old: item.old,
+            new: item.new,
+          }),
         );
       } else if (updateType === "flows") {
-        updatePayload.flows = data.payload.update.flow_ids.map(
-            (item: any) => ({
-              code: item.code,
-              point_a: item.point_a,
-              point_b: item.point_b,
-              device_a: item.device_a,
-              device_b: item.device_b,
-              port_a: item.port_a,
-              port_b: item.port_b,
-              signal_level: item.signal_level,
-            }),
-        );
+        updatePayload.flows = data.payload.update.flow_ids.map((item: any) => ({
+          code: item.code,
+          point_a: item.point_a,
+          point_b: item.point_b,
+          device_a: item.device_a,
+          device_b: item.device_b,
+          port_a: item.port_a,
+          port_b: item.port_b,
+          signal_level: item.signal_level,
+        }));
       }
     }
 
@@ -206,21 +204,21 @@ const useApplicationDocumentForm = ({
           actions: data.payload.basic.actions,
         },
         create: data.payload.basic.actions?.includes("create")
-            ? {
+          ? {
               flow_ids:
-                  data.payload.create?.flow_ids?.map(
-                      ({ id_exist, ...rest }: any) => rest,
-                  ) || [],
+                data.payload.create?.flow_ids?.map(
+                  ({ id_exist, ...rest }: any) => rest,
+                ) || [],
             }
-            : undefined,
+          : undefined,
         update: data.payload.basic.actions?.includes("update")
-            ? updatePayload
-            : undefined,
+          ? updatePayload
+          : undefined,
         delete: data.payload.basic.actions?.includes("delete")
-            ? {
+          ? {
               elements: currentIds,
             }
-            : undefined,
+          : undefined,
       },
     };
   };
@@ -301,66 +299,66 @@ const useApplicationDocumentForm = ({
 
   const submitPayload = (payload: any) => {
     mutate(
-        {
-          url: URLS.RH_Order_Application,
-          attributes: payload,
+      {
+        url: URLS.RH_Order_Application,
+        attributes: payload,
+      },
+      {
+        onSuccess: () => {
+          form.reset();
+          navigate("/rh-252/a-252");
+          onSave?.();
+          toast({
+            variant: "success",
+            title: t("Success"),
+            description: t("Application created successfully"),
+          });
         },
-        {
-          onSuccess: () => {
-            form.reset();
-            navigate("/rh-252/a-252");
-            onSave?.();
-            toast({
-              variant: "success",
-              title: t("Success"),
-              description: t("Application created successfully"),
-            });
-          },
-          onError: (error: any) => {
-            toast({
-              variant: "destructive",
-              title: t(`${get(error, "response.statusText", "Error")}`),
-              description: t(
-                  `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-              ),
-            });
-          },
+        onError: (error: any) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
         },
+      },
     );
   };
 
   const handleSubmit = useCallback(
-      (data: any) => {
-        const code = data.code;
-        let payload;
+    (data: any) => {
+      const code = data.code;
+      let payload;
 
-        switch (code) {
-          case "17-45":
-            payload = createPayload1745(data);
-            break;
-          case "17-54":
-            payload = createPayload1754(data);
-            break;
-          case "17-33":
-            payload = createPayload1733(data);
-            break;
-          case "17-70":
-            payload = createPayload1770(data);
-            break;
-          case "17-48":
-            payload = createPayload1748(data);
-            break;
-          case "17-31":
-            payload = createPayload1731(data);
-            break;
-          default:
-            console.error("Unknown code:", code);
-            return;
-        }
+      switch (code) {
+        case "17-45":
+          payload = createPayload1745(data);
+          break;
+        case "17-54":
+          payload = createPayload1754(data);
+          break;
+        case "17-33":
+          payload = createPayload1733(data);
+          break;
+        case "17-70":
+          payload = createPayload1770(data);
+          break;
+        case "17-48":
+          payload = createPayload1748(data);
+          break;
+        case "17-31":
+          payload = createPayload1731(data);
+          break;
+        default:
+          console.error("Unknown code:", code);
+          return;
+      }
 
-        submitPayload(payload);
-      },
-      [currentIds, mutate, navigate, onSave, toast, t, form],
+      submitPayload(payload);
+    },
+    [currentIds, mutate, navigate, onSave, toast, t, form],
   );
 
   return {

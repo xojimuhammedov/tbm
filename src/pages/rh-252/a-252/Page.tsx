@@ -18,131 +18,131 @@ import OrderView1748 from "@/pages/rh-252/a-252/components/View/1748view.tsx";
 import OrderApplicationView1731 from "@/pages/rh-252/a-252/components/View/1731view.tsx";
 
 const Page = () => {
-    const { t } = useTranslation();
-    const {
-        handleAdd,
-        loading,
-        params,
-        dataSource,
-        handleFilter,
-        columns,
-        currentItem,
-        handleCloseView,
-        openView,
-        openEditCode,
-        editCodeId,
-        editCodeValue,
-        handleCloseEditCode,
-        handleEditCodeSuccess,
-    } = useApplicationDocuments();
+  const { t } = useTranslation();
+  const {
+    handleAdd,
+    loading,
+    params,
+    dataSource,
+    handleFilter,
+    columns,
+    currentItem,
+    handleCloseView,
+    openView,
+    openEditCode,
+    editCodeId,
+    editCodeValue,
+    handleCloseEditCode,
+    handleEditCodeSuccess,
+  } = useApplicationDocuments();
 
-    const breadcrumbs = useMemo<BreadcrumbInterface[]>(
-        () => [
-            { name: t("RH 252"), path: "/rh-252", isActive: false },
-            { name: t("A application"), path: "/rh-252/a-252", isActive: true },
-        ],
-        [t],
-    );
+  const breadcrumbs = useMemo<BreadcrumbInterface[]>(
+    () => [
+      { name: t("RH 252"), path: "/rh-252", isActive: false },
+      { name: t("A application"), path: "/rh-252/a-252", isActive: true },
+    ],
+    [t],
+  );
 
-    const renderOrderView = () => {
-        if (!currentItem) return null;
+  const renderOrderView = () => {
+    if (!currentItem) return null;
 
-        const model = currentItem.payload_model;
-        if (model === "17_54_payloads") {
-            return (
-                <OrderApplicationView1754
-                    open={openView}
-                    onOpenChange={handleCloseView}
-                    document={currentItem}
-                />
-            );
-        }
-        if (model === "17_45_payloads") {
-            return (
-                <OrderApplicationView1745
-                    open={openView}
-                    onOpenChange={handleCloseView}
-                    document={currentItem}
-                />
-            );
-        }
-        if (model === "17_33_payloads") {
-            return (
-                <OrderApplicationView1733
-                    open={openView}
-                    onOpenChange={handleCloseView}
-                    document={currentItem}
-                />
-            );
-        }
-        if (model === "17_70_payloads") {
-            return (
-                <OrderApplicationView1770
-                    open={openView}
-                    onOpenChange={handleCloseView}
-                    document={currentItem}
-                />
-            );
-        }
-        if (model === "17_48_payloads") {
-            return (
-                <OrderView1748
-                    open={openView}
-                    onOpenChange={handleCloseView}
-                    document={currentItem}
-                />
-            );
-        }
-        if (model === "17_31_payloads") {
-            return (
-                <OrderApplicationView1731
-                    open={openView}
-                    onOpenChange={handleCloseView}
-                    document={currentItem}
-                />
-            );
-        }
+    const model = currentItem.payload_model;
+    if (model === "17_54_payloads") {
+      return (
+        <OrderApplicationView1754
+          open={openView}
+          onOpenChange={handleCloseView}
+          document={currentItem}
+        />
+      );
+    }
+    if (model === "17_45_payloads") {
+      return (
+        <OrderApplicationView1745
+          open={openView}
+          onOpenChange={handleCloseView}
+          document={currentItem}
+        />
+      );
+    }
+    if (model === "17_33_payloads") {
+      return (
+        <OrderApplicationView1733
+          open={openView}
+          onOpenChange={handleCloseView}
+          document={currentItem}
+        />
+      );
+    }
+    if (model === "17_70_payloads") {
+      return (
+        <OrderApplicationView1770
+          open={openView}
+          onOpenChange={handleCloseView}
+          document={currentItem}
+        />
+      );
+    }
+    if (model === "17_48_payloads") {
+      return (
+        <OrderView1748
+          open={openView}
+          onOpenChange={handleCloseView}
+          document={currentItem}
+        />
+      );
+    }
+    if (model === "17_31_payloads") {
+      return (
+        <OrderApplicationView1731
+          open={openView}
+          onOpenChange={handleCloseView}
+          document={currentItem}
+        />
+      );
+    }
 
-        return null;
-    };
+    return null;
+  };
 
-    return (
-        <>
-            {renderOrderView()}
+  return (
+    <>
+      {renderOrderView()}
 
-            <EditCodeModal
-                open={openEditCode}
-                onOpenChange={handleCloseEditCode}
-                documentId={editCodeId}
-                currentCode={editCodeValue}
-                onSuccess={handleEditCodeSuccess}
-            />
+      <EditCodeModal
+        open={openEditCode}
+        onOpenChange={handleCloseEditCode}
+        documentId={editCodeId}
+        currentCode={editCodeValue}
+        onSuccess={handleEditCodeSuccess}
+      />
 
-            <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-                <Button size={"sm"} onClick={handleAdd}>
-                    <CirclePlusIcon />
-                    {t("Add new")}
-                </Button>
-            </PageHeader>
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+        <Button size={"sm"} onClick={handleAdd}>
+          <CirclePlusIcon />
+          {t("Add new")}
+        </Button>
+      </PageHeader>
 
-            <PageWrapper>
-                <DataTable<OrderApplication, PaginationInterface<OrderApplication>>
-                    tableKey={"application-documents"}
-                    hasNumbers
-                    hasSearch
-                    isStickyHeader
-                    loading={loading}
-                    hasPagination
-                    params={params}
-                    onParamChange={handleFilter}
-                    rowKey={"_id"}
-                    dataSource={dataSource}
-                    dataKey={"docs"}
-                    columns={columns}
-                />
-            </PageWrapper>
-        </>
-    );
+      <PageWrapper>
+        <DataTable<OrderApplication, PaginationInterface<OrderApplication>>
+          tableKey={"application-documents"}
+          hasNumbers
+          hasSearch
+          isStickyHeader
+          loading={loading}
+          hasPagination
+          params={params}
+          onParamChange={handleFilter}
+          rowKey={"_id"}
+          dataSource={dataSource}
+          dataKey={"docs"}
+          columns={columns}
+        />
+      </PageWrapper>
+    </>
+  );
 };
 
 export default Page;

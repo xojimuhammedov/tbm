@@ -14,11 +14,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-
 export const dateFormatter = (
-    date?: Date | number | string,
-    format = DATE_TIME,
-    locale?: string
+  date?: Date | number | string,
+  format = DATE_TIME,
+  locale?: string,
 ) => {
   if (!date) return "";
 
@@ -49,8 +48,8 @@ export const dateFormatter = (
 };
 
 export const createOptions = (
-    arg: Record<string, string>,
-    t: (...args: TranslationArgsType) => string
+  arg: Record<string, string>,
+  t: (...args: TranslationArgsType) => string,
 ): Option[] => {
   return Object.entries(arg).map(([key, value]) => ({
     value,
