@@ -3,215 +3,188 @@ import { MyModal } from "@/shared/components/moleculas/modal";
 import { FileTextIcon, DownloadIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { dateFormatter } from "@/shared/utils/utils";
-import { DATE } from "@/shared/constants/date.constants";
 import { useReactToPrint } from "react-to-print";
 import { Button } from "dgz-ui/button";
 import { OrderApplication } from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
 import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
-interface OrderApplicationViewProps {
+interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   document?: OrderApplication | null;
 }
 
-const OrderApplicationView1745 = ({
-  open,
-  onOpenChange,
-  document,
-}: OrderApplicationViewProps) => {
+const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
   const { t } = useTranslation();
   const contentRef = useRef<HTMLDivElement>(null);
-
   const handlePrint = useReactToPrint({
     contentRef: contentRef,
-    documentTitle: `Farmoyish_${document?.document_index || "17-45"}`,
+    documentTitle: `Farmoyish_${document?.code || ""}`,
   });
 
-  const is1745 = document?.code === "17-45";
-  const payload = is1745 ? document.payload : null;
+  const payload = (document as any)?.payload;
+  const basic = payload?.basic;
+
+  // Sarlavhani amallarga qarab shakllantirish mantiqi
+  const getDynamicTitle = () => {
+    const hasCreate = payload?.create?.flow_ids?.length > 0;
+    const hasUpdate = (payload?.update?.channels?.length > 0) || (payload?.update?.flows?.length > 0);
+    const hasDelete = (payload?.delete?.channels?.length > 0) || (payload?.delete?.channel_ids?.length > 0);
+
+    const signal = basic?.signal_level || "2 Mbit/s";
+    const actions: string[] = [];
+
+    if (hasUpdate) actions.push("yo‘nalishini o‘zgartirish");
+    if (hasCreate) actions.push("tashkil etish");
+    if (hasDelete) actions.push("o‘chirish");
+
+    if (actions.length === 0) return `${signal} oqimlar to‘g‘risida`;
+
+    const actionText = actions.length > 1
+        ? actions.slice(0, -1).join(", ") + " va " + actions.slice(-1)
+        : actions[0];
+
+    return `${signal} oqimni ${actionText} to‘g‘risida`;
+  };
+
+  let globalStep = 0;
 
   return (
-    <MyModal
-      open={open}
-      onOpenChange={onOpenChange}
-      size="8xl"
-      className="overflow-auto"
-      header={
-        <div className="flex items-center justify-between w-full pr-12 font-sans">
-          <div className="flex items-center gap-2">
-            <FileTextIcon className="size-5 text-blue-600" />
-            <span className="font-semibold text-gray-800">
-              {t("Farmoyishni ko'rish")} ({document?.code})
-            </span>
-          </div>
-
-          <Button
-            onClick={() => handlePrint()}
-            variant="default"
-            size="sm"
-            className="flex items-center gap-2 h-9 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors shadow-sm"
+      <MyModal
+          open={open}
+          onOpenChange={onOpenChange}
+          size="8xl"
+          className="overflow-auto"
+          header={
+            <div className="flex items-center justify-between w-full pr-12 font-sans">
+              <div className="flex items-center gap-2">
+                <FileTextIcon className="size-5 text-blue-600" />
+                <span className="font-semibold text-gray-800">
+                            {t("Farmoyishni ko'rish")} ({document?.code})
+                        </span>
+              </div>
+              <Button
+                  onClick={() => handlePrint()}
+                  variant="default"
+                  size="sm"
+                  className="flex items-center gap-2 h-9 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors shadow-sm"
+              >
+                <DownloadIcon className="size-4" />
+                <span className="text-xs font-bold uppercase">PDF YUKLASH</span>
+              </Button>
+            </div>
+          }
+      >
+        <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
+          <div
+              ref={contentRef}
+              style={{
+                fontFamily: '"Times New Roman", Times, serif',
+                paddingLeft: '3cm',
+                paddingRight: '3cm',
+                paddingTop: '1.5cm',
+                paddingBottom: '1.5cm'
+              }}
+              className="bg-white w-full max-w-[950px] shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
           >
-            <DownloadIcon className="size-4" />
-            <span className="text-xs font-bold uppercase">
-              PDF YUKLASH (PRINT)
-            </span>
-          </Button>
-        </div>
-      }
-    >
-      <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
-        <div
-          ref={contentRef}
-          style={{
-            fontFamily: '"Times New Roman", Times, serif',
-            paddingLeft: "3cm",
-            paddingRight: "3cm",
-            paddingTop: "1.5cm",
-            paddingBottom: "1.5cm",
-          }}
-          className="bg-white w-full max-w-[900px] shadow-2xl p-12 relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-snug"
-        >
-          <style dangerouslySetInnerHTML={{ __html: `
-                        @page {
-                        
-                    }
-                        @media print {
-                            body { margin: 0; }
-                          
-                        }
-                    `}} />
-          <DocumentHeader />
-          <div className="text-center uppercase font-bold text-[13px] border-b-2 border-black pb-2 mb-1">
-            <p>O‘ZBEKISTON RESPUBLIKASI RAQAMLI TEXNOLOGIYALAR VAZIRLIGI</p>
-            <p className="text-[15px] mt-1">
-              “O‘ZBEKISTON TELEKOMMUNIKATSIYA TARMOQLARINI BOSHQARISH RESPUBLIKA
-              MARKAZI”
-            </p>
-            <p>DAVLAT UNITAR KORXONASI</p>
-          </div>
+            <DocumentHeader />
+            <div className="text-center font-bold text-[14px] uppercase mb-1">
+              O‘ZBEKISTON RESPUBLIKASI RAQAMLI TEXNOLOGIYALAR VAZIRLIGI
+            </div>
+            <div className="text-center font-bold text-[14px] uppercase">
+              “O‘ZBEKISTON TELEKOMMUNIKATSIYA TARMOQLARINI BOSHQARISH RESPUBLIKA MARKAZI” DUK
+            </div>
 
-          <div className="text-center text-[10px] mb-4">
-            O‘zbekiston Respublikasi, Toshkent sh., 100019, Olmazor tumani,
-            Sebzor dahasi, 18 «A» -uy <br />
-            📞: +998 71 240 27 72 | 📠: +998 71 240 54 19 | E-mail: tmc@rtmc.uz
-          </div>
+            <div className="border-t border-black mt-4"></div>
+            <div className="text-center text-[10px] italic mb-1">
+              O‘zbekiston Respublikasi, Toshkent sh., 100019, Olmazor tumani, Sebzor dahasi, 18 «А» -uy
+              <br />
+              ☎: +998 71 240 27 72 | 📠: +998 71 240 54 19 | E-mail: tmc@rtmc.uz
+            </div>
+            <div className="border-t border-black mb-6"></div>
 
-          <div className="border-t border-black mb-6">
-            <h1 className="text-center font-bold text-[22px] tracking-[0.3em] py-4 uppercase">
+            <div className="text-center font-bold text-[22px] tracking-[0.3em] mb-4">
               FARMOYISHI
-            </h1>
-          </div>
-
-          <div className="flex justify-between font-bold border-b border-black py-1 mb-8 text-[14px]">
-            <div>
-              SANA:{" "}
-              {document?.order_date
-                ? dateFormatter(document.order_date, DATE)
-                : ""}
             </div>
-            <div>
-              {document?.code}-{document?.document_index}
-            </div>
-            <div>SONI: 1</div>
-          </div>
 
-          <div className="space-y-4 mb-10 text-[14px]">
-            <div className="flex">
-              <span className="font-bold w-28 italic">Kimga:</span>
-              <div className="font-bold uppercase flex-1">
-                {document?.to?.map((item, i) => (
-                  <p key={i}>{item}</p>
-                ))}
+            <div className="flex justify-between font-bold py-1 mb-5 text-[14px]">
+              <div>
+                SANA: {document?.order_date ? dateFormatter(document.order_date, "DD.MM.YYYY", "uz") : "____.____._______"}-yil
               </div>
+              <div>№ {document?.code || "17-45"}</div>
+              <div>SONI: 1</div>
             </div>
-            <div className="flex">
-              <span className="font-bold w-28 italic">Nusxasi:</span>
-              <div className="flex-1">
-                {document?.copy?.map((item, i) => (
-                  <p key={i}>{item}</p>
-                ))}
+
+            <div className="grid grid-cols-[100px_1fr] gap-y-1 mb-8 text-[15px]">
+              <span className="font-bold italic">Kimga:</span>
+              <div className="font-bold uppercase">
+                {document?.to?.map((item, i) => <p key={i}>{item}</p>)}
               </div>
+              <span className="font-bold italic">Nusxasi:</span>
+              <div>
+                {document?.copy?.map((item, i) => <p key={i}>{item}</p>)}
+              </div>
+              <span className="font-bold italic">Kimdan:</span>
+              <div className="font-bold uppercase">“O‘zTTBRM” DUK</div>
             </div>
-            <div className="flex">
-              <span className="font-bold w-28 italic">Kimdan:</span>
-              <div className="font-bold uppercase flex-1">“O‘zTTBRM” DUK</div>
+
+            <div className="text-center font-bold text-[16px] mb-8 underline uppercase px-10">
+              {getDynamicTitle()}
             </div>
-          </div>
 
-          <div className="text-center font-bold text-[15px] mb-8 underline uppercase px-10">
-            {payload?.basic?.signal_level} oqim yo‘nalishini o‘zgartirish va
-            tashkil etish to‘g‘risida
-          </div>
+            <div className="text-[15px] text-justify space-y-6 mb-10">
+              <p className="indent-12 leading-relaxed">
+                {basic?.organization_name}ning {basic?.request_date ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM", "uz") : "____-yil __-________"}dagi {basic?.request_number}-son murojaatiga binoan, {basic?.justification} {document?.order_date ? dateFormatter(document.order_date, "YYYY-yil D-MMMM", "uz") : "____-yil __-________"}dan quyidagi ishlar amalga oshirilsin:
+              </p>
 
-          <div className="text-[15px] space-y-6 text-justify">
-            <p className="indent-12 leading-relaxed">
-              “O‘zbektelekom” AK {payload?.basic?.organization_name}ning{" "}
-              {payload?.basic?.request_date
-                ? dateFormatter(
-                    payload.basic.request_date,
-                    "yyyy-yil d-martdagi",
-                  )
-                : ""}{" "}
-              {payload?.basic?.request_number}-son murojaatiga binoan,{" "}
-              {payload?.basic?.justification} uchun{" "}
-              <span className="font-bold underline italic">
-                {document?.order_date
-                  ? dateFormatter(document.order_date, "yyyy-yil d-martdan")
-                  : ""}
-              </span>{" "}
-              quyidagi ishlar amalga oshirilsin:
-            </p>
-
-            <div className="space-y-8">
-              {payload?.update?.flows?.map((flow, index) => (
-                <div key={`upd-${index}`} className="pl-4">
-                  <p className="font-medium">
-                    {index + 1}. {flow.code} yo‘nalishidagi{" "}
-                    {payload?.basic?.signal_level} oqim (ID-{flow.code}){" "}
-                    {flow.point_b} yo‘nalishga o‘zgartirilsin:
-                  </p>
-                  <div className="pl-12 mt-2 space-y-1 italic text-[14px]">
-                    <p>
-                      Oldin: {flow.point_a} ({flow.device_a}) – {flow.point_b} (
-                      {flow.device_b})
-                    </p>
-                    <p className="font-bold not-italic">
-                      Hozir: {flow.point_a} ({flow.device_a}) –{" "}
-                      <span className="underline">{flow.point_b}</span> (
-                      {flow.device_b})
-                    </p>
-                  </div>
-                </div>
-              ))}
-
-              {payload?.create?.flow_ids?.map((flow, index) => {
-                const startIdx =
-                  (payload?.update?.flows?.length || 0) + index + 1;
+              {/* 1. UPDATE QISMI */}
+              {payload?.update?.channels?.map((item: any, i: number) => {
+                globalStep++;
                 return (
-                  <div key={`cre-${index}`} className="pl-4">
-                    <p className="font-medium">
-                      {startIdx}. {flow.point_a} – {flow.point_b} oralig‘ida{" "}
-                      {flow.signal_level || payload?.basic?.signal_level} oqim
-                      tashkil etilsin
-                    </p>
-                    <div className="pl-12 mt-1 text-[14px]">
-                      <p>
-                        {flow.point_a} ({flow.port_a}) – {flow.point_b} (
-                        {flow.port_b})
-                      </p>
-                      <p className="font-bold">
-                        Ushbu oqimga ID-{flow.code} biriktirilsin
-                      </p>
+                    <div key={`upd-${i}`} className="pl-4">
+                      <p>{globalStep}. {item.old?.international_stream_number} yo‘nalishidagi {basic?.signal_level} oqim {item.new?.international_stream_number} yo‘nalishiga quyidagicha o‘zgartirilsin:</p>
+                      <div className="pl-12 mt-2 italic text-[14px]">
+                        <p>Oldin: {item.old?.international_stream_number} (Kod: {item.old?.code})</p>
+                        <p className="font-bold not-italic underline">Hozir: {item.new?.international_stream_number} (Kod: {item.new?.code})</p>
+                      </div>
                     </div>
-                  </div>
                 );
               })}
+
+              {/* 2. CREATE QISMI */}
+              {payload?.create?.flow_ids?.map((id: any, i: number) => {
+                globalStep++;
+                return (
+                    <div key={`cre-${i}`} className="pl-4">
+                      <p>{globalStep}. Tegishli manzillar oralig‘ida {basic?.signal_level} oqim tashkil etilsin.</p>
+                      <p className="pl-12 font-bold mt-1">Ushbu oqimga ID-{id} biriktirilsin.</p>
+                    </div>
+                );
+              })}
+
+              {/* 3. DELETE QISMI */}
+              {(payload?.delete?.channels?.length > 0 || payload?.delete?.channel_ids?.length > 0) && (
+                  <div className="pl-4">
+                    <p>{++globalStep}. Xizmat ehtiyoji yo‘qligi sababli quyidagi {basic?.signal_level} oqimlar o‘chirilsin:</p>
+                    <p className="pl-12 font-bold italic mt-1">
+                      {[...(payload?.delete?.channels || []), ...(payload?.delete?.channel_ids || [])].join(", ")}
+                    </p>
+                  </div>
+              )}
+
+              <div className="mt-8 space-y-1 text-[14px]">
+                <p>Murojaat uchun tel: {document?.responsible?.phone || "71-240-27-72"}</p>
+                <p>Mas’ul xodim: <span className="font-bold">{document?.responsible?.first_name}</span></p>
+              </div>
             </div>
+
+            {/*<div className="mt-20 flex justify-between items-end font-bold px-4">*/}
+            {/*  <div className="w-1/2">Direktorning birinchi o‘rinbosari</div>*/}
+            {/*  <div className="w-1/2 text-right">{document?.responsible?.second_name || "Sh. Meliboyev"}</div>*/}
+            {/*</div>*/}
           </div>
         </div>
-      </div>
-    </MyModal>
+      </MyModal>
   );
 };
 

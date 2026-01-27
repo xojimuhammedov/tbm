@@ -32,9 +32,14 @@ export interface FlowsIdsOrder {
     signal_level?: string;
 }
 
+export interface ChannelInfo {
+    code: string;
+    international_stream_number: string;
+}
+
 export interface ChannelUpdate {
-    old: string;
-    new: string;
+    old: ChannelInfo;
+    new: ChannelInfo;
 }
 
 export interface Payload1745 {
@@ -51,11 +56,13 @@ export interface Payload1745 {
         flow_ids: FlowsIdsOrder[];
     };
     update?: {
-        channels?: ChannelUpdate[];
-        flows?: FlowsIdsOrder[];
+        channels: ChannelUpdate[];
+        flows: FlowsIdsOrder[];
     };
     delete?: {
-        elements: string[];
+        flow_ids: string[];
+        channels: string[];
+        channel_ids: string[];
     };
 }
 
