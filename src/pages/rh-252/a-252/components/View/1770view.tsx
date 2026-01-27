@@ -96,7 +96,8 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
 
                     <div className="border-t-2 border-black mb-2"></div>
                     <div className="text-center text-[10px] leading-tight mb-1 italic">
-                        O‘zbekiston Respublikasi, Toshkent sh., 100019, Olmazor tumani, Sebzor dahasi, 18 «A» -uy
+                        O‘zbekiston Respublikasi, Toshkent shahri, Mirzo Ulug'bek tumani, Navnihol MFY,
+                        Tepamasjid ko'chasi, 4-uy
                         <br />
                         ☎: +998 71 240 27 72 📠: +998 71 240 54 19
                         <br />
@@ -136,13 +137,13 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                             “{basic?.title || "Telegraph"}”
                         </p>
                         <p className="text-[14px]">
-                            (Asos: “{basic?.title || "Telegraph"}”ning {basic?.request_date ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM") : "____-yil"}dagi {basic?.request_number || "TT38546"}-son xabarnomasi)
+                            (Asos: “{basic?.title || "Telegraph"}”ning {basic?.request_date ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM","uz") : "____-yil"}dagi {basic?.request_number || "TT38546"})
                         </p>
                         <p className="font-bold text-[16px]">
-                            “{basic?.connection_closure_type || "2-8"}” aloqa yopish yo‘li bilan (<u>{basic?.max_duration_minutes || "120"} daqiqagacha</u>)
+                            “{basic?.connection_closure_type || "2-8"}”  (<u>{basic?.max_duration_minutes || "120"} daqiqagacha</u>)
                         </p>
                         <p className="font-bold text-[16px]">
-                            {basic?.start_time ? dateFormatter(basic.start_time, "YYYY-yil D-MMMM") : "____-yil"} {formatTime(basic?.start_time)}dan {formatTime(basic?.end_time)} gacha (UTC{basic?.timezone || "+5"})
+                            {basic?.start_time ? dateFormatter(basic.start_time, "YYYY-yil D-MMMM" ,"uz") : "____-yil"} {formatTime(basic?.start_time)}dan {formatTime(basic?.end_time)} gacha (UTC{basic?.timezone || "+5"})
                         </p>
                     </div>
                     <div className="space-y-4 mb-15 text-[15px] font-medium italic">

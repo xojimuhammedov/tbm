@@ -59,9 +59,6 @@ const ApplicationDocumentForm = () => {
   const isSettingsDocMode = selectedCode === "17-48";
   const isNetworkDocMode = selectedCode === "17-31";
 
-
-
-
   const handleAddUpdateRow = () => {
     if (currentUpdateType === "channels") {
       appendUpdate({ old: "", new: "" });
@@ -107,20 +104,17 @@ const ApplicationDocumentForm = () => {
         { label: "Tashkil etish", value: "create" },
         { label: "Ko'chirish", value: "update" },
         { label: "O'chirish", value: "delete" },
-
       ],
       [],
   );
 
   const prefixOptions = [
-    { label: "17-54 (TV-RV)", value: "17-54" },
-    { label: "17-45 (Flows)", value: "17-45" },
-    { label: "17-33 (Flows)", value: "17-33" },
-    { label: "17-70 (Flows)", value: "17-70" },
-    { label: "17-48 (Flows)", value: "17-48" },
-    { label: "17-31 (Flows)", value: "17-31" },
-
-
+    { label: "17-70", value: "17-70" },
+    { label: "17-54", value: "17-54" },
+    { label: "17-48", value: "17-48" },
+    { label: "17-45", value: "17-45" },
+    { label: "17-33", value: "17-33" },
+    { label: "17-31", value: "17-31" },
   ];
 
   return (
@@ -150,10 +144,9 @@ const ApplicationDocumentForm = () => {
             </div>
 
             <div className="flex justify-between items-center mb-8 text-lg">
-
-              <div className="flex items-center gap-2">
-                      <span>SANA:</span>
-                      <MyDatePicker name="order_date" control={form.control} />
+              <div className=" items-center gap-1">
+                <span className={"font-bold"}>Sana:</span>
+                <MyDatePicker name="order_date" control={form.control} />
               </div>
               <div className="flex items-end gap-2">
                 <div className="w-[150px]">
@@ -163,14 +156,6 @@ const ApplicationDocumentForm = () => {
                       options={prefixOptions}
                       placeholder="Kod"
                       className="border-t-0 border-l-0 border-r-0 rounded-none h-7 min-h-[28px]"
-                  />
-                </div>
-                <div className="w-[150px]">
-                  <MyInput
-                      name="document_index"
-                      control={form.control}
-                      placeholder="Farmoyish nomeri"
-                      className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                   />
                 </div>
               </div>
@@ -233,14 +218,13 @@ const ApplicationDocumentForm = () => {
                               placeholder="O'zTTBRM DUK"
                               className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-[300px]"
                           />
-                          <p>mintaqaviy boshqaruv bog'lamasining</p>
                           <div className="w-[120px]">
                             <MyDatePicker
                                 name="payload.basic.request_date"
                                 control={form.control}
                             />
                           </div>
-                          <p>dagi va</p>
+                          <p>dagi</p>
                           <div className="w-[100px]">
                             <MyInput
                                 name="payload.basic.request_number"
@@ -258,13 +242,15 @@ const ApplicationDocumentForm = () => {
                                 className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                             />
                           </div>
-                          <div className="flex items-center gap-2 w-[150px] ml-auto">
-                            <span>Deadline</span>
+                          <div className="flex items-center gap-2 w-[150px] ">
                             <MyDatePicker
                                 name="payload.basic.deadline"
                                 control={form.control}
                             />
+                            <span>dan</span>
+
                           </div>
+                          <span>quyidagi ishlar amalga oshirilsin:</span>
                         </div>
                       </>
                   )}
@@ -311,12 +297,12 @@ const ApplicationDocumentForm = () => {
 
                   {/* Form 17-33 ga xos bo'lgan qism */}
                   {isReserveChannelDeleteMode && (
-                      <AAGBackupDeleteSection control={form.control}/>
+                      <AAGBackupDeleteSection control={form.control} />
                   )}
 
                   {/* Form 17-70 ga xos bo'lgan qism  */}
                   {isTelegraphPlannedWorkMode && (
-                      <TelegraphPlannedWorkSection control={form.control}/>
+                      <TelegraphPlannedWorkSection control={form.control} />
                   )}
 
                   {/* Form 17-48 ha xos bo'lgan qism */}
@@ -326,21 +312,11 @@ const ApplicationDocumentForm = () => {
                           setValue={form.setValue}
                       />
                   )}
-
-
                 </>
-
-
-
-
             )}
 
             {/* Form 17-31 ha xos bo'lgan qism */}
-            {isNetworkDocMode && (
-                <IDSection1731
-                    control={form.control}
-                />
-            )}
+            {isNetworkDocMode && <IDSection1731 control={form.control} />}
 
             {/* Mas'ul xodim - har doim ko'rinadi */}
             <MySelect
@@ -355,10 +331,14 @@ const ApplicationDocumentForm = () => {
           </div>
 
           <FormContainerFooter>
-            <Button size="sm" variant="ghost" type="button"  onClick={() => navigate(-1)}>
+            <Button
+                size="sm"
+                variant="ghost"
+                type="button"
+                onClick={() => navigate(-1)}
+            >
               <ArrowLeftIcon />
               {t("Back")}
-
             </Button>
           </FormContainerFooter>
         </form>

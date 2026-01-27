@@ -28,7 +28,6 @@ const useApplicationDocumentForm = ({
     shouldUnregister: false,
     defaultValues: {
       code: "",
-      document_index: "",
       order_date: null,
       to: [],
       copy: [],
@@ -152,7 +151,6 @@ const useApplicationDocumentForm = ({
 
   const createBasePayload = (data: any) => ({
     code: data.code,
-    document_index: data.document_index,
     order_date: data.order_date,
     to: data.to,
     copy: data.copy,
