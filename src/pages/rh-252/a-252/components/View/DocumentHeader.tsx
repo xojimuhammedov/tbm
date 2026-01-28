@@ -1,11 +1,11 @@
-
+import LogoBanner from '@/pages/rh-252/a-252/components/View/tbm_logo_doc.png'
 
 const DocumentHeader = () => {
     return (
         <div className="flex justify-between items-center w-full mb-4 ">
             <div className="w-90 h-auto">
                 <img
-                    src="/public/images/tbm_logo_doc.png"
+                    src={LogoBanner}
                     alt="TBM Globus"
                     className="w-full h-auto object-contain"
                 />
