@@ -128,7 +128,7 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
               <div className="font-bold uppercase">“O‘zTTBRM” DUK</div>
             </div>
 
-            <div className="text-center font-bold text-[16px] mb-8 underline uppercase px-10">
+            <div className="text-center font-bold text-[16px] mb-8 uppercase px-10">
               {getDynamicTitle()}
             </div>
 
@@ -145,7 +145,7 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
                       <p>{globalStep}. {item.old?.international_stream_number} yo‘nalishidagi {basic?.signal_level} oqim {item.new?.international_stream_number} yo‘nalishiga quyidagicha o‘zgartirilsin:</p>
                       <div className="pl-12 mt-2 italic text-[14px]">
                         <p>Oldin: {item.old?.international_stream_number} (Kod: {item.old?.code})</p>
-                        <p className="font-bold not-italic underline">Hozir: {item.new?.international_stream_number} (Kod: {item.new?.code})</p>
+                        <p className="font-bold not-italic">Hozir: {item.new?.international_stream_number} (Kod: {item.new?.code})</p>
                       </div>
                     </div>
                 );
