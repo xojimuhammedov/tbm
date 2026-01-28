@@ -30,6 +30,7 @@ export interface FlowsIdsOrder {
     device_a: string;
     device_b: string;
     signal_level?: string;
+
 }
 
 export interface ChannelInfo {

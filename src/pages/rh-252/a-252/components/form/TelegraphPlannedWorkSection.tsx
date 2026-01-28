@@ -102,7 +102,7 @@ const TelegraphPlannedWorkSection = ({control}: TelegraphPlannedWorkSectionProps
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
                         <Hash className="w-5 h-5 text-indigo-600"/>
-                        Oqim ID raqamlari (flow_ids)
+                        ID raqamlari
                     </h3>
                     <Button
                         type="button"

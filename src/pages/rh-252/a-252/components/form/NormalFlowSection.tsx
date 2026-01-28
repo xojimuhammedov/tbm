@@ -50,7 +50,6 @@ const NormalFlowSection = ({
 
     return (
         <>
-            {/* Basic section */}
             <div className="flex items-center justify-center gap-4 mb-8">
                 <MyInput
                     control={control}

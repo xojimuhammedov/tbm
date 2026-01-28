@@ -73,11 +73,9 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                 >
                     <style dangerouslySetInnerHTML={{ __html: `
                         @page {
-                        
                     }
                         @media print {
                             body { margin: 0; }
-                          
                         }
                     `}} />
                     <DocumentHeader />
@@ -110,7 +108,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                     <div className="flex justify-between font-bold text-[15px]">
                         <div className="flex gap-1">
                             SANA: <span className=" decoration-1">
-                {document?.order_date ? dateFormatter(document.order_date, "YYYY-yil D-MMMM") : "____-yil __-________"}
+                {document?.order_date ? dateFormatter(document.order_date, "YYYY-yil D-MMMM","uz") : "____-yil __-________"}
               </span>
                         </div>
                         <div>№ {document?.code || "17-70-XX/XXXX"}</div>
@@ -143,7 +141,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                             “{basic?.connection_closure_type || "2-8"}”  (<u>{basic?.max_duration_minutes || "120"} daqiqagacha</u>)
                         </p>
                         <p className="font-bold text-[16px]">
-                            {basic?.start_time ? dateFormatter(basic.start_time, "YYYY-yil D-MMMM" ,"uz") : "____-yil"} {formatTime(basic?.start_time)}dan {formatTime(basic?.end_time)} gacha (UTC{basic?.timezone || "+5"})
+                            {basic?.start_time ? dateFormatter(basic.start_time, "YYYY-yil D-MMMM" ,"uz") : "____-yil"} {formatTime(basic?.start_time)}dan {formatTime(basic?.end_time)} gacha ({basic?.timezone || "+5"})
                         </p>
                     </div>
                     <div className="space-y-4 mb-15 text-[15px] font-medium italic">
