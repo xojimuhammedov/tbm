@@ -25,7 +25,6 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
   const payload = (document as any)?.payload;
   const basic = payload?.basic;
 
-  // Sarlavhani amallarga qarab shakllantirish mantiqi
   const getDynamicTitle = () => {
     const hasCreate = payload?.create?.flow_ids?.length > 0;
     const hasUpdate = (payload?.update?.channels?.length > 0) || (payload?.update?.flows?.length > 0);
@@ -88,20 +87,29 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
               className="bg-white w-full max-w-[950px] shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
           >
             <DocumentHeader />
-            <div className="text-center font-bold text-[14px] uppercase mb-1">
+            <div className="text-center font-bold text-[14px] uppercase ">
               O‘ZBEKISTON RESPUBLIKASI RAQAMLI TEXNOLOGIYALAR VAZIRLIGI
             </div>
-            <div className="text-center font-bold text-[14px] uppercase">
-              “O‘ZBEKISTON TELEKOMMUNIKATSIYA TARMOQLARINI BOSHQARISH RESPUBLIKA MARKAZI” DUK
+            <div className="text-center font-bold text-[15px] uppercase ">
+              “O‘ZBEKISTON TELEKOMMUNIKATSIYA TARMOQLARINI
+            </div>
+            <div className="text-center font-bold text-[15px] uppercase">
+              BOSHQARISH RESPUBLIKA MARKAZI”
+            </div>
+            <div className="text-center font-bold text-[14px] uppercase mb-4">
+              DAVLAT UNITAR KORXONASI
             </div>
 
-            <div className="border-t border-black mt-4"></div>
-            <div className="text-center text-[10px] italic mb-1">
-              O‘zbekiston Respublikasi, Toshkent sh., 100019, Olmazor tumani, Sebzor dahasi, 18 «А» -uy
+            <div className="border-t-2 border-black mb-2"></div>
+            <div className="text-center text-[10px] leading-tight mb-1 italic">
+              O‘zbekiston Respublikasi, Toshkent shahri, Mirzo Ulug'bek tumani, Navnihol MFY,
+              Tepamasjid ko'chasi, 4-uy
               <br />
-              ☎: +998 71 240 27 72 | 📠: +998 71 240 54 19 | E-mail: tmc@rtmc.uz
+              ☎: +998 71 240 27 72 📠: +998 71 240 54 19
+              <br />
+              E-mail: tmc@rtmc.uz
             </div>
-            <div className="border-t border-black mb-6"></div>
+            <div className="border-t-2 border-black mb-5"></div>
 
             <div className="text-center font-bold text-[22px] tracking-[0.3em] mb-4">
               FARMOYISHI
@@ -128,7 +136,7 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
               <div className="font-bold uppercase">“O‘zTTBRM” DUK</div>
             </div>
 
-            <div className="text-center font-bold text-[16px] mb-8 uppercase px-10">
+            <div className="text-center font-bold text-[16px] mb-5  px-10">
               {getDynamicTitle()}
             </div>
 
@@ -152,15 +160,27 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
               })}
 
               {/* 2. CREATE QISMI */}
-              {payload?.create?.flow_ids?.map((id: any, i: number) => {
-                globalStep++;
-                return (
-                    <div key={`cre-${i}`} className="pl-4">
-                      <p>{globalStep}. Tegishli manzillar oralig‘ida {basic?.signal_level} oqim tashkil etilsin.</p>
-                      <p className="pl-12 font-bold mt-1">Ushbu oqimga ID-{id} biriktirilsin.</p>
+              {payload?.create?.flow_ids && payload.create.flow_ids.length > 0 && (
+                  <div className="pl-4">
+                    <p>
+                      {++globalStep}. Tegishli manzillar oralig‘idagi oqimlar quyidagicha tashkil etilsin va ma’lumot o‘rnida qabul qilinsin:
+                    </p>
+
+                    <div className="pl-12 mt-4 space-y-4">
+                      {payload.create.flow_ids.map((item: any, i: number) => (
+                          <div key={`cre-item-${i}`} className="leading-relaxed">
+                            <p>
+                              {item.point_a} ({item.device_a || ""}) – {item.point_b} ({item.device_b || ""})
+                              oralig‘idagi <span className="font-bold">{item.signal_level || basic?.signal_level}</span> oqim
+                            </p>
+                            <p className="font-bold uppercase">
+                              UFTF ID-{item.code}
+                            </p>
+                          </div>
+                      ))}
                     </div>
-                );
-              })}
+                  </div>
+              )}
 
               {/* 3. DELETE QISMI */}
               {(payload?.delete?.channels?.length > 0 || payload?.delete?.channel_ids?.length > 0) && (

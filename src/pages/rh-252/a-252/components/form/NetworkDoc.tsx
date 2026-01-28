@@ -11,12 +11,11 @@ interface IDSection1731Props {
 }
 
 const IDSection1731 = ({ control }: IDSection1731Props) => {
-    // Validatsiya natijalarini saqlash: { "index-0": true, "index-1": "loading" }
     const [validationStates, setValidationStates] = useState<Record<string, boolean | 'loading'>>({});
 
     const { fields, append, remove } = useFieldArray({
         control,
-        name: "payload.flow_ids", // 17-31 interfacega moslandi
+        name: "payload.flow_ids",
     });
 
     const watchedFlows = useWatch({
@@ -31,7 +30,6 @@ const IDSection1731 = ({ control }: IDSection1731Props) => {
         setValidationStates(prev => ({ ...prev, [stateKey]: 'loading' }));
 
         try {
-            // Backenddan ID mavjudligini tekshirish
             const res = await request.get(
                 `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=false`
             );
@@ -66,8 +64,7 @@ const IDSection1731 = ({ control }: IDSection1731Props) => {
                         <Hash className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900">Flow ID kiritish</h3>
-                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Payload 17-31</p>
+                        <h3 className="text-lg font-bold text-gray-900">ID kiritish</h3>
                     </div>
                 </div>
 
