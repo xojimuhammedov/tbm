@@ -18,7 +18,6 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
         contentRef: contentRef,
         documentTitle: `Farmoyish_${document?.code || "17-31"}`,
     });
-
     const flows = document?.payload?.flow_ids || [];
 
     return (
@@ -49,24 +48,19 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
         >
             <style>{`
                 @media print {
-                    body * {
-                        visibility: hidden;
-                    }
-                    .print-content, .print-content * {
-                        visibility: visible;
-                    }
+                    body * { visibility: hidden; }
+                    .print-content, .print-content * { visibility: visible; }
                     .print-content {
                         position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        background: white;
-                        padding: 0 !important;
-                        margin: 0 !important;
+                        left: 0; top: 0; width: 100%;
+                        background: white; padding: 0 !important; margin: 0 !important;
                     }
                     @page {
                         size: A4 landscape;
-                        margin: 1.5cm 3cm;
+                        margin: 1.5cm 2cm;
+                    }
+                    .no-break {
+                        break-inside: avoid;
                     }
                 }
             `}</style>
@@ -74,13 +68,10 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
             <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
                 <div
                     ref={contentRef}
-                    className="print-content bg-white w-full max-w-[1200px] shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 leading-tight"
+                    className="print-content bg-white w-full max-w-[1200px] shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0"
                     style={{
                         fontFamily: '"Times New Roman", Times, serif',
-                        paddingLeft: '3cm',
-                        paddingRight: '3cm',
-                        paddingTop: '1.5cm',
-                        paddingBottom: '1.5cm'
+                        padding: '1.5cm 2cm'
                     }}
                 >
                     <DocumentHeader />
@@ -91,10 +82,10 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
                         <p className="mt-2 tracking-[0.2em] text-[18px]">FARMOYISHI</p>
                     </div>
 
-                    <div className="flex justify-between font-bold py-1 mb-4 text-[14px]">
+                    <div className="flex justify-between font-bold py-1 mb-6 text-[14px]">
                         <div>
                             SANA:{" "}
-                            <span>
+                            <span className="border-b border-black px-2">
                                 {document?.order_date
                                     ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz")
                                     : "____-yil __-________"}
@@ -103,51 +94,30 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
                         <div>№ {document?.code || "17-31"}</div>
                         <div>Nusxa: 1</div>
                     </div>
-
-                    <div className="w-full" style={{ overflowX: 'visible' }}>
-                        <table
-                            className="w-full text-[11px]"
-                            style={{
-                                borderCollapse: 'collapse',
-                                border: '1px solid black'
-                            }}
-                        >
-                            <thead>
-                            <tr className="bg-gray-50">
-                                <th style={{ border: '1px solid black', padding: '4px' }}>ID</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Xalqaro raqam</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>To'g'ri raqam</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Teskari raqam</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Port A</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Multipleksor A</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>p.A</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Name_MS_final</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Tezlik</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>№ stm</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Oqim raqami</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>p.B</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Multipleksor B</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Iste'molchi</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Farmoyish №</th>
-                                <th style={{ border: '1px solid black', padding: '4px' }}>Manfaatdorlik</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {flows.map((flow: any) => (
-                                flow.route.map((route: any, rIdx: number) => (
-                                    <tr key={`${flow._id}-${rIdx}`} className="text-center">
-                                        {rIdx === 0 && (
-                                            <td
-                                                className="align-middle"
-                                                rowSpan={flow.route.length}
-                                                style={{ border: '1px solid black', padding: '4px' }}
-                                            >
-                                                {flow.flow_id}
-                                            </td>
-                                        )}
-                                        <td style={{ border: '1px solid black', padding: '4px' }}>
-                                            {route.international_number ? route.international_number : "----"}
-                                        </td>
+                    {flows.map((flow: any, fIdx: number) => (
+                        <div key={flow._id || fIdx} className="no-break mb-10 last:mb-0">
+                            <div className="bg-gray-50 border border-black border-b-0 p-2 font-bold text-[13px]">
+                                OQIM (ID): {flow.flow_id}
+                            </div>
+                            <table className="w-full text-[11px]" style={{ borderCollapse: 'collapse', border: '1px solid black' }}>
+                                <thead>
+                                <tr className="bg-gray-100/50">
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>To'g'ri raqam</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>Teskari raqam</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>Port A</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>Multipleksor A</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>p.A</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>Name_MS_final</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>Tezlik</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>№ stm</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>Oqim №</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>p.B</th>
+                                    <th style={{ border: '1px solid black', padding: '4px' }}>Multipleksor B</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {flow.route.map((route: any, rIdx: number) => (
+                                    <tr key={rIdx} className="text-center">
                                         <td style={{ border: '1px solid black', padding: '4px' }}>{route.forward_number}</td>
                                         <td style={{ border: '1px solid black', padding: '4px' }}>{route.reverse_number}</td>
                                         <td style={{ border: '1px solid black', padding: '4px' }}>{route.port_a}</td>
@@ -159,15 +129,40 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
                                         <td style={{ border: '1px solid black', padding: '4px' }}>{route.potok_number}</td>
                                         <td style={{ border: '1px solid black', padding: '4px' }}>{route.pb}</td>
                                         <td style={{ border: '1px solid black', padding: '4px' }}>{route.mux_b}</td>
-                                        <td style={{ border: '1px solid black', padding: '4px', textAlign: 'left' }}>{route.consumer}</td>
-                                        <td style={{ border: '1px solid black', padding: '4px' }}>{route.order_number}</td>
-                                        <td style={{ border: '1px solid black', padding: '4px' }}>{route.interest_level}</td>
                                     </tr>
-                                ))
-                            ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                ))}
+                                </tbody>
+                            </table>
+                            <div
+                                className="grid grid-cols-2 gap-x-10 gap-y-3 p-4 border border-black border-t-0 text-[12px]"
+                            >
+                                <div className="flex items-end gap-2">
+                                    <span className="font-bold text-gray-700 whitespace-nowrap">Xalqaro raqam:</span>
+                                    <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5 italic">
+                                        {flow.route[0]?.international_number || "----"}
+                                    </span>
+                                </div>
+                                <div className="flex items-end gap-2">
+                                    <span className="font-bold text-gray-700 whitespace-nowrap">Farmoyish №:</span>
+                                    <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
+                                        {flow.route[0]?.order_number || "----"}
+                                    </span>
+                                </div>
+                                <div className="flex items-end gap-2">
+                                    <span className="font-bold text-gray-700 whitespace-nowrap">Iste'molchi:</span>
+                                    <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
+                                        {flow.route[0]?.consumer || "----"}
+                                    </span>
+                                </div>
+                                <div className="flex items-end gap-2">
+                                    <span className="font-bold text-gray-700 whitespace-nowrap">Manfaatdorlik:</span>
+                                    <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
+                                        {flow.route[0]?.interest_level || "----"}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </MyModal>

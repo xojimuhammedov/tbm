@@ -136,11 +136,11 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
               <div className="font-bold uppercase">“O‘zTTBRM” DUK</div>
             </div>
 
-            <div className="text-center font-bold text-[16px] mb-5  px-10">
+            <div className="text-center font-bold text-[16px] mb-2  ">
               {getDynamicTitle()}
             </div>
 
-            <div className="text-[15px] text-justify space-y-6 mb-10">
+            <div className="text-[15px] text-justify space-y-3 mb-10">
               <p className="indent-12 leading-relaxed">
                 {basic?.organization_name}ning {basic?.request_date ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM", "uz") : "____-yil __-________"}dagi {basic?.request_number}-son murojaatiga binoan, {basic?.justification} {document?.order_date ? dateFormatter(document.order_date, "YYYY-yil D-MMMM", "uz") : "____-yil __-________"}dan quyidagi ishlar amalga oshirilsin:
               </p>
@@ -151,9 +151,9 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
                 return (
                     <div key={`upd-${i}`} className="pl-4">
                       <p>{globalStep}. {item.old?.international_stream_number} yo‘nalishidagi {basic?.signal_level} oqim {item.new?.international_stream_number} yo‘nalishiga quyidagicha o‘zgartirilsin:</p>
-                      <div className="pl-12 mt-2 italic text-[14px]">
+                      <div className="pl-12 mt-2 text-[14px]">
                         <p>Oldin: {item.old?.international_stream_number} (Kod: {item.old?.code})</p>
-                        <p className="font-bold not-italic">Hozir: {item.new?.international_stream_number} (Kod: {item.new?.code})</p>
+                        <p className="">Hozir: {item.new?.international_stream_number} (Kod: {item.new?.code})</p>
                       </div>
                     </div>
                 );
@@ -166,15 +166,12 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
                       {++globalStep}. Tegishli manzillar oralig‘idagi oqimlar quyidagicha tashkil etilsin va ma’lumot o‘rnida qabul qilinsin:
                     </p>
 
-                    <div className="pl-12 mt-4 space-y-4">
+                    <div className="pl-12 mt-2 ">
                       {payload.create.flow_ids.map((item: any, i: number) => (
                           <div key={`cre-item-${i}`} className="leading-relaxed">
                             <p>
                               {item.point_a} ({item.device_a || ""}) – {item.point_b} ({item.device_b || ""})
-                              oralig‘idagi <span className="font-bold">{item.signal_level || basic?.signal_level}</span> oqim
-                            </p>
-                            <p className="font-bold uppercase">
-                              UFTF ID-{item.code}
+                              oralig‘idagi <span className="">{item.signal_level || basic?.signal_level}</span> oqim  UFTF <span className={"font-bold"}>{item.code}</span>
                             </p>
                           </div>
                       ))}
@@ -192,8 +189,8 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
                   </div>
               )}
 
-              <div className="mt-8 space-y-1 text-[14px]">
-                <p>Murojaat uchun tel: {document?.responsible?.phone || "71-240-27-72"}</p>
+              <div className="mt-5 space-y-1 text-[14px]">
+                <p>Murojaat uchun tel: +{document?.responsible?.phone || "71-240-27-72"}</p>
                 <p>Mas’ul xodim: <span className="font-bold">{document?.responsible?.first_name}</span></p>
               </div>
             </div>
