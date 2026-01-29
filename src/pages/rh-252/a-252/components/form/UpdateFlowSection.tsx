@@ -52,7 +52,12 @@ const UpdateFlowSection = ({
             const res = await request.get(
                 `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${isEmpty}`,
             );
-            const isValid = res.data?.valid !== false;
+
+            // Agar success mavjud bo'lsa, uning qiymatidan foydalanish
+            // Agar success yo'q bo'lsa yoki false bo'lsa - invalid
+            const isValid = res.data?.success === true;
+
+            console.log('Validation response:', res.data, 'isValid:', isValid); // Debug uchun
 
             setValidationStates((prev) => ({
                 ...prev,
@@ -287,7 +292,7 @@ const UpdateFlowSection = ({
                             variant="ghost"
                             size="icon"
                             onClick={() => onRemoveRow(index)}
-                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                            className="text-red-500 hover:text-red-700 hover:bg-red-200"
                         >
                             <Trash2 size={18} />
                         </Button>
