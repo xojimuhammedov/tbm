@@ -293,7 +293,7 @@ const useApplicationDocumentForm = ({
   const createPayload1731 = (data: any) => ({
     ...createBasePayload(data),
     payload: {
-      flow_ids: data.payload.flow_ids || [],
+      file_name: data.payload.file_name,
     },
   });
 
