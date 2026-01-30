@@ -57,7 +57,7 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
                     }
                     @page {
                         size: A4 landscape;
-                        margin: 1.5cm 2cm;
+                        margin: 1.5cm 20cm;
                     }
                     .no-break {
                         break-inside: avoid;
@@ -71,7 +71,10 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
                     className="print-content bg-white w-full max-w-[1200px] shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0"
                     style={{
                         fontFamily: '"Times New Roman", Times, serif',
-                        padding: '1.5cm 2cm'
+                        paddingLeft: '3cm',
+                        paddingRight: '3cm',
+                        paddingTop: '1.5cm',
+                        paddingBottom: '1.5cm'
                     }}
                 >
                     <DocumentHeader />
@@ -85,7 +88,7 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
                     <div className="flex justify-between font-bold py-1 mb-6 text-[14px]">
                         <div>
                             SANA:{" "}
-                            <span className="border-b border-black px-2">
+                            <span className=" px-2">
                                 {document?.order_date
                                     ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz")
                                     : "____-yil __-________"}
@@ -139,25 +142,25 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
                                 <div className="flex items-end gap-2">
                                     <span className="font-bold text-gray-700 whitespace-nowrap">Xalqaro raqam:</span>
                                     <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5 italic">
-                                        {flow.route[0]?.international_number || "----"}
+                                        {flow.route[0]?.international_number || " "}
                                     </span>
                                 </div>
                                 <div className="flex items-end gap-2">
                                     <span className="font-bold text-gray-700 whitespace-nowrap">Farmoyish №:</span>
                                     <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
-                                        {flow.route[0]?.order_number || "----"}
+                                        {flow.route[0]?.order_number || " "}
                                     </span>
                                 </div>
                                 <div className="flex items-end gap-2">
                                     <span className="font-bold text-gray-700 whitespace-nowrap">Iste'molchi:</span>
                                     <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
-                                        {flow.route[0]?.consumer || "----"}
+                                        {flow.route[0]?.consumer || " "}
                                     </span>
                                 </div>
                                 <div className="flex items-end gap-2">
                                     <span className="font-bold text-gray-700 whitespace-nowrap">Manfaatdorlik:</span>
                                     <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
-                                        {flow.route[0]?.interest_level || "----"}
+                                        {flow.route[0]?.interest_level || " "}
                                     </span>
                                 </div>
                             </div>

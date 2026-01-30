@@ -170,7 +170,7 @@ export interface StoppedFlow {
 
 
 export interface Payload1731 {
-    flow_ids: string[];
+    file_name: string;
 }
 
 

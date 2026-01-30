@@ -287,6 +287,7 @@ const ApplicationDocumentForm = () => {
                           onRemoveRow={remove}
                           onGenerate={handleGenerateClick}
                           watch={form.watch}
+                          setValue={form.setValue}
                       />
                   )}
 
@@ -316,7 +317,7 @@ const ApplicationDocumentForm = () => {
             )}
 
             {/* Form 17-31 ha xos bo'lgan qism */}
-            {isNetworkDocMode && <IDSection1731 control={form.control} />}
+            {isNetworkDocMode && <IDSection1731 control={form.control} setValue={form.setValue} />}
 
             {/* Mas'ul xodim - har doim ko'rinadi */}
             <MySelect
