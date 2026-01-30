@@ -72,13 +72,13 @@ const DynamicIdInput: React.FC<IdInputProps> = ({
             />
             {inputValues.length > 1 || value.trim() !== "" ? (
               <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
+                type="button"
+                variant="ghost"
+                size="icon"
                 onClick={() => removeId(index)}
                 className=" text-red-500 hover:text-red-700 hover:bg-red-200"
               >
-                <Trash2 size={18}  />
+                <Trash2 size={18} />
               </Button>
             ) : null}
           </div>
