@@ -21,7 +21,6 @@ const IDSection1731 = ({ control, setValue }: IDSection1731Props) => {
     const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { handleUpload, loading: isUploading } = useFileUpload((file_name) => {
-        console.log("onSuccessAction callback called with file_name:", file_name); // Debug
         setValue("payload.file_name", file_name, { shouldValidate: true });
         const newFile: UploadedFile = {
             id: Date.now().toString(),

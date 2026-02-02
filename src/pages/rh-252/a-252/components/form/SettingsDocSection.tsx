@@ -160,12 +160,12 @@ const SettingsDocSection = ({control, setValue}: SettingsDocSectionProps) => {
 
                 {showJumladan && (
                     <div className="p-4 bg-white border-t">
-                        <div className="min-h-[400px] bg-white">
+                        <div className="min-h-[300px] bg-white">
                             <ReactQuill
                                 theme="snow"
                                 value={includingContent || ""}
                                 onChange={(val) => setValue("payload.including", val)}
-                                className="h-[250px] mb-12"
+                                className="h-[250px] mb-5"
                             />
                         </div>
                         <div>
@@ -184,6 +184,15 @@ const SettingsDocSection = ({control, setValue}: SettingsDocSectionProps) => {
                                     control={control}
                                     name="payload.reserve_routes"
                                     placeholder="PS714, PS718, PS719 (AI-7), SP126 (AI-9)."
+                                    className="border-t-0 border-l-0 border-r-0 rounded-none h-7 bg-transparent inline-block w-64"
+                                />
+                            </div>
+                            <div className="flex flex-wrap items-center gap-2 text-lg">
+                                <span className="font-semibold">Kelishilgan:</span>
+                                <MyInput
+                                    control={control}
+                                    name="payload.concert_second"
+                                    placeholder=" Sh. Hamroyev (AI-7), B. Mansurxonov (AI-9)."
                                     className="border-t-0 border-l-0 border-r-0 rounded-none h-7 bg-transparent inline-block w-64"
                                 />
                             </div>

@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { get } from "lodash";
 import { useToast } from "@/shared/hooks/useToast";
-import usePostQuery from "@/shared/hooks/query/usePostQuery";
+import useGetOne from "@/shared/hooks/api/useGetOne";
+import useMutate from "@/shared/hooks/api/useMutate";
+import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod";
 import KEYS from "@/shared/constants/keys";
 import URLS from "@/shared/constants/urls";
 import { request } from "@/request";
@@ -15,22 +17,35 @@ export interface UseApplicationDocumentFormParams {
   onSave?: () => void;
 }
 
-const useApplicationDocumentForm = ({
-                                      id,
-                                      onSave,
-                                    }: UseApplicationDocumentFormParams) => {
+const safeArray = <T,>(v: any): T[] => (Array.isArray(v) ? v : []);
+const codePrefix = (full?: string) => (full ? full.split("-").slice(0, 2).join("-") : "");
+const isoToHHmm = (iso?: string | null) => {
+  if (!iso) return "";
+  if (iso.includes("T")) return iso.split("T")[1]?.slice(0, 5) || "";
+  return iso.slice(0, 5);
+};
+const formatToISO = (timeStr: string) => {
+  if (!timeStr) return null;
+  if (timeStr.includes("T")) return timeStr;
+  const today = new Date().toISOString().split("T")[0];
+  return `${today}T${timeStr}:00.000Z`;
+};
+const listToText = (v: any) => safeArray<string>(v).join("\n");
+const textToList = (v: any) =>
+    typeof v === "string" ? v.split("\n").map((x) => x.trim()).filter(Boolean) : safeArray<string>(v);
+const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormParams) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const fullCodeRef = useRef<string>("");
   const [currentIds, setCurrentIds] = useState<string[]>([]);
-
   const form = useForm<any>({
     shouldUnregister: false,
     defaultValues: {
       code: "",
       order_date: null,
-      to: [],
-      copy: [],
+      to: "",
+      copy: "",
       responsible: "",
       point_a: "",
       point_b: "",
@@ -41,6 +56,7 @@ const useApplicationDocumentForm = ({
           request_number: "",
           request_date: null,
           deadline: null,
+          base_file: "",
           justification: "",
           signal_level: "",
           actions: [],
@@ -60,7 +76,7 @@ const useApplicationDocumentForm = ({
           flow_ids: [],
         },
         delete: {
-          elements: [],
+          channels: [],
         },
         events: [],
         flow_ids: [],
@@ -72,60 +88,247 @@ const useApplicationDocumentForm = ({
         responsible_person: "",
         concert_text: "",
         basis: "",
+        file_name: "",
       },
     },
   });
-
   const currentUpdateType = form.watch("payload.update.update_type");
   const count = form.watch("count");
   const stationA = form.watch("point_a");
   const stationB = form.watch("point_b");
-
-  const { getValidationClass, getOriginalNumValidationClass, clearValidation } =
-      useFlowValidation({
-        control: form.control,
-        updateType: currentUpdateType,
-      });
-
-  const { mutate } = usePostQuery({
-    listKeyId: KEYS.RH_Order_Application,
+  const { getValidationClass, getOriginalNumValidationClass, clearValidation } = useFlowValidation({
+    control: form.control,
+    updateType: currentUpdateType,
+  });
+  const { data: editData, isLoading } = useGetOne({
+    url: [URLS.RH_Order_Application, id || ""],
+    queryKey: [KEYS.RH_Order_Application, id || ""],
+    options: { enabled: !!id },
+  });
+  const { query: saveMutation } = useMutate({
+    url: [URLS.RH_Order_Application, id || ""],
+    method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
+    options: {
+      onSuccess: () => {
+        if (!id) {
+          form.reset();
+          setCurrentIds([]);
+          fullCodeRef.current = "";
+        }
+        navigate("/rh-252/a-252");
+        onSave?.();
+        toast({
+          variant: "success",
+          title: t("Success"),
+          description: id ? t("Application updated successfully") : t("Application created successfully"),
+        });
+      },
+      onError: (error: any) => {
+        toast({
+          variant: "destructive",
+          title: t(`${get(error, "response.statusText", "Error")}`),
+          description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+          ),
+        });
+      },
+    },
   });
 
+  type AnyObj = Record<string, any>;
+  const isObj = (v: unknown): v is AnyObj => typeof v === "object" && v !== null;
+  const unwrapDoc = (v: unknown): AnyObj | null => {
+    if (!isObj(v)) return null;
+    if (isObj(v.data)) return v.data as AnyObj;
+    return v as AnyObj;
+  };
+  useEffect(() => {
+    if (!editData || !id) return;
+    const doc = unwrapDoc(editData);
+    if (!doc?.code) return;
+    populateFormData(doc);
+  }, [editData, id]);
+
+
+  const populateFormData = (doc: any) => {
+    const fullCode = doc?.code || "";
+    const prefix = codePrefix(fullCode); // "17-45"
+
+    fullCodeRef.current = fullCode;
+
+    form.setValue("code", prefix);
+    form.setValue("order_date", doc.order_date ?? null);
+    form.setValue("to", listToText(doc.to));
+    form.setValue("copy", listToText(doc.copy));
+    form.setValue("responsible", doc?.responsible?._id ?? "");
+    const payload = doc.payload || {};
+    switch (prefix) {
+      case "17-45":
+        populateForm1745(payload);
+        break;
+      case "17-54":
+        populateForm1754(payload);
+        break;
+      case "17-33":
+        populateForm1733(payload);
+        break;
+      case "17-70":
+        populateForm1770(payload);
+        break;
+      case "17-48":
+        populateForm1748(payload);
+        break;
+      case "17-31":
+        populateForm1731(payload);
+        break;
+      default:
+        break;
+    }
+  };
+
+  /** ====== 17-45  ====== */
+  const populateForm1745 = (payload: any) => {
+    const basic = payload.basic || {};
+
+    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue("payload.basic.request_number", basic.request_number ?? "");
+    form.setValue("payload.basic.request_date", basic.request_date ?? null);
+    form.setValue("payload.basic.deadline", basic.deadline ?? null);
+    form.setValue("payload.basic.justification", basic.justification ?? "");
+    form.setValue("payload.basic.signal_level", basic.signal_level ?? "");
+    form.setValue("payload.basic.actions", safeArray<string>(basic.actions));
+    if (payload.create?.flow_ids) {
+      const rows = safeArray(payload.create.flow_ids).map((x: any) => ({
+        code: x?.code ?? "",
+        point_a: x?.point_a ?? "",
+        point_b: x?.point_b ?? "",
+        signal_level: x?.signal_level ?? "",
+        port_a: x?.port_a ?? "",
+        port_b: x?.port_b ?? "",
+        device_a: x?.device_a ?? "",
+        device_b: x?.device_b ?? "",
+        id_exist: null,
+      }));
+      form.setValue("payload.create.flow_ids", rows);
+    }
+    const hasChannels = safeArray(payload.update?.channels).length > 0;
+    const hasFlows = safeArray(payload.update?.flows).length > 0;
+
+    if (hasChannels) {
+      form.setValue("payload.update.update_type", "channels");
+      const channelsUI = safeArray(payload.update.channels).map((ch: any) => ({
+        old_code: ch?.old?.code ?? "",
+        new_code: ch?.new?.code ?? "",
+        old_int: ch?.old?.international_stream_number ?? "",
+        new_int: ch?.new?.international_stream_number ?? "",
+      }));
+      form.setValue("payload.update.flow_ids", channelsUI);
+    } else if (hasFlows) {
+      form.setValue("payload.update.update_type", "flows");
+      const flowsUI = safeArray(payload.update.flows).map((fl: any) => ({
+        code: fl?.code ?? "",
+        point_a: fl?.point_a ?? "",
+        point_b: fl?.point_b ?? "",
+        device_a: fl?.device_a ?? "",
+        device_b: fl?.device_b ?? "",
+        port_a: fl?.port_a ?? "",
+        port_b: fl?.port_b ?? "",
+        signal_level: fl?.signal_level ?? "",
+      }));
+      form.setValue("payload.update.flow_ids", flowsUI);
+    } else {
+      form.setValue("payload.update.update_type", "");
+      form.setValue("payload.update.flow_ids", []);
+    }
+    const delChannels = safeArray<string>(payload.delete?.channels);
+    setCurrentIds(delChannels);
+    form.setValue("payload.delete.channels", delChannels);
+  };
+
+  /** ====== 17-54 ====== */
+  const populateForm1754 = (payload: any) => {
+    const basic = payload.basic || {};
+    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue("payload.basic.request_number", basic.request_number ?? "");
+    form.setValue("payload.basic.request_date", basic.request_date ?? null);
+    form.setValue("payload.basic.justification", basic.justification ?? "");
+    form.setValue("payload.basic.context", basic.context ?? "");
+    form.setValue("payload.events", payload.events || []);
+  };
+
+  /** ====== 17-33 ====== */
+  const populateForm1733 = (payload: any) => {
+    const basic = payload.basic || {};
+    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue("payload.basic.request_number", basic.request_number ?? "");
+    form.setValue("payload.basic.request_date", basic.request_date ?? null);
+    form.setValue("payload.basic.deadline", basic.deadline ?? null);
+    form.setValue("payload.basic.justification", basic.justification ?? "");
+    const delChannels = safeArray<string>(payload.delete?.channels);
+    setCurrentIds(delChannels);
+    form.setValue("payload.delete.channels", delChannels);
+  };
+
+  /** ====== 17-70 ====== */
+  const populateForm1770 = (payload: any) => {
+    const basic = payload.basic || {};
+    form.setValue("payload.basic.title", basic.title ?? "");
+    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue("payload.basic.request_number", basic.request_number ?? "");
+    form.setValue("payload.basic.request_date", basic.request_date ?? null);
+    form.setValue("payload.basic.connection_closure_type", basic.connection_closure_type ?? "");
+    form.setValue("payload.basic.max_duration_minutes", basic.max_duration_minutes ?? 0);
+    form.setValue("payload.basic.start_time", isoToHHmm(basic.start_time));
+    form.setValue("payload.basic.end_time", isoToHHmm(basic.end_time));
+    form.setValue("payload.basic.timezone", basic.timezone ?? "");
+    form.setValue("payload.flow_ids", payload.flow_ids || []);
+  };
+
+  /** ====== 17-48 ====== */
+  const populateForm1748 = (payload: any) => {
+    const basic = payload.basic || {};
+    form.setValue("payload.basic.title", basic.title ?? "");
+    form.setValue("payload.basic.start_time", basic.start_time ?? "");
+    form.setValue("payload.basic.end_time", basic.end_time ?? "");
+    form.setValue("payload.concert_second", payload.concert_second ?? "");
+    form.setValue("payload.content", payload.content ?? "");
+    form.setValue("payload.including", payload.including ?? "");
+    form.setValue("payload.main_routes", payload.main_routes ?? "");
+    form.setValue("payload.reserve_routes", payload.reserve_routes ?? "");
+    form.setValue("payload.stopped_flows", payload.stopped_flows || []);
+    form.setValue("payload.responsible_person", payload.responsible_person ?? "");
+    form.setValue("payload.concert_text", payload.concert_text ?? "");
+    form.setValue("payload.basis", payload.basis ?? "");
+  };
+
+  /** ====== 17-31 ====== */
+  const populateForm1731 = (payload: any) => {
+    form.setValue("payload.file_name", payload.file_name ?? "");
+  };
+
+  /** ===== UpdateType o'zgarsa: row strukturasi reset ===== */
   useEffect(() => {
     if (!currentUpdateType) return;
     const currentFlows = form.getValues("payload.update.flow_ids");
-    if (currentFlows && currentFlows.length > 0) {
-      const clearedFlows = currentFlows.map(() => {
-        if (currentUpdateType === "channels") {
-          return { old: "", new: "" };
-        } else {
-          return {
-            code: "",
-            point_a: "",
-            point_b: "",
-            device_a: "",
-            device_b: "",
-            port_a: "",
-            port_b: "",
-            signal_level: "",
-          };
-        }
-      });
-      form.setValue("payload.update.flow_ids", clearedFlows);
-    }
+    const isAlreadyCleared = currentFlows.every((f: { code: any; old_code: any; }) => !f.code && !f.old_code);
+    if (currentFlows.length > 0 && isAlreadyCleared) return;
+
+    const clearedFlows = currentFlows.map(() => {
+      if (currentUpdateType === "channels") {
+        return { old_code: "", new_code: "", old_int: "", new_int: "" };
+      }
+      return { code: "", point_a: "", point_b: "", device_a: "", device_b: "", port_a: "", port_b: "", signal_level: "" };
+    });
+
+    form.setValue("payload.update.flow_ids", clearedFlows);
     clearValidation();
-  }, [currentUpdateType, form]);
-
+  }, [currentUpdateType]);
   const handleGenerate = useCallback(async () => {
-    if (!count || Number(count) <= 0) return;
+    if (!count || Number(count) <= 0) return [];
     try {
-      const res = await request.get(
-          `/api/flows-id/empty-id-numbers?count=${count}`,
-      );
+      const res = await request.get(`/api/flows-id/empty-id-numbers?count=${count}`);
       const result = await res.data;
-
       const ids: string[] = result.data || [];
-
       const rows = Array.from({ length: Number(count) }).map((_, i) => ({
         code: ids[i] || "",
         point_a: stationA || "",
@@ -150,44 +353,48 @@ const useApplicationDocumentForm = ({
   }, [count, stationA, stationB, toast, t]);
 
   const createBasePayload = (data: any) => ({
-    code: data.code,
+    code: fullCodeRef.current || data.code,
     order_date: data.order_date,
-    to: data.to,
-    copy: data.copy,
+    to: textToList(data.to),
+    copy: textToList(data.copy),
     responsible: data.responsible,
   });
 
-  const formatToISO = (timeStr: string) => {
-    if (!timeStr) return null;
-    if (timeStr.includes('T')) return timeStr;
-    const today = new Date().toISOString().split('T')[0];
-    return `${today}T${timeStr}:00.000Z`;
-  };
-
+  /** ===== 17-45  ===== */
   const createPayload1745 = (data: any) => {
-    const updatePayload: any = {};
-    if (data.payload?.update?.flow_ids?.length > 0) {
-      const updateType = data.payload.update.update_type;
+    const actions = safeArray<string>(data.payload?.basic?.actions);
+    const updateType = data.payload?.update?.update_type;
+    let updatePayload: any = undefined;
+
+    if (actions.includes("update")) {
       if (updateType === "channels") {
-        updatePayload.channels = data.payload.update.flow_ids.map(
-            (item: any) => ({
-              old: item.old,
-              new: item.new,
-            }),
-        );
+        updatePayload = {
+          channels: safeArray(data.payload?.update?.flow_ids).map((row: any) => ({
+            old: {
+              code: row.old_code,
+              international_stream_number: row.old_int || "",
+            },
+            new: {
+              code: row.new_code,
+              international_stream_number: row.new_int || "",
+            },
+          })),
+          flows: [],
+        };
       } else if (updateType === "flows") {
-        updatePayload.flows = data.payload.update.flow_ids.map(
-            (item: any) => ({
-              code: item.code,
-              point_a: item.point_a,
-              point_b: item.point_b,
-              device_a: item.device_a,
-              device_b: item.device_b,
-              port_a: item.port_a,
-              port_b: item.port_b,
-              signal_level: item.signal_level,
-            }),
-        );
+        updatePayload = {
+          channels: [],
+          flows: safeArray(data.payload?.update?.flow_ids).map((row: any) => ({
+            code: row.code,
+            point_a: row.point_a,
+            point_b: row.point_b,
+            device_a: row.device_a,
+            device_b: row.device_b,
+            port_a: row.port_a,
+            port_b: row.port_b,
+            signal_level: row.signal_level,
+          })),
+        };
       }
     }
 
@@ -201,28 +408,31 @@ const useApplicationDocumentForm = ({
           deadline: data.payload.basic.deadline,
           justification: data.payload.basic.justification,
           signal_level: data.payload.basic.signal_level,
-          actions: data.payload.basic.actions,
+          actions,
+          base_file: data.payload.file_name || "",
         },
-        create: data.payload.basic.actions?.includes("create")
+
+        create: actions.includes("create")
             ? {
               flow_ids:
-                  data.payload.create?.flow_ids?.map(
-                      ({ id_exist, ...rest }: any) => rest,
-                  ) || [],
+                  data.payload.create?.flow_ids?.map(({ id_exist, ...rest }: any) => rest) || [],
             }
             : undefined,
-        update: data.payload.basic.actions?.includes("update")
-            ? updatePayload
-            : undefined,
-        delete: data.payload.basic.actions?.includes("delete")
+
+        update: actions.includes("update") ? updatePayload : undefined,
+
+        delete: actions.includes("delete")
             ? {
-              elements: currentIds,
+              channels: currentIds,
+              flow_ids: [],
+              channel_ids: [],
             }
             : undefined,
       },
     };
   };
 
+  /** ===== 17-54 SUBMIT ===== */
   const createPayload1754 = (data: any) => ({
     ...createBasePayload(data),
     payload: {
@@ -232,11 +442,13 @@ const useApplicationDocumentForm = ({
         request_date: data.payload.basic.request_date,
         justification: data.payload.basic.justification,
         context: data.payload.basic.context,
+        base_file: data.payload.file_name || "",
       },
       events: data.payload.events || [],
     },
   });
 
+  /** ===== 17-33 SUBMIT  ===== */
   const createPayload1733 = (data: any) => ({
     ...createBasePayload(data),
     payload: {
@@ -246,13 +458,17 @@ const useApplicationDocumentForm = ({
         request_date: data.payload.basic.request_date,
         deadline: data.payload.basic.deadline,
         justification: data.payload.basic.justification,
+        base_file: data.payload.file_name || "",
       },
       delete: {
-        elements: data.payload.delete.elements || [],
+        channels: currentIds,
+        flow_ids: [],
+        channel_ids: [],
       },
     },
   });
 
+  /** ===== 17-70 SUBMIT ===== */
   const createPayload1770 = (data: any) => ({
     ...createBasePayload(data),
     payload: {
@@ -265,12 +481,13 @@ const useApplicationDocumentForm = ({
         max_duration_minutes: data.payload.basic.max_duration_minutes,
         start_time: formatToISO(data.payload.basic.start_time),
         end_time: formatToISO(data.payload.basic.end_time),
-        timezone: data.payload.basic.timezone,
+        base_file: data.payload.file_name || "",
       },
       flow_ids: data.payload.flow_ids || [],
     },
   });
 
+  /** ===== 17-48 SUBMIT ===== */
   const createPayload1748 = (data: any) => ({
     ...createBasePayload(data),
     payload: {
@@ -278,8 +495,10 @@ const useApplicationDocumentForm = ({
         title: data.payload.basic.title,
         start_time: formatToISO(data.payload.basic.start_time),
         end_time: formatToISO(data.payload.basic.end_time),
+        base_file: data.payload.file_name || "",
       },
       content: data.payload.content,
+      concert_second: data.payload.concert_second,
       including: data.payload.including,
       main_routes: data.payload.main_routes,
       reserve_routes: data.payload.reserve_routes,
@@ -290,6 +509,7 @@ const useApplicationDocumentForm = ({
     },
   });
 
+  /** ===== 17-31 SUBMIT ===== */
   const createPayload1731 = (data: any) => ({
     ...createBasePayload(data),
     payload: {
@@ -297,42 +517,13 @@ const useApplicationDocumentForm = ({
     },
   });
 
-  const submitPayload = (payload: any) => {
-    mutate(
-        {
-          url: URLS.RH_Order_Application,
-          attributes: payload,
-        },
-        {
-          onSuccess: () => {
-            form.reset();
-            navigate("/rh-252/a-252");
-            onSave?.();
-            toast({
-              variant: "success",
-              title: t("Success"),
-              description: t("Application created successfully"),
-            });
-          },
-          onError: (error: any) => {
-            toast({
-              variant: "destructive",
-              title: t(`${get(error, "response.statusText", "Error")}`),
-              description: t(
-                  `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-              ),
-            });
-          },
-        },
-    );
-  };
-
+  /** ===== Submit ===== */
   const handleSubmit = useCallback(
       (data: any) => {
-        const code = data.code;
+        const prefix = data.code; // UI prefix
         let payload;
 
-        switch (code) {
+        switch (prefix) {
           case "17-45":
             payload = createPayload1745(data);
             break;
@@ -352,13 +543,13 @@ const useApplicationDocumentForm = ({
             payload = createPayload1731(data);
             break;
           default:
-            console.error("Unknown code:", code);
+            console.error("Unknown code:", prefix);
             return;
         }
 
-        submitPayload(payload);
+        saveMutation.mutate(payload);
       },
-      [currentIds, mutate, navigate, onSave, toast, t, form],
+      [currentIds, saveMutation],
   );
 
   return {
@@ -371,6 +562,7 @@ const useApplicationDocumentForm = ({
     getValidationClass,
     getOriginalNumValidationClass,
     currentUpdateType,
+    isLoading,
   };
 };
 
