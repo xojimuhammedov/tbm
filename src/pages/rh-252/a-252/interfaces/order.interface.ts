@@ -152,6 +152,7 @@ export interface Payload1748 {
         end_time: string;
     };
     content: string;
+    concert_second:string;
     reserve_routes : string;
     main_routes : string;
     stopped_flows: StoppedFlow[];

@@ -9,7 +9,7 @@ import { useFieldArray } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainerFooter } from "@/shared/components/templates/form";
 import { Button } from "dgz-ui";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, Loader2 } from "lucide-react";
 import DynamicIdInput from "./DynamicDeleteInput";
 import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
 import useApplicationDocumentForm from "@/pages/rh-252/a-252/hooks/useApplicationDocumentForm";
@@ -17,12 +17,13 @@ import UpdateFlowSection from "@/pages/rh-252/a-252/components/form/UpdateFlowSe
 import TvRvFlowSection from "@/pages/rh-252/a-252/components/form/TvRvFlowSection.tsx";
 import CreateFlowSection from "@/pages/rh-252/a-252/components/form/ CreateFlowSection.tsx";
 import AAGBackupDeleteSection from "@/pages/rh-252/a-252/components/form/ReserveChannelDeleteSection.tsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TelegraphPlannedWorkSection from "@/pages/rh-252/a-252/components/form/TelegraphPlannedWorkSection.tsx";
 import SettingsDocSection from "@/pages/rh-252/a-252/components/form/SettingsDocSection.tsx";
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
 
 const ApplicationDocumentForm = () => {
+  const { id } = useParams<{ id: string }>();
   const { staffOptions } = useStaffOptions();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -34,7 +35,8 @@ const ApplicationDocumentForm = () => {
     setCurrentIds,
     getValidationClass,
     currentUpdateType,
-  } = useApplicationDocumentForm({});
+    isLoading,
+  } = useApplicationDocumentForm({ id: id || null });
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -117,6 +119,18 @@ const ApplicationDocumentForm = () => {
     { label: "17-31", value: "17-31" },
   ];
 
+  // Loading state - edit mode uchun
+  if (isLoading && id) {
+    return (
+        <div className="flex items-center justify-center h-96 bg-white rounded-lg shadow-lg">
+          <div className="flex flex-col items-center gap-4">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+            <span className="text-gray-600">{t("Loading...")}</span>
+          </div>
+        </div>
+    );
+  }
+
   return (
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} action="">
@@ -156,6 +170,7 @@ const ApplicationDocumentForm = () => {
                       options={prefixOptions}
                       placeholder="Kod"
                       className="border-t-0 border-l-0 border-r-0 rounded-none h-7 min-h-[28px]"
+                      isDisabled={!!id} // Edit mode da kod o'zgartirib bo'lmaydi
                   />
                 </div>
               </div>
@@ -186,6 +201,7 @@ const ApplicationDocumentForm = () => {
                         className="border border-t-0 border-l-0 border-r-0 rounded-none"
                     />
                   </div>
+
 
                   {/* Form 17-45 ga xos bo'lgan qism */}
                   {isNormalMode && (
@@ -248,7 +264,6 @@ const ApplicationDocumentForm = () => {
                                 control={form.control}
                             />
                             <span>dan</span>
-
                           </div>
                           <span>quyidagi ishlar amalga oshirilsin:</span>
                         </div>
@@ -313,13 +328,19 @@ const ApplicationDocumentForm = () => {
                           setValue={form.setValue}
                       />
                   )}
+
+                  <div className={"mb-5 mt-5"}>
+                    <IDSection1731 control={form.control} setValue={form.setValue} />
+                  </div>
+
                 </>
             )}
 
             {/* Form 17-31 ha xos bo'lgan qism */}
-            {isNetworkDocMode && <IDSection1731 control={form.control} setValue={form.setValue} />}
+            {isNetworkDocMode && (
+                <IDSection1731 control={form.control} setValue={form.setValue} />
+            )}
 
-            {/* Mas'ul xodim - har doim ko'rinadi */}
             <MySelect
                 control={form.control}
                 name="responsible"
@@ -341,6 +362,20 @@ const ApplicationDocumentForm = () => {
               <ArrowLeftIcon />
               {t("Back")}
             </Button>
+            {/*<Button*/}
+            {/*    size="sm"*/}
+            {/*    type="submit"*/}
+            {/*    disabled={isLoading}*/}
+            {/*>*/}
+            {/*  {isLoading ? (*/}
+            {/*      <>*/}
+            {/*        <Loader2 className="w-4 h-4 animate-spin mr-2" />*/}
+            {/*        {t("Saving...")}*/}
+            {/*      </>*/}
+            {/*  ) : (*/}
+            {/*      t(id ? "Update" : "Create")*/}
+            {/*  )}*/}
+            {/*</Button>*/}
           </FormContainerFooter>
         </form>
       </Form>
@@ -348,3 +383,4 @@ const ApplicationDocumentForm = () => {
 };
 
 export default ApplicationDocumentForm;
+

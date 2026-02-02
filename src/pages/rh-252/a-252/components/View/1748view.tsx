@@ -243,6 +243,12 @@ const OrderView1748 = ({open, onOpenChange, document}: Props) => {
                                     <span className="u-pre">{payload!.reserve_routes}</span>
                                 </div>
                             ) : null}
+                            {reserveRoutesOk ? (
+                                <div>
+                                    <span className="font-bold">Kelishilgan:</span>{" "}
+                                    <span className="u-pre">{payload!.concert_second}</span>
+                                </div>
+                            ) : null}
                         </div>
                     ) : null}
 

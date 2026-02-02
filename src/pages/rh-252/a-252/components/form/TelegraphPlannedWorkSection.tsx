@@ -1,7 +1,8 @@
 import {useFieldArray, Control} from "react-hook-form";
-import {MyInput, MyDatePicker, MyTimePicker} from "dgz-ui-shared/components/form";
+import {MyInput, MyDatePicker} from "dgz-ui-shared/components/form";
 import {Button} from "dgz-ui";
 import {Plus, Trash2, Hash, Info} from "lucide-react";
+import {MyDateTimePicker} from "@/pages/rh-252/a-252/components/form/MyDateTimePicker.tsx";
 
 interface TelegraphPlannedWorkSectionProps {
     control: Control<any>;
@@ -76,23 +77,15 @@ const TelegraphPlannedWorkSection = ({control}: TelegraphPlannedWorkSectionProps
                         </span>
                         <span>daqiqagacha bo'lgan muddatga)</span>
                         <span className="font-semibold ">Vaqti:</span>
-                        <span className="w-44 inline-block mr-5">
-                             <MyTimePicker control={control} name="payload.basic.start_time"/>
+                        <span className=" inline-block mr-5">
+                             <MyDateTimePicker control={control} name="payload.basic.start_time"/>
                         </span>
                         <span>dan</span>
-                        <span className="w-44 inline-block mr-5">
-                             <MyTimePicker control={control} name="payload.basic.end_time"/>
+                        <span className=" inline-block mr-5">
+                             <MyDateTimePicker control={control} name="payload.basic.end_time"/>
                         </span>
-                        <span>gacha (</span>
-                        <span className="w-20 inline-block">
-                            <MyInput
-                                control={control}
-                                name="payload.basic.timezone"
-                                placeholder="UTC+5"
-                                className="border-none h-7 bg-transparent p-0 focus:ring-0 font-mono text-sm"
-                            />
-                        </span>
-                        <span>)</span>
+                        <span>gacha.</span>
+
                     </div>
                 </div>
             </div>
@@ -146,7 +139,7 @@ const TelegraphPlannedWorkSection = ({control}: TelegraphPlannedWorkSectionProps
 
                 {fields.length === 0 && (
                     <div
-                        className="flex flex-col items-center justify-center py-16 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50">
+                        className="flex flex-col items-center justify-center py-8 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50">
                         <div className="p-3 bg-white rounded-full shadow-sm mb-3">
                             <Info className="w-6 h-6 text-gray-300"/>
                         </div>
