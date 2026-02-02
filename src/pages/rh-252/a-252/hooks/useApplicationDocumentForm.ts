@@ -17,32 +17,22 @@ export interface UseApplicationDocumentFormParams {
   onSave?: () => void;
 }
 
-/** ===== Helpers ===== */
 const safeArray = <T,>(v: any): T[] => (Array.isArray(v) ? v : []);
 const codePrefix = (full?: string) => (full ? full.split("-").slice(0, 2).join("-") : "");
-
-/** API datetime -> "HH:mm" */
 const isoToHHmm = (iso?: string | null) => {
   if (!iso) return "";
   if (iso.includes("T")) return iso.split("T")[1]?.slice(0, 5) || "";
   return iso.slice(0, 5);
 };
-
-/** "HH:mm" -> ISO (today) */
 const formatToISO = (timeStr: string) => {
   if (!timeStr) return null;
   if (timeStr.includes("T")) return timeStr;
   const today = new Date().toISOString().split("T")[0];
   return `${today}T${timeStr}:00.000Z`;
 };
-
-/** to/copy: array -> textarea string */
 const listToText = (v: any) => safeArray<string>(v).join("\n");
-/** textarea string -> array */
 const textToList = (v: any) =>
     typeof v === "string" ? v.split("\n").map((x) => x.trim()).filter(Boolean) : safeArray<string>(v);
-
-/** ===== Hook ===== */
 const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormParams) => {
   const { t } = useTranslation();
   const { toast } = useToast();
@@ -54,7 +44,6 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     defaultValues: {
       code: "",
       order_date: null,
-
       to: "",
       copy: "",
       responsible: "",
@@ -103,25 +92,19 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
       },
     },
   });
-
   const currentUpdateType = form.watch("payload.update.update_type");
   const count = form.watch("count");
   const stationA = form.watch("point_a");
   const stationB = form.watch("point_b");
-
   const { getValidationClass, getOriginalNumValidationClass, clearValidation } = useFlowValidation({
     control: form.control,
     updateType: currentUpdateType,
   });
-
-  /** ===== Edit uchun data ===== */
   const { data: editData, isLoading } = useGetOne({
     url: [URLS.RH_Order_Application, id || ""],
     queryKey: [KEYS.RH_Order_Application, id || ""],
     options: { enabled: !!id },
   });
-
-  /** ===== Save mutate ===== */
   const { query: saveMutation } = useMutate({
     url: [URLS.RH_Order_Application, id || ""],
     method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
@@ -159,13 +142,10 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     if (isObj(v.data)) return v.data as AnyObj;
     return v as AnyObj;
   };
-
   useEffect(() => {
     if (!editData || !id) return;
-
     const doc = unwrapDoc(editData);
     if (!doc?.code) return;
-
     populateFormData(doc);
   }, [editData, id]);
 
@@ -178,17 +158,10 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
 
     form.setValue("code", prefix);
     form.setValue("order_date", doc.order_date ?? null);
-
-    // UI uchun string (textarea ko'rinishida)
     form.setValue("to", listToText(doc.to));
     form.setValue("copy", listToText(doc.copy));
-
-    // responsible object -> id
     form.setValue("responsible", doc?.responsible?._id ?? "");
-
-    // endi payload doc.payload ichida
     const payload = doc.payload || {};
-
     switch (prefix) {
       case "17-45":
         populateForm1745(payload);
@@ -213,7 +186,7 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     }
   };
 
-  /** ====== 17-45 POPULATE (APIga mos) ====== */
+  /** ====== 17-45  ====== */
   const populateForm1745 = (payload: any) => {
     const basic = payload.basic || {};
 
@@ -224,8 +197,6 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     form.setValue("payload.basic.justification", basic.justification ?? "");
     form.setValue("payload.basic.signal_level", basic.signal_level ?? "");
     form.setValue("payload.basic.actions", safeArray<string>(basic.actions));
-
-    // Create flow_ids (API: payload.create.flow_ids)
     if (payload.create?.flow_ids) {
       const rows = safeArray(payload.create.flow_ids).map((x: any) => ({
         code: x?.code ?? "",
@@ -240,26 +211,20 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
       }));
       form.setValue("payload.create.flow_ids", rows);
     }
-
-    // Update - channels yoki flows
     const hasChannels = safeArray(payload.update?.channels).length > 0;
     const hasFlows = safeArray(payload.update?.flows).length > 0;
 
     if (hasChannels) {
       form.setValue("payload.update.update_type", "channels");
-
-      // API: channels: [{old:{code,int}, new:{code,int}}]
       const channelsUI = safeArray(payload.update.channels).map((ch: any) => ({
         old_code: ch?.old?.code ?? "",
         new_code: ch?.new?.code ?? "",
         old_int: ch?.old?.international_stream_number ?? "",
         new_int: ch?.new?.international_stream_number ?? "",
       }));
-
       form.setValue("payload.update.flow_ids", channelsUI);
     } else if (hasFlows) {
       form.setValue("payload.update.update_type", "flows");
-
       const flowsUI = safeArray(payload.update.flows).map((fl: any) => ({
         code: fl?.code ?? "",
         point_a: fl?.point_a ?? "",
@@ -270,14 +235,11 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
         port_b: fl?.port_b ?? "",
         signal_level: fl?.signal_level ?? "",
       }));
-
       form.setValue("payload.update.flow_ids", flowsUI);
     } else {
       form.setValue("payload.update.update_type", "");
       form.setValue("payload.update.flow_ids", []);
     }
-
-    // Delete: API payload.delete.channels: string[]
     const delChannels = safeArray<string>(payload.delete?.channels);
     setCurrentIds(delChannels);
     form.setValue("payload.delete.channels", delChannels);
@@ -302,8 +264,6 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
     form.setValue("payload.basic.justification", basic.justification ?? "");
-
-    // API delete.channels bo'lishi mumkin (sizning eski UI esa delete.elements edi)
     const delChannels = safeArray<string>(payload.delete?.channels);
     setCurrentIds(delChannels);
     form.setValue("payload.delete.channels", delChannels);
@@ -318,11 +278,9 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.connection_closure_type", basic.connection_closure_type ?? "");
     form.setValue("payload.basic.max_duration_minutes", basic.max_duration_minutes ?? 0);
-
     form.setValue("payload.basic.start_time", isoToHHmm(basic.start_time));
     form.setValue("payload.basic.end_time", isoToHHmm(basic.end_time));
     form.setValue("payload.basic.timezone", basic.timezone ?? "");
-
     form.setValue("payload.flow_ids", payload.flow_ids || []);
   };
 
@@ -351,11 +309,7 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   /** ===== UpdateType o'zgarsa: row strukturasi reset ===== */
   useEffect(() => {
     if (!currentUpdateType) return;
-
     const currentFlows = form.getValues("payload.update.flow_ids");
-
-    // Agar massiv allaqachon tozalangan bo'lsa yoki kerakli strukturada bo'lsa, to'xtatamiz
-    // Bu cheksiz siklni oldini oladi
     const isAlreadyCleared = currentFlows.every((f: { code: any; old_code: any; }) => !f.code && !f.old_code);
     if (currentFlows.length > 0 && isAlreadyCleared) return;
 
@@ -368,16 +322,13 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
 
     form.setValue("payload.update.flow_ids", clearedFlows);
     clearValidation();
-  }, [currentUpdateType]); // Bog'liqliklar ro'yxatini minimallashtiring
-  /** ===== Generate IDs ===== */
+  }, [currentUpdateType]);
   const handleGenerate = useCallback(async () => {
     if (!count || Number(count) <= 0) return [];
     try {
       const res = await request.get(`/api/flows-id/empty-id-numbers?count=${count}`);
       const result = await res.data;
-
       const ids: string[] = result.data || [];
-
       const rows = Array.from({ length: Number(count) }).map((_, i) => ({
         code: ids[i] || "",
         point_a: stationA || "",
@@ -401,23 +352,17 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     }
   }, [count, stationA, stationB, toast, t]);
 
-  /** ===== Base payload ===== */
   const createBasePayload = (data: any) => ({
-    // 🔥 serverga full code yuboramiz
     code: fullCodeRef.current || data.code,
     order_date: data.order_date,
-    // UI: textarea string -> array
     to: textToList(data.to),
     copy: textToList(data.copy),
-    // UI: select id
     responsible: data.responsible,
   });
 
-  /** ===== 17-45 SUBMIT (API format) ===== */
+  /** ===== 17-45  ===== */
   const createPayload1745 = (data: any) => {
     const actions = safeArray<string>(data.payload?.basic?.actions);
-
-    // UPDATE conversion
     const updateType = data.payload?.update?.update_type;
     let updatePayload: any = undefined;
 
@@ -478,7 +423,6 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
 
         delete: actions.includes("delete")
             ? {
-              // ✅ API: channels
               channels: currentIds,
               flow_ids: [],
               channel_ids: [],
@@ -504,7 +448,7 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     },
   });
 
-  /** ===== 17-33 SUBMIT (API delete.channels) ===== */
+  /** ===== 17-33 SUBMIT  ===== */
   const createPayload1733 = (data: any) => ({
     ...createBasePayload(data),
     payload: {
@@ -613,7 +557,6 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     form,
     handleSubmit,
     handleGenerate,
-    // delete.channels ni siz eski nom bilan ishlatyapsiz: currentIds
     currentIds,
     setCurrentIds,
     getValidationClass,
