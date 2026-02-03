@@ -29,9 +29,9 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
     // Default values bo'sh obyekt bo'lsa, nested qiymatlarda xatolik bermaydi
     defaultValues: {
       flow_id: {
-        code: ""
-      }
-    }
+        code: "",
+      },
+    },
   });
 
   const query = useGetOne<{ data: FlowInterface }>({
@@ -48,7 +48,7 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
           variant: "destructive",
           title: t(`${get(error, "response.statusText", "Error")}`),
           description: t(
-              `${get(error, "response.data.message", "An error occurred")}`,
+            `${get(error, "response.data.message", "An error occurred")}`,
           ),
         });
       },
@@ -59,8 +59,8 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
           variant: "success",
           title: t(`Success`),
           description: id
-              ? t(`Flow updated successfully`)
-              : t(`Flow created successfully`),
+            ? t(`Flow updated successfully`)
+            : t(`Flow created successfully`),
         });
       },
     },
@@ -73,7 +73,7 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
         flow_id: {
           code: item.flow_id?.code || "",
           signal_level: item.flow_id?.signal_level || "",
-          _id: item.flow_id?._id
+          _id: item.flow_id?._id,
         },
         column1: item.column1,
         outs_id: item.outs_id,
@@ -109,10 +109,10 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
   }, [query.data, form]);
 
   const onSubmit = useCallback(
-      (data: FlowDto) => {
-        save.mutate(data);
-      },
-      [save],
+    (data: FlowDto) => {
+      save.mutate(data);
+    },
+    [save],
   );
 
   return { form, onSubmit, isLoading: query.isLoading };

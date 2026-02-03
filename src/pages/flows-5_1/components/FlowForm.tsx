@@ -27,12 +27,12 @@ const FlowForm = ({ id, onSave, readOnly = false }: FlowFormProps) => {
         <h2 className={"text-xl font-medium"}>{title}</h2>
         <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
           <MyInput<FlowDto>
-              control={form.control}
-              name={"flow_id.code"}
-              label={t("Code")}
-              placeholder={t("Enter code")}
-              required
-              disabled={readOnly}
+            control={form.control}
+            name={"flow_id.code"}
+            label={t("Code")}
+            placeholder={t("Enter code")}
+            required
+            disabled={readOnly}
           />
           <MyInput<FlowDto>
             control={form.control}

@@ -17,8 +17,9 @@ export interface UseApplicationDocumentFormParams {
   onSave?: () => void;
 }
 
-const safeArray = <T,>(v: any): T[] => (Array.isArray(v) ? v : []);
-const codePrefix = (full?: string) => (full ? full.split("-").slice(0, 2).join("-") : "");
+const safeArray = <T>(v: any): T[] => (Array.isArray(v) ? v : []);
+const codePrefix = (full?: string) =>
+  full ? full.split("-").slice(0, 2).join("-") : "";
 const isoToHHmm = (iso?: string | null) => {
   if (!iso) return "";
   if (iso.includes("T")) return iso.split("T")[1]?.slice(0, 5) || "";
@@ -32,8 +33,16 @@ const formatToISO = (timeStr: string) => {
 };
 const listToText = (v: any) => safeArray<string>(v).join("\n");
 const textToList = (v: any) =>
-    typeof v === "string" ? v.split("\n").map((x) => x.trim()).filter(Boolean) : safeArray<string>(v);
-const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormParams) => {
+  typeof v === "string"
+    ? v
+        .split("\n")
+        .map((x) => x.trim())
+        .filter(Boolean)
+    : safeArray<string>(v);
+const useApplicationDocumentForm = ({
+  id,
+  onSave,
+}: UseApplicationDocumentFormParams) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -96,10 +105,11 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   const count = form.watch("count");
   const stationA = form.watch("point_a");
   const stationB = form.watch("point_b");
-  const { getValidationClass, getOriginalNumValidationClass, clearValidation } = useFlowValidation({
-    control: form.control,
-    updateType: currentUpdateType,
-  });
+  const { getValidationClass, getOriginalNumValidationClass, clearValidation } =
+    useFlowValidation({
+      control: form.control,
+      updateType: currentUpdateType,
+    });
   const { data: editData, isLoading } = useGetOne({
     url: [URLS.RH_Order_Application, id || ""],
     queryKey: [KEYS.RH_Order_Application, id || ""],
@@ -120,7 +130,9 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
         toast({
           variant: "success",
           title: t("Success"),
-          description: id ? t("Application updated successfully") : t("Application created successfully"),
+          description: id
+            ? t("Application updated successfully")
+            : t("Application created successfully"),
         });
       },
       onError: (error: any) => {
@@ -128,7 +140,7 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
           variant: "destructive",
           title: t(`${get(error, "response.statusText", "Error")}`),
           description: t(
-              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
           ),
         });
       },
@@ -136,7 +148,8 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   });
 
   type AnyObj = Record<string, any>;
-  const isObj = (v: unknown): v is AnyObj => typeof v === "object" && v !== null;
+  const isObj = (v: unknown): v is AnyObj =>
+    typeof v === "object" && v !== null;
   const unwrapDoc = (v: unknown): AnyObj | null => {
     if (!isObj(v)) return null;
     if (isObj(v.data)) return v.data as AnyObj;
@@ -148,7 +161,6 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     if (!doc?.code) return;
     populateFormData(doc);
   }, [editData, id]);
-
 
   const populateFormData = (doc: any) => {
     const fullCode = doc?.code || "";
@@ -190,7 +202,10 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   const populateForm1745 = (payload: any) => {
     const basic = payload.basic || {};
 
-    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue(
+      "payload.basic.organization_name",
+      basic.organization_name ?? "",
+    );
     form.setValue("payload.basic.request_number", basic.request_number ?? "");
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
@@ -248,7 +263,10 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   /** ====== 17-54 ====== */
   const populateForm1754 = (payload: any) => {
     const basic = payload.basic || {};
-    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue(
+      "payload.basic.organization_name",
+      basic.organization_name ?? "",
+    );
     form.setValue("payload.basic.request_number", basic.request_number ?? "");
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.justification", basic.justification ?? "");
@@ -259,7 +277,10 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   /** ====== 17-33 ====== */
   const populateForm1733 = (payload: any) => {
     const basic = payload.basic || {};
-    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue(
+      "payload.basic.organization_name",
+      basic.organization_name ?? "",
+    );
     form.setValue("payload.basic.request_number", basic.request_number ?? "");
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
@@ -273,11 +294,20 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   const populateForm1770 = (payload: any) => {
     const basic = payload.basic || {};
     form.setValue("payload.basic.title", basic.title ?? "");
-    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue(
+      "payload.basic.organization_name",
+      basic.organization_name ?? "",
+    );
     form.setValue("payload.basic.request_number", basic.request_number ?? "");
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
-    form.setValue("payload.basic.connection_closure_type", basic.connection_closure_type ?? "");
-    form.setValue("payload.basic.max_duration_minutes", basic.max_duration_minutes ?? 0);
+    form.setValue(
+      "payload.basic.connection_closure_type",
+      basic.connection_closure_type ?? "",
+    );
+    form.setValue(
+      "payload.basic.max_duration_minutes",
+      basic.max_duration_minutes ?? 0,
+    );
     form.setValue("payload.basic.start_time", isoToHHmm(basic.start_time));
     form.setValue("payload.basic.end_time", isoToHHmm(basic.end_time));
     form.setValue("payload.basic.timezone", basic.timezone ?? "");
@@ -296,7 +326,10 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     form.setValue("payload.main_routes", payload.main_routes ?? "");
     form.setValue("payload.reserve_routes", payload.reserve_routes ?? "");
     form.setValue("payload.stopped_flows", payload.stopped_flows || []);
-    form.setValue("payload.responsible_person", payload.responsible_person ?? "");
+    form.setValue(
+      "payload.responsible_person",
+      payload.responsible_person ?? "",
+    );
     form.setValue("payload.concert_text", payload.concert_text ?? "");
     form.setValue("payload.basis", payload.basis ?? "");
   };
@@ -310,14 +343,25 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   useEffect(() => {
     if (!currentUpdateType) return;
     const currentFlows = form.getValues("payload.update.flow_ids");
-    const isAlreadyCleared = currentFlows.every((f: { code: any; old_code: any; }) => !f.code && !f.old_code);
+    const isAlreadyCleared = currentFlows.every(
+      (f: { code: any; old_code: any }) => !f.code && !f.old_code,
+    );
     if (currentFlows.length > 0 && isAlreadyCleared) return;
 
     const clearedFlows = currentFlows.map(() => {
       if (currentUpdateType === "channels") {
         return { old_code: "", new_code: "", old_int: "", new_int: "" };
       }
-      return { code: "", point_a: "", point_b: "", device_a: "", device_b: "", port_a: "", port_b: "", signal_level: "" };
+      return {
+        code: "",
+        point_a: "",
+        point_b: "",
+        device_a: "",
+        device_b: "",
+        port_a: "",
+        port_b: "",
+        signal_level: "",
+      };
     });
 
     form.setValue("payload.update.flow_ids", clearedFlows);
@@ -326,7 +370,9 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   const handleGenerate = useCallback(async () => {
     if (!count || Number(count) <= 0) return [];
     try {
-      const res = await request.get(`/api/flows-id/empty-id-numbers?count=${count}`);
+      const res = await request.get(
+        `/api/flows-id/empty-id-numbers?count=${count}`,
+      );
       const result = await res.data;
       const ids: string[] = result.data || [];
       const rows = Array.from({ length: Number(count) }).map((_, i) => ({
@@ -369,16 +415,18 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     if (actions.includes("update")) {
       if (updateType === "channels") {
         updatePayload = {
-          channels: safeArray(data.payload?.update?.flow_ids).map((row: any) => ({
-            old: {
-              code: row.old_code,
-              international_stream_number: row.old_int || "",
-            },
-            new: {
-              code: row.new_code,
-              international_stream_number: row.new_int || "",
-            },
-          })),
+          channels: safeArray(data.payload?.update?.flow_ids).map(
+            (row: any) => ({
+              old: {
+                code: row.old_code,
+                international_stream_number: row.old_int || "",
+              },
+              new: {
+                code: row.new_code,
+                international_stream_number: row.new_int || "",
+              },
+            }),
+          ),
           flows: [],
         };
       } else if (updateType === "flows") {
@@ -413,21 +461,23 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
         },
 
         create: actions.includes("create")
-            ? {
+          ? {
               flow_ids:
-                  data.payload.create?.flow_ids?.map(({ id_exist, ...rest }: any) => rest) || [],
+                data.payload.create?.flow_ids?.map(
+                  ({ id_exist, ...rest }: any) => rest,
+                ) || [],
             }
-            : undefined,
+          : undefined,
 
         update: actions.includes("update") ? updatePayload : undefined,
 
         delete: actions.includes("delete")
-            ? {
+          ? {
               channels: currentIds,
               flow_ids: [],
               channel_ids: [],
             }
-            : undefined,
+          : undefined,
       },
     };
   };
@@ -519,37 +569,37 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
 
   /** ===== Submit ===== */
   const handleSubmit = useCallback(
-      (data: any) => {
-        const prefix = data.code; // UI prefix
-        let payload;
+    (data: any) => {
+      const prefix = data.code; // UI prefix
+      let payload;
 
-        switch (prefix) {
-          case "17-45":
-            payload = createPayload1745(data);
-            break;
-          case "17-54":
-            payload = createPayload1754(data);
-            break;
-          case "17-33":
-            payload = createPayload1733(data);
-            break;
-          case "17-70":
-            payload = createPayload1770(data);
-            break;
-          case "17-48":
-            payload = createPayload1748(data);
-            break;
-          case "17-31":
-            payload = createPayload1731(data);
-            break;
-          default:
-            console.error("Unknown code:", prefix);
-            return;
-        }
+      switch (prefix) {
+        case "17-45":
+          payload = createPayload1745(data);
+          break;
+        case "17-54":
+          payload = createPayload1754(data);
+          break;
+        case "17-33":
+          payload = createPayload1733(data);
+          break;
+        case "17-70":
+          payload = createPayload1770(data);
+          break;
+        case "17-48":
+          payload = createPayload1748(data);
+          break;
+        case "17-31":
+          payload = createPayload1731(data);
+          break;
+        default:
+          console.error("Unknown code:", prefix);
+          return;
+      }
 
-        saveMutation.mutate(payload);
-      },
-      [currentIds, saveMutation],
+      saveMutation.mutate(payload);
+    },
+    [currentIds, saveMutation],
   );
 
   return {
