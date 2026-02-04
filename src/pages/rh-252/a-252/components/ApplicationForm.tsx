@@ -170,7 +170,7 @@ const ApplicationDocumentForm = () => {
                       options={prefixOptions}
                       placeholder="Kod"
                       className="border-t-0 border-l-0 border-r-0 rounded-none h-7 min-h-[28px]"
-                      isDisabled={!!id} // Edit mode da kod o'zgartirib bo'lmaydi
+                      isDisabled={!!id}
                   />
                 </div>
               </div>
