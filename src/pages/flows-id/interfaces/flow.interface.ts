@@ -17,4 +17,7 @@ export interface FlowInterface {
   name_point_b?: string;
   device_a?: string;
   device_b?: string;
+  status?: string;
+  dissolution_order?: string;
+  status_filter?: string
 }

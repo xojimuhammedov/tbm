@@ -21,11 +21,12 @@ const useFlows = () => {
   const [openView, setOpenView] = useState(false);
   const [viewId, setViewId] = useState<string | null>(null);
 
-  const { query, handleFilter, params } = useLists<FlowInterface>({
+  const { query, handleFilter, params }: any = useLists<FlowInterface>({
     url: [FLOWS_ID_QUERY_KEY],
   });
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
+  const statusFilterValue = params?.status_filter
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
@@ -38,7 +39,7 @@ const useFlows = () => {
   }, []);
 
   const allIds = useMemo(
-    () => query.data?.docs?.map((item) => item._id) || [],
+    () => query.data?.docs?.map((item: any) => item._id) || [],
     [query.data],
   );
 
@@ -145,6 +146,7 @@ const useFlows = () => {
         toggleSelectRow,
         toggleSelectAll,
         allIds,
+        statusFilterValue
       ),
     [
       t,
@@ -155,6 +157,7 @@ const useFlows = () => {
       toggleSelectRow,
       toggleSelectAll,
       allIds,
+      statusFilterValue
     ],
   );
 
