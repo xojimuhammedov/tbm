@@ -140,6 +140,7 @@ export interface Payload1770 {
         start_time: string;
         end_time: string;
         timezone: string;
+        context:string;
     }
     flow_ids: string[];
 }

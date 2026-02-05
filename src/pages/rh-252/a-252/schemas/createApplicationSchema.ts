@@ -119,6 +119,8 @@ export const createOrderSchema = (
       start_time: z.string().min(1, requiredMsg("Start time")),
       end_time: z.string().min(1, requiredMsg("End time")),
       timezone: z.string().min(1, requiredMsg("Timezone")),
+      context: z.string().optional(),
+
     }),
     flow_ids: z.array(z.string()).min(1, requiredMsg("Flow IDs")),
   });
