@@ -23,6 +23,7 @@ const Page = () => {
     handleAdd,
     selectedRowKeys,
     handleDeleteMany,
+    handleDeleteAll
   } = useChannels();
 
   const [importModalOpen, setImportModalOpen] = useState(false);
@@ -42,6 +43,15 @@ const Page = () => {
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
+          <Button
+              size={"sm"}
+              variant="destructive"
+              onClick={handleDeleteAll}
+              className="bg-red-600 hover:bg-red-700 text-white"
+          >
+            <Trash2Icon className="size-4" />
+            {t("Delete all")}
+          </Button>
           <Button
             size={"sm"}
             disabled={selectedRowKeys.length === 0}

@@ -4,19 +4,17 @@ import { useTranslation } from "react-i18next";
 import useDelete from "@/shared/hooks/api/useDelete.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import { get } from "lodash";
-import { useConfirm } from "dgz-ui-shared/hooks";
 import { FLOWS_ID_QUERY_KEY } from "@/pages/flows-id/constants/flows.constants.ts";
 import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface.ts";
 import createFlowColumns from "@/pages/flows-id/helpers/createFlowColumns.tsx";
 import { useNavigate } from "react-router-dom";
-import { ROW_CHECK_DELETE } from "@/shared/constants/rowCheck.delete.ts";
+import {useFlowDeleteActions} from "@/shared/hooks/flow/useFlowDeleteActions.ts";
 
 const useFlows = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { removeWithConfirm, remove } = useDelete([FLOWS_ID_QUERY_KEY]);
   const { toast } = useToast();
-  const { confirm }: any = useConfirm();
 
   const [openView, setOpenView] = useState(false);
   const [viewId, setViewId] = useState<string | null>(null);
@@ -26,11 +24,19 @@ const useFlows = () => {
   });
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
-  const statusFilterValue = params?.status_filter
+  const statusFilterValue = params?.status_filter;
+
+  // Yangi hook ishlatish
+  const { handleDeleteAll: handleDeleteAllAction, handleDeleteMany: handleDeleteManyAction } = useFlowDeleteActions({
+    refetch: query.refetch,
+    onSuccess: () => {
+      setSelectedRowKeys([]);
+    },
+  });
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   }, []);
 
@@ -39,8 +45,8 @@ const useFlows = () => {
   }, []);
 
   const allIds = useMemo(
-    () => query.data?.docs?.map((item: any) => item._id) || [],
-    [query.data],
+      () => query.data?.docs?.map((item: any) => item._id) || [],
+      [query.data],
   );
 
   const currentItem = useMemo(() => {
@@ -50,79 +56,46 @@ const useFlows = () => {
   }, [query.data, viewId]);
 
   const handleDelete = useCallback(
-    (id: FlowInterface["_id"]) => {
-      removeWithConfirm(id)
-        .then(() => {
-          query.refetch();
-          toast({
-            variant: "success",
-            title: t(`Success`),
-            description: t(`Flow removed successfully`),
-          });
-        })
-        .catch((error) => {
-          toast({
-            variant: "destructive",
-            title: t(`${get(error, "response.statusText", "Error")}`),
-            description: t(
-              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
-            ),
-          });
-        });
-    },
-    [removeWithConfirm, t, toast, query],
+      (id: FlowInterface["_id"]) => {
+        removeWithConfirm(id)
+            .then(() => {
+              query.refetch();
+              toast({
+                variant: "success",
+                title: t(`Success`),
+                description: t(`Flow removed successfully`),
+              });
+            })
+            .catch((error) => {
+              toast({
+                variant: "destructive",
+                title: t(`${get(error, "response.statusText", "Error")}`),
+                description: t(
+                    `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+                ),
+              });
+            });
+      },
+      [removeWithConfirm, t, toast, query],
   );
 
   const handleDeleteMany = useCallback(() => {
-    if (selectedRowKeys.length === 0) {
-      toast({
-        variant: "destructive",
-        title: t("Xatolik"),
-        description: t("Hech qanday element tanlanmagan"),
-      });
-      return;
-    }
+    handleDeleteManyAction(selectedRowKeys, remove);
+  }, [selectedRowKeys, handleDeleteManyAction, remove]);
 
-    confirm({
-      title: t("Tasdiqlash"),
-      description: t("{{count}} ta oqimni o'chirishga ishonchingiz komilmi?", {
-        count: selectedRowKeys.length,
-      }),
-      onConfirm: () => {
-        remove(ROW_CHECK_DELETE, { ids: selectedRowKeys })
-          .then(() => {
-            toast({
-              variant: "success",
-              title: t("Muvaffaqiyatli"),
-              description: t("{{count}} ta oqim o'chirildi", {
-                count: selectedRowKeys.length,
-              }),
-            });
-            setSelectedRowKeys([]);
-            query.refetch();
-          })
-          .catch((error) => {
-            toast({
-              variant: "destructive",
-              title: t(`${get(error, "response.statusText", "Error")}`),
-              description: t(
-                `${get(error, "response.data.message", "An error occurred.")}`,
-              ),
-            });
-          });
-      },
-    });
-  }, [selectedRowKeys, remove, confirm, query, t, toast]);
+  const handleDeleteAll = useCallback(() => {
+    handleDeleteAllAction(remove);
+  }, [handleDeleteAllAction, remove]);
 
   const handleAdd = useCallback(() => {
     navigate("/flows-id/create");
   }, [navigate]);
 
   const handleEdit = useCallback(
-    (id: string) => {
-      navigate(`/flows-id/edit/${id}`);
-    },
-    [navigate],
+      (id: string) => {
+        navigate(`/flows-id/edit/${id}`);
+      },
+      [navigate],
   );
 
   const handleView = useCallback((id: string) => {
@@ -136,8 +109,19 @@ const useFlows = () => {
   }, []);
 
   const columns = useMemo(
-    () =>
-      createFlowColumns(
+      () =>
+          createFlowColumns(
+              t,
+              handleDelete,
+              handleEdit,
+              handleView,
+              selectedRowKeys,
+              toggleSelectRow,
+              toggleSelectAll,
+              allIds,
+              statusFilterValue
+          ),
+      [
         t,
         handleDelete,
         handleEdit,
@@ -147,18 +131,7 @@ const useFlows = () => {
         toggleSelectAll,
         allIds,
         statusFilterValue
-      ),
-    [
-      t,
-      handleDelete,
-      handleEdit,
-      handleView,
-      selectedRowKeys,
-      toggleSelectRow,
-      toggleSelectAll,
-      allIds,
-      statusFilterValue
-    ],
+      ],
   );
 
   return {
@@ -170,6 +143,7 @@ const useFlows = () => {
     handleAdd,
     handleDelete,
     handleDeleteMany,
+    handleDeleteAll,
     openView,
     handleCloseView,
     currentItem,

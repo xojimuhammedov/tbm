@@ -1,4 +1,4 @@
-export type OrderCode = "17-45" | "17-54" | "17-33" | "17-70" | "17-48"| "17-31";
+export type OrderCode = "17-45" | "17-54" | "17-33" | "17-70" | "17-48" | "17-31";
 
 export interface BaseOrder {
     _id?: string;
@@ -119,6 +119,7 @@ export interface FlowsIds1733 {
     created_at: string;
     updated_at: string;
 }
+
 export interface Channels1733 {
     _id: string;
     code: string;
@@ -129,6 +130,7 @@ export interface Channels1733 {
         code: string;
     };
 }
+
 export interface Payload1770 {
     basic: {
         organization_name: string;
@@ -140,7 +142,7 @@ export interface Payload1770 {
         start_time: string;
         end_time: string;
         timezone: string;
-        context:string;
+        context: string;
     }
     flow_ids: string[];
 }
@@ -153,9 +155,9 @@ export interface Payload1748 {
         end_time: string;
     };
     content: string;
-    concert_second:string;
-    reserve_routes : string;
-    main_routes : string;
+    concert_second: string;
+    reserve_routes: string;
+    main_routes: string;
     stopped_flows: StoppedFlow[];
     including: string;
     responsible_person: string;
