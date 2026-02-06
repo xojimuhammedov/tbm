@@ -29,6 +29,7 @@ const Page = () => {
     currentItem,
     selectedRowKeys,
     handleDeleteMany,
+      handleDeleteAll
   } = useFlows();
 
   const [importModalOpen, setImportModalOpen] = useState(false);
@@ -69,7 +70,15 @@ const Page = () => {
       />
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
-          {/* {selectedRowKeys.length > 0 && ( */}
+            <Button
+                size={"sm"}
+                variant="destructive"
+                onClick={handleDeleteAll}
+                className="bg-red-600 hover:bg-red-700 text-white"
+            >
+                <Trash2Icon className="size-4" />
+                {t("Delete all")}
+            </Button>
           <Button
             size={"sm"}
             variant="destructive"
@@ -80,7 +89,6 @@ const Page = () => {
             <Trash2Icon className="size-4" />
             {t("Delete")} ({selectedRowKeys.length})
           </Button>
-          {/* // )} */}
 
           <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
             <UploadIcon className="size-4" />
