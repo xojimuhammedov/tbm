@@ -46,7 +46,6 @@ const useLocalInbounds = () => {
       [query.data],
   );
 
-  // Single delete (old logic)
   const handleDelete = useCallback(
       (id: LocalInboundInterface["_id"]) => {
         removeWithConfirm(id)
@@ -71,12 +70,10 @@ const useLocalInbounds = () => {
       [removeWithConfirm, query, t, toast],
   );
 
-  // Many delete -> useFlowDeleteActions
   const handleDeleteMany = useCallback(() => {
     handleDeleteManyAction(selectedRowKeys, remove);
   }, [selectedRowKeys, handleDeleteManyAction, remove]);
 
-  // Optional: delete all (agar UI ishlatsa)
   const handleDeleteAll = useCallback(() => {
     handleDeleteAllAction(remove);
   }, [handleDeleteAllAction, remove]);

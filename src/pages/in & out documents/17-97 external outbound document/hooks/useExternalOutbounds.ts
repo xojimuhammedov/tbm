@@ -46,7 +46,6 @@ const useExternalOutbounds = () => {
       [query.data],
   );
 
-  // Single delete (old logic)
   const handleDelete = useCallback(
       (id: ExternalOutboundInterface["_id"]) => {
         removeWithConfirm(id)
@@ -71,12 +70,10 @@ const useExternalOutbounds = () => {
       [removeWithConfirm, query, t, toast],
   );
 
-  // Many delete -> useFlowDeleteActions
   const handleDeleteMany = useCallback(() => {
     handleDeleteManyAction(selectedRowKeys, remove);
   }, [selectedRowKeys, handleDeleteManyAction, remove]);
 
-  // Agar sizda "Delete all" ham bo'lsa (optional)
   const handleDeleteAll = useCallback(() => {
     handleDeleteAllAction(remove);
   }, [handleDeleteAllAction, remove]);
@@ -123,7 +120,7 @@ const useExternalOutbounds = () => {
     handleAdd,
     handleDelete,
     handleDeleteMany,
-    handleDeleteAll, // agar UI ishlatsa
+    handleDeleteAll,
     selectedRowKeys,
     setSelectedRowKeys,
     toggleSelectRow,

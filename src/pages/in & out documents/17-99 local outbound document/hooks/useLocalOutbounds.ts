@@ -71,12 +71,10 @@ const useLocalOutbounds = () => {
       [removeWithConfirm, query, t, toast],
   );
 
-  // Many delete -> useFlowDeleteActions
   const handleDeleteMany = useCallback(() => {
     handleDeleteManyAction(selectedRowKeys, remove);
   }, [selectedRowKeys, handleDeleteManyAction, remove]);
 
-  // Optional: delete all (agar kerak bo'lsa)
   const handleDeleteAll = useCallback(() => {
     handleDeleteAllAction(remove);
   }, [handleDeleteAllAction, remove]);
@@ -121,9 +119,9 @@ const useLocalOutbounds = () => {
     params,
     handleFilter,
     handleAdd,
-    handleDelete,       // agar columnlarda single delete bor bo‘lsa
+    handleDelete,
     handleDeleteMany,
-    handleDeleteAll,    // kerak bo‘lmasa olib tashlang
+    handleDeleteAll,
     selectedRowKeys,
     setSelectedRowKeys,
     toggleSelectRow,
