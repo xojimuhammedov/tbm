@@ -2,6 +2,16 @@ import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { EditIcon, Trash2Icon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { FlowInterface } from "@/pages/flows-5_1/interfaces/flow.interface.ts";
+import { ReactNode } from "react";
+
+const renderHeader = (label: string): ReactNode => (
+    <span style={{ whiteSpace: 'nowrap' }}>{label}</span>
+);
+
+const renderCell = (val: unknown): ReactNode => {
+  const content = (val !== undefined && val !== null && val !== "") ? String(val) : "-";
+  return <span style={{ whiteSpace: 'nowrap' }}>{content}</span>;
+};
 
 const createFlowColumns = (
     t: (...args: TranslationArgsType) => string,
@@ -32,31 +42,31 @@ const createFlowColumns = (
         />
     ),
   },
-  { key: "flow_code", dataIndex: "flow_code", name: "ID" },
-  { key: "forward", dataIndex: "forward", name: "прямой" },
-  { key: "reverse", dataIndex: "reverse", name: "обратный" },
-  { key: "start", dataIndex: "start", name: "Начало" },
-  { key: "port_a", dataIndex: "port_a", name: "Port_A" },
-  { key: "mux_a", dataIndex: "mux_a", name: "Mux_A" },
-  { key: "pa", dataIndex: "pa", name: "пА" },
-  { key: "final_ms_name", dataIndex: "final_ms_name", name: "Name_MS_final" },
-  { key: "signal_level", dataIndex: "signal_transmission_level", name: "Уровень п" },
-  { key: "au4", dataIndex: "au4", name: "_AU-4" },
-  { key: "ts", dataIndex: "ts", name: "_ts" },
-  { key: "pb", dataIndex: "pb", name: "пВ" },
-  { key: "transit", dataIndex: "transit", name: "транзит" },
-  { key: "mux_b", dataIndex: "mux_b", name: "Mux_B" },
-  { key: "port_b", dataIndex: "port_b", name: "Port_B" },
-  { key: "end", dataIndex: "end", name: "Конец" },
-  { key: "consumer", dataIndex: "consumer", name: "Пoтребитель" },
-  { key: "order_number", dataIndex: "order_number", name: "Распоряжения" },
-  { key: "interest_level", dataIndex: "interest_level", name: "Заинтересованность" },
-  { key: "mt", dataIndex: "mt", name: "М/Т" },
-  { key: "speed", dataIndex: "speed", name: "Скорость" },
+  { key: "flow_code", dataIndex: "flow_code", name: renderHeader("ID"), render: renderCell },
+  { key: "forward", dataIndex: "forward", name: renderHeader(t("прямой")), render: renderCell },
+  { key: "reverse", dataIndex: "reverse", name: renderHeader(t("обратный")), render: renderCell },
+  { key: "start", dataIndex: "start", name: renderHeader(t("Начало")), render: renderCell },
+  { key: "port_a", dataIndex: "port_a", name: renderHeader("Port A"), render: renderCell },
+  { key: "mux_a", dataIndex: "mux_a", name: renderHeader("Mux A"), render: renderCell },
+  { key: "pa", dataIndex: "pa", name: renderHeader("пА"), render: renderCell },
+  { key: "final_ms_name", dataIndex: "final_ms_name", name: renderHeader("Name MS final"), render: renderCell },
+  { key: "signal_level", dataIndex: "signal_transmission_level", name: renderHeader(t("Уровень п")), render: renderCell },
+  { key: "au4", dataIndex: "au4", name: renderHeader("AU-4"), render: renderCell },
+  { key: "ts", dataIndex: "ts", name: renderHeader("ts"), render: renderCell },
+  { key: "pb", dataIndex: "pb", name: renderHeader("пВ"), render: renderCell },
+  { key: "transit", dataIndex: "transit", name: renderHeader(t("транзит")), render: renderCell },
+  { key: "mux_b", dataIndex: "mux_b", name: renderHeader("Mux B"), render: renderCell },
+  { key: "port_b", dataIndex: "port_b", name: renderHeader("Port B"), render: renderCell },
+  { key: "end", dataIndex: "end", name: renderHeader(t("Конец")), render: renderCell },
+  { key: "consumer", dataIndex: "consumer", name: renderHeader(t("Пoтребитель")), render: renderCell },
+  { key: "order_number", dataIndex: "order_number", name: renderHeader(t("Распоряжения")), render: renderCell },
+  { key: "interest_level", dataIndex: "interest_level", name: renderHeader(t("Заинтересованность")), render: renderCell },
+  { key: "mt", dataIndex: "mt", name: renderHeader("М/Т"), render: renderCell },
+  { key: "speed", dataIndex: "speed", name: renderHeader(t("Скорость")), render: renderCell },
   {
     key: "actions",
     dataIndex: "_id",
-    name: "",
+    name: renderHeader(t("Actions")),
     render: (id: string) => (
         <div className="flex items-center gap-2">
           <MyTooltip content={t("Edit")}>
