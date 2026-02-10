@@ -10,6 +10,24 @@ const renderHeader = (label: string): ReactNode => (
 
 const renderCell = (val: unknown): ReactNode => {
   const content = (val !== undefined && val !== null && val !== "") ? String(val) : "-";
+
+  if (content === "-") {
+    return <span style={{ whiteSpace: 'nowrap' }}>-</span>;
+  }
+
+  const maxLength = 40;
+
+  if (content.length > maxLength) {
+    const truncated = content.substring(0, maxLength) + "...";
+    return (
+        <MyTooltip content={content}>
+        <span style={{ whiteSpace: 'nowrap', cursor: 'pointer' }}>
+          {truncated}
+        </span>
+        </MyTooltip>
+    );
+  }
+
   return <span style={{ whiteSpace: 'nowrap' }}>{content}</span>;
 };
 

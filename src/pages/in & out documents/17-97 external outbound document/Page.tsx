@@ -6,7 +6,7 @@ import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import { CirclePlusIcon, UploadIcon, Trash2Icon } from "lucide-react";
+import {CirclePlusIcon, UploadIcon, Trash2Icon, Layers} from "lucide-react";
 import useExternalOutbounds from "@/pages/in & out documents/17-97 external outbound document/hooks/useExternalOutbounds.ts";
 import { ExternalOutboundInterface } from "@/pages/in & out documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
 import { EXTERNAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-97 external outbound document/constants/external.outbound.constants.ts";
@@ -24,6 +24,7 @@ const Page = () => {
     handleAdd,
     selectedRowKeys,
     handleDeleteMany,
+    handleDeleteAll
   } = useExternalOutbounds();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
@@ -41,6 +42,14 @@ const Page = () => {
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
+          <Button
+              size={"sm"}
+              variant="destructive"
+              onClick={handleDeleteAll}
+          >
+            <Layers className="size-4" />
+            {t("Delete all")}
+          </Button>
           <Button
             disabled={selectedRowKeys.length === 0}
             size={"sm"}

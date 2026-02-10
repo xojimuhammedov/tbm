@@ -9,11 +9,25 @@ const renderHeader = (label: string) => (
     <span style={{ whiteSpace: 'nowrap' }}>{label}</span>
 );
 
-const renderValue = (value: any) => (
-    <span style={{ whiteSpace: 'nowrap' }}>
-    {value && value !== "" ? value : "-"}
-  </span>
-);
+const renderValue = (value: any) => {
+  if (!value || value === "") return <span>-</span>;
+
+  const stringValue = value.toString();
+  const maxLength = 40;
+
+  if (stringValue.length > maxLength) {
+    const truncated = stringValue.substring(0, maxLength) + "...";
+    return (
+        <MyTooltip content={stringValue}>
+        <span style={{ whiteSpace: 'nowrap', cursor: 'pointer' }}>
+          {truncated}
+        </span>
+        </MyTooltip>
+    );
+  }
+
+  return <span style={{ whiteSpace: 'nowrap' }}>{stringValue}</span>;
+};
 
 const createChannelColumns = (
     t: (...args: TranslationArgsType) => string,
@@ -47,61 +61,61 @@ const createChannelColumns = (
   {
     key: "code",
     dataIndex: "code",
-    name: renderHeader(t("Code")),
+    name: renderHeader(t("Код")),
     render: (value) => renderValue(value),
   },
   {
     key: "flow_code",
     dataIndex: "flow_code",
-    name: renderHeader(t("Flow Code")),
+    name: renderHeader(t("Идентификатор потока")),
     render: (value) => renderValue(value),
   },
   {
     key: "international_stream_number",
     dataIndex: "international_stream_number",
-    name: renderHeader(t("Int stream number")),
+    name: renderHeader(t("Международный номер потока")),
     render: (value) => renderValue(value),
   },
   {
     key: "rcpu_site_id_a",
     dataIndex: "rcpu_site_id_a",
-    name: renderHeader(t("RCPU Site A")),
+    name: renderHeader(t("RCU site ID A потока")),
     render: (value) => renderValue(value),
   },
   {
     key: "icm_a_stream",
     dataIndex: "icm_a_stream",
-    name: renderHeader(t("ICM A Stream")),
+    name: renderHeader(t("ИКМ A потока")),
     render: (value) => renderValue(value),
   },
   {
     key: "rcpu_site_id_z",
     dataIndex: "rcpu_site_id_z",
-    name: renderHeader(t("RCPU Site Z")),
+    name: renderHeader(t("RCU site ID Z потока")),
     render: (value) => renderValue(value),
   },
   {
     key: "icm_b_stream",
     dataIndex: "icm_b_stream",
-    name: renderHeader(t("ICM B Stream")),
+    name: renderHeader(t("ИКМ В потока")),
     render: (value) => renderValue(value),
   },
   {
     key: "channel_link",
     dataIndex: "channel_link",
-    name: renderHeader(t("Channel Link")),
+    name: renderHeader(t("линк канала")),
     render: (value) => renderValue(value),
   },
   {
     key: "channel_number_in_stream",
     dataIndex: "channel_number_in_stream",
-    name: renderHeader(t("Channel num in Stream")),
+    name: renderHeader(t("№ канала в потоке")),
     render: (value) => renderValue(value),
   },
   {
     key: "channel_mode",
     dataIndex: "channel_mode",
-    name: renderHeader(t("Mode")),
+    name: renderHeader(t("РЕЖИМ канала")),
     render: (value) => renderValue(value),
   },
   {
@@ -119,7 +133,7 @@ const createChannelColumns = (
   {
     key: "a_port_nms",
     dataIndex: "a_port_nms",
-    name: renderHeader(t("A Port NMS")),
+    name: renderHeader(t("A port NMS")),
     render: (value) => renderValue(value),
   },
   {
@@ -137,34 +151,34 @@ const createChannelColumns = (
   {
     key: "z_port_nms",
     dataIndex: "z_port_nms",
-    name: renderHeader(t("Z Port NMS")),
+    name: renderHeader(t("Z port NMS")),
     render: (value) => renderValue(value),
   },
   {
     key: "created_at",
     dataIndex: "created_at",
-    name: renderHeader(t("Created date")),
+    name: renderHeader(t("Дата создания")),
     render: (date) => renderValue(date ? dateFormatter(date, DATE_TIME) : null),
   },
   {
     key: "updated_at",
     dataIndex: "updated_at",
-    name: renderHeader(t("Updated date")),
+    name: renderHeader(t("Дата обновления")),
     render: (date) => renderValue(date ? dateFormatter(date, DATE_TIME) : null),
   },
   {
     key: "_id",
     dataIndex: "_id",
-    name: renderHeader(t("Actions")),
+    name: renderHeader(t("Действия")),
     render: (id) => (
         <div className={"flex items-center gap-2"}>
-          <MyTooltip content={t("Edit")}>
+          <MyTooltip content={t("Редактировать")}>
             <EditIcon
                 className={"size-4 cursor-pointer text-blue-500"}
                 onClick={() => handleEdit(id)}
             />
           </MyTooltip>
-          <MyTooltip content={t("Delete")}>
+          <MyTooltip content={t("Удалить")}>
             <Trash2Icon
                 className={"size-4 cursor-pointer text-red-500"}
                 onClick={() => handleDelete(id)}
@@ -173,6 +187,7 @@ const createChannelColumns = (
         </div>
     ),
   },
+
 ];
 
 export default createChannelColumns;
