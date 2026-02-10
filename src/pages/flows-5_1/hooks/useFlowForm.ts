@@ -26,12 +26,6 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
 
   const form = useForm<FlowDto>({
     resolver: zodResolver(schema),
-    // Default values bo'sh obyekt bo'lsa, nested qiymatlarda xatolik bermaydi
-    defaultValues: {
-      flow_id: {
-        code: ""
-      }
-    }
   });
 
   const query = useGetOne<{ data: FlowInterface }>({
@@ -70,13 +64,10 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
     const item = query.data?.data;
     if (item) {
       form.reset({
-        flow_id: {
-          code: item.flow_id?.code || "",
-          signal_level: item.flow_id?.signal_level || "",
-          _id: item.flow_id?._id
-        },
+        flow_id: item.flow_id,
+        flow_code: item.flow_code,
         column1: item.column1,
-        outs_id: item.outs_id,
+        outs_id: item.id,
         international: item.international,
         forward: item.forward,
         reverse: item.reverse,

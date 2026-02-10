@@ -32,59 +32,38 @@ const createFlowColumns = (
         />
     ),
   },
-  {
-    key: "code",
-    dataIndex: "flow_id",
-    name: t("Code"),
-    render: (flowId: FlowInterface["flow_id"]) => flowId?.code || "-",
-  },
-  {
-    key: "mux_a",
-    dataIndex: "mux_a",
-    name: t("Mux A"),
-    render: (value: string) => value || "-",
-  },
-  {
-    key: "pa",
-    dataIndex: "pa",
-    name: t("PA"),
-    render: (value: string) => value || "-",
-  },
-  {
-    key: "mux_b",
-    dataIndex: "mux_b",
-    name: t("Mux B"),
-    render: (value: string) => value || "-",
-  },
-  {
-    key: "port_b",
-    dataIndex: "port_b",
-    name: t("Port B"),
-    render: (value: string) => value || "-",
-  },
-  {
-    key: "speed",
-    dataIndex: "speed",
-    name: t("Speed"),
-    render: (value: string) => value || "-",
-  },
+  { key: "flow_code", dataIndex: "flow_code", name: "ID" },
+  { key: "forward", dataIndex: "forward", name: "прямой" },
+  { key: "reverse", dataIndex: "reverse", name: "обратный" },
+  { key: "start", dataIndex: "start", name: "Начало" },
+  { key: "port_a", dataIndex: "port_a", name: "Port_A" },
+  { key: "mux_a", dataIndex: "mux_a", name: "Mux_A" },
+  { key: "pa", dataIndex: "pa", name: "пА" },
+  { key: "final_ms_name", dataIndex: "final_ms_name", name: "Name_MS_final" },
+  { key: "signal_level", dataIndex: "signal_transmission_level", name: "Уровень п" },
+  { key: "au4", dataIndex: "au4", name: "_AU-4" },
+  { key: "ts", dataIndex: "ts", name: "_ts" },
+  { key: "pb", dataIndex: "pb", name: "пВ" },
+  { key: "transit", dataIndex: "transit", name: "транзит" },
+  { key: "mux_b", dataIndex: "mux_b", name: "Mux_B" },
+  { key: "port_b", dataIndex: "port_b", name: "Port_B" },
+  { key: "end", dataIndex: "end", name: "Конец" },
+  { key: "consumer", dataIndex: "consumer", name: "Пoтребитель" },
+  { key: "order_number", dataIndex: "order_number", name: "Распоряжения" },
+  { key: "interest_level", dataIndex: "interest_level", name: "Заинтересованность" },
+  { key: "mt", dataIndex: "mt", name: "М/Т" },
+  { key: "speed", dataIndex: "speed", name: "Скорость" },
   {
     key: "actions",
     dataIndex: "_id",
-    name: t(""),
+    name: "",
     render: (id: string) => (
-        <div className={"flex items-center gap-2"}>
+        <div className="flex items-center gap-2">
           <MyTooltip content={t("Edit")}>
-            <EditIcon
-                className={"size-4 cursor-pointer text-blue-500 hover:text-blue-700"}
-                onClick={() => handleEdit(id)}
-            />
+            <EditIcon className="size-4 cursor-pointer text-blue-500" onClick={() => handleEdit(id)} />
           </MyTooltip>
           <MyTooltip content={t("Delete")}>
-            <Trash2Icon
-                className={"size-4 cursor-pointer text-red-500 hover:text-red-700"}
-                onClick={() => handleDelete(id)}
-            />
+            <Trash2Icon className="size-4 cursor-pointer text-red-500" onClick={() => handleDelete(id)} />
           </MyTooltip>
         </div>
     ),
