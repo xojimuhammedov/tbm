@@ -22,9 +22,15 @@ export type ChannelFormProps = {
 const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
+
   const schema = useMemo(() => createChannelSchema(t), [t]);
+
   const form = useForm<ChannelDto>({
     resolver: zodResolver(schema),
+    // Default qiymatlar status va boshqalar uchun
+    defaultValues: {
+      status: "active",
+    }
   });
 
   const query = useGetOne<{ data: ChannelInterface }>({
@@ -35,7 +41,7 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
   });
 
   const { query: save } = useMutate({
-    url: [CHANNELS_ID_QUERY_KEY, id || ""],
+    url: id ? [CHANNELS_ID_QUERY_KEY, id] : [CHANNELS_ID_QUERY_KEY], // POST bo'lsa ID'siz yuboriladi
     method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
@@ -43,7 +49,7 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
           variant: "destructive",
           title: t(`${get(error, "response.statusText", "Error")}`),
           description: t(
-            `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
           ),
         });
       },
@@ -54,41 +60,47 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
           variant: "success",
           title: t(`Success`),
           description: id
-            ? t(`Channel updated successfully`)
-            : t(`Channel created successfully`),
+              ? t(`Channel updated successfully`)
+              : t(`Channel created successfully`),
         });
       },
     },
   });
 
+  // Backend'dan kelgan ma'lumotni formaga yuklash
   useEffect(() => {
     const item = query.data?.data;
     if (item) {
       form.reset({
         code: item.code,
         consumer_name: item.consumer_name,
-        connection_number: item.connection_number,
         point_a: item.point_a,
         point_b: item.point_b,
         link_N1: item.link_N1,
-        organization_order_number: item.organization_order_number,
-        deciphering_notes: item.deciphering_notes,
-        is_archived: item.is_archived,
-        verification_status: item.verification_status,
+        organization_order: item.organization_order,
+        organization_order_date: item.organization_order_date
+            ? new Date(item.organization_order_date as string).toISOString().split('T')[0]
+            : "",
+        status: item.status,
+        // Ixtiyoriy maydonlar bo'lsa:
+        dissolution_order: item.dissolution_order || "",
+        dissolution_order_date: item.dissolution_order_date || "",
       });
     }
   }, [query.data, form]);
 
   const onSubmit = useCallback(
-    (data: ChannelDto) => {
-      save.mutate(data);
-    },
-    [save],
+      (data: ChannelDto) => {
+        save.mutate(data);
+      },
+      [save],
   );
 
   return {
     form,
     onSubmit,
+    isLoading: query.isLoading,
+    isSaving: save.isPending,
   };
 };
 

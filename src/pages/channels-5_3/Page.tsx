@@ -6,7 +6,7 @@ import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import { CirclePlusIcon, UploadIcon, Trash2Icon } from "lucide-react";
+import { CirclePlusIcon, UploadIcon, Trash2Icon,Layers   } from "lucide-react";
 import { CHANNELS_5_3_QUERY_KEY } from "@/pages/channels-5_3/constants/channels.constants.ts";
 import { ChannelInterface } from "@/pages/channels-5_3/interfaces/channel.interface.ts";
 import useChannels from "@/pages/channels-5_3/hooks/useChannels.ts";
@@ -47,9 +47,8 @@ const Page = () => {
               size={"sm"}
               variant="destructive"
               onClick={handleDeleteAll}
-              className="bg-red-600 hover:bg-red-700 text-white"
           >
-            <Trash2Icon className="size-4" />
+            <Layers className="size-4" />
             {t("Delete all")}
           </Button>
           <Button
