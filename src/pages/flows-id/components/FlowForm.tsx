@@ -124,7 +124,7 @@ const FlowForm = ({ id, onSave, readOnly = false }: FlowFormProps) => {
               size={"sm"}
               variant={"ghost"}
               type={"button"}
-              onClick={() => navigate("/flows-5_1")}
+              onClick={() => navigate(-1)}
             >
               <ArrowLeftIcon />
               {t("Back")}

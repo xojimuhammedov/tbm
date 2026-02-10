@@ -25,8 +25,6 @@ const useFlows = () => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
   const statusFilterValue = params?.status_filter;
-
-  // Yangi hook ishlatish
   const { handleDeleteAll: handleDeleteAllAction, handleDeleteMany: handleDeleteManyAction } = useFlowDeleteActions({
     refetch: query.refetch,
     onSuccess: () => {

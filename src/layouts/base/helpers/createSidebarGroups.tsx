@@ -48,6 +48,35 @@ const createSidebarGroups = (
     ],
   },
   {
+    title: t("Auth"),
+    items: [
+      {
+        title: t("Auth"),
+        url: "inout",
+        icon: Inbox,
+        isActive: isActive("inout"),
+        children: [
+          {
+            title: t("17-96 ex/in document"),
+            url: "exin-96",
+          },
+          {
+            title: t("17-97 ex/out document"),
+            url: "exout-97",
+          },
+          {
+            title: t("17-98 loc/in document"),
+            url: "locin-98",
+          },
+          {
+            title: t("17-99 loc/out document"),
+            url: "locout-99",
+          },
+        ],
+      },
+    ],
+  },
+  {
     title: t("NM information"),
     items: [
       // {
