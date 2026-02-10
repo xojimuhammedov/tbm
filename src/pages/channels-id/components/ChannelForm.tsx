@@ -17,157 +17,143 @@ const ChannelForm = ({ id, onSave, readOnly = false }: ChannelFormProps) => {
   const { t } = useTranslation();
   const { form, onSubmit } = useChannelForm({ id, onSave });
   const navigate = useNavigate();
+
   const title = id
-    ? `${t("Edit")} ${t("Channels ID")}`
-    : `${t("Create")} ${t("Channels ID")}`;
+      ? `${t("Edit")} ${t("Channels ID")}`
+      : `${t("Create")} ${t("Channels ID")}`;
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-4"}>
-        <h2 className={"text-xl font-medium"}>{title}</h2>
-        <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"code"}
-            label={t("ID номера")}
-            placeholder={t("ID номера")}
-            required
-            disabled={readOnly}
-          />
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"consumer_name"}
-            label={t("Наименование потребителя")}
-            placeholder={t("Наименование потребителя")}
-            required
-            disabled={readOnly}
-          />
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"connection_number"}
-            label={t("Номер связи")}
-            placeholder={t("Номер связи")}
-            required
-            disabled={readOnly}
-          />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+          <h2 className={"text-xl font-medium"}>{title}</h2>
 
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"point_a"}
-            label={t("Пункт А")}
-            placeholder={t("Пункт А")}
-            required
-            disabled={readOnly}
-          />
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"point_b"}
-            label={t("Пункт B")}
-            placeholder={t("Пункт B")}
-            required
-            disabled={readOnly}
-          />
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"link_N1"}
-            label={t("Линк №1")}
-            placeholder={t("Линк №1")}
-            required
-            disabled={readOnly}
-          />
+          <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"code"}
+                label={t("ID номера")}
+                placeholder={t("ID номера")}
+                required
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"consumer_name"}
+                label={t("Наименование потребителя")}
+                placeholder={t("Наименование потребителя")}
+                required
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"connection_number"}
+                label={t("Номер связи")}
+                placeholder={t("Номер связи")}
+                disabled={readOnly}
+            />
 
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"organization_order_number"}
-            label={t("распоряжения на орг")}
-            placeholder={t("распоряжения на орг")}
-            required
-            disabled={readOnly}
-          />
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"deciphering_notes"}
-            label={t("Примечания расформиров")}
-            placeholder={t("Примечания расформиров")}
-            required
-            disabled={readOnly}
-          />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"point_a"}
+                label={t("Пункт А")}
+                placeholder={t("Пункт А")}
+                required
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"point_b"}
+                label={t("Пункт B")}
+                placeholder={t("Пункт B")}
+                required
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"link_N1"}
+                label={t("Линк №1")}
+                placeholder={t("Линк №1")}
+                required
+                disabled={readOnly}
+            />
 
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"is_archived"}
-            label={t("архив")}
-            placeholder={t("архив")}
-            required
-            disabled={readOnly}
-          />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"organization_order"}
+                label={t("Распоряжение на орг.")}
+                placeholder={t("Распоряжение на орг.")}
+                required
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"organization_order_date"}
+                label={t("Дата распоряжения")}
+                type="date"
+                required
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"status"}
+                label={t("Статус")}
+                placeholder={t("active/inactive")}
+                disabled={readOnly}
+            />
 
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"verification_status"}
-            label={t("Сверка")}
-            placeholder={t("Сверка")}
-            required
-            disabled={readOnly}
-          />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"dissolution_order"}
+                label={t("Распоряжение на расформирование")}
+                placeholder={t("Номер приказа")}
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"dissolution_order_date"}
+                label={t("Дата расформирования")}
+                type="date"
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"verification_status"}
+                label={t("Сверка")}
+                placeholder={t("Статус сверки")}
+                disabled={readOnly}
+            />
 
-          {/* <MyInput<ChannelDto>
-            control={form.control}
-            name={"channel_mode"}
-            label={t("Channel mode")}
-            placeholder={t("Enter channel mode")}
-            required
-            disabled={readOnly}
-          />
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"timeslot_number"}
-            label={t("Timeslot number")}
-            placeholder={t("Enter timeslot number")}
-            required
-            disabled={readOnly}
-          />
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"fac_group_bc"}
-            label={t("FAC group BC")}
-            placeholder={t("Enter FAC group BC")}
-            required
-            disabled={readOnly}
-          /> */}
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"deciphering_notes"}
+                label={t("Примечания")}
+                placeholder={t("Примечания")}
+                disabled={readOnly}
+            />
+            <MyInput<ChannelDto>
+                control={form.control}
+                name={"is_archived"}
+                label={t("Архив")}
+                placeholder={t("Да/Нет")}
+                disabled={readOnly}
+            />
+          </div>
 
-          {/* <MyInput<ChannelDto>
-            control={form.control}
-            name={"site_a"}
-            label={t("Site A")}
-            placeholder={t("Enter site A")}
-            required
-            disabled={readOnly}
-          />
-          <MyInput<ChannelDto>
-            control={form.control}
-            name={"ne_a_id"}
-            label={t("NE A ID")}
-            placeholder={t("Enter NE A ID")}
-            required
-            disabled={readOnly}
-          /> */}
-        </div>
-        {!readOnly && (
-          <FormContainerFooter>
-            <Button
-              size={"sm"}
-              variant={"ghost"}
-              type={"button"}
-              onClick={() => navigate("/channels-5_3")}
-            >
-              <ArrowLeftIcon />
-              {t("Back")}
-            </Button>
-          </FormContainerFooter>
-        )}
-      </form>
-    </Form>
+          {!readOnly && (
+              <FormContainerFooter>
+                <Button
+                    size={"sm"}
+                    variant={"default"}
+                    type={"button"}
+                    onClick={() => navigate(-1)}
+                >
+                  <ArrowLeftIcon className="mr-2 h-4 w-4" />
+                  {t("Back")}
+                </Button>
+              </FormContainerFooter>
+          )}
+        </form>
+      </Form>
   );
 };
 
