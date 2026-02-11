@@ -8,23 +8,21 @@ import { FLOWS_ID_QUERY_KEY } from "@/pages/flows-id/constants/flows.constants.t
 import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface.ts";
 import createFlowColumns from "@/pages/flows-id/helpers/createFlowColumns.tsx";
 import { useNavigate } from "react-router-dom";
-import {useFlowDeleteActions} from "@/shared/hooks/flow/useFlowDeleteActions.ts";
+import { useFlowDeleteActions } from "@/shared/hooks/flow/useFlowDeleteActions.ts";
 
 const useFlows = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { removeWithConfirm, remove } = useDelete([FLOWS_ID_QUERY_KEY]);
   const { toast } = useToast();
-
   const [openView, setOpenView] = useState(false);
   const [viewId, setViewId] = useState<string | null>(null);
-
   const { query, handleFilter, params }: any = useLists<FlowInterface>({
     url: [FLOWS_ID_QUERY_KEY],
   });
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
-  const statusFilterValue = params?.status_filter;
+
   const { handleDeleteAll: handleDeleteAllAction, handleDeleteMany: handleDeleteManyAction } = useFlowDeleteActions({
     refetch: query.refetch,
     onSuccess: () => {
@@ -41,7 +39,6 @@ const useFlows = () => {
   const toggleSelectAll = useCallback((ids: string[]) => {
     setSelectedRowKeys((prev) => (prev.length === ids.length ? [] : ids));
   }, []);
-
   const allIds = useMemo(
       () => query.data?.docs?.map((item: any) => item._id) || [],
       [query.data],
@@ -50,18 +47,18 @@ const useFlows = () => {
   const currentItem = useMemo(() => {
     if (!viewId || !query.data) return null;
     const list = query.data.docs || get(query.data, "data.docs") || [];
-    return list.find((item: FlowInterface) => item._id === viewId);
+    return list.find((item: FlowInterface) => (item._id || item.id) === viewId);
   }, [query.data, viewId]);
 
   const handleDelete = useCallback(
-      (id: FlowInterface["_id"]) => {
+      (id: string) => {
         removeWithConfirm(id)
             .then(() => {
               query.refetch();
               toast({
                 variant: "success",
-                title: t(`Success`),
-                description: t(`Flow removed successfully`),
+                title: t("Success"),
+                description: t("Flow removed successfully"),
               });
             })
             .catch((error) => {
@@ -69,12 +66,12 @@ const useFlows = () => {
                 variant: "destructive",
                 title: t(`${get(error, "response.statusText", "Error")}`),
                 description: t(
-                    `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+                    `${get(error, "response.data.message", "An error occurred")}`,
                 ),
               });
             });
       },
-      [removeWithConfirm, t, toast, query],
+      [removeWithConfirm, t, toast, query.refetch],
   );
 
   const handleDeleteMany = useCallback(() => {
@@ -116,8 +113,7 @@ const useFlows = () => {
               selectedRowKeys,
               toggleSelectRow,
               toggleSelectAll,
-              allIds,
-              statusFilterValue
+              allIds
           ),
       [
         t,
@@ -127,13 +123,12 @@ const useFlows = () => {
         selectedRowKeys,
         toggleSelectRow,
         toggleSelectAll,
-        allIds,
-        statusFilterValue
+        allIds
       ],
   );
 
   return {
-    loading: query.isLoading,
+    loading: query.isLoading || query.isFetching,
     columns,
     dataSource: query.data,
     params,
@@ -149,6 +144,7 @@ const useFlows = () => {
     setSelectedRowKeys,
     toggleSelectRow,
     toggleSelectAll,
+    refetch: query.refetch
   };
 };
 

@@ -3,6 +3,32 @@ import { EditIcon, Trash2Icon, EyeIcon, Download } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface.ts";
 import { Badge } from "dgz-ui";
+import { DATE_TIME } from "@/shared/constants/date.constants.ts";
+import { dateFormatter } from "@/shared/utils/utils.ts";
+
+const renderHeader = (label: string) => (
+    <span style={{ whiteSpace: 'nowrap' }}>{label}</span>
+);
+
+const renderValue = (value: any) => {
+  if (value === undefined || value === null || value === "") return <span>-</span>;
+
+  const stringValue = value.toString();
+  const maxLength = 40;
+
+  if (stringValue.length > maxLength) {
+    const truncated = stringValue.substring(0, maxLength) + "...";
+    return (
+        <MyTooltip content={stringValue}>
+                <span style={{ whiteSpace: 'nowrap', cursor: 'pointer' }}>
+                    {truncated}
+                </span>
+        </MyTooltip>
+    );
+  }
+
+  return <span style={{ whiteSpace: 'nowrap' }}>{stringValue}</span>;
+};
 
 const createFlowColumns = (
     t: (...args: TranslationArgsType) => string,
@@ -13,7 +39,6 @@ const createFlowColumns = (
     onSelectRow: (id: string) => void,
     onSelectAll: (ids: string[]) => void,
     allIds: string[],
-    statusFilterValue?: string
 ): ColumnType<FlowInterface>[] => {
 
   const handleDownloadFile = (baseFile: string) => {
@@ -27,7 +52,32 @@ const createFlowColumns = (
     document.body.removeChild(link);
   };
 
-  const columns: ColumnType<FlowInterface>[] = [
+  const renderOrder = (orders: any[]) => {
+    if (!orders || orders.length === 0) return <span>-</span>;
+    const firstOrder = orders[0];
+    const orderCode = firstOrder?.order_code || "-";
+    const baseFile = firstOrder?.base_file;
+
+    if (baseFile) {
+      return (
+          <div className="flex items-center gap-2">
+            <button
+                onClick={() => handleDownloadFile(baseFile)}
+                className="text-blue-600 hover:text-blue-800 underline cursor-pointer font-medium whitespace-nowrap"
+            >
+              {orderCode}
+            </button>
+            <Download
+                className="size-4 cursor-pointer text-blue-600"
+                onClick={() => handleDownloadFile(baseFile)}
+            />
+          </div>
+      );
+    }
+    return <span className="whitespace-nowrap">{orderCode}</span>;
+  };
+
+  return [
     {
       key: "selection",
       dataIndex: "_id",
@@ -48,64 +98,92 @@ const createFlowColumns = (
           />
       ),
     },
-    { key: "code", dataIndex: "code", name: t("ID nomer") },
-    { key: "name_point_a", dataIndex: "point_a", name: t("Point A") },
-    { key: "name_point_b", dataIndex: "point_b", name: t("Point B") },
-
+    {
+      key: "code",
+      dataIndex: "code",
+      name: renderHeader(t("Код")),
+      render: (value) => renderValue(value),
+    },
+    {
+      key: "name_point_a",
+      dataIndex: "name_point_a",
+      name: renderHeader(t("Point A Name")),
+      render: (value) => renderValue(value),
+    },
+    {
+      key: "point_a",
+      dataIndex: "point_a",
+      name: renderHeader(t("Point A")),
+      render: (value) => renderValue(value),
+    },
+    {
+      key: "name_point_b",
+      dataIndex: "name_point_b",
+      name: renderHeader(t("Point B Name")),
+      render: (value) => renderValue(value),
+    },
+    {
+      key: "point_b",
+      dataIndex: "point_b",
+      name: renderHeader(t("Point B")),
+      render: (value) => renderValue(value),
+    },
+    {
+      key: "signal_level",
+      dataIndex: "signal_level",
+      name: renderHeader(t("Уровень сигнала")),
+      render: (value) => renderValue(value),
+    },
     {
       key: "organization_order",
       dataIndex: "organization_order",
-      name: t("Organization order"),
-      render: (value) => {
-        if (!value) return "-";
-        if (Array.isArray(value) && value.length > 0) {
-          const firstOrder = value[0];
-          const orderCode = firstOrder?.order_code || "-";
-          const baseFile = firstOrder?.base_file;
-
-          if (baseFile) {
-            return (
-                <div className="flex items-center gap-2">
-                  <button
-                      onClick={() => handleDownloadFile(baseFile)}
-                      className="text-blue-600 hover:text-blue-800 underline cursor-pointer font-medium"
-                  >
-                    {orderCode}
-                  </button>
-                  <MyTooltip content={t("Download file")}>
-                    <Download
-                        className="size-4 cursor-pointer text-blue-600 hover:text-blue-800"
-                        onClick={() => handleDownloadFile(baseFile)}
-                    />
-                  </MyTooltip>
-                </div>
-            );
-          }
-
-          return orderCode;
-        }
-        return value.toString();
-      },
+      name: renderHeader(t("Распоряжение об организации")),
+      render: (value) => renderOrder(value),
     },
-
+    {
+      key: "dissolution_order",
+      dataIndex: "dissolution_order",
+      name: renderHeader(t("Распоряжение o расформировании")),
+      render: (value) => renderOrder(value),
+    },
+    {
+      key: "organization_archive",
+      dataIndex: "organization_archive",
+      name: renderHeader(t("Архив организации")),
+      render: (value) => renderValue(value),
+    },
+    {
+      key: "deciphering_archive",
+      dataIndex: "deciphering_archive",
+      name: renderHeader(t("Архив расформирования")),
+      render: (value) => renderValue(value),
+    },
+    {
+      key: "note",
+      dataIndex: "note",
+      name: renderHeader(t("Примечание")),
+      render: (value) => renderValue(value),
+    },
     {
       key: "status",
       dataIndex: "status",
-      name: t("Status"),
-      render: (value) => {
-        if (!value) return "-";
-        return (
-            <Badge variant={value === "active" ? "green" : "red"}>
-              {value === "active" ? t("Active") : t("InActive")}
-            </Badge>
-        );
-      },
+      name: renderHeader(t("Статус")),
+      render: (value) => (
+          <Badge variant={value === "active" ? "green" : "red"}>
+            {value === "active" ? t("Active") : t("InActive")}
+          </Badge>
+      ),
     },
-
+    {
+      key: "created_at",
+      dataIndex: "created_at",
+      name: renderHeader(t("Дата создания")),
+      render: (date) => renderValue(date ? dateFormatter(date, DATE_TIME) : null),
+    },
     {
       key: "_id",
       dataIndex: "_id",
-      name: t(""),
+      name: renderHeader(t("Действия")),
       render: (id) => (
           <div className="flex items-center gap-2">
             <MyTooltip content={t("View")}>
@@ -114,17 +192,15 @@ const createFlowColumns = (
                   onClick={() => handleView(id)}
               />
             </MyTooltip>
-
             <MyTooltip content={t("Edit")}>
               <EditIcon
-                  className="size-4 cursor-pointer hover:text-orange-500"
+                  className="size-4 cursor-pointer text-blue-500"
                   onClick={() => handleEdit(id)}
               />
             </MyTooltip>
-
             <MyTooltip content={t("Delete")}>
               <Trash2Icon
-                  className="size-4 cursor-pointer hover:text-red-500"
+                  className="size-4 cursor-pointer text-red-500"
                   onClick={() => handleDelete(id)}
               />
             </MyTooltip>
@@ -132,50 +208,6 @@ const createFlowColumns = (
       ),
     },
   ];
-
-  if (statusFilterValue === "inactive") {
-    const dissolutionColumn: ColumnType<FlowInterface> = {
-      key: "dissolution_order",
-      dataIndex: "dissolution_order",
-      name: t("Dissolution order"),
-      render: (value) => {
-        if (!value) return "-";
-        if (Array.isArray(value) && value.length > 0) {
-          const firstOrder = value[0];
-          const orderCode = firstOrder?.order_code || "-";
-          const baseFile = firstOrder?.base_file;
-
-          if (baseFile) {
-            return (
-                <div className="flex items-center gap-2">
-                  <button
-                      onClick={() => handleDownloadFile(baseFile)}
-                      className="text-blue-600 hover:text-blue-800 underline cursor-pointer font-medium"
-                  >
-                    {orderCode}
-                  </button>
-                  <MyTooltip content={t("Download file")}>
-                    <Download
-                        className="size-4 cursor-pointer text-blue-600 hover:text-blue-800"
-                        onClick={() => handleDownloadFile(baseFile)}
-                    />
-                  </MyTooltip>
-                </div>
-            );
-          }
-
-          return orderCode;
-        }
-        return value.toString();
-      },
-    };
-
-    const orgIndex = columns.findIndex((c: any) => c.key === "organization_order");
-    const insertAt = orgIndex >= 0 ? orgIndex + 1 : 4;
-    columns.splice(insertAt, 0, dissolutionColumn);
-  }
-
-  return columns;
 };
 
 export default createFlowColumns;
