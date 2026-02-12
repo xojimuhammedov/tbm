@@ -59,12 +59,6 @@ const createChannelColumns = (
     ),
   },
   {
-    key: "code",
-    dataIndex: "code",
-    name: renderHeader(t("Код")),
-    render: (value) => renderValue(value),
-  },
-  {
     key: "flow_code",
     dataIndex: "flow_code",
     name: renderHeader(t("Идентификатор потока")),

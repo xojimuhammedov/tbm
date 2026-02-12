@@ -4,6 +4,7 @@ import { dateFormatter } from "@/shared/utils/utils.ts";
 import { EditIcon, Trash2Icon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { ChannelInterface } from "@/pages/channels-id/interfaces/channel.interface.ts";
+import {Badge} from "dgz-ui";
 
 const renderHeader = (label: string) => (
     <span style={{ whiteSpace: 'nowrap' }}>{label}</span>
@@ -105,9 +106,9 @@ const createChannelColumns = (
     dataIndex: "status",
     name: renderHeader(t("Статус")),
     render: (value) => (
-        <span className={value === "active" ? "text-green-600" : "text-gray-500"}>
-        {renderValue(value)}
-      </span>
+        <Badge variant={value === "active" ? "green" : "red"}>
+          {value === "active" ? t("Active") : t("InActive")}
+        </Badge>
     ),
   },
   {
@@ -129,7 +130,7 @@ const createChannelColumns = (
     dataIndex: "_id",
     name: renderHeader(t("Действия")),
     render: (id) => (
-        <div className={"flex items-center gap-2"}>
+        <div className={"flex items-center  gap-2"}>
           <MyTooltip content={t("Редактировать")}>
             <EditIcon
                 className={"size-4 cursor-pointer text-blue-500"}
