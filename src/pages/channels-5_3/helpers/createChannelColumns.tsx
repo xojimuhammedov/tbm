@@ -61,7 +61,7 @@ const createChannelColumns = (
   {
     key: "flow_code",
     dataIndex: "flow_code",
-    name: renderHeader(t("Идентификатор потока")),
+    name: renderHeader(t("ID")),
     render: (value) => renderValue(value),
   },
   {
