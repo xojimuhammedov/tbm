@@ -47,7 +47,7 @@ export const createFlowSchema = (t: (...args: TranslationArgsType) => string) =>
                 ns: config.LANG.NS.VALIDATION,
             }),
         ),
-        organization_order: z.string(orderSchema).min(1,
+        organization_order: z.array(z.any()).min(1,
             t("required {{field}}", {
                 field: t("Organization Order"),
                 ns: config.LANG.NS.VALIDATION,
