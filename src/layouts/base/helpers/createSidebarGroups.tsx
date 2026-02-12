@@ -12,6 +12,7 @@ import {
   Users,
   BarChart3,
   Inbox,
+  FileSignature,
 } from "lucide-react";
 
 const createSidebarGroups = (
@@ -48,29 +49,29 @@ const createSidebarGroups = (
     ],
   },
   {
-    title: t("Auth"),
+    title: t("Hujjatlar"),
     items: [
       {
-        title: t("Auth"),
+        title: t("Jurnallar"),
         url: "inout",
-        icon: Inbox,
+        icon: FileSignature,
         isActive: isActive("inout"),
         children: [
           {
-            title: t("17-96 ex/in document"),
-            url: "exin-96",
+            title: t("Buyruqlar"),
+            url: "orders",
           },
           {
-            title: t("17-97 ex/out document"),
-            url: "exout-97",
+            title: t("Farmoyishlar"),
+            url: "decrees",
           },
           {
-            title: t("17-98 loc/in document"),
-            url: "locin-98",
+            title: t("Xabarnoma va farmoyish"),
+            url: "notify",
           },
           {
-            title: t("17-99 loc/out document"),
-            url: "locout-99",
+            title: t("Chiquvchi hujjatlar"),
+            url: "outgoing",
           },
         ],
       },
