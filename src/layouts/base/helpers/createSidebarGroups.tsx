@@ -49,13 +49,13 @@ const createSidebarGroups = (
     ],
   },
   {
-    title: t("Hujjatlar"),
+    title: t("Jurnallar"),
     items: [
       {
         title: t("Jurnallar"),
-        url: "inout",
+        url: "journals",
         icon: FileSignature,
-        isActive: isActive("inout"),
+        isActive: isActive("journals"),
         children: [
           {
             title: t("Buyruqlar"),

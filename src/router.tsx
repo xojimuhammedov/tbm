@@ -61,6 +61,54 @@ const Eid_17_99_FormPage = lazy(
     ),
 );
 
+// Journals Pages
+
+const OrdersPage = lazy(
+    () =>
+        import(
+            "@/pages/in & out documents/17-96 external inbound document/Page.tsx"
+            ),
+);
+const OrdersFormPage = lazy(
+    () =>
+        import(
+            "@/pages/in & out documents/17-96 external inbound document/pages/FormPage.tsx"
+            ),
+);
+const DecreesPage = lazy(
+    () =>
+        import(
+            "@/pages/in & out documents/17-97 external outbound document/Page.tsx"
+            ),
+);
+const DecreesFormPage = lazy(
+    () =>
+        import(
+            "@/pages/in & out documents/17-97 external outbound document/pages/FormPage.tsx"
+            ),
+);
+const NotifyPage = lazy(
+    () =>
+        import("@/pages/in & out documents/17-98 local inbound document/Page.tsx"),
+);
+const NotifyFormPage = lazy(
+    () =>
+        import(
+            "@/pages/in & out documents/17-98 local inbound document/pages/FormPage.tsx"
+            ),
+);
+const OutgoingPage = lazy(
+    () =>
+        import("@/pages/in & out documents/17-99 local outbound document/Page.tsx"),
+);
+const OutgoingFormPage = lazy(
+    () =>
+        import(
+            "@/pages/in & out documents/17-99 local outbound document/pages/FormPage.tsx"
+            ),
+);
+
+
 // NM Information Pages
 const ReceivedDocumentsPage = lazy(() => import("@/pages/inbox/Page"));
 const RTSIPage = lazy(() => import("@/pages/staff/Page"));
@@ -241,6 +289,56 @@ function Router() {
           path: "inout/locout-99/edit/:id",
           element: <Eid_17_99_FormPage />,
         },
+
+          //Journals
+        {
+          path: "journals/orders",
+          element: <OrdersPage />,
+        },
+        {
+          path: "journals/orders/create",
+          element: <OrdersFormPage />,
+        },
+        {
+          path: "journals/orders/edit/:id",
+          element: <OrdersFormPage />,
+        },
+        {
+          path: "journals/decrees",
+          element: <DecreesPage />,
+        },
+        {
+          path: "journals/decrees/create",
+        },
+        {
+          path: "journals/decrees/edit/:id",
+          element: <DecreesFormPage />,
+        },
+        {
+          path: "journals/notify",
+          element: <NotifyPage />,
+        },
+        {
+          path: "journals/notify/create",
+          element: <NotifyFormPage />,
+        },
+        {
+          path: "journals/notify/edit/:id",
+          element: <NotifyFormPage />,
+        },
+        {
+          path: "journals/outgoing",
+          element: <OutgoingPage />,
+        },
+        {
+          path: "journals/outgoing/create",
+          element: <OutgoingFormPage />,
+        },
+        {
+          path: "journals/outgoing/edit/:id",
+          element: <OutgoingFormPage />,
+        },
+
         // NM Information Routes
         {
           path: "received-documents",
