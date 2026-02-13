@@ -11,6 +11,7 @@ import { CHANNELS_5_3_QUERY_KEY } from "@/pages/channels-5_3/constants/channels.
 import { ChannelInterface } from "@/pages/channels-5_3/interfaces/channel.interface.ts";
 import useChannels from "@/pages/channels-5_3/hooks/useChannels.ts";
 import ChannelImport from "@/pages/channels-5_3/components/ChannelImport.tsx";
+import {useChannels53Filters} from "@/pages/channels-5_3/hooks/useChannels53Filters.tsx";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ const Page = () => {
   } = useChannels();
 
   const [importModalOpen, setImportModalOpen] = useState(false);
-
+  const filters = useChannels53Filters();
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
@@ -81,6 +82,10 @@ const Page = () => {
           loading={loading}
           params={params}
           onParamChange={handleFilter}
+          filters={filters}
+          handleFilterChange={(filterParams) => {
+            handleFilter({ ...params, ...filterParams, page: 1 });
+          }}
           rowKey={"_id"}
           dataSource={dataSource}
           dataKey={"docs"}

@@ -11,6 +11,7 @@ import { CHANNELS_ID_QUERY_KEY } from "@/pages/channels-id/constants/channels.co
 import { ChannelInterface } from "@/pages/channels-id/interfaces/channel.interface.ts";
 import useChannels from "@/pages/channels-id/hooks/useChannels.ts";
 import ImportChannelsModal from "./components/ImportChannelsModal";
+import {useChannelsIdFilters} from "@/pages/channels-id/hooks/useChannelsIdFilters.tsx";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ const Page = () => {
     handleDeleteMany,
     handleDeleteAll
   } = useChannels();
+  const filters = useChannelsIdFilters();
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
@@ -83,6 +85,10 @@ const Page = () => {
           loading={loading}
           params={params}
           onParamChange={handleFilter}
+          filters={filters}
+          handleFilterChange={(filterParams) => {
+            handleFilter({ ...params, ...filterParams, page: 1 });
+          }}
           rowKey={"_id"}
           dataSource={dataSource}
           dataKey={"docs"}
