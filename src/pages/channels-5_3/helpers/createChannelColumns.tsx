@@ -95,6 +95,12 @@ const createChannelColumns = (
     render: (value) => renderValue(value),
   },
   {
+    key: "channel_identifier",
+    dataIndex: "channel_identifier",
+    name: renderHeader(t("Идентификатор канала")),
+    render: (value) => renderValue(value),
+  },
+  {
     key: "channel_link",
     dataIndex: "channel_link",
     name: renderHeader(t("линк канала")),

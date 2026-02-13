@@ -12,6 +12,7 @@ import { FlowInterface } from "@/pages/flows-5_1/interfaces/flow.interface.ts";
 import useFlows from "@/pages/flows-5_1/hooks/useFlows.ts";
 import ImportFlow_5_1_Modal from "@/pages/flows-5_1/components/ImportFlow_5_1_Modal.tsx";
 import UpdateManyFlowsModal from "@/pages/flows-5_1/components/UpdateManyFlowsModal.tsx";
+import {useFlows51Filters} from "@/pages/flows-5_1/hooks/useFlows51Filters.tsx";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const Page = () => {
 
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [updateManyModalOpen, setUpdateManyModalOpen] = useState(false);
-
+    const filters = useFlows51Filters();
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
       () => [
         {
@@ -96,6 +97,10 @@ const Page = () => {
               loading={loading}
               params={params}
               onParamChange={handleFilter}
+              filters={filters}
+              handleFilterChange={(filterParams) => {
+                  handleFilter({ ...params, ...filterParams, page: 1 });
+              }}
               rowKey={"_id"}
               dataSource={dataSource}
               dataKey={"docs"}
