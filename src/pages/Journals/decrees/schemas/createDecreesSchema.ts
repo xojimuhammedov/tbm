@@ -2,7 +2,7 @@ import { TranslationArgsType } from "dgz-ui-shared/types";
 import { z } from "zod";
 import { config } from "@/shared/utils/config.ts";
 
-export const createOrdersSchema = (
+export const createDecreesSchema = (
     t: (...args: TranslationArgsType) => string,
 ) =>
     z.object({
@@ -35,6 +35,6 @@ export const createOrdersSchema = (
         ),
     });
 
-export type OrdersDto = z.infer<
-    ReturnType<typeof createOrdersSchema>
+export type DecreesDto = z.infer<
+    ReturnType<typeof createDecreesSchema>
 >;

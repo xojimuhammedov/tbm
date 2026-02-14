@@ -4,23 +4,18 @@ import { get } from "lodash";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { request } from "@/request";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import {
-  EXTERNAL_INBOUND_IMPORT_API,
-  EXTERNAL_INBOUND_QUERY_KEY,
-} from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
+import {ORDERS_IMPORT_API, ORDERS_QUERY_KEY} from "@/pages/Journals/orders/constants/orders.constants.ts";
 export type FlowImportProps = {
   status?: string;
   onSuccess?: () => void;
 };
-
 const useOrderImport = ({ onSuccess }: FlowImportProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return request.post(EXTERNAL_INBOUND_IMPORT_API, formData, {
+      return request.post(ORDERS_IMPORT_API, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -40,7 +35,7 @@ const useOrderImport = ({ onSuccess }: FlowImportProps = {}) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [EXTERNAL_INBOUND_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [ORDERS_QUERY_KEY] });
       toast({
         variant: "success",
         title: t("Success"),
@@ -49,7 +44,6 @@ const useOrderImport = ({ onSuccess }: FlowImportProps = {}) => {
       onSuccess?.();
     },
   });
-
   const handleUpload = useCallback(
     (file: File) => {
       const formData = new FormData();

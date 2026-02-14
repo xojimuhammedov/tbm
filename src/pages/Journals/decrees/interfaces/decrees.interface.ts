@@ -1,4 +1,4 @@
-export interface OrdersInterface {
+export interface DecreesInterface {
   _id: string;
   registration_date: string;
   summary: string;

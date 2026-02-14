@@ -7,10 +7,10 @@ import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
 import {CirclePlusIcon, UploadIcon, Trash2Icon, Layers} from "lucide-react";
-import useExternalInbounds from "@/pages/in & out documents/17-96 external inbound document/hooks/useExternalInbounds.ts";
-import ImportExternalInboundModal from "./components/ImportExternalInboundModal.tsx";
-import { EXTERNAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
-import { ExternalInboundDocument } from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
+import ImportOrdersModal from "./components/ImportOrdersModal.tsx";
+import {ORDERS_QUERY_KEY} from "@/pages/Journals/orders/constants/orders.constants.ts";
+import {OrdersInterface} from "@/pages/Journals/orders/interfaces/orders.interface.ts";
+import useOrders from "@/pages/Journals/orders/hooks/useOrders.ts";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -25,13 +25,13 @@ const Page = () => {
     selectedRowKeys,
     handleDeleteMany,
     handleDeleteAll
-  } = useExternalInbounds();
+  } = useOrders();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
-        name: t("External inbound-17-96"),
-        path: "/inout/exin-96",
+        name: t("Orders"),
+        path: "/journals/orders",
         isActive: true,
       },
     ],
@@ -74,10 +74,10 @@ const Page = () => {
 
       <PageWrapper>
         <DataTable<
-          ExternalInboundDocument,
-          PaginationInterface<ExternalInboundDocument>
+              OrdersInterface,
+          PaginationInterface<OrdersInterface>
         >
-          tableKey={EXTERNAL_INBOUND_QUERY_KEY}
+          tableKey={ORDERS_QUERY_KEY}
           hasNumbers
           hasSearch
           isStickyHeader
@@ -92,7 +92,7 @@ const Page = () => {
         />
       </PageWrapper>
 
-      <ImportExternalInboundModal
+      <ImportOrdersModal
         open={importModalOpen}
         onOpenChange={setImportModalOpen}
       />
