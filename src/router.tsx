@@ -66,25 +66,25 @@ const Eid_17_99_FormPage = lazy(
 const OrdersPage = lazy(
     () =>
         import(
-            "@/pages/in & out documents/17-96 external inbound document/Page.tsx"
+            "@/pages/Journals/orders/Page.tsx"
             ),
 );
 const OrdersFormPage = lazy(
     () =>
         import(
-            "@/pages/in & out documents/17-96 external inbound document/pages/FormPage.tsx"
+            "@/pages/Journals/orders/pages/FormPage.tsx"
             ),
 );
 const DecreesPage = lazy(
     () =>
         import(
-            "@/pages/in & out documents/17-97 external outbound document/Page.tsx"
+            "@/pages/Journals/decrees/Page.tsx"
             ),
 );
 const DecreesFormPage = lazy(
     () =>
         import(
-            "@/pages/in & out documents/17-97 external outbound document/pages/FormPage.tsx"
+            "@/pages/Journals/decrees/pages/FormPage.tsx"
             ),
 );
 const NotifyPage = lazy(
@@ -309,6 +309,7 @@ function Router() {
         },
         {
           path: "journals/decrees/create",
+          element: <DecreesFormPage />,
         },
         {
           path: "journals/decrees/edit/:id",

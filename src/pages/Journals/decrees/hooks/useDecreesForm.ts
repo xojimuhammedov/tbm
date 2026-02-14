@@ -7,21 +7,21 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import { createOrdersSchema, OrdersDto } from "@/pages/Journals/orders/schemas/createExternalInboundSchema.ts";
-import { OrdersInterface } from "@/pages/Journals/orders/interfaces/orders.interface.ts";
-import { ORDERS_QUERY_KEY } from "@/pages/Journals/orders/constants/orders.constants.ts";
+import {createDecreesSchema, DecreesDto} from "@/pages/Journals/decrees/schemas/createDecreesSchema.ts";
+import {DecreesInterface} from "@/pages/Journals/decrees/interfaces/decrees.interface.ts";
+import {DECREES_QUERY_KEY} from "@/pages/Journals/decrees/constants/decrees.constants.ts";
 
-export type OrderFormProps = {
+export type DecreesFormProps = {
   id: string | null;
   onSave?: () => void;
 };
 
-const useOrderForm = ({ id, onSave }: OrderFormProps) => {
+const useDecreesForm = ({ id, onSave }: DecreesFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const schema = useMemo(() => createOrdersSchema(t), [t]);
+  const schema = useMemo(() => createDecreesSchema(t), [t]);
 
-  const form = useForm<OrdersDto>({
+  const form = useForm<DecreesDto>({
     resolver: zodResolver(schema),
     defaultValues: {
       registration_date: "",
@@ -31,15 +31,15 @@ const useOrderForm = ({ id, onSave }: OrderFormProps) => {
     },
   });
 
-  const query = useGetOne<{ data: OrdersInterface }>({
-    url: id ? [ORDERS_QUERY_KEY, id] : [ORDERS_QUERY_KEY],
+  const query = useGetOne<{ data: DecreesInterface }>({
+    url: id ? [DECREES_QUERY_KEY, id] : [DECREES_QUERY_KEY],
     options: {
       enabled: Boolean(id),
     },
   });
 
   const { query: save } = useMutate({
-    url: id ? [ORDERS_QUERY_KEY, id] : [ORDERS_QUERY_KEY],
+    url: id ? [DECREES_QUERY_KEY, id] : [DECREES_QUERY_KEY],
     method: id ? MutateRequestMethod.PATCH  : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
@@ -101,7 +101,7 @@ const useOrderForm = ({ id, onSave }: OrderFormProps) => {
   }, [query.data, form]);
 
   const onSubmit = useCallback(
-      (data: OrdersDto) => {
+      (data: DecreesDto) => {
         save.mutate({
           ...data,
           registration_date: formatDateForServer(data.registration_date),
@@ -117,4 +117,4 @@ const useOrderForm = ({ id, onSave }: OrderFormProps) => {
   };
 };
 
-export default useOrderForm;
+export default useDecreesForm;

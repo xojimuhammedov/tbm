@@ -5,10 +5,10 @@ import useDelete from "@/shared/hooks/api/useDelete.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
-import createExternalInboundColumns from "@/pages/in & out documents/17-96 external inbound document/helpers/createExternalInboundColumns.tsx";
 import { useFlowDeleteActions } from "@/shared/hooks/flow/useFlowDeleteActions.ts";
-import {ORDERS_QUERY_KEY} from "@/pages/Journals/orders/constants/external-inbound.constants.ts";
 import {OrdersInterface} from "@/pages/Journals/orders/interfaces/orders.interface.ts";
+import {ORDERS_QUERY_KEY} from "@/pages/Journals/orders/constants/orders.constants.ts";
+import createOrdersColumns from "@/pages/Journals/orders/helpers/createOrdersColumns.tsx";
 
 const useOrders = () => {
   const { t } = useTranslation();
@@ -89,7 +89,7 @@ const useOrders = () => {
 
   const columns = useMemo(
       () =>
-          createExternalInboundColumns(
+          createOrdersColumns(
               t,
               handleDelete,
               handleEdit,

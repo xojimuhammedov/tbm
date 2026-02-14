@@ -7,10 +7,10 @@ import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
 import {CirclePlusIcon, UploadIcon, Trash2Icon, Layers} from "lucide-react";
-import useExternalInbounds from "@/pages/in & out documents/17-96 external inbound document/hooks/useExternalInbounds.ts";
-import ImportExternalInboundModal from "./components/ImportExternalInboundModal.tsx";
-import { EXTERNAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
-import { ExternalInboundDocument } from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
+import useDecrees from "@/pages/Journals/decrees/hooks/useDecrees.ts";
+import {DecreesInterface} from "@/pages/Journals/decrees/interfaces/decrees.interface.ts";
+import {DECREES_QUERY_KEY} from "@/pages/Journals/decrees/constants/decrees.constants.ts";
+import DecreesModal from "@/pages/Journals/decrees/components/DecreesModal.tsx";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -25,78 +25,78 @@ const Page = () => {
     selectedRowKeys,
     handleDeleteMany,
     handleDeleteAll
-  } = useExternalInbounds();
+  } = useDecrees();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
-    () => [
-      {
-        name: t("External inbound-17-96"),
-        path: "/inout/exin-96",
-        isActive: true,
-      },
-    ],
-    [t],
+      () => [
+        {
+          name: t("Decrees"),
+          path: "/journals/decrees",
+          isActive: true,
+        },
+      ],
+      [t],
   );
 
   return (
-    <>
-      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-        <div className="flex items-center gap-2">
-          <Button
-              size={"sm"}
-              variant="destructive"
-              onClick={handleDeleteAll}
-          >
-            <Layers className="size-4" />
-            {t("Delete all")}
-          </Button>
-          <Button
-            disabled={selectedRowKeys.length === 0}
-            size={"sm"}
-            variant="destructive"
-            onClick={handleDeleteMany}
-          >
-            <Trash2Icon className="size-4" />
-            {t("O'chirish")}{" "}
-            {selectedRowKeys.length > 0 && `(${selectedRowKeys.length})`}
-          </Button>
+      <>
+        <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+          <div className="flex items-center gap-2">
+            <Button
+                size={"sm"}
+                variant="destructive"
+                onClick={handleDeleteAll}
+            >
+              <Layers className="size-4" />
+              {t("Delete all")}
+            </Button>
+            <Button
+                disabled={selectedRowKeys.length === 0}
+                size={"sm"}
+                variant="destructive"
+                onClick={handleDeleteMany}
+            >
+              <Trash2Icon className="size-4" />
+              {t("O'chirish")}{" "}
+              {selectedRowKeys.length > 0 && `(${selectedRowKeys.length})`}
+            </Button>
 
-          <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
-            <UploadIcon className="size-4" />
-            {t("Import")}
-          </Button>
-          <Button size={"sm"} onClick={handleAdd}>
-            <CirclePlusIcon className="size-4" />
-            {t("Add new")}
-          </Button>
-        </div>
-      </PageHeader>
+            <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
+              <UploadIcon className="size-4" />
+              {t("Import")}
+            </Button>
+            <Button size={"sm"} onClick={handleAdd}>
+              <CirclePlusIcon className="size-4" />
+              {t("Add new")}
+            </Button>
+          </div>
+        </PageHeader>
 
-      <PageWrapper>
-        <DataTable<
-          ExternalInboundDocument,
-          PaginationInterface<ExternalInboundDocument>
-        >
-          tableKey={EXTERNAL_INBOUND_QUERY_KEY}
-          hasNumbers
-          hasSearch
-          isStickyHeader
-          hasPagination
-          loading={loading}
-          params={params}
-          onParamChange={handleFilter}
-          rowKey={"_id"}
-          dataSource={dataSource}
-          dataKey={"docs"}
-          columns={columns}
+        <PageWrapper>
+          <DataTable<
+                DecreesInterface,
+                PaginationInterface<DecreesInterface>
+              >
+              tableKey={DECREES_QUERY_KEY}
+              hasNumbers
+              hasSearch
+              isStickyHeader
+              hasPagination
+              loading={loading}
+              params={params}
+              onParamChange={handleFilter}
+              rowKey={"_id"}
+              dataSource={dataSource}
+              dataKey={"docs"}
+              columns={columns}
+          />
+        </PageWrapper>
+
+        <DecreesModal
+            open={importModalOpen}
+            onOpenChange={setImportModalOpen}
         />
-      </PageWrapper>
-
-      <ImportExternalInboundModal
-        open={importModalOpen}
-        onOpenChange={setImportModalOpen}
-      />
-    </>
+      </>
   );
 };
 

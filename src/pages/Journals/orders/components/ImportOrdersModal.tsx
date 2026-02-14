@@ -3,7 +3,7 @@ import { MyModal } from "@/shared/components/moleculas/modal";
 import { UploadCloudIcon, FileTextIcon, XIcon, Trash2Icon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "dgz-ui/button";
-import useExternalInboundImport from "@/pages/in & out documents/17-96 external inbound document/hooks/useExternalInboundImport.ts";
+import useOrderImport from "@/pages/Journals/orders/hooks/useOrderImport.ts";
 
 interface ImportFlowModalProps {
   open: boolean;
@@ -20,7 +20,7 @@ const formatBytes = (bytes: number, decimals = 2) => {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 };
 
-const ImportExternalInboundModal = ({
+const ImportOrdersModal = ({
   open,
   onOpenChange,
   refetch,
@@ -30,7 +30,7 @@ const ImportExternalInboundModal = ({
   const [files, setFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState(0);
 
-  const { handleUpload, loading } = useExternalInboundImport({
+  const { handleUpload, loading } = useOrderImport({
     onSuccess: () => {
       setProgress(100);
       setTimeout(() => {
@@ -215,4 +215,4 @@ const ImportExternalInboundModal = ({
   );
 };
 
-export default ImportExternalInboundModal;
+export default ImportOrdersModal;
