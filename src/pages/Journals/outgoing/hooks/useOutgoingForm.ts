@@ -67,7 +67,7 @@ const useOutgoingForm = ({ id, onSave }: OutgoingFormProps) => {
     };
     if (item) {
       form.reset({
-        user_id: item.user_id || "",
+        user_id: item.user._id || "",
         registration_date: formatDate(item.registration_date),
         summary: item.summary ?? "",
         doc_index: item.doc_index ?? "",
