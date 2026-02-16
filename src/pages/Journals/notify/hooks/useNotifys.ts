@@ -5,19 +5,19 @@ import useDelete from "@/shared/hooks/api/useDelete.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { EXTERNAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
-import { ExternalInboundDocument } from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
-import createExternalInboundColumns from "@/pages/in & out documents/17-96 external inbound document/helpers/createExternalInboundColumns.tsx";
 import { useFlowDeleteActions } from "@/shared/hooks/flow/useFlowDeleteActions.ts";
+import {NotifyInterface} from "@/pages/Journals/notify/interfaces/notify.interface.ts";
+import {NOTIFY_QUERY_KEY} from "@/pages/Journals/notify/constants/notify.constants.ts";
+import createNotifyColumns from "@/pages/Journals/notify/helpers/createNotifyColumns.tsx";
 
-const useExternalInbounds = () => {
+const useNotifys = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const { removeWithConfirm, remove } = useDelete([EXTERNAL_INBOUND_QUERY_KEY]);
-  const { query, handleFilter, params } = useLists<ExternalInboundDocument>({
-    url: [EXTERNAL_INBOUND_QUERY_KEY],
+  const { removeWithConfirm, remove } = useDelete([NOTIFY_QUERY_KEY]);
+  const { query, handleFilter, params } = useLists<NotifyInterface>({
+    url: [NOTIFY_QUERY_KEY],
   });
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
@@ -45,7 +45,7 @@ const useExternalInbounds = () => {
   );
 
   const handleDelete = useCallback(
-      (id: ExternalInboundDocument["_id"]) => {
+      (id: NotifyInterface["_id"]) => {
         removeWithConfirm(id)
             .then(() => {
               query.refetch();
@@ -77,19 +77,19 @@ const useExternalInbounds = () => {
   }, [handleDeleteAllAction, remove]);
 
   const handleAdd = useCallback(() => {
-    navigate("/inout/exin-96/create");
+    navigate("/journals/notify/create");
   }, [navigate]);
 
   const handleEdit = useCallback(
       (id: string) => {
-        navigate(`/inout/exin-96/edit/${id}`);
+        navigate(`/journals/notify/edit/${id}`);
       },
       [navigate],
   );
 
   const columns = useMemo(
       () =>
-          createExternalInboundColumns(
+          createNotifyColumns(
               t,
               handleDelete,
               handleEdit,
@@ -126,4 +126,4 @@ const useExternalInbounds = () => {
   };
 };
 
-export default useExternalInbounds;
+export default useNotifys;

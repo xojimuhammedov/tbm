@@ -7,34 +7,31 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import { EXTERNAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
-import {
-  createExternalInboundSchema,
-  ExternalInboundDto,
-} from "@/pages/in & out documents/17-96 external inbound document/schemas/createExternalInboundSchema.ts";
-import { ExternalInboundDocument } from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
+import {createOutgoingSchema, OutgoingDto} from "@/pages/Journals/outgoing/schemas/createOutgoingSchema.ts";
+import {OUTGOING_QUERY_KEY} from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
+import {OutgoingInterface} from "@/pages/Journals/outgoing/interfaces/outgoing.interface.ts";
 
-export type ExternalInboundFormProps = {
+export type OutgoingFormProps = {
   id: string | null;
   onSave?: () => void;
 };
 
-const useExternalInboundForm = ({ id, onSave }: ExternalInboundFormProps) => {
+const useOutgoingForm = ({ id, onSave }: OutgoingFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const schema = useMemo(() => createExternalInboundSchema(t), [t]);
-  const form = useForm<ExternalInboundDto>({
+  const schema = useMemo(() => createOutgoingSchema(t), [t]);
+  const form = useForm<OutgoingDto>({
     resolver: zodResolver(schema),
   });
-  const query = useGetOne<{ data: ExternalInboundDocument }>({
-    url: [EXTERNAL_INBOUND_QUERY_KEY, id || ""],
+  const query = useGetOne<{ data: OutgoingInterface }>({
+    url: [OUTGOING_QUERY_KEY, id || ""],
     options: {
       enabled: Boolean(id),
     },
   });
   const { query: save } = useMutate({
-    url: [EXTERNAL_INBOUND_QUERY_KEY, id || ""],
-    method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
+    url: [OUTGOING_QUERY_KEY, id || ""],
+    method: id ? MutateRequestMethod.PATCH : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
         toast({
@@ -70,26 +67,16 @@ const useExternalInboundForm = ({ id, onSave }: ExternalInboundFormProps) => {
     };
     if (item) {
       form.reset({
-        reg_num: item.reg_num,
-        reg_date: formatDate(item.reg_date),
-        journal_index: item.journal_index,
-        reception_num: item.reception_num,
-        reception_date: formatDate(item.reception_date),
-        original_num: item.original_num,
-        original_date: formatDate(item.original_date),
-        doc_type: item.doc_type,
-        organization: item.organization,
-        content: item.content,
-        assignee: item.assignee,
-        resolution: item.resolution,
-        deadline: formatDate(item.deadline),
-        status: item.status,
-        reply_order_date: formatDate(item.reply_order_date),
+        user_id: item.user_id || "",
+        registration_date: formatDate(item.registration_date),
+        summary: item.summary ?? "",
+        doc_index: item.doc_index ?? "",
+        recipient: item.recipient ?? "",
       });
     }
   }, [query.data, form]);
   const onSubmit = useCallback(
-    (data: ExternalInboundDto) => {
+    (data: OutgoingDto) => {
       save.mutate(data);
     },
     [save],
@@ -101,4 +88,4 @@ const useExternalInboundForm = ({ id, onSave }: ExternalInboundFormProps) => {
   };
 };
 
-export default useExternalInboundForm;
+export default useOutgoingForm;

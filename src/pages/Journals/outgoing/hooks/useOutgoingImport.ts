@@ -4,23 +4,20 @@ import { get } from "lodash";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { request } from "@/request";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import {
-  EXTERNAL_INBOUND_IMPORT_API,
-  EXTERNAL_INBOUND_QUERY_KEY,
-} from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
+import {OUTGOING_IMPORT_API, OUTGOING_QUERY_KEY} from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
 export type FlowImportProps = {
   status?: string;
   onSuccess?: () => void;
 };
 
-const useExternalInboundImport = ({ onSuccess }: FlowImportProps = {}) => {
+const useOutgoingImport = ({ onSuccess }: FlowImportProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return request.post(EXTERNAL_INBOUND_IMPORT_API, formData, {
+      return request.post(OUTGOING_IMPORT_API, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -40,7 +37,7 @@ const useExternalInboundImport = ({ onSuccess }: FlowImportProps = {}) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [EXTERNAL_INBOUND_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [OUTGOING_QUERY_KEY] });
       toast({
         variant: "success",
         title: t("Success"),
@@ -66,4 +63,4 @@ const useExternalInboundImport = ({ onSuccess }: FlowImportProps = {}) => {
   };
 };
 
-export default useExternalInboundImport;
+export default useOutgoingImport;

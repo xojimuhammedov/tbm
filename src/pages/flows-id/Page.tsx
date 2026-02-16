@@ -103,6 +103,17 @@ const Page = () => {
                     handleFilterChange={(filterParams) => {
                         handleFilter({ ...params, ...filterParams, page: 1 });
                     }}
+                    // Agar DataTable onReset yoki shunga o'xshash prop qo'llab-quvvatlasa:
+                    onFilterReset={() => {
+                        handleFilter({
+                            ...params,
+                            status_filter: undefined,
+                            consumer: undefined,
+                            point_a: undefined,
+                            point_b: undefined,
+                            page: 1,
+                        });
+                    }}
                     rowKey={"_id"}
                     dataSource={dataSource}
                     dataKey={"docs"}
