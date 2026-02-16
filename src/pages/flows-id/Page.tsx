@@ -6,15 +6,13 @@ import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import {CirclePlusIcon, UploadIcon, Trash2Icon, Layers, X} from "lucide-react";
+import {CirclePlusIcon, UploadIcon, Trash2Icon, Layers,} from "lucide-react";
 import { FLOWS_ID_QUERY_KEY } from "@/pages/flows-id/constants/flows.constants.ts";
 import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface.ts";
 import useFlows from "@/pages/flows-id/hooks/useFlows.ts";
 import ImportFlowModal from "./components/ImportFlowModal";
 import FlowView from "@/pages/flows-id/components/FlowIdView.tsx";
 import {useFlowsFilters} from "@/pages/flows-id/hooks/useFlowsfilters.tsx";
-
-
 
 const Page = () => {
     const { t } = useTranslation();
@@ -51,15 +49,6 @@ const Page = () => {
             />
 
             <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-                {params?.search && (
-                    <a
-                        onClick={() => handleFilter({ ...params, search: "", page: 1 })}
-                        className="text-muted-foreground hover:bg-transparent focus:border-none relative top-20 right-75 cursor-pointer
-                       "
-                    >
-                        <X className="size-4 mr-1" />
-                    </a>
-                )}
                 <div className="flex items-center gap-2">
                     <Button size={"sm"} variant="destructive" onClick={handleDeleteAll}>
                         <Layers className="size-4" />
@@ -100,20 +89,6 @@ const Page = () => {
                     params={params}
                     onParamChange={handleFilter}
                     filters={filters}
-                    handleFilterChange={(filterParams) => {
-                        handleFilter({ ...params, ...filterParams, page: 1 });
-                    }}
-                    // Agar DataTable onReset yoki shunga o'xshash prop qo'llab-quvvatlasa:
-                    onFilterReset={() => {
-                        handleFilter({
-                            ...params,
-                            status_filter: undefined,
-                            consumer: undefined,
-                            point_a: undefined,
-                            point_b: undefined,
-                            page: 1,
-                        });
-                    }}
                     rowKey={"_id"}
                     dataSource={dataSource}
                     dataKey={"docs"}

@@ -17,10 +17,14 @@ const useFlows = () => {
   const { toast } = useToast();
   const [openView, setOpenView] = useState(false);
   const [viewId, setViewId] = useState<string | null>(null);
-  const { query, handleFilter, params }: any = useLists<FlowInterface>({
+  const { query, handleFilter: baseHandleFilter, params }: any = useLists<FlowInterface>({
     url: [FLOWS_ID_QUERY_KEY],
   });
 
+
+  const handleFilter = useCallback((newParams: any) => {
+    baseHandleFilter({ ...newParams, page: 1 });
+  }, [baseHandleFilter]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
   const { handleDeleteAll: handleDeleteAllAction, handleDeleteMany: handleDeleteManyAction } = useFlowDeleteActions({
