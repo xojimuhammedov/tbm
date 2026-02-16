@@ -89,22 +89,22 @@ const DecreesFormPage = lazy(
 );
 const NotifyPage = lazy(
     () =>
-        import("@/pages/in & out documents/17-98 local inbound document/Page.tsx"),
+        import("@/pages/Journals/notify/Page.tsx"),
 );
 const NotifyFormPage = lazy(
     () =>
         import(
-            "@/pages/in & out documents/17-98 local inbound document/pages/FormPage.tsx"
+            "@/pages/Journals/notify/pages/FormPage.tsx"
             ),
 );
 const OutgoingPage = lazy(
     () =>
-        import("@/pages/in & out documents/17-99 local outbound document/Page.tsx"),
+        import("@/pages/Journals/outgoing/Page.tsx"),
 );
 const OutgoingFormPage = lazy(
     () =>
         import(
-            "@/pages/in & out documents/17-99 local outbound document/pages/FormPage.tsx"
+            "@/pages/Journals/outgoing/pages/FormPage.tsx"
             ),
 );
 

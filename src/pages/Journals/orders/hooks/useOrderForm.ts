@@ -7,40 +7,31 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import { createOrdersSchema, OrdersDto } from "@/pages/Journals/orders/schemas/createExternalInboundSchema.ts";
-import { OrdersInterface } from "@/pages/Journals/orders/interfaces/orders.interface.ts";
-import { ORDERS_QUERY_KEY } from "@/pages/Journals/orders/constants/orders.constants.ts";
+import {createOrdersSchema, OrdersDto} from "@/pages/Journals/orders/schemas/createExternalInboundSchema.ts";
+import {ORDERS_QUERY_KEY} from "@/pages/Journals/orders/constants/orders.constants.ts";
+import {OrdersInterface} from "@/pages/Journals/orders/interfaces/orders.interface.ts";
 
-export type OrderFormProps = {
+export type OrdersFormProps = {
   id: string | null;
   onSave?: () => void;
 };
 
-const useOrderForm = ({ id, onSave }: OrderFormProps) => {
+const useOrderForm = ({ id, onSave }: OrdersFormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const schema = useMemo(() => createOrdersSchema(t), [t]);
-
   const form = useForm<OrdersDto>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      registration_date: "",
-      summary: "",
-      prepared_by: "",
-      signed_by: "",
-    },
   });
-
   const query = useGetOne<{ data: OrdersInterface }>({
-    url: id ? [ORDERS_QUERY_KEY, id] : [ORDERS_QUERY_KEY],
+    url: [ORDERS_QUERY_KEY, id || ""],
     options: {
       enabled: Boolean(id),
     },
   });
-
   const { query: save } = useMutate({
-    url: id ? [ORDERS_QUERY_KEY, id] : [ORDERS_QUERY_KEY],
-    method: id ? MutateRequestMethod.PATCH  : MutateRequestMethod.POST,
+    url: [ORDERS_QUERY_KEY, id || ""],
+    method: id ? MutateRequestMethod.PATCH : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
         toast({
@@ -62,54 +53,33 @@ const useOrderForm = ({ id, onSave }: OrderFormProps) => {
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("Order updated successfully")
-              : t("Order created successfully"),
+              ? t("External inbound updated successfully")
+              : t("External inbound created successfully"),
         });
       },
     },
   });
-  const formatDateForInput = (dateString?: string | null): string => {
-    if (!dateString) return "";
-    const match = dateString.match(/^(\d{2})[.\-/](\d{2})[.\-/](\d{4})$/);
-    if (match) {
-      const [, day, month, year] = match;
-      return `${year}-${month}-${day}`;
-    }
-    if (dateString.includes("T")) return dateString.split("T")[0];
-    return dateString;
-  };
-
-  const formatDateForServer = (dateString: string): string => {
-    if (!dateString) return "";
-    if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
-      const [year, month, day] = dateString.split("-");
-      return `${day}.${month}.${year}`;
-    }
-    return dateString;
-  };
-
   useEffect(() => {
     const item = query.data?.data;
+    const formatDate = (dateString?: string | null) => {
+      if (!dateString) return "";
+      return dateString.split("T")[0];
+    };
     if (item) {
       form.reset({
-        registration_date: formatDateForInput(item.registration_date),
+        registration_date: formatDate(item.registration_date),
         summary: item.summary ?? "",
         prepared_by: item.prepared_by ?? "",
         signed_by: item.signed_by ?? "",
       });
     }
   }, [query.data, form]);
-
   const onSubmit = useCallback(
       (data: OrdersDto) => {
-        save.mutate({
-          ...data,
-          registration_date: formatDateForServer(data.registration_date),
-        });
+        save.mutate(data);
       },
       [save],
   );
-
   return {
     form,
     onSubmit,

@@ -3,9 +3,9 @@ import { MyModal } from "@/shared/components/moleculas/modal";
 import { UploadCloudIcon, FileTextIcon, XIcon, Trash2Icon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "dgz-ui/button";
-import useExternalInboundImport from "@/pages/in & out documents/17-96 external inbound document/hooks/useExternalInboundImport.ts";
+import useOutgoingImport from "@/pages/Journals/outgoing/hooks/useOutgoingImport.ts";
 
-interface ImportFlowModalProps {
+interface ImportOutgoingModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   refetch?: () => void;
@@ -20,17 +20,17 @@ const formatBytes = (bytes: number, decimals = 2) => {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 };
 
-const ImportExternalInboundModal = ({
+const OutgoingModal = ({
   open,
   onOpenChange,
   refetch,
-}: ImportFlowModalProps) => {
+}: ImportOutgoingModalProps) => {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState(0);
 
-  const { handleUpload, loading } = useExternalInboundImport({
+  const { handleUpload, loading } = useOutgoingImport({
     onSuccess: () => {
       setProgress(100);
       setTimeout(() => {
@@ -215,4 +215,4 @@ const ImportExternalInboundModal = ({
   );
 };
 
-export default ImportExternalInboundModal;
+export default OutgoingModal;
