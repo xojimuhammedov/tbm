@@ -18,8 +18,12 @@ jobs:
           node-version: 22
           cache: "npm"
 
-      - name: 📥 Dependency o'rnatish
-        run: npm ci
+#      - name: 📥 Dependency o'rnatish
+#        run: npm ci
+      - name: Install dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
 
       - name: 🏗️ Build yaratish
         run: npm run build
