@@ -486,6 +486,41 @@ function Router() {
           path: "huawei-p30-lite",
           element: <HuaweiP30LitePage />,
         },
+
+        {
+          path: "channels-5_3",
+          children: [
+            {
+              index: true,
+              element: <Channels51Page />,
+            },
+            {
+              path: "create",
+              element: <Channels51FormPage />,
+            },
+            {
+              path: "edit/:id",
+              element: <Channels51FormPage />,
+            },
+          ],
+        },
+        {
+          path: "flows-5_1",
+          children: [
+            {
+              index: true,
+              element: <Flows53Page />,
+            },
+            {
+              path: "create",
+              element: <Flows53FormPage />,
+            },
+            {
+              path: "edit/:id",
+              element: <Flows53FormPage />,
+            },
+          ],
+        },
         {
           path: "channels-5_3",
           element: <Channels51Page />,

@@ -263,56 +263,41 @@ const createSidebarGroups = (
   //     // },
   //   ],
   // },
+
   {
     title: t("Resource Database"),
     items: [
-      // {
-      //   title: t("Nokia"),
-      //   url: "nokia",
-      //   icon: Database,
-      //   isActive: isActive("nokia"),
-      // },
-      // {
-      //   title: t("ZTE"),
-      //   url: "zte",
-      //   icon: Database,
-      //   isActive: isActive("zte"),
-      // },
-      // {
-      //   title: t("Huawei P30 pro"),
-      //   url: "huawei-p30-pro",
-      //   icon: Database,
-      //   isActive: isActive("huawei-p30-pro"),
-      // },
-      // {
-      //   title: t("Huawei P30 lite"),
-      //   url: "huawei-p30-lite",
-      //   icon: Database,
-      //   isActive: isActive("huawei-p30-lite"),
-      // },
       {
-        title: t("Channels(5_3)"),
-        url: "channels-5_3",
+        title: t("Channels"),
+        url: "",
         icon: Database,
-        isActive: isActive("channels-5_3"),
+        isActive: isActive("channels"),
+        children: [
+          {
+            title: t("Channels(5_3)"),
+            url: "channels-5_3",
+          },
+          {
+            title: t("Channels ID"),
+            url: "channels-id",
+          },
+        ],
       },
       {
-        title: t("Channels ID"),
-        url: "channels-id",
+        title: t("Flows"),
+        url: "",
         icon: Database,
-        isActive: isActive("channels-id"),
-      },
-      {
-        title: t("Flows(5_1)"),
-        url: "flows-5_1",
-        icon: Database,
-        isActive: isActive("flows-5_1"),
-      },
-      {
-        title: t("Flows ID"),
-        url: "flows-id",
-        icon: Database,
-        isActive: isActive("flows-id"),
+        isActive: isActive("flows"),
+        children: [
+          {
+            title: t("Flows(5_1)"),
+            url: "flows-5_1",
+          },
+          {
+            title: t("Flows ID"),
+            url: "flows-id",
+          },
+        ],
       },
       {
         title: t("Card index"),
@@ -322,6 +307,41 @@ const createSidebarGroups = (
       },
     ],
   },
+  // {
+  //   title: t("Resource Database"),
+  //   items: [
+  //     {
+  //       title: t("Channels(5_3)"),
+  //       url: "channels-5_3",
+  //       icon: Database,
+  //       isActive: isActive("channels-5_3"),
+  //     },
+  //     {
+  //       title: t("Channels ID"),
+  //       url: "channels-id",
+  //       icon: Database,
+  //       isActive: isActive("channels-id"),
+  //     },
+  //     {
+  //       title: t("Flows(5_1)"),
+  //       url: "flows-5_1",
+  //       icon: Database,
+  //       isActive: isActive("flows-5_1"),
+  //     },
+  //     {
+  //       title: t("Flows ID"),
+  //       url: "flows-id",
+  //       icon: Database,
+  //       isActive: isActive("flows-id"),
+  //     },
+  //     {
+  //       title: t("Card index"),
+  //       url: "card-indexes",
+  //       icon: Database,
+  //       isActive: isActive("card-indexes"),
+  //     },
+  //   ],
+  // },
   {
     title: t("Administration"),
     items: [
