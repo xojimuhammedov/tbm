@@ -5,6 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { I18nextProvider } from "react-i18next";
+import dayjs from "dayjs";
+
+
+(window as any).dayjs = dayjs;
 
 const queryClient = new QueryClient();
 
