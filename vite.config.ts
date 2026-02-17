@@ -19,8 +19,18 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "./src"),
+        '@': path.resolve(__dirname, './src'),
+        "dgz-ui-shared/dist/dgz-ui-shared.css": path.resolve(__dirname, "node_modules/dgz-ui-shared/dist/styles.css"),
       },
+      dedupe: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'i18next',
+        'react-i18next',
+        'dgz-ui',
+        'dgz-ui-shared',
+      ],
     },
     server: {
       host: true,
