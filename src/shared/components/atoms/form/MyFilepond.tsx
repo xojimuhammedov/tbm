@@ -34,6 +34,8 @@ export type MyFilepondProps<TFieldValues extends FieldValues> =
       onChange?: (files: FilePondFile[]) => void;
       containerClassName?: string;
       beforeRemoveFile?: (file: unknown) => void;
+        helperText?: React.ReactNode;
+        floatingError?: boolean;
     };
 
 const MyFilepond = <TFieldValues extends FieldValues>({

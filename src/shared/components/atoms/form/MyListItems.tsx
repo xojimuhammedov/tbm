@@ -24,6 +24,7 @@ type MyListItemsProps<
     onParamsChange?: (params: Record<string, unknown>) => void;
     total?: number;
     header?: ReactNode;
+    helperText?: ReactNode;
   };
 
 const MyListItems = <TFieldValues extends FieldValues, TData>({
