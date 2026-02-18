@@ -4,7 +4,10 @@ import { get } from "lodash";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { request } from "@/request";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import {NOTIFY_IMPORT_API, NOTIFY_QUERY_KEY} from "@/pages/Journals/notify/constants/notify.constants.ts";
+import {
+  NOTIFY_IMPORT_API,
+  NOTIFY_QUERY_KEY,
+} from "@/pages/Journals/notify/constants/notify.constants.ts";
 export type NotifyImportProps = {
   status?: string;
   onSuccess?: () => void;

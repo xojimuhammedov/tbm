@@ -6,10 +6,10 @@ import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import {CirclePlusIcon, UploadIcon, Trash2Icon, Layers} from "lucide-react";
+import { CirclePlusIcon, UploadIcon, Trash2Icon, Layers } from "lucide-react";
 import useOutgoings from "@/pages/Journals/outgoing/hooks/useOutgoings.ts";
-import {OutgoingInterface} from "@/pages/Journals/outgoing/interfaces/outgoing.interface.ts";
-import {OUTGOING_QUERY_KEY} from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
+import { OutgoingInterface } from "@/pages/Journals/outgoing/interfaces/outgoing.interface.ts";
+import { OUTGOING_QUERY_KEY } from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
 import OutgoingModal from "@/pages/Journals/outgoing/components/ImportExternalInboundModal.tsx";
 
 const Page = () => {
@@ -24,7 +24,7 @@ const Page = () => {
     handleAdd,
     selectedRowKeys,
     handleDeleteMany,
-    handleDeleteAll
+    handleDeleteAll,
   } = useOutgoings();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
@@ -42,11 +42,7 @@ const Page = () => {
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
-          <Button
-              size={"sm"}
-              variant="destructive"
-              onClick={handleDeleteAll}
-          >
+          <Button size={"sm"} variant="destructive" onClick={handleDeleteAll}>
             <Layers className="size-4" />
             {t("Delete all")}
           </Button>
@@ -73,10 +69,7 @@ const Page = () => {
       </PageHeader>
 
       <PageWrapper>
-        <DataTable<
-              OutgoingInterface,
-          PaginationInterface<OutgoingInterface>
-        >
+        <DataTable<OutgoingInterface, PaginationInterface<OutgoingInterface>>
           tableKey={OUTGOING_QUERY_KEY}
           hasNumbers
           hasSearch
@@ -92,10 +85,7 @@ const Page = () => {
         />
       </PageWrapper>
 
-      <OutgoingModal
-        open={importModalOpen}
-        onOpenChange={setImportModalOpen}
-      />
+      <OutgoingModal open={importModalOpen} onOpenChange={setImportModalOpen} />
     </>
   );
 };

@@ -31,10 +31,7 @@ const Page = () => {
     handleDeleteAll,
   } = useFlows();
   const [importModalOpen, setImportModalOpen] = useState(false);
-  const filters = useMemo(
-    () => createFlowsFilters(t),
-    [t]
-  );
+  const filters = useMemo(() => createFlowsFilters(t), [t]);
   const breadcrumbs: BreadcrumbInterface[] = [
     {
       name: t("Flows ID"),

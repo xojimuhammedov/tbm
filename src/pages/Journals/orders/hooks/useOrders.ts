@@ -6,8 +6,8 @@ import { useToast } from "@/shared/hooks/useToast.ts";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { useFlowDeleteActions } from "@/shared/hooks/flow/useFlowDeleteActions.ts";
-import {OrdersInterface} from "@/pages/Journals/orders/interfaces/orders.interface.ts";
-import {ORDERS_QUERY_KEY} from "@/pages/Journals/orders/constants/orders.constants.ts";
+import { OrdersInterface } from "@/pages/Journals/orders/interfaces/orders.interface.ts";
+import { ORDERS_QUERY_KEY } from "@/pages/Journals/orders/constants/orders.constants.ts";
 import createOrdersColumns from "@/pages/Journals/orders/helpers/createOrdersColumns.tsx";
 
 const useOrders = () => {
@@ -22,7 +22,10 @@ const useOrders = () => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
-  const { handleDeleteMany: handleDeleteManyAction, handleDeleteAll: handleDeleteAllAction } = useFlowDeleteActions({
+  const {
+    handleDeleteMany: handleDeleteManyAction,
+    handleDeleteAll: handleDeleteAllAction,
+  } = useFlowDeleteActions({
     refetch: query.refetch,
     onSuccess: () => {
       setSelectedRowKeys([]);
@@ -31,7 +34,7 @@ const useOrders = () => {
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
-        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   }, []);
 
@@ -40,32 +43,32 @@ const useOrders = () => {
   }, []);
 
   const allIds = useMemo(
-      () => query.data?.docs?.map((item) => item._id) || [],
-      [query.data],
+    () => query.data?.docs?.map((item) => item._id) || [],
+    [query.data],
   );
 
   const handleDelete = useCallback(
-      (id: OrdersInterface["_id"]) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Muvaffaqiyatli"),
-                description: t("Hujjat muvaffaqiyatli o'chirildi"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(get(error, "response.statusText", "Error")),
-                description: t(
-                    get(error, "response.data.message", "Xatolik yuz berdi"),
-                ),
-              });
-            });
-      },
-      [removeWithConfirm, query, t, toast],
+    (id: OrdersInterface["_id"]) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Muvaffaqiyatli"),
+            description: t("Hujjat muvaffaqiyatli o'chirildi"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(get(error, "response.statusText", "Error")),
+            description: t(
+              get(error, "response.data.message", "Xatolik yuz berdi"),
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, query, t, toast],
   );
 
   const handleDeleteMany = useCallback(() => {
@@ -81,24 +84,15 @@ const useOrders = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/journals/orders/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/journals/orders/edit/${id}`);
+    },
+    [navigate],
   );
 
   const columns = useMemo(
-      () =>
-          createOrdersColumns(
-              t,
-              handleDelete,
-              handleEdit,
-              selectedRowKeys,
-              toggleSelectRow,
-              toggleSelectAll,
-              allIds,
-          ),
-      [
+    () =>
+      createOrdersColumns(
         t,
         handleDelete,
         handleEdit,
@@ -106,7 +100,16 @@ const useOrders = () => {
         toggleSelectRow,
         toggleSelectAll,
         allIds,
-      ],
+      ),
+    [
+      t,
+      handleDelete,
+      handleEdit,
+      selectedRowKeys,
+      toggleSelectRow,
+      toggleSelectAll,
+      allIds,
+    ],
   );
 
   return {

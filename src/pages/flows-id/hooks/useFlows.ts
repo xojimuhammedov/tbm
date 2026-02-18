@@ -23,7 +23,10 @@ const useFlows = () => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
-  const { handleDeleteAll: handleDeleteAllAction, handleDeleteMany: handleDeleteManyAction } = useFlowDeleteActions({
+  const {
+    handleDeleteAll: handleDeleteAllAction,
+    handleDeleteMany: handleDeleteManyAction,
+  } = useFlowDeleteActions({
     refetch: query.refetch,
     onSuccess: () => {
       setSelectedRowKeys([]);
@@ -32,7 +35,7 @@ const useFlows = () => {
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
-        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   }, []);
 
@@ -40,8 +43,8 @@ const useFlows = () => {
     setSelectedRowKeys((prev) => (prev.length === ids.length ? [] : ids));
   }, []);
   const allIds = useMemo(
-      () => query.data?.docs?.map((item: any) => item._id) || [],
-      [query.data],
+    () => query.data?.docs?.map((item: any) => item._id) || [],
+    [query.data],
   );
 
   const currentItem = useMemo(() => {
@@ -51,27 +54,27 @@ const useFlows = () => {
   }, [query.data, viewId]);
 
   const handleDelete = useCallback(
-      (id: string) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Success"),
-                description: t("Flow removed successfully"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(`${get(error, "response.statusText", "Error")}`),
-                description: t(
-                    `${get(error, "response.data.message", "An error occurred")}`,
-                ),
-              });
-            });
-      },
-      [removeWithConfirm, t, toast, query.refetch],
+    (id: string) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Success"),
+            description: t("Flow removed successfully"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred")}`,
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, t, toast, query.refetch],
   );
 
   const handleDeleteMany = useCallback(() => {
@@ -87,10 +90,10 @@ const useFlows = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/flows-id/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/flows-id/edit/${id}`);
+    },
+    [navigate],
   );
 
   const handleView = useCallback((id: string) => {
@@ -104,18 +107,8 @@ const useFlows = () => {
   }, []);
 
   const columns = useMemo(
-      () =>
-          createFlowColumns(
-              t,
-              handleDelete,
-              handleEdit,
-              handleView,
-              selectedRowKeys,
-              toggleSelectRow,
-              toggleSelectAll,
-              allIds
-          ),
-      [
+    () =>
+      createFlowColumns(
         t,
         handleDelete,
         handleEdit,
@@ -123,8 +116,18 @@ const useFlows = () => {
         selectedRowKeys,
         toggleSelectRow,
         toggleSelectAll,
-        allIds
-      ],
+        allIds,
+      ),
+    [
+      t,
+      handleDelete,
+      handleEdit,
+      handleView,
+      selectedRowKeys,
+      toggleSelectRow,
+      toggleSelectAll,
+      allIds,
+    ],
   );
 
   return {
@@ -144,7 +147,7 @@ const useFlows = () => {
     setSelectedRowKeys,
     toggleSelectRow,
     toggleSelectAll,
-    refetch: query.refetch
+    refetch: query.refetch,
   };
 };
 

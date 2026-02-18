@@ -6,7 +6,7 @@ import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import {CirclePlusIcon, UploadIcon, Trash2Icon, Layers} from "lucide-react";
+import { CirclePlusIcon, UploadIcon, Trash2Icon, Layers } from "lucide-react";
 import useLocalOutbounds from "@/pages/in & out documents/17-99 local outbound document/hooks/useLocalOutbounds.ts";
 import { LocalOutboundInterface } from "@/pages/in & out documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
 import { LOCAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-99 local outbound document/constants/local.outbound.constants.ts";
@@ -24,7 +24,7 @@ const Page = () => {
     handleAdd,
     selectedRowKeys,
     handleDeleteMany,
-    handleDeleteAll
+    handleDeleteAll,
   } = useLocalOutbounds();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
@@ -42,11 +42,7 @@ const Page = () => {
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
-          <Button
-              size={"sm"}
-              variant="destructive"
-              onClick={handleDeleteAll}
-          >
+          <Button size={"sm"} variant="destructive" onClick={handleDeleteAll}>
             <Layers className="size-4" />
             {t("Delete all")}
           </Button>

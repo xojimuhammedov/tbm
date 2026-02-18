@@ -10,155 +10,157 @@ import { FlowInterface } from "@/pages/flows-5_1/interfaces/flow.interface.ts";
 import { get } from "lodash";
 
 export interface UpdateFormData {
-    additional_information: string;
-    reverse: string;
-    forward: string;
-    sp: string;
+  additional_information: string;
+  reverse: string;
+  forward: string;
+  sp: string;
 }
 
 interface UseUpdateManyFlowsProps {
-    selectedIds: string[];
-    onSuccess?: () => void;
-    onClose: () => void;
-    isOpen: boolean;
+  selectedIds: string[];
+  onSuccess?: () => void;
+  onClose: () => void;
+  isOpen: boolean;
 }
 
 const useUpdateManyFlows = ({
-                                selectedIds,
-                                onSuccess,
-                                onClose,
-                                isOpen,
-                            }: UseUpdateManyFlowsProps) => {
-    const { t } = useTranslation();
-    const { toast } = useToast();
+  selectedIds,
+  onSuccess,
+  onClose,
+  isOpen,
+}: UseUpdateManyFlowsProps) => {
+  const { t } = useTranslation();
+  const { toast } = useToast();
 
-    const form = useForm<UpdateFormData>({
-        defaultValues: {
-            additional_information: "",
-            reverse: "",
-            forward: "",
-            sp: "",
-        },
-    });
+  const form = useForm<UpdateFormData>({
+    defaultValues: {
+      additional_information: "",
+      reverse: "",
+      forward: "",
+      sp: "",
+    },
+  });
 
-    const firstSelectedId = selectedIds[0];
-    const { data: flowResponse, isLoading: isLoadingFlow } = useGetOne<{ data: FlowInterface }>({
-        url: [FLOWS_5_1_QUERY_KEY, firstSelectedId],
-        queryKey: [FLOWS_5_1_QUERY_KEY, firstSelectedId],
-        options: {
-            enabled: isOpen && !!firstSelectedId, // Modal ochilganda va ID mavjud bo'lsa
-        },
-    });
+  const firstSelectedId = selectedIds[0];
+  const { data: flowResponse, isLoading: isLoadingFlow } = useGetOne<{
+    data: FlowInterface;
+  }>({
+    url: [FLOWS_5_1_QUERY_KEY, firstSelectedId],
+    queryKey: [FLOWS_5_1_QUERY_KEY, firstSelectedId],
+    options: {
+      enabled: isOpen && !!firstSelectedId, // Modal ochilganda va ID mavjud bo'lsa
+    },
+  });
 
-    useEffect(() => {
-        const flowData = flowResponse?.data;
-        console.log("🔍 Flow Response:", flowResponse);
-        console.log("📦 Flow Data:", flowData);
-        console.log("🚪 Modal Open:", isOpen);
+  useEffect(() => {
+    const flowData = flowResponse?.data;
+    console.log("🔍 Flow Response:", flowResponse);
+    console.log("📦 Flow Data:", flowData);
+    console.log("🚪 Modal Open:", isOpen);
 
-        if (flowData && isOpen) {
-            const resetData = {
-                additional_information: flowData.additional_information || "",
-                reverse: flowData.reverse || "",
-                forward: flowData.forward || "",
-                sp: flowData.sp || "",
-            };
+    if (flowData && isOpen) {
+      const resetData = {
+        additional_information: flowData.additional_information || "",
+        reverse: flowData.reverse || "",
+        forward: flowData.forward || "",
+        sp: flowData.sp || "",
+      };
 
-            console.log("✅ Resetting form with:", resetData);
-            form.reset(resetData);
-        }
-    }, [flowResponse, isOpen, form]);
+      console.log("✅ Resetting form with:", resetData);
+      form.reset(resetData);
+    }
+  }, [flowResponse, isOpen, form]);
 
-    useEffect(() => {
-        if (!isOpen) {
-            form.reset({
-                additional_information: "",
-                reverse: "",
-                forward: "",
-                sp: "",
-            });
-        }
-    }, [isOpen, form]);
+  useEffect(() => {
+    if (!isOpen) {
+      form.reset({
+        additional_information: "",
+        reverse: "",
+        forward: "",
+        sp: "",
+      });
+    }
+  }, [isOpen, form]);
 
-    const { query } = useMutate({
-        url: [FLOWS_5_1_QUERY_KEY, "update-many"],
-        method: MutateRequestMethod.PATCH,
-        options: {
-            onSuccess: () => {
-                toast({
-                    variant: "success",
-                    title: t("Success"),
-                    description: t(`Successfully updated ${selectedIds.length} flows`),
-                });
-                form.reset();
-                onClose();
-                onSuccess?.();
-            },
-            onError: (error: any) => {
-                toast({
-                    variant: "destructive",
-                    title: t(`${get(error, "response.statusText", "Error")}`),
-                    description: t(
-                        `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`
-                    ),
-                });
-            },
-        },
-    });
-
-    const onSubmit = useCallback(
-        (data: UpdateFormData) => {
-            const updates: Partial<UpdateFormData> = {};
-
-            if (data.additional_information?.trim()) {
-                updates.additional_information = data.additional_information.trim();
-            }
-            if (data.reverse?.trim()) {
-                updates.reverse = data.reverse.trim();
-            }
-            if (data.forward?.trim()) {
-                updates.forward = data.forward.trim();
-            }
-            if (data.sp?.trim()) {
-                updates.sp = data.sp.trim();
-            }
-
-            if (Object.keys(updates).length === 0) {
-                toast({
-                    variant: "destructive",
-                    title: t("Error"),
-                    description: t("Please fill at least one field"),
-                });
-                return;
-            }
-
-            const payload = {
-                route_ids: selectedIds,
-                updates,
-            };
-
-            query.mutate(payload);
-        },
-        [selectedIds, query, t, toast]
-    );
-
-    const handleClose = useCallback(() => {
-        form.reset({
-            additional_information: "",
-            reverse: "",
-            forward: "",
-            sp: "",
+  const { query } = useMutate({
+    url: [FLOWS_5_1_QUERY_KEY, "update-many"],
+    method: MutateRequestMethod.PATCH,
+    options: {
+      onSuccess: () => {
+        toast({
+          variant: "success",
+          title: t("Success"),
+          description: t(`Successfully updated ${selectedIds.length} flows`),
         });
+        form.reset();
         onClose();
-    }, [form, onClose]);
+        onSuccess?.();
+      },
+      onError: (error: any) => {
+        toast({
+          variant: "destructive",
+          title: t(`${get(error, "response.statusText", "Error")}`),
+          description: t(
+            `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+          ),
+        });
+      },
+    },
+  });
 
-    return {
-        form,
-        onSubmit,
-        handleClose,
-        isLoading: query.isPending,
-        isLoadingFlow,
-    };
+  const onSubmit = useCallback(
+    (data: UpdateFormData) => {
+      const updates: Partial<UpdateFormData> = {};
+
+      if (data.additional_information?.trim()) {
+        updates.additional_information = data.additional_information.trim();
+      }
+      if (data.reverse?.trim()) {
+        updates.reverse = data.reverse.trim();
+      }
+      if (data.forward?.trim()) {
+        updates.forward = data.forward.trim();
+      }
+      if (data.sp?.trim()) {
+        updates.sp = data.sp.trim();
+      }
+
+      if (Object.keys(updates).length === 0) {
+        toast({
+          variant: "destructive",
+          title: t("Error"),
+          description: t("Please fill at least one field"),
+        });
+        return;
+      }
+
+      const payload = {
+        route_ids: selectedIds,
+        updates,
+      };
+
+      query.mutate(payload);
+    },
+    [selectedIds, query, t, toast],
+  );
+
+  const handleClose = useCallback(() => {
+    form.reset({
+      additional_information: "",
+      reverse: "",
+      forward: "",
+      sp: "",
+    });
+    onClose();
+  }, [form, onClose]);
+
+  return {
+    form,
+    onSubmit,
+    handleClose,
+    isLoading: query.isPending,
+    isLoadingFlow,
+  };
 };
 
 export default useUpdateManyFlows;

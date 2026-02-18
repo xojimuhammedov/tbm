@@ -6,10 +6,10 @@ import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import {CirclePlusIcon, UploadIcon, Trash2Icon, Layers} from "lucide-react";
+import { CirclePlusIcon, UploadIcon, Trash2Icon, Layers } from "lucide-react";
 import ImportOrdersModal from "./components/ImportOrdersModal.tsx";
-import {ORDERS_QUERY_KEY} from "@/pages/Journals/orders/constants/orders.constants.ts";
-import {OrdersInterface} from "@/pages/Journals/orders/interfaces/orders.interface.ts";
+import { ORDERS_QUERY_KEY } from "@/pages/Journals/orders/constants/orders.constants.ts";
+import { OrdersInterface } from "@/pages/Journals/orders/interfaces/orders.interface.ts";
 import useOrders from "@/pages/Journals/orders/hooks/useOrders.ts";
 
 const Page = () => {
@@ -24,7 +24,7 @@ const Page = () => {
     handleAdd,
     selectedRowKeys,
     handleDeleteMany,
-    handleDeleteAll
+    handleDeleteAll,
   } = useOrders();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
@@ -42,11 +42,7 @@ const Page = () => {
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
-          <Button
-              size={"sm"}
-              variant="destructive"
-              onClick={handleDeleteAll}
-          >
+          <Button size={"sm"} variant="destructive" onClick={handleDeleteAll}>
             <Layers className="size-4" />
             {t("Delete all")}
           </Button>
@@ -73,10 +69,7 @@ const Page = () => {
       </PageHeader>
 
       <PageWrapper>
-        <DataTable<
-              OrdersInterface,
-          PaginationInterface<OrdersInterface>
-        >
+        <DataTable<OrdersInterface, PaginationInterface<OrdersInterface>>
           tableKey={ORDERS_QUERY_KEY}
           hasNumbers
           hasSearch

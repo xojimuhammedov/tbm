@@ -99,9 +99,7 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
                 ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz")
                 : "____-yil __-________"}
             </div>
-            <div className="uppercase">
-              № {document?.code || ""}
-            </div>
+            <div className="uppercase">№ {document?.code || ""}</div>
             <div>SONI: 1</div>
           </div>
           <div className="grid grid-cols-[60px_1fr] gap-y-2 mb-5 text-[15px]">

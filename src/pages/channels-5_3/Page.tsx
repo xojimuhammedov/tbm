@@ -6,12 +6,12 @@ import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import { CirclePlusIcon, UploadIcon, Trash2Icon,Layers   } from "lucide-react";
+import { CirclePlusIcon, UploadIcon, Trash2Icon, Layers } from "lucide-react";
 import { CHANNELS_5_3_QUERY_KEY } from "@/pages/channels-5_3/constants/channels.constants.ts";
 import { ChannelInterface } from "@/pages/channels-5_3/interfaces/channel.interface.ts";
 import useChannels from "@/pages/channels-5_3/hooks/useChannels.ts";
 import ChannelImport from "@/pages/channels-5_3/components/ChannelImport.tsx";
-import {createChannels53Filters} from "@/pages/channels-5_3/hooks/useChannels53Filters.tsx";
+import { createChannels53Filters } from "@/pages/channels-5_3/hooks/useChannels53Filters.tsx";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -24,14 +24,11 @@ const Page = () => {
     handleAdd,
     selectedRowKeys,
     handleDeleteMany,
-    handleDeleteAll
+    handleDeleteAll,
   } = useChannels();
 
   const [importModalOpen, setImportModalOpen] = useState(false);
-  const filters = useMemo(
-    () => createChannels53Filters(t),
-    [t]
-  );
+  const filters = useMemo(() => createChannels53Filters(t), [t]);
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
@@ -47,11 +44,7 @@ const Page = () => {
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
-          <Button
-              size={"sm"}
-              variant="destructive"
-              onClick={handleDeleteAll}
-          >
+          <Button size={"sm"} variant="destructive" onClick={handleDeleteAll}>
             <Layers className="size-4" />
             {t("Delete all")}
           </Button>

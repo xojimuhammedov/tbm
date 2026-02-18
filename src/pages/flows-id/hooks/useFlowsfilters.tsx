@@ -1,7 +1,7 @@
 import { FilterInterface } from "dgz-ui-shared/components/filters";
 
 export const createFlowsFilters = (
-  t: (key: string) => string
+  t: (key: string) => string,
 ): FilterInterface[] => {
   return [
     {
@@ -18,19 +18,19 @@ export const createFlowsFilters = (
       name: "consumer",
       label: t("Consumer"),
       placeholder: t("Enter consumer"),
-    //   type: "input",
+      //   type: "input",
     },
     {
       name: "point_a",
       label: t("Point A"),
       placeholder: t("Enter point A"),
-    //   type: "input",
+      //   type: "input",
     },
     {
       name: "point_b",
       label: t("Point B"),
       placeholder: t("Enter point B"),
-    //   type: "input",
+      //   type: "input",
     },
   ];
 };

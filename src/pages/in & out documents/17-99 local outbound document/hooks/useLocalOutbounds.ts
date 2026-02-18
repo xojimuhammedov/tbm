@@ -23,17 +23,19 @@ const useLocalOutbounds = () => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
-  const { handleDeleteMany: handleDeleteManyAction, handleDeleteAll: handleDeleteAllAction } =
-      useFlowDeleteActions({
-        refetch: query.refetch,
-        onSuccess: () => {
-          setSelectedRowKeys([]);
-        },
-      });
+  const {
+    handleDeleteMany: handleDeleteManyAction,
+    handleDeleteAll: handleDeleteAllAction,
+  } = useFlowDeleteActions({
+    refetch: query.refetch,
+    onSuccess: () => {
+      setSelectedRowKeys([]);
+    },
+  });
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
-        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   }, []);
 
@@ -42,33 +44,33 @@ const useLocalOutbounds = () => {
   }, []);
 
   const allIds = useMemo(
-      () => query.data?.docs?.map((item) => item._id) || [],
-      [query.data],
+    () => query.data?.docs?.map((item) => item._id) || [],
+    [query.data],
   );
 
   // Single delete (old logic)
   const handleDelete = useCallback(
-      (id: string) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Muvaffaqiyatli"),
-                description: t("Hujjat muvaffaqiyatli o'chirildi"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(get(error, "response.statusText", "Error")),
-                description: t(
-                    get(error, "response.data.message", "Xatolik yuz berdi"),
-                ),
-              });
-            });
-      },
-      [removeWithConfirm, query, t, toast],
+    (id: string) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Muvaffaqiyatli"),
+            description: t("Hujjat muvaffaqiyatli o'chirildi"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(get(error, "response.statusText", "Error")),
+            description: t(
+              get(error, "response.data.message", "Xatolik yuz berdi"),
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, query, t, toast],
   );
 
   const handleDeleteMany = useCallback(() => {
@@ -84,24 +86,15 @@ const useLocalOutbounds = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/inout/locout-99/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/inout/locout-99/edit/${id}`);
+    },
+    [navigate],
   );
 
   const columns = useMemo(
-      () =>
-          createLocalOutboundColumns(
-              t,
-              handleDelete,
-              handleEdit,
-              selectedRowKeys,
-              toggleSelectRow,
-              toggleSelectAll,
-              allIds,
-          ),
-      [
+    () =>
+      createLocalOutboundColumns(
         t,
         handleDelete,
         handleEdit,
@@ -109,7 +102,16 @@ const useLocalOutbounds = () => {
         toggleSelectRow,
         toggleSelectAll,
         allIds,
-      ],
+      ),
+    [
+      t,
+      handleDelete,
+      handleEdit,
+      selectedRowKeys,
+      toggleSelectRow,
+      toggleSelectAll,
+      allIds,
+    ],
   );
 
   return {

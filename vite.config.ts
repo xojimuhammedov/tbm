@@ -19,15 +19,28 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
-        "dgz-ui-shared/dist/dgz-ui-shared.css": path.resolve(__dirname, "node_modules/dgz-ui-shared/dist/styles.css"),
-        "dgz-ui/dist/dgz-ui.css": path.resolve(__dirname, "node_modules/dgz-ui/dist/styles.css"),
-        "dgz-ui/dist/styles.css": path.resolve(__dirname, "node_modules/dgz-ui/dist/styles.css"),
+        "@": path.resolve(__dirname, "./src"),
+        "dgz-ui-shared/dist/dgz-ui-shared.css": path.resolve(
+          __dirname,
+          "node_modules/dgz-ui-shared/dist/styles.css",
+        ),
+        "dgz-ui/dist/dgz-ui.css": path.resolve(
+          __dirname,
+          "node_modules/dgz-ui/dist/styles.css",
+        ),
+        "dgz-ui/dist/styles.css": path.resolve(
+          __dirname,
+          "node_modules/dgz-ui/dist/styles.css",
+        ),
       },
       dedupe: [
-        'react', 'react-dom', 'react/jsx-runtime',
-        'i18next', 'react-i18next',
-        'dgz-ui', 'dgz-ui-shared',
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "i18next",
+        "react-i18next",
+        "dgz-ui",
+        "dgz-ui-shared",
       ],
     },
     server: {

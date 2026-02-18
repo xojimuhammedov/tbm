@@ -1,7 +1,12 @@
 import { MyInput } from "dgz-ui-shared/components/form";
 import { Button, cn } from "dgz-ui";
 import { PlusSquare, Trash2 } from "lucide-react";
-import { Control, FieldArrayWithId, UseFormWatch, UseFormSetValue } from "react-hook-form";
+import {
+  Control,
+  FieldArrayWithId,
+  UseFormWatch,
+  UseFormSetValue,
+} from "react-hook-form";
 import { useEffect, useState } from "react";
 import useGetEmptyFlowIds from "@/pages/rh-252/a-252/hooks/Usegetemptyflowids.ts";
 
@@ -32,14 +37,14 @@ const CreateFlowSection = ({
     enabled: fetchCount > 0,
     onSuccess: (data: string[]) => {
       if (data && data.length > 0) {
-        const newIds = data.filter(id => !usedIds.has(id));
+        const newIds = data.filter((id) => !usedIds.has(id));
         const startIndex = fields.length - newIds.length;
 
         newIds.forEach((id, idx) => {
           const fieldIndex = startIndex + idx;
           if (fieldIndex >= 0 && fieldIndex < fields.length) {
             setValue(`payload.create.flow_ids.${fieldIndex}.code`, id);
-            setUsedIds(prev => new Set([...prev, id]));
+            setUsedIds((prev) => new Set([...prev, id]));
           }
         });
       }
@@ -62,7 +67,7 @@ const CreateFlowSection = ({
   const handleRemoveRow = (index: number) => {
     const codeValue = watch(`payload.create.flow_ids.${index}.code`);
     if (codeValue) {
-      setUsedIds(prev => {
+      setUsedIds((prev) => {
         const newSet = new Set(prev);
         newSet.delete(codeValue);
         return newSet;

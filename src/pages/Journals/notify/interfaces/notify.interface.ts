@@ -3,6 +3,6 @@ export interface NotifyInterface {
   registration_date: string;
   summary: string;
   nomenclature_number: number;
-  doc_recipient : string
+  doc_recipient: string;
   signed_by: string;
 }

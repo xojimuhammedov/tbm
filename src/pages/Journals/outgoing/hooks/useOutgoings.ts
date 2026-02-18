@@ -6,8 +6,8 @@ import { useToast } from "@/shared/hooks/useToast.ts";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { useFlowDeleteActions } from "@/shared/hooks/flow/useFlowDeleteActions.ts";
-import {OUTGOING_QUERY_KEY} from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
-import {OutgoingInterface} from "@/pages/Journals/outgoing/interfaces/outgoing.interface.ts";
+import { OUTGOING_QUERY_KEY } from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
+import { OutgoingInterface } from "@/pages/Journals/outgoing/interfaces/outgoing.interface.ts";
 import createOutgoingColumns from "@/pages/Journals/outgoing/helpers/createOutgoingColumns.tsx";
 
 const useOutgoings = () => {
@@ -22,7 +22,10 @@ const useOutgoings = () => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
-  const { handleDeleteMany: handleDeleteManyAction, handleDeleteAll: handleDeleteAllAction } = useFlowDeleteActions({
+  const {
+    handleDeleteMany: handleDeleteManyAction,
+    handleDeleteAll: handleDeleteAllAction,
+  } = useFlowDeleteActions({
     refetch: query.refetch,
     onSuccess: () => {
       setSelectedRowKeys([]);
@@ -31,7 +34,7 @@ const useOutgoings = () => {
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
-        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   }, []);
 
@@ -40,32 +43,32 @@ const useOutgoings = () => {
   }, []);
 
   const allIds = useMemo(
-      () => query.data?.docs?.map((item) => item._id) || [],
-      [query.data],
+    () => query.data?.docs?.map((item) => item._id) || [],
+    [query.data],
   );
 
   const handleDelete = useCallback(
-      (id: OutgoingInterface["_id"]) => {
-        removeWithConfirm(id)
-            .then(() => {
-              query.refetch();
-              toast({
-                variant: "success",
-                title: t("Muvaffaqiyatli"),
-                description: t("Hujjat muvaffaqiyatli o'chirildi"),
-              });
-            })
-            .catch((error) => {
-              toast({
-                variant: "destructive",
-                title: t(get(error, "response.statusText", "Error")),
-                description: t(
-                    get(error, "response.data.message", "Xatolik yuz berdi"),
-                ),
-              });
-            });
-      },
-      [removeWithConfirm, query, t, toast],
+    (id: OutgoingInterface["_id"]) => {
+      removeWithConfirm(id)
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t("Muvaffaqiyatli"),
+            description: t("Hujjat muvaffaqiyatli o'chirildi"),
+          });
+        })
+        .catch((error) => {
+          toast({
+            variant: "destructive",
+            title: t(get(error, "response.statusText", "Error")),
+            description: t(
+              get(error, "response.data.message", "Xatolik yuz berdi"),
+            ),
+          });
+        });
+    },
+    [removeWithConfirm, query, t, toast],
   );
 
   const handleDeleteMany = useCallback(() => {
@@ -81,24 +84,15 @@ const useOutgoings = () => {
   }, [navigate]);
 
   const handleEdit = useCallback(
-      (id: string) => {
-        navigate(`/journals/outgoing/edit/${id}`);
-      },
-      [navigate],
+    (id: string) => {
+      navigate(`/journals/outgoing/edit/${id}`);
+    },
+    [navigate],
   );
 
   const columns = useMemo(
-      () =>
-          createOutgoingColumns(
-              t,
-              handleDelete,
-              handleEdit,
-              selectedRowKeys,
-              toggleSelectRow,
-              toggleSelectAll,
-              allIds,
-          ),
-      [
+    () =>
+      createOutgoingColumns(
         t,
         handleDelete,
         handleEdit,
@@ -106,7 +100,16 @@ const useOutgoings = () => {
         toggleSelectRow,
         toggleSelectAll,
         allIds,
-      ],
+      ),
+    [
+      t,
+      handleDelete,
+      handleEdit,
+      selectedRowKeys,
+      toggleSelectRow,
+      toggleSelectAll,
+      allIds,
+    ],
   );
 
   return {

@@ -155,7 +155,9 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
               dagi {basic?.request_number || ""})
             </p>
             <p className="font-bold text-[16px]">
-              {basic?.max_duration_minutes === 0 ? "" : basic?.connection_closure_type}
+              {basic?.max_duration_minutes === 0
+                ? ""
+                : basic?.connection_closure_type}
               (
               <b>
                 {basic?.max_duration_minutes ||

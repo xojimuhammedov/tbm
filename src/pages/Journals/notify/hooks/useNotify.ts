@@ -1,6 +1,6 @@
 import useGetOne from "@/shared/hooks/api/useGetOne.ts";
-import {NOTIFY_QUERY_KEY} from "@/pages/Journals/notify/constants/notify.constants.ts";
-import {NotifyInterface} from "@/pages/Journals/notify/interfaces/notify.interface.ts";
+import { NOTIFY_QUERY_KEY } from "@/pages/Journals/notify/constants/notify.constants.ts";
+import { NotifyInterface } from "@/pages/Journals/notify/interfaces/notify.interface.ts";
 
 const useNotify = (id: string) => {
   const query = useGetOne<{ data: NotifyInterface }>({

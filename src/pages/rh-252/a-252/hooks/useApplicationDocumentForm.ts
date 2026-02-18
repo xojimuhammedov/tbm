@@ -11,19 +11,20 @@ import KEYS from "@/shared/constants/keys";
 import URLS from "@/shared/constants/urls";
 import { request } from "@/request";
 import { useFlowValidation } from "@/pages/rh-252/a-252/hooks/useCheckForm";
-import {unwrapDoc} from "@/pages/rh-252/a-252/hooks/component/utils/doc.ts";
-import {codePrefix} from "@/pages/rh-252/a-252/hooks/component/utils/common.ts";
-import {listToText} from "@/pages/rh-252/a-252/hooks/component/utils/list.ts";
-import {handlers} from "@/pages/rh-252/a-252/hooks/component/utils/registry.ts";
-
-
+import { unwrapDoc } from "@/pages/rh-252/a-252/hooks/component/utils/doc.ts";
+import { codePrefix } from "@/pages/rh-252/a-252/hooks/component/utils/common.ts";
+import { listToText } from "@/pages/rh-252/a-252/hooks/component/utils/list.ts";
+import { handlers } from "@/pages/rh-252/a-252/hooks/component/utils/registry.ts";
 
 export interface UseApplicationDocumentFormParams {
   id?: string | null;
   onSave?: () => void;
 }
 
-const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormParams) => {
+const useApplicationDocumentForm = ({
+  id,
+  onSave,
+}: UseApplicationDocumentFormParams) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -81,10 +82,11 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   const currentUpdateType = form.watch("payload.update.update_type");
   const count = form.watch("count");
 
-  const { getValidationClass, getOriginalNumValidationClass, clearValidation } = useFlowValidation({
-    control: form.control,
-    updateType: currentUpdateType,
-  });
+  const { getValidationClass, getOriginalNumValidationClass, clearValidation } =
+    useFlowValidation({
+      control: form.control,
+      updateType: currentUpdateType,
+    });
 
   const { data: editData, isLoading } = useGetOne({
     url: [URLS.RH_Order_Application, id || ""],
@@ -108,8 +110,8 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("Application updated successfully")
-              : t("Application created successfully"),
+            ? t("Application updated successfully")
+            : t("Application created successfully"),
         });
       },
       onError: (error: any) => {
@@ -117,7 +119,7 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
           variant: "destructive",
           title: t(`${get(error, "response.statusText", "Error")}`),
           description: t(
-              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
           ),
         });
       },
@@ -153,8 +155,8 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
 
     const currentFlows = form.getValues("payload.update.flow_ids") || [];
     const isAlreadyCleared =
-        currentFlows.length > 0 &&
-        currentFlows.every((f: any) => !f?.code && !f?.old_code);
+      currentFlows.length > 0 &&
+      currentFlows.every((f: any) => !f?.code && !f?.old_code);
 
     if (isAlreadyCleared) return;
 
@@ -184,7 +186,9 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
     const stationA = form.getValues("point_a");
     const stationB = form.getValues("point_b");
     try {
-      const res = await request.get(`/api/flows-id/empty-id-numbers?count=${cnt}`);
+      const res = await request.get(
+        `/api/flows-id/empty-id-numbers?count=${cnt}`,
+      );
       const result = await res.data;
       const ids: string[] = result.data || [];
 
@@ -211,20 +215,20 @@ const useApplicationDocumentForm = ({ id, onSave }: UseApplicationDocumentFormPa
   }, [count, form, toast, t]);
 
   const handleSubmit = useCallback(
-      (data: any) => {
-        const prefix = data.code; // UI prefix
-        const handler = handlers[prefix];
-        if (!handler) {
-          console.error("Unknown code:", prefix);
-          return;
-        }
-        const payload = handler.build(data, {
-          fullCode: fullCodeRef.current || data.code,
-          currentIds,
-        });
-        saveMutation.mutate(payload);
-      },
-      [currentIds, saveMutation],
+    (data: any) => {
+      const prefix = data.code; // UI prefix
+      const handler = handlers[prefix];
+      if (!handler) {
+        console.error("Unknown code:", prefix);
+        return;
+      }
+      const payload = handler.build(data, {
+        fullCode: fullCodeRef.current || data.code,
+        currentIds,
+      });
+      saveMutation.mutate(payload);
+    },
+    [currentIds, saveMutation],
   );
 
   return {

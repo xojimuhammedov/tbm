@@ -7,9 +7,12 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import {createOrdersSchema, OrdersDto} from "@/pages/Journals/orders/schemas/createExternalInboundSchema.ts";
-import {ORDERS_QUERY_KEY} from "@/pages/Journals/orders/constants/orders.constants.ts";
-import {OrdersInterface} from "@/pages/Journals/orders/interfaces/orders.interface.ts";
+import {
+  createOrdersSchema,
+  OrdersDto,
+} from "@/pages/Journals/orders/schemas/createExternalInboundSchema.ts";
+import { ORDERS_QUERY_KEY } from "@/pages/Journals/orders/constants/orders.constants.ts";
+import { OrdersInterface } from "@/pages/Journals/orders/interfaces/orders.interface.ts";
 
 export type OrdersFormProps = {
   id: string | null;
@@ -38,11 +41,11 @@ const useOrderForm = ({ id, onSave }: OrdersFormProps) => {
           variant: "destructive",
           title: t(get(error, "response.statusText", "Error")),
           description: t(
-              get(
-                  error,
-                  "response.data.message",
-                  "An error occurred. Contact the administrator",
-              ),
+            get(
+              error,
+              "response.data.message",
+              "An error occurred. Contact the administrator",
+            ),
           ),
         });
       },
@@ -53,8 +56,8 @@ const useOrderForm = ({ id, onSave }: OrdersFormProps) => {
           variant: "success",
           title: t("Success"),
           description: id
-              ? t("External inbound updated successfully")
-              : t("External inbound created successfully"),
+            ? t("External inbound updated successfully")
+            : t("External inbound created successfully"),
         });
       },
     },
@@ -75,10 +78,10 @@ const useOrderForm = ({ id, onSave }: OrdersFormProps) => {
     }
   }, [query.data, form]);
   const onSubmit = useCallback(
-      (data: OrdersDto) => {
-        save.mutate(data);
-      },
-      [save],
+    (data: OrdersDto) => {
+      save.mutate(data);
+    },
+    [save],
   );
   return {
     form,

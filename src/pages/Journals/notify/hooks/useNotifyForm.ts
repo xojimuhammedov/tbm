@@ -7,9 +7,12 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import {createNotifySchema, NotifyDto} from "@/pages/Journals/notify/schemas/createNotifySchema.ts";
-import {NotifyInterface} from "@/pages/Journals/notify/interfaces/notify.interface.ts";
-import {NOTIFY_QUERY_KEY} from "@/pages/Journals/notify/constants/notify.constants.ts";
+import {
+  createNotifySchema,
+  NotifyDto,
+} from "@/pages/Journals/notify/schemas/createNotifySchema.ts";
+import { NotifyInterface } from "@/pages/Journals/notify/interfaces/notify.interface.ts";
+import { NOTIFY_QUERY_KEY } from "@/pages/Journals/notify/constants/notify.constants.ts";
 
 export type NotifyFormProps = {
   id: string | null;

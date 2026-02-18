@@ -4,7 +4,10 @@ import { get } from "lodash";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { request } from "@/request";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import {OUTGOING_IMPORT_API, OUTGOING_QUERY_KEY} from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
+import {
+  OUTGOING_IMPORT_API,
+  OUTGOING_QUERY_KEY,
+} from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
 export type FlowImportProps = {
   status?: string;
   onSuccess?: () => void;

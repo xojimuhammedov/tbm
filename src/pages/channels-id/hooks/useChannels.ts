@@ -8,7 +8,7 @@ import { CHANNELS_ID_QUERY_KEY } from "@/pages/channels-id/constants/channels.co
 import { ChannelInterface } from "@/pages/channels-id/interfaces/channel.interface.ts";
 import createChannelColumns from "@/pages/channels-id/helpers/createChannelColumns.tsx";
 import { useNavigate } from "react-router-dom";
-import {useFlowDeleteActions} from "@/shared/hooks/flow/useFlowDeleteActions.ts";
+import { useFlowDeleteActions } from "@/shared/hooks/flow/useFlowDeleteActions.ts";
 
 const useChannels = () => {
   const { t } = useTranslation();
@@ -20,13 +20,15 @@ const useChannels = () => {
   });
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
-  const { handleDeleteAll: handleDeleteAllAction, handleDeleteMany: handleDeleteManyAction } = useFlowDeleteActions({
+  const {
+    handleDeleteAll: handleDeleteAllAction,
+    handleDeleteMany: handleDeleteManyAction,
+  } = useFlowDeleteActions({
     refetch: query.refetch,
     onSuccess: () => {
       setSelectedRowKeys([]);
     },
   });
-
 
   const toggleSelectRow = useCallback((id: string) => {
     setSelectedRowKeys((prev) =>
@@ -66,7 +68,6 @@ const useChannels = () => {
     },
     [removeWithConfirm, t, toast, query],
   );
-
 
   const handleDeleteMany = useCallback(() => {
     handleDeleteManyAction(selectedRowKeys, remove);

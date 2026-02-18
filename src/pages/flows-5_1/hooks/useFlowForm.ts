@@ -42,7 +42,7 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
           variant: "destructive",
           title: t(`${get(error, "response.statusText", "Error")}`),
           description: t(
-              `${get(error, "response.data.message", "An error occurred")}`,
+            `${get(error, "response.data.message", "An error occurred")}`,
           ),
         });
       },
@@ -53,8 +53,8 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
           variant: "success",
           title: t(`Success`),
           description: id
-              ? t(`Flow updated successfully`)
-              : t(`Flow created successfully`),
+            ? t(`Flow updated successfully`)
+            : t(`Flow created successfully`),
         });
       },
     },
@@ -100,10 +100,10 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
   }, [query.data, form]);
 
   const onSubmit = useCallback(
-      (data: FlowDto) => {
-        save.mutate(data);
-      },
-      [save],
+    (data: FlowDto) => {
+      save.mutate(data);
+    },
+    [save],
   );
 
   return { form, onSubmit, isLoading: query.isLoading };

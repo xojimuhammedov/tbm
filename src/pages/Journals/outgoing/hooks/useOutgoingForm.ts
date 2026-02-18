@@ -7,9 +7,12 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import {createOutgoingSchema, OutgoingDto} from "@/pages/Journals/outgoing/schemas/createOutgoingSchema.ts";
-import {OUTGOING_QUERY_KEY} from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
-import {OutgoingInterface} from "@/pages/Journals/outgoing/interfaces/outgoing.interface.ts";
+import {
+  createOutgoingSchema,
+  OutgoingDto,
+} from "@/pages/Journals/outgoing/schemas/createOutgoingSchema.ts";
+import { OUTGOING_QUERY_KEY } from "@/pages/Journals/outgoing/constants/outgoing.constants.ts";
+import { OutgoingInterface } from "@/pages/Journals/outgoing/interfaces/outgoing.interface.ts";
 
 export type OutgoingFormProps = {
   id: string | null;

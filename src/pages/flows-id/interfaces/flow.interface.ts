@@ -14,7 +14,7 @@ export interface FlowInterface {
   name_point_a: string;
   name_point_b: string;
   signal_level: string;
-  status: 'active' | 'inactive' | string;
+  status: "active" | "inactive" | string;
   organization_order: OrderDetails[];
   dissolution_order: OrderDetails[];
   created_at: string;

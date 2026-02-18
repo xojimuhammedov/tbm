@@ -1,9 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { get, isNil } from "lodash";
+import { isNil } from "lodash";
 import { useDateRangeStore } from "dgz-ui-shared/stores";
 import { dayjs } from "@/shared/utils/day.ts";
-import { DATE } from "@/shared/constants/date.constants.ts";
 
 type UseQueryParamsProps = {
   excludeParams?: string[];
@@ -22,8 +21,8 @@ const useQueryParams = (props?: UseQueryParamsProps) => {
       const range = storedRanges[dateKey];
       if (range) return range;
       return {
-        from: dayjs.tz().subtract(2, 'week').startOf('day').toDate(),
-        to: dayjs.tz().endOf('day').toDate(),
+        from: dayjs.tz().subtract(2, "week").startOf("day").toDate(),
+        to: dayjs.tz().endOf("day").toDate(),
       };
     }
     return undefined;
@@ -34,14 +33,14 @@ const useQueryParams = (props?: UseQueryParamsProps) => {
 
     // Only inject stored range dates if they're not already in URL
     if (storedRange?.from && storedRange?.to) {
-      const hasStartInUrl = searchParams.has('start');
-      const hasEndInUrl = searchParams.has('end');
+      const hasStartInUrl = searchParams.has("start");
+      const hasEndInUrl = searchParams.has("end");
 
-      if (!hasStartInUrl && !props?.excludeParams?.includes('start')) {
-        parsedParams['start'] = dayjs(storedRange.from).utc(true).toISOString();
+      if (!hasStartInUrl && !props?.excludeParams?.includes("start")) {
+        parsedParams["start"] = dayjs(storedRange.from).utc(true).toISOString();
       }
-      if (!hasEndInUrl && !props?.excludeParams?.includes('end')) {
-        parsedParams['end'] = dayjs(storedRange.to).utc(true).toISOString();
+      if (!hasEndInUrl && !props?.excludeParams?.includes("end")) {
+        parsedParams["end"] = dayjs(storedRange.to).utc(true).toISOString();
       }
     }
 

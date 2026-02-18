@@ -12,7 +12,7 @@ export interface ChannelInterface {
   dissolution_order_date: string | null;
   archive_order: string | null;
   archive_order_date: string | null;
-  status: 'active' | 'inactive' | string;
+  status: "active" | "inactive" | string;
   created_at: string | Date;
   connection_number?: string;
   deciphering_notes?: string;

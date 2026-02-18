@@ -30,7 +30,7 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
     // Default qiymatlar status va boshqalar uchun
     defaultValues: {
       status: "active",
-    }
+    },
   });
 
   const query = useGetOne<{ data: ChannelInterface }>({
@@ -49,7 +49,7 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
           variant: "destructive",
           title: t(`${get(error, "response.statusText", "Error")}`),
           description: t(
-              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
           ),
         });
       },
@@ -60,8 +60,8 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
           variant: "success",
           title: t(`Success`),
           description: id
-              ? t(`Channel updated successfully`)
-              : t(`Channel created successfully`),
+            ? t(`Channel updated successfully`)
+            : t(`Channel created successfully`),
         });
       },
     },
@@ -79,8 +79,10 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
         link_N1: item.link_N1,
         organization_order: item.organization_order,
         organization_order_date: item.organization_order_date
-            ? new Date(item.organization_order_date as string).toISOString().split('T')[0]
-            : "",
+          ? new Date(item.organization_order_date as string)
+              .toISOString()
+              .split("T")[0]
+          : "",
         status: item.status,
         // Ixtiyoriy maydonlar bo'lsa:
         dissolution_order: item.dissolution_order || "",
@@ -90,10 +92,10 @@ const useChannelForm = ({ id, onSave }: ChannelFormProps) => {
   }, [query.data, form]);
 
   const onSubmit = useCallback(
-      (data: ChannelDto) => {
-        save.mutate(data);
-      },
-      [save],
+    (data: ChannelDto) => {
+      save.mutate(data);
+    },
+    [save],
   );
 
   return {

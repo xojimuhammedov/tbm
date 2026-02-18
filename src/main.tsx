@@ -7,7 +7,6 @@ import App from "./App";
 import { I18nextProvider } from "react-i18next";
 import dayjs from "dayjs";
 
-
 (window as any).dayjs = dayjs;
 
 const queryClient = new QueryClient();

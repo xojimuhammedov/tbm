@@ -12,8 +12,8 @@ const useFlowsOptions = () => {
   const flowMbbOptions = useMemo(
     () =>
       query.data?.docs?.map((item) => ({
-          label: item.interest_level ?? "",
-          value: item.interest_level ?? "",
+        label: item.interest_level ?? "",
+        value: item.interest_level ?? "",
       })),
     [query.data],
   );
