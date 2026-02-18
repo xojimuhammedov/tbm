@@ -10,8 +10,9 @@ import {
 } from "@/pages/flows-5_1/constants/flows.constants.ts";
 
 export type FlowImportProps = {
-  onSuccess?: () => void;
+  onSuccess?: (jobId: string) => void;
 };
+
 const useFlow_5_1_Import = ({ onSuccess }: FlowImportProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
@@ -19,44 +20,38 @@ const useFlow_5_1_Import = ({ onSuccess }: FlowImportProps = {}) => {
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return request.post(FLOWS_5_1_IMPORT_API, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const res = await request.post(FLOWS_5_1_IMPORT_API, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
+      return res.data;
     },
     onError: (error: never) => {
       toast({
         variant: "destructive",
         title: t(get(error, "response.statusText", "Error")),
-        description: t(
-          get(
-            error,
-            "response.data.message",
-            "Fayl yuklashda xatolik yuz berdi",
-          ),
-        ),
+        description: t(get(error, "response.data.message", "Fayl yuklashda xatolik yuz berdi")),
       });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const jobId: string = data?.jobId;
       queryClient.invalidateQueries({ queryKey: [FLOWS_5_1_QUERY_KEY] });
       toast({
-        variant: "success",
-        title: t("Success"),
-        description: t("Fayl muvaffaqiyatli yuklandi"),
+        title: t("Upload Started"),
+        description: t("Import jarayoni boshlandi..."),
       });
-      onSuccess?.();
+      onSuccess?.(jobId);
     },
   });
-  const handleUpload = useCallback(
-    (file: File) => {
-      const formData = new FormData();
-      formData.append("file", file);
 
-      mutation.mutate(formData);
-    },
-    [mutation],
+  const handleUpload = useCallback(
+      (file: File) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        mutation.mutate(formData);
+      },
+      [mutation],
   );
+
   return {
     handleUpload,
     loading: mutation.isPending,

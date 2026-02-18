@@ -11,57 +11,67 @@ import {
 
 export type FlowImportProps = {
   status?: string;
-  onSuccess?: () => void;
+  // jobId argumentini qabul qilishi uchun tipini yangiladik
+  onSuccess?: (jobId: string) => void;
 };
 
 const useChannelsImport = ({
-  status = "active",
-  onSuccess,
-}: FlowImportProps = {}) => {
+                             status = "active",
+                             onSuccess,
+                           }: FlowImportProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return request.post(`${CHANNELS_IMPORT_API}/${status}`, formData, {
+      const res = await request.post(`${CHANNELS_IMPORT_API}/${status}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      // Response ichidagi ma'lumotni qaytaramiz
+      return res.data;
     },
     onError: (error: never) => {
       toast({
         variant: "destructive",
         title: t(get(error, "response.statusText", "Error")),
         description: t(
-          get(
-            error,
-            "response.data.message",
-            "Fayl yuklashda xatolik yuz berdi",
-          ),
+            get(
+                error,
+                "response.data.message",
+                "Fayl yuklashda xatolik yuz berdi",
+            ),
         ),
       });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Kelgan javobdan jobId ni ajratib olamiz
+      const jobId: string = data?.jobId;
+      console.log("[useChannelsImport] Upload success. jobId:", jobId);
+
       queryClient.invalidateQueries({ queryKey: [CHANNELS_ID_QUERY_KEY] });
+
       toast({
         variant: "success",
-        title: t("Success"),
-        description: t("Fayl muvaffaqiyatli yuklandi"),
+        title: t("Upload Started"),
+        description: t("Import jarayoni boshlandi..."),
       });
-      onSuccess?.();
+
+      // Callback funksiyaga jobId ni uzatamiz
+      onSuccess?.(jobId);
     },
   });
 
   const handleUpload = useCallback(
-    (file: File) => {
-      const formData = new FormData();
-      formData.append("file", file);
+      (file: File) => {
+        const formData = new FormData();
+        formData.append("file", file);
 
-      mutation.mutate(formData);
-    },
-    [mutation],
+        mutation.mutate(formData);
+      },
+      [mutation],
   );
 
   return {
