@@ -81,6 +81,12 @@ const createFlowColumns = (
   { key: "interest_level", dataIndex: "interest_level", name: renderHeader(t("Заинтересованность")), render: renderCell },
   { key: "mt", dataIndex: "mt", name: renderHeader("М/Т"), render: renderCell },
   { key: "speed", dataIndex: "speed", name: renderHeader(t("Скорость")), render: renderCell },
+  { key: "protection_mode", dataIndex: "protection_mode", name: renderHeader(t("Prot/Unprot")), render: renderCell },
+  { key: "sp", dataIndex: "sp", name: renderHeader(t("С/П")), render: renderCell },
+  { key: "additional_information", dataIndex: "additional_information", name: renderHeader(t("Дополнительная Информация")), render: renderCell },
+  { key: "payment_status", dataIndex: "payment_status", name: renderHeader(t("оплата")), render: renderCell },
+  { key: "e1_name_in_vs", dataIndex: "e1_name_in_vs", name: renderHeader(t("ИМя_е1_в_ВС")), render: renderCell },
+  { key: "ms_name_in_vs", dataIndex: "ms_name_in_vs", name: renderHeader(t("ИМя_MS_в_ВС")), render: renderCell },
   {
     key: "actions",
     dataIndex: "_id",

@@ -6,7 +6,7 @@ import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { ChannelInterface } from "@/pages/channels-5_3/interfaces/channel.interface.ts";
 
 const renderHeader = (label: string) => (
-    <span style={{ whiteSpace: 'nowrap' }}>{label}</span>
+  <span style={{ whiteSpace: "nowrap" }}>{label}</span>
 );
 
 const renderValue = (value: any) => {
@@ -18,44 +18,44 @@ const renderValue = (value: any) => {
   if (stringValue.length > maxLength) {
     const truncated = stringValue.substring(0, maxLength) + "...";
     return (
-        <MyTooltip content={stringValue}>
-        <span style={{ whiteSpace: 'nowrap', cursor: 'pointer' }}>
+      <MyTooltip content={stringValue}>
+        <span style={{ whiteSpace: "nowrap", cursor: "pointer" }}>
           {truncated}
         </span>
-        </MyTooltip>
+      </MyTooltip>
     );
   }
 
-  return <span style={{ whiteSpace: 'nowrap' }}>{stringValue}</span>;
+  return <span style={{ whiteSpace: "nowrap" }}>{stringValue}</span>;
 };
 
 const createChannelColumns = (
-    t: (...args: TranslationArgsType) => string,
-    handleDelete: (id: string) => void,
-    handleEdit: (id: string) => void,
-    selectedRowKeys: string[],
-    onSelectRow: (id: string) => void,
-    onSelectAll: (ids: string[]) => void,
-    allIds: string[],
+  t: (...args: TranslationArgsType) => string,
+  handleDelete: (id: string) => void,
+  handleEdit: (id: string) => void,
+  selectedRowKeys: string[],
+  onSelectRow: (id: string) => void,
+  onSelectAll: (ids: string[]) => void,
+  allIds: string[],
 ): ColumnType<ChannelInterface>[] => [
   {
     key: "selection",
     dataIndex: "_id",
     name: (
-        <input
-            type="checkbox"
-            className="cursor-pointer size-4"
-            onChange={(e) => onSelectAll(e.target.checked ? allIds : [])}
-            checked={allIds.length > 0 && selectedRowKeys.length === allIds.length}
-        />
+      <input
+        type="checkbox"
+        className="cursor-pointer size-4"
+        onChange={(e) => onSelectAll(e.target.checked ? allIds : [])}
+        checked={allIds.length > 0 && selectedRowKeys.length === allIds.length}
+      />
     ),
     render: (id: string) => (
-        <input
-            type="checkbox"
-            className="cursor-pointer size-4"
-            checked={selectedRowKeys.includes(id)}
-            onChange={() => onSelectRow(id)}
-        />
+      <input
+        type="checkbox"
+        className="cursor-pointer size-4"
+        checked={selectedRowKeys.includes(id)}
+        onChange={() => onSelectRow(id)}
+      />
     ),
   },
   {
@@ -68,6 +68,18 @@ const createChannelColumns = (
     key: "international_stream_number",
     dataIndex: "international_stream_number",
     name: renderHeader(t("Международный номер потока")),
+    render: (value) => renderValue(value),
+  },
+  {
+    key: "forward_stream_interaction_number",
+    dataIndex: "forward_stream_interaction_number",
+    name: renderHeader(t("Прямой номер взаимодействия потока")),
+    render: (value) => renderValue(value),
+  },
+  {
+    key: "reverse_stream_interaction_number",
+    dataIndex: "reverse_stream_interaction_number",
+    name: renderHeader(t("Обратный взаимодействия потока")),
     render: (value) => renderValue(value),
   },
   {
@@ -171,23 +183,22 @@ const createChannelColumns = (
     dataIndex: "_id",
     name: renderHeader(t("Действия")),
     render: (id) => (
-        <div className={"flex items-center gap-2"}>
-          <MyTooltip content={t("Редактировать")}>
-            <EditIcon
-                className={"size-4 cursor-pointer text-blue-500"}
-                onClick={() => handleEdit(id)}
-            />
-          </MyTooltip>
-          <MyTooltip content={t("Удалить")}>
-            <Trash2Icon
-                className={"size-4 cursor-pointer text-red-500"}
-                onClick={() => handleDelete(id)}
-            />
-          </MyTooltip>
-        </div>
+      <div className={"flex items-center gap-2"}>
+        <MyTooltip content={t("Редактировать")}>
+          <EditIcon
+            className={"size-4 cursor-pointer text-blue-500"}
+            onClick={() => handleEdit(id)}
+          />
+        </MyTooltip>
+        <MyTooltip content={t("Удалить")}>
+          <Trash2Icon
+            className={"size-4 cursor-pointer text-red-500"}
+            onClick={() => handleDelete(id)}
+          />
+        </MyTooltip>
+      </div>
     ),
   },
-
 ];
 
 export default createChannelColumns;

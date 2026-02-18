@@ -7,6 +7,7 @@ import { DATE } from "@/shared/constants/date.constants.ts";
 
 type UseQueryParamsProps = {
   excludeParams?: string[];
+  includeParams?: string[];
   dateRangeKey?: string;
   format?: string;
 };
@@ -15,34 +16,45 @@ const useQueryParams = (props?: UseQueryParamsProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { storedRanges } = useDateRangeStore();
 
+  const storedRange = useMemo(() => {
+    const dateKey = props?.dateRangeKey;
+    if (dateKey) {
+      const range = storedRanges[dateKey];
+      if (range) return range;
+      return {
+        from: dayjs.tz().subtract(2, 'week').startOf('day').toDate(),
+        to: dayjs.tz().endOf('day').toDate(),
+      };
+    }
+    return undefined;
+  }, [props?.dateRangeKey, storedRanges]);
+
   const memoizedParams = useMemo(() => {
     const parsedParams: Record<string, string | string[]> = {};
 
-    if (props?.dateRangeKey) {
-      const storedRange = storedRanges[props.dateRangeKey];
-      if (storedRange?.from && storedRange?.to) {
-        parsedParams["from"] = dayjs(storedRange.from)
-          .utc(true)
-          .format(props?.format ?? DATE);
-        parsedParams["to"] = dayjs(storedRange.to)
-          .utc(true)
-          .format(props?.format ?? DATE);
+    // Only inject stored range dates if they're not already in URL
+    if (storedRange?.from && storedRange?.to) {
+      const hasStartInUrl = searchParams.has('start');
+      const hasEndInUrl = searchParams.has('end');
+
+      if (!hasStartInUrl && !props?.excludeParams?.includes('start')) {
+        parsedParams['start'] = dayjs(storedRange.from).utc(true).toISOString();
+      }
+      if (!hasEndInUrl && !props?.excludeParams?.includes('end')) {
+        parsedParams['end'] = dayjs(storedRange.to).utc(true).toISOString();
       }
     }
 
     searchParams.forEach((value, key) => {
       if (props?.excludeParams?.includes(key)) return;
+      if (props?.includeParams && !props.includeParams.includes(key)) return;
+
       const values = searchParams.getAll(key);
       parsedParams[key] = values.length > 1 ? values : value;
     });
 
     return parsedParams;
-  }, [
-    searchParams,
-    props?.excludeParams,
-    props?.dateRangeKey,
-    JSON.stringify(get(storedRanges, props?.dateRangeKey ?? "", "")),
-  ]);
+  }, [searchParams, props?.excludeParams, props?.includeParams, storedRange]);
 
   const handleSetParams = useCallback(
     (data: Record<string, unknown>) => {
