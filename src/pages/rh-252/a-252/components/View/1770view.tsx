@@ -109,17 +109,21 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
           <div className="text-center font-bold text-[18px] tracking-[0.3em] mb-5">
             XABARNOMA
           </div>
-          <div className="flex justify-between font-bold text-[15px]">
+          <div className="grid grid-cols-3 font-bold text-[15px] items-center">
             <div className="flex gap-1">
-              SANA:{" "}
-              <span className=" decoration-1">
+              SANA:
+              <span>
                 {document?.order_date
                   ? dateFormatter(document.order_date, "YYYY-yil D-MMMM", "uz")
                   : "____-yil __-________"}
               </span>
             </div>
-            <div>№ {document?.code || "17-70-XX/XXXX"}</div>
-            <div>SONI: 1</div>
+
+            <div className="text-center">
+              № {document?.code || "17-70-XX/XXXX"}
+            </div>
+
+            <div className="text-right">SONI: 1</div>
           </div>
 
           <div className="grid grid-cols-[60px_1fr]  mb-8 text-[15px] ">
@@ -171,7 +175,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
                 ? dateFormatter(basic.start_time, "YYYY-yil D-MMMM", "uz")
                 : "____-yil"}{" "}
               {formatTime(basic?.start_time)} dan {formatTime(basic?.end_time)}{" "}
-              gacha ({basic?.timezone || "+5UTC"})
+              gacha ({basic?.timezone || "UTC+5"})
             </p>
           </div>
           <div className="space-y-4 mb-15 text-[15px] font-medium italic">
