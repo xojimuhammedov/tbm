@@ -11,57 +11,55 @@ import {
 
 export type FlowImportProps = {
   status?: string;
-  onSuccess?: () => void;
+  onSuccess?: (jobId: string) => void;
 };
 
 const useFlowImport = ({
-  status = "active",
-  onSuccess,
-}: FlowImportProps = {}) => {
+                         status = "active",
+                         onSuccess,
+                       }: FlowImportProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return request.post(`${FLOWS_IMPORT_API}/${status}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const res = await request.post(`${FLOWS_IMPORT_API}/${status}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
+      return res.data;
     },
     onError: (error: never) => {
       toast({
         variant: "destructive",
         title: t(get(error, "response.statusText", "Error")),
         description: t(
-          get(
-            error,
-            "response.data.message",
-            "Fayl yuklashda xatolik yuz berdi",
-          ),
+            get(error, "response.data.message", "Fayl yuklashda xatolik yuz berdi")
         ),
       });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const jobId: string = data?.jobId;
+      console.log("[useFlowImport] Upload success. jobId:", jobId);
+
       queryClient.invalidateQueries({ queryKey: [FLOWS_ID_QUERY_KEY] });
+
       toast({
-        variant: "success",
-        title: t("Success"),
-        description: t("Fayl muvaffaqiyatli yuklandi"),
+        title: t("Upload Started"),
+        description: t("Import jarayoni boshlandi..."),
       });
-      onSuccess?.();
+
+      onSuccess?.(jobId);
     },
   });
 
   const handleUpload = useCallback(
-    (file: File) => {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      mutation.mutate(formData);
-    },
-    [mutation],
+      (file: File) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        mutation.mutate(formData);
+      },
+      [mutation]
   );
 
   return {
