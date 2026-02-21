@@ -1,7 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useEImzo } from 'use-eimzo'
+import { useCallback, useState } from "react";
+import { useEImzo } from "use-eimzo";
+import { useToast } from "@/shared/hooks/useToast";
+import { useTranslation } from "react-i18next";
+import useGeneratePdf from "./useGeneratePdf";
+import useTimestamp from "./useTimestamp";
+import useVerifySignature from "./useVerifySignature";
 
-type Cert = {
+export type Cert = {
     disk: string;
     path: string;
     name: string;
@@ -17,93 +22,169 @@ type Cert = {
     type: string;
 };
 
-export const MyComponent = () => {
-    const { listAllKeys, signKey, install } = useEImzo()
-    const [keys, setKeys] = useState<Cert[]>([])
-    const [pkcs7, setPkcs7] = useState<string | null>(null)
-    const [fileBase64, setFileBase64] = useState<string | null>(null);
+export type SignStep =
+    | "idle"
+    | "generating-pdf"
+    | "loading-pdf"
+    | "signing"
+    | "timestamping"
+    | "verifying"
+    | "done"
+    | "error";
 
+const useEImzoSign = (documentId: string) => {
+    const { t } = useTranslation();
+    const { toast } = useToast();
+    const { listAllKeys, signKey, install } = useEImzo();
 
-    useEffect(() => {
-        const init = async () => {
-            try {
-                await install() // API keys va E-IMZO ni ishga tushirish
-                const allKeys = await listAllKeys()
-                setKeys(allKeys)
-            } catch (err) {
-                console.error('E-IMZO init xatolik:', err)
-            }
+    const { generatePdf } = useGeneratePdf();
+    const { addTimestamp } = useTimestamp();
+    const { verifySignature } = useVerifySignature();
+
+    const [step, setStep] = useState<SignStep>("idle");
+    const [keys, setKeys] = useState<Cert[]>([]);
+    const [selectedCert, setSelectedCert] = useState<Cert | null>(null);
+    const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+    const [pkcs7, setPkcs7] = useState<string | null>(null);
+    const [pkcs7WithTimestamp, setPkcs7WithTimestamp] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchPdfAsBase64 = useCallback(async (filePath: string): Promise<string> => {
+        const response = await fetch(filePath, {
+            credentials: "include",
+        });
+
+        if (!response.ok) {
+            throw new Error(`PDF yuklanmadi: ${response.status} ${response.statusText}`);
         }
-        init()
-    }, [])
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                // "data:application/pdf;base64,..." qismini olib tashlab, faqat sof Base64 ni olamiz
-                const base64String = (reader.result as string).split(',')[1];
-                setFileBase64(base64String);
-            };
-            reader.readAsDataURL(file);
+        const arrayBuffer = await response.arrayBuffer();
+        const bytes = new Uint8Array(arrayBuffer);
+        let binary = "";
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
         }
-    };
+        return btoa(binary);
+    }, []);
 
-    const handleSignKey = async (cert: Cert) => {
-        if (!fileBase64) {
-            alert("Iltimos, avval faylni tanlang!");
+    /** E-IMZO ni ishga tushirish */
+    const initEImzo = useCallback(async () => {
+        try {
+            await install();
+            const allKeys = await listAllKeys();
+            setKeys(allKeys as Cert[]);
+        } catch {
+            throw new Error(
+                t("E-IMZO dasturi topilmadi. Iltimos, dasturni ishga tushiring.")
+            );
+        }
+    }, [install, listAllKeys, t]);
+
+    /** PDF ni oldindan yuklash */
+    const preloadPdf = useCallback(async () => {
+        try {
+            const pdfName = await generatePdf(documentId);
+            const pdfPath = `/api/temp-pdf/${pdfName}`;
+            setPdfUrl(pdfPath);
+        } catch (err) {
+            console.error("Preload error:", err);
+        }
+    }, [documentId, generatePdf]);
+
+    /** Asosiy imzolash jarayoni */
+    const handleSign = useCallback(async () => {
+        if (!selectedCert) {
+            toast({
+                variant: "destructive",
+                title: t("Xatolik"),
+                description: t("Iltimos, avval kalitni tanlang."),
+            });
             return;
         }
+
+        setError(null);
+
         try {
-            // 'my-challenge-string' o'rniga faylning Base64 kodi ketadi
-            const result = await signKey(cert, fileBase64);
-            setPkcs7(result);
-            console.log("Imzolangan PKCS#7 paket:", result);
-        } catch (err) {
-            console.error("Imzolashda xatolik:", err);
+            let currentPdfUrl = pdfUrl;
+            if (!currentPdfUrl) {
+                setStep("generating-pdf");
+                const pdfName = await generatePdf(documentId);
+                currentPdfUrl = `/api/temp-pdf/${pdfName}`;
+                setPdfUrl(currentPdfUrl);
+            }
+
+            // 2. Base64 ga aylantirish
+            setStep("loading-pdf");
+            const base64 = await fetchPdfAsBase64(currentPdfUrl);
+
+            // 3. E-IMZO bilan imzolash
+            setStep("signing");
+            const signedPkcs7 = (await signKey(selectedCert, base64)) as string;
+            setPkcs7(signedPkcs7);
+
+            // 4. Timestamp qo'shish
+            setStep("timestamping");
+            const timedPkcs7 = await addTimestamp(signedPkcs7);
+            setPkcs7WithTimestamp(timedPkcs7);
+
+            // 5. Verifikatsiya (Serverga yuborish)
+            setStep("verifying");
+            await verifySignature(documentId, timedPkcs7);
+
+            setStep("done");
+            toast({
+                variant: "success",
+                title: t("Muvaffaqiyatli"),
+                description: t("Hujjat muvaffaqiyatli imzolandi va tasdiqlandi."),
+            });
+        } catch (err: unknown) {
+            const message =
+                err instanceof Error ? err.message : t("Noma'lum xatolik yuz berdi.");
+            setError(message);
+            setStep("error");
+            toast({
+                variant: "destructive",
+                title: t("Xatolik"),
+                description: message,
+            });
         }
-    }
+    }, [
+        selectedCert,
+        documentId,
+        pdfUrl,
+        generatePdf,
+        fetchPdfAsBase64,
+        signKey,
+        addTimestamp,
+        verifySignature,
+        t,
+        toast,
+    ]);
 
+    const reset = useCallback(() => {
+        setStep("idle");
+        setSelectedCert(null);
+        setPdfUrl(null);
+        setPkcs7(null);
+        setPkcs7WithTimestamp(null);
+        setError(null);
+    }, []);
 
-    return (
-        <div style={{ padding: '20px' }}>
-            <h1>E-IMZO Hujjat Imzolash</h1>
+    return {
+        keys,
+        selectedCert,
+        setSelectedCert,
+        initEImzo,
+        step,
+        error,
+        pdfUrl,
+        pkcs7,
+        pkcs7WithTimestamp,
+        preloadPdf,
+        handleSign,
+        reset,
+        isLoading: !["idle", "done", "error"].includes(step),
+    };
+};
 
-            <div style={{ marginBottom: '20px', border: '1px solid #ccc', padding: '10px' }}>
-                <h3>1-qadam: Faylni tanlang</h3>
-                <input type="file" onChange={handleFileChange} />
-                {fileBase64 && <p style={{ color: 'green' }}>Fayl yuklandi va Base64 ga o'girildi.</p>}
-            </div>
-
-            <div style={{ marginBottom: '20px' }}>
-                <h3>2-qadam: Kalitni tanlang va imzolang</h3>
-                {keys.length === 0 && <p>Kalitlar yuklanmoqda yoki E-IMZO topilmadi...</p>}
-                {keys.map((cert) => (
-                    <div key={cert.serialNumber} style={{ marginBottom: '10px', borderBottom: '1px dotted' }}>
-                        <p><strong>F.I.SH:</strong> {cert.CN} <br/>
-                            <strong>STIR:</strong> {cert.TIN}</p>
-                        <button
-                            disabled={!fileBase64}
-                            onClick={() => handleSignKey(cert)}
-                        >
-                            Ushbu kalit bilan imzolash
-                        </button>
-                    </div>
-                ))}
-            </div>
-
-            {pkcs7 && (
-                <div>
-                    <h3>Natija (PKCS#7):</h3>
-                    <textarea
-                        readOnly
-                        value={pkcs7}
-                        style={{ width: '100%', height: '150px', fontFamily: 'monospace' }}
-                    />
-                    <p><i>Bu kodni backendga yuborib, imzoni va hujjatni validatsiya qilishingiz mumkin.</i></p>
-                </div>
-            )}
-        </div>
-    )
-}
+export default useEImzoSign;

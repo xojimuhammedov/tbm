@@ -166,6 +166,9 @@ const GroupPage = lazy(() => import("@/pages/groups/Page"));
 const SettingsPage = lazy(() => import("@/pages/staff/Page"));
 const RolesPage = lazy(() => import("@/pages/role/Page"));
 
+// E-imzo
+const EImzoSignPage = lazy(() => import("@/shared/components/e-imzo/EImzoSignPage.tsx"));
+
 function Router() {
   const routes: RouteObject[] = [
     {
@@ -663,6 +666,10 @@ function Router() {
           element: <F252_ApplicationForm />,
         },
       ],
+    },
+    {
+      path:"rh-252/a-252/sign/:id",
+      element: <EImzoSignPage />,
     },
     {
       path: "error",
