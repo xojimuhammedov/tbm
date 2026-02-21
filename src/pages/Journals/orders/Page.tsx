@@ -11,7 +11,7 @@ import ImportOrdersModal from "./components/ImportOrdersModal.tsx";
 import { ORDERS_QUERY_KEY } from "@/pages/Journals/orders/constants/orders.constants.ts";
 import { OrdersInterface } from "@/pages/Journals/orders/interfaces/orders.interface.ts";
 import useOrders from "@/pages/Journals/orders/hooks/useOrders.ts";
-import {MyComponent} from "@/shared/hooks/e-imzo/useEImzo.tsx";
+
 
 const Page = () => {
   const { t } = useTranslation();
@@ -58,7 +58,7 @@ const Page = () => {
             {selectedRowKeys.length > 0 && `(${selectedRowKeys.length})`}
           </Button>
 
-          <MyComponent/>
+
 
               <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
             <UploadIcon className="size-4" />

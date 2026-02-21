@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const BASE_URL = env.VITE_BASE_URL;
   const SOCKET_URL = env.VITE_SOCKET_URL;
-  const proxyPaths = ["/api", "/uploads"];
+  const proxyPaths = ["/api", "/uploads", "/frontend"];
   const socketPaths = ["/socket.io"];
 
   const defaultConfig = {
