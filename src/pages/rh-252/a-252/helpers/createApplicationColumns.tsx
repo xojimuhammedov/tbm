@@ -1,5 +1,5 @@
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import { EditIcon, EyeIcon, Trash2Icon, PencilLineIcon, ShieldCheckIcon } from "lucide-react";
+import { EditIcon, EyeIcon, Trash2Icon, PencilLineIcon } from "lucide-react"; // ShieldCheckIcon
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import {
   OrderApplication,
@@ -14,7 +14,7 @@ const createOrderColumns = (
     handleDelete: (id: string) => void,
     handleView: (id: string) => void,
     handleEditCode: (id: string, code: string) => void,
-    handleEImzo: (id: string) => void,
+    // handleEImzo: (id: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
     key: "code",
@@ -83,14 +83,14 @@ const createOrderColumns = (
       return (
           <div className={"flex items-center gap-2"}>
             {/* E-IMZO — View oldida */}
-            <MyTooltip content={t("E-IMZO bilan imzolash")}>
-              <ShieldCheckIcon
-                  className={
-                    "size-4 cursor-pointer text-slate-500 hover:text-emerald-600 transition-colors"
-                  }
-                  onClick={() => handleEImzo(id)}
-              />
-            </MyTooltip>
+            {/*<MyTooltip content={t("E-IMZO bilan imzolash")}>*/}
+            {/*  <ShieldCheckIcon*/}
+            {/*      className={*/}
+            {/*        "size-4 cursor-pointer text-slate-500 hover:text-emerald-600 transition-colors"*/}
+            {/*      }*/}
+            {/*      onClick={() => handleEImzo(id)}*/}
+            {/*  />*/}
+            {/*</MyTooltip>*/}
 
             <MyTooltip content={t("View")}>
               <EyeIcon
