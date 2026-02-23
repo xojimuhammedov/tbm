@@ -27,6 +27,11 @@ const RH231AFormPage = () => {
         path: id ? `${id}/edit` : "create",
         isActive: true,
       },
+        {
+            name: t("E-imzo"),
+            path: "rh-252/a-252/sign/:id",
+            isActive: true,
+        },
     ],
     [id, t],
   );
