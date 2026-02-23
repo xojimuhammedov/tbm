@@ -3,7 +3,7 @@ import { safeArray } from "../utils/common";
 import { Handler } from "@/pages/rh-252/a-252/hooks/component/types/types.ts";
 
 const h1733: Handler = {
-  populate: (form, payload, ctx) => {
+  populate: (form, payload) => {
     const basic = payload.basic || {};
     form.setValue(
       "payload.basic.organization_name",
@@ -14,9 +14,14 @@ const h1733: Handler = {
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
     form.setValue("payload.basic.justification", basic.justification ?? "");
 
-    const delChannels = safeArray<string>(payload.delete?.channels);
-    ctx.setCurrentIds(delChannels);
-    form.setValue("payload.delete.channels", delChannels);
+    const flowIds = safeArray(payload.delete?.flow_ids);
+    const delElements = flowIds.map((item: any) =>
+        typeof item === "string" ? item : item.code
+    );
+
+    setTimeout(() => {
+      form.setValue("payload.delete.elements", delElements, { shouldDirty: true });
+    }, 0);
   },
 
   build: (data, ctx) => ({
@@ -31,7 +36,7 @@ const h1733: Handler = {
         base_file: data.payload.file_name || "",
       },
       delete: {
-        elements: ctx.currentIds || [],
+        elements: data.payload.delete?.elements || [],
       },
     },
   }),

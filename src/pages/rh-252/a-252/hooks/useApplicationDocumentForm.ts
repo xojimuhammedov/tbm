@@ -40,6 +40,7 @@ const useApplicationDocumentForm = ({
       to: "",
       copy: "",
       responsible: "",
+      director: "",
       point_a: "",
       point_b: "",
       count: "",
@@ -63,7 +64,7 @@ const useApplicationDocumentForm = ({
         },
         create: { flow_ids: [] },
         update: { update_type: "", flow_ids: [] },
-        delete: { channels: [] },
+        delete: { elements: [] },
         events: [],
         flow_ids: [],
         content: "",
@@ -141,6 +142,7 @@ const useApplicationDocumentForm = ({
     form.setValue("to", listToText(doc.to));
     form.setValue("copy", listToText(doc.copy));
     form.setValue("responsible", doc?.responsible?._id ?? "");
+    form.setValue("director", doc?.director ?? "");
 
     const handler = handlers[prefix];
     if (!handler) return;

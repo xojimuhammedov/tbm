@@ -351,6 +351,16 @@ const ApplicationDocumentForm = () => {
             isClearable
             required
           />
+
+          <MySelect
+              control={form.control}
+              name="director"
+              options={staffOptions || []}
+              label={t("Direktor")}
+              placeholder={t("Select director")}
+              isClearable
+              required
+          />
         </div>
 
         <FormContainerFooter>

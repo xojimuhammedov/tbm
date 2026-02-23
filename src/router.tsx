@@ -622,6 +622,10 @@ function Router() {
           element: <A252FormPage />,
         },
         {
+          path:"rh-252/a-252/sign/:id",
+          element: <EImzoSignPage />,
+        },
+        {
           path: "rh-252/rh-3_3",
           element: <RH3_3Page />,
         },
@@ -667,10 +671,7 @@ function Router() {
         },
       ],
     },
-    {
-      path:"rh-252/a-252/sign/:id",
-      element: <EImzoSignPage />,
-    },
+
     {
       path: "error",
       element: <CommonLayout />,
