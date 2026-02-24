@@ -33,4 +33,5 @@ export interface FlowInterface {
   e1_name_in_vs?: string;
   ms_name_in_vs?: string;
   created_at: string;
+  inter_operator_id: string;
 }

@@ -17,6 +17,7 @@ export interface BaseOrder {
   copy: string[];
   payload_model?: string;
   created_at: string;
+  created_by: ResponsibleUser;
 }
 
 export interface ResponsibleUser {

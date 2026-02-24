@@ -375,7 +375,7 @@ const OrderView1748 = ({ open, onOpenChange, document }: Props) => {
           <div className="flex justify-between items-end text-[15px] font-bold mt-5">
             <div className="w-1/2">Direktor</div>
             <div className="w-1/2 text-right">
-               {director.first_name}
+               {director?.first_name}
             </div>
           </div>
         </div>

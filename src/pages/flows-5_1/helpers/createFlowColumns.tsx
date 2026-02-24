@@ -74,6 +74,12 @@ const createFlowColumns = (
     render: renderCell,
   },
   {
+    key: "inter_operator_id",
+    dataIndex: "inter_operator_id",
+    name: renderHeader(t("международный ")),
+    render: renderCell,
+  },
+  {
     key: "reverse",
     dataIndex: "reverse",
     name: renderHeader(t("обратный")),
