@@ -225,6 +225,33 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
               </div>
             </div>
           ))}
+          {/* --- Imzolar bo'limi --- */}
+          <div className="mt-10 space-y-4 no-break">
+
+            {/* Direktor qatori */}
+            <div className="flex justify-between items-end text-[16px] font-bold">
+              <div className="w-1/2">Direktor:</div>
+              <div className="w-1/2 text-right  ">
+                {document?.director?.first_name}
+              </div>
+            </div>
+
+            {/* Tuzuvchi (Created by) qatori */}
+            <div className="flex justify-between items-end text-[15px] font-bold pt-4">
+              <div className="w-1/2">Tuzuvchi:</div>
+              <div className="w-1/2 text-right  ">
+                {document?.created_by?.first_name} {document?.created_by?.second_name}
+              </div>
+            </div>
+
+            {/* Bog'lanish uchun ma'lumot (ixtiyoriy, kichikroq shriftda) */}
+              {/*<div className="flex justify-end mt-2">*/}
+              {/*  <div className="text-[12px] text-gray-600">*/}
+              {/*    Tel: {document?.responsible?.phone}*/}
+              {/*  </div>*/}
+              {/*</div>*/}
+
+          </div>
         </div>
       </div>
     </MyModal>

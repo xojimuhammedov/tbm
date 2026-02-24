@@ -24,6 +24,9 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
 
   const payload = (document as any)?.payload;
   const basic = payload?.basic;
+  const director = document?.director;
+
+
 
   const getDynamicTitle = () => {
     const hasCreate = payload?.create?.flow_ids?.length > 0;
@@ -248,6 +251,13 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
                   {document?.responsible?.first_name}
                 </span>
               </p>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-end text-[15px] font-bold mt-5">
+            <div className="w-1/2">Direktor</div>
+            <div className="w-1/2 text-right">
+              {director?.first_name}
             </div>
           </div>
 

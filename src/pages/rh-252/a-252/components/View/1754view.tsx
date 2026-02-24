@@ -23,6 +23,8 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
   });
   const payload = (document as any)?.payload;
 
+  const director = (document as any)?.director;
+
   return (
     <MyModal
       open={open}
@@ -178,7 +180,14 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
             Mintaqaviy boshqaruv bog‘lamasi tomonidan batafsil ma’lumot taqdim
             etilsin.
           </p>
+          <div className="flex justify-between items-end text-[15px] font-bold mt-5">
+            <div className="w-1/2">Direktor</div>
+            <div className="w-1/2 text-right">
+              {director?.first_name}
+            </div>
+          </div>
         </div>
+
       </div>
     </MyModal>
   );
