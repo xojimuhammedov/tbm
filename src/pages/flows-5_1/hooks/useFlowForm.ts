@@ -95,6 +95,7 @@ const useFlowForm = ({ id, onSave }: FlowFormProps) => {
         payment_status: item.payment_status,
         e1_name_in_vs: item.e1_name_in_vs,
         ms_name_in_vs: item.ms_name_in_vs,
+        inter_operator_id: item.inter_operator_id
       });
     }
   }, [query.data, form]);

@@ -66,6 +66,12 @@ const createOrderColumns = (
     name: t("Mas'ul xodim"),
     render: (responsible: ResponsibleUser) => responsible?.first_name || "---",
   },
+    {
+        key: "name",
+        dataIndex: "created_by",
+        name: t("Yaratuvchi"),
+        render: (responsible: ResponsibleUser) => responsible?.first_name || "---",
+    },
   {
     key: "created_at",
     dataIndex: "created_at",
