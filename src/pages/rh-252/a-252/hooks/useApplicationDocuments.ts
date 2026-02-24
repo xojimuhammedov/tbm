@@ -111,7 +111,7 @@ const useApplicationDocuments = () => {
               handleDelete,
               handleView,
               handleEditCode,
-              // handleEImzo, // ← yangi parametr
+              handleEImzo,
           ),
       [handleDelete, handleEdit, handleView, handleEditCode, handleEImzo, t],
   );

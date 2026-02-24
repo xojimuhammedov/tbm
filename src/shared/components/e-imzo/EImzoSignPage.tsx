@@ -70,7 +70,6 @@ function CertDropdown({ keys, selected, onSelect, disabled }: { keys: Cert[]; se
                     {keys.length === 0 ? <span className="text-slate-400">Kalitlar topilmadi</span> : selected ? (
                         <>
                             <p className="font-semibold text-slate-800 truncate">{selected.CN}</p>
-                            <p className="text-xs text-slate-500">STIR: {selected.TIN}</p>
                         </>
                     ) : <span className="text-slate-500">Kalitni tanlang...</span>}
                 </div>
@@ -89,7 +88,6 @@ function CertDropdown({ keys, selected, onSelect, disabled }: { keys: Cert[]; se
                                             className={`w-full text-left px-4 py-3.5 flex items-start gap-3 transition-colors ${isSelected ? "bg-emerald-50" : "hover:bg-slate-50"} ${expired ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}>
                                         <div className="flex-1 min-w-0">
                                             <p className="font-semibold text-slate-800 text-sm">{cert.CN}</p>
-                                            <p className="text-xs text-slate-500">STIR: {cert.TIN}</p>
                                             <p className="text-[10px] text-slate-400">{formatDate(cert.validFrom)} - {formatDate(cert.validTo)}</p>
                                         </div>
                                     </button>

@@ -35,7 +35,7 @@ export type SignStep =
 const useEImzoSign = (documentId: string) => {
     const { t } = useTranslation();
     const { toast } = useToast();
-    const { listAllKeys, signKey, install } = useEImzo();
+    const { listAllKeys, signKey, install, addApiKey } = useEImzo();
 
     const { generatePdf } = useGeneratePdf();
     const { addTimestamp } = useTimestamp();
@@ -71,6 +71,10 @@ const useEImzoSign = (documentId: string) => {
     const initEImzo = useCallback(async () => {
         try {
             await install();
+            addApiKey(
+                window.location.hostname,
+                import.meta.env.VITE_EIMZO_API_KEY
+            );
             const allKeys = await listAllKeys();
             setKeys(allKeys as Cert[]);
         } catch {
@@ -78,7 +82,7 @@ const useEImzoSign = (documentId: string) => {
                 t("E-IMZO dasturi topilmadi. Iltimos, dasturni ishga tushiring.")
             );
         }
-    }, [install, listAllKeys, t]);
+    }, [install, addApiKey, listAllKeys, t]);
 
     /** PDF ni oldindan yuklash */
     const preloadPdf = useCallback(async () => {

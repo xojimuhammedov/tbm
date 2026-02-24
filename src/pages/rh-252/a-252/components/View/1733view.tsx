@@ -27,6 +27,8 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
   const basic = payload?.basic;
   const channels = payload?.delete?.channels || [];
   const responsible = document?.responsible;
+  const director = document?.director;
+
 
   return (
     <MyModal
@@ -170,6 +172,13 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
                 bo‘yicha mas’ul
               </b>
             </p>
+          </div>
+
+          <div className="flex justify-between items-end text-[15px] font-bold mt-5">
+            <div className="w-1/2">Direktor</div>
+            <div className="w-1/2 text-right">
+              {director?.first_name}
+            </div>
           </div>
         </div>
       </div>

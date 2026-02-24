@@ -12,6 +12,7 @@ export interface BaseOrder {
   document_index: string;
   order_date: string;
   responsible: ResponsibleUser;
+  director: ResponsibleUser;
   to: string[];
   copy: string[];
   payload_model?: string;

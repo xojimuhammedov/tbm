@@ -2,14 +2,6 @@ import { buildBasePayload } from "../utils/commonPayload";
 import { safeArray } from "../utils/common";
 import { Handler } from "@/pages/rh-252/a-252/hooks/component/types/types.ts";
 
-/**
- * UI -> API (contract)
- * UI: payload.update.update_type ("channels" | "flows")
- * UI: payload.update.flow_ids (rows)
- *
- * API: payload.update.channels: [{old: string, new: string}]
- * API: payload.update.flows: [{code, point_a, point_b, device_a, device_b, port_a, port_b}]
- */
 const buildUpdatePayloadContract = (data: any) => {
   const updateType = data.payload?.update?.update_type;
 

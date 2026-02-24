@@ -24,6 +24,8 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
   const basic = payload?.basic;
   const flowIds = payload?.flow_ids || [];
   const responsible = document?.responsible;
+  const director = document?.director;
+
   const formatTime = (dateStr: string) => {
     if (!dateStr) return "00:00";
     const date = new Date(dateStr);
@@ -187,6 +189,12 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
             <div className="w-1/2">TTMQ va B xizmati boshlig‘i</div>
             <div className="w-1/2 text-right">
               {responsible?.first_name} {responsible?.second_name}
+            </div>
+          </div>
+          <div className="flex justify-between items-end text-[15px] font-bold mt-5">
+            <div className="w-1/2">Direktor</div>
+            <div className="w-1/2 text-right">
+                    {director?.first_name}
             </div>
           </div>
         </div>

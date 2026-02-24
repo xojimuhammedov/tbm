@@ -3,7 +3,11 @@ import { Handler } from "@/pages/rh-252/a-252/hooks/component/types/types.ts";
 
 const h1731: Handler = {
   populate: (form, payload) => {
-    form.setValue("payload.file_name", payload.file_name ?? "");
+    const basic = payload.basic || {};
+    form.setValue(
+        "payload.file_name",
+        basic.base_file ?? payload?.file_name ?? "",
+    );
   },
 
   build: (data, ctx) => ({

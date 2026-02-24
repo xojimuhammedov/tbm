@@ -20,7 +20,11 @@ const h1748: Handler = {
     );
     form.setValue("payload.concert_text", payload.concert_text ?? "");
     form.setValue("payload.basis", payload.basis ?? "");
-  },
+    form.setValue(
+        "payload.file_name",
+        basic.base_file ?? payload?.file_name ?? "",
+    );
+    },
 
   build: (data, ctx) => ({
     ...buildBasePayload(data, ctx.fullCode),
