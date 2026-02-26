@@ -14,6 +14,7 @@ const LoginPage = lazy(() => import("./layouts/auth/login/Login"));
 
 // Dashboard Pages
 const DashboardPage = lazy(() => import("./pages/dashboard/Page"));
+const Verify = lazy(() => import("./pages/check-document/Page.tsx"));
 
 // External incoming documents
 const Eid_17_96_Page = lazy(
@@ -140,6 +141,7 @@ const E231FormPage = lazy(
   () => import("@/pages/gras/e-231/pages/FormPage.tsx"),
 );
 
+
 const A252Page = lazy(() => import("@/pages/rh-252/a-252/Page"));
 const A252FormPage = lazy(() => import("@/pages/rh-252/a-252/pages/FormPage"));
 
@@ -200,6 +202,10 @@ function Router() {
         {
           path: "dashboard",
           element: <DashboardPage />,
+        },
+        {
+          path: "verify",
+          element: <Verify/>,
         },
         //External incoming documents
 

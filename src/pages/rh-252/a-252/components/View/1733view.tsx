@@ -123,16 +123,15 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
               {basic?.request_date
                 ? dateFormatter(basic.request_date, "YYYY-yil DD-MMMM", "uz")
                 : "____-yil __-________"}
-              dagi {basic?.request_number || "____"}ga binoan{" "}
+              dagi {basic?.request_number || "____"} ga binoan{" "}
               {basic?.justification || "___________________________________"}
               {basic?.deadline
                 ? dateFormatter(basic.deadline, " YYYY-yil DD-MMMM", "uz")
-                : "____-yildan"}{" "}
-              boshlab ushbu kanallar uchun ishlagan quyidagi zaxira (AAG)
+                : "____-yildan"}{""}dan boshlab ushbu kanallar uchun ishlagan quyidagi zaxira (AAG)
               kanallari o‘chirilsin:
             </p>
           </div>
-          <div className="space-y-3 mb-8 text-[15px] ml-4">
+          <div className="space-y-3 mb-4 text-[15px] ml-4">
             {channels.map((ch: any, idx: number) => (
               <div key={idx} className="flex">
                 <span className="mr-2">{idx + 1})</span>
@@ -145,8 +144,8 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
             ))}
           </div>
 
-          <div className="text-[15px] mb-12 text-justify leading-relaxed">
-            <p>
+          <div className="text-[15px] mb-12 text-justify">
+            <p className="indent-12">
               Shuningdek zaxira (AAG) kanallari o‘chirilgandan so‘ng bo‘shagan
               {channels.length > 0 && (
                 <span className="font-bold mx-1">
