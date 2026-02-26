@@ -26,21 +26,43 @@ export type SignStep =
     | "idle"
     | "generating-pdf"
     | "loading-pdf"
+    | "loading-key"
     | "signing"
     | "timestamping"
     | "verifying"
     | "done"
     | "error";
 
+const PLUGIN_MAP: Record<string, string> = {
+    pfx: "pfx",
+    certkey: "certkey",
+    ytks: "ytks",
+    idcard: "idcard",
+    baikey: "baikey",
+};
+
+const capiCall = <T = unknown>(plugin: string, name: string, args: unknown[] = []): Promise<T> =>
+    new Promise<T>((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const CAPIWS = (window as any).CAPIWS;
+        if (!CAPIWS) {
+            reject(new Error("CAPIWS topilmadi. E-IMZO ishga tushmagan."));
+            return;
+        }
+        CAPIWS.callFunction(
+            { plugin, name, arguments: args },
+            (_: unknown, data: T) => resolve(data),
+            (err: unknown) => reject(new Error(String(err)))
+        );
+    });
+
 const useEImzoSign = (documentId: string) => {
     const { t } = useTranslation();
     const { toast } = useToast();
-    const { listAllKeys, signKey, install, addApiKey } = useEImzo();
-
+    const { listAllKeys, install, addApiKey } = useEImzo();
     const { generatePdf } = useGeneratePdf();
     const { addTimestamp } = useTimestamp();
     const { verifySignature } = useVerifySignature();
-
     const [step, setStep] = useState<SignStep>("idle");
     const [keys, setKeys] = useState<Cert[]>([]);
     const [selectedCert, setSelectedCert] = useState<Cert | null>(null);
@@ -50,52 +72,35 @@ const useEImzoSign = (documentId: string) => {
     const [error, setError] = useState<string | null>(null);
 
     const fetchPdfAsBase64 = useCallback(async (filePath: string): Promise<string> => {
-        const response = await fetch(filePath, {
-            credentials: "include",
-        });
-
+        const response = await fetch(filePath, { credentials: "include" });
         if (!response.ok) {
             throw new Error(`PDF yuklanmadi: ${response.status} ${response.statusText}`);
         }
-        const arrayBuffer = await response.arrayBuffer();
-        const bytes = new Uint8Array(arrayBuffer);
+        const bytes = new Uint8Array(await response.arrayBuffer());
         let binary = "";
-        const len = bytes.byteLength;
-        for (let i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
+        for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
         return btoa(binary);
     }, []);
 
-    /** E-IMZO ni ishga tushirish */
     const initEImzo = useCallback(async () => {
         try {
             await install();
-            addApiKey(
-                window.location.hostname,
-                import.meta.env.VITE_EIMZO_API_KEY
-            );
-            const allKeys = await listAllKeys();
-            setKeys(allKeys as Cert[]);
+            addApiKey(window.location.hostname, import.meta.env.VITE_EIMZO_API_KEY);
+            setKeys((await listAllKeys()) as Cert[]);
         } catch {
-            throw new Error(
-                t("E-IMZO dasturi topilmadi. Iltimos, dasturni ishga tushiring.")
-            );
+            throw new Error(t("E-IMZO dasturi topilmadi. Iltimos, dasturni ishga tushiring."));
         }
     }, [install, addApiKey, listAllKeys, t]);
 
-    /** PDF ni oldindan yuklash */
     const preloadPdf = useCallback(async () => {
         try {
             const pdfName = await generatePdf(documentId);
-            const pdfPath = `/api/temp-pdf/${pdfName}`;
-            setPdfUrl(pdfPath);
+            setPdfUrl(`/api/temp-pdf/${pdfName}`);
         } catch (err) {
-            console.error("Preload error:", err);
+            console.error("Preload xatosi:", err);
         }
     }, [documentId, generatePdf]);
 
-    /** Asosiy imzolash jarayoni */
     const handleSign = useCallback(async () => {
         if (!selectedCert) {
             toast({
@@ -107,8 +112,11 @@ const useEImzoSign = (documentId: string) => {
         }
 
         setError(null);
+        const plugin = PLUGIN_MAP[selectedCert.type?.toLowerCase()] ?? "pfx";
+        let loadedKeyId: string | null = null;
 
         try {
+            // 1. PDF yaratish
             let currentPdfUrl = pdfUrl;
             if (!currentPdfUrl) {
                 setStep("generating-pdf");
@@ -117,21 +125,39 @@ const useEImzoSign = (documentId: string) => {
                 setPdfUrl(currentPdfUrl);
             }
 
-            // 2. Base64 ga aylantirish
+            // 2. PDF → base64
             setStep("loading-pdf");
             const base64 = await fetchPdfAsBase64(currentPdfUrl);
 
-            // 3. E-IMZO bilan imzolash
-            setStep("signing");
-            const signedPkcs7 = (await signKey(selectedCert, base64)) as string;
-            setPkcs7(signedPkcs7);
+            // 3. Kalitni yuklash → keyId (PIN dialog)
+            setStep("loading-key");
+            const loadData = await capiCall<{ id?: string; keyId?: string }>(plugin, "load_key", [
+                selectedCert.disk,
+                selectedCert.path,
+                selectedCert.name,
+                selectedCert.alias,
+            ]);
 
-            // 4. Timestamp qo'shish
+            loadedKeyId = loadData?.id ?? loadData?.keyId ?? null;
+            if (!loadedKeyId) throw new Error(t("Kalit yuklanmadi."));
+
+            // 4. PKCS#7 imzolash
+            setStep("signing");
+            const signData = await capiCall<{ pkcs7_64: string }>("pkcs7", "create_pkcs7", [
+                base64,
+                loadedKeyId,
+                "no",
+            ]);
+
+            if (!signData?.pkcs7_64) throw new Error(t("Imzolash muvaffaqiyatsiz yakunlandi."));
+            setPkcs7(signData.pkcs7_64);
+
+            // 5. Timestamp
             setStep("timestamping");
-            const timedPkcs7 = await addTimestamp(signedPkcs7);
+            const timedPkcs7 = await addTimestamp(signData.pkcs7_64);
             setPkcs7WithTimestamp(timedPkcs7);
 
-            // 5. Verifikatsiya (Serverga yuborish)
+            // 6. Server verifikatsiya
             setStep("verifying");
             await verifySignature(documentId, timedPkcs7);
 
@@ -142,15 +168,14 @@ const useEImzoSign = (documentId: string) => {
                 description: t("Hujjat muvaffaqiyatli imzolandi va tasdiqlandi."),
             });
         } catch (err: unknown) {
-            const message =
-                err instanceof Error ? err.message : t("Noma'lum xatolik yuz berdi.");
+            const message = err instanceof Error ? err.message : t("Noma'lum xatolik yuz berdi.");
             setError(message);
             setStep("error");
-            toast({
-                variant: "destructive",
-                title: t("Xatolik"),
-                description: message,
-            });
+            toast({ variant: "destructive", title: t("Xatolik"), description: message });
+        } finally {
+            if (loadedKeyId) {
+                capiCall(plugin, "unload_key", [loadedKeyId]).catch(() => null);
+            }
         }
     }, [
         selectedCert,
@@ -158,7 +183,6 @@ const useEImzoSign = (documentId: string) => {
         pdfUrl,
         generatePdf,
         fetchPdfAsBase64,
-        signKey,
         addTimestamp,
         verifySignature,
         t,
@@ -179,14 +203,14 @@ const useEImzoSign = (documentId: string) => {
         selectedCert,
         setSelectedCert,
         initEImzo,
+        preloadPdf,
+        handleSign,
+        reset,
         step,
         error,
         pdfUrl,
         pkcs7,
         pkcs7WithTimestamp,
-        preloadPdf,
-        handleSign,
-        reset,
         isLoading: !["idle", "done", "error"].includes(step),
     };
 };
