@@ -188,12 +188,17 @@ function Router() {
       ],
     },
     {
+      path: "verify",
+      element: <Verify/>,
+    },
+    {
       path: "/",
       element: (
         <IsLoggedIn>
           <BaseLayout />
         </IsLoggedIn>
       ),
+
       children: [
         {
           index: true,
@@ -676,6 +681,7 @@ function Router() {
           element: <F252_ApplicationForm />,
         },
       ],
+
     },
 
     {
@@ -692,6 +698,7 @@ function Router() {
         },
       ],
     },
+
     {
       path: "*",
       element: <Navigate to={"/error/not-found"} />,

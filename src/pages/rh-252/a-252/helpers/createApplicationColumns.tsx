@@ -64,13 +64,13 @@ const createOrderColumns = (
     key: "first_name",
     dataIndex: "responsible",
     name: t("Mas'ul xodim"),
-    render: (responsible: ResponsibleUser) => responsible?.first_name || "---",
+    render: (responsible: ResponsibleUser) => responsible?.first_name+" "+ responsible?.second_name || "---",
   },
     {
         key: "name",
         dataIndex: "created_by",
         name: t("Yaratuvchi"),
-        render: (responsible: ResponsibleUser) => responsible?.first_name || "---",
+        render: (responsible: ResponsibleUser) => responsible?.first_name +" "+ responsible?.second_name || "---",
     },
   {
     key: "created_at",
