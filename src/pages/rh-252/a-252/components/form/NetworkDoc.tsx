@@ -48,7 +48,7 @@ const IDSection1731 = ({ control, setValue }: IDSection1731Props) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+    <div className="bg-white mb-5 p-6 rounded-xl border border-gray-200 shadow-sm">
       <div className="p-4 bg-slate-50 rounded-lg border border-dashed border-slate-300">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
