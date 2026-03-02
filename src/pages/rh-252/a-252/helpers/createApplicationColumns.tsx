@@ -15,6 +15,7 @@ const createOrderColumns = (
     handleView: (id: string) => void,
     handleEditCode: (id: string, code: string) => void,
     handleEImzo: (id: string) => void,
+    handleEImzoProgress: (id: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
     key: "code",
@@ -88,6 +89,14 @@ const createOrderColumns = (
       if (!id) return null;
       return (
           <div className={"flex items-center gap-2"}>
+              <MyTooltip content={t("Imzolash")}>
+                  <ShieldCheckIcon
+                      className={
+                          "size-4 cursor-pointer text-slate-500 hover:text-emerald-600 transition-colors"
+                      }
+                      onClick={() => handleEImzoProgress(id)}
+                  />
+              </MyTooltip>
             <MyTooltip content={t("E-IMZO bilan imzolash")}>
               <ShieldCheckIcon
                   className={
