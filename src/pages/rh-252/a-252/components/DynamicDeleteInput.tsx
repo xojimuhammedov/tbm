@@ -1,90 +1,82 @@
 import { Button } from "dgz-ui";
 import { MyInput } from "dgz-ui-shared/components/form";
-import { Trash2 } from "lucide-react";
-import React, { useState, KeyboardEvent } from "react";
+import { Trash2, Plus } from "lucide-react";
+import React from "react";
+import { useFieldArray, Control } from "react-hook-form";
 
-interface IdInputProps {
-  onIdsChange?: (ids: string[]) => void;
-  initialIds?: string[];
+interface DynamicIdInputProps {
+  control: Control<any>;
+  name: string; // Masalan: "payload.delete.flow_ids"
 }
 
-const DynamicIdInput: React.FC<IdInputProps> = ({
-  onIdsChange,
-  initialIds = [],
-}) => {
-  const [inputValues, setInputValues] = useState<string[]>(
-    initialIds.length > 0 ? initialIds : [""],
-  );
-  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
+const DynamicIdInput: React.FC<DynamicIdInputProps> = ({ control, name }) => {
+  // Field array orqali formalarni boshqarish
+  const { fields, append, remove } = useFieldArray({
+    control, // Bu yerda shunchaki control (form.control emas!)
+    name,
+  });
+
+  // Agar massiv bo'sh bo'lsa, avtomatik bitta bo'sh qator qo'shish
+  React.useEffect(() => {
+    if (fields.length === 0) {
+      append({ value: "" });
+    }
+  }, [fields, append]);
+
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (
-        index === inputValues.length - 1 &&
-        inputValues[index].trim() !== ""
-      ) {
-        setInputValues([...inputValues, ""]);
+      const target = e.target as HTMLInputElement;
+      if (index === fields.length - 1 && target.value.trim() !== "") {
+        append({ value: "" });
       }
     }
   };
 
-  const handleChange = (index: number, value: string) => {
-    const newValues = [...inputValues];
-    newValues[index] = value;
-    setInputValues(newValues);
-
-    const filledIds = newValues.filter((val) => val.trim() !== "");
-
-    if (onIdsChange) {
-      onIdsChange(filledIds);
-    }
-  };
-
-  const removeId = (index: number) => {
-    const newValues = inputValues.filter((_, i) => i !== index);
-    setInputValues(newValues);
-
-    const filledIds = newValues.filter((val) => val.trim() !== "");
-
-    if (onIdsChange) {
-      onIdsChange(filledIds);
-    }
-
-    if (newValues.length === 0) {
-      setInputValues([""]);
-    }
-  };
-
   return (
-    <div className="w-full">
-      <h2 className="text-xl font-semibold">O'chirish to'g'risida</h2>
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        Kanal va ID ni kiriting (Enter bosib yangi qator qo'shing)
-      </label>
-      <div className="flex gap-4 items-center">
-        {inputValues.map((value, index) => (
-          <div key={index} className="flex items-center gap-2">
-            <MyInput
-              value={value}
-              onChange={(e) => handleChange(index, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              placeholder="Masalan: ID-6620"
-              autoFocus={index === inputValues.length - 1 && value === ""}
-            />
-            {inputValues.length > 1 || value.trim() !== "" ? (
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                onClick={() => removeId(index)}
-                className=" text-red-500 hover:text-red-700 hover:bg-red-200"
-              >
-                <Trash2 size={18} />
-              </Button>
-            ) : null}
-          </div>
-        ))}
+      <div className="w-full space-y-4">
+        <h2 className="text-xl font-semibold">O'chirish to'g'risida</h2>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Kanal va ID ni kiriting (Enter bosib yangi qator qo'shing)
+        </label>
+
+        <div className="flex flex-col gap-3">
+          {fields.map((field, index) => (
+              <div key={field.id} className="flex items-center gap-2 w-full">
+                <div className="flex-1">
+                  <MyInput
+                      control={control} // Propsdan kelayotgan control
+                      name={`${name}.${index}.value`} // Har bir input uchun unique name
+                      placeholder="Masalan: ID-6620"
+                      onKeyDown={(e) => handleKeyDown(index, e as any)}
+                  />
+                </div>
+
+                {fields.length > 1 && (
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => remove(index)}
+                        className="text-red-500 hover:text-red-700 hover:bg-red-100 shrink-0"
+                    >
+                      <Trash2 size={18} />
+                    </Button>
+                )}
+              </div>
+          ))}
+        </div>
+
+        <Button
+            type="button"
+            variant="default"
+            size="sm"
+            onClick={() => append({ value: "" })}
+            className="mt-2"
+        >
+          <Plus size={16} className="mr-2" /> Yangi qator qo'shish
+        </Button>
       </div>
-    </div>
   );
 };
 

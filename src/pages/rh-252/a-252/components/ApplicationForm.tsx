@@ -32,7 +32,6 @@ const ApplicationDocumentForm = () => {
         form,
         handleSubmit,
         handleGenerate,
-        setCurrentIds,
         getValidationClass,
         currentUpdateType,
         isLoading,
@@ -158,7 +157,7 @@ const ApplicationDocumentForm = () => {
                     </div>
 
                     <div className="flex justify-between items-center mb-8 text-lg">
-                        <div className=" items-center gap-1">
+                        <div className=" items-center gap-1 w-[150px]">
                             <span className={"font-bold"}>Sana:</span>
                             <MyDatePicker name="order_date" control={form.control} placeholder="Sana kiriting"
                                           rules={{required: "Sana kiriting"}}/>
@@ -213,7 +212,7 @@ const ApplicationDocumentForm = () => {
                                             name="payload.basic.signal_level"
                                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                                         />
-                                        <p className="text-xl font-semibold">oqimlarni tarmoqdan</p>
+                                        <p className="text-xl font-semibold">oqimni</p>
                                         <div className="w-[380px] text-left">
                                             <MySelect
                                                 control={form.control}
@@ -225,6 +224,8 @@ const ApplicationDocumentForm = () => {
                                                 required
                                             />
                                         </div>
+                                        <p className="text-xl font-semibold">to'g'risida.</p>
+
                                     </div>
 
                                     <div className="flex flex-wrap items-center gap-2 my-8">
@@ -234,7 +235,7 @@ const ApplicationDocumentForm = () => {
                                             placeholder="O'zTTBRM DUK"
                                             className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-[300px]"
                                         />
-                                        <div className="w-[120px]">
+                                        <div className="w-[130px]">
                                             <MyDatePicker
                                                 name="payload.basic.request_date"
                                                 control={form.control}
@@ -249,7 +250,7 @@ const ApplicationDocumentForm = () => {
                                                 className="border border-t-0 border-l-0 border-r-0 rounded-none h-6 py-0"
                                             />
                                         </div>
-                                        <p>-bildirgisiga binoan</p>
+                                        <p>-son murojaatiga binoan</p>
                                         <div className="w-[250px]">
                                             <MyInput
                                                 name="payload.basic.justification"
@@ -258,10 +259,11 @@ const ApplicationDocumentForm = () => {
                                                 className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
                                             />
                                         </div>
-                                        <div className="flex items-center gap-2 w-[150px] ">
+                                        <div className="flex items-center gap-2 w-[165px] ">
                                             <MyDatePicker
                                                 name="payload.basic.deadline"
                                                 control={form.control}
+
                                             />
                                             <span>dan</span>
                                         </div>
@@ -284,11 +286,10 @@ const ApplicationDocumentForm = () => {
 
                             {/* Delete section - faqat 17-45 uchun */}
                             {isNormalMode && selectedActions.includes("delete") && (
-                                <div className="mt-6 border p-4 my-2 rounded-xl">
-                                    <h3 className="font-semibold mb-2">O'chirish</h3>
+                                <div className="mt-6 border p-6 my-2 rounded-xl bg-gray-50/50">
                                     <DynamicIdInput
-                                        onIdsChange={(ids) => setCurrentIds(ids)}
-                                        initialIds={[]}
+                                        control={form.control}
+                                        name="payload.delete.flow_ids" // Formadagi path
                                     />
                                 </div>
                             )}
