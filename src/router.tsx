@@ -170,6 +170,8 @@ const RolesPage = lazy(() => import("@/pages/role/Page"));
 
 // E-imzo
 const EImzoSignPage = lazy(() => import("@/shared/components/e-imzo/EImzoSignPage.tsx"));
+// Progress document
+const ProgreesDoc = lazy(() => import("@/pages/imzolash/page.tsx"));
 
 function Router() {
   const routes: RouteObject[] = [
@@ -635,6 +637,10 @@ function Router() {
         {
           path:"rh-252/a-252/sign/:id",
           element: <EImzoSignPage />,
+        },
+        {
+          path:"rh-252/a-252/progress/:id",
+          element: <ProgreesDoc />,
         },
         {
           path: "rh-252/rh-3_3",
