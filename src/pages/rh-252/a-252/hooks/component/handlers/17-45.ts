@@ -8,10 +8,9 @@ const buildUpdatePayloadContract = (data: any) => {
   if (updateType === "channels") {
     return {
       channels: safeArray(data.payload?.update?.flow_ids).map((row: any) => ({
-        old: row.old ?? "",
-        new: row.new ?? "",
+        old: row.old_code ?? row.old ?? "",
+        new: row.new_code ?? row.new ?? "",
       })),
-      // contract bo‘yicha flows bo‘lmasa ham bo‘ladi, lekin aniq qilish uchun:
       flows: [],
     };
   }
@@ -27,29 +26,18 @@ const buildUpdatePayloadContract = (data: any) => {
         device_b: row.device_b || "",
         port_a: row.port_a || "",
         port_b: row.port_b || "",
+        signal_level: row.signal_level || "",
       })),
     };
   }
 
   return undefined;
 };
-
 const h1745: Handler = {
-  /**
-   * API (editData.payload) -> UI
-   * API contract:
-   * payload.create.flow_ids: [{code, point_a, point_b, signal_level, port_a, port_b, device_a, device_b}]
-   * payload.update.channels: [{old: string, new: string}]
-   * payload.update.flows: [{...}]
-   * payload.delete.elements: [string]
-   */
   populate: (form, payload, ctx) => {
     const basic = payload.basic || {};
 
-    form.setValue(
-      "payload.basic.organization_name",
-      basic.organization_name ?? "",
-    );
+    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
     form.setValue("payload.basic.request_number", basic.request_number ?? "");
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
@@ -57,14 +45,11 @@ const h1745: Handler = {
     form.setValue("payload.basic.signal_level", basic.signal_level ?? "");
     form.setValue("payload.basic.actions", safeArray<string>(basic.actions));
 
-    // base_file (agar edit payloadda bo‘lsa)
-    // UI'da sen data.payload.file_name ishlatyapsan, shu joyda ham o‘sha fieldni to‘ldiramiz:
     form.setValue(
-      "payload.file_name",
-      basic.base_file ?? payload?.file_name ?? "",
+        "payload.file_name",
+        basic.base_file ?? payload?.file_name ?? "",
     );
 
-    // create.flow_ids
     if (payload.create?.flow_ids) {
       const rows = safeArray(payload.create.flow_ids).map((x: any) => ({
         code: x?.code ?? "",
@@ -75,14 +60,13 @@ const h1745: Handler = {
         port_b: x?.port_b ?? "",
         device_a: x?.device_a ?? "",
         device_b: x?.device_b ?? "",
-        id_exist: null, // UI helper
+        id_exist: null,
       }));
       form.setValue("payload.create.flow_ids", rows);
     } else {
       form.setValue("payload.create.flow_ids", []);
     }
 
-    // update
     const apiChannels = safeArray(payload.update?.channels);
     const apiFlows = safeArray(payload.update?.flows);
 
@@ -91,9 +75,6 @@ const h1745: Handler = {
       const rows = apiChannels.map((ch: any) => ({
         old_code: ch?.old ?? "",
         new_code: ch?.new ?? "",
-        // UI'da old_int/new_int bo‘lsa ham, contractda yo‘q — bo‘sh qoldiramiz
-        old_int: "",
-        new_int: "",
       }));
       form.setValue("payload.update.flow_ids", rows);
     } else if (apiFlows.length > 0) {
@@ -106,47 +87,41 @@ const h1745: Handler = {
         device_b: fl?.device_b ?? "",
         port_a: fl?.port_a ?? "",
         port_b: fl?.port_b ?? "",
-        // UI'da signal_level ishlatilsa — editda yo‘q bo‘lsa bo‘sh
         signal_level: fl?.signal_level ?? "",
       }));
       form.setValue("payload.update.flow_ids", rows);
-    } else {
-      form.setValue("payload.update.update_type", "");
-      form.setValue("payload.update.flow_ids", []);
     }
 
-    // delete.elements
-    const delElements = safeArray<string>(payload.delete?.elements);
-    ctx.setCurrentIds(delElements);
-    // UI'da sendagi defaultValues payload.delete.channels edi.
-    // Lekin contract elements, shuning uchun UI ham elements bo‘lishi kerak:
-    form.setValue("payload.delete.elements", delElements);
+    if (payload.delete?.elements) {
+      const delElements = safeArray<string>(payload.delete.elements);
+      const mappedForForm = delElements.map(id => ({ value: id }));
+      form.setValue("payload.delete.flow_ids", mappedForForm);
+      ctx.setCurrentIds(delElements);
+    }
   },
 
-  /**
-   * UI -> API (contract)
-   */
   build: (data, ctx) => {
     const actions = safeArray<string>(data.payload?.basic?.actions);
 
     const updatePayload = actions.includes("update")
-      ? buildUpdatePayloadContract(data)
-      : undefined;
+        ? buildUpdatePayloadContract(data)
+        : undefined;
 
     const createPayload = actions.includes("create")
-      ? {
-          flow_ids:
-            data.payload.create?.flow_ids?.map(
+        ? {
+          flow_ids: safeArray(data.payload.create?.flow_ids).map(
               ({ id_exist, ...rest }: any) => rest,
-            ) || [],
+          ),
         }
-      : undefined;
+        : undefined;
 
     const deletePayload = actions.includes("delete")
-      ? {
-          elements: ctx.currentIds || [],
+        ? {
+          elements: safeArray(data.payload?.delete?.flow_ids)
+              .map((item: any) => item.value)
+              .filter((val: string) => val && val.trim() !== ""),
         }
-      : undefined;
+        : undefined;
 
     return {
       ...buildBasePayload(data, ctx.fullCode),
@@ -159,7 +134,6 @@ const h1745: Handler = {
           justification: data.payload.basic.justification,
           signal_level: data.payload.basic.signal_level,
           actions,
-          // base_file (sen file_name dan olayapsan)
           base_file: data.payload.file_name || "",
         },
         ...(createPayload ? { create: createPayload } : {}),

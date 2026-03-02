@@ -71,7 +71,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
             paddingTop: "1.5cm",
             paddingBottom: "1.5cm",
           }}
-          className="bg-white w-full max-w-[900px] shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 leading-snug"
+          className="bg-white w-full max-w-[900px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 leading-snug"
         >
           <style
             dangerouslySetInnerHTML={{
@@ -196,6 +196,14 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
             <div className="w-1/2 text-right">
                     {director?.first_name}
             </div>
+          </div>
+          <div className="mt-auto text-[11px] text-[#5a76a8] ">
+            <p>
+              {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
+            </p>
+            <p>
+              {(document as any)?.created_by?.short_phone}
+            </p>
           </div>
         </div>
       </div>

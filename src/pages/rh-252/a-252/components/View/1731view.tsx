@@ -68,7 +68,7 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
       <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
         <div
           ref={contentRef}
-          className="print-content bg-white w-full max-w-[1200px] shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0"
+          className="print-content bg-white w-full max-w-[1200px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0"
           style={{
             fontFamily: '"Times New Roman", Times, serif',
             paddingLeft: "3cm",
@@ -237,12 +237,23 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
             </div>
 
             {/* Tuzuvchi (Created by) qatori */}
-            <div className="flex justify-between items-end text-[15px] font-bold pt-4">
-              <div className="w-1/2">Tuzuvchi:</div>
-              <div className="w-1/2 text-right  ">
-                {document?.created_by?.first_name} {document?.created_by?.second_name}
-              </div>
+            {/*<div className="flex justify-between items-end text-[15px] font-bold pt-4">*/}
+            {/*  <div className="w-1/2">Tuzuvchi:</div>*/}
+            {/*  <div className="w-1/2 text-right  ">*/}
+            {/*    {document?.created_by?.first_name} {document?.created_by?.second_name}*/}
+            {/*  </div>*/}
+            {/*</div>*/}
+
+            <div className="mt-auto text-[11px] text-[#5a76a8] ">
+              <p>
+                {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
+              </p>
+              <p>
+                {(document as any)?.created_by?.short_phone}
+              </p>
             </div>
+
+
 
             {/* Bog'lanish uchun ma'lumot (ixtiyoriy, kichikroq shriftda) */}
               {/*<div className="flex justify-end mt-2">*/}
