@@ -31,7 +31,7 @@ export const connectEventsSocket = (): Socket<EventsSocketEvents> => {
     }
 
     socket = io("https://eresurs.rtmc.uz", {
-        path: "/socket.io",
+        path: "/events/socket.io",
         transports: ["websocket"],
         auth: { token },
         extraHeaders: token ? { Authorization: `Bearer ${token}` } : {},
