@@ -64,7 +64,7 @@ const StaffForm = ({ id, onSave, readOnly = false }: StaffFormProps) => {
             label={t("Pinfl")}
             placeholder={t("Enter pinfl")}
             required
-            mask={"0000000000000"}
+            mask={"00000000000000"}
             disabled={readOnly}
           />
           <MyMaskInput<StaffDto>
