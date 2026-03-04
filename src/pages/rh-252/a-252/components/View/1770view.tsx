@@ -193,17 +193,14 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
           </div>
           <div className="flex justify-between items-end text-[15px] font-bold mt-5">
             <div className="w-1/2">Direktor</div>
-            <div className="w-1/2 text-right">
-                    {director?.first_name}
-            </div>
+            <div className="w-1/2 text-right">{director?.first_name}</div>
           </div>
           <div className="mt-auto text-[11px] text-[#5a76a8] ">
             <p>
-              {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
+              {(document as any)?.created_by?.first_name?.[0]}.{" "}
+              {(document as any)?.created_by?.second_name}
             </p>
-            <p>
-              {(document as any)?.created_by?.short_phone}
-            </p>
+            <p>{(document as any)?.created_by?.short_phone}</p>
           </div>
         </div>
       </div>

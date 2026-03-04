@@ -5,8 +5,8 @@ const h1731: Handler = {
   populate: (form, payload) => {
     const basic = payload.basic || {};
     form.setValue(
-        "payload.file_name",
-        basic.base_file ?? payload?.file_name ?? "",
+      "payload.file_name",
+      basic.base_file ?? payload?.file_name ?? "",
     );
   },
 

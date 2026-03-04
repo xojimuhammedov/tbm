@@ -42,9 +42,9 @@ const useLogin = () => {
   const { toast } = useToast();
   const getChallenge = useChallenge();
   const { accessToken, setAccessToken, setRefreshToken } = useAuthStore();
-  const { listAllKeys, signKey, install } = useEImzo()
-  const [keys, setKeys] = useState<Cert[]>([])
-  const [pkcs7, setPkcs7] = useState<string | null>(null)
+  const { listAllKeys, signKey, install } = useEImzo();
+  const [keys, setKeys] = useState<Cert[]>([]);
+  const [pkcs7, setPkcs7] = useState<string | null>(null);
   const navigate = useNavigate();
   const { setMe } = useUserStore();
   const { setPasswordToken } = usePasswordConfirmTokenStore();
@@ -133,32 +133,31 @@ const useLogin = () => {
     navigate("/auth");
   };
 
-
   const handleSignKey = async (cert: Cert) => {
     try {
-      const challenge = await getChallenge()
-      const result = await signKey(cert, challenge)
-      setPkcs7(result)
+      const challenge = await getChallenge();
+      const result = await signKey(cert, challenge);
+      setPkcs7(result);
       eImzoLogin.mutate({
-        "pkcs7": result
+        pkcs7: result,
       });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   useEffect(() => {
     const init = async () => {
       try {
-        await install()
-        const allKeys = await listAllKeys()
-        setKeys(allKeys)
+        await install();
+        const allKeys = await listAllKeys();
+        setKeys(allKeys);
       } catch (err) {
-        console.error('E-IMZO init xatolik:', err)
+        console.error("E-IMZO init xatolik:", err);
       }
-    }
-    init()
-  }, [])
+    };
+    init();
+  }, []);
 
   return {
     form,

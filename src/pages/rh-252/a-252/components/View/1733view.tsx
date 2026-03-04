@@ -29,7 +29,6 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
   const responsible = document?.responsible;
   const director = document?.director;
 
-
   return (
     <MyModal
       open={open}
@@ -127,8 +126,9 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
               {basic?.justification || "___________________________________"}
               {basic?.deadline
                 ? dateFormatter(basic.deadline, " YYYY-yil DD-MMMM", "uz")
-                : "____-yildan"}{""}dan boshlab ushbu kanallar uchun ishlagan quyidagi zaxira (AAG)
-              kanallari o‘chirilsin:
+                : "____-yildan"}
+              {""}dan boshlab ushbu kanallar uchun ishlagan quyidagi zaxira
+              (AAG) kanallari o‘chirilsin:
             </p>
           </div>
           <div className="space-y-3 mb-4 text-[15px] ml-4">
@@ -175,17 +175,14 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
 
           <div className="flex justify-between items-end text-[15px] font-bold mt-5">
             <div className="w-1/2">Direktor</div>
-            <div className="w-1/2 text-right">
-              {director?.first_name}
-            </div>
+            <div className="w-1/2 text-right">{director?.first_name}</div>
           </div>
           <div className="mt-auto text-[11px] text-[#4a76a8] leading-[1.2]">
             <p>
-              {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
+              {(document as any)?.created_by?.first_name?.[0]}.{" "}
+              {(document as any)?.created_by?.second_name}
             </p>
-            <p>
-              {(document as any)?.created_by?.short_phone}
-            </p>
+            <p>{(document as any)?.created_by?.short_phone}</p>
           </div>
         </div>
       </div>

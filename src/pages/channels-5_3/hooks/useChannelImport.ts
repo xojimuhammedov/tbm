@@ -32,11 +32,11 @@ const useChannelImport = ({ onSuccess }: ChannelImportProps = {}) => {
         variant: "destructive",
         title: t(get(error, "response.statusText", "Error")),
         description: t(
-            get(
-                error,
-                "response.data.message",
-                "Fayl yuklashda xatolik yuz berdi",
-            ),
+          get(
+            error,
+            "response.data.message",
+            "Fayl yuklashda xatolik yuz berdi",
+          ),
         ),
       });
     },
@@ -56,12 +56,12 @@ const useChannelImport = ({ onSuccess }: ChannelImportProps = {}) => {
   });
 
   const handleUpload = useCallback(
-      (file: File) => {
-        const formData = new FormData();
-        formData.append("file", file);
-        mutation.mutate(formData);
-      },
-      [mutation],
+    (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      mutation.mutate(formData);
+    },
+    [mutation],
   );
 
   return {

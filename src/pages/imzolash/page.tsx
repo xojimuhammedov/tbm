@@ -564,7 +564,6 @@
 //     );
 // }
 
-
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
@@ -579,45 +578,45 @@ import { CardIndexInterface } from "@/pages/card-indexes/interfaces/card-index.i
 import useCardIndexes from "@/pages/card-indexes/hooks/useCardIndexes.ts";
 
 const Page = () => {
-    const { t } = useTranslation();
-    const { loading, columns, dataSource, handleFilter, params, handleAdd } =
-        useCardIndexes();
-    const breadcrumbs = useMemo<BreadcrumbInterface[]>(
-        () => [
-            {
-                name: t("Card index"),
-                path: "/card-indexes",
-                isActive: true,
-            },
-        ],
-        [t],
-    );
-    return (
-        <>
-            <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-                <Button size={"sm"} onClick={handleAdd}>
-                    <CirclePlusIcon />
-                    {t("Add new")}
-                </Button>
-            </PageHeader>
-            <PageWrapper>
-                <DataTable<CardIndexInterface, PaginationInterface<CardIndexInterface>>
-                    tableKey={CARD_INDEXES_QUERY_KEY}
-                    hasNumbers
-                    hasSearch
-                    isStickyHeader
-                    hasPagination
-                    loading={loading}
-                    params={params}
-                    onParamChange={handleFilter}
-                    rowKey={"_id"}
-                    dataSource={dataSource}
-                    dataKey={"docs"}
-                    columns={columns}
-                />
-            </PageWrapper>
-        </>
-    );
+  const { t } = useTranslation();
+  const { loading, columns, dataSource, handleFilter, params, handleAdd } =
+    useCardIndexes();
+  const breadcrumbs = useMemo<BreadcrumbInterface[]>(
+    () => [
+      {
+        name: t("Card index"),
+        path: "/card-indexes",
+        isActive: true,
+      },
+    ],
+    [t],
+  );
+  return (
+    <>
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+        <Button size={"sm"} onClick={handleAdd}>
+          <CirclePlusIcon />
+          {t("Add new")}
+        </Button>
+      </PageHeader>
+      <PageWrapper>
+        <DataTable<CardIndexInterface, PaginationInterface<CardIndexInterface>>
+          tableKey={CARD_INDEXES_QUERY_KEY}
+          hasNumbers
+          hasSearch
+          isStickyHeader
+          hasPagination
+          loading={loading}
+          params={params}
+          onParamChange={handleFilter}
+          rowKey={"_id"}
+          dataSource={dataSource}
+          dataKey={"docs"}
+          columns={columns}
+        />
+      </PageWrapper>
+    </>
+  );
 };
 
 export default Page;

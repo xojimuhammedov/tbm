@@ -25,15 +25,15 @@ const h1770: Handler = {
     form.setValue("payload.basic.timezone", basic.timezone ?? "");
     form.setValue("payload.basic.context", basic.context ?? "");
     const flowIds = Array.isArray(payload.flow_ids)
-        ? payload.flow_ids.map((item: any) => item.code || item)
-        : [];
+      ? payload.flow_ids.map((item: any) => item.code || item)
+      : [];
 
     form.setValue("payload.flow_ids", flowIds);
     form.setValue(
-        "payload.file_name",
-        basic.base_file ?? payload?.file_name ?? "",
+      "payload.file_name",
+      basic.base_file ?? payload?.file_name ?? "",
     );
-    },
+  },
 
   build: (data, ctx) => ({
     ...buildBasePayload(data, ctx.fullCode),
