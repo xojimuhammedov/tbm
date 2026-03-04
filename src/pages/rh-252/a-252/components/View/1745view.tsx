@@ -302,7 +302,7 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
               <div className="w-1/2">Direktor</div>
               <div className="w-1/2 text-right">{director?.first_name}</div>
             </div>
-            <div className="mt-auto text-[11px] text-[#5a76a8] ">
+            <div className="mt-auto text-sm text-[#5a76a8] ">
               <p>
                 {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
               </p>

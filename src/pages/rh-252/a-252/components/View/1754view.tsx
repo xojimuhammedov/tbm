@@ -186,7 +186,7 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
               {director?.first_name}
             </div>
           </div>
-          <div className="mt-20 text-[11px] text-[#5a76a8] ">
+          <div className="mt-20 text-sm text-[#5a76a8] ">
             <p>
               {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
             </p>
