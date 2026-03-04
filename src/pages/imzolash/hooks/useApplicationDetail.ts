@@ -8,23 +8,13 @@ import useGeneratePdf from "./useGeneratePdf";
 import useBulkShare from "./useBulkShare";
 import useDocumentSocket, {
     DocumentSocketPayload,
-    DocumentSocketRecipient,
+    DocumentStatus,
 } from "./useDocumentSocket";
 import {
     approvalShareSchema,
     ApprovalShareFormValues,
 } from "../schema/approvalShare.schema";
-import { ApplicationDocument, DocumentStage } from "../interfaces/detail.interface";
-
-// ─── Recipient UI model ───────────────────────────────────────────────────────
-
-export interface RecipientUI {
-    id: string;
-    fullName: string;
-    type: "APPROVAL" | "SIGNING";
-    isEditor: boolean;
-    status: "PENDING" | "ACCEPTED" | "REJECTED" | "CANCEL";
-}
+import { ApplicationDocument } from "../interfaces/detail.interface";
 
 // ─── HOOK ────────────────────────────────────────────────────────────────────
 
@@ -32,21 +22,15 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
     const { t } = useTranslation();
     const { toast } = useToast();
 
-    // ─── UI state ───────────────────────────────────────────────────────────────
-    const [stage, setStage] = useState<DocumentStage>("draft");
+    const [socketData, setSocketData] = useState<DocumentSocketPayload | null>(null);
     const [pdfOpen, setPdfOpen] = useState(false);
     const [pdfUrl, setPdfUrl] = useState<string | null>(null);
     const [showShareForm, setShowShareForm] = useState(false);
 
-    // Socket dan kelgan recipient list (real-time)
-    const [recipients, setRecipients] = useState<RecipientUI[]>([]);
-
-    // ─── Hooks ──────────────────────────────────────────────────────────────────
     const { staffOptions } = useStaffOptions();
     const { generatePdf, isGenerating } = useGeneratePdf();
     const { sendForApproval, isSending } = useBulkShare();
 
-    // ─── Form ───────────────────────────────────────────────────────────────────
     const form = useForm<ApprovalShareFormValues>({
         resolver: zodResolver(approvalShareSchema),
         defaultValues: {
@@ -57,32 +41,9 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
         },
     });
 
-    // ─── Socket ─────────────────────────────────────────────────────────────────
-    // Page ochilganda ulanadi, yopilganda uziladi
+    // ─── Socket ──────────────────────────────────────────────────────────────
     const handleSocketUpdate = useCallback((payload: DocumentSocketPayload) => {
-        // Stage ni yangilaymiz
-        if (payload.stage) {
-            setStage(payload.stage);
-        }
-
-        // Recipientlarni UI modeli ga aylantiramiz
-        if (Array.isArray(payload.recipients)) {
-            const mapped: RecipientUI[] = payload.recipients.map(
-                (r: DocumentSocketRecipient) => ({
-                    id: r._id,
-                    fullName: `${r.first_name} ${r.second_name}`.trim(),
-                    type: r.type,
-                    isEditor: r.isEditor,
-                    status: r.status,
-                })
-            );
-            setRecipients(mapped);
-
-            // Agar recipients bor bo'lsa — jarayon boshlangan
-            if (mapped.length > 0 && payload.stage === "draft") {
-                setStage("approval");
-            }
-        }
+        setSocketData(payload);
     }, []);
 
     useDocumentSocket({
@@ -90,7 +51,12 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
         onUpdate: handleSocketUpdate,
     });
 
-    // ─── PDF ────────────────────────────────────────────────────────────────────
+    // ─── Derived state ────────────────────────────────────────────────────────
+    // document_status → eski "stage" ga mapping (ActionBar / ShareForm uchun)
+    const documentStatus: DocumentStatus = socketData?.document_status ?? "DRAFT";
+    const isDraft = documentStatus === "DRAFT";
+
+    // ─── PDF ─────────────────────────────────────────────────────────────────
     const handleOpenPdf = useCallback(async () => {
         if (!document?._id) return;
         setPdfOpen(true);
@@ -110,7 +76,7 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
 
     const handleClosePdf = useCallback(() => setPdfOpen(false), []);
 
-    // ─── Share ──────────────────────────────────────────────────────────────────
+    // ─── Share ────────────────────────────────────────────────────────────────
     const handleSubmitShare = useCallback(
         async (values: ApprovalShareFormValues) => {
             if (!document?._id) return;
@@ -125,8 +91,6 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
                     signer: values.director_id,
                 });
 
-                // Socket javob bergunicha optimistic UI
-                setStage("approval");
                 setShowShareForm(false);
 
                 toast({
@@ -150,22 +114,21 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
         form.reset();
     }, [form]);
 
-    // Jarayonni bekor qilish
     const handleCancelProcess = useCallback(() => {
-        setStage("draft");
-        setRecipients([]);
+        setSocketData(null);
         form.reset();
-        // TODO: API call to cancel
     }, [form]);
 
     return {
-        stage,
-        setStage,
+        // socket dan kelgan to'liq data
+        socketData,
+        documentStatus,
+        isDraft,
+
         pdfOpen,
         pdfUrl,
         showShareForm,
         setShowShareForm,
-        recipients,           // socket dan kelgan real-time list
         form,
         staffOptions,
         handleOpenPdf,
