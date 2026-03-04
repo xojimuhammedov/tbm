@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
@@ -18,11 +18,33 @@ import {
   USER_KEY,
 } from "@/layouts/auth/constants/user.constants.ts";
 import { useQueryClient } from "@tanstack/react-query";
+import { useEImzo } from "use-eimzo";
+import useChallenge from "@/shared/hooks/e-imzo/useChallenge";
+
+export type Cert = {
+  disk: string;
+  path: string;
+  name: string;
+  alias: string;
+  serialNumber: string;
+  validFrom: string;
+  validTo: string;
+  CN: string;
+  TIN: string;
+  UID: string;
+  O: string;
+  T: string;
+  type: string;
+};
 
 const useLogin = () => {
   const { t } = useTranslation(["common", "ERROR", "validation"]);
   const { toast } = useToast();
+  const getChallenge = useChallenge();
   const { accessToken, setAccessToken, setRefreshToken } = useAuthStore();
+  const { listAllKeys, signKey, install } = useEImzo()
+  const [keys, setKeys] = useState<Cert[]>([])
+  const [pkcs7, setPkcs7] = useState<string | null>(null)
   const navigate = useNavigate();
   const { setMe } = useUserStore();
   const { setPasswordToken } = usePasswordConfirmTokenStore();
@@ -70,6 +92,28 @@ const useLogin = () => {
     },
   });
 
+  const { query: eImzoLogin } = useMutate<{
+    token: string;
+    refresh_token: string;
+    ttl: string;
+    user: UserInterface;
+  }>({
+    url: ["auth", "eimzo-login"],
+    method: MutateRequestMethod.POST,
+    options: {
+      onSuccess: handleSuccess,
+      onError: (error) => {
+        toast({
+          variant: "destructive",
+          title: t(`${get(error, "response.statusText", "Error")}`),
+          description: t(
+            `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+          ),
+        });
+      },
+    },
+  });
+
   useEffect(() => {
     if (accessToken && getMe.data) {
       setMe(get(getMe.data, "user", null));
@@ -89,11 +133,41 @@ const useLogin = () => {
     navigate("/auth");
   };
 
+
+  const handleSignKey = async (cert: Cert) => {
+    try {
+      const challenge = await getChallenge()
+      const result = await signKey(cert, challenge)
+      setPkcs7(result)
+      eImzoLogin.mutate({
+        "pkcs7": result
+      });
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await install()
+        const allKeys = await listAllKeys()
+        setKeys(allKeys)
+      } catch (err) {
+        console.error('E-IMZO init xatolik:', err)
+      }
+    }
+    init()
+  }, [])
+
   return {
     form,
     onSubmit,
     logout,
     loading: login.isPending,
+    keys,
+    pkcs7,
+    handleSignKey,
   };
 };
 
