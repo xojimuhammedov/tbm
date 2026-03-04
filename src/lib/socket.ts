@@ -15,7 +15,7 @@ export type EventsSocketEvents = {
     "join-shared":       (data: { document_id: string }) => void;
     "leave-shared":      (data: { document_id: string }) => void;
     "join-notification": (data: { document_id: string }) => void;
-    "created":           (data: any) => void;
+    "shared:created":           (data: any) => void;
 };
 
 let socket: Socket<EventsSocketEvents> | null = null;

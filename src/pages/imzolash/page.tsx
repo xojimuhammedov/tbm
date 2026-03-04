@@ -1,23 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { LoaderCircleIcon, FileTextIcon, ChevronLeftIcon } from "lucide-react";
+import { LoaderCircleIcon, FileTextIcon, ChevronLeftIcon, SendIcon } from "lucide-react";
 import { MyModal } from "@/shared/components/moleculas/modal";
 import { Button } from "dgz-ui/button";
 import useApplicationDetail from "./hooks/useApplicationDetail";
 import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
-import { ApplicationDocument, DocumentStage } from "./interfaces/detail.interface";
+import { ApplicationDocument } from "./interfaces/detail.interface";
 import { dateFormatter } from "@/shared/utils/utils";
 import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
-import {DocumentStatusBar} from "@/pages/imzolash/component/DocumentStatusBar.tsx";
-import {ShareFormPanel} from "@/pages/imzolash/component/sharedRecipients.tsx";
-
-// ─── CONSTANTS ────────────────────────────────────────────────────────────────
-
-const STAGES: { id: DocumentStage; label: string; color: string }[] = [
-    { id: "draft",    label: "Qoralama",           color: "#94a3b8" },
-    { id: "approval", label: "Ko'rib chiqilmoqda", color: "#f59e0b" },
-    { id: "signing",  label: "Imzolashda",         color: "#6366f1" },
-    { id: "done",     label: "Kuchga kirdi",        color: "#10b981" },
-];
+import { DocumentStatusBar } from "@/pages/imzolash/component/DocumentStatusBar";
+import { ShareFormPanel } from "@/pages/imzolash/component/sharedRecipients";
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
 
@@ -27,15 +18,9 @@ const fullName = (u?: { first_name?: string; second_name?: string }) =>
 // ─── PDF MODAL ────────────────────────────────────────────────────────────────
 
 function PdfModal({
-                      open,
-                      onClose,
-                      pdfUrl,
-                      isGenerating,
+                      open, onClose, pdfUrl, isGenerating,
                   }: {
-    open: boolean;
-    onClose: () => void;
-    pdfUrl: string | null;
-    isGenerating: boolean;
+    open: boolean; onClose: () => void; pdfUrl: string | null; isGenerating: boolean;
 }) {
     return (
         <MyModal
@@ -46,9 +31,7 @@ function PdfModal({
             header={
                 <div className="flex items-center gap-2.5 pr-10">
                     <FileTextIcon className="size-4 text-slate-500" />
-                    <span className="font-semibold text-slate-800 text-sm">
-                        Hujjat · PDF ko'rinishi
-                    </span>
+                    <span className="font-semibold text-slate-800 text-sm">Hujjat · PDF ko'rinishi</span>
                 </div>
             }
         >
@@ -56,23 +39,53 @@ function PdfModal({
                 {isGenerating ? (
                     <div className="flex flex-col items-center gap-3">
                         <LoaderCircleIcon className="size-7 text-sky-500 animate-spin" />
-                        <span className="text-sm text-slate-500 font-medium">
-                            Hujjat yuklanmoqda...
-                        </span>
+                        <span className="text-sm text-slate-500 font-medium">Hujjat yuklanmoqda...</span>
                     </div>
                 ) : pdfUrl ? (
-                    <iframe
-                        src={pdfUrl}
-                        className="w-full rounded-xl border border-slate-200 shadow-sm bg-white"
-                        style={{ height: "75vh" }}
-                        title="Hujjat PDF"
-                    />
+                    <iframe src={pdfUrl} className="w-full rounded-xl border border-slate-200 shadow-sm bg-white" style={{ height: "75vh" }} title="Hujjat PDF" />
                 ) : (
                     <div className="flex flex-col items-center gap-2 text-slate-400">
                         <FileTextIcon className="size-8 opacity-30" />
                         <span className="text-sm">PDF topilmadi</span>
                     </div>
                 )}
+            </div>
+        </MyModal>
+    );
+}
+
+// ─── SHARE MODAL ─────────────────────────────────────────────────────────────
+
+function ShareModal({
+                        open, onClose, form, staffOptions, onSubmit, isSending,
+                    }: {
+    open: boolean;
+    onClose: () => void;
+    form: any;
+    staffOptions: any[];
+    onSubmit: () => void;
+    isSending: boolean;
+}) {
+    return (
+        <MyModal
+            open={open}
+            onOpenChange={(v) => !v && onClose()}
+            size="lg"
+            header={
+                <div className="flex items-center gap-2.5 pr-10">
+                    <SendIcon className="size-4 text-sky-500" />
+                    <span className="font-semibold text-slate-800 text-sm">Ko'rib chiqishga yuborish</span>
+                </div>
+            }
+        >
+            <div className="p-4">
+                <ShareFormPanel
+                    form={form}
+                    staffOptions={staffOptions}
+                    onCancel={onClose}
+                    onSubmit={onSubmit}
+                    isSending={isSending}
+                />
             </div>
         </MyModal>
     );
@@ -86,16 +99,12 @@ function MetaCard({ doc }: { doc: ApplicationDocument }) {
         ["Yaratilgan vaqt", dateFormatter(doc.created_at, DATE_TIME)],
         ["Mas'ul xodim",    fullName(doc.responsible)],
         ["Yaratuvchi",      fullName(doc.created_by)],
-        [
-            "Kimga",
-            (doc.to?.slice(0, 2).join(", ") ?? "") +
-            (doc.to?.length > 2 ? ` +${doc.to.length - 2}` : ""),
-        ],
-        ["Nusxasi", doc.copy?.join(", ") ?? "—"],
+        ["Kimga",           (doc.to?.slice(0, 2).join(", ") ?? "") + (doc.to?.length > 2 ? ` +${doc.to.length - 2}` : "")],
+        ["Nusxasi",         doc.copy?.join(", ") ?? "—"],
     ];
 
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm mb-4 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden h-fit">
             <div className="px-5 py-4 border-b border-slate-100">
                 <p className="text-[10px] font-bold tracking-[0.1em] uppercase text-slate-400 mb-1.5">
                     Hujjat ma'lumotlari
@@ -104,10 +113,10 @@ function MetaCard({ doc }: { doc: ApplicationDocument }) {
                     {doc.payload?.basic?.title}
                 </p>
             </div>
-            <div className="grid grid-cols-2 divide-x divide-y divide-slate-100">
+            <div className="divide-y divide-slate-100">
                 {rows.map(([label, value]) => (
-                    <div key={label} className="px-5 py-3.5">
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    <div key={label} className="px-5 py-3">
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">
                             {label}
                         </p>
                         <p className="text-[13px] font-semibold text-slate-900">
@@ -120,53 +129,7 @@ function MetaCard({ doc }: { doc: ApplicationDocument }) {
     );
 }
 
-// ─── ACTION BAR ──────────────────────────────────────────────────────────────
-
-function ActionBar({
-                       stage,
-                       showShareForm,
-                       onOpenShareForm,
-                   }: {
-    stage: DocumentStage;
-    showShareForm: boolean;
-    onOpenShareForm: () => void;
-}) {
-    const currentStage = STAGES.find((s) => s.id === stage);
-
-    if (stage !== "draft" || showShareForm) return null;
-
-    return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-4 py-3 flex items-center gap-3">
-            <Button
-                onClick={onOpenShareForm}
-                className="h-9 text-[12.5px] font-semibold gap-2 bg-sky-500 hover:bg-sky-600 text-white shadow-sm"
-            >
-                <svg
-                    width="13" height="13" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
-                >
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                Ko'rib chiqishga yuborish
-            </Button>
-
-            {/* Current stage pill */}
-            <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100">
-                <div
-                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    style={{ background: currentStage?.color }}
-                />
-                <span className="text-[11.5px] font-semibold text-slate-600">
-                    {currentStage?.label}
-                </span>
-            </div>
-        </div>
-    );
-}
-
-// ─── PAGE ────────────────────────────────────────────────────────────────────
+// ─── PAGE ─────────────────────────────────────────────────────────────────────
 
 const ApplicationDocumentDetailPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -176,19 +139,17 @@ const ApplicationDocumentDetailPage = () => {
     const doc = applicationDocumentQuery.data?.data as ApplicationDocument | undefined;
 
     const {
-        stage,
+        isDraft,
         pdfOpen,
         pdfUrl,
         showShareForm,
         setShowShareForm,
-        recipients,
         form,
         staffOptions,
         handleOpenPdf,
         handleClosePdf,
         handleSubmitShare,
         handleCancelShare,
-        handleCancelProcess,
         isGenerating,
         isSending,
     } = useApplicationDetail(doc);
@@ -205,10 +166,10 @@ const ApplicationDocumentDetailPage = () => {
 
     return (
         <div className="min-h-screen bg-[#f1f3f6] px-4 py-7 pb-16">
-            <div className="max-w-[800px] mx-auto">
+            <div className="max-w-[1100px] mx-auto">
 
                 {/* ── HEADER ── */}
-                <div className="flex items-center gap-3 mb-5">
+                <div className="flex items-center gap-3 mb-6">
                     <Button
                         variant="default"
                         size="icon"
@@ -227,48 +188,56 @@ const ApplicationDocumentDetailPage = () => {
                         </p>
                     </div>
 
-                    {/* PDF button */}
-                    <Button
-                        variant="default"
-                        onClick={handleOpenPdf}
-                        disabled={isGenerating}
-                        className="h-9 text-[12.5px] font-semibold gap-2 border-slate-200 flex-shrink-0"
-                    >
-                        {isGenerating ? (
-                            <LoaderCircleIcon className="size-3.5 animate-spin text-sky-500" />
-                        ) : (
-                            <FileTextIcon className="size-3.5 text-slate-500" />
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                        {/* PDF button */}
+                        <Button
+                            variant="default"
+                            onClick={handleOpenPdf}
+                            disabled={isGenerating}
+                            className="h-9 text-[12.5px] font-semibold gap-2 border-slate-200"
+                        >
+                            {isGenerating
+                                ? <LoaderCircleIcon className="size-3.5 animate-spin text-sky-500" />
+                                : <FileTextIcon className="size-3.5 text-slate-500" />
+                            }
+                            PDF ko'rish
+                        </Button>
+
+                        {/* Send for review — only in DRAFT */}
+                        {isDraft && (
+                            <Button
+                                onClick={() => setShowShareForm(true)}
+                                className="h-9 text-[12.5px] font-semibold gap-2 bg-sky-500 hover:bg-sky-600 text-white shadow-sm"
+                            >
+                                <SendIcon className="size-3.5" />
+                                Ko'rib chiqishga yuborish
+                            </Button>
                         )}
-                        PDF ko'rish
-                    </Button>
+                    </div>
                 </div>
 
-                {/* ── STATUS BAR (progress + recipients) ── */}
-                <DocumentStatusBar
-                    stage={stage}
-                    recipients={recipients}
-                    onCancelProcess={handleCancelProcess}
-                />
+                {/* ── TWO COLUMN LAYOUT ── */}
+                <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-4 items-start">
 
-                <MetaCard doc={doc} />
+                    {/* LEFT — meta card */}
+                    <MetaCard doc={doc} />
 
-                {showShareForm && (
-                    <ShareFormPanel
-                        form={form}
-                        staffOptions={staffOptions ?? []}
-                        onCancel={handleCancelShare}
-                        onSubmit={form.handleSubmit(handleSubmitShare)}
-                        isSending={isSending}
-                    />
-                )}
-
-                <ActionBar
-                    stage={stage}
-                    showShareForm={showShareForm}
-                    onOpenShareForm={() => setShowShareForm(true)}
-                />
+                    {/* RIGHT — status bar */}
+                    <DocumentStatusBar documentId={id} />
+                </div>
             </div>
 
+            {/* ── SHARE MODAL ── */}
+            <ShareModal
+                open={showShareForm}
+                onClose={handleCancelShare}
+                form={form}
+                staffOptions={staffOptions ?? []}
+                onSubmit={form.handleSubmit(handleSubmitShare)}
+                isSending={isSending}
+            />
+
+            {/* ── PDF MODAL ── */}
             <PdfModal
                 open={pdfOpen}
                 onClose={handleClosePdf}

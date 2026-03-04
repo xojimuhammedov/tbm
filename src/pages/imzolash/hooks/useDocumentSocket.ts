@@ -1,23 +1,43 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { connectEventsSocket } from "@/lib/socket";
-import { DocumentStage } from "../interfaces/detail.interface";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export interface DocumentSocketRecipient {
+export type DocumentStatus =
+    | "DRAFT"
+    | "IN_REVIEW"
+    | "REJECTED"
+    | "APPROVED"
+    | "SIGNING"
+    | "SIGNED"
+    | "EXECUTING"
+    | "EXECUTED"
+    | "CANCELLED";
+
+export type RecipientStatus = "PENDING" | "ACCEPTED" | "REJECTED" | "CANCEL";
+export type RecipientType   = "APPROVAL" | "SIGNING";
+
+export interface SocketRecipient {
     _id: string;
     first_name: string;
     second_name: string;
-    type: "APPROVAL" | "SIGNING";
+    middle_name?: string;
+    type: RecipientType;
+    stages: string;
+    status: RecipientStatus;
     isEditor: boolean;
-    status: "PENDING" | "ACCEPTED" | "REJECTED" | "CANCEL";
-    stage: "DRAFT" | "APPROVAL" | "SIGNING" | "DONE";
+    is_current: boolean;
+    is_parallel: boolean;
+    order: number;
 }
 
 export interface DocumentSocketPayload {
     document_id: string;
-    stage: DocumentStage;
-    recipients: DocumentSocketRecipient[];
+    document_code: string;
+    document_status: DocumentStatus;
+    document_type: string;
+    users: SocketRecipient[];
+    signer: SocketRecipient;
 }
 
 interface Props {
@@ -28,31 +48,42 @@ interface Props {
 // ─── HOOK ────────────────────────────────────────────────────────────────────
 
 const useDocumentSocket = ({ documentId, onUpdate }: Props) => {
-    const onUpdateRef = useRef(onUpdate);
+    const onUpdateRef   = useRef(onUpdate);
+    const documentIdRef = useRef(documentId);
 
-    // Stale closure oldini olish
-    useEffect(() => {
-        onUpdateRef.current = onUpdate;
-    }, [onUpdate]);
-
-    const handleCreated = useCallback(
-        (data: DocumentSocketPayload) => {
-            if (data?.document_id !== documentId) return;
-            onUpdateRef.current(data);
-        },
-        [documentId]
-    );
+    useEffect(() => { onUpdateRef.current   = onUpdate;    }, [onUpdate]);
+    useEffect(() => { documentIdRef.current = documentId; }, [documentId]);
 
     useEffect(() => {
         if (!documentId) return;
+
         const sock = connectEventsSocket();
         sock.emit("join-shared", { document_id: documentId });
-        sock.on("created", handleCreated);
+
+        const handler = (message: any) => {
+            let found: DocumentSocketPayload | undefined;
+
+            if (message?.data && Array.isArray(message.data)) {
+                found = message.data.find((d: any) => d.document_id === documentIdRef.current);
+            } else if (message?.document_id === documentIdRef.current) {
+                found = message;
+            } else if (Array.isArray(message)) {
+                found = message.find((d: any) => d.document_id === documentIdRef.current);
+            }
+
+            if (found) {
+                onUpdateRef.current(found);
+            }
+        };
+
+        sock.on("shared:created", handler);
+
         return () => {
             sock.emit("leave-shared", { document_id: documentId });
-            sock.off("created", handleCreated);
+            sock.off("shared:created", handler);
         };
-    }, [documentId, handleCreated]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [documentId]);
 };
 
 export default useDocumentSocket;
