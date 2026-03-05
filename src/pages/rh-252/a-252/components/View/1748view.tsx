@@ -130,10 +130,6 @@ const OrderView1748 = ({ open, onOpenChange, document }: Props) => {
 
   const toOk = hasArray(document?.to);
   const copyOk = hasArray(document?.copy);
-  const director = useMemo(() => {
-    return document?.director || null;
-  }, [document]);
-
   return (
     <MyModal
       open={open}
@@ -372,16 +368,13 @@ const OrderView1748 = ({ open, onOpenChange, document }: Props) => {
               <span className="">{payload!.basis}</span>
             </div>
           ) : null}
-          <div className="flex justify-between items-end text-[15px] font-bold mt-10">
-            <div className="w-1/2">Direktor</div>
-            <div className="w-1/2 text-right">{director?.first_name}</div>
-          </div>
           <div className="mt-auto text-sm text-[#5a76a8] ">
             <p>
-              {(document as any)?.created_by?.first_name?.[0]}.{" "}
-              {(document as any)?.created_by?.second_name}
+              {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
             </p>
-            <p>{(document as any)?.created_by?.short_phone}</p>
+            <p>
+              {(document as any)?.created_by?.short_phone}
+            </p>
           </div>
         </div>
       </div>

@@ -1,26 +1,26 @@
-import { useParams, useNavigate } from "react-router-dom";
-import {
-  LoaderCircleIcon,
-  FileTextIcon,
-  ChevronLeftIcon,
-  SendIcon,
-} from "lucide-react";
-import { MyModal } from "@/shared/components/moleculas/modal";
-import { Button } from "dgz-ui/button";
-import useApplicationDetail from "./hooks/useApplicationDetail";
-import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
-import { ApplicationDocument } from "./interfaces/detail.interface";
-import { dateFormatter } from "@/shared/utils/utils";
-import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
 import { DocumentStatusBar } from "@/pages/imzolash/component/DocumentStatusBar";
 import { ShareFormPanel } from "@/pages/imzolash/component/sharedRecipients";
+import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
+import { MyModal } from "@/shared/components/moleculas/modal";
+import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
+import { dateFormatter } from "@/shared/utils/utils";
+import { Button } from "dgz-ui/button";
+import {
+  ChevronLeftIcon,
+  FileTextIcon,
+  LoaderCircleIcon,
+  SendIcon,
+} from "lucide-react";
+import { useCallback, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useApplicationDetail from "./hooks/useApplicationDetail";
+import { ApplicationDocument } from "./interfaces/detail.interface";
+import { ApprovalShareFormValues } from "./schema/approvalShare.schema";
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
 
 const fullName = (u?: { first_name?: string; second_name?: string }) =>
   u ? `${u.first_name ?? ""} ${u.second_name ?? ""}`.trim() : "—";
 
-// ─── PDF MODAL ────────────────────────────────────────────────────────────────
 
 function PdfModal({
   open,
@@ -74,7 +74,6 @@ function PdfModal({
   );
 }
 
-// ─── SHARE MODAL ─────────────────────────────────────────────────────────────
 
 function ShareModal({
   open,
@@ -118,8 +117,6 @@ function ShareModal({
   );
 }
 
-// ─── META CARD ────────────────────────────────────────────────────────────────
-
 function MetaCard({ doc }: { doc: ApplicationDocument }) {
   const rows: [string, string][] = [
     ["Buyurtma sanasi", dateFormatter(doc.order_date, DATE)],
@@ -160,8 +157,6 @@ function MetaCard({ doc }: { doc: ApplicationDocument }) {
   );
 }
 
-// ─── PAGE ─────────────────────────────────────────────────────────────────────
-
 const ApplicationDocumentDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -183,9 +178,54 @@ const ApplicationDocumentDetailPage = () => {
     handleClosePdf,
     handleSubmitShare,
     handleCancelShare,
+    handleAddRecipient,
+    handleRemoveRecipient,
     isGenerating,
     isSending,
+    isModifying,
   } = useApplicationDetail(doc);
+
+  const [showAddModal, setShowAddModal] = useState(false);
+
+  const handleOpenAddModal = useCallback(() => {
+    form.reset({
+      approver_ids: [],
+      director_id: "",
+      approver_edit_permissions: {},
+      director_can_edit: false,
+    });
+    setShowAddModal(true);
+  }, [form]);
+
+  const handleCloseAddModal = useCallback(() => {
+    setShowAddModal(false);
+    form.reset({
+      approver_ids: [],
+      director_id: "",
+      approver_edit_permissions: {},
+      director_can_edit: false,
+    });
+  }, [form]);
+
+  const handleAddRecipients = useCallback(
+    async (values: ApprovalShareFormValues) => {
+      try {
+        for (const uid of values.approver_ids || []) {
+          await handleAddRecipient(
+            uid,
+            values.approver_edit_permissions[uid] ?? false,
+            "APPROVAL",
+          );
+        }
+        if (values.director_id) {
+          await handleAddRecipient(values.director_id, false, "SIGNING");
+        }
+        handleCloseAddModal();
+      } catch {
+      }
+    },
+    [handleAddRecipient, form],
+  );
 
   if (applicationDocumentQuery.isLoading) {
     return (
@@ -199,8 +239,7 @@ const ApplicationDocumentDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-[#f1f3f6] px-4 py-7 pb-16">
-      <div className="max-w-[1100px] mx-auto">
-        {/* ── HEADER ── */}
+      <div className="max-w-[1200px] mx-auto">
         <div className="flex items-center gap-3 mb-6">
           <Button
             variant="default"
@@ -221,7 +260,6 @@ const ApplicationDocumentDetailPage = () => {
           </div>
 
           <div className="flex items-center gap-2 flex-shrink-0">
-            {/* PDF button */}
             <Button
               variant="default"
               onClick={handleOpenPdf}
@@ -236,7 +274,6 @@ const ApplicationDocumentDetailPage = () => {
               PDF ko'rish
             </Button>
 
-            {/* Send for review — only in DRAFT */}
             {isDraft && (
               <Button
                 onClick={() => setShowShareForm(true)}
@@ -249,17 +286,19 @@ const ApplicationDocumentDetailPage = () => {
           </div>
         </div>
 
-        {/* ── TWO COLUMN LAYOUT ── */}
         <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-4 items-start">
-          {/* LEFT — meta card */}
           <MetaCard doc={doc} />
-
-          {/* RIGHT — status bar */}
-          <DocumentStatusBar documentId={id} />
+          <DocumentStatusBar
+            documentId={id}
+            onAddRecipient={handleAddRecipient}
+            onRemoveRecipient={handleRemoveRecipient}
+            isModifying={isModifying}
+            staffOptions={staffOptions ?? []}
+            onOpenAddModal={handleOpenAddModal}
+          />
         </div>
       </div>
 
-      {/* ── SHARE MODAL ── */}
       <ShareModal
         open={showShareForm}
         onClose={handleCancelShare}
@@ -269,12 +308,20 @@ const ApplicationDocumentDetailPage = () => {
         isSending={isSending}
       />
 
-      {/* ── PDF MODAL ── */}
       <PdfModal
         open={pdfOpen}
         onClose={handleClosePdf}
         pdfUrl={pdfUrl}
         isGenerating={isGenerating}
+      />
+
+      <ShareModal
+        open={showAddModal}
+        onClose={handleCloseAddModal}
+        form={form}
+        staffOptions={staffOptions ?? []}
+        onSubmit={form.handleSubmit(handleAddRecipients)}
+        isSending={isModifying}
       />
     </div>
   );

@@ -40,7 +40,6 @@ const useApplicationDocumentForm = ({
       to: "",
       copy: "",
       responsible: "",
-      director: "",
       point_a: "",
       point_b: "",
       count: "",
@@ -142,7 +141,6 @@ const useApplicationDocumentForm = ({
     form.setValue("to", listToText(doc.to));
     form.setValue("copy", listToText(doc.copy));
     form.setValue("responsible", doc?.responsible?._id ?? "");
-    form.setValue("director", doc?.director?._id ?? "");
 
     const handler = handlers[prefix];
     if (!handler) return;

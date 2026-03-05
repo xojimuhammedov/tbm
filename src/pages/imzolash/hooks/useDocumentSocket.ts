@@ -1,97 +1,97 @@
-import { useEffect, useRef } from "react";
 import { connectEventsSocket } from "@/lib/socket";
+import { useEffect, useRef } from "react";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 export type DocumentStatus =
-  | "DRAFT"
-  | "IN_REVIEW"
-  | "REJECTED"
-  | "APPROVED"
-  | "SIGNING"
-  | "SIGNED"
-  | "EXECUTING"
-  | "EXECUTED"
-  | "CANCELLED";
+    | "DRAFT"
+    | "IN_REVIEW"
+    | "REJECTED"
+    | "APPROVED"
+    | "SIGNING"
+    | "SIGNED"
+    | "EXECUTING"
+    | "EXECUTED"
+    | "CANCELLED";
 
 export type RecipientStatus = "PENDING" | "ACCEPTED" | "REJECTED" | "CANCEL";
 export type RecipientType = "APPROVAL" | "SIGNING";
 
 export interface SocketRecipient {
-  _id: string;
-  first_name: string;
-  second_name: string;
-  middle_name?: string;
-  type: RecipientType;
-  stages: string;
-  status: RecipientStatus;
-  isEditor: boolean;
-  is_current: boolean;
-  is_parallel: boolean;
-  order: number;
+    _id: string;
+    first_name: string;
+    second_name: string;
+    middle_name?: string;
+    type: RecipientType;
+    stages: string;
+    status: RecipientStatus;
+    isEditor: boolean;
+    is_current: boolean;
+    is_parallel: boolean;
+    order: number;
+    shared_id?: string;
 }
 
 export interface DocumentSocketPayload {
-  document_id: string;
-  document_code: string;
-  document_status: DocumentStatus;
-  document_type: string;
-  users: SocketRecipient[];
-  signer: SocketRecipient;
+    document_id: string;
+    document_code: string;
+    document_status: DocumentStatus;
+    document_type: string;
+    users: SocketRecipient[];
+    signer: SocketRecipient;
 }
 
 interface Props {
-  documentId: string | undefined;
-  onUpdate: (payload: DocumentSocketPayload) => void;
+    documentId: string | undefined;
+    onUpdate: (payload: DocumentSocketPayload) => void;
 }
 
-// ─── HOOK ────────────────────────────────────────────────────────────────────
 
 const useDocumentSocket = ({ documentId, onUpdate }: Props) => {
-  const onUpdateRef = useRef(onUpdate);
-  const documentIdRef = useRef(documentId);
+    const onUpdateRef = useRef(onUpdate);
+    const documentIdRef = useRef(documentId);
 
-  useEffect(() => {
-    onUpdateRef.current = onUpdate;
-  }, [onUpdate]);
-  useEffect(() => {
-    documentIdRef.current = documentId;
-  }, [documentId]);
+    useEffect(() => { onUpdateRef.current = onUpdate; }, [onUpdate]);
+    useEffect(() => { documentIdRef.current = documentId; }, [documentId]);
 
-  useEffect(() => {
-    if (!documentId) return;
+    useEffect(() => {
+        if (!documentId) return;
 
-    const sock = connectEventsSocket();
-    sock.emit("join-shared", { document_id: documentId });
+        const sock = connectEventsSocket();
 
-    const handler = (message: any) => {
-      let found: DocumentSocketPayload | undefined;
+        const handleJoin = () => {
+            sock.emit("join-shared", { document_id: documentId });
+        };
 
-      if (message?.data && Array.isArray(message.data)) {
-        found = message.data.find(
-          (d: any) => d.document_id === documentIdRef.current,
-        );
-      } else if (message?.document_id === documentIdRef.current) {
-        found = message;
-      } else if (Array.isArray(message)) {
-        found = message.find(
-          (d: any) => d.document_id === documentIdRef.current,
-        );
-      }
+        if (sock.connected) {
+            handleJoin();
+        }
 
-      if (found) {
-        onUpdateRef.current(found);
-      }
-    };
+        sock.on("connect", handleJoin);
 
-    sock.on("shared:created", handler);
+        const handler = (message: any) => {
+            let found: DocumentSocketPayload | undefined;
 
-    return () => {
-      sock.emit("leave-shared", { document_id: documentId });
-      sock.off("shared:created", handler);
-    };
-     
-  }, [documentId]);
+            if (message?.data && Array.isArray(message.data)) {
+                found = message.data.find((d: any) => d.document_id === documentIdRef.current);
+            } else if (message?.document_id === documentIdRef.current) {
+                found = message;
+            } else if (Array.isArray(message)) {
+                found = message.find((d: any) => d.document_id === documentIdRef.current);
+            }
+
+            if (found) {
+                onUpdateRef.current(found);
+            }
+        };
+
+        sock.on("shared:created", handler);
+
+        return () => {
+            sock.emit("leave-shared", { document_id: documentId });
+            sock.off("connect", handleJoin);
+            sock.off("shared:created", handler);
+        };
+    }, [documentId]);
 };
 
 export default useDocumentSocket;

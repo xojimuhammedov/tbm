@@ -1,0 +1,2 @@
+src/pages/imzolash/component/DocumentStatusBar.tsx(337,105): error TS6133: 'staffOptions' is declared but its value is never read.
+src/pages/imzolash/component/DocumentStatusBar.tsx(350,46): error TS2339: Property 'shared_id' does not exist on type 'SocketRecipient'.

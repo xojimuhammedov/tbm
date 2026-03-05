@@ -1,13 +1,10 @@
-import { useState, useCallback } from "react";
-import { XIcon, Loader2, UserPlusIcon, RefreshCwIcon } from "lucide-react";
 import useDocumentSocket, {
   DocumentSocketPayload,
   DocumentStatus,
   SocketRecipient,
 } from "@/pages/imzolash/hooks/useDocumentSocket";
-import useCancelProcess from "@/pages/imzolash/hooks/useCancelProcess";
-
-// ─── CONSTANTS ────────────────────────────────────────────────────────────────
+import { Loader2, UserPlusIcon, XIcon } from "lucide-react";
+import { useCallback, useState } from "react";
 
 const TIMELINE: { id: DocumentStatus; label: string; color: string }[] = [
   { id: "DRAFT", label: "Qoralama", color: "#94a3b8" },
@@ -63,8 +60,6 @@ const TYPE_META: Record<string, { label: string; color: string }> = {
   SIGNING: { label: "Imzolovchi", color: "#6366f1" },
 };
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
-
 const fullName = (r: SocketRecipient) =>
   [r.first_name, r.second_name].filter(Boolean).join(" ") || "—";
 
@@ -73,8 +68,6 @@ const getInitials = (r: SocketRecipient) =>
     .filter(Boolean)
     .join("")
     .toUpperCase();
-
-// ─── AVATAR ───────────────────────────────────────────────────────────────────
 
 function Avatar({ recipient }: { recipient: SocketRecipient }) {
   const color = TYPE_META[recipient.type]?.color ?? "#94a3b8";
@@ -95,21 +88,19 @@ function Avatar({ recipient }: { recipient: SocketRecipient }) {
   );
 }
 
-// ─── RECIPIENT ROW ────────────────────────────────────────────────────────────
-
 interface RecipientRowProps {
   r: SocketRecipient;
   delay: number;
   canModify: boolean;
-  onReplace: (r: SocketRecipient) => void;
+  onRemove?: (r: SocketRecipient) => void;
 }
 
-function RecipientRow({ r, delay, canModify, onReplace }: RecipientRowProps) {
+function RecipientRow({ r, delay, canModify, onRemove }: RecipientRowProps) {
   const typeMeta = TYPE_META[r.type] ?? TYPE_META.APPROVAL;
   const statusMeta = STATUS_META[r.status] ?? STATUS_META.PENDING;
   const isApproval = r.type === "APPROVAL";
-  // Only PENDING approval recipients can be replaced
-  const canReplace = canModify && isApproval && r.status === "PENDING";
+  const canReplace =
+    canModify && (isApproval || r.type === "SIGNING") && r.status === "PENDING";
 
   return (
     <div
@@ -173,205 +164,19 @@ function RecipientRow({ r, delay, canModify, onReplace }: RecipientRowProps) {
           {statusMeta.label}
         </span>
       </div>
-
-      {/* Replace button — only for pending approvers */}
-      {canReplace && (
+      {canReplace && onRemove && (
         <button
-          onClick={() => onReplace(r)}
-          className="opacity-0 group-hover:opacity-100 flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-500 text-[10.5px] font-semibold transition-all duration-200 flex-shrink-0"
-          title="Boshqa odamga almashtirish"
+          onClick={() => onRemove(r)}
+          className="opacity-0 group-hover:opacity-100 flex items-center justify-center w-7 h-7 rounded-lg bg-slate-100 hover:bg-red-50 hover:text-red-500 text-slate-500 transition-colors"
+          title="Olib tashlash"
         >
-          <RefreshCwIcon size={11} />
-          Almashtirish
+          <XIcon size={12} />
         </button>
       )}
     </div>
   );
 }
 
-// ─── REPLACE MODAL ────────────────────────────────────────────────────────────
-
-interface ReplaceModalProps {
-  open: boolean;
-  target: SocketRecipient | null;
-  onClose: () => void;
-  onConfirm: (newUserId: string) => void;
-  isLoading: boolean;
-}
-
-function ReplaceModal({
-  open,
-  target,
-  onClose,
-  onConfirm,
-  isLoading,
-}: ReplaceModalProps) {
-  const [userId, setUserId] = useState("");
-
-  if (!open || !target) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      {/* Modal */}
-      <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6"
-        style={{ animation: "modalIn 0.2s ease both" }}
-      >
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-              Tekshiruvchini almashtirish
-            </p>
-            <p className="text-[14px] font-extrabold text-slate-800">
-              {fullName(target)}
-            </p>
-          </div>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors"
-          >
-            <XIcon size={14} className="text-slate-500" />
-          </button>
-        </div>
-
-        <div className="mb-4">
-          <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2 block">
-            Yangi tekshiruvchi ID
-          </label>
-          <input
-            type="text"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            placeholder="Xodim ID ni kiriting..."
-            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-[13px] font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all"
-          />
-          <p className="text-[11px] text-slate-400 mt-1.5">
-            * Faqat PENDING holotidagi tekshiruvchilarni almashtirish mumkin
-          </p>
-        </div>
-
-        <div className="flex gap-2">
-          <button
-            onClick={onClose}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 text-slate-600 text-[12.5px] font-bold hover:bg-slate-200 transition-colors"
-          >
-            Bekor
-          </button>
-          <button
-            onClick={() => userId.trim() && onConfirm(userId.trim())}
-            disabled={!userId.trim() || isLoading}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-500 text-white text-[12.5px] font-bold hover:bg-indigo-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading && <Loader2 size={13} className="animate-spin" />}
-            Almashtirish
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── ADD RECIPIENT MODAL ──────────────────────────────────────────────────────
-
-interface AddRecipientModalProps {
-  open: boolean;
-  onClose: () => void;
-  onConfirm: (userId: string, isEditor: boolean) => void;
-  isLoading: boolean;
-}
-
-function AddRecipientModal({
-  open,
-  onClose,
-  onConfirm,
-  isLoading,
-}: AddRecipientModalProps) {
-  const [userId, setUserId] = useState("");
-  const [isEditor, setIsEditor] = useState(false);
-
-  if (!open) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6"
-        style={{ animation: "modalIn 0.2s ease both" }}
-      >
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-              Yangi tekshiruvchi
-            </p>
-            <p className="text-[14px] font-extrabold text-slate-800">
-              Tasdiqlashga qo'shish
-            </p>
-          </div>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors"
-          >
-            <XIcon size={14} className="text-slate-500" />
-          </button>
-        </div>
-
-        <div className="mb-3">
-          <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2 block">
-            Xodim ID
-          </label>
-          <input
-            type="text"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            placeholder="Xodim ID ni kiriting..."
-            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-[13px] font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-400 transition-all"
-          />
-        </div>
-
-        <label className="flex items-center gap-2.5 mb-5 cursor-pointer">
-          <div
-            onClick={() => setIsEditor(!isEditor)}
-            className={`w-9 h-5 rounded-full transition-colors duration-200 flex items-center px-0.5 ${isEditor ? "bg-amber-500" : "bg-slate-200"}`}
-          >
-            <div
-              className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${isEditor ? "translate-x-4" : "translate-x-0"}`}
-            />
-          </div>
-          <span className="text-[12.5px] font-semibold text-slate-600">
-            Tahrirlash huquqi berish
-          </span>
-        </label>
-
-        <div className="flex gap-2">
-          <button
-            onClick={onClose}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 text-slate-600 text-[12.5px] font-bold hover:bg-slate-200 transition-colors"
-          >
-            Bekor
-          </button>
-          <button
-            onClick={() => userId.trim() && onConfirm(userId.trim(), isEditor)}
-            disabled={!userId.trim() || isLoading}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 text-white text-[12.5px] font-bold hover:bg-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading && <Loader2 size={13} className="animate-spin" />}
-            Qo'shish
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── TIMELINE TRACK ──────────────────────────────────────────────────────────
 
 function TimelineTrack({ status }: { status: DocumentStatus }) {
   const resolvedStatus = STATUS_ALIAS[status] ?? status;
@@ -530,25 +335,26 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
 interface Props {
   documentId: string | undefined;
   onAddRecipient?: (userId: string, isEditor: boolean) => Promise<void>;
-  onReplaceRecipient?: (targetId: string, newUserId: string) => Promise<void>;
+  onRemoveRecipient?: (sharedId: string) => Promise<void>;
   isModifying?: boolean;
+  staffOptions?: { value: string; label: string }[];
+  onOpenAddModal?: () => void;
 }
 
 export function DocumentStatusBar({
   documentId,
   onAddRecipient,
-  onReplaceRecipient,
+  onRemoveRecipient,
   isModifying = false,
+  staffOptions: _staffOptions,
+  onOpenAddModal,
 }: Props) {
   const [socketData, setSocketData] = useState<DocumentSocketPayload | null>(
     null,
   );
-  const [confirmingCancel, setConfirmingCancel] = useState(false);
-  const [replaceTarget, setReplaceTarget] = useState<SocketRecipient | null>(
+  const [removeTarget, setRemoveTarget] = useState<SocketRecipient | null>(
     null,
   );
-  const [showAddModal, setShowAddModal] = useState(false);
-  const { cancelProcess, isCancelling } = useCancelProcess();
 
   const handleUpdate = useCallback((payload: DocumentSocketPayload) => {
     setSocketData(payload);
@@ -556,26 +362,10 @@ export function DocumentStatusBar({
 
   useDocumentSocket({ documentId, onUpdate: handleUpdate });
 
-  const handleCancel = async () => {
-    if (!documentId) return;
-    try {
-      await cancelProcess(documentId);
-      setConfirmingCancel(false);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleReplace = async (newUserId: string) => {
-    if (!replaceTarget || !onReplaceRecipient) return;
-    await onReplaceRecipient(replaceTarget._id, newUserId);
-    setReplaceTarget(null);
-  };
-
-  const handleAdd = async (userId: string, isEditor: boolean) => {
-    if (!onAddRecipient) return;
-    await onAddRecipient(userId, isEditor);
-    setShowAddModal(false);
+  const handleRemove = async () => {
+    if (!removeTarget || !onRemoveRecipient) return;
+    await onRemoveRecipient(removeTarget.shared_id || removeTarget._id);
+    setRemoveTarget(null);
   };
 
   const status = socketData?.document_status ?? "DRAFT";
@@ -585,11 +375,9 @@ export function DocumentStatusBar({
     signer ? [...users, signer] : users
   ) as SocketRecipient[];
   const hasRecipients = allRecipients.length > 0;
-  // Can cancel if active process
   const canCancel = !["DRAFT", "EXECUTED", "SIGNED", "CANCELLED"].includes(
     status,
   );
-  // Can add more approvers if still in review
   const canAddMore = status === "IN_REVIEW" && !!onAddRecipient;
 
   return (
@@ -627,57 +415,20 @@ export function DocumentStatusBar({
 
               <div className="flex items-center gap-2">
                 {/* Add more approver button */}
-                {canAddMore && (
+                {canAddMore && onOpenAddModal && (
                   <button
-                    onClick={() => setShowAddModal(true)}
+                    onClick={onOpenAddModal}
                     className="flex items-center gap-1.5 text-[11.5px] font-semibold text-amber-500 hover:text-amber-600 transition-colors"
                   >
                     <UserPlusIcon size={12} />
                     Qo'shish
                   </button>
                 )}
-
-                {/* Cancel whole process */}
-                {canCancel &&
-                  (confirmingCancel ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] text-slate-500 font-medium">
-                        Ishonchingiz komilmi?
-                      </span>
-                      <button
-                        onClick={handleCancel}
-                        disabled={isCancelling}
-                        className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-500 text-white text-[11px] font-bold hover:bg-red-600 transition-colors disabled:opacity-60"
-                      >
-                        {isCancelling && (
-                          <Loader2 className="size-3 animate-spin" />
-                        )}
-                        Ha
-                      </button>
-                      <button
-                        onClick={() => setConfirmingCancel(false)}
-                        className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 text-[11px] font-bold hover:bg-slate-200 transition-colors"
-                      >
-                        Yo'q
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setConfirmingCancel(true)}
-                      className="flex items-center gap-1.5 text-[11.5px] font-semibold text-slate-400 hover:text-red-500 transition-colors group"
-                    >
-                      <XIcon
-                        size={12}
-                        className="group-hover:rotate-90 transition-transform duration-200"
-                      />
-                      Bekor qilish
-                    </button>
-                  ))}
               </div>
             </div>
 
             {/* Recipient list */}
-            <div className="px-4 pb-4 flex flex-col gap-2">
+            <div className="px-4 pb-4 flex flex-col gap-2 max-h-[60vh] overflow-y-auto">
               {allRecipients
                 .slice()
                 .sort((a, b) => a.order - b.order)
@@ -686,8 +437,12 @@ export function DocumentStatusBar({
                     key={r._id}
                     r={r}
                     delay={i * 0.06}
-                    canModify={canCancel && !!onReplaceRecipient}
-                    onReplace={setReplaceTarget}
+                    canModify={canCancel}
+                    onRemove={
+                      canCancel && !!onRemoveRecipient
+                        ? setRemoveTarget
+                        : undefined
+                    }
                   />
                 ))}
             </div>
@@ -695,22 +450,51 @@ export function DocumentStatusBar({
         )}
       </div>
 
-      {/* Replace modal */}
-      <ReplaceModal
-        open={!!replaceTarget}
-        target={replaceTarget}
-        onClose={() => setReplaceTarget(null)}
-        onConfirm={handleReplace}
-        isLoading={isModifying}
-      />
-
-      {/* Add recipient modal */}
-      <AddRecipientModal
-        open={showAddModal}
-        onClose={() => setShowAddModal(false)}
-        onConfirm={handleAdd}
-        isLoading={isModifying}
-      />
+      {/* Remove confirmation modal */}
+      {removeTarget && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+            onClick={() => setRemoveTarget(null)}
+          />
+          <div
+            className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6"
+            style={{ animation: "modalIn 0.2s ease both" }}
+          >
+            <div className="mb-4">
+              <h3 className="text-[14px] font-extrabold text-slate-800 mb-1">
+                Tekshiruvchini olib tashlash
+              </h3>
+              <p className="text-[12px] text-slate-500">
+                Rostdan ham{" "}
+                <span className="font-bold text-slate-700">
+                  {fullName(removeTarget)}
+                </span>
+                ni jarayondan olib tashlamoqchimisiz?
+              </p>
+            </div>
+            <div className="flex gap-2 mt-5">
+              <button
+                onClick={() => setRemoveTarget(null)}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 text-slate-600 text-[12.5px] font-bold hover:bg-slate-200 transition-colors"
+              >
+                Yo'q
+              </button>
+              <button
+                onClick={handleRemove}
+                disabled={isModifying}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-500 text-white text-[12.5px] font-bold hover:bg-red-600 transition-colors disabled:opacity-50"
+              >
+                {isModifying ? (
+                  <Loader2 size={13} className="animate-spin" />
+                ) : (
+                  "Ha, olib tashlash"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
