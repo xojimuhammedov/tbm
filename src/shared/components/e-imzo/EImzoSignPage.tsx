@@ -8,7 +8,6 @@ import {
   CheckCircle2Icon,
   AlertCircleIcon,
   LoaderCircleIcon,
-  FileTextIcon,
   ArrowLeftIcon,
 } from "lucide-react";
 
@@ -256,7 +255,7 @@ const EImzoSignPage = () => {
           </div>
 
           {/* PDF ko'rish bloki */}
-          {pdfLoading ? (
+          {/* {pdfLoading ? (
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm mb-4 flex items-center justify-center gap-3 py-16">
               <LoaderCircleIcon className="size-5 text-emerald-500 animate-spin" />
               <span className="text-sm text-slate-500">
@@ -277,7 +276,7 @@ const EImzoSignPage = () => {
                 title="Hujjat PDF"
               />
             </div>
-          ) : null}
+          ) : null} */}
 
           {/* Progress va Xatoliklar */}
           <SignProgress step={step} />

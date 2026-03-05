@@ -20,6 +20,7 @@ export interface StaffUser {
   _id: string;
   first_name: string;
   second_name: string;
+  middle_name?: string;
   short_phone?: string;
 }
 
@@ -34,6 +35,7 @@ export interface ApplicationDocument {
   responsible: StaffUser;
   director: StaffUser;
   created_by: StaffUser;
+  status: string;
 }
 
 // ─── Share / Bulk send ────────────────────────────────────────────────────────

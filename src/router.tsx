@@ -176,6 +176,9 @@ const ProgreesDoc = lazy(() => import("@/pages/imzolash/page.tsx"));
 const AgreementDecreesPage = lazy(
   () => import("@/pages/agreement-decrees/Page"),
 );
+const AgreementDecreesFormPage = lazy(
+  () => import("@/pages/agreement-decrees/pages/FormPage"),
+);
 
 function Router() {
   const routes: RouteObject[] = [
@@ -693,6 +696,10 @@ function Router() {
         {
           path: "rh-252/agreement-decrees",
           element: <AgreementDecreesPage />,
+        },
+        {
+          path: "rh-252/agreement-decrees/:id/shared/:sharedId",
+          element: <AgreementDecreesFormPage />,
         },
       ],
     },

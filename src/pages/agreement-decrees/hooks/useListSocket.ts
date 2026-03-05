@@ -1,9 +1,10 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { ColumnType } from "dgz-ui-shared/types";
 import { connectEventsSocket } from "@/lib/socket";
 import createSharedColumns from "../helpers/createColumnShared";
 import { SharedItemInterface } from "../interfaces/shared.interface";
+import { useNavigate } from "react-router-dom";
 
 interface UseListSocketReturn {
   dataSource: any;
@@ -17,11 +18,16 @@ const useListSocket = (): UseListSocketReturn => {
   const { t } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   // Pagination va filter parametrlari
   const [params, setParams] = useState<any>({ limit: 10, page: 1 });
 
-  const columns = useMemo(() => createSharedColumns(t), [t]);
+  const handleView = useCallback((record: any) => {
+    navigate(`/rh-252/agreement-decrees/${record?.document_id?._id}/shared/${record?.shared_id}`);
+  }, [navigate]);
+
+  const columns = useMemo(() => createSharedColumns(t, handleView), [t]);
 
   const handleFilter = (newParams: any) => {
     setParams((prev: any) => ({ ...prev, ...newParams }));

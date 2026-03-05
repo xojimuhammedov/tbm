@@ -14,6 +14,9 @@ const Page = () => {
   const { dataSource, loading, params, handleFilter, columns } =
     useListSocket();
 
+  console.log(dataSource);
+
+
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
