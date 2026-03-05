@@ -1,5 +1,5 @@
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import {EditIcon, EyeIcon, Trash2Icon, PencilLineIcon, ShieldCheckIcon} from "lucide-react"; // ShieldCheckIcon
+import {EditIcon, EyeIcon, Trash2Icon, PencilLineIcon, ShieldCheckIcon,FileSignature  } from "lucide-react"; // ShieldCheckIcon
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import {
   OrderApplication,
@@ -90,7 +90,7 @@ const createOrderColumns = (
       return (
           <div className={"flex items-center gap-2"}>
               <MyTooltip content={t("Imzolash")}>
-                  <ShieldCheckIcon
+                  <FileSignature
                       className={
                           "size-4 cursor-pointer text-slate-500 hover:text-emerald-600 transition-colors"
                       }

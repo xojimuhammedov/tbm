@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react";
 import { connectEventsSocket } from "@/lib/socket";
+import { useEffect, useRef } from "react";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 export type DocumentStatus =
     | "DRAFT"
@@ -15,7 +14,7 @@ export type DocumentStatus =
     | "CANCELLED";
 
 export type RecipientStatus = "PENDING" | "ACCEPTED" | "REJECTED" | "CANCEL";
-export type RecipientType   = "APPROVAL" | "SIGNING";
+export type RecipientType = "APPROVAL" | "SIGNING";
 
 export interface SocketRecipient {
     _id: string;
@@ -29,6 +28,7 @@ export interface SocketRecipient {
     is_current: boolean;
     is_parallel: boolean;
     order: number;
+    shared_id?: string;
 }
 
 export interface DocumentSocketPayload {
@@ -45,20 +45,28 @@ interface Props {
     onUpdate: (payload: DocumentSocketPayload) => void;
 }
 
-// ─── HOOK ────────────────────────────────────────────────────────────────────
 
 const useDocumentSocket = ({ documentId, onUpdate }: Props) => {
-    const onUpdateRef   = useRef(onUpdate);
+    const onUpdateRef = useRef(onUpdate);
     const documentIdRef = useRef(documentId);
 
-    useEffect(() => { onUpdateRef.current   = onUpdate;    }, [onUpdate]);
+    useEffect(() => { onUpdateRef.current = onUpdate; }, [onUpdate]);
     useEffect(() => { documentIdRef.current = documentId; }, [documentId]);
 
     useEffect(() => {
         if (!documentId) return;
 
         const sock = connectEventsSocket();
-        sock.emit("join-shared", { document_id: documentId });
+
+        const handleJoin = () => {
+            sock.emit("join-shared", { document_id: documentId });
+        };
+
+        if (sock.connected) {
+            handleJoin();
+        }
+
+        sock.on("connect", handleJoin);
 
         const handler = (message: any) => {
             let found: DocumentSocketPayload | undefined;
@@ -80,9 +88,9 @@ const useDocumentSocket = ({ documentId, onUpdate }: Props) => {
 
         return () => {
             sock.emit("leave-shared", { document_id: documentId });
+            sock.off("connect", handleJoin);
             sock.off("shared:created", handler);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [documentId]);
 };
 

@@ -1,5 +1,5 @@
-import { useApi } from "@/shared/hooks/api/useApi";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod";
+import { useApi } from "@/shared/hooks/api/useApi";
 import { BulkShareResponse } from "../interfaces/detail.interface";
 
 const BULK_SHARE_URL = ["rh-252", "share", "bulk"];
@@ -11,7 +11,7 @@ const useBulkShare = () => {
         document_id: string;
         isQueue: boolean;
         users: { user_id: string; isEditor: boolean }[];
-        signer: string;
+        signer?: string;
     }): Promise<BulkShareResponse> => {
         return await mutate<BulkShareResponse>({
             data: payload,

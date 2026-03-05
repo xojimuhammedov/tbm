@@ -24,7 +24,6 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
 
   const payload = (document as any)?.payload;
   const basic = payload?.basic;
-  const director = document?.director;
 
   // basic.actions arrayidagi tartibga qarab ishlash
   const actions: string[] = basic?.actions || [];
@@ -298,10 +297,6 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
               </div>
             </div>
 
-            <div className="flex justify-between items-end text-[15px] font-bold mt-5">
-              <div className="w-1/2">Direktor</div>
-              <div className="w-1/2 text-right">{director?.first_name}</div>
-            </div>
             <div className="mt-auto text-sm text-[#5a76a8] ">
               <p>
                 {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
