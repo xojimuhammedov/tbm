@@ -5,17 +5,18 @@ import useAuthStore from "@/shared/store/useAuthStore.ts";
 
 export type EventsSocketEvents = {
     // Job events (mavjud)
-    "job:status":    (data: any) => void;
-    "job:progress":  (data: any) => void;
+    "job:status": (data: any) => void;
+    "job:progress": (data: any) => void;
     "job:completed": (data: any) => void;
-    "job:failed":    (data: any) => void;
-    "leave-job":     (data: any) => void;
+    "job:failed": (data: any) => void;
+    "leave-job": (data: any) => void;
 
     // Document shared events
-    "join-shared":       (data: { document_id: string }) => void;
-    "leave-shared":      (data: { document_id: string }) => void;
+    "join-shared": (data: { document_id: string }) => void;
+    "leave-shared": (data: { document_id: string }) => void;
     "join-notification": (data: { document_id: string }) => void;
-    "shared:created":           (data: any) => void;
+    "shared:created": (data: any) => void;
+    "shared:list": (data: any) => void;
 };
 
 let socket: Socket<EventsSocketEvents> | null = null;

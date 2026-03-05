@@ -172,6 +172,7 @@ const RolesPage = lazy(() => import("@/pages/role/Page"));
 const EImzoSignPage = lazy(() => import("@/shared/components/e-imzo/EImzoSignPage.tsx"));
 // Progress document
 const ProgreesDoc = lazy(() => import("@/pages/imzolash/page.tsx"));
+const AgreementDecreesPage = lazy(() => import("@/pages/agreement-decrees/Page"));
 
 function Router() {
   const routes: RouteObject[] = [
@@ -685,6 +686,10 @@ function Router() {
         {
           path: "rh-252/f-252/edit/:id",
           element: <F252_ApplicationForm />,
+        },
+        {
+          path: "rh-252/agreement-decrees",
+          element: <AgreementDecreesPage />,
         },
       ],
 
