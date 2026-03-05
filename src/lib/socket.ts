@@ -4,18 +4,19 @@ import { io, Socket } from "socket.io-client";
 // ─── Socket event types ───────────────────────────────────────────────────────
 
 export type EventsSocketEvents = {
-    // Job events (mavjud)
     "job:status": (data: any) => void;
     "job:progress": (data: any) => void;
     "job:completed": (data: any) => void;
     "job:failed": (data: any) => void;
     "leave-job": (data: any) => void;
 
-    // Document shared events
-    "join-shared": (data: { document_id: string }) => void;
-    "leave-shared": (data: { document_id: string }) => void;
+    "join-shared": (data: any) => void;
+    "leave-shared": (data: any) => void;
     "join-notification": (data: { document_id: string }) => void;
     "shared:created": (data: any) => void;
+
+    // Mana shu qator TS2345 xatosini yo'qotadi
+    "shared:list": (data: any) => void;
 };
 
 let socket: Socket<EventsSocketEvents> | null = null;
@@ -24,13 +25,16 @@ export const connectEventsSocket = (): Socket<EventsSocketEvents> => {
     const token = useAuthStore.getState().accessToken;
 
     if (socket) {
-        // Update token just in case it changed
-        socket.auth = { token };
-        if (socket.io?.opts) {
-            socket.io.opts.extraHeaders = token ? { Authorization: `Bearer ${token}` } : {};
+        // Agar token o'zgargan bo'lsa, uni yangilash
+        if (socket.auth && (socket.auth as any).token !== token) {
+            socket.auth = { token };
+            if (socket.io?.opts) {
+                socket.io.opts.extraHeaders = token ? { Authorization: `Bearer ${token}` } : {};
+            }
+            // Token yangilangach qayta ulanish shart
+            socket.disconnect().connect();
         }
 
-        // If it was manually disconnected, reconnect
         if (socket.disconnected) {
             socket.connect();
         }
@@ -50,11 +54,9 @@ export const connectEventsSocket = (): Socket<EventsSocketEvents> => {
     socket.on("connect", () => {
         console.log("✅ Socket connected:", socket?.id);
     });
+
     socket.on("connect_error", (err) => {
         console.error("❌ Socket connect_error:", err.message);
-    });
-    socket.on("disconnect", (reason) => {
-        console.warn("🔌 Socket disconnected:", reason);
     });
 
     return socket;

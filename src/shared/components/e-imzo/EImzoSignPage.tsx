@@ -162,7 +162,6 @@ const EImzoSignPage = () => {
     preloadPdf,
     step,
     error,
-    pdfUrl,
     handleSign,
     reset,
     isLoading,
@@ -170,7 +169,7 @@ const EImzoSignPage = () => {
 
   const [initError, setInitError] = useState<string | null>(null);
   const [initLoading, setInitLoading] = useState(true);
-  const [pdfLoading, setPdfLoading] = useState(false);
+  const [, setPdfLoading] = useState(false);
 
   // Breadcrumbs
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
