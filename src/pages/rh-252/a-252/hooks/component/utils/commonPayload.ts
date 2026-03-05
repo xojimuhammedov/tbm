@@ -6,5 +6,5 @@ export const buildBasePayload = (data: any, fullCode: string) => ({
   to: textToList(data.to),
   copy: textToList(data.copy),
   responsible: data.responsible,
-  director: data.director
+  director: data.director,
 });

@@ -141,7 +141,6 @@ const E231FormPage = lazy(
   () => import("@/pages/gras/e-231/pages/FormPage.tsx"),
 );
 
-
 const A252Page = lazy(() => import("@/pages/rh-252/a-252/Page"));
 const A252FormPage = lazy(() => import("@/pages/rh-252/a-252/pages/FormPage"));
 
@@ -169,10 +168,14 @@ const SettingsPage = lazy(() => import("@/pages/staff/Page"));
 const RolesPage = lazy(() => import("@/pages/role/Page"));
 
 // E-imzo
-const EImzoSignPage = lazy(() => import("@/shared/components/e-imzo/EImzoSignPage.tsx"));
+const EImzoSignPage = lazy(
+  () => import("@/shared/components/e-imzo/EImzoSignPage.tsx"),
+);
 // Progress document
 const ProgreesDoc = lazy(() => import("@/pages/imzolash/page.tsx"));
-const AgreementDecreesPage = lazy(() => import("@/pages/agreement-decrees/Page"));
+const AgreementDecreesPage = lazy(
+  () => import("@/pages/agreement-decrees/Page"),
+);
 
 function Router() {
   const routes: RouteObject[] = [
@@ -192,7 +195,7 @@ function Router() {
     },
     {
       path: "verify",
-      element: <Verify/>,
+      element: <Verify />,
     },
     {
       path: "/",
@@ -213,7 +216,7 @@ function Router() {
         },
         {
           path: "verify",
-          element: <Verify/>,
+          element: <Verify />,
         },
         //External incoming documents
 
@@ -636,11 +639,11 @@ function Router() {
           element: <A252FormPage />,
         },
         {
-          path:"rh-252/a-252/sign/:id",
+          path: "rh-252/a-252/sign/:id",
           element: <EImzoSignPage />,
         },
         {
-          path:"rh-252/a-252/progress/:id",
+          path: "rh-252/a-252/progress/:id",
           element: <ProgreesDoc />,
         },
         {
@@ -692,7 +695,6 @@ function Router() {
           element: <AgreementDecreesPage />,
         },
       ],
-
     },
 
     {

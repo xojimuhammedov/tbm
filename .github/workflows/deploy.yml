@@ -41,7 +41,6 @@ jobs:
           VITE_VALIDATION_NS: ${{secrets.VITE_VALIDATION_NS}}
           VITE_ERROR_NS: ${{secrets.VITE_ERROR_NS}}
 
-
       - name: 📤 Kodni yuklash
         uses: actions/upload-artifact@v4
         with:

@@ -16,20 +16,24 @@ export type FlowImportProps = {
 };
 
 const useChannelsImport = ({
-                             status = "active",
-                             onSuccess,
-                           }: FlowImportProps = {}) => {
+  status = "active",
+  onSuccess,
+}: FlowImportProps = {}) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      const res = await request.post(`${CHANNELS_IMPORT_API}/${status}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const res = await request.post(
+        `${CHANNELS_IMPORT_API}/${status}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         },
-      });
+      );
       // Response ichidagi ma'lumotni qaytaramiz
       return res.data;
     },
@@ -38,11 +42,11 @@ const useChannelsImport = ({
         variant: "destructive",
         title: t(get(error, "response.statusText", "Error")),
         description: t(
-            get(
-                error,
-                "response.data.message",
-                "Fayl yuklashda xatolik yuz berdi",
-            ),
+          get(
+            error,
+            "response.data.message",
+            "Fayl yuklashda xatolik yuz berdi",
+          ),
         ),
       });
     },
@@ -65,13 +69,13 @@ const useChannelsImport = ({
   });
 
   const handleUpload = useCallback(
-      (file: File) => {
-        const formData = new FormData();
-        formData.append("file", file);
+    (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
 
-        mutation.mutate(formData);
-      },
-      [mutation],
+      mutation.mutate(formData);
+    },
+    [mutation],
   );
 
   return {

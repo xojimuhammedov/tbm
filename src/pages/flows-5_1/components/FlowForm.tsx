@@ -243,11 +243,11 @@ const FlowForm = ({ id, onSave, readOnly = false }: FlowFormProps) => {
             disabled={readOnly}
           />
           <MyInput<FlowDto>
-              control={form.control}
-              name={"inter_operator_id"}
-              label={t("International operator id")}
-              placeholder={t("Enter operator ID ")}
-              disabled={readOnly}
+            control={form.control}
+            name={"inter_operator_id"}
+            label={t("International operator id")}
+            placeholder={t("Enter operator ID ")}
+            disabled={readOnly}
           />
         </div>
         {!readOnly && (

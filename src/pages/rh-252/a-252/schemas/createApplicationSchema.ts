@@ -3,13 +3,13 @@ import { config } from "@/shared/utils/config.ts";
 import { z } from "zod";
 
 export const createOrderSchema = (
-    t: (...args: TranslationArgsType) => string,
+  t: (...args: TranslationArgsType) => string,
 ) => {
   const requiredMsg = (fieldKey: string) =>
-      t("required {{field}}", {
-        field: t(fieldKey),
-        ns: config.LANG.NS.VALIDATION,
-      });
+    t("required {{field}}", {
+      field: t(fieldKey),
+      ns: config.LANG.NS.VALIDATION,
+    });
 
   // --- Reusable Schemas ---
 
@@ -35,7 +35,9 @@ export const createOrderSchema = (
 
   const channelInfoSchema = z.object({
     code: z.string().min(1, requiredMsg("Code")),
-    international_stream_number: z.string().min(1, requiredMsg("International stream number")),
+    international_stream_number: z
+      .string()
+      .min(1, requiredMsg("International stream number")),
   });
 
   const channelUpdateSchema = z.object({
@@ -100,15 +102,19 @@ export const createOrderSchema = (
       actions: z.array(z.enum(["create", "update", "delete"])),
     }),
     create: z.object({ flow_ids: z.array(flowSchema) }).optional(),
-    update: z.object({
-      channels: z.array(channelUpdateSchema).optional(),
-      flows: z.array(flowSchema).optional(),
-    }).optional(),
-    delete: z.object({
-      flow_ids: z.array(z.string()).optional(),
-      channels: z.array(z.string()).optional(),
-      channel_ids: z.array(z.string()).optional(),
-    }).optional(),
+    update: z
+      .object({
+        channels: z.array(channelUpdateSchema).optional(),
+        flows: z.array(flowSchema).optional(),
+      })
+      .optional(),
+    delete: z
+      .object({
+        flow_ids: z.array(z.string()).optional(),
+        channels: z.array(z.string()).optional(),
+        channel_ids: z.array(z.string()).optional(),
+      })
+      .optional(),
   });
 
   const payload1754Schema = z.object({

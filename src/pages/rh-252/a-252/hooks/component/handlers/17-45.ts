@@ -37,7 +37,10 @@ const h1745: Handler = {
   populate: (form, payload, ctx) => {
     const basic = payload.basic || {};
 
-    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue(
+      "payload.basic.organization_name",
+      basic.organization_name ?? "",
+    );
     form.setValue("payload.basic.request_number", basic.request_number ?? "");
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
@@ -46,8 +49,8 @@ const h1745: Handler = {
     form.setValue("payload.basic.actions", safeArray<string>(basic.actions));
 
     form.setValue(
-        "payload.file_name",
-        basic.base_file ?? payload?.file_name ?? "",
+      "payload.file_name",
+      basic.base_file ?? payload?.file_name ?? "",
     );
 
     if (payload.create?.flow_ids) {
@@ -94,7 +97,7 @@ const h1745: Handler = {
 
     if (payload.delete?.elements) {
       const delElements = safeArray<string>(payload.delete.elements);
-      const mappedForForm = delElements.map(id => ({ value: id }));
+      const mappedForForm = delElements.map((id) => ({ value: id }));
       form.setValue("payload.delete.flow_ids", mappedForForm);
       ctx.setCurrentIds(delElements);
     }
@@ -104,24 +107,24 @@ const h1745: Handler = {
     const actions = safeArray<string>(data.payload?.basic?.actions);
 
     const updatePayload = actions.includes("update")
-        ? buildUpdatePayloadContract(data)
-        : undefined;
+      ? buildUpdatePayloadContract(data)
+      : undefined;
 
     const createPayload = actions.includes("create")
-        ? {
+      ? {
           flow_ids: safeArray(data.payload.create?.flow_ids).map(
-              ({ id_exist, ...rest }: any) => rest,
+            ({ id_exist, ...rest }: any) => rest,
           ),
         }
-        : undefined;
+      : undefined;
 
     const deletePayload = actions.includes("delete")
-        ? {
+      ? {
           elements: safeArray(data.payload?.delete?.flow_ids)
-              .map((item: any) => item.value)
-              .filter((val: string) => val && val.trim() !== ""),
+            .map((item: any) => item.value)
+            .filter((val: string) => val && val.trim() !== ""),
         }
-        : undefined;
+      : undefined;
 
     return {
       ...buildBasePayload(data, ctx.fullCode),

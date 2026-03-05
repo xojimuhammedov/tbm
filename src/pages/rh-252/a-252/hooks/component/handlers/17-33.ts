@@ -14,18 +14,19 @@ const h1733: Handler = {
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
     form.setValue("payload.basic.justification", basic.justification ?? "");
     form.setValue(
-        "payload.file_name",
-        basic.base_file ?? payload?.file_name ?? "",
+      "payload.file_name",
+      basic.base_file ?? payload?.file_name ?? "",
     );
-
 
     const flowIds = safeArray(payload.delete?.flow_ids);
     const delElements = flowIds.map((item: any) =>
-        typeof item === "string" ? item : item.code
+      typeof item === "string" ? item : item.code,
     );
 
     setTimeout(() => {
-      form.setValue("payload.delete.elements", delElements, { shouldDirty: true });
+      form.setValue("payload.delete.elements", delElements, {
+        shouldDirty: true,
+      });
     }, 0);
   },
 
