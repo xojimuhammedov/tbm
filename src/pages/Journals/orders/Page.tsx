@@ -12,7 +12,6 @@ import { ORDERS_QUERY_KEY } from "@/pages/Journals/orders/constants/orders.const
 import { OrdersInterface } from "@/pages/Journals/orders/interfaces/orders.interface.ts";
 import useOrders from "@/pages/Journals/orders/hooks/useOrders.ts";
 
-
 const Page = () => {
   const { t } = useTranslation();
   const [importModalOpen, setImportModalOpen] = useState(false);
@@ -58,9 +57,7 @@ const Page = () => {
             {selectedRowKeys.length > 0 && `(${selectedRowKeys.length})`}
           </Button>
 
-
-
-              <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
+          <Button size={"sm"} onClick={() => setImportModalOpen(true)}>
             <UploadIcon className="size-4" />
             {t("Import")}
           </Button>

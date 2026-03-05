@@ -193,6 +193,10 @@ const createSidebarGroups = (
             url: "a-252",
           },
           {
+            title: t("Kelishuv farmoyishlar"),
+            url: "agreement-decrees",
+          },
+          {
             title: t("3.3 Application"),
             url: "rh-3_3",
           },

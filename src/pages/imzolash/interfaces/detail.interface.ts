@@ -1,39 +1,41 @@
 // ─── Document ────────────────────────────────────────────────────────────────
 
 export interface BasicPayload {
-    title: string;
-    start_time: string;
-    end_time: string;
-    connection_closure_type: string;
-    max_duration_minutes: number;
-    timezone: string;
-    request_date?: string;
-    request_number?: string;
+  title: string;
+  start_time: string;
+  end_time: string;
+  connection_closure_type: string;
+  max_duration_minutes: number;
+  timezone: string;
+  request_date?: string;
+  request_number?: string;
 }
 
 export interface DocumentPayload {
-    basic: BasicPayload;
-    flow_ids?: { code: string }[];
+  basic: BasicPayload;
+  flow_ids?: { code: string }[];
 }
 
 export interface StaffUser {
-    _id: string;
-    first_name: string;
-    second_name: string;
-    short_phone?: string;
+  _id: string;
+  first_name: string;
+  second_name: string;
+  middle_name?: string;
+  short_phone?: string;
 }
 
 export interface ApplicationDocument {
-    _id: string;
-    code: string;
-    order_date: string;
-    created_at: string;
-    payload: DocumentPayload;
-    to: string[];
-    copy: string[];
-    responsible: StaffUser;
-    director: StaffUser;
-    created_by: StaffUser;
+  _id: string;
+  code: string;
+  order_date: string;
+  created_at: string;
+  payload: DocumentPayload;
+  to: string[];
+  copy: string[];
+  responsible: StaffUser;
+  director: StaffUser;
+  created_by: StaffUser;
+  status: string;
 }
 
 // ─── Share / Bulk send ────────────────────────────────────────────────────────
@@ -41,28 +43,28 @@ export interface ApplicationDocument {
 export type ShareType = "APPROVAL" | "SIGNING";
 
 export interface ShareRecipient {
-    user_id: string;
-    type: ShareType;
-    isEditor: boolean;
+  user_id: string;
+  type: ShareType;
+  isEditor: boolean;
 }
 
 export interface BulkSharePayload {
-    document_id: string;
-    isQueue: boolean;
-    data: ShareRecipient[];
+  document_id: string;
+  isQueue: boolean;
+  data: ShareRecipient[];
 }
 
 export interface BulkShareResponse {
-    success: boolean;
-    message: string;
+  success: boolean;
+  message: string;
 }
 
 // ─── PDF ─────────────────────────────────────────────────────────────────────
 
 export interface GeneratePdfResponse {
-    success: boolean;
-    message: string;
-    fileName: string;
+  success: boolean;
+  message: string;
+  fileName: string;
 }
 
 // ─── Stage ───────────────────────────────────────────────────────────────────
