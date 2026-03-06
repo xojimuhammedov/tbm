@@ -1,18 +1,18 @@
 import { MenuGroupInterface } from "@/layouts/base/interfaces/menu-group.interface.ts";
 import { TranslationArgsType } from "dgz-ui-shared/types";
 import {
+  BarChart3,
   ChartBarBig,
   Database,
   FileLock,
+  FileSignature,
+  Inbox,
   Settings,
   ShieldUser,
   SmartphoneCharging,
   Tv,
   User,
   Users,
-  BarChart3,
-  Inbox,
-  FileSignature,
 } from "lucide-react";
 
 const createSidebarGroups = (
@@ -195,6 +195,10 @@ const createSidebarGroups = (
           {
             title: t("Kelishuv farmoyishlar"),
             url: "agreement-decrees",
+          },
+          {
+            title: t("Imzolanadigan hujjatlar"),
+            url: "hujjatlarni-imzolash",
           },
           {
             title: t("3.3 Application"),

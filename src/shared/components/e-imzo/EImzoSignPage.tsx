@@ -1,15 +1,15 @@
-import { useEffect, useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import {
-  ShieldCheckIcon,
-  KeyRoundIcon,
-  ChevronDownIcon,
-  CheckCircle2Icon,
   AlertCircleIcon,
-  LoaderCircleIcon,
   ArrowLeftIcon,
+  CheckCircle2Icon,
+  ChevronDownIcon,
+  KeyRoundIcon,
+  LoaderCircleIcon,
+  ShieldCheckIcon,
 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
 
 // UI komponentlar va layoutlar
 import { PageWrapper } from "@/shared/components/containers/page";
@@ -113,7 +113,7 @@ function CertDropdown({
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div className="absolute z-50 mt-2 w-full bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
-            <div className="max-h-64 overflow-y-auto divide-y divide-slate-100">
+            <div className="max-h-96 overflow-y-auto divide-y divide-slate-100">
               {keys.map((cert) => {
                 const expired = isExpired(cert.validTo);
                 const isSelected = selected?.serialNumber === cert.serialNumber;
