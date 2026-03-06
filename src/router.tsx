@@ -179,6 +179,12 @@ const AgreementDecreesPage = lazy(
 const AgreementDecreesFormPage = lazy(
   () => import("@/pages/agreement-decrees/pages/FormPage"),
 );
+const HujjatlarniImzolashPage = lazy(
+  () => import("@/pages/hujjatlarni-imzolash/Page"),
+);
+const HujjatlarniImzolashFormPage = lazy(
+  () => import("@/pages/hujjatlarni-imzolash/pages/FormPage"),
+);
 
 function Router() {
   const routes: RouteObject[] = [
@@ -700,6 +706,14 @@ function Router() {
         {
           path: "rh-252/agreement-decrees/:id/shared/:sharedId",
           element: <AgreementDecreesFormPage />,
+        },
+        {
+          path: "rh-252/hujjatlarni-imzolash",
+          element: <HujjatlarniImzolashPage />,
+        },
+        {
+          path: "rh-252/hujjatlarni-imzolash/:id/shared/:sharedId",
+          element: <HujjatlarniImzolashFormPage />,
         },
       ],
     },

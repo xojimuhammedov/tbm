@@ -11,6 +11,8 @@ export interface BaseOrder {
   code: OrderCode;
   document_index: string;
   order_date: string;
+  status?: string;
+  pdf_path?: string;
   responsible: ResponsibleUser;
   director: ResponsibleUser;
   to: string[];

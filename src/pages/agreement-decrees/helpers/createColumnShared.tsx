@@ -1,13 +1,13 @@
+import MyTooltip from "@/shared/components/atoms/tooltip/MyTooltip.tsx";
 import { Badge } from "dgz-ui";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
+import { EyeIcon } from "lucide-react";
 import {
   SharedItemInterface,
   SharedStage,
-  SharedType,
   SharedStatus,
+  SharedType,
 } from "../interfaces/shared.interface.ts";
-import MyTooltip from "@/shared/components/atoms/tooltip/MyTooltip.tsx";
-import { EyeIcon } from "lucide-react";
 
 const renderHeader = (label: string) => (
   <span style={{ whiteSpace: "nowrap" }}>{label}</span>
