@@ -10,6 +10,7 @@ export interface BaseOrder {
   _id?: string;
   code: OrderCode;
   document_index: string;
+  status: string;
   order_date: string;
   responsible: ResponsibleUser;
   director: ResponsibleUser;
