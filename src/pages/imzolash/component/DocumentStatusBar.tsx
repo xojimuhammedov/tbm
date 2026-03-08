@@ -177,7 +177,6 @@ function RecipientRow({ r, delay, canModify, onRemove }: RecipientRowProps) {
   );
 }
 
-
 function TimelineTrack({ status }: { status: DocumentStatus }) {
   const resolvedStatus = STATUS_ALIAS[status] ?? status;
   const idx = TIMELINE.findIndex((s) => s.id === resolvedStatus);

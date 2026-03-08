@@ -28,7 +28,6 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
   const channels = payload?.delete?.channels || [];
   const responsible = document?.responsible;
 
-
   return (
     <MyModal
       open={open}
@@ -126,8 +125,9 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
               {basic?.justification || "___________________________________"}
               {basic?.deadline
                 ? dateFormatter(basic.deadline, " YYYY-yil DD-MMMM", "uz")
-                : "____-yildan"}{""}dan boshlab ushbu kanallar uchun ishlagan quyidagi zaxira (AAG)
-              kanallari o‘chirilsin:
+                : "____-yildan"}
+              {""}dan boshlab ushbu kanallar uchun ishlagan quyidagi zaxira
+              (AAG) kanallari o‘chirilsin:
             </p>
           </div>
           <div className="space-y-3 mb-4 text-[15px] ml-4">
@@ -174,11 +174,10 @@ const OrderApplicationView1733 = ({ open, onOpenChange, document }: Props) => {
 
           <div className="mt-auto text-sm text-[#4a76a8] leading-[1.2]">
             <p>
-              {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
+              {(document as any)?.created_by?.first_name?.[0]}.{" "}
+              {(document as any)?.created_by?.second_name}
             </p>
-            <p>
-              {(document as any)?.created_by?.short_phone}
-            </p>
+            <p>{(document as any)?.created_by?.short_phone}</p>
           </div>
         </div>
       </div>

@@ -23,9 +23,14 @@ const useListSocket = (): UseListSocketReturn => {
   // Pagination va filter parametrlari
   const [params, setParams] = useState<any>({ limit: 10, page: 1 });
 
-  const handleView = useCallback((record: any) => {
-    navigate(`/rh-252/hujjatlarni-imzolash/${record?.document_id?._id}/shared/${record?.shared_id}`);
-  }, [navigate]);
+  const handleView = useCallback(
+    (record: any) => {
+      navigate(
+        `/rh-252/hujjatlarni-imzolash/${record?.document_id?._id}/shared/${record?.shared_id}`,
+      );
+    },
+    [navigate],
+  );
 
   const columns = useMemo(() => createSharedColumns(t, handleView), [t]);
 
@@ -43,10 +48,14 @@ const useListSocket = (): UseListSocketReturn => {
 
     const handleSharedList = (response: any) => {
       // Filter for type "SIGNING"
-      const filteredData = response?.data ? {
-        ...response,
-        data: response.data.filter((item: SharedItemInterface) => item.type === "SIGNING")
-      } : response;
+      const filteredData = response?.data
+        ? {
+            ...response,
+            data: response.data.filter(
+              (item: SharedItemInterface) => item.type === "SIGNING",
+            ),
+          }
+        : response;
       setData(filteredData);
       setLoading(false); // Data kelganida loadingni o'chiramiz
     };

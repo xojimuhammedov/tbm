@@ -23,9 +23,14 @@ const useListSocket = (): UseListSocketReturn => {
   // Pagination va filter parametrlari
   const [params, setParams] = useState<any>({ limit: 10, page: 1 });
 
-  const handleView = useCallback((record: any) => {
-    navigate(`/rh-252/agreement-decrees/${record?.document_id?._id}/shared/${record?.shared_id}`);
-  }, [navigate]);
+  const handleView = useCallback(
+    (record: any) => {
+      navigate(
+        `/rh-252/agreement-decrees/${record?.document_id?._id}/shared/${record?.shared_id}`,
+      );
+    },
+    [navigate],
+  );
 
   const columns = useMemo(() => createSharedColumns(t, handleView), [t]);
 

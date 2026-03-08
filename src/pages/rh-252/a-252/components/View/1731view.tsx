@@ -227,10 +227,6 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
           ))}
           {/* --- Imzolar bo'limi --- */}
           <div className="mt-10 space-y-4 no-break">
-
-
-
-
             {/* Tuzuvchi (Created by) qatori */}
             {/*<div className="flex justify-between items-end text-[15px] font-bold pt-4">*/}
             {/*  <div className="w-1/2">Tuzuvchi:</div>*/}
@@ -241,22 +237,18 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
 
             <div className="mt-auto text-sm text-[#5a76a8]">
               <p>
-                {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
+                {(document as any)?.created_by?.first_name?.[0]}.{" "}
+                {(document as any)?.created_by?.second_name}
               </p>
-              <p>
-                {(document as any)?.created_by?.short_phone}
-              </p>
+              <p>{(document as any)?.created_by?.short_phone}</p>
             </div>
 
-
-
             {/* Bog'lanish uchun ma'lumot (ixtiyoriy, kichikroq shriftda) */}
-              {/*<div className="flex justify-end mt-2">*/}
-              {/*  <div className="text-[12px] text-gray-600">*/}
-              {/*    Tel: {document?.responsible?.phone}*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-
+            {/*<div className="flex justify-end mt-2">*/}
+            {/*  <div className="text-[12px] text-gray-600">*/}
+            {/*    Tel: {document?.responsible?.phone}*/}
+            {/*  </div>*/}
+            {/*</div>*/}
           </div>
         </div>
       </div>

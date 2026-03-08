@@ -180,14 +180,12 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
           </p>
           <div className="mt-20 text-sm text-[#5a76a8] ">
             <p>
-              {(document as any)?.created_by?.first_name?.[0]}. {(document as any)?.created_by?.second_name}
+              {(document as any)?.created_by?.first_name?.[0]}.{" "}
+              {(document as any)?.created_by?.second_name}
             </p>
-            <p>
-              {(document as any)?.created_by?.short_phone}
-            </p>
+            <p>{(document as any)?.created_by?.short_phone}</p>
           </div>
         </div>
-
       </div>
     </MyModal>
   );

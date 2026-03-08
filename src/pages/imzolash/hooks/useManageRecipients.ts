@@ -5,7 +5,12 @@ export const useManageRecipients = () => {
   const { mutate, loading } = useApi([]);
 
   // Endpoints updated to user's specified requirement
-  const addRecipient = async (documentId: string, userId: string, isEditor: boolean, type: "APPROVAL" | "SIGNING" = "APPROVAL") => {
+  const addRecipient = async (
+    documentId: string,
+    userId: string,
+    isEditor: boolean,
+    type: "APPROVAL" | "SIGNING" = "APPROVAL",
+  ) => {
     return await mutate({
       url: ["rh-252", "share"],
       data: { document_id: documentId, to_id: userId, type, isEditor },

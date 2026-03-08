@@ -42,61 +42,61 @@ const createSharedColumns = (
   t: (...args: TranslationArgsType) => string,
   handleView: (record: SharedItemInterface) => void,
 ): ColumnType<SharedItemInterface>[] => [
-    {
-      key: "document_id",
-      dataIndex: "document_id",
-      name: t("Hujjat", { defaultValue: "Hujjat" }),
-      render: (_, record) => record.document_id?.code || "-",
+  {
+    key: "document_id",
+    dataIndex: "document_id",
+    name: t("Hujjat", { defaultValue: "Hujjat" }),
+    render: (_, record) => record.document_id?.code || "-",
+  },
+  {
+    key: "from_id",
+    dataIndex: "from_id",
+    name: t("Kimdan", { defaultValue: "Kimdan" }),
+    render: (_, record) => {
+      const from = record.from_id;
+      if (!from) return "-";
+      return `${from.second_name || ""} ${from.first_name || ""} ${from.middle_name || ""}`.trim();
     },
-    {
-      key: "from_id",
-      dataIndex: "from_id",
-      name: t("Kimdan", { defaultValue: "Kimdan" }),
-      render: (_, record) => {
-        const from = record.from_id;
-        if (!from) return "-";
-        return `${from.second_name || ""} ${from.first_name || ""} ${from.middle_name || ""}`.trim();
-      },
-    },
-    {
-      key: "stages",
-      dataIndex: "stages",
-      name: t("Bosqich", { defaultValue: "Bosqich" }),
-      render: (value: SharedStage) => (
-        <Badge variant={stageColors[value] || "default"}>{value || "-"}</Badge>
-      ),
-    },
-    {
-      key: "type",
-      dataIndex: "type",
-      name: t("Turi", { defaultValue: "Turi" }),
-      render: (value: SharedType) => (
-        <Badge variant={typeColors[value] || "default"}>{value || "-"}</Badge>
-      ),
-    },
-    {
-      key: "status",
-      dataIndex: "status",
-      name: t("Holat", { defaultValue: "Holat" }),
-      render: (value: SharedStatus) => (
-        <Badge variant={statusColors[value] || "default"}>{value || "-"}</Badge>
-      ),
-    },
-    {
-      key: "document_id",
-      dataIndex: "document_id",
-      name: renderHeader(t("Действия")),
-      render: (_, record) => (
-        <div className={"flex items-center gap-2"}>
-          <MyTooltip content={t("View")}>
-            <EyeIcon
-              className="size-4 cursor-pointer hover:text-blue-500"
-              onClick={() => record && handleView(record)}
-            />
-          </MyTooltip>
-        </div>
-      ),
-    },
-  ];
+  },
+  {
+    key: "stages",
+    dataIndex: "stages",
+    name: t("Bosqich", { defaultValue: "Bosqich" }),
+    render: (value: SharedStage) => (
+      <Badge variant={stageColors[value] || "default"}>{value || "-"}</Badge>
+    ),
+  },
+  {
+    key: "type",
+    dataIndex: "type",
+    name: t("Turi", { defaultValue: "Turi" }),
+    render: (value: SharedType) => (
+      <Badge variant={typeColors[value] || "default"}>{value || "-"}</Badge>
+    ),
+  },
+  {
+    key: "status",
+    dataIndex: "status",
+    name: t("Holat", { defaultValue: "Holat" }),
+    render: (value: SharedStatus) => (
+      <Badge variant={statusColors[value] || "default"}>{value || "-"}</Badge>
+    ),
+  },
+  {
+    key: "document_id",
+    dataIndex: "document_id",
+    name: renderHeader(t("Действия")),
+    render: (_, record) => (
+      <div className={"flex items-center gap-2"}>
+        <MyTooltip content={t("View")}>
+          <EyeIcon
+            className="size-4 cursor-pointer hover:text-blue-500"
+            onClick={() => record && handleView(record)}
+          />
+        </MyTooltip>
+      </div>
+    ),
+  },
+];
 
 export default createSharedColumns;

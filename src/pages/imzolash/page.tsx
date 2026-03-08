@@ -17,10 +17,8 @@ import useApplicationDetail from "./hooks/useApplicationDetail";
 import { ApplicationDocument } from "./interfaces/detail.interface";
 import { ApprovalShareFormValues } from "./schema/approvalShare.schema";
 
-
 const fullName = (u?: { first_name?: string; second_name?: string }) =>
   u ? `${u.first_name ?? ""} ${u.second_name ?? ""}`.trim() : "—";
-
 
 function PdfModal({
   open,
@@ -73,7 +71,6 @@ function PdfModal({
     </MyModal>
   );
 }
-
 
 function ShareModal({
   open,
@@ -221,8 +218,7 @@ const ApplicationDocumentDetailPage = () => {
           await handleAddRecipient(values.director_id, false, "SIGNING");
         }
         handleCloseAddModal();
-      } catch {
-      }
+      } catch {}
     },
     [handleAddRecipient, form],
   );
