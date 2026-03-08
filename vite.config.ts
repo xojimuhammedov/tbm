@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const BASE_URL = env.VITE_BASE_URL;
   const SOCKET_URL = env.VITE_SOCKET_URL;
+  const USE_PROXY = env.VITE_USE_PROXY !== 'false';
   const proxyPaths = ["/api", "/uploads", "/frontend"];
   const socketPaths = ["/socket.io"];
 
@@ -46,7 +47,7 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true,
       open: false,
-      proxy: {
+      proxy: USE_PROXY ? {
         ...Object.fromEntries(
           proxyPaths.map((path) => [
             path,
@@ -65,7 +66,7 @@ export default defineConfig(({ mode }) => {
             },
           ]),
         ),
-      },
+      } : {},
     },
   };
 });

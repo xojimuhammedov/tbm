@@ -1,6 +1,9 @@
 import useAuthStore from "@/shared/store/useAuthStore.ts";
 import { io, Socket } from "socket.io-client";
 
+// Get socket URL from environment or fallback
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "https://eresurs.rtmc.uz";
+
 // ─── Socket event types ───────────────────────────────────────────────────────
 
 export type EventsSocketEvents = {
@@ -41,7 +44,7 @@ export const connectEventsSocket = (): Socket<EventsSocketEvents> => {
         return socket;
     }
 
-    socket = io("https://eresurs.rtmc.uz", {
+    socket = io(SOCKET_URL, {
         path: "/socket.io",
         transports: ["websocket"],
         auth: { token },

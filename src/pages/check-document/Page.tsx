@@ -45,9 +45,10 @@ const Page = () => {
 
   useEffect(() => {
     if (docId && sig) {
+      const baseUrl = import.meta.env.VITE_BASE_URL || "https://eresurs.rtmc.uz";
       axios
         .get<IDocData>(
-          "https://eresurs.rtmc.uz/api/rh-252/orderv2/check-qr-code",
+          `${baseUrl}/api/rh-252/orderv2/check-qr-code`,
           {
             params: { id: docId, sig: sig },
           },

@@ -5,7 +5,7 @@ import { useToast } from "@/shared/hooks/useToast.ts";
 import { useTranslation } from "react-i18next";
 import useAuthStore from "@/shared/store/useAuthStore.ts";
 
-const SOCKET_URL = "https://eresurs.rtmc.uz";
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "https://eresurs.rtmc.uz";
 
 export type JobStatus = "active" | "completed" | "failed" | "waiting";
 
