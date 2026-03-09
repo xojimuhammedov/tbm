@@ -1,6 +1,6 @@
 import { MySelect } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui/button";
-import { LoaderCircleIcon } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { useEffect } from "react";
 import { FormProvider, UseFormReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -36,43 +36,15 @@ export function ShareFormPanel({
 
     return (
         <FormProvider {...form}>
-            <div
-                className="bg-white rounded-2xl border border-slate-200 shadow-sm mb-4 overflow-hidden"
-                style={{ animation: "slideDown 0.25s cubic-bezier(0.34,1.1,0.64,1)" }}
-            >
-                <style>{`
-                    @keyframes slideDown {
-                        from { opacity: 0; transform: translateY(-10px); }
-                        to   { opacity: 1; transform: translateY(0); }
-                    }
-                `}</style>
-
-                {/* Header */}
-                <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-                    <div>
-                        <p className="font-bold text-sm text-slate-800">
-                            Ko'rib chiqishga yuborish
-                        </p>
-                        <p className="text-xs text-slate-400 mt-0.5">
-                            Tasdiqlash va imzolash uchun xodimlarni tanlang
-                        </p>
-                    </div>
-                    <button
-                        onClick={onCancel}
-                        className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-700 text-sm transition-all duration-150"
-                    >
-                        ✕
-                    </button>
-                </div>
-
-                <div className="p-5 space-y-4 max-h-[60vh] overflow-y-auto">
+            <div className="w-full flex flex-col">
+                <div className="flex-1 space-y-5 p-1 max-h-[65vh] overflow-y-auto" style={{ scrollbarWidth: "thin", minHeight: "350px" }}>
                     {/* ── APPROVAL block ── */}
-                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-amber-50/60 to-orange-50/30 p-4 space-y-3">
+                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-amber-50/60 to-orange-50/30 p-4 sm:p-5 space-y-4">
                         <div className="flex items-center gap-2">
-                            <div className="w-1 h-4 rounded-full bg-amber-400" />
-                            <span className="text-[10.5px] font-bold text-slate-600 uppercase tracking-wider">
-                Tasdiqlash bosqichi
-              </span>
+                            <div className="w-1.5 h-5 rounded-full bg-amber-400" />
+                            <span className="text-[11px] sm:text-[13px] font-bold text-slate-600 uppercase tracking-wider">
+                                Tasdiqlash bosqichi
+                            </span>
                         </div>
 
                         <MySelect
@@ -88,11 +60,11 @@ export function ShareFormPanel({
 
                         {/* Edit toggle per user - more compact UI */}
                         {approverIds && approverIds.length > 0 && (
-                            <div className="mt-4 pt-3 border-t border-amber-100/50">
-                                <p className="text-[10.5px] font-bold text-amber-700/60 uppercase tracking-wider mb-2">
+                            <div className="mt-5 pt-4 border-t border-amber-100/50">
+                                <p className="text-[11px] sm:text-[13px] font-bold text-amber-700/60 uppercase tracking-wider mb-3">
                                     Tahrirlash huquqlari
                                 </p>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
                                     {approverIds.map((uid: string) => {
                                         const userLabel =
                                             staffOptions.find((o) => o.value === uid)?.label ||
@@ -103,7 +75,7 @@ export function ShareFormPanel({
                                         return (
                                             <label
                                                 key={uid}
-                                                className="flex items-center gap-2.5 bg-white/60 p-2 rounded-lg border border-amber-100/50 hover:bg-white cursor-pointer transition-colors group"
+                                                className="flex items-center gap-3 bg-white/80 p-3 rounded-xl border border-amber-100/50 hover:bg-white cursor-pointer transition-colors group"
                                             >
                                                 <button
                                                     type="button"
@@ -116,18 +88,18 @@ export function ShareFormPanel({
                                                             { shouldDirty: true },
                                                         );
                                                     }}
-                                                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
+                                                    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
                                                         canEdit ? "bg-amber-400" : "bg-slate-200"
                                                     }`}
                                                 >
-                          <span
-                              className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm ring-0 transition-transform ${
-                                  canEdit ? "translate-x-4" : "translate-x-0"
-                              }`}
-                          />
+                                                    <span
+                                                        className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-sm ring-0 transition-transform ${
+                                                            canEdit ? "translate-x-5" : "translate-x-0"
+                                                        }`}
+                                                    />
                                                 </button>
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="text-[11px] font-semibold text-slate-700 truncate">
+                                                    <p className="text-[12px] sm:text-[14px] font-semibold text-slate-700 truncate">
                                                         {userLabel}
                                                     </p>
                                                 </div>
@@ -140,12 +112,12 @@ export function ShareFormPanel({
                     </div>
 
                     {/* ── SIGNING block ── */}
-                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-violet-50/60 to-indigo-50/30 p-4 space-y-3">
+                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-violet-50/60 to-indigo-50/30 p-4 sm:p-5 space-y-4">
                         <div className="flex items-center gap-2">
-                            <div className="w-1 h-4 rounded-full bg-violet-400" />
-                            <span className="text-[10.5px] font-bold text-slate-600 uppercase tracking-wider">
-                Imzolash bosqichi
-              </span>
+                            <div className="w-1.5 h-5 rounded-full bg-violet-400" />
+                            <span className="text-[11px] sm:text-[13px] font-bold text-slate-600 uppercase tracking-wider">
+                                Imzolash bosqichi
+                            </span>
                         </div>
 
                         <MySelect
@@ -160,43 +132,30 @@ export function ShareFormPanel({
                 </div>
 
                 {/* Footer */}
-                <div className="px-5 pb-5 flex gap-2.5">
+                <div className="mt-4 pt-3 flex gap-3 px-1">
                     <Button
                         variant="default"
                         onClick={onCancel}
-                        className="flex-1 h-10 text-[12.5px] font-semibold text-slate-600"
+                        className="flex-1 h-12 text-[13px] sm:text-[15px] font-semibold text-rose-600 bg-rose-600 hover:bg-rose-800 border-none transition-colors"
                     >
                         Bekor qilish
                     </Button>
                     <Button
-                        onClick={onSubmit}
-                        disabled={isSending}
-                        className="flex-[2] h-10 text-[12.5px] font-semibold bg-sky-500 hover:bg-sky-600 text-white shadow-sm"
-                    >
-                        {isSending ? (
-                            <>
-                                <LoaderCircleIcon className="size-3.5 animate-spin" />
-                                Yuborilmoqda...
-                            </>
-                        ) : (
-                            <>
-                                <svg
-                                    width="13"
-                                    height="13"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2.2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <line x1="22" y1="2" x2="11" y2="13" />
-                                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                                </svg>
-                                Yuborish
-                            </>
-                        )}
-                    </Button>
+    onClick={onSubmit}
+    disabled={isSending}
+    className="flex-[2] h-12 text-[13px] sm:text-[15px] font-semibold bg-sky-500 hover:bg-sky-600 text-white shadow-md gap-2"
+>
+    {isSending ? (
+        <>
+            <LoaderCircle className="size-4 sm:size-5 animate-spin" />
+            Yuborilmoqda...
+        </>
+    ) : (
+        <>
+            Yuborish
+        </>
+    )}
+</Button>
                 </div>
             </div>
         </FormProvider>

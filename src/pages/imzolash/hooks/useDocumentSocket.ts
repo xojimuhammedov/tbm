@@ -29,6 +29,7 @@ export interface SocketRecipient {
     is_parallel: boolean;
     order: number;
     shared_id?: string;
+    comment?: string;
 }
 
 export interface DocumentSocketPayload {

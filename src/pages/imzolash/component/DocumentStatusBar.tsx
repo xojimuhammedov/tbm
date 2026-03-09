@@ -12,8 +12,6 @@ const TIMELINE: { id: DocumentStatus; label: string; color: string }[] = [
   { id: "APPROVED", label: "Tasdiqlangan", color: "#6366f1" },
   { id: "SIGNING", label: "Imzolashda", color: "#8b5cf6" },
   { id: "SIGNED", label: "Imzolandi", color: "#10b981" },
-  { id: "EXECUTING", label: "Bajarilmoqda", color: "#0ea5e9" },
-  { id: "EXECUTED", label: "Bajarildi", color: "#10b981" },
 ];
 
 const STATUS_ALIAS: Partial<Record<DocumentStatus, DocumentStatus>> = {
@@ -93,9 +91,10 @@ interface RecipientRowProps {
   delay: number;
   canModify: boolean;
   onRemove?: (r: SocketRecipient) => void;
+  onShowReason?: () => void;
 }
 
-function RecipientRow({ r, delay, canModify, onRemove }: RecipientRowProps) {
+function RecipientRow({ r, delay, canModify, onRemove, onShowReason }: RecipientRowProps) {
   const typeMeta = TYPE_META[r.type] ?? TYPE_META.APPROVAL;
   const statusMeta = STATUS_META[r.status] ?? STATUS_META.PENDING;
   const isApproval = r.type === "APPROVAL";
@@ -164,10 +163,24 @@ function RecipientRow({ r, delay, canModify, onRemove }: RecipientRowProps) {
           {statusMeta.label}
         </span>
       </div>
+
+      {r.status === "REJECTED" && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onShowReason) onShowReason();
+          }}
+          className="flex items-center justify-center w-6 h-6 rounded-md bg-red-100 hover:bg-red-200 text-red-600 font-extrabold text-[13px] transition-colors ml-[-4px]"
+          title="Rad etish sababini ko'rish"
+        >
+          !
+        </button>
+      )}
+
       {canReplace && onRemove && (
         <button
           onClick={() => onRemove(r)}
-          className="opacity-0 group-hover:opacity-100 flex items-center justify-center w-7 h-7 rounded-lg bg-slate-100 hover:bg-red-50 hover:text-red-500 text-slate-500 transition-colors"
+          className="flex items-center justify-center w-7 h-7 rounded-lg bg-slate-100 hover:bg-red-50 hover:text-red-500 text-slate-500 transition-colors"
           title="Olib tashlash"
         >
           <XIcon size={12} />
@@ -177,7 +190,6 @@ function RecipientRow({ r, delay, canModify, onRemove }: RecipientRowProps) {
   );
 }
 
-
 function TimelineTrack({ status }: { status: DocumentStatus }) {
   const resolvedStatus = STATUS_ALIAS[status] ?? status;
   const idx = TIMELINE.findIndex((s) => s.id === resolvedStatus);
@@ -185,19 +197,18 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
   const fillPct = safeIdx <= 0 ? 0 : (safeIdx / (TIMELINE.length - 1)) * 100;
   const currentStage = TIMELINE[safeIdx];
   const isTerminal = status === "CANCELLED" || status === "REJECTED";
-  const isDone = status === "EXECUTED" || status === "SIGNED";
+  const isDone = status === "SIGNED";
 
   return (
-    <div className="px-6 pt-6 pb-5">
-      <div className="flex items-center justify-between mb-6">
-        <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-slate-400">
+    <div className="px-4 sm:px-6 pt-6 pb-5">
+      <div className="flex items-center justify-between mb-8 sm:mb-10">
+        <span className="text-[11px] sm:text-[12px] font-bold tracking-[0.14em] uppercase text-slate-400">
           Hujjat holati
         </span>
         <div className="flex items-center gap-2">
           {isTerminal && (
             <svg
-              width="12"
-              height="12"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4"
               viewBox="0 0 24 24"
               fill="none"
               stroke="#ef4444"
@@ -210,8 +221,7 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
           )}
           {isDone && (
             <svg
-              width="13"
-              height="13"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4"
               viewBox="0 0 24 24"
               fill="none"
               stroke="#10b981"
@@ -223,25 +233,25 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
             </svg>
           )}
           {!isTerminal && !isDone && (
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
               <span
                 className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
                 style={{ background: currentStage?.color }}
               />
               <span
-                className="relative inline-flex rounded-full h-2 w-2"
+                className="relative inline-flex rounded-full h-full w-full"
                 style={{ background: currentStage?.color }}
               />
             </span>
           )}
           <span
-            className="text-[12.5px] font-extrabold tracking-tight"
+            className="text-[13px] sm:text-[15px] font-extrabold tracking-tight"
             style={{
               color: isTerminal
                 ? "#ef4444"
                 : isDone
                   ? "#10b981"
-                  : (currentStage?.color ?? "#0f172a"),
+                  : (currentStage?.color ?? "#10b981"),
             }}
           >
             {isTerminal
@@ -253,43 +263,41 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
         </div>
       </div>
 
-      <div className="relative flex items-start justify-between">
-        <div className="absolute top-[15px] left-[15px] right-[15px] h-[1.5px] bg-slate-100 z-0" />
+      <div className="relative flex items-start justify-between w-full mx-auto">
+        <div className="absolute top-4 sm:top-5 md:top-6 left-[10%] right-[10%] h-[2px] sm:h-[3px] bg-slate-100 z-0" />
         <div
-          className="absolute top-[15px] left-[15px] h-[1.5px] z-[1]"
+          className="absolute top-4 sm:top-5 md:top-6 left-[10%] h-[2px] sm:h-[3px] z-[1]"
           style={{
-            width: `calc(${fillPct / 100} * (100% - 30px))`,
+            width: `${fillPct * 0.8}%`,
             background: isTerminal
               ? "#fca5a5"
-              : "linear-gradient(90deg, #0ea5e9, #8b5cf6)",
+              : "linear-gradient(90deg, #34d399, #10b981)",
             transition: "width 0.8s cubic-bezier(0.34, 1.1, 0.64, 1)",
           }}
         />
         {TIMELINE.map((s, i) => {
-          const done = i < safeIdx;
-          const active = i === safeIdx && !isTerminal;
+          const done = i <= safeIdx && (isDone || i < safeIdx);
+          const active = i === safeIdx && !isTerminal && !isDone;
           return (
             <div
               key={s.id}
-              className="relative z-[2] flex flex-col items-center gap-2 flex-1"
+              className="relative z-[2] flex flex-col items-center flex-1"
             >
               <div
-                className="w-[30px] h-[30px] rounded-full flex items-center justify-center"
+                className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-500 ease-in-out"
                 style={{
-                  background: done ? "#0f172a" : "#fff",
+                  background: done ? "#10b981" : "#fff",
                   border: done
-                    ? "2px solid #0f172a"
+                    ? "2px solid #10b981"
                     : active
                       ? `2px solid ${s.color}`
-                      : "1.5px solid #e2e8f0",
-                  boxShadow: active ? `0 0 0 5px ${s.color}18` : "none",
-                  transition: "all 0.5s ease",
+                      : "2px solid #e2e8f0",
+                  boxShadow: active ? `0 0 0 5px ${s.color}20` : "none",
                 }}
               >
                 {done && (
                   <svg
-                    width="11"
-                    height="11"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="white"
@@ -302,7 +310,7 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
                 )}
                 {active && (
                   <div
-                    className="w-[9px] h-[9px] rounded-full"
+                    className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full"
                     style={{
                       background: s.color,
                       animation: "pulseDot 1.8s ease-in-out infinite",
@@ -310,13 +318,13 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
                   />
                 )}
                 {!done && !active && (
-                  <div className="w-2 h-2 rounded-full bg-slate-200" />
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-2.5 md:h-2.5 rounded-full bg-slate-200" />
                 )}
               </div>
               <span
-                className="text-[9.5px] font-semibold whitespace-nowrap text-center leading-tight"
+                className="text-[9.5px] sm:text-[10px] md:text-[11px] font-bold whitespace-nowrap text-center leading-tight mt-2 sm:mt-2.5 md:mt-3"
                 style={{
-                  color: done ? "#334155" : active ? s.color : "#cbd5e1",
+                  color: done ? "#10b981" : active ? s.color : "#94a3b8",
                   transition: "color 0.3s ease",
                 }}
               >
@@ -353,6 +361,9 @@ export function DocumentStatusBar({
     null,
   );
   const [removeTarget, setRemoveTarget] = useState<SocketRecipient | null>(
+    null,
+  );
+  const [reasonTarget, setReasonTarget] = useState<SocketRecipient | null>(
     null,
   );
 
@@ -443,6 +454,7 @@ export function DocumentStatusBar({
                         ? setRemoveTarget
                         : undefined
                     }
+                    onShowReason={() => setReasonTarget(r)}
                   />
                 ))}
             </div>
@@ -490,6 +502,36 @@ export function DocumentStatusBar({
                 ) : (
                   "Ha, olib tashlash"
                 )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {reasonTarget && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+            onClick={() => setReasonTarget(null)}
+          />
+          <div
+            className="relative bg-white rounded-2xl shadow-xl w-full max-w-sm p-6"
+            style={{ animation: "modalIn 0.2s ease both" }}
+          >
+            <div className="mb-4">
+              <h3 className="text-[14px] font-extrabold text-slate-800 mb-1">
+                Rad etish sababi
+              </h3>
+              <p className="text-[13px] text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 mt-3 whitespace-pre-wrap">
+                {reasonTarget.comment || "Sabab ko'rsatilmagan"}
+              </p>
+            </div>
+            <div className="flex justify-end mt-5">
+              <button
+                onClick={() => setReasonTarget(null)}
+                className="px-5 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-[12.5px] font-bold hover:bg-slate-200 transition-colors"
+              >
+                Yopish
               </button>
             </div>
           </div>

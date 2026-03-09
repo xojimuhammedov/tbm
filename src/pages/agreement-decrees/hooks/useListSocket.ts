@@ -1,10 +1,9 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import { ColumnType } from "dgz-ui-shared/types";
 import { connectEventsSocket } from "@/lib/socket";
+import { ColumnType } from "dgz-ui-shared/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import createSharedColumns from "../helpers/createColumnShared";
 import { SharedItemInterface } from "../interfaces/shared.interface";
-import { useNavigate } from "react-router-dom";
 
 interface UseListSocketReturn {
   dataSource: any;
@@ -12,20 +11,28 @@ interface UseListSocketReturn {
   params: any;
   handleFilter: (newParams: any) => void;
   columns: ColumnType<SharedItemInterface>[];
+  openView: boolean;
+  setOpenView: (open: boolean) => void;
+  currentItem: any;
+  setCurrentItem: (item: any) => void;
 }
 
 const useListSocket = (): UseListSocketReturn => {
   const { t } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const navigate = useNavigate();
-
   // Pagination va filter parametrlari
   const [params, setParams] = useState<any>({ limit: 10, page: 1 });
+  const [openView, setOpenView] = useState(false);
+  const [currentItem, setCurrentItem] = useState<any>(null);
 
   const handleView = useCallback((record: any) => {
-    navigate(`/rh-252/agreement-decrees/${record?.document_id?._id}/shared/${record?.shared_id}`);
-  }, [navigate]);
+    setCurrentItem({
+      ...record?.document_id,
+      sharedId: record?.shared_id
+    });
+    setOpenView(true);
+  }, []);
 
   const columns = useMemo(() => createSharedColumns(t, handleView), [t]);
 
@@ -75,6 +82,10 @@ const useListSocket = (): UseListSocketReturn => {
     params,
     handleFilter,
     columns,
+    openView,
+    setOpenView,
+    currentItem,
+    setCurrentItem,
   };
 };
 
