@@ -8,12 +8,13 @@ import { Button } from "dgz-ui/button";
 import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
 interface Props {
+  asComponent?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   document?: any;
 }
 
-const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
+const OrderApplicationView1770 = ({ open, onOpenChange, document , asComponent }: Props) => {
   const { t } = useTranslation();
   const contentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -34,7 +35,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
       hour12: false,
     });
   };
-  return (
+  const modalInstance = (
     <MyModal
       open={open}
       onOpenChange={onOpenChange}
@@ -70,7 +71,7 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
             paddingTop: "1.5cm",
             paddingBottom: "1.5cm",
           }}
-          className="bg-white w-full max-w-[900px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 leading-snug"
+          className="bg-white w-full max-w-[900px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 leading-snug h-fit"
         >
           <style
             dangerouslySetInnerHTML={{
@@ -202,6 +203,16 @@ const OrderApplicationView1770 = ({ open, onOpenChange, document }: Props) => {
       </div>
     </MyModal>
   );
+
+  if (asComponent) {
+    return (
+      <div className="h-full bg-gray-100 overflow-auto relative flex justify-center">
+        {modalInstance.props.children}
+      </div>
+    );
+  }
+  return modalInstance;
+
 };
 
 export default OrderApplicationView1770;

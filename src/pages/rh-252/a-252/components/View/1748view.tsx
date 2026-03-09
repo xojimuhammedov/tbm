@@ -12,6 +12,7 @@ import type {
 } from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
 
 interface Props {
+  asComponent?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   document?: OrderApplication | any | null;
@@ -65,7 +66,7 @@ const isSameDateTime = (a?: string, b?: string) => {
   return new Date(a).getTime() === new Date(b).getTime();
 };
 
-const OrderView1748 = ({ open, onOpenChange, document }: Props) => {
+const OrderView1748 = ({ open, onOpenChange, document , asComponent }: Props) => {
   const { t } = useTranslation();
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -130,7 +131,7 @@ const OrderView1748 = ({ open, onOpenChange, document }: Props) => {
 
   const toOk = hasArray(document?.to);
   const copyOk = hasArray(document?.copy);
-  return (
+  const modalInstance = (
     <MyModal
       open={open}
       onOpenChange={onOpenChange}
@@ -166,7 +167,7 @@ const OrderView1748 = ({ open, onOpenChange, document }: Props) => {
             paddingTop: "1.5cm",
             paddingBottom: "1.5cm",
           }}
-          className="bg-white w-full max-w-[950px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
+          className="bg-white w-full max-w-[950px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight h-fit"
         >
           <style
             dangerouslySetInnerHTML={{
@@ -380,6 +381,16 @@ const OrderView1748 = ({ open, onOpenChange, document }: Props) => {
       </div>
     </MyModal>
   );
+
+  if (asComponent) {
+    return (
+      <div className="h-full bg-gray-100 overflow-auto relative flex justify-center">
+        {modalInstance.props.children}
+      </div>
+    );
+  }
+  return modalInstance;
+
 };
 
 export default OrderView1748;

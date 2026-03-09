@@ -1,32 +1,17 @@
 import MyTooltip from "@/shared/components/atoms/tooltip/MyTooltip.tsx";
+import { dayjs } from "@/shared/utils/day.ts";
 import { Badge } from "dgz-ui";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import { EyeIcon } from "lucide-react";
+import { AlertCircle, CheckCircle2, EyeIcon, XCircle } from "lucide-react";
 import {
   SharedItemInterface,
-  SharedStage,
   SharedStatus,
-  SharedType,
 } from "../interfaces/shared.interface.ts";
 
 const renderHeader = (label: string) => (
   <span style={{ whiteSpace: "nowrap" }}>{label}</span>
 );
 
-const stageColors: Record<
-  string,
-  "gray" | "blue" | "indigo" | "green" | "default"
-> = {
-  DRAFT: "gray",
-  SIGNING: "blue",
-  APPROVAL: "indigo",
-  DONE: "green",
-};
-
-const typeColors: Record<string, "blue" | "indigo" | "default"> = {
-  SIGNING: "blue",
-  APPROVAL: "indigo",
-};
 
 const statusColors: Record<
   string,
@@ -51,7 +36,7 @@ const createSharedColumns = (
     {
       key: "from_id",
       dataIndex: "from_id",
-      name: t("Kimdan", { defaultValue: "Kimdan" }),
+      name: t("Jo'natgan odam", { defaultValue: "Jo'natgan odam" }),
       render: (_, record) => {
         const from = record.from_id;
         if (!from) return "-";
@@ -59,28 +44,51 @@ const createSharedColumns = (
       },
     },
     {
-      key: "stages",
-      dataIndex: "stages",
-      name: t("Bosqich", { defaultValue: "Bosqich" }),
-      render: (value: SharedStage) => (
-        <Badge variant={stageColors[value] || "default"}>{value || "-"}</Badge>
-      ),
-    },
-    {
-      key: "type",
-      dataIndex: "type",
-      name: t("Turi", { defaultValue: "Turi" }),
-      render: (value: SharedType) => (
-        <Badge variant={typeColors[value] || "default"}>{value || "-"}</Badge>
-      ),
+      key: "created_at",
+      dataIndex: "created_at",
+      name: t("Jo'natilgan vaqt", { defaultValue: "Jo'natilgan vaqt" }),
+      render: (value: string) => {
+        return value ? dayjs(value).format("DD.MM.YYYY HH:mm") : "-";
+      },
     },
     {
       key: "status",
       dataIndex: "status",
       name: t("Holat", { defaultValue: "Holat" }),
-      render: (value: SharedStatus) => (
-        <Badge variant={statusColors[value] || "default"}>{value || "-"}</Badge>
-      ),
+      render: (value: SharedStatus) => {
+        if (value === "PENDING") {
+          return (
+            <span className="inline-flex items-center px-2  rounded-md border border-purple-200 text-[12px] font-medium bg-purple-100 text-purple-700">
+              {t("Yangi", { defaultValue: "Yangi" })}
+            </span>
+          );
+        }
+        if (value === "ACCEPTED") {
+          return (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-green-200 text-[13px] font-medium bg-green-100 text-green-700">
+              <CheckCircle2 className="w-4 h-4 fill-green-500 text-white" />
+              {t("Imzolangan", { defaultValue: "Imzolangan" })}
+            </span>
+          );
+        }
+        if (value === "REJECTED") {
+          return (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-red-200 text-[13px] font-medium bg-red-100 text-red-700">
+              <XCircle className="w-4 h-4 fill-red-500 text-white" />
+              {t("Rad etilgan", { defaultValue: "Rad etilgan" })}
+            </span>
+          );
+        }
+        if (value === "CANCEL") {
+          return (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-200 text-[13px] font-medium bg-slate-100 text-slate-700">
+              <AlertCircle className="w-4 h-4" />
+              {t("Bekor qilingan", { defaultValue: "Bekor qilingan" })}
+            </span>
+          );
+        }
+        return <Badge variant={statusColors[value] || "default"}>{value || "-"}</Badge>;
+      },
     },
     {
       key: "document_id",

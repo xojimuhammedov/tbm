@@ -91,9 +91,10 @@ interface RecipientRowProps {
   delay: number;
   canModify: boolean;
   onRemove?: (r: SocketRecipient) => void;
+  onShowReason?: () => void;
 }
 
-function RecipientRow({ r, delay, canModify, onRemove }: RecipientRowProps) {
+function RecipientRow({ r, delay, canModify, onRemove, onShowReason }: RecipientRowProps) {
   const typeMeta = TYPE_META[r.type] ?? TYPE_META.APPROVAL;
   const statusMeta = STATUS_META[r.status] ?? STATUS_META.PENDING;
   const isApproval = r.type === "APPROVAL";
@@ -162,6 +163,20 @@ function RecipientRow({ r, delay, canModify, onRemove }: RecipientRowProps) {
           {statusMeta.label}
         </span>
       </div>
+
+      {r.status === "REJECTED" && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onShowReason) onShowReason();
+          }}
+          className="flex items-center justify-center w-6 h-6 rounded-md bg-red-100 hover:bg-red-200 text-red-600 font-extrabold text-[13px] transition-colors ml-[-4px]"
+          title="Rad etish sababini ko'rish"
+        >
+          !
+        </button>
+      )}
+
       {canReplace && onRemove && (
         <button
           onClick={() => onRemove(r)}
@@ -348,6 +363,9 @@ export function DocumentStatusBar({
   const [removeTarget, setRemoveTarget] = useState<SocketRecipient | null>(
     null,
   );
+  const [reasonTarget, setReasonTarget] = useState<SocketRecipient | null>(
+    null,
+  );
 
   const handleUpdate = useCallback((payload: DocumentSocketPayload) => {
     setSocketData(payload);
@@ -436,6 +454,7 @@ export function DocumentStatusBar({
                         ? setRemoveTarget
                         : undefined
                     }
+                    onShowReason={() => setReasonTarget(r)}
                   />
                 ))}
             </div>
@@ -483,6 +502,36 @@ export function DocumentStatusBar({
                 ) : (
                   "Ha, olib tashlash"
                 )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {reasonTarget && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+            onClick={() => setReasonTarget(null)}
+          />
+          <div
+            className="relative bg-white rounded-2xl shadow-xl w-full max-w-sm p-6"
+            style={{ animation: "modalIn 0.2s ease both" }}
+          >
+            <div className="mb-4">
+              <h3 className="text-[14px] font-extrabold text-slate-800 mb-1">
+                Rad etish sababi
+              </h3>
+              <p className="text-[13px] text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 mt-3 whitespace-pre-wrap">
+                {reasonTarget.comment || "Sabab ko'rsatilmagan"}
+              </p>
+            </div>
+            <div className="flex justify-end mt-5">
+              <button
+                onClick={() => setReasonTarget(null)}
+                className="px-5 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-[12.5px] font-bold hover:bg-slate-200 transition-colors"
+              >
+                Yopish
               </button>
             </div>
           </div>

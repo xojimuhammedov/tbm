@@ -11,8 +11,7 @@ import { Button } from "dgz-ui/button";
 import {
   ChevronLeftIcon,
   FileTextIcon,
-  LoaderCircleIcon,
-  SendIcon,
+  LoaderCircleIcon
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -96,16 +95,31 @@ function ShareModal({
       open={open}
       onOpenChange={(v) => !v && onClose()}
       size="lg"
+      className="overflow-visible"
       header={
         <div className="flex items-center gap-2.5 pr-10">
-          <SendIcon className="size-4 text-blue-500" />
-          <span className="font-semibold text-neutral-900 text-sm">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-sky-500"
+          >
+            <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
+            <path d="m21.854 2.147-10.94 10.939"/>
+          </svg>
+          <span className="font-semibold text-neutral-900 text-[14px] sm:text-[16px]">
             Ko'rib chiqishga yuborish
           </span>
         </div>
       }
     >
-      <div className="p-4">
+      <div className="p-4 sm:p-6 overflow-visible">
         <ShareFormPanel
           form={form}
           staffOptions={staffOptions}
@@ -142,37 +156,36 @@ function MetaCard({
 
   return (
     <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden h-fit">
-      <div className="px-5 py-4 border-b border-neutral-100">
-        <p className="text-[10px] font-bold tracking-[0.1em] uppercase text-neutral-400 mb-1.5">
+      <div className="px-4 py-2.5 lg:py-3 border-b border-neutral-100">
+        <p className="text-[9px] sm:text-[10px] 2xl:text-[11px] font-bold tracking-[0.1em] uppercase text-neutral-400 mb-0.5">
           Hujjat ma'lumotlari
         </p>
-        <p className="font-extrabold text-[15px] text-neutral-900 leading-snug tracking-tight">
+        <p className="font-extrabold text-[13px] sm:text-[15px] 2xl:text-[17px] text-neutral-900 leading-snug tracking-tight">
           {doc.payload?.basic?.title}
         </p>
       </div>
       <div className="divide-y divide-neutral-100">
         {rows.map(([label, value]) => (
-          <div key={label} className="px-5 py-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-0.5">
+          <div key={label} className="px-4 py-2 2xl:py-2.5">
+            <p className="text-[9px] sm:text-[10px] 2xl:text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-0.5">
               {label}
             </p>
-            <p className="text-[13px] font-semibold text-neutral-900">
+            <p className="text-[12px] sm:text-[13px] 2xl:text-[15px] font-semibold text-neutral-900">
               {value || "—"}
             </p>
           </div>
         ))}
       </div>
-      <div className="px-5 py-4 border-t border-neutral-100">
+      <div className="px-4 py-2.5 border-t border-neutral-100">
         <Button
-          variant="ghost"
           onClick={handleOpenPdf}
           disabled={isGenerating}
-          className="w-full justify-center h-9 text-[12.5px] font-semibold gap-2"
+          className="w-full justify-center h-9 text-[12.5px]  font-semibold gap-2"
         >
           {isGenerating ? (
-            <LoaderCircleIcon className="size-3.5 animate-spin text-blue-500" />
+            <LoaderCircleIcon  className="size-3.5 animate-spin  text-blue-500" />
           ) : (
-            <FileTextIcon className="size-3.5 text-neutral-500" />
+            <FileTextIcon className="size-3.5 text-white-500" />
           )}
         </Button>
       </div>
@@ -191,7 +204,8 @@ const ApplicationDocumentDetailPage = () => {
     | undefined;
 
   const {
-    isDraft,
+    canShare,
+    documentStatus,
     pdfOpen,
     pdfUrl,
     showShareForm,
@@ -275,43 +289,57 @@ const ApplicationDocumentDetailPage = () => {
 
   return (
     <>
-      <PageHeader breadcrumbs={breadcrumbs}>
-        <Button
-          variant="default"
-          size="icon"
-          className="w-9 h-9 rounded-xl border-neutral-200 flex-shrink-0"
-          onClick={() => navigate(-1)}
-        >
-          <ChevronLeftIcon className="size-4" />
-        </Button>
-      </PageHeader>
+      <PageHeader breadcrumbs={breadcrumbs} />
       <PageWrapper>
         <div className="">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex-1 min-w-0">
-              <h1 className="font-extrabold text-[18px] text-neutral-900 tracking-tight leading-none truncate">
-                Buyurtma hujjati
-              </h1>
-              <p className="text-[11px] text-neutral-400 mt-0.5 font-mono">
-                № {doc.code}
-              </p>
+          <div className="flex flex-col sm:flex-row sm:items-center  mb-2 ">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <Button
+                variant="secondary"
+                size="icon"
+                className="w-10 h-10 rounded-xl bg-white border border-neutral-200 flex-shrink-0 hover:bg-neutral-50 shadow-sm group"
+                onClick={() => navigate(-1)}
+              >
+                <ChevronLeftIcon className="size-5 text-neutral-700 group-hover:text-black transition-colors" />
+              </Button>
+              <div className="flex-1 min-w-0">
+                <h1 className="font-extrabold text-[16px] sm:text-[18px] 2xl:text-[22px] text-neutral-900 tracking-tight leading-tight truncate">
+                  Buyurtma hujjati
+                </h1>
+                <p className="text-[10px] sm:text-[12px] 2xl:text-[13px] text-neutral-400 mt-0.5 font-mono">
+                  № {doc.code}
+                </p>
+              </div>
             </div>
 
             <div className="flex items-center gap-2 flex-shrink-0">
-              {isDraft && (
+              {canShare && (
                 <Button
-                  variant="default"
+                  variant="secondary"
                   onClick={() => setShowShareForm(true)}
-                  className="h-9 text-[12.5px] font-semibold gap-2"
+                  className="h-10 2xl:h-11 text-[12px] sm:text-[13px] 2xl:text-[14px] font-semibold gap-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 hover:text-sky-600 shadow-sm rounded-xl px-4 2xl:px-5 transition-colors"
                 >
-                  <SendIcon className="size-3.5" />
-                  Ko'rib chiqishga yuborish
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
+                    <path d="m21.854 2.147-10.94 10.939"/>
+                  </svg>
+                  {documentStatus === "REJECTED" ? "Qaytadan yuborish" : "Ko'rib chiqishga yuborish"}
                 </Button>
               )}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-4 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[330px_1fr] 2xl:grid-cols-[360px_1fr] gap-4 2xl:gap-6 items-start">
             <MetaCard
               doc={doc}
               handleOpenPdf={handleOpenPdf}

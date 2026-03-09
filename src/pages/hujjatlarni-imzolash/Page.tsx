@@ -3,16 +3,19 @@ import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { BreadcrumbInterface } from "dgz-ui";
 import { DataTable } from "dgz-ui-shared/components/datatable";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { SignReviewModal } from "./components/SignReviewModal";
 import useListSocket from "./hooks/useListSocket";
 import { SharedItemInterface } from "./interfaces/shared.interface";
 const HUJJATLARN_IMZOLASH_KEY = "hujjatlarni-imzolash-list";
 
 const Page = () => {
   const { t } = useTranslation();
+  const [selectedRecord, setSelectedRecord] = useState<any>(null);
+
   const { dataSource, loading, params, handleFilter, columns } =
-    useListSocket();
+    useListSocket((record) => setSelectedRecord(record));
 
   console.log(dataSource);
 
@@ -51,6 +54,17 @@ const Page = () => {
           columns={columns}
         />
       </PageWrapper>
+
+      <SignReviewModal
+        open={!!selectedRecord}
+        onClose={() => setSelectedRecord(null)}
+        currentItem={selectedRecord?.document_id}
+        sharedId={selectedRecord?.shared_id}
+        onSuccess={() => {
+          setSelectedRecord(null);
+          handleFilter({}); // Reload or trigger refetch by changing params technically
+        }}
+      />
     </>
   );
 };

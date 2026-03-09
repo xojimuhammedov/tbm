@@ -7,12 +7,13 @@ import { Button } from "dgz-ui/button";
 import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
 interface Props {
+  asComponent?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   document?: any;
 }
 
-const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
+const OrderApplicationView1731 = ({ open, onOpenChange, document , asComponent }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
     contentRef: contentRef,
@@ -20,7 +21,7 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
   });
   const flows = document?.payload?.flow_ids || [];
 
-  return (
+  const modalInstance = (
     <MyModal
       open={open}
       onOpenChange={onOpenChange}
@@ -68,7 +69,7 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
       <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
         <div
           ref={contentRef}
-          className="print-content bg-white w-full max-w-[1200px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0"
+          className="print-content bg-white w-full max-w-[1200px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 h-fit"
           style={{
             fontFamily: '"Times New Roman", Times, serif',
             paddingLeft: "3cm",
@@ -262,6 +263,16 @@ const OrderApplicationView1731 = ({ open, onOpenChange, document }: Props) => {
       </div>
     </MyModal>
   );
+
+  if (asComponent) {
+    return (
+      <div className="h-full bg-gray-100 overflow-auto relative flex justify-center">
+        {modalInstance.props.children}
+      </div>
+    );
+  }
+  return modalInstance;
+
 };
 
 export default OrderApplicationView1731;

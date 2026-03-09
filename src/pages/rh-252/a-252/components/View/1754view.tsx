@@ -9,12 +9,13 @@ import { OrderApplication } from "@/pages/rh-252/a-252/interfaces/order.interfac
 import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
 interface Props {
+  asComponent?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   document?: OrderApplication | null;
 }
 
-const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
+const OrderApplicationView1754 = ({ open, onOpenChange, document , asComponent }: Props) => {
   const { t } = useTranslation();
   const contentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -23,7 +24,7 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
   });
   const payload = (document as any)?.payload;
 
-  return (
+  const modalInstance = (
     <MyModal
       open={open}
       onOpenChange={onOpenChange}
@@ -59,7 +60,7 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
             paddingTop: "1.5cm",
             paddingBottom: "1.5cm",
           }}
-          className="bg-white w-full max-w-[950px] min-h-[1100px] flex flex-col shadow-2xl  relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
+          className="bg-white w-full max-w-[950px] min-h-[1100px] flex flex-col shadow-2xl  relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight h-fit"
         >
           <style
             dangerouslySetInnerHTML={{
@@ -191,6 +192,16 @@ const OrderApplicationView1754 = ({ open, onOpenChange, document }: Props) => {
       </div>
     </MyModal>
   );
+
+  if (asComponent) {
+    return (
+      <div className="h-full bg-gray-100 overflow-auto relative flex justify-center">
+        {modalInstance.props.children}
+      </div>
+    );
+  }
+  return modalInstance;
+
 };
 
 export default OrderApplicationView1754;

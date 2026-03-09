@@ -14,7 +14,7 @@ interface UseListSocketReturn {
   columns: ColumnType<SharedItemInterface>[];
 }
 
-const useListSocket = (): UseListSocketReturn => {
+const useListSocket = (onView?: (record: any) => void): UseListSocketReturn => {
   const { t } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -24,8 +24,12 @@ const useListSocket = (): UseListSocketReturn => {
   const [params, setParams] = useState<any>({ limit: 10, page: 1 });
 
   const handleView = useCallback((record: any) => {
-    navigate(`/rh-252/hujjatlarni-imzolash/${record?.document_id?._id}/shared/${record?.shared_id}`);
-  }, [navigate]);
+    if (onView) {
+      onView(record);
+    } else {
+      navigate(`/rh-252/hujjatlarni-imzolash/${record?.document_id?._id}/shared/${record?.shared_id}`);
+    }
+  }, [navigate, onView]);
 
   const columns = useMemo(() => createSharedColumns(t, handleView), [t]);
 
