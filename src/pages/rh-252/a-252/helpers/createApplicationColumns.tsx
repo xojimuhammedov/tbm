@@ -2,7 +2,7 @@ import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
 import { dateFormatter } from "@/shared/utils/utils";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import { EditIcon, EyeIcon, FileDown, FileSignature, PencilLineIcon, ShieldCheckIcon, Trash2Icon } from "lucide-react"; // ShieldCheckIcon
+import { EditIcon, EyeIcon, FileDown, FileSignature, PencilLineIcon, ShieldCheckIcon, Trash2Icon } from "lucide-react";
 import {
   OrderApplication,
   ResponsibleUser,
@@ -39,12 +39,17 @@ const createOrderColumns = (
       );
     },
   },
-  {
-    key: "order_date",
-    dataIndex: "order_date",
-    name: t("Order date"),
-    render: (val: string) => dateFormatter(val, DATE),
-  },
+    {
+        key: "order_date",
+        dataIndex: "order_date",
+        name: t("Order date"),
+        // whitespace-nowrap matnni bir qatorga majburlaydi
+        render: (val: string) => (
+            <span className="whitespace-nowrap">
+        {dateFormatter(val, DATE)}
+      </span>
+        ),
+    },
   {
     key: "to",
     dataIndex: "to",
@@ -88,16 +93,20 @@ const createOrderColumns = (
       let label = status || "---";
       let colorClass = "bg-slate-100 text-slate-700";
 
-      if (status === "SIGNED") {
+     if (status === "EXECUTED" ||  status === "SIGNED") {
         label = "Imzolangan";
-        colorClass = "bg-blue-100 text-blue-700";
-      } else if (status === "EXECUTED") {
-        label = "Bajarildi";
         colorClass = "bg-emerald-100 text-emerald-700";
       } else if (status === "SIGNING") {
         label = "Imzolanmoqda";
         colorClass = "bg-amber-100 text-amber-700";
+      } else if (status === "IN_REVIEW") {
+          label = "Tekshirilmoqda";
+          colorClass = "bg-amber-100 text-amber-700";
+      } else if (status === "DRAFT") {
+          label = "Yangi";
+          colorClass = "bg-purple-100 text-purple-700";
       }
+
 
       return (
         <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}>

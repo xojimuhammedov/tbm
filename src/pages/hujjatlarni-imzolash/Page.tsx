@@ -1,4 +1,5 @@
 import { PageWrapper } from "@/shared/components/containers/page";
+import { DateRangeFilter } from "@/shared/components/templates/filters";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { BreadcrumbInterface } from "dgz-ui";
@@ -14,7 +15,7 @@ const Page = () => {
   const { t } = useTranslation();
   const [selectedRecord, setSelectedRecord] = useState<any>(null);
 
-  const { dataSource, loading, params, handleFilter, columns } =
+  const { dataSource, loading, params, handleFilter, columns, filters } =
     useListSocket((record) => setSelectedRecord(record));
 
   console.log(dataSource);
@@ -34,7 +35,10 @@ const Page = () => {
 
   return (
     <>
-      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs} />
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+         <DateRangeFilter dateKey={HUJJATLARN_IMZOLASH_KEY} />
+      </PageHeader>
+
       <PageWrapper>
         <DataTable<
           SharedItemInterface,
@@ -52,6 +56,7 @@ const Page = () => {
           dataSource={dataSource}
           dataKey={"docs"}
           columns={columns}
+          filters={filters}
         />
       </PageWrapper>
 

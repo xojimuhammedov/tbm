@@ -1,4 +1,5 @@
 import { PageWrapper } from "@/shared/components/containers/page";
+import { DateRangeFilter } from "@/shared/components/templates/filters";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { BreadcrumbInterface } from "dgz-ui";
@@ -12,11 +13,10 @@ const AGREEMENT_DECREES_KEY = "agreement-decrees-list";
 
 const Page = () => {
   const { t } = useTranslation();
-  const { dataSource, loading, params, handleFilter, columns, openView, setOpenView, currentItem, setCurrentItem } =
+  const { dataSource, loading, params, handleFilter, columns, filters, openView, setOpenView, currentItem, setCurrentItem } =
     useListSocket();
 
   console.log(dataSource);
-
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
@@ -40,7 +40,10 @@ const Page = () => {
         sharedId={currentItem?.sharedId}
       />
 
-      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs} />
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+         <DateRangeFilter dateKey={AGREEMENT_DECREES_KEY} />
+      </PageHeader>
+
       <PageWrapper>
         <DataTable<
           SharedItemInterface,
@@ -58,6 +61,7 @@ const Page = () => {
           dataSource={dataSource}
           dataKey={"docs"}
           columns={columns}
+          filters={filters}
         />
       </PageWrapper>
     </>
