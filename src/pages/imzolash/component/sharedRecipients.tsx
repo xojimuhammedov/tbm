@@ -37,12 +37,12 @@ export function ShareFormPanel({
     return (
         <FormProvider {...form}>
             <div className="w-full flex flex-col">
-                <div className="flex-1 space-y-5 p-1 max-h-[65vh] overflow-y-auto" style={{ scrollbarWidth: "thin", minHeight: "350px" }}>
+                <div className="flex-1 space-y-5 p-1  overflow-y-auto" style={{ scrollbarWidth: "thin", minHeight: "360px" }}>
                     {/* ── APPROVAL block ── */}
-                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-amber-50/60 to-orange-50/30 p-4 sm:p-5 space-y-4">
+                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-amber-50/60 to-orange-50/30 p-3 space-y-3">
                         <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-5 rounded-full bg-amber-400" />
-                            <span className="text-[11px] sm:text-[13px] font-bold text-slate-600 uppercase tracking-wider">
+                            <div className="w-1 h-4 rounded-full bg-amber-400" />
+                            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
                                 Tasdiqlash bosqichi
                             </span>
                         </div>
@@ -60,8 +60,8 @@ export function ShareFormPanel({
 
                         {/* Edit toggle per user - more compact UI */}
                         {approverIds && approverIds.length > 0 && (
-                            <div className="mt-5 pt-4 border-t border-amber-100/50">
-                                <p className="text-[11px] sm:text-[13px] font-bold text-amber-700/60 uppercase tracking-wider mb-3">
+                            <div className="mt-4 pt-3 border-t border-amber-100/50">
+                                <p className="text-xs font-bold text-amber-700/60 uppercase tracking-wider mb-2">
                                     Tahrirlash huquqlari
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
@@ -88,18 +88,18 @@ export function ShareFormPanel({
                                                             { shouldDirty: true },
                                                         );
                                                     }}
-                                                    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
+                                                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
                                                         canEdit ? "bg-amber-400" : "bg-slate-200"
                                                     }`}
                                                 >
                                                     <span
-                                                        className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-sm ring-0 transition-transform ${
-                                                            canEdit ? "translate-x-5" : "translate-x-0"
+                                                        className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm ring-0 transition-transform ${
+                                                            canEdit ? "translate-x-4" : "translate-x-0"
                                                         }`}
                                                     />
                                                 </button>
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="text-[12px] sm:text-[14px] font-semibold text-slate-700 truncate">
+                                                    <p className="text-sm font-semibold text-slate-700 truncate">
                                                         {userLabel}
                                                     </p>
                                                 </div>
@@ -112,10 +112,10 @@ export function ShareFormPanel({
                     </div>
 
                     {/* ── SIGNING block ── */}
-                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-violet-50/60 to-indigo-50/30 p-4 sm:p-5 space-y-4">
+                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-violet-50/60 to-indigo-50/30 p-3 space-y-3">
                         <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-5 rounded-full bg-violet-400" />
-                            <span className="text-[11px] sm:text-[13px] font-bold text-slate-600 uppercase tracking-wider">
+                            <div className="w-1 h-4 rounded-full bg-violet-400" />
+                            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
                                 Imzolash bosqichi
                             </span>
                         </div>
@@ -132,30 +132,28 @@ export function ShareFormPanel({
                 </div>
 
                 {/* Footer */}
-                <div className="mt-4 pt-3 flex gap-3 px-1">
+                <div className="mt-4 pt-3 flex items-center justify-end gap-3 px-1">
                     <Button
-                        variant="default"
+                        variant="secondary"
                         onClick={onCancel}
-                        className="flex-1 h-12 text-[13px] sm:text-[15px] font-semibold text-rose-600 bg-rose-600 hover:bg-rose-800 border-none transition-colors"
+                        className="min-w-[120px]"
                     >
                         Bekor qilish
                     </Button>
                     <Button
-    onClick={onSubmit}
-    disabled={isSending}
-    className="flex-[2] h-12 text-[13px] sm:text-[15px] font-semibold bg-sky-500 hover:bg-sky-600 text-white shadow-md gap-2"
->
-    {isSending ? (
-        <>
-            <LoaderCircle className="size-4 sm:size-5 animate-spin" />
-            Yuborilmoqda...
-        </>
-    ) : (
-        <>
-            Yuborish
-        </>
-    )}
-</Button>
+                        onClick={onSubmit}
+                        disabled={isSending}
+                        className="min-w-[120px] bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                        {isSending ? (
+                            <div className="flex items-center gap-2">
+                                <LoaderCircle className="size-4 animate-spin" />
+                                <span>Yuborilmoqda...</span>
+                            </div>
+                        ) : (
+                            <span>Yuborish</span>
+                        )}
+                    </Button>
                 </div>
             </div>
         </FormProvider>

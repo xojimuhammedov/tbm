@@ -9,9 +9,10 @@ import { dateFormatter } from "@/shared/utils/utils";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import { Button } from "dgz-ui/button";
 import {
-  ChevronLeftIcon,
-  FileTextIcon,
-  LoaderCircleIcon
+    ChevronLeftIcon,
+    FileTextIcon,
+  LoaderCircleIcon,
+    FileType2
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -97,29 +98,14 @@ function ShareModal({
       size="lg"
       className="overflow-visible"
       header={
-        <div className="flex items-center gap-2.5 pr-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-sky-500"
-          >
-            <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
-            <path d="m21.854 2.147-10.94 10.939"/>
-          </svg>
-          <span className="font-semibold text-neutral-900 text-[14px] sm:text-[16px]">
+        <div className="flex items-center gap-1.5 pr-10">
+          <span className="font-semibold text-neutral-900 text-sm">
             Ko'rib chiqishga yuborish
           </span>
         </div>
       }
     >
-      <div className="p-4 sm:p-6 overflow-visible">
+      <div className="p-4 overflow-visible">
         <ShareFormPanel
           form={form}
           staffOptions={staffOptions}
@@ -155,22 +141,22 @@ function MetaCard({
   ];
 
   return (
-    <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden h-fit">
-      <div className="px-4 py-2.5 lg:py-3 border-b border-neutral-100">
-        <p className="text-[9px] sm:text-[10px] 2xl:text-[11px] font-bold tracking-[0.1em] uppercase text-neutral-400 mb-0.5">
+    <div className="bg-white rounded-xl border border-neutral-200 shadow-sm overflow-hidden h-fit">
+      <div className="px-4 py-3 border-b border-neutral-100">
+        <p className="text-[10px] font-bold tracking-wider uppercase text-neutral-400 mb-0.5">
           Hujjat ma'lumotlari
         </p>
-        <p className="font-extrabold text-[13px] sm:text-[15px] 2xl:text-[17px] text-neutral-900 leading-snug tracking-tight">
+        <p className="font-bold text-base text-neutral-900 leading-snug tracking-tight">
           {doc.payload?.basic?.title}
         </p>
       </div>
       <div className="divide-y divide-neutral-100">
         {rows.map(([label, value]) => (
-          <div key={label} className="px-4 py-2 2xl:py-2.5">
-            <p className="text-[9px] sm:text-[10px] 2xl:text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-0.5">
+          <div key={label} className="px-4 py-2">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-0.5">
               {label}
             </p>
-            <p className="text-[12px] sm:text-[13px] 2xl:text-[15px] font-semibold text-neutral-900">
+            <p className="text-sm font-semibold text-neutral-900">
               {value || "—"}
             </p>
           </div>
@@ -178,16 +164,23 @@ function MetaCard({
       </div>
       <div className="px-4 py-2.5 border-t border-neutral-100">
         <Button
-          onClick={handleOpenPdf}
-          disabled={isGenerating}
-          className="w-full justify-center h-9 text-[12.5px]  font-semibold gap-2"
-        >
-          {isGenerating ? (
-            <LoaderCircleIcon  className="size-3.5 animate-spin  text-blue-500" />
-          ) : (
-            <FileTextIcon className="size-3.5 text-white-500" />
-          )}
-        </Button>
+  onClick={handleOpenPdf}
+  disabled={isGenerating}
+  className="w-full justify-center h-9 text-[12.5px] font-semibold gap-2 transition-all active:scale-95"
+>
+  {isGenerating ? (
+    <>
+      <LoaderCircleIcon className="size-4 animate-spin text-blue-500" />
+      <span>Tayyorlanmoqda...</span>
+    </>
+  ) : (
+    <>
+      {/* PDF ikonkasi: qizil rangda bo'lsa ko'proq PDFga o'xshaydi */}
+      <FileType2 className="size-4 text-red-500" />
+      <span>PDF ko'rish</span>
+    </>
+  )}
+</Button>
       </div>
     </div>
   );
@@ -292,7 +285,7 @@ const ApplicationDocumentDetailPage = () => {
       <PageHeader breadcrumbs={breadcrumbs} />
       <PageWrapper>
         <div className="">
-          <div className="flex flex-col sm:flex-row sm:items-center  mb-2 ">
+          <div className="flex flex-col sm:flex-row sm:items-center  mb-4 ">
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <Button
                 variant="secondary"
@@ -303,10 +296,10 @@ const ApplicationDocumentDetailPage = () => {
                 <ChevronLeftIcon className="size-5 text-neutral-700 group-hover:text-black transition-colors" />
               </Button>
               <div className="flex-1 min-w-0">
-                <h1 className="font-extrabold text-[16px] sm:text-[18px] 2xl:text-[22px] text-neutral-900 tracking-tight leading-tight truncate">
+                <h1 className="font-bold text-xl text-neutral-900 tracking-tight leading-tight truncate">
                   Buyurtma hujjati
                 </h1>
-                <p className="text-[10px] sm:text-[12px] 2xl:text-[13px] text-neutral-400 mt-0.5 font-mono">
+                <p className="text-sm text-neutral-400 mt-0.5 font-mono">
                   № {doc.code}
                 </p>
               </div>
@@ -317,7 +310,7 @@ const ApplicationDocumentDetailPage = () => {
                 <Button
                   variant="secondary"
                   onClick={() => setShowShareForm(true)}
-                  className="h-10 2xl:h-11 text-[12px] sm:text-[13px] 2xl:text-[14px] font-semibold gap-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 hover:text-sky-600 shadow-sm rounded-xl px-4 2xl:px-5 transition-colors"
+                  className="h-10 text-sm font-semibold gap-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 hover:text-sky-600 shadow-sm rounded-xl px-4 transition-colors"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -339,7 +332,7 @@ const ApplicationDocumentDetailPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[330px_1fr] 2xl:grid-cols-[360px_1fr] gap-4 2xl:gap-6 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[340px_1fr] gap-4 items-start">
             <MetaCard
               doc={doc}
               handleOpenPdf={handleOpenPdf}

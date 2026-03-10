@@ -1,7 +1,7 @@
 import useDocumentSocket, {
-  DocumentSocketPayload,
-  DocumentStatus,
-  SocketRecipient,
+    DocumentSocketPayload,
+    DocumentStatus,
+    SocketRecipient,
 } from "@/pages/imzolash/hooks/useDocumentSocket";
 import { Loader2, UserPlusIcon, XIcon } from "lucide-react";
 import { useCallback, useState } from "react";
@@ -76,7 +76,7 @@ function Avatar({ recipient }: { recipient: SocketRecipient }) {
         color,
         border: `1.5px solid ${color}30`,
       }}
-      className="w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-black flex-shrink-0 select-none relative"
+      className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-black flex-shrink-0 select-none relative"
     >
       {getInitials(recipient)}
       {recipient.is_current && (
@@ -124,11 +124,11 @@ function RecipientRow({ r, delay, canModify, onRemove, onShowReason }: Recipient
             </span>
           )}
         </p>
-        <p className="text-[13px] font-semibold text-slate-800 truncate">
+        <p className="text-xs font-semibold text-slate-800 truncate">
           {fullName(r)}
         </p>
         {r.middle_name && (
-          <p className="text-[11px] text-slate-400 truncate">{r.middle_name}</p>
+          <p className="text-[10px] text-slate-400 truncate">{r.middle_name}</p>
         )}
       </div>
 
@@ -157,7 +157,7 @@ function RecipientRow({ r, delay, canModify, onRemove, onShowReason }: Recipient
           }}
         />
         <span
-          className="text-[10.5px] font-semibold"
+          className="text-[10px] font-semibold"
           style={{ color: statusMeta.color }}
         >
           {statusMeta.label}
@@ -200,9 +200,9 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
   const isDone = status === "SIGNED";
 
   return (
-    <div className="px-4 sm:px-6 pt-6 pb-5">
-      <div className="flex items-center justify-between mb-8 sm:mb-10">
-        <span className="text-[11px] sm:text-[12px] font-bold tracking-[0.14em] uppercase text-slate-400">
+    <div className="px-4 pt-4 pb-3">
+      <div className="flex items-center justify-between mb-5">
+        <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-slate-400">
           Hujjat holati
         </span>
         <div className="flex items-center gap-2">
@@ -245,7 +245,7 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
             </span>
           )}
           <span
-            className="text-[13px] sm:text-[15px] font-extrabold tracking-tight"
+            className="text-sm font-bold tracking-tight"
             style={{
               color: isTerminal
                 ? "#ef4444"
@@ -284,7 +284,7 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
               className="relative z-[2] flex flex-col items-center flex-1"
             >
               <div
-                className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-500 ease-in-out"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-500 ease-in-out"
                 style={{
                   background: done ? "#10b981" : "#fff",
                   border: done
@@ -318,11 +318,11 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
                   />
                 )}
                 {!done && !active && (
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-2.5 md:h-2.5 rounded-full bg-slate-200" />
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-200" />
                 )}
               </div>
               <span
-                className="text-[9.5px] sm:text-[10px] md:text-[11px] font-bold whitespace-nowrap text-center leading-tight mt-2 sm:mt-2.5 md:mt-3"
+                className="text-[9px] sm:text-[10px] font-bold whitespace-nowrap text-center leading-tight mt-2"
                 style={{
                   color: done ? "#10b981" : active ? s.color : "#94a3b8",
                   transition: "color 0.3s ease",
@@ -429,7 +429,7 @@ export function DocumentStatusBar({
                 {canAddMore && onOpenAddModal && (
                   <button
                     onClick={onOpenAddModal}
-                    className="flex items-center gap-1.5 text-[11.5px] font-semibold text-amber-500 hover:text-amber-600 transition-colors"
+                    className="flex items-center gap-1.5 text-[11px] font-semibold text-amber-500 hover:text-amber-600 transition-colors"
                   >
                     <UserPlusIcon size={12} />
                     Qo'shish
