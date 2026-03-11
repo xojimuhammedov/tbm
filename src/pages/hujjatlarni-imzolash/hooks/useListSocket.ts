@@ -32,7 +32,11 @@ const useListSocket = (onView?: (record: any) => void): UseListSocketReturn => {
     if (onView) {
       onView(record);
     } else {
-      navigate(`/rh-252/hujjatlarni-imzolash/${record?.document_id?._id}/shared/${record?.shared_id}`);
+      const docId = typeof record?.document_id === "string" ? record.document_id : record?.document_id?._id;
+      const allUsers = [...(record?.users || []), ...(record?.signers || [])];
+      const me = allUsers.find(u => u.is_current || u.status === 'PENDING');
+      const sharedId = record?.shared_id || me?.shared_id;
+      navigate(`/rh-252/hujjatlarni-imzolash/${docId}/shared/${sharedId}`);
     }
   }, [navigate, onView]);
 

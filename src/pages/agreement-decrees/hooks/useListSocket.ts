@@ -36,7 +36,7 @@ const useListSocket = (): UseListSocketReturn => {
   const handleView = useCallback((record: any) => {
     setCurrentItem({
       ...record?.document_id,
-      sharedId: record?.shared_id
+      sharedId: record?.shared_id || record?._id
     });
     setOpenView(true);
   }, []);

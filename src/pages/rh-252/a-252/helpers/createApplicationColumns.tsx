@@ -2,7 +2,7 @@ import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
 import { dateFormatter } from "@/shared/utils/utils";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import { EditIcon, EyeIcon, FileDown, FileSignature, PencilLineIcon, ShieldCheckIcon, Trash2Icon } from "lucide-react";
+import { EditIcon, EyeIcon, FileDown, FileSignature, PencilLineIcon, Trash2Icon } from "lucide-react";
 import {
   OrderApplication,
   ResponsibleUser,
@@ -14,7 +14,6 @@ const createOrderColumns = (
     handleDelete: (id: string) => void,
     handleView: (id: string) => void,
     handleEditCode: (id: string, code: string) => void,
-    handleEImzo: (id: string) => void,
     handleEImzoProgress: (id: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
@@ -43,7 +42,6 @@ const createOrderColumns = (
         key: "order_date",
         dataIndex: "order_date",
         name: t("Order date"),
-        // whitespace-nowrap matnni bir qatorga majburlaydi
         render: (val: string) => (
             <span className="whitespace-nowrap">
         {dateFormatter(val, DATE)}
@@ -105,7 +103,10 @@ const createOrderColumns = (
       } else if (status === "DRAFT") {
           label = "Yangi";
           colorClass = "bg-purple-100 text-purple-700";
-      }
+      } else if (status === "REJECTED") {
+         label = "Rad etildi";
+         colorClass = "bg-red-100 text-red-700";
+     }
 
 
       return (
@@ -142,12 +143,6 @@ const createOrderColumns = (
                           <FileSignature
                               className="size-4 cursor-pointer text-slate-500 hover:text-emerald-600 transition-colors"
                               onClick={() => handleEImzoProgress(id)}
-                          />
-                      </MyTooltip>
-                      <MyTooltip content={t("E-IMZO bilan imzolash")}>
-                          <ShieldCheckIcon
-                              className="size-4 cursor-pointer text-slate-500 hover:text-blue-600 transition-colors"
-                              onClick={() => handleEImzo(id)}
                           />
                       </MyTooltip>
                   </>
