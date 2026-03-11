@@ -1,8 +1,7 @@
 import MyTooltip from "@/shared/components/atoms/tooltip/MyTooltip.tsx";
 import { dayjs } from "@/shared/utils/day.ts";
-import { Badge } from "dgz-ui";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import { AlertCircle, CheckCircle2, EyeIcon, XCircle } from "lucide-react";
+import { EyeIcon } from "lucide-react";
 import {
   SharedItemInterface,
   SharedStatus,
@@ -13,14 +12,38 @@ const renderHeader = (label: string) => (
 );
 
 
-const statusColors: Record<
-  string,
-  "red" | "orange" | "green" | "gray" | "default"
-> = {
-  REJECTED: "red",
-  PENDING: "orange",
-  ACCEPTED: "green",
-  CANCEL: "gray",
+const renderStatus = (status: string | undefined) => {
+  let label = status || "---";
+  let colorClass = "bg-slate-100 text-slate-700";
+
+  if (status === "ACCEPTED" || status === "DONE" || status === "EXECUTED" || status === "SIGNED") {
+    label = status === "ACCEPTED" ? "Qabul qilingan" : "Imzolangan";
+    colorClass = "bg-emerald-100 text-emerald-700";
+  } else if (status === "WAITING") {
+    label = "Jarayonda";
+    colorClass = "bg-blue-100 text-blue-700";
+  } else if (status === "PENDING" || status === "IN_REVIEW") {
+    label = status === "PENDING" ? "Kutilmoqda" : "Tekshirilmoqda";
+    colorClass = "bg-amber-100 text-amber-700";
+  } else if (status === "REJECTED") {
+    label = "Rad etilgan";
+    colorClass = "bg-red-100 text-red-700";
+  } else if (status === "BLOCK") {
+    label = "Bloklangan";
+    colorClass = "bg-stone-100 text-stone-700";
+  } else if (status === "DRAFT") {
+    label = "Yangi";
+    colorClass = "bg-purple-100 text-purple-700";
+  } else if (status === "CANCEL") {
+    label = "Bekor qilingan";
+    colorClass = "bg-gray-100 text-gray-700";
+  }
+
+  return (
+    <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}>
+      {label}
+    </span>
+  );
 };
 
 const createSharedColumns = (
@@ -55,40 +78,7 @@ const createSharedColumns = (
       key: "status",
       dataIndex: "status",
       name: t("Holat", { defaultValue: "Holat" }),
-      render: (value: SharedStatus) => {
-        if (value === "PENDING") {
-          return (
-            <span className="inline-flex items-center px-2  rounded-md border border-purple-200 text-[12px] font-medium bg-purple-100 text-purple-700">
-              {t("Yangi", { defaultValue: "Yangi" })}
-            </span>
-          );
-        }
-        if (value === "ACCEPTED") {
-          return (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-green-200 text-[13px] font-medium bg-green-100 text-green-700">
-              <CheckCircle2 className="w-4 h-4 fill-green-500 text-white" />
-              {t("Imzolangan", { defaultValue: "Imzolangan" })}
-            </span>
-          );
-        }
-        if (value === "REJECTED") {
-          return (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-red-200 text-[13px] font-medium bg-red-100 text-red-700">
-              <XCircle className="w-4 h-4 fill-red-500 text-white" />
-              {t("Rad etilgan", { defaultValue: "Rad etilgan" })}
-            </span>
-          );
-        }
-        if (value === "CANCEL") {
-          return (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-200 text-[13px] font-medium bg-slate-100 text-slate-700">
-              <AlertCircle className="w-4 h-4" />
-              {t("Bekor qilingan", { defaultValue: "Bekor qilingan" })}
-            </span>
-          );
-        }
-        return <Badge variant={statusColors[value] || "default"}>{value || "-"}</Badge>;
-      },
+      render: (value: SharedStatus | string | undefined) => renderStatus(value),
     },
     {
       key: "document_id",

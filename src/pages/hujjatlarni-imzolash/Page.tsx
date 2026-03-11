@@ -63,8 +63,13 @@ const Page = () => {
       <SignReviewModal
         open={!!selectedRecord}
         onClose={() => setSelectedRecord(null)}
-        currentItem={selectedRecord?.document_id}
-        sharedId={selectedRecord?.shared_id}
+        currentItem={selectedRecord}
+        sharedId={
+          selectedRecord?.shared_id ||
+          selectedRecord?._id ||
+          [...(selectedRecord?.users || []), ...(selectedRecord?.signers || [])]
+            .find((u: any) => u.is_current || u.status === 'PENDING')?.shared_id
+        }
         onSuccess={() => {
           setSelectedRecord(null);
           handleFilter({}); // Reload or trigger refetch by changing params technically

@@ -6,18 +6,11 @@ import useDocumentSocket, {
 import { Loader2, UserPlusIcon, XIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 
-const TIMELINE: { id: DocumentStatus; label: string; color: string }[] = [
-  { id: "DRAFT", label: "Qoralama", color: "#94a3b8" },
-  { id: "IN_REVIEW", label: "Ko'rib chiqish", color: "#f59e0b" },
-  { id: "APPROVED", label: "Tasdiqlangan", color: "#6366f1" },
-  { id: "SIGNING", label: "Imzolashda", color: "#8b5cf6" },
-  { id: "SIGNED", label: "Imzolandi", color: "#10b981" },
+const TIMELINE: { id: string; label: string; color: string }[] = [
+  { id: "APPROVAL", label: "Tasdiqlash", color: "#f59e0b" },
+  { id: "SIGNING", label: "Imzolash", color: "#3b82f6" },
+  { id: "DONE", label: "Yakunlandi", color: "#10b981" },
 ];
-
-const STATUS_ALIAS: Partial<Record<DocumentStatus, DocumentStatus>> = {
-  REJECTED: "IN_REVIEW",
-  CANCELLED: "DRAFT",
-};
 
 const STATUS_META: Record<
   string,
@@ -190,14 +183,14 @@ function RecipientRow({ r, delay, canModify, onRemove, onShowReason }: Recipient
   );
 }
 
-function TimelineTrack({ status }: { status: DocumentStatus }) {
-  const resolvedStatus = STATUS_ALIAS[status] ?? status;
-  const idx = TIMELINE.findIndex((s) => s.id === resolvedStatus);
+function TimelineTrack({ status, stage }: { status: DocumentStatus; stage?: string }) {
+  const resolvedStage = stage || "APPROVAL";
+  const idx = TIMELINE.findIndex((s) => s.id === resolvedStage);
   const safeIdx = idx < 0 ? 0 : idx;
   const fillPct = safeIdx <= 0 ? 0 : (safeIdx / (TIMELINE.length - 1)) * 100;
   const currentStage = TIMELINE[safeIdx];
   const isTerminal = status === "CANCELLED" || status === "REJECTED";
-  const isDone = status === "SIGNED";
+  const isDone = stage === "DONE" || status === "SIGNED" || status === "EXECUTED" || status === "APPROVED";
 
   return (
     <div className="px-4 pt-4 pb-3">
@@ -264,9 +257,9 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
       </div>
 
       <div className="relative flex items-start justify-between w-full mx-auto">
-        <div className="absolute top-4 sm:top-5 md:top-6 left-[10%] right-[10%] h-[2px] sm:h-[3px] bg-slate-100 z-0" />
+        <div className="absolute top-[18px] sm:top-[20px] left-[10%] right-[10%] h-[3px] sm:h-[4px] -translate-y-1/2 bg-slate-100 z-0" />
         <div
-          className="absolute top-4 sm:top-5 md:top-6 left-[10%] h-[2px] sm:h-[3px] z-[1]"
+          className="absolute top-[18px] sm:top-[20px] left-[10%] h-[3px] sm:h-[4px] -translate-y-1/2 z-[1]"
           style={{
             width: `${fillPct * 0.8}%`,
             background: isTerminal
@@ -284,20 +277,20 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
               className="relative z-[2] flex flex-col items-center flex-1"
             >
               <div
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-500 ease-in-out"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-500 ease-in-out"
                 style={{
                   background: done ? "#10b981" : "#fff",
                   border: done
                     ? "2px solid #10b981"
                     : active
-                      ? `2px solid ${s.color}`
+                      ? `3px solid ${s.color}`
                       : "2px solid #e2e8f0",
-                  boxShadow: active ? `0 0 0 5px ${s.color}20` : "none",
+                  boxShadow: active ? `0 0 0 6px ${s.color}20` : "none",
                 }}
               >
                 {done && (
                   <svg
-                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5"
+                    className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="white"
@@ -310,7 +303,7 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
                 )}
                 {active && (
                   <div
-                    className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full"
+                    className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 rounded-full"
                     style={{
                       background: s.color,
                       animation: "pulseDot 1.8s ease-in-out infinite",
@@ -318,11 +311,11 @@ function TimelineTrack({ status }: { status: DocumentStatus }) {
                   />
                 )}
                 {!done && !active && (
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-200" />
+                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-200" />
                 )}
               </div>
               <span
-                className="text-[9px] sm:text-[10px] font-bold whitespace-nowrap text-center leading-tight mt-2"
+                className="text-[10px] sm:text-[11px] md:text-xs font-bold whitespace-nowrap text-center leading-tight mt-3 pl-1"
                 style={{
                   color: done ? "#10b981" : active ? s.color : "#94a3b8",
                   transition: "color 0.3s ease",
@@ -380,11 +373,10 @@ export function DocumentStatusBar({
   };
 
   const status = socketData?.document_status ?? "DRAFT";
+  const stage = socketData?.document_stage ?? "APPROVAL";
   const users = socketData?.users ?? [];
-  const signer = socketData?.signer;
-  const allRecipients = (
-    signer ? [...users, signer] : users
-  ) as SocketRecipient[];
+  const signers = socketData?.signers ?? (socketData?.signer ? [socketData.signer] : []);
+  const allRecipients = [...users, ...signers] as SocketRecipient[];
   const hasRecipients = allRecipients.length > 0;
   const canCancel = !["DRAFT", "EXECUTED", "SIGNED", "CANCELLED"].includes(
     status,
@@ -409,7 +401,7 @@ export function DocumentStatusBar({
             `}</style>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm mb-4 overflow-hidden">
-        <TimelineTrack status={status} />
+        <TimelineTrack status={status} stage={stage} />
 
         {hasRecipients && (
           <div className="border-t border-slate-100">
@@ -445,7 +437,7 @@ export function DocumentStatusBar({
                 .sort((a, b) => a.order - b.order)
                 .map((r, i) => (
                   <RecipientRow
-                    key={r._id}
+                    key={r.shared_id || r._id || i}
                     r={r}
                     delay={i * 0.06}
                     canModify={canCancel}

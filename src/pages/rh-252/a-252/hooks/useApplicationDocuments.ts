@@ -95,13 +95,6 @@ const useApplicationDocuments = () => {
     [query, removeWithConfirm, t, toast],
   );
 
-  /** E-IMZO sahifasiga yo'naltirish */
-  const handleEImzo = useCallback(
-    (docId: string) => {
-      navigate(`/rh-252/a-252/sign/${docId}`);
-    },
-    [navigate],
-  );
 
   const handleEImzoProgress = useCallback(
     (docId: string) => {
@@ -118,10 +111,9 @@ const useApplicationDocuments = () => {
         handleDelete,
         handleView,
         handleEditCode,
-        handleEImzo,
         handleEImzoProgress,
       ),
-    [handleDelete, handleEdit, handleView, handleEditCode, handleEImzo, t],
+    [handleDelete, handleEdit, handleView, handleEditCode, t],
   );
 
   return {
