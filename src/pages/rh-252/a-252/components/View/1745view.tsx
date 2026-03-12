@@ -31,6 +31,9 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document, asComponent }:
           payload?.delete?.flow_ids?.length > 0
       );
 
+  const totalActiveActions = [hasCreate, hasUpdate, hasDelete].filter(Boolean);
+  const isMultiple = totalActiveActions.length > 1;
+
   const getDynamicTitle = () => {
     const signal = basic?.signal_level || "2 Mbit/s";
     const actionLabels: string[] = [];
@@ -51,6 +54,21 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document, asComponent }:
     return `${signal} oqimni ${actionText} to'g'risida`;
   };
 
+  const baseIntro = (
+      <>
+        {basic?.organization_name}ning{" "}
+        {basic?.request_date
+            ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM", "uz")
+            : "____-yil __-________"}
+        dagi {basic?.request_number}-son murojaatiga binoan,{" "}
+        {basic?.justification}{" "}
+        {document?.order_date
+            ? dateFormatter(document.order_date, "YYYY-yil D-MMMM", "uz")
+            : "____-yil __-________"}
+        dan{" "}
+      </>
+  );
+
   const renderSections = () => {
     let step = 0;
     const sections: JSX.Element[] = [];
@@ -60,11 +78,13 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document, asComponent }:
         step++;
         sections.push(
             <div key="create" className="pl-4">
-              <p>
-                {step}. Tegishli manzillar oralig'idagi oqimlar quyidagicha tashkil etilsin va
-                ma'lumot o'rnida qabul qilinsin:
-              </p>
-              <div className="pl-12 mt-2">
+              {isMultiple ? (
+                  <p>
+                    {step}. Tegishli manzillar oralig'idagi oqimlar quyidagicha tashkil etilsin va
+                    ma'lumot o'rnida qabul qilinsin:
+                  </p>
+              ) : null}
+              <div className={isMultiple ? "pl-12 mt-2" : "mt-2"}>
                 {payload.create.flow_ids.map((item: any, i: number) => (
                     <p key={`cre-${i}`} className="leading-relaxed">
                       {item.point_a} ({item.device_a || ""}) – {item.point_b} ({item.device_b || ""}){" "}
@@ -74,6 +94,12 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document, asComponent }:
                     </p>
                 ))}
               </div>
+              {payload?.responsible_organizing && (
+                  <p className="mt-3">
+                    Mas'ul tashkilot:{" "}
+                    <span className="font-bold">{payload.responsible_organizing}</span>
+                  </p>
+              )}
             </div>
         );
       }
@@ -84,7 +110,8 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document, asComponent }:
           sections.push(
               <div key={`upd-ch-${step}`} className="pl-4">
                 <p>
-                  {step}. {item.old?.international_stream_number} yo'nalishidagi{" "}
+                  {isMultiple && `${step}. `}
+                  {item.old?.international_stream_number} yo'nalishidagi{" "}
                   {basic?.signal_level} oqim {item.new?.international_stream_number}{" "}
                   yo'nalishiga quyidagicha o'zgartirilsin:
                 </p>
@@ -103,9 +130,9 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document, asComponent }:
           sections.push(
               <div key={`upd-fl-${step}`} className="pl-4">
                 <p>
-                  {step}. {old?.point_a} – {old?.point_b} yo'nalishidagi {basic?.signal_level} oqim
-                  ({old?.code}) {nw?.point_a} – {nw?.point_b} yo'nalishga o'zgartirilsin
-                  quyidagicha o'zgartirilsin:
+                  {isMultiple && `${step}. `}
+                  {old?.point_a} – {old?.point_b} yo'nalishidagi {basic?.signal_level} oqim
+                  ({old?.code}) {nw?.point_a} – {nw?.point_b} yo'nalishga quyidagicha o'zgartirilsin:
                 </p>
                 <div className="pl-12 mt-2 text-[14px]">
                   <p>
@@ -140,17 +167,217 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document, asComponent }:
 
         sections.push(
             <div key="delete" className="pl-4">
-              <p>
-                {step}. Xizmat ehtiyoji yo'qligi sababli quyidagi {basic?.signal_level} oqimlar
-                o'chirilsin:
+              {isMultiple && (
+                  <p>
+                    {step}. Xizmat ehtiyoji yo'qligi sababli quyidagi {basic?.signal_level} oqimlar
+                    o'chirilsin:
+                  </p>
+              )}
+              <p className={`font-bold italic mt-1 ${isMultiple ? "pl-12" : ""}`}>
+                {deleteCodes.join(", ")}
               </p>
-              <p className="pl-12 font-bold italic mt-1">{deleteCodes.join(", ")}</p>
             </div>
         );
       }
     }
 
     return sections;
+  };
+
+  // bitta action bo'lganda intro matni inline davomi
+  const renderIntroWithSingleAction = () => {
+    if (isMultiple) {
+      return (
+          <p className="indent-12 leading-relaxed">
+            {baseIntro}quyidagi ishlar amalga oshirilsin:
+          </p>
+      );
+    }
+
+    if (hasCreate) {
+      return (
+          <p className="indent-12 leading-relaxed">
+            {baseIntro}tegishli manzillar oralig'idagi oqimlar quyidagicha tashkil etilsin va
+            ma'lumot o'rnida qabul qilinsin:
+          </p>
+      );
+    }
+
+    if (hasUpdate) {
+      const channels = payload?.update?.channels || [];
+      const flows = payload?.update?.flows || [];
+
+      if (channels.length > 0) {
+        const item = channels[0];
+        return (
+            <p className="indent-12 leading-relaxed">
+              {baseIntro}
+              {item.old?.international_stream_number} yo'nalishidagi{" "}
+              {basic?.signal_level} oqim {item.new?.international_stream_number}{" "}
+              yo'nalishiga quyidagicha o'zgartirilsin:
+            </p>
+        );
+      }
+
+      if (flows.length > 0) {
+        const item = flows[0];
+        const old = item.old;
+        const nw = item.new;
+        return (
+            <p className="indent-12 leading-relaxed">
+              {baseIntro}
+              {old?.point_a} – {old?.point_b} yo'nalishidagi {basic?.signal_level} oqim
+              ({old?.code}) {nw?.point_a} – {nw?.point_b} yo'nalishga quyidagicha o'zgartirilsin:
+            </p>
+        );
+      }
+    }
+
+    if (hasDelete) {
+      const deleteCodes: string[] = [
+        ...(payload?.delete?.channels || []),
+        ...(payload?.delete?.channel_ids || []),
+        ...(payload?.delete?.flow_ids || []).map((f: any) => f.code || f._id),
+      ].filter(Boolean);
+
+      return (
+          <p className="indent-12 leading-relaxed">
+            {baseIntro}xizmat ehtiyoji yo'qligi sababli quyidagi {basic?.signal_level} oqimlar
+            o'chirilsin:{" "}
+            <span className="font-bold italic">{deleteCodes.join(", ")}</span>
+          </p>
+      );
+    }
+
+    return (
+        <p className="indent-12 leading-relaxed">
+          {baseIntro}quyidagi ishlar amalga oshirilsin:
+        </p>
+    );
+  };
+
+  // bitta action bo'lganda sections render qilish (intro inline bo'lgani uchun ba'zilari skip)
+  const renderSingleActionSections = () => {
+    if (hasDelete) return null; // delete inline yozildi
+    if (hasUpdate) {
+      const channels = payload?.update?.channels || [];
+      const flows = payload?.update?.flows || [];
+
+      // birinchi item intro ga kirgani uchun, qolganlarini render qilish
+      const remainingChannels = channels.slice(1);
+      const remainingFlows = channels.length > 0 ? flows : flows.slice(1);
+      const firstFlow = channels.length === 0 ? flows[0] : null;
+
+      const sections: JSX.Element[] = [];
+
+      if (firstFlow) {
+        // birinchi flow intro ga kirdi, detail qismini chiqaramiz
+        const old = firstFlow.old;
+        const nw = firstFlow.new;
+        sections.push(
+            <div key="upd-fl-detail-0" className="pl-12 mt-2 text-[14px]">
+              <p>
+                Oldin: {old?.point_a}
+                {old?.device_a ? ` (${old.device_a}` : ""}
+                {old?.port_a ? `&${old.port_a})` : old?.device_a ? ")" : ""} –{" "}
+                {old?.point_b}
+                {old?.device_b ? ` (${old.device_b}` : ""}
+                {old?.port_b ? `&${old.port_b})` : old?.device_b ? ")" : ""}
+              </p>
+              <p>
+                Hozir: {nw?.point_a}
+                {nw?.device_a ? ` (${nw.device_a}` : ""}
+                {nw?.port_a ? `&${nw.port_a})` : nw?.device_a ? ")" : ""} –{" "}
+                {nw?.point_b}
+                {nw?.device_b ? ` (${nw.device_b}` : ""}
+                {nw?.port_b ? `&${nw.port_b})` : nw?.device_b ? ")" : ""}
+              </p>
+            </div>
+        );
+      }
+
+      if (channels.length > 0) {
+        const firstCh = channels[0];
+        sections.push(
+            <div key="upd-ch-detail-0" className="pl-12 mt-2 text-[14px]">
+              <p>Oldin: {firstCh.old?.international_stream_number} (Kod: {firstCh.old?.code})</p>
+              <p>Hozir: {firstCh.new?.international_stream_number} (Kod: {firstCh.new?.code})</p>
+            </div>
+        );
+      }
+
+      remainingChannels.forEach((item: any, i: number) => {
+        sections.push(
+            <div key={`upd-ch-rem-${i}`} className="pl-4">
+              <p>
+                {item.old?.international_stream_number} yo'nalishidagi{" "}
+                {basic?.signal_level} oqim {item.new?.international_stream_number}{" "}
+                yo'nalishiga quyidagicha o'zgartirilsin:
+              </p>
+              <div className="pl-12 mt-2 text-[14px]">
+                <p>Oldin: {item.old?.international_stream_number} (Kod: {item.old?.code})</p>
+                <p>Hozir: {item.new?.international_stream_number} (Kod: {item.new?.code})</p>
+              </div>
+            </div>
+        );
+      });
+
+      remainingFlows.forEach((item: any, i: number) => {
+        const old = item.old;
+        const nw = item.new;
+        sections.push(
+            <div key={`upd-fl-rem-${i}`} className="pl-4">
+              <p>
+                {old?.point_a} – {old?.point_b} yo'nalishidagi {basic?.signal_level} oqim
+                ({old?.code}) {nw?.point_a} – {nw?.point_b} yo'nalishga quyidagicha o'zgartirilsin:
+              </p>
+              <div className="pl-12 mt-2 text-[14px]">
+                <p>
+                  Oldin: {old?.point_a}
+                  {old?.device_a ? ` (${old.device_a}` : ""}
+                  {old?.port_a ? `&${old.port_a})` : old?.device_a ? ")" : ""} –{" "}
+                  {old?.point_b}
+                  {old?.device_b ? ` (${old.device_b}` : ""}
+                  {old?.port_b ? `&${old.port_b})` : old?.device_b ? ")" : ""}
+                </p>
+                <p>
+                  Hozir: {nw?.point_a}
+                  {nw?.device_a ? ` (${nw.device_a}` : ""}
+                  {nw?.port_a ? `&${nw.port_a})` : nw?.device_a ? ")" : ""} –{" "}
+                  {nw?.point_b}
+                  {nw?.device_b ? ` (${nw.device_b}` : ""}
+                  {nw?.port_b ? `&${nw.port_b})` : nw?.device_b ? ")" : ""}
+                </p>
+              </div>
+            </div>
+        );
+      });
+
+      return sections;
+    }
+
+    if (hasCreate) {
+      return (
+          <div className="mt-2">
+            {payload.create.flow_ids.map((item: any, i: number) => (
+                <p key={`cre-${i}`} className="leading-relaxed">
+                  {item.point_a} ({item.device_a || ""}) – {item.point_b} ({item.device_b || ""}){" "}
+                  oralig'idagi{" "}
+                  <span>{item.signal_level || basic?.signal_level}</span> oqim UFTF{" "}
+                  <span className="font-bold">{item.code}</span>
+                </p>
+            ))}
+            {payload?.responsible_organizing && (
+                <p className="mt-3">
+                  Mas'ul tashkilot:{" "}
+                  <span className="font-bold">{payload.responsible_organizing}</span>
+                </p>
+            )}
+          </div>
+      );
+    }
+
+    return null;
   };
 
   const DocumentContent = (
@@ -229,27 +456,16 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document, asComponent }:
         </div>
 
         <div className="text-[15px] text-justify space-y-3 mb-10">
-          <p className="indent-12 leading-relaxed">
-            {basic?.organization_name}ning{" "}
-            {basic?.request_date
-                ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM", "uz")
-                : "____-yil __-________"}
-            dagi {basic?.request_number}-son murojaatiga binoan,{" "}
-            {basic?.justification}{" "}
-            {document?.order_date
-                ? dateFormatter(document.order_date, "YYYY-yil D-MMMM", "uz")
-                : "____-yil __-________"}
-            dan quyidagi ishlar amalga oshirilsin:
-          </p>
+          {renderIntroWithSingleAction()}
 
-          {renderSections()}
+          {isMultiple ? renderSections() : renderSingleActionSections()}
 
-          <div className="mt-5 space-y-1 text-[14px]">
-            <p>
-              Mas'ul xodim:{" "}
-              <span className="font-bold">{document?.responsible?.first_name}</span>
-            </p>
-          </div>
+          {payload?.responsible_form_3_3 && (
+              <p className="mt-3">
+                MBB shakl 3.3:{" "}
+                <span className="font-bold">{payload.responsible_form_3_3}</span>
+              </p>
+          )}
         </div>
 
         <div className="mt-auto text-sm text-[#5a76a8]">

@@ -39,7 +39,6 @@ const useApplicationDocumentForm = ({
       order_date: null,
       to: "",
       copy: "",
-      responsible: "",
       point_a: "",
       point_b: "",
       count: "",
@@ -140,7 +139,6 @@ const useApplicationDocumentForm = ({
     form.setValue("order_date", doc.order_date ?? null);
     form.setValue("to", listToText(doc.to));
     form.setValue("copy", listToText(doc.copy));
-    form.setValue("responsible", doc?.responsible?._id ?? "");
 
     const handler = handlers[prefix];
     if (!handler) return;

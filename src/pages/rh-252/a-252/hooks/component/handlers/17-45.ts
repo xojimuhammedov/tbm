@@ -33,24 +33,24 @@ const buildUpdatePayloadContract = (data: any) => {
 
   return undefined;
 };
+
 const h1745: Handler = {
   populate: (form, payload, ctx) => {
     const basic = payload.basic || {};
 
-    form.setValue(
-      "payload.basic.organization_name",
-      basic.organization_name ?? "",
-    );
+    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
     form.setValue("payload.basic.request_number", basic.request_number ?? "");
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
     form.setValue("payload.basic.justification", basic.justification ?? "");
     form.setValue("payload.basic.signal_level", basic.signal_level ?? "");
     form.setValue("payload.basic.actions", safeArray<string>(basic.actions));
+    form.setValue("payload.basic.responsible_organizing", basic.responsible_organizing ?? "");
+    form.setValue("payload.basic.responsible_form_3_3", basic.responsible_form_3_3 ?? "");
 
     form.setValue(
-      "payload.file_name",
-      basic.base_file ?? payload?.file_name ?? "",
+        "payload.file_name",
+        basic.base_file ?? payload?.file_name ?? "",
     );
 
     if (payload.create?.flow_ids) {
@@ -107,25 +107,24 @@ const h1745: Handler = {
     const actions = safeArray<string>(data.payload?.basic?.actions);
 
     const updatePayload = actions.includes("update")
-      ? buildUpdatePayloadContract(data)
-      : undefined;
+        ? buildUpdatePayloadContract(data)
+        : undefined;
 
     const createPayload = actions.includes("create")
-      ? {
+        ? {
           flow_ids: safeArray(data.payload.create?.flow_ids).map(
-            ({ id_exist, ...rest }: any) => rest,
+              ({ id_exist, ...rest }: any) => rest,
           ),
         }
-      : undefined;
+        : undefined;
 
     const deletePayload = actions.includes("delete")
-      ? {
+        ? {
           elements: safeArray(data.payload?.delete?.flow_ids)
-            .map((item: any) => item.value)
-            .filter((val: string) => val && val.trim() !== ""),
+              .map((item: any) => item.value)
+              .filter((val: string) => val && val.trim() !== ""),
         }
-      : undefined;
-
+        : undefined;
     return {
       ...buildBasePayload(data, ctx.fullCode),
       payload: {
@@ -139,6 +138,10 @@ const h1745: Handler = {
           actions,
           base_file: data.payload.file_name || "",
         },
+        responsible_form_3_3: data.payload.basic.responsible_form_3_3 || "",
+        ...(actions.includes("create") ? {
+          responsible_organizing: data.payload.basic.responsible_organizing || "",
+        } : {}),
         ...(createPayload ? { create: createPayload } : {}),
         ...(updatePayload ? { update: updatePayload } : {}),
         ...(deletePayload ? { delete: deletePayload } : {}),

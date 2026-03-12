@@ -17,8 +17,8 @@ createRoot(document.getElementById("root")!).render(
     <Suspense fallback={<div />}>
       <I18nextProvider i18n={i18n}>
         <QueryClientProvider client={queryClient}>
-          <EImzoProvider>
-            <App />
+          <EImzoProvider loadingNode={<></>}>
+                  <App />
           </EImzoProvider>
         </QueryClientProvider>
       </I18nextProvider>

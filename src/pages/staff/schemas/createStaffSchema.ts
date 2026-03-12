@@ -61,6 +61,12 @@ export const createStaffSchema = (
           ns: config.LANG.NS.VALIDATION,
         }),
       ),
+      position: z.string().nonempty(
+        t("required {{field}}", {
+          field: t("Position"),
+          ns: config.LANG.NS.VALIDATION,
+        }),
+      ),
       password: z
         .string()
         .min(

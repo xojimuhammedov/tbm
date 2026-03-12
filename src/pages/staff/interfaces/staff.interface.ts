@@ -5,6 +5,7 @@ export interface StaffInterface {
   middle_name: string;
   email: string;
   role: { _id: string; name: string };
+  position: { _id: string; name: string };
   pinfl: string;
   phone: string;
   creatorId: string;
