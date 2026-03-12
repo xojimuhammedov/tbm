@@ -8,9 +8,8 @@ import {
   FileDown,
   FileSignature,
   PencilLineIcon,
-  ShieldCheckIcon,
   Trash2Icon,
-} from "lucide-react"; // ShieldCheckIcon
+} from "lucide-react";
 import {
   OrderApplication,
   ResponsibleUser,
@@ -22,7 +21,6 @@ const createOrderColumns = (
   handleDelete: (id: string) => void,
   handleView: (id: string) => void,
   handleEditCode: (id: string, code: string) => void,
-  handleEImzo: (id: string) => void,
   handleEImzoProgress: (id: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
@@ -51,7 +49,9 @@ const createOrderColumns = (
     key: "order_date",
     dataIndex: "order_date",
     name: t("Order date"),
-    render: (val: string) => dateFormatter(val, DATE),
+    render: (val: string) => (
+      <span className="whitespace-nowrap">{dateFormatter(val, DATE)}</span>
+    ),
   },
   {
     key: "to",
@@ -98,15 +98,21 @@ const createOrderColumns = (
       let label = status || "---";
       let colorClass = "bg-slate-100 text-slate-700";
 
-      if (status === "SIGNED") {
+      if (status === "EXECUTED" || status === "SIGNED") {
         label = "Imzolangan";
-        colorClass = "bg-blue-100 text-blue-700";
-      } else if (status === "EXECUTED") {
-        label = "Bajarildi";
         colorClass = "bg-emerald-100 text-emerald-700";
       } else if (status === "SIGNING") {
         label = "Imzolanmoqda";
         colorClass = "bg-amber-100 text-amber-700";
+      } else if (status === "IN_REVIEW") {
+        label = "Tekshirilmoqda";
+        colorClass = "bg-amber-100 text-amber-700";
+      } else if (status === "DRAFT") {
+        label = "Yangi";
+        colorClass = "bg-purple-100 text-purple-700";
+      } else if (status === "REJECTED") {
+        label = "Rad etildi";
+        colorClass = "bg-red-100 text-red-700";
       }
 
       return (
@@ -146,12 +152,6 @@ const createOrderColumns = (
                 <FileSignature
                   className="size-4 cursor-pointer text-slate-500 hover:text-emerald-600 transition-colors"
                   onClick={() => handleEImzoProgress(id)}
-                />
-              </MyTooltip>
-              <MyTooltip content={t("E-IMZO bilan imzolash")}>
-                <ShieldCheckIcon
-                  className="size-4 cursor-pointer text-slate-500 hover:text-blue-600 transition-colors"
-                  onClick={() => handleEImzo(id)}
                 />
               </MyTooltip>
             </>

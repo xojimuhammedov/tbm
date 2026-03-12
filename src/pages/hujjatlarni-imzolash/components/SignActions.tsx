@@ -107,8 +107,8 @@ function CertDropdown({
       {open && keys.length > 0 && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute z-50 mt-2 w-full bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
-            <div className="max-h-96 overflow-y-auto divide-y divide-slate-100">
+          <div className="absolute z-50 mt-2 w-full bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden">
+            <div className="max-h-60 overflow-y-auto divide-y divide-slate-100">
               {keys.map((cert) => {
                 const expired = isExpired(cert.validTo);
                 const isSelected = selected?.serialNumber === cert.serialNumber;
@@ -144,7 +144,13 @@ function CertDropdown({
 }
 
 // SignActions komponenti
-const SignActions = ({ documentId }: { documentId: string }) => {
+const SignActions = ({
+  documentId,
+  onReject,
+}: {
+  documentId: string;
+  onReject?: () => void;
+}) => {
   const navigate = useNavigate();
 
   const {
@@ -180,8 +186,8 @@ const SignActions = ({ documentId }: { documentId: string }) => {
   const isError = step === "error";
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden h-fit">
-      <div className="p-5 border-b border-slate-100 flex items-center gap-2">
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm h-fit">
+      <div className="p-5 border-b border-slate-100 flex items-center gap-2 rounded-t-2xl">
         <KeyRoundIcon className="size-4 text-slate-500" />
         <span className="font-semibold text-slate-700 text-sm">
           Elektron kalitni tanlang
@@ -234,23 +240,34 @@ const SignActions = ({ documentId }: { documentId: string }) => {
           )}
 
           {!isDone && (
-            <button
-              onClick={handleSign}
-              disabled={isLoading || !selectedCert || !!initError}
-              className="flex-1 flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-200/60 text-sm"
-            >
-              {isLoading ? (
-                <>
-                  <LoaderCircleIcon className="size-4 animate-spin" />
-                  Jarayonda...
-                </>
-              ) : (
-                <>
-                  <ShieldCheckIcon className="size-4" />
-                  Hujjatni imzolash
-                </>
+            <>
+              {onReject && (
+                <button
+                  onClick={onReject}
+                  disabled={isLoading || !!initError}
+                  className="flex-1 max-w-[140px] flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 disabled:bg-red-50 text-red-600 font-semibold py-3.5 rounded-xl border border-red-200 transition-all shadow-sm text-sm"
+                >
+                  Rad etish
+                </button>
               )}
-            </button>
+              <button
+                onClick={handleSign}
+                disabled={isLoading || !selectedCert || !!initError}
+                className="flex-1 flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-200/60 text-sm"
+              >
+                {isLoading ? (
+                  <>
+                    <LoaderCircleIcon className="size-4 animate-spin" />
+                    Jarayonda...
+                  </>
+                ) : (
+                  <>
+                    <ShieldCheckIcon className="size-4" />
+                    Hujjatni imzolash
+                  </>
+                )}
+              </button>
+            </>
           )}
         </div>
       </div>

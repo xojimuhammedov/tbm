@@ -1,18 +1,22 @@
 import { PageWrapper } from "@/shared/components/containers/page";
+import { DateRangeFilter } from "@/shared/components/templates/filters";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { BreadcrumbInterface } from "dgz-ui";
 import { DataTable } from "dgz-ui-shared/components/datatable";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { SignReviewModal } from "./components/SignReviewModal";
 import useListSocket from "./hooks/useListSocket";
 import { SharedItemInterface } from "./interfaces/shared.interface";
 const HUJJATLARN_IMZOLASH_KEY = "hujjatlarni-imzolash-list";
 
 const Page = () => {
   const { t } = useTranslation();
-  const { dataSource, loading, params, handleFilter, columns } =
-    useListSocket();
+  const [selectedRecord, setSelectedRecord] = useState<any>(null);
+
+  const { dataSource, loading, params, handleFilter, columns, filters } =
+    useListSocket((record) => setSelectedRecord(record));
 
   console.log(dataSource);
 
@@ -31,7 +35,10 @@ const Page = () => {
 
   return (
     <>
-      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs} />
+      <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
+        <DateRangeFilter dateKey={HUJJATLARN_IMZOLASH_KEY} />
+      </PageHeader>
+
       <PageWrapper>
         <DataTable<
           SharedItemInterface,
@@ -49,8 +56,27 @@ const Page = () => {
           dataSource={dataSource}
           dataKey={"docs"}
           columns={columns}
+          filters={filters}
         />
       </PageWrapper>
+
+      <SignReviewModal
+        open={!!selectedRecord}
+        onClose={() => setSelectedRecord(null)}
+        currentItem={selectedRecord}
+        sharedId={
+          selectedRecord?.shared_id ||
+          selectedRecord?._id ||
+          [
+            ...(selectedRecord?.users || []),
+            ...(selectedRecord?.signers || []),
+          ].find((u: any) => u.is_current || u.status === "PENDING")?.shared_id
+        }
+        onSuccess={() => {
+          setSelectedRecord(null);
+          handleFilter({}); // Reload or trigger refetch by changing params technically
+        }}
+      />
     </>
   );
 };

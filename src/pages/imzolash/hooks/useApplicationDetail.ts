@@ -49,6 +49,7 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
 
   const documentStatus: DocumentStatus = socketData?.document_status ?? "DRAFT";
   const isDraft = documentStatus === "DRAFT";
+  const canShare = documentStatus === "DRAFT" || documentStatus === "REJECTED";
   const handleOpenPdf = useCallback(async () => {
     if (!document?._id) return;
     setPdfOpen(true);
@@ -154,6 +155,7 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
     socketData,
     documentStatus,
     isDraft,
+    canShare,
     pdfOpen,
     pdfUrl,
     showShareForm,

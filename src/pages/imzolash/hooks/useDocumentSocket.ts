@@ -28,15 +28,18 @@ export interface SocketRecipient {
   is_parallel: boolean;
   order: number;
   shared_id?: string;
+  comment?: string;
 }
 
 export interface DocumentSocketPayload {
   document_id: string;
   document_code: string;
   document_status: DocumentStatus;
+  document_stage?: "APPROVAL" | "SIGNING" | "DONE" | "DRAFT";
   document_type: string;
-  users: SocketRecipient[];
-  signer: SocketRecipient;
+  users?: SocketRecipient[];
+  signers?: SocketRecipient[];
+  signer?: SocketRecipient;
 }
 
 interface Props {
@@ -91,11 +94,13 @@ const useDocumentSocket = ({ documentId, onUpdate }: Props) => {
     };
 
     sock.on("shared:created", handler);
+    sock.on("shared:list", handler);
 
     return () => {
       sock.emit("leave-shared", { document_id: documentId });
       sock.off("connect", handleJoin);
       sock.off("shared:created", handler);
+      sock.off("shared:list", handler);
     };
   }, [documentId]);
 };

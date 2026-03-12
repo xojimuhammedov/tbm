@@ -1,30 +1,30 @@
-export interface DocumentId {
-  code: string;
-  document_type: string;
-  status: string;
-  _id: string;
-}
-
-export interface FromId {
+export interface SharedUser {
+  shared_id: string;
   first_name: string;
-  middle_name?: string;
   second_name: string;
-  _id: string;
+  middle_name?: string;
+  type: string;
+  isEditor: boolean;
+  status: string;
+  stages: string;
+  order: number;
+  is_parallel: boolean;
+  is_current: boolean;
+  comment?: string | null;
 }
 
-export type SharedType = "SIGNING" | "APPROVAL";
-export type SharedStatus = "REJECTED" | "PENDING" | "ACCEPTED" | "CANCEL";
-export type SharedStage = "DRAFT" | "SIGNING" | "APPROVAL" | "DONE";
+export type DocumentStage = "APPROVAL" | "SIGNING" | "DONE" | "DRAFT";
 
 export interface SharedItemInterface {
   _id?: string;
-  created_at: string;
-  document_id: DocumentId;
-  from_id: FromId;
-  isEditor: boolean;
-  shared_id: string;
-  stages: SharedStage;
-  status: SharedStatus;
-  to_id: string;
-  type: SharedType;
+  document_id?: any;
+  document_status?: string;
+  document_code?: string;
+  document_type?: string;
+  document_stage?: DocumentStage;
+  signers?: SharedUser[];
+  users?: SharedUser[];
+  status?: string;
+  stages?: DocumentStage | string;
+  shared_id?: string;
 }

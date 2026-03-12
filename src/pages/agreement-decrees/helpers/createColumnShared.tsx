@@ -1,41 +1,55 @@
 import MyTooltip from "@/shared/components/atoms/tooltip/MyTooltip.tsx";
-import { Badge } from "dgz-ui";
+import { dayjs } from "@/shared/utils/day.ts";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { EyeIcon } from "lucide-react";
 import {
   SharedItemInterface,
-  SharedStage,
   SharedStatus,
-  SharedType,
 } from "../interfaces/shared.interface.ts";
 
 const renderHeader = (label: string) => (
   <span style={{ whiteSpace: "nowrap" }}>{label}</span>
 );
 
-const stageColors: Record<
-  string,
-  "gray" | "blue" | "indigo" | "green" | "default"
-> = {
-  DRAFT: "gray",
-  SIGNING: "blue",
-  APPROVAL: "indigo",
-  DONE: "green",
-};
+const renderStatus = (status: string | undefined) => {
+  let label = status || "---";
+  let colorClass = "bg-slate-100 text-slate-700";
 
-const typeColors: Record<string, "blue" | "indigo" | "default"> = {
-  SIGNING: "blue",
-  APPROVAL: "indigo",
-};
+  if (
+    status === "ACCEPTED" ||
+    status === "DONE" ||
+    status === "EXECUTED" ||
+    status === "SIGNED"
+  ) {
+    label = status === "ACCEPTED" ? "Qabul qilingan" : "Imzolangan";
+    colorClass = "bg-emerald-100 text-emerald-700";
+  } else if (status === "WAITING") {
+    label = "Jarayonda";
+    colorClass = "bg-blue-100 text-blue-700";
+  } else if (status === "PENDING" || status === "IN_REVIEW") {
+    label = status === "PENDING" ? "Kutilmoqda" : "Tekshirilmoqda";
+    colorClass = "bg-amber-100 text-amber-700";
+  } else if (status === "REJECTED") {
+    label = "Rad etilgan";
+    colorClass = "bg-red-100 text-red-700";
+  } else if (status === "BLOCK") {
+    label = "Bloklangan";
+    colorClass = "bg-stone-100 text-stone-700";
+  } else if (status === "DRAFT") {
+    label = "Yangi";
+    colorClass = "bg-purple-100 text-purple-700";
+  } else if (status === "CANCEL") {
+    label = "Bekor qilingan";
+    colorClass = "bg-gray-100 text-gray-700";
+  }
 
-const statusColors: Record<
-  string,
-  "red" | "orange" | "green" | "gray" | "default"
-> = {
-  REJECTED: "red",
-  PENDING: "orange",
-  ACCEPTED: "green",
-  CANCEL: "gray",
+  return (
+    <span
+      className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}
+    >
+      {label}
+    </span>
+  );
 };
 
 const createSharedColumns = (
@@ -51,7 +65,7 @@ const createSharedColumns = (
   {
     key: "from_id",
     dataIndex: "from_id",
-    name: t("Kimdan", { defaultValue: "Kimdan" }),
+    name: t("Jo'natgan odam", { defaultValue: "Jo'natgan odam" }),
     render: (_, record) => {
       const from = record.from_id;
       if (!from) return "-";
@@ -59,28 +73,18 @@ const createSharedColumns = (
     },
   },
   {
-    key: "stages",
-    dataIndex: "stages",
-    name: t("Bosqich", { defaultValue: "Bosqich" }),
-    render: (value: SharedStage) => (
-      <Badge variant={stageColors[value] || "default"}>{value || "-"}</Badge>
-    ),
-  },
-  {
-    key: "type",
-    dataIndex: "type",
-    name: t("Turi", { defaultValue: "Turi" }),
-    render: (value: SharedType) => (
-      <Badge variant={typeColors[value] || "default"}>{value || "-"}</Badge>
-    ),
+    key: "created_at",
+    dataIndex: "created_at",
+    name: t("Jo'natilgan vaqt", { defaultValue: "Jo'natilgan vaqt" }),
+    render: (value: string) => {
+      return value ? dayjs(value).format("DD.MM.YYYY HH:mm") : "-";
+    },
   },
   {
     key: "status",
     dataIndex: "status",
     name: t("Holat", { defaultValue: "Holat" }),
-    render: (value: SharedStatus) => (
-      <Badge variant={statusColors[value] || "default"}>{value || "-"}</Badge>
-    ),
+    render: (value: SharedStatus | string | undefined) => renderStatus(value),
   },
   {
     key: "document_id",

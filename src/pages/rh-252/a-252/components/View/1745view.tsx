@@ -1,31 +1,27 @@
 import { JSX, useRef } from "react";
 import { MyModal } from "@/shared/components/moleculas/modal";
-import { FileTextIcon, DownloadIcon } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { dateFormatter } from "@/shared/utils/utils";
-import { useReactToPrint } from "react-to-print";
-import { Button } from "dgz-ui/button";
 import { OrderApplication } from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
 import DocumentHeader from "@/pages/rh-252/a-252/components/View/DocumentHeader.tsx";
 
 interface Props {
+  asComponent?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   document?: OrderApplication | null;
 }
 
-const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
-  const { t } = useTranslation();
+const OrderApplicationView1745 = ({
+  open,
+  onOpenChange,
+  document,
+  asComponent,
+}: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const handlePrint = useReactToPrint({
-    contentRef: contentRef,
-    documentTitle: `Farmoyish_${document?.code || ""}`,
-  });
 
   const payload = (document as any)?.payload;
   const basic = payload?.basic;
 
-  // basic.actions arrayidagi tartibga qarab ishlash
   const actions: string[] = basic?.actions || [];
 
   const hasCreate =
@@ -40,7 +36,6 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
       payload?.delete?.channel_ids?.length > 0 ||
       payload?.delete?.flow_ids?.length > 0);
 
-  // Sarlavhani actions tartibiga qarab yasash
   const getDynamicTitle = () => {
     const signal = basic?.signal_level || "2 Mbit/s";
     const actionLabels: string[] = [];
@@ -62,13 +57,11 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
     return `${signal} oqimni ${actionText} to'g'risida`;
   };
 
-  // Render sections in actions order
   const renderSections = () => {
     let step = 0;
     const sections: JSX.Element[] = [];
 
     for (const action of actions) {
-      // CREATE
       if (action === "create" && hasCreate) {
         step++;
         sections.push(
@@ -91,9 +84,7 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
         );
       }
 
-      // UPDATE - channels
       if (action === "update" && hasUpdate) {
-        // channels
         for (const item of payload?.update?.channels || []) {
           step++;
           sections.push(
@@ -118,7 +109,6 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
           );
         }
 
-        // flows
         for (const item of payload?.update?.flows || []) {
           step++;
           const old = item.old;
@@ -160,11 +150,8 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
         }
       }
 
-      // DELETE
       if (action === "delete" && hasDelete) {
         step++;
-
-        // Barcha o'chiriladigan kodlarni to'plash
         const deleteCodes: string[] = [
           ...(payload?.delete?.channels || []),
           ...(payload?.delete?.channel_ids || []),
@@ -188,140 +175,135 @@ const OrderApplicationView1745 = ({ open, onOpenChange, document }: Props) => {
     return sections;
   };
 
+  const DocumentContent = (
+    <div
+      ref={contentRef}
+      style={{
+        fontFamily: '"Times New Roman", Times, serif',
+        paddingLeft: "3cm",
+        paddingRight: "3cm",
+        paddingTop: "1.5cm",
+        paddingBottom: "1.5cm",
+      }}
+      className="bg-white w-full max-w-[950px] min-h-[1100px] flex flex-col relative text-black leading-tight h-fit mx-auto"
+    >
+      <DocumentHeader />
+
+      <div className="text-center font-bold text-[14px] uppercase">
+        O'ZBEKISTON RESPUBLIKASI RAQAMLI TEXNOLOGIYALAR VAZIRLIGI
+      </div>
+      <div className="text-center font-bold text-[15px] uppercase">
+        "O'ZBEKISTON TELEKOMMUNIKATSIYA TARMOQLARINI
+      </div>
+      <div className="text-center font-bold text-[15px] uppercase">
+        BOSHQARISH RESPUBLIKA MARKAZI"
+      </div>
+      <div className="text-center font-bold text-[14px] uppercase mb-4">
+        DAVLAT UNITAR KORXONASI
+      </div>
+
+      <div className="border-t-2 border-black mb-2"></div>
+      <div className="text-center text-[10px] leading-tight mb-1 italic">
+        O'zbekiston Respublikasi, Toshkent shahri, Mirzo Ulug'bek tumani,
+        Navnihol MFY, Tepamasjid ko'chasi, 4-uy
+        <br />
+        ☎: +998 71 240 27 72 📠: +998 71 240 54 19
+        <br />
+        E-mail: tmc@rtmc.uz
+      </div>
+      <div className="border-t-2 border-black mb-5"></div>
+
+      <div className="text-center font-bold text-[22px] tracking-[0.3em] mb-4">
+        FARMOYISHI
+      </div>
+
+      <div className="flex justify-between font-bold py-1 mb-5 text-[14px]">
+        <div>
+          SANA:{" "}
+          {document?.order_date
+            ? dateFormatter(document.order_date, "DD.MM.YYYY", "uz")
+            : "____.____._______"}
+          -yil
+        </div>
+        <div>№ {document?.code || "17-45"}</div>
+        <div>SONI: 1</div>
+      </div>
+
+      <div className="grid grid-cols-[100px_1fr] gap-y-1 mb-8 text-[15px]">
+        <span className="font-bold italic">Kimga:</span>
+        <div className="font-bold uppercase">
+          {document?.to?.map((item: string, i: number) => (
+            <p key={i}>{item}</p>
+          ))}
+        </div>
+        <span className="font-bold italic">Nusxasi:</span>
+        <div>
+          {document?.copy?.map((item: string, i: number) => (
+            <p key={i}>{item}</p>
+          ))}
+        </div>
+        <span className="font-bold italic">Kimdan:</span>
+        <div className="font-bold uppercase">"O'zTTBRM" DUK</div>
+      </div>
+
+      <div className="text-center font-bold text-[16px] mb-2">
+        {getDynamicTitle()}
+      </div>
+
+      <div className="text-[15px] text-justify space-y-3 mb-10">
+        <p className="indent-12 leading-relaxed">
+          {basic?.organization_name}ning{" "}
+          {basic?.request_date
+            ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM", "uz")
+            : "____-yil __-________"}
+          dagi {basic?.request_number}-son murojaatiga binoan,{" "}
+          {basic?.justification}{" "}
+          {document?.order_date
+            ? dateFormatter(document.order_date, "YYYY-yil D-MMMM", "uz")
+            : "____-yil __-________"}
+          dan quyidagi ishlar amalga oshirilsin:
+        </p>
+
+        {renderSections()}
+
+        <div className="mt-5 space-y-1 text-[14px]">
+          <p>
+            Mas'ul xodim:{" "}
+            <span className="font-bold">
+              {document?.responsible?.first_name}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-auto text-sm text-[#5a76a8]">
+        <p>
+          {(document as any)?.created_by?.first_name?.[0]}.{" "}
+          {(document as any)?.created_by?.second_name}
+        </p>
+        <p>{(document as any)?.created_by?.short_phone}</p>
+      </div>
+    </div>
+  );
+
+  if (asComponent) {
+    return (
+      <div className="w-full bg-gray-100 p-0 overflow-auto">
+        {DocumentContent}
+      </div>
+    );
+  }
+
   return (
     <MyModal
       open={open}
       onOpenChange={onOpenChange}
-      size="8xl"
-      className="overflow-auto"
-      header={
-        <div className="flex items-center justify-between w-full pr-12 font-sans">
-          <div className="flex items-center gap-2">
-            <FileTextIcon className="size-5 text-blue-600" />
-            <span className="font-semibold text-gray-800">
-              {t("Farmoyishni ko'rish")} ({document?.code})
-            </span>
-          </div>
-          <Button
-            onClick={() => handlePrint()}
-            variant="default"
-            size="sm"
-            className="flex items-center gap-2 h-9 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors shadow-sm"
-          >
-            <DownloadIcon className="size-4" />
-            <span className="text-xs font-bold uppercase">PDF YUKLASH</span>
-          </Button>
-        </div>
-      }
+      size="4xl"
+      className="overflow-auto p-0"
+      header={null}
     >
-      <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
-        <div
-          ref={contentRef}
-          style={{
-            fontFamily: '"Times New Roman", Times, serif',
-            paddingLeft: "3cm",
-            paddingRight: "3cm",
-            paddingTop: "1.5cm",
-            paddingBottom: "1.5cm",
-          }}
-          className="bg-white w-full max-w-[950px] min-h-[1100px] flex flex-col shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-10 leading-tight"
-        >
-          <DocumentHeader />
-          <div className="text-center font-bold text-[14px] uppercase">
-            O'ZBEKISTON RESPUBLIKASI RAQAMLI TEXNOLOGIYALAR VAZIRLIGI
-          </div>
-          <div className="text-center font-bold text-[15px] uppercase">
-            "O'ZBEKISTON TELEKOMMUNIKATSIYA TARMOQLARINI
-          </div>
-          <div className="text-center font-bold text-[15px] uppercase">
-            BOSHQARISH RESPUBLIKA MARKAZI"
-          </div>
-          <div className="text-center font-bold text-[14px] uppercase mb-4">
-            DAVLAT UNITAR KORXONASI
-          </div>
-
-          <div className="border-t-2 border-black mb-2"></div>
-          <div className="text-center text-[10px] leading-tight mb-1 italic">
-            O'zbekiston Respublikasi, Toshkent shahri, Mirzo Ulug'bek tumani,
-            Navnihol MFY, Tepamasjid ko'chasi, 4-uy
-            <br />
-            ☎: +998 71 240 27 72 📠: +998 71 240 54 19
-            <br />
-            E-mail: tmc@rtmc.uz
-          </div>
-          <div className="border-t-2 border-black mb-5"></div>
-
-          <div className="text-center font-bold text-[22px] tracking-[0.3em] mb-4">
-            FARMOYISHI
-          </div>
-
-          <div className="flex justify-between font-bold py-1 mb-5 text-[14px]">
-            <div>
-              SANA:{" "}
-              {document?.order_date
-                ? dateFormatter(document.order_date, "DD.MM.YYYY", "uz")
-                : "____.____._______"}
-              -yil
-            </div>
-            <div>№ {document?.code || "17-45"}</div>
-            <div>SONI: 1</div>
-          </div>
-
-          <div className="grid grid-cols-[100px_1fr] gap-y-1 mb-8 text-[15px]">
-            <span className="font-bold italic">Kimga:</span>
-            <div className="font-bold uppercase">
-              {document?.to?.map((item, i) => (
-                <p key={i}>{item}</p>
-              ))}
-            </div>
-            <span className="font-bold italic">Nusxasi:</span>
-            <div>
-              {document?.copy?.map((item, i) => (
-                <p key={i}>{item}</p>
-              ))}
-            </div>
-            <span className="font-bold italic">Kimdan:</span>
-            <div className="font-bold uppercase">"O'zTTBRM" DUK</div>
-          </div>
-
-          <div className="text-center font-bold text-[16px] mb-2">
-            {getDynamicTitle()}
-          </div>
-
-          <div className="text-[15px] text-justify space-y-3 mb-10">
-            <p className="indent-12 leading-relaxed">
-              {basic?.organization_name}ning{" "}
-              {basic?.request_date
-                ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM", "uz")
-                : "____-yil __-________"}
-              dagi {basic?.request_number}-son murojaatiga binoan,{" "}
-              {basic?.justification}{" "}
-              {document?.order_date
-                ? dateFormatter(document.order_date, "YYYY-yil D-MMMM", "uz")
-                : "____-yil __-________"}
-              dan quyidagi ishlar amalga oshirilsin:
-            </p>
-
-            {renderSections()}
-
-            <div className="mt-5 space-y-1 text-[14px]">
-              <p>
-                Mas'ul xodim:{" "}
-                <span className="font-bold">
-                  {document?.responsible?.first_name}
-                </span>
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-auto text-sm text-[#5a76a8] ">
-            <p>
-              {(document as any)?.created_by?.first_name?.[0]}.{" "}
-              {(document as any)?.created_by?.second_name}
-            </p>
-            <p>{(document as any)?.created_by?.short_phone}</p>
-          </div>
-        </div>
+      <div className="bg-gray-100 min-h-full w-full py-5">
+        {DocumentContent}
       </div>
     </MyModal>
   );
