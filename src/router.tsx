@@ -166,6 +166,7 @@ const StaffPage = lazy(() => import("@/pages/staff/Page"));
 const GroupPage = lazy(() => import("@/pages/groups/Page"));
 const SettingsPage = lazy(() => import("@/pages/staff/Page"));
 const RolesPage = lazy(() => import("@/pages/role/Page"));
+const PositionsPage = lazy(() => import("@/pages/position/Page"));
 
 // E-imzo
 const EImzoSignPage = lazy(
@@ -562,6 +563,11 @@ function Router() {
         {
           path: "settings/roles",
           element: <RolesPage />,
+        },
+        // Settings -> Positions route
+        {
+          path: "settings/positions",
+          element: <PositionsPage />,
         },
         // {
         //   path: "gras",

@@ -5,6 +5,4 @@ export const buildBasePayload = (data: any, fullCode: string) => ({
   order_date: data.order_date,
   to: textToList(data.to),
   copy: textToList(data.copy),
-  responsible: data.responsible,
-  director: data.director,
 });

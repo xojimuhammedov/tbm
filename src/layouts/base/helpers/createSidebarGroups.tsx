@@ -376,6 +376,11 @@ const createSidebarGroups = (
             url: "roles",
             icon: ShieldUser,
           },
+          {
+            title: t("Positions"),
+            url: "positions",
+            icon: ShieldUser,
+          },
         ],
       },
     ],
