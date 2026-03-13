@@ -31,17 +31,22 @@ const useListSocket = (): UseListSocketReturn => {
   const [currentItem, setCurrentItem] = useState<any>(null);
 
   // URL dan sanalarni olamiz
-  const { params: queryParams } = useQueryParams({ dateRangeKey: "agreement-decrees-list" });
+  const { params: queryParams } = useQueryParams({
+    dateRangeKey: "agreement-decrees-list",
+  });
 
   const handleView = useCallback((record: any) => {
     setCurrentItem({
       ...record?.document_id,
-      sharedId: record?.shared_id || record?._id
+      sharedId: record?.shared_id || record?._id,
     });
     setOpenView(true);
   }, []);
 
-  const columns = useMemo(() => createSharedColumns(t, handleView), [t, handleView]);
+  const columns = useMemo(
+    () => createSharedColumns(t, handleView),
+    [t, handleView],
+  );
 
   const handleFilter = (newParams: any) => {
     setParams((prev: any) => {
@@ -58,7 +63,7 @@ const useListSocket = (): UseListSocketReturn => {
       ...params,
       type: "APPROVAL",
       from: queryParams?.from,
-      to: queryParams?.to
+      to: queryParams?.to,
     },
   });
 
@@ -66,7 +71,11 @@ const useListSocket = (): UseListSocketReturn => {
     const socket = connectEventsSocket();
 
     // Dastlab join-shared emmit qilinadi. E'tibor bering, params qabul qilishi mumkin bo'lsa uni yuboramiz.
-    socket.emit("join-shared", { ...params, from: queryParams?.from, to: queryParams?.to });
+    socket.emit("join-shared", {
+      ...params,
+      from: queryParams?.from,
+      to: queryParams?.to,
+    });
 
     const handleSharedList = () => {
       // Ma'lumot yangilanganini bilsak rest orqali qayta fetch qilamiz
@@ -78,7 +87,11 @@ const useListSocket = (): UseListSocketReturn => {
     // Component unmount bo'lganda yoki params o'zgarganda tozalaymiz
     return () => {
       socket.off("shared:list", handleSharedList);
-      socket.emit("leave-shared", { ...params, from: queryParams?.from, to: queryParams?.to });
+      socket.emit("leave-shared", {
+        ...params,
+        from: queryParams?.from,
+        to: queryParams?.to,
+      });
     };
   }, [params, refetch, queryParams]);
 

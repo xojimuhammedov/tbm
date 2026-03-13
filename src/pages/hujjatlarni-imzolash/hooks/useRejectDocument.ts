@@ -20,7 +20,9 @@ export const useRejectDocument = (id: string, onSuccess?: () => void) => {
         toast({
           variant: "success",
           title: t("Success", { defaultValue: "Success" }),
-          description: t("Muvaffaqiyatli saqlandi", { defaultValue: "Muvaffaqiyatli saqlandi" }),
+          description: t("Muvaffaqiyatli saqlandi", {
+            defaultValue: "Muvaffaqiyatli saqlandi",
+          }),
         });
         if (onSuccess) {
           onSuccess();
@@ -30,7 +32,9 @@ export const useRejectDocument = (id: string, onSuccess?: () => void) => {
         toast({
           variant: "destructive",
           title: t("Error", { defaultValue: "Xatolik" }),
-          description: error?.response?.data?.message || t("Xatolik yuz berdi", { defaultValue: "Xatolik yuz berdi" }),
+          description:
+            error?.response?.data?.message ||
+            t("Xatolik yuz berdi", { defaultValue: "Xatolik yuz berdi" }),
         });
       },
     },

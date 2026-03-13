@@ -13,8 +13,18 @@ const AGREEMENT_DECREES_KEY = "agreement-decrees-list";
 
 const Page = () => {
   const { t } = useTranslation();
-  const { dataSource, loading, params, handleFilter, columns, filters, openView, setOpenView, currentItem, setCurrentItem } =
-    useListSocket();
+  const {
+    dataSource,
+    loading,
+    params,
+    handleFilter,
+    columns,
+    filters,
+    openView,
+    setOpenView,
+    currentItem,
+    setCurrentItem,
+  } = useListSocket();
 
   console.log(dataSource);
 
@@ -35,13 +45,16 @@ const Page = () => {
     <>
       <AgreementReviewModal
         open={openView}
-        onClose={() => { setOpenView(false); setCurrentItem(null); }}
+        onClose={() => {
+          setOpenView(false);
+          setCurrentItem(null);
+        }}
         currentItem={currentItem}
         sharedId={currentItem?.sharedId}
       />
 
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-         <DateRangeFilter dateKey={AGREEMENT_DECREES_KEY} />
+        <DateRangeFilter dateKey={AGREEMENT_DECREES_KEY} />
       </PageHeader>
 
       <PageWrapper>

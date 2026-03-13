@@ -36,7 +36,7 @@ const Page = () => {
   return (
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-         <DateRangeFilter dateKey={HUJJATLARN_IMZOLASH_KEY} />
+        <DateRangeFilter dateKey={HUJJATLARN_IMZOLASH_KEY} />
       </PageHeader>
 
       <PageWrapper>
@@ -67,8 +67,10 @@ const Page = () => {
         sharedId={
           selectedRecord?.shared_id ||
           selectedRecord?._id ||
-          [...(selectedRecord?.users || []), ...(selectedRecord?.signers || [])]
-            .find((u: any) => u.is_current || u.status === 'PENDING')?.shared_id
+          [
+            ...(selectedRecord?.users || []),
+            ...(selectedRecord?.signers || []),
+          ].find((u: any) => u.is_current || u.status === "PENDING")?.shared_id
         }
         onSuccess={() => {
           setSelectedRecord(null);

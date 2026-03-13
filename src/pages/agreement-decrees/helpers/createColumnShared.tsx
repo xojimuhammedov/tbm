@@ -11,12 +11,16 @@ const renderHeader = (label: string) => (
   <span style={{ whiteSpace: "nowrap" }}>{label}</span>
 );
 
-
 const renderStatus = (status: string | undefined) => {
   let label = status || "---";
   let colorClass = "bg-slate-100 text-slate-700";
 
-  if (status === "ACCEPTED" || status === "DONE" || status === "EXECUTED" || status === "SIGNED") {
+  if (
+    status === "ACCEPTED" ||
+    status === "DONE" ||
+    status === "EXECUTED" ||
+    status === "SIGNED"
+  ) {
     label = status === "ACCEPTED" ? "Qabul qilingan" : "Imzolangan";
     colorClass = "bg-emerald-100 text-emerald-700";
   } else if (status === "WAITING") {
@@ -40,7 +44,9 @@ const renderStatus = (status: string | undefined) => {
   }
 
   return (
-    <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}>
+    <span
+      className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}
+    >
       {label}
     </span>
   );
@@ -50,51 +56,51 @@ const createSharedColumns = (
   t: (...args: TranslationArgsType) => string,
   handleView: (record: SharedItemInterface) => void,
 ): ColumnType<SharedItemInterface>[] => [
-    {
-      key: "document_id",
-      dataIndex: "document_id",
-      name: t("Hujjat", { defaultValue: "Hujjat" }),
-      render: (_, record) => record.document_id?.code || "-",
+  {
+    key: "document_id",
+    dataIndex: "document_id",
+    name: t("Hujjat", { defaultValue: "Hujjat" }),
+    render: (_, record) => record.document_id?.code || "-",
+  },
+  {
+    key: "from_id",
+    dataIndex: "from_id",
+    name: t("Jo'natgan odam", { defaultValue: "Jo'natgan odam" }),
+    render: (_, record) => {
+      const from = record.from_id;
+      if (!from) return "-";
+      return `${from.second_name || ""} ${from.first_name || ""} ${from.middle_name || ""}`.trim();
     },
-    {
-      key: "from_id",
-      dataIndex: "from_id",
-      name: t("Jo'natgan odam", { defaultValue: "Jo'natgan odam" }),
-      render: (_, record) => {
-        const from = record.from_id;
-        if (!from) return "-";
-        return `${from.second_name || ""} ${from.first_name || ""} ${from.middle_name || ""}`.trim();
-      },
+  },
+  {
+    key: "created_at",
+    dataIndex: "created_at",
+    name: t("Jo'natilgan vaqt", { defaultValue: "Jo'natilgan vaqt" }),
+    render: (value: string) => {
+      return value ? dayjs(value).format("DD.MM.YYYY HH:mm") : "-";
     },
-    {
-      key: "created_at",
-      dataIndex: "created_at",
-      name: t("Jo'natilgan vaqt", { defaultValue: "Jo'natilgan vaqt" }),
-      render: (value: string) => {
-        return value ? dayjs(value).format("DD.MM.YYYY HH:mm") : "-";
-      },
-    },
-    {
-      key: "status",
-      dataIndex: "status",
-      name: t("Holat", { defaultValue: "Holat" }),
-      render: (value: SharedStatus | string | undefined) => renderStatus(value),
-    },
-    {
-      key: "document_id",
-      dataIndex: "document_id",
-      name: renderHeader(t("Действия")),
-      render: (_, record) => (
-        <div className={"flex items-center gap-2"}>
-          <MyTooltip content={t("View")}>
-            <EyeIcon
-              className="size-4 cursor-pointer hover:text-blue-500"
-              onClick={() => record && handleView(record)}
-            />
-          </MyTooltip>
-        </div>
-      ),
-    },
-  ];
+  },
+  {
+    key: "status",
+    dataIndex: "status",
+    name: t("Holat", { defaultValue: "Holat" }),
+    render: (value: SharedStatus | string | undefined) => renderStatus(value),
+  },
+  {
+    key: "document_id",
+    dataIndex: "document_id",
+    name: renderHeader(t("Действия")),
+    render: (_, record) => (
+      <div className={"flex items-center gap-2"}>
+        <MyTooltip content={t("View")}>
+          <EyeIcon
+            className="size-4 cursor-pointer hover:text-blue-500"
+            onClick={() => record && handleView(record)}
+          />
+        </MyTooltip>
+      </div>
+    ),
+  },
+];
 
 export default createSharedColumns;

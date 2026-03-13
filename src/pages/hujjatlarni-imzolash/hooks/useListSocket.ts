@@ -26,21 +26,32 @@ const useListSocket = (onView?: (record: any) => void): UseListSocketReturn => {
   const [params, setParams] = useState<any>({ limit: 10, page: 1 });
 
   // URL dan sanalarni olamiz
-  const { params: queryParams } = useQueryParams({ dateRangeKey: "hujjatlarni-imzolash-list" });
+  const { params: queryParams } = useQueryParams({
+    dateRangeKey: "hujjatlarni-imzolash-list",
+  });
 
-  const handleView = useCallback((record: any) => {
-    if (onView) {
-      onView(record);
-    } else {
-      const docId = typeof record?.document_id === "string" ? record.document_id : record?.document_id?._id;
-      const allUsers = [...(record?.users || []), ...(record?.signers || [])];
-      const me = allUsers.find(u => u.is_current || u.status === 'PENDING');
-      const sharedId = record?.shared_id || me?.shared_id;
-      navigate(`/rh-252/hujjatlarni-imzolash/${docId}/shared/${sharedId}`);
-    }
-  }, [navigate, onView]);
+  const handleView = useCallback(
+    (record: any) => {
+      if (onView) {
+        onView(record);
+      } else {
+        const docId =
+          typeof record?.document_id === "string"
+            ? record.document_id
+            : record?.document_id?._id;
+        const allUsers = [...(record?.users || []), ...(record?.signers || [])];
+        const me = allUsers.find((u) => u.is_current || u.status === "PENDING");
+        const sharedId = record?.shared_id || me?.shared_id;
+        navigate(`/rh-252/hujjatlarni-imzolash/${docId}/shared/${sharedId}`);
+      }
+    },
+    [navigate, onView],
+  );
 
-  const columns = useMemo(() => createSharedColumns(t, handleView), [t, handleView]);
+  const columns = useMemo(
+    () => createSharedColumns(t, handleView),
+    [t, handleView],
+  );
 
   const handleFilter = (newParams: any) => {
     setParams((prev: any) => {
@@ -57,7 +68,7 @@ const useListSocket = (onView?: (record: any) => void): UseListSocketReturn => {
       ...params,
       type: "SIGNING",
       from: queryParams?.from,
-      to: queryParams?.to
+      to: queryParams?.to,
     },
   });
 
@@ -65,7 +76,11 @@ const useListSocket = (onView?: (record: any) => void): UseListSocketReturn => {
     const socket = connectEventsSocket();
 
     // Dastlab join-shared emmit qilinadi. E'tibor bering, params qabul qilishi mumkin bo'lsa uni yuboramiz.
-    socket.emit("join-shared", { ...params, from: queryParams?.from, to: queryParams?.to });
+    socket.emit("join-shared", {
+      ...params,
+      from: queryParams?.from,
+      to: queryParams?.to,
+    });
 
     const handleSharedList = () => {
       // Ma'lumot yangilanganini bilsak rest orqali qayta fetch qilamiz
@@ -77,7 +92,11 @@ const useListSocket = (onView?: (record: any) => void): UseListSocketReturn => {
     // Component unmount bo'lganda yoki params o'zgarganda tozalaymiz
     return () => {
       socket.off("shared:list", handleSharedList);
-      socket.emit("leave-shared", { ...params, from: queryParams?.from, to: queryParams?.to });
+      socket.emit("leave-shared", {
+        ...params,
+        from: queryParams?.from,
+        to: queryParams?.to,
+      });
     };
   }, [params, refetch, queryParams]);
 
