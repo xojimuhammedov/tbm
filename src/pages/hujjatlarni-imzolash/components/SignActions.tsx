@@ -1,10 +1,10 @@
 import {
-    AlertCircleIcon,
-    CheckCircle2Icon,
-    ChevronDownIcon,
-    KeyRoundIcon,
-    LoaderCircleIcon,
-    ShieldCheckIcon,
+  AlertCircleIcon,
+  CheckCircle2Icon,
+  ChevronDownIcon,
+  KeyRoundIcon,
+  LoaderCircleIcon,
+  ShieldCheckIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -144,7 +144,13 @@ function CertDropdown({
 }
 
 // SignActions komponenti
-const SignActions = ({ documentId, onReject }: { documentId: string; onReject?: () => void }) => {
+const SignActions = ({
+  documentId,
+  onReject,
+}: {
+  documentId: string;
+  onReject?: () => void;
+}) => {
   const navigate = useNavigate();
 
   const {

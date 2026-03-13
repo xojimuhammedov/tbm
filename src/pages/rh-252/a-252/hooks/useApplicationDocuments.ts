@@ -95,7 +95,6 @@ const useApplicationDocuments = () => {
     [query, removeWithConfirm, t, toast],
   );
 
-
   const handleEImzoProgress = useCallback(
     (docId: string) => {
       navigate(`/rh-252/a-252/progress/${docId}`);

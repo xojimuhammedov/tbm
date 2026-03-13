@@ -1,7 +1,7 @@
 import useDocumentSocket, {
-    DocumentSocketPayload,
-    DocumentStatus,
-    SocketRecipient,
+  DocumentSocketPayload,
+  DocumentStatus,
+  SocketRecipient,
 } from "@/pages/imzolash/hooks/useDocumentSocket";
 import { Loader2, UserPlusIcon, XIcon } from "lucide-react";
 import { useCallback, useState } from "react";
@@ -87,7 +87,13 @@ interface RecipientRowProps {
   onShowReason?: () => void;
 }
 
-function RecipientRow({ r, delay, canModify, onRemove, onShowReason }: RecipientRowProps) {
+function RecipientRow({
+  r,
+  delay,
+  canModify,
+  onRemove,
+  onShowReason,
+}: RecipientRowProps) {
   const typeMeta = TYPE_META[r.type] ?? TYPE_META.APPROVAL;
   const statusMeta = STATUS_META[r.status] ?? STATUS_META.PENDING;
   const isApproval = r.type === "APPROVAL";
@@ -183,14 +189,24 @@ function RecipientRow({ r, delay, canModify, onRemove, onShowReason }: Recipient
   );
 }
 
-function TimelineTrack({ status, stage }: { status: DocumentStatus; stage?: string }) {
+function TimelineTrack({
+  status,
+  stage,
+}: {
+  status: DocumentStatus;
+  stage?: string;
+}) {
   const resolvedStage = stage || "APPROVAL";
   const idx = TIMELINE.findIndex((s) => s.id === resolvedStage);
   const safeIdx = idx < 0 ? 0 : idx;
   const fillPct = safeIdx <= 0 ? 0 : (safeIdx / (TIMELINE.length - 1)) * 100;
   const currentStage = TIMELINE[safeIdx];
   const isTerminal = status === "CANCELLED" || status === "REJECTED";
-  const isDone = stage === "DONE" || status === "SIGNED" || status === "EXECUTED" || status === "APPROVED";
+  const isDone =
+    stage === "DONE" ||
+    status === "SIGNED" ||
+    status === "EXECUTED" ||
+    status === "APPROVED";
 
   return (
     <div className="px-4 pt-4 pb-3">
@@ -375,7 +391,8 @@ export function DocumentStatusBar({
   const status = socketData?.document_status ?? "DRAFT";
   const stage = socketData?.document_stage ?? "APPROVAL";
   const users = socketData?.users ?? [];
-  const signers = socketData?.signers ?? (socketData?.signer ? [socketData.signer] : []);
+  const signers =
+    socketData?.signers ?? (socketData?.signer ? [socketData.signer] : []);
   const allRecipients = [...users, ...signers] as SocketRecipient[];
   const hasRecipients = allRecipients.length > 0;
   const canCancel = !["DRAFT", "EXECUTED", "SIGNED", "CANCELLED"].includes(

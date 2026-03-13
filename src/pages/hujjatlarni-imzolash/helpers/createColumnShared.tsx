@@ -2,9 +2,7 @@ import MyTooltip from "@/shared/components/atoms/tooltip/MyTooltip.tsx";
 
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { EyeIcon } from "lucide-react";
-import {
-    SharedItemInterface,
-} from "../interfaces/shared.interface.ts";
+import { SharedItemInterface } from "../interfaces/shared.interface.ts";
 
 const renderHeader = (label: string) => (
   <span style={{ whiteSpace: "nowrap" }}>{label}</span>
@@ -29,7 +27,9 @@ const renderStage = (status: string | undefined) => {
   }
 
   return (
-    <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}>
+    <span
+      className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}
+    >
       {label}
     </span>
   );
@@ -39,7 +39,12 @@ const renderStatus = (status: string | undefined) => {
   let label = status || "---";
   let colorClass = "bg-slate-100 text-slate-700";
 
-  if (status === "ACCEPTED" || status === "DONE" || status === "EXECUTED" || status === "SIGNED") {
+  if (
+    status === "ACCEPTED" ||
+    status === "DONE" ||
+    status === "EXECUTED" ||
+    status === "SIGNED"
+  ) {
     label = status === "ACCEPTED" ? "Qabul qilingan" : "Imzolangan";
     colorClass = "bg-emerald-100 text-emerald-700";
   } else if (status === "WAITING") {
@@ -63,7 +68,9 @@ const renderStatus = (status: string | undefined) => {
   }
 
   return (
-    <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}>
+    <span
+      className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}
+    >
       {label}
     </span>
   );
@@ -84,7 +91,9 @@ const createSharedColumns = (
     dataIndex: "document_id",
     name: t("Turi", { defaultValue: "Turi" }),
     render: (_, record: any) => (
-      <span className="text-gray-600">{record?.document_id?.document_type || "-"}</span>
+      <span className="text-gray-600">
+        {record?.document_id?.document_type || "-"}
+      </span>
     ),
   },
   {

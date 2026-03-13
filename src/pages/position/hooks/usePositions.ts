@@ -71,7 +71,9 @@ const usePositions = () => {
   );
 
   const handleDeleteMany = useCallback(() => {
-    handleDeleteManyAction(selectedRowKeys, (_endpoint: string, data: any) => remove("hard", data));
+    handleDeleteManyAction(selectedRowKeys, (_endpoint: string, data: any) =>
+      remove("hard", data),
+    );
   }, [selectedRowKeys, handleDeleteManyAction, remove]);
 
   const handleDeleteAll = useCallback(() => {

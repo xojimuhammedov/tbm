@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require("fs");
 
 // Create the summarized card component
 const content = `import { Card } from "dgz-ui";
@@ -75,4 +75,8 @@ export const StatusCards = ({ data }: StatusCardsProps) => {
 };
 `;
 
-fs.writeFileSync('c:/Users/zuxrd/OneDrive/Рабочий стол/tbm/src/pages/agreement-decrees/components/StatusCards.tsx', content, 'utf8');
+fs.writeFileSync(
+  "c:/Users/zuxrd/OneDrive/Рабочий стол/tbm/src/pages/agreement-decrees/components/StatusCards.tsx",
+  content,
+  "utf8",
+);

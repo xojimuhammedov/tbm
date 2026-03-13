@@ -58,16 +58,16 @@ const Page = () => {
       </MyModal>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
-            <Button
-              size={"sm"}
-              variant="destructive"
-              onClick={handleDeleteMany}
-              className="btn-delete"
-              disabled={selectedRowKeys.length === 0}
-            >
-              <Trash2Icon className="size-4" />
-              {t("Delete")} ({selectedRowKeys.length})
-            </Button>
+          <Button
+            size={"sm"}
+            variant="destructive"
+            onClick={handleDeleteMany}
+            className="btn-delete"
+            disabled={selectedRowKeys.length === 0}
+          >
+            <Trash2Icon className="size-4" />
+            {t("Delete")} ({selectedRowKeys.length})
+          </Button>
           <Button size={"sm"} onClick={handleAdd}>
             <CirclePlusIcon className="size-4" />
             {t("Add new")}

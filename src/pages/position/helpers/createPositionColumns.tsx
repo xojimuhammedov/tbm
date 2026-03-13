@@ -57,10 +57,16 @@ const createPositionColumns = (
     render: (id) => (
       <div className={"flex items-center gap-2"}>
         <MyTooltip content={t("Edit")}>
-          <EditIcon className={"size-4 cursor-pointer text-blue-500"} onClick={() => handleEdit(id)} />
+          <EditIcon
+            className={"size-4 cursor-pointer text-blue-500"}
+            onClick={() => handleEdit(id)}
+          />
         </MyTooltip>
         <MyTooltip content={t("Delete")}>
-          <Trash2Icon className={"size-4 cursor-pointer text-red-500"} onClick={() => handleDelete(id)} />
+          <Trash2Icon
+            className={"size-4 cursor-pointer text-red-500"}
+            onClick={() => handleDelete(id)}
+          />
         </MyTooltip>
       </div>
     ),
