@@ -23,10 +23,10 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
     null,
   );
   const [pdfOpen, setPdfOpen] = useState(false);
-  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+
   const [showShareForm, setShowShareForm] = useState(false);
   const { staffOptions } = useStaffOptions();
-  const { generatePdf, isGenerating } = useGeneratePdf();
+  const { isGenerating } = useGeneratePdf();
   const { sendForApproval, isSending } = useBulkShare();
   const { addRecipient, removeRecipient, isModifying } = useManageRecipients();
   const form = useForm<ApprovalShareFormValues>({
@@ -145,7 +145,6 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
     isDraft,
     canShare,
     pdfOpen,
-    pdfUrl,
     showShareForm,
     setShowShareForm,
     form,

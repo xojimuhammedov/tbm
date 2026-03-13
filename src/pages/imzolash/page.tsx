@@ -178,11 +178,9 @@ function ShareModal({
 function MetaCard({
   doc,
   handleOpenPdf,
-  isGenerating,
 }: {
   doc: ApplicationDocument;
   handleOpenPdf: () => void;
-  isGenerating: boolean;
 }) {
   const rows: [string, string][] = [
     ["Buyurtma sanasi", dateFormatter(doc.order_date, DATE)],
@@ -248,7 +246,6 @@ const ApplicationDocumentDetailPage = () => {
     canShare,
     documentStatus,
     pdfOpen,
-    pdfUrl,
     showShareForm,
     setShowShareForm,
     form,
@@ -259,7 +256,6 @@ const ApplicationDocumentDetailPage = () => {
     handleCancelShare,
     handleAddRecipient,
     handleRemoveRecipient,
-    isGenerating,
     isSending,
     isModifying,
   } = useApplicationDetail(doc);
@@ -386,7 +382,6 @@ const ApplicationDocumentDetailPage = () => {
             <MetaCard
               doc={doc}
               handleOpenPdf={handleOpenPdf}
-              isGenerating={isGenerating}
             />
             <DocumentStatusBar
               documentId={id}
