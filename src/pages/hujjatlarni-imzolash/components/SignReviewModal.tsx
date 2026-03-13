@@ -1,6 +1,6 @@
 import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
 import { MyModal } from "@/shared/components/moleculas/modal";
-import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
+import { DATE_TIME } from "@/shared/constants/date.constants";
 import { dateFormatter } from "@/shared/utils/utils";
 import { Badge } from "dgz-ui";
 import { Button } from "dgz-ui/button";
@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "dgz-ui/dialog";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRejectDocument } from "../hooks/useRejectDocument";
 import SignActions from "./SignActions";
 
