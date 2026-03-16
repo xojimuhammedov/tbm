@@ -219,10 +219,12 @@ function Router() {
         {
           index: true,
           element: <Navigate to={"dashboard"} replace />,
+          
         },
         {
           path: "dashboard",
-          element: <DashboardPage />,
+          element: 
+              <DashboardPage />
         },
         {
           path: "verify",
@@ -232,248 +234,484 @@ function Router() {
 
         {
           path: "inout/exin-96",
-          element: <Eid_17_96_Page />,
+          element: (
+            <HasAccess roles={["admin", "tbp"]}>
+              <Eid_17_96_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exin-96/create",
-          element: <Eid_17_96_FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_96_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exin-96/edit/:id",
-          element: <Eid_17_96_FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_96_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exout-97",
-          element: <Eid_17_97 />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_97 />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exout-97/create",
-          element: <Eid_17_97_FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_97_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exout-97/edit/:id",
-          element: <Eid_17_97_FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_97_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locin-98",
-          element: <Eid_17_98 />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_98 />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locin-98/create",
-          element: <Eid_17_98_FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_98_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locin-98/edit/:id",
-          element: <Eid_17_98_FormPage />,
+            element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_98_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locout-99",
-          element: <Eid_17_99 />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_99 />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locout-99/create",
-          element: <Eid_17_99_FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_99_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locout-99/edit/:id",
-          element: <Eid_17_99_FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Eid_17_99_FormPage />
+            </HasAccess>
+          ),
         },
 
         //Journals
         {
           path: "journals/orders",
-          element: <OrdersPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OrdersPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/orders/create",
-          element: <OrdersFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OrdersFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/orders/edit/:id",
-          element: <OrdersFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OrdersFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/decrees",
-          element: <DecreesPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <DecreesPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/decrees/create",
-          element: <DecreesFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <DecreesFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/decrees/edit/:id",
-          element: <DecreesFormPage />,
+            element: (
+            <HasAccess roles={["admin"]}>
+              <DecreesFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/notify",
-          element: <NotifyPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <NotifyPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/notify/create",
-          element: <NotifyFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <NotifyFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/notify/edit/:id",
-          element: <NotifyFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <NotifyFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/outgoing",
-          element: <OutgoingPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OutgoingPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/outgoing/create",
-          element: <OutgoingFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OutgoingFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/outgoing/edit/:id",
-          element: <OutgoingFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OutgoingFormPage />
+            </HasAccess>
+          ),
         },
 
         // NM Information Routes
         {
           path: "received-documents",
-          element: <ReceivedDocumentsPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <ReceivedDocumentsPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi",
-          element: <RTSIPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RTSIPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/application",
-          element: <ApplicationPage />,
+            element: (
+            <HasAccess roles={["admin"]}>
+              <ApplicationPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/application/create",
-          element: <ApplicationFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <ApplicationFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/application/edit/:id",
-          element: <ApplicationFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <ApplicationFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-51",
-          element: <F51Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F51Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-51/create",
-          element: <F51FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F51FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-51/edit/:id",
-          element: <F51FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F51FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-54",
-          element: <F54Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F54Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-54/create",
-          element: <F54FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F54FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-54/edit/:id",
-          element: <F54FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F54FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-56",
-          element: <F56Page />,
+            element: (
+            <HasAccess roles={["admin"]}>
+              <F56Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-56/create",
-          element: <F56FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F56FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-56/edit/:id",
-          element: <F56FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F56FormPage />
+            </HasAccess>
+          ),
         },
         // RH files section
         {
           path: "rh/rh-143",
-          element: <Rh_143_Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Rh_143_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-091",
-          element: <Rh_091_Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Rh_091_Page />
+            </HasAccess>
+          ),
         },
 
         {
           path: "rh/rh-218",
-          element: <Rh_218_Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Rh_218_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-249",
-          element: <Rh_249_Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Rh_249_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-251",
-          element: <Rh_251_Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Rh_251_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-226-1",
-          element: <Rh_226_1_Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Rh_226_1_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-226-2",
-          element: <Rh_226_2_Page />,
+            element: (
+            <HasAccess roles={["admin"]}>
+              <Rh_226_2_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-260",
-          element: <Rh_260_Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Rh_260_Page />
+            </HasAccess>
+          ),
         },
 
         // RTTSI sectioni
         {
           path: "rttsi",
-          element: <RTTSIPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RTTSIPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rttsi/create",
-          element: <RTTSIFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RTTSIFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rttsi/edit/:id",
-          element: <RTTSIFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RTTSIFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "operational-work",
-          element: <OperationalWorkPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OperationalWorkPage />
+            </HasAccess>
+          ),
         },
         {
           path: "operational-work/create",
-          element: <OperativeFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OperativeFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "operational-work/edit/:id",
-          element: <OperativeFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <OperativeFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "television",
-          element: <TelevisionPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <TelevisionPage />
+            </HasAccess>
+          ),
         },
         {
           path: "television/create",
-          element: <TelevisionFormPage />,
+            element: (
+            <HasAccess roles={["admin"]}>
+              <TelevisionFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "television/edit/:id",
-          element: <TelevisionFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <TelevisionFormPage />
+            </HasAccess>
+          ),
         },
         // Resource Database Routes
         {
           path: "nokia",
-          element: <NokiaPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <NokiaPage />
+            </HasAccess>
+          ),
         },
         {
           path: "zte",
-          element: <ZTEPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <ZTEPage />
+            </HasAccess>
+          ),
         },
         {
           path: "huawei-p30-pro",
-          element: <HuaweiP30ProPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <HuaweiP30ProPage />
+            </HasAccess>
+          ),
         },
         {
           path: "huawei-p30-lite",
-          element: <HuaweiP30LitePage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <HuaweiP30LitePage />
+            </HasAccess>
+          ),
         },
 
         {
@@ -481,15 +719,27 @@ function Router() {
           children: [
             {
               index: true,
-              element: <Channels51Page />,
+              element: (
+                <HasAccess roles={["admin"]}>
+                  <Channels51Page />
+                </HasAccess>
+              ),
             },
             {
               path: "create",
-              element: <Channels51FormPage />,
+              element: (
+                <HasAccess roles={["admin"]}>
+                  <Channels51FormPage />
+                </HasAccess>
+              ),
             },
             {
               path: "edit/:id",
-              element: <Channels51FormPage />,
+              element: (
+                <HasAccess roles={["admin"]}>
+                  <Channels51FormPage />
+                </HasAccess>
+              ),
             },
           ],
         },
@@ -498,76 +748,144 @@ function Router() {
           children: [
             {
               index: true,
-              element: <Flows53Page />,
+                element: (
+                <HasAccess roles={["admin"]}>
+                  <Flows53Page />
+                </HasAccess>
+              ),
             },
             {
               path: "create",
-              element: <Flows53FormPage />,
+              element: (
+                <HasAccess roles={["admin"]}>
+                  <Flows53FormPage />
+                </HasAccess>
+              ),
             },
             {
               path: "edit/:id",
-              element: <Flows53FormPage />,
+              element: (
+                <HasAccess roles={["admin"]}>
+                  <Flows53FormPage />
+                </HasAccess>
+              ),
             },
           ],
         },
         {
           path: "channels-5_3",
-          element: <Channels51Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Channels51Page />
+            </HasAccess>
+          ),
         },
         {
           path: "channels-5_3/create",
-          element: <Channels51FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Channels51FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "channels-5_3/edit/:id",
-          element: <Channels51FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Channels51FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-5_1",
-          element: <Flows53Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Flows53Page />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-5_1/create",
-          element: <Flows53FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Flows53FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-5_1/edit/:id",
-          element: <Flows53FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <Flows53FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "card-indexes",
-          element: <CardIndexesPage />,
+            element: (
+            <HasAccess roles={["admin"]}>
+              <CardIndexesPage />
+            </HasAccess>
+          ),
         },
         {
           path: "card-indexes/create",
-          element: <CardIndexesFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <CardIndexesFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "card-indexes/edit/:id",
-          element: <CardIndexesFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <CardIndexesFormPage />
+            </HasAccess>
+          ),
         },
         // Administration Routes
         {
           path: "staff",
-          element: <StaffPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <StaffPage />
+            </HasAccess>
+          ),
         },
         {
           path: "groups",
-          element: <GroupPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <GroupPage />
+            </HasAccess>
+          ),
         },
         {
           path: "settings",
-          element: <SettingsPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <SettingsPage />
+            </HasAccess>
+          ),
         },
         // Settings -> Roles route
         {
           path: "settings/roles",
-          element: <RolesPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RolesPage />
+            </HasAccess>
+          ),
         },
         // Settings -> Positions route
         {
           path: "settings/positions",
-          element: <PositionsPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <PositionsPage />
+            </HasAccess>
+          ),
         },
         // {
         //   path: "gras",
@@ -575,27 +893,51 @@ function Router() {
         // },
         {
           path: "gras/b-231",
-          element: <B231Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <B231Page />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/b-231/create",
-          element: <B231FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <B231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/b-231/edit/:id",
-          element: <B231FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <B231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/c-231",
-          element: <C231Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <C231Page />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/c-231/create",
-          element: <C231FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <C231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/c-231/edit/:id",
-          element: <C231FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <C231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/d-231",
@@ -607,115 +949,227 @@ function Router() {
         },
         {
           path: "gras/d-231/create",
-          element: <D231FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <D231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/d-231/edit/:id",
-          element: <D231FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <D231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/e-231",
-          element: <E231Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <E231Page />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/e-231/create",
-          element: <E231FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <E231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/e-231/edit/:id",
-          element: <E231FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <E231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-id",
-          element: <FlowsIdPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <FlowsIdPage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-id/create",
-          element: <FlowsIdCreatePage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <FlowsIdCreatePage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-id/edit/:id",
-          element: <FlowsIdCreatePage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <FlowsIdCreatePage />
+            </HasAccess>
+          ),
         },
         {
           path: "channels-id",
-          element: <ChannelsIdPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <ChannelsIdPage />
+            </HasAccess>
+          ),
         },
         {
           path: "channels-id/create",
-          element: <ChannelsCreatePage />,
+            element: (
+            <HasAccess roles={["admin"]}>
+              <ChannelsCreatePage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252",
-          element: <A252Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <A252Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252/create",
-          element: <A252FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <A252FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252/edit/:id",
-          element: <A252FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <A252FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252/sign/:id",
-          element: <EImzoSignPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <EImzoSignPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252/progress/:id",
-          element: <ProgreesDoc />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <ProgreesDoc />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/rh-3_3",
-          element: <RH3_3Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RH3_3Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/rh-3_3/create",
-          element: <RH3_3FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RH3_3FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/rh-3_3/edit/:id",
-          element: <RH3_3FormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RH3_3FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/c-252",
-          element: <RH_CDocument />,
+              element: (
+            <HasAccess roles={["admin"]}>
+              <RH_CDocument />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/c-252/create",
-          element: <RH_CFormDocument />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RH_CFormDocument />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/d-252",
-          element: <RH_D_Application />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RH_D_Application />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/d-252/create",
-          element: <RH_D_ApplicationForm />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RH_D_ApplicationForm />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/d-252/edit/:id",
-          element: <RH_D_ApplicationForm />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <RH_D_ApplicationForm />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/f-252",
-          element: <F252_Application />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F252_Application />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/f-252/create",
-          element: <F252_ApplicationForm />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F252_ApplicationForm />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/f-252/edit/:id",
-          element: <F252_ApplicationForm />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <F252_ApplicationForm />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/agreement-decrees",
-          element: <AgreementDecreesPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <AgreementDecreesPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/agreement-decrees/:id/shared/:sharedId",
-          element: <AgreementDecreesFormPage />,
+                element: (
+            <HasAccess roles={["admin"]}>
+              <AgreementDecreesFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/hujjatlarni-imzolash",
@@ -735,7 +1189,6 @@ function Router() {
         },
       ],
     },
-
     {
       path: "error",
       element: <CommonLayout />,
@@ -750,7 +1203,6 @@ function Router() {
         },
       ],
     },
-
     {
       path: "*",
       element: <Navigate to={"/error/not-found"} />,
