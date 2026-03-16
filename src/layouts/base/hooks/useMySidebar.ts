@@ -9,12 +9,12 @@ const useMySidebar = () => {
   const { t } = useTranslation();
   const { isActive } = useMenuActive();
   const { me } = useUserStore();
-  
+
   const userRole = (me as any)?.role?.name;
 
   const groups = useMemo(() => {
     const defaultGroups = createSidebarGroups(t, isActive);
-    
+
     // If no userRole is found, we can optionally return defaultGroups
     // or return everything. Assume we return defaultGroups for safety.
     if (!userRole) return defaultGroups;
@@ -39,9 +39,9 @@ const useMySidebar = () => {
         .filter((item) => {
           // If it has children and they were all filtered out, and it's a parent menu without a direct valid URL
           if (item.children && item.children.length === 0) {
-             return false;
+            return false;
           }
-           return true;
+          return true;
         });
     };
 
