@@ -125,10 +125,23 @@ const useApplicationDocumentForm = ({
     },
   });
 
+  const isInitialLoad = useRef(true);
+
   useEffect(() => {
-    if (!editData || !id) return;
+    // Agar id bo'lmasa, demak bu yangi yaratish rejimi
+    if (!id) {
+      isInitialLoad.current = false;
+      return;
+    }
+
+    // Agar id bo'lsa-yu, hali editData yuklanmagan bo'lsa - kutamiz
+    if (!editData) return;
+
     const doc = unwrapDoc(editData);
-    if (!doc?.code) return;
+    if (!doc?.code) {
+      isInitialLoad.current = false;
+      return;
+    }
 
     const fullCode = doc.code || "";
     const prefix = codePrefix(fullCode);
@@ -141,12 +154,24 @@ const useApplicationDocumentForm = ({
     form.setValue("copy", listToText(doc.copy));
 
     const handler = handlers[prefix];
-    if (!handler) return;
+    if (!handler) {
+      isInitialLoad.current = false;
+      return;
+    }
 
     handler.populate(form, doc.payload || {}, { setCurrentIds });
-  }, [editData, id]);
+    
+    // Initial loading tugaganini belgilaymiz. 
+    // Timeoutni biroz oshiramizki, handler ichidagi setTimeouts ulgurib qolsin
+    setTimeout(() => {
+      isInitialLoad.current = false;
+    }, 200);
+  }, [editData, id, form]);
 
   useEffect(() => {
+    // Agar dastlabki yuklash bo'layotgan bo'lsa, tozalashni amalga oshirmaymiz
+    if (isInitialLoad.current) return;
+
     const prefix = codePrefix(fullCodeRef.current || "");
     if (prefix !== "17-45") return;
     if (!currentUpdateType) return;

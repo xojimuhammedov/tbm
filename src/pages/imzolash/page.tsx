@@ -113,7 +113,7 @@ function PdfModal({
     <MyModal
       open={open}
       onOpenChange={(v) => !v && onClose()}
-      size="8xl"
+      size="5xl"
       className="overflow-auto"
       header={
         <div className="flex items-center gap-2.5 pr-10">
