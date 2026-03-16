@@ -3,4 +3,5 @@ import { MenuItemInterface } from "@/layouts/base/interfaces/menu-item.interface
 export interface MenuGroupInterface {
   title: string;
   items: MenuItemInterface[];
+  roles?: string[]; // Added roles property
 }

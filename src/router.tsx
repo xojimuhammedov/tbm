@@ -1,4 +1,4 @@
-import { IsGuest, IsLoggedIn } from "@/shared/guards";
+import { IsGuest, IsLoggedIn, HasAccess } from "@/shared/guards";
 import { lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
 
@@ -599,7 +599,11 @@ function Router() {
         },
         {
           path: "gras/d-231",
-          element: <D231Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <D231Page />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/d-231/create",
@@ -715,11 +719,19 @@ function Router() {
         },
         {
           path: "rh-252/hujjatlarni-imzolash",
-          element: <HujjatlarniImzolashPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <HujjatlarniImzolashPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/hujjatlarni-imzolash/:id/shared/:sharedId",
-          element: <HujjatlarniImzolashFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <HujjatlarniImzolashFormPage />
+            </HasAccess>
+          ),
         },
       ],
     },

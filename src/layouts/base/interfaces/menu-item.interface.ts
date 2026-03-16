@@ -7,5 +7,6 @@ export interface MenuItemInterface {
   icon?: RemixiconComponentType & RefAttributes<SVGSVGElement>;
   isActive?: boolean;
   access?: string[];
+  roles?: string[]; // Added roles property
   children?: MenuItemInterface[];
 }
