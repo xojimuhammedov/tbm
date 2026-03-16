@@ -5,25 +5,22 @@ import { Handler } from "@/pages/rh-252/a-252/hooks/component/types/types.ts";
 const h1748: Handler = {
   populate: (form, payload) => {
     const basic = payload.basic || {};
-    form.setValue("payload.basic.title", basic.title ?? "");
-    form.setValue("payload.basic.start_time", basic.start_time ?? "");
-    form.setValue("payload.basic.end_time", basic.end_time ?? "");
-    form.setValue("payload.concert_second", payload.concert_second ?? "");
-    form.setValue("payload.content", payload.content ?? "");
-    form.setValue("payload.including", payload.including ?? "");
-    form.setValue("payload.main_routes", payload.main_routes ?? "");
-    form.setValue("payload.reserve_routes", payload.reserve_routes ?? "");
-    form.setValue("payload.stopped_flows", payload.stopped_flows || []);
-    form.setValue(
-      "payload.responsible_person",
-      payload.responsible_person ?? "",
-    );
-    form.setValue("payload.concert_text", payload.concert_text ?? "");
-    form.setValue("payload.basis", payload.basis ?? "");
-    form.setValue(
-      "payload.file_name",
-      basic.base_file ?? payload?.file_name ?? "",
-    );
+    form.setValue("payload.basic.title", basic.title ?? payload.title ?? "");
+    form.setValue("payload.basic.start_time", basic.start_time ?? payload.start_time ?? "");
+    form.setValue("payload.basic.end_time", basic.end_time ?? payload.end_time ?? "");
+    
+    setTimeout(() => {
+      form.setValue("payload.concert_second", payload.concert_second ?? "", { shouldDirty: true });
+      form.setValue("payload.content", payload.content ?? "", { shouldDirty: true });
+      form.setValue("payload.including", payload.including ?? "", { shouldDirty: true });
+      form.setValue("payload.main_routes", payload.main_routes ?? "", { shouldDirty: true });
+      form.setValue("payload.reserve_routes", payload.reserve_routes ?? "", { shouldDirty: true });
+      form.setValue("payload.stopped_flows", payload.stopped_flows || [], { shouldDirty: true });
+      form.setValue("payload.responsible_person", payload.responsible_person ?? "", { shouldDirty: true });
+      form.setValue("payload.concert_text", payload.concert_text ?? "", { shouldDirty: true });
+      form.setValue("payload.basis", payload.basis ?? "", { shouldDirty: true });
+    }, 0);
+    // file_name is intentionally omitted to require re-upload on edit
   },
 
   build: (data, ctx) => ({
@@ -33,7 +30,7 @@ const h1748: Handler = {
         title: data.payload.basic.title,
         start_time: formatToISO(data.payload.basic.start_time),
         end_time: formatToISO(data.payload.basic.end_time),
-        base_file: data.payload.file_name || "",
+        ...(data.payload.file_name ? { base_file: data.payload.file_name } : {}),
       },
       content: data.payload.content,
       concert_second: data.payload.concert_second,
