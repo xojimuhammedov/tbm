@@ -1,4 +1,4 @@
-import { IsGuest, IsLoggedIn } from "@/shared/guards";
+import { IsGuest, IsLoggedIn, HasAccess } from "@/shared/guards";
 import { lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
 
@@ -166,6 +166,7 @@ const StaffPage = lazy(() => import("@/pages/staff/Page"));
 const GroupPage = lazy(() => import("@/pages/groups/Page"));
 const SettingsPage = lazy(() => import("@/pages/staff/Page"));
 const RolesPage = lazy(() => import("@/pages/role/Page"));
+const PositionsPage = lazy(() => import("@/pages/position/Page"));
 
 // E-imzo
 const EImzoSignPage = lazy(
@@ -563,6 +564,11 @@ function Router() {
           path: "settings/roles",
           element: <RolesPage />,
         },
+        // Settings -> Positions route
+        {
+          path: "settings/positions",
+          element: <PositionsPage />,
+        },
         // {
         //   path: "gras",
         //   element: <GrasPage />,
@@ -593,7 +599,11 @@ function Router() {
         },
         {
           path: "gras/d-231",
-          element: <D231Page />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <D231Page />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/d-231/create",
@@ -709,11 +719,19 @@ function Router() {
         },
         {
           path: "rh-252/hujjatlarni-imzolash",
-          element: <HujjatlarniImzolashPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <HujjatlarniImzolashPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/hujjatlarni-imzolash/:id/shared/:sharedId",
-          element: <HujjatlarniImzolashFormPage />,
+          element: (
+            <HasAccess roles={["admin"]}>
+              <HujjatlarniImzolashFormPage />
+            </HasAccess>
+          ),
         },
       ],
     },

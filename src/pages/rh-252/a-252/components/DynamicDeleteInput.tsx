@@ -6,17 +6,15 @@ import { useFieldArray, Control } from "react-hook-form";
 
 interface DynamicIdInputProps {
   control: Control<any>;
-  name: string; // Masalan: "payload.delete.flow_ids"
+  name: string;
 }
 
 const DynamicIdInput: React.FC<DynamicIdInputProps> = ({ control, name }) => {
-  // Field array orqali formalarni boshqarish
   const { fields, append, remove } = useFieldArray({
-    control, // Bu yerda shunchaki control (form.control emas!)
+    control,
     name,
   });
 
-  // Agar massiv bo'sh bo'lsa, avtomatik bitta bo'sh qator qo'shish
   React.useEffect(() => {
     if (fields.length === 0) {
       append({ value: "" });
@@ -48,8 +46,8 @@ const DynamicIdInput: React.FC<DynamicIdInputProps> = ({ control, name }) => {
           <div key={field.id} className="flex items-center gap-2 w-full">
             <div className="flex-1">
               <MyInput
-                control={control} // Propsdan kelayotgan control
-                name={`${name}.${index}.value`} // Har bir input uchun unique name
+                control={control}
+                name={`${name}.${index}.value`}
                 placeholder="Masalan: ID-6620"
                 onKeyDown={(e) => handleKeyDown(index, e as any)}
               />

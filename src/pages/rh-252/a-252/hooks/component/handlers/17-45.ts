@@ -33,6 +33,7 @@ const buildUpdatePayloadContract = (data: any) => {
 
   return undefined;
 };
+
 const h1745: Handler = {
   populate: (form, payload, ctx) => {
     const basic = payload.basic || {};
@@ -47,6 +48,14 @@ const h1745: Handler = {
     form.setValue("payload.basic.justification", basic.justification ?? "");
     form.setValue("payload.basic.signal_level", basic.signal_level ?? "");
     form.setValue("payload.basic.actions", safeArray<string>(basic.actions));
+    form.setValue(
+      "payload.basic.responsible_organizing",
+      basic.responsible_organizing ?? "",
+    );
+    form.setValue(
+      "payload.basic.responsible_form_3_3",
+      basic.responsible_form_3_3 ?? "",
+    );
 
     form.setValue(
       "payload.file_name",
@@ -125,7 +134,6 @@ const h1745: Handler = {
             .filter((val: string) => val && val.trim() !== ""),
         }
       : undefined;
-
     return {
       ...buildBasePayload(data, ctx.fullCode),
       payload: {
@@ -139,6 +147,13 @@ const h1745: Handler = {
           actions,
           base_file: data.payload.file_name || "",
         },
+        responsible_form_3_3: data.payload.basic.responsible_form_3_3 || "",
+        ...(actions.includes("create")
+          ? {
+              responsible_organizing:
+                data.payload.basic.responsible_organizing || "",
+            }
+          : {}),
         ...(createPayload ? { create: createPayload } : {}),
         ...(updatePayload ? { update: updatePayload } : {}),
         ...(deletePayload ? { delete: deletePayload } : {}),

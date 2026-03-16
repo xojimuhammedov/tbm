@@ -1,5 +1,11 @@
 import { DocumentStatusBar } from "@/pages/imzolash/component/DocumentStatusBar";
 import { ShareFormPanel } from "@/pages/imzolash/component/sharedRecipients";
+import OrderApplicationView1731 from "@/pages/rh-252/a-252/components/View/1731view";
+import OrderApplicationView1733 from "@/pages/rh-252/a-252/components/View/1733view";
+import OrderApplicationView1745 from "@/pages/rh-252/a-252/components/View/1745view";
+import OrderView1748 from "@/pages/rh-252/a-252/components/View/1748view";
+import OrderApplicationView1754 from "@/pages/rh-252/a-252/components/View/1754view";
+import OrderApplicationView1770 from "@/pages/rh-252/a-252/components/View/1770view";
 import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
 import { PageWrapper } from "@/shared/components/containers/page";
 import { MyModal } from "@/shared/components/moleculas/modal";
@@ -11,8 +17,8 @@ import { Button } from "dgz-ui/button";
 import {
   ChevronLeftIcon,
   FileTextIcon,
-  LoaderCircleIcon,
   FileType2,
+  LoaderCircleIcon,
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,14 +33,82 @@ const fullName = (u?: { first_name?: string; second_name?: string }) =>
 function PdfModal({
   open,
   onClose,
-  pdfUrl,
-  isGenerating,
+  doc,
 }: {
   open: boolean;
   onClose: () => void;
-  pdfUrl: string | null;
-  isGenerating: boolean;
+  doc: any;
 }) {
+  const renderOrderView = () => {
+    if (!doc) return null;
+    const model = doc.payload_model;
+    if (model === "17_54_payloads") {
+      return (
+        <OrderApplicationView1754
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    if (model === "17_45_payloads") {
+      return (
+        <OrderApplicationView1745
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    if (model === "17_33_payloads") {
+      return (
+        <OrderApplicationView1733
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    if (model === "17_70_payloads") {
+      return (
+        <OrderApplicationView1770
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    if (model === "17_48_payloads") {
+      return (
+        <OrderView1748
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    if (model === "17_31_payloads") {
+      return (
+        <OrderApplicationView1731
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    return (
+      <div className="p-8 text-center text-gray-500">
+        Hujjat ko'rinishi topilmadi
+      </div>
+    );
+  };
+
   return (
     <MyModal
       open={open}
@@ -45,32 +119,15 @@ function PdfModal({
         <div className="flex items-center gap-2.5 pr-10">
           <FileTextIcon className="size-4 text-neutral-500" />
           <span className="font-semibold text-neutral-900 text-sm">
-            Hujjat · PDF ko'rinishi
+            Hujjat ko'rinishi
           </span>
         </div>
       }
     >
       <div className="bg-neutral-100 min-h-[500px] flex items-center justify-center p-5">
-        {isGenerating ? (
-          <div className="flex flex-col items-center gap-3">
-            <LoaderCircleIcon className="size-7 text-blue-500 animate-spin" />
-            <span className="text-sm text-neutral-500 font-medium">
-              Hujjat yuklanmoqda...
-            </span>
-          </div>
-        ) : pdfUrl ? (
-          <iframe
-            src={pdfUrl}
-            className="w-full rounded-xl border border-neutral-200 shadow-sm bg-white"
-            style={{ height: "75vh" }}
-            title="Hujjat PDF"
-          />
-        ) : (
-          <div className="flex flex-col items-center gap-2 text-neutral-400">
-            <FileTextIcon className="size-8 opacity-30" />
-            <span className="text-sm">PDF topilmadi</span>
-          </div>
-        )}
+        <div className="w-full bg-white shadow-sm border border-neutral-200">
+          {renderOrderView()}
+        </div>
       </div>
     </MyModal>
   );
@@ -121,11 +178,9 @@ function ShareModal({
 function MetaCard({
   doc,
   handleOpenPdf,
-  isGenerating,
 }: {
   doc: ApplicationDocument;
   handleOpenPdf: () => void;
-  isGenerating: boolean;
 }) {
   const rows: [string, string][] = [
     ["Buyurtma sanasi", dateFormatter(doc.order_date, DATE)],
@@ -165,21 +220,12 @@ function MetaCard({
       <div className="px-4 py-2.5 border-t border-neutral-100">
         <Button
           onClick={handleOpenPdf}
-          disabled={isGenerating}
           className="w-full justify-center h-9 text-[12.5px] font-semibold gap-2 transition-all active:scale-95"
         >
-          {isGenerating ? (
-            <>
-              <LoaderCircleIcon className="size-4 animate-spin text-blue-500" />
-              <span>Tayyorlanmoqda...</span>
-            </>
-          ) : (
-            <>
-              {/* PDF ikonkasi: qizil rangda bo'lsa ko'proq PDFga o'xshaydi */}
-              <FileType2 className="size-4 text-red-500" />
-              <span>PDF ko'rish</span>
-            </>
-          )}
+          <>
+            <FileType2 className="size-4 text-red-500" />
+            <span>Hujjatni ko'rish</span>
+          </>
         </Button>
       </div>
     </div>
@@ -200,7 +246,6 @@ const ApplicationDocumentDetailPage = () => {
     canShare,
     documentStatus,
     pdfOpen,
-    pdfUrl,
     showShareForm,
     setShowShareForm,
     form,
@@ -211,7 +256,6 @@ const ApplicationDocumentDetailPage = () => {
     handleCancelShare,
     handleAddRecipient,
     handleRemoveRecipient,
-    isGenerating,
     isSending,
     isModifying,
   } = useApplicationDetail(doc);
@@ -335,11 +379,7 @@ const ApplicationDocumentDetailPage = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[340px_1fr] gap-4 items-start">
-            <MetaCard
-              doc={doc}
-              handleOpenPdf={handleOpenPdf}
-              isGenerating={isGenerating}
-            />
+            <MetaCard doc={doc} handleOpenPdf={handleOpenPdf} />
             <DocumentStatusBar
               documentId={id}
               onAddRecipient={handleAddRecipient}
@@ -361,12 +401,7 @@ const ApplicationDocumentDetailPage = () => {
         isSending={isSending}
       />
 
-      <PdfModal
-        open={pdfOpen}
-        onClose={handleClosePdf}
-        pdfUrl={pdfUrl}
-        isGenerating={isGenerating}
-      />
+      <PdfModal open={pdfOpen} onClose={handleClosePdf} doc={doc} />
 
       <ShareModal
         open={showAddModal}

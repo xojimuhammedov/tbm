@@ -10,10 +10,7 @@ import {
   PencilLineIcon,
   Trash2Icon,
 } from "lucide-react";
-import {
-  OrderApplication,
-  ResponsibleUser,
-} from "../interfaces/order.interface";
+import { OrderApplication } from "../interfaces/order.interface";
 
 const createOrderColumns = (
   t: (...args: TranslationArgsType) => string,
@@ -68,20 +65,6 @@ const createOrderColumns = (
         </div>
       );
     },
-  },
-  {
-    key: "first_name",
-    dataIndex: "responsible",
-    name: t("Mas'ul xodim"),
-    render: (responsible: ResponsibleUser) =>
-      responsible?.first_name + " " + responsible?.second_name || "---",
-  },
-  {
-    key: "name",
-    dataIndex: "created_by",
-    name: t("Yaratuvchi"),
-    render: (responsible: ResponsibleUser) =>
-      responsible?.first_name + " " + responsible?.second_name || "---",
   },
   {
     key: "created_at",

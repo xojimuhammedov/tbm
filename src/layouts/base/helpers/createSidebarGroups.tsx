@@ -31,18 +31,22 @@ const createSidebarGroups = (
           {
             title: t("17-96 ex/in document"),
             url: "exin-96",
+            roles: ["admin"],
           },
           {
             title: t("17-97 ex/out document"),
             url: "exout-97",
+            roles: ["admin"],
           },
           {
             title: t("17-98 loc/in document"),
             url: "locin-98",
+            roles: ["admin"],
           },
           {
             title: t("17-99 loc/out document"),
             url: "locout-99",
+            roles: ["admin"],
           },
         ],
       },
@@ -374,6 +378,11 @@ const createSidebarGroups = (
           {
             title: t("Roles"),
             url: "roles",
+            icon: ShieldUser,
+          },
+          {
+            title: t("Positions"),
+            url: "positions",
             icon: ShieldUser,
           },
         ],

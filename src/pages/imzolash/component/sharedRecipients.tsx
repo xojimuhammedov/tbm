@@ -36,125 +36,103 @@ export function ShareFormPanel({
 
   return (
     <FormProvider {...form}>
-      <div className="w-full flex flex-col">
-        <div
-          className="flex-1 space-y-5 p-1  overflow-y-auto"
-          style={{ scrollbarWidth: "thin", minHeight: "360px" }}
-        >
-          {/* ── APPROVAL block ── */}
-          <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-amber-50/60 to-orange-50/30 p-3 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-4 rounded-full bg-amber-400" />
-              <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
-                Tasdiqlash bosqichi
-              </span>
-            </div>
-
+      <div className="w-full flex flex-col gap-3">
+        <div className="rounded-xl border border-slate-100 bg-white p-4 space-y-3">
+          <div className="relative">
             <MySelect
               control={form.control}
               name="approver_ids"
               options={staffOptions}
-              label={t("Mas'ul xodim")}
-              placeholder={t("Select staffs")}
+              label={t("Ko'rib chiquvchilar")}
+              placeholder={t("Tanlang...")}
               isClearable
               required
               isMulti={true}
             />
+          </div>
 
-            {/* Edit toggle per user - more compact UI */}
-            {approverIds && approverIds.length > 0 && (
-              <div className="mt-4 pt-3 border-t border-amber-100/50">
-                <p className="text-xs font-bold text-amber-700/60 uppercase tracking-wider mb-2">
-                  Tahrirlash huquqlari
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-                  {approverIds.map((uid: string) => {
-                    const userLabel =
-                      staffOptions.find((o) => o.value === uid)?.label ||
-                      "Noma'lum";
-                    const editPermissions =
-                      form.watch("approver_edit_permissions") || {};
-                    const canEdit = editPermissions[uid] || false;
-                    return (
-                      <label
-                        key={uid}
-                        className="flex items-center gap-3 bg-white/80 p-3 rounded-xl border border-amber-100/50 hover:bg-white cursor-pointer transition-colors group"
+          {approverIds && approverIds.length > 0 && (
+            <div className="pt-3 border-t border-slate-100">
+              <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                Tahrirlash huquqlari
+              </p>
+              <div className="space-y-1">
+                {approverIds.map((uid: string) => {
+                  const userLabel =
+                    staffOptions.find((o) => o.value === uid)?.label ??
+                    "Noma'lum";
+                  const editPermissions =
+                    form.watch("approver_edit_permissions") || {};
+                  const canEdit = editPermissions[uid] || false;
+                  return (
+                    <div
+                      key={uid}
+                      className="flex items-center justify-between gap-3 py-2 px-1"
+                    >
+                      <p className="text-sm text-slate-700 truncate flex-1">
+                        {userLabel}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const current =
+                            form.getValues("approver_edit_permissions") || {};
+                          form.setValue(
+                            "approver_edit_permissions",
+                            { ...current, [uid]: !canEdit },
+                            { shouldDirty: true },
+                          );
+                        }}
+                        className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
+                          canEdit ? "bg-blue-500" : "bg-slate-200"
+                        }`}
                       >
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const current =
-                              form.getValues("approver_edit_permissions") || {};
-                            form.setValue(
-                              "approver_edit_permissions",
-                              { ...current, [uid]: !canEdit },
-                              { shouldDirty: true },
-                            );
-                          }}
-                          className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
-                            canEdit ? "bg-amber-400" : "bg-slate-200"
+                        <span
+                          className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm ring-0 transition-transform ${
+                            canEdit ? "translate-x-4" : "translate-x-0"
                           }`}
-                        >
-                          <span
-                            className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm ring-0 transition-transform ${
-                              canEdit ? "translate-x-4" : "translate-x-0"
-                            }`}
-                          />
-                        </button>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-sm font-semibold text-slate-700 truncate">
-                            {userLabel}
-                          </p>
-                        </div>
-                      </label>
-                    );
-                  })}
-                </div>
+                        />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
-            )}
-          </div>
-
-          {/* ── SIGNING block ── */}
-          <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-violet-50/60 to-indigo-50/30 p-3 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-4 rounded-full bg-violet-400" />
-              <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
-                Imzolash bosqichi
-              </span>
             </div>
+          )}
+        </div>
 
-            <MySelect
-              control={form.control}
-              name="director_id"
-              options={staffOptions}
-              label={t("Direktor")}
-              placeholder={t("Select director")}
-              isClearable
-            />
-          </div>
+        <div className="rounded-xl border border-slate-100 bg-white p-4">
+          <MySelect
+            control={form.control}
+            name="director_id"
+            options={staffOptions}
+            label={t("Imzolovchi")}
+            placeholder={t("Tanlang...")}
+            isClearable
+          />
         </div>
 
         {/* Footer */}
-        <div className="mt-4 pt-3 flex items-center justify-end gap-3 px-1">
+        <div className="flex items-center justify-end gap-2 pt-1">
           <Button
             variant="secondary"
             onClick={onCancel}
-            className="min-w-[120px]"
+            className="min-w-[110px]"
           >
             Bekor qilish
           </Button>
           <Button
             onClick={onSubmit}
             disabled={isSending}
-            className="min-w-[120px] bg-blue-600 hover:bg-blue-700 text-white"
+            className="min-w-[110px] bg-blue-600 hover:bg-blue-700 text-white"
           >
             {isSending ? (
-              <div className="flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 <LoaderCircle className="size-4 animate-spin" />
-                <span>Yuborilmoqda...</span>
-              </div>
+                Yuborilmoqda...
+              </span>
             ) : (
-              <span>Yuborish</span>
+              "Yuborish"
             )}
           </Button>
         </div>

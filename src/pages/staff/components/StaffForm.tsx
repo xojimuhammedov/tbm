@@ -9,6 +9,7 @@ import { FormContainerFooter } from "@/shared/components/templates/form";
 import { StaffDto } from "@/pages/staff/schemas/createStaffSchema.ts";
 import useStaffForm from "@/pages/staff/hooks/useStaffForm.ts";
 import useRoleOptions from "@/pages/role/hooks/useRoleOptions.ts";
+import usePositionOptions from "@/pages/position/hooks/usePositionOptions.ts";
 
 interface StaffFormProps {
   id: string | null;
@@ -23,6 +24,7 @@ const StaffForm = ({ id, onSave, readOnly = false }: StaffFormProps) => {
     onSave,
   });
   const { roleOptions } = useRoleOptions();
+  const { positionOptions } = usePositionOptions();
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-4"}>
@@ -102,6 +104,15 @@ const StaffForm = ({ id, onSave, readOnly = false }: StaffFormProps) => {
             options={roleOptions || []}
             label={t("Role")}
             placeholder={t("Select role")}
+            required
+            isDisabled={readOnly}
+          />
+          <MySelect<StaffDto>
+            control={form.control}
+            name={"position"}
+            options={positionOptions || []}
+            label={t("Position")}
+            placeholder={t("Select position")}
             required
             isDisabled={readOnly}
           />

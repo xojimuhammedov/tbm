@@ -23,10 +23,10 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
     null,
   );
   const [pdfOpen, setPdfOpen] = useState(false);
-  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+
   const [showShareForm, setShowShareForm] = useState(false);
   const { staffOptions } = useStaffOptions();
-  const { generatePdf, isGenerating } = useGeneratePdf();
+  const { isGenerating } = useGeneratePdf();
   const { sendForApproval, isSending } = useBulkShare();
   const { addRecipient, removeRecipient, isModifying } = useManageRecipients();
   const form = useForm<ApprovalShareFormValues>({
@@ -50,22 +50,10 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
   const documentStatus: DocumentStatus = socketData?.document_status ?? "DRAFT";
   const isDraft = documentStatus === "DRAFT";
   const canShare = documentStatus === "DRAFT" || documentStatus === "REJECTED";
-  const handleOpenPdf = useCallback(async () => {
+  const handleOpenPdf = useCallback(() => {
     if (!document?._id) return;
     setPdfOpen(true);
-    if (pdfUrl) return;
-    try {
-      const url = await generatePdf(document._id);
-      setPdfUrl(url);
-    } catch {
-      setPdfOpen(false);
-      toast({
-        variant: "destructive",
-        title: t("Xatolik"),
-        description: t("PDF yaratishda xatolik yuz berdi"),
-      });
-    }
-  }, [document?._id, pdfUrl, generatePdf, toast, t]);
+  }, [document?._id]);
 
   const handleClosePdf = useCallback(() => setPdfOpen(false), []);
   const handleSubmitShare = useCallback(
@@ -157,7 +145,6 @@ const useApplicationDetail = (document: ApplicationDocument | undefined) => {
     isDraft,
     canShare,
     pdfOpen,
-    pdfUrl,
     showShareForm,
     setShowShareForm,
     form,

@@ -11,7 +11,6 @@ import { FormContainerFooter } from "@/shared/components/templates/form";
 import { Button } from "dgz-ui";
 import { ArrowLeftIcon, Loader2 } from "lucide-react";
 import DynamicIdInput from "./DynamicDeleteInput";
-import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
 import useApplicationDocumentForm from "@/pages/rh-252/a-252/hooks/useApplicationDocumentForm";
 import UpdateFlowSection from "@/pages/rh-252/a-252/components/form/UpdateFlowSection.tsx";
 import TvRvFlowSection from "@/pages/rh-252/a-252/components/form/TvRvFlowSection.tsx";
@@ -24,7 +23,6 @@ import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
 
 const ApplicationDocumentForm = () => {
   const { id } = useParams<{ id: string }>();
-  const { staffOptions } = useStaffOptions();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -309,6 +307,35 @@ const ApplicationDocumentForm = () => {
                 />
               )}
 
+              {/* responsible fieldlar */}
+              {/* responsible_form_3_3 - har doim 17-45 da ko'rinadi */}
+              <div className="flex items-center gap-2 mt-4">
+                <span className="font-semibold whitespace-nowrap">
+                  MBB shakl 3.3:
+                </span>
+                <MyInput
+                  control={form.control}
+                  name="payload.basic.responsible_form_3_3"
+                  placeholder="MBB-1, 5."
+                  className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-[200px]"
+                />
+              </div>
+
+              {/* responsible_organizing - faqat create tanlanganda */}
+              {selectedActions.includes("create") && (
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="font-semibold whitespace-nowrap">
+                    Mas'ul tashkilot:
+                  </span>
+                  <MyInput
+                    control={form.control}
+                    name="payload.basic.responsible_organizing"
+                    placeholder="tarmoq administratori (R. Ahmedov)"
+                    className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-[300px]"
+                  />
+                </div>
+              )}
+
               {/* Form 17-54 ga xos bo'lgan qism */}
               {isTvRvMode && (
                 <TvRvFlowSection control={form.control} watch={form.watch} />
@@ -345,17 +372,6 @@ const ApplicationDocumentForm = () => {
           {isNetworkDocMode && (
             <IDSection1731 control={form.control} setValue={form.setValue} />
           )}
-
-          <MySelect
-            control={form.control}
-            className={"mb-3 mt-2"}
-            name="responsible"
-            options={staffOptions || []}
-            label={t("Mas'ul xodim")}
-            placeholder={t("Select staffs")}
-            isClearable
-            required
-          />
         </div>
 
         <FormContainerFooter>

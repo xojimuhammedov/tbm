@@ -7,36 +7,36 @@ import { get } from "lodash";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import { STAFF_QUERY_KEY } from "@/pages/staff/constants/staff.constants.ts";
-import { StaffInterface } from "@/pages/staff/interfaces/staff.interface.ts";
+import { POSITION_QUERY_KEY } from "@/pages/position/constants/position.constants.ts";
 import {
-  createStaffSchema,
-  StaffDto,
-} from "@/pages/staff/schemas/createStaffSchema.ts";
+  createPositionSchema,
+  PositionDto,
+} from "@/pages/position/schemas/createPositionSchema.ts";
+import { PositionInterface } from "@/pages/position/interfaces/position.interface.ts";
 
 export type FormProps = {
   id: string | null;
   onSave?: () => void;
 };
 
-const useStaffForm = ({ id, onSave }: FormProps) => {
+const usePositionForm = ({ id, onSave }: FormProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const schema = useMemo(() => createStaffSchema(t, id), [t, id]);
-  const form = useForm<StaffDto>({
+  const schema = useMemo(() => createPositionSchema(t), [t]);
+  const form = useForm<PositionDto>({
     resolver: zodResolver(schema),
   });
 
-  const query = useGetOne<{ user: StaffInterface }>({
-    url: [STAFF_QUERY_KEY, id || ""],
+  const query = useGetOne<PositionInterface>({
+    url: [POSITION_QUERY_KEY, id || ""],
     options: {
       enabled: Boolean(id),
     },
   });
 
   const { query: save } = useMutate({
-    url: [STAFF_QUERY_KEY, id || ""],
-    method: id ? MutateRequestMethod.PUT : MutateRequestMethod.POST,
+    url: [POSITION_QUERY_KEY, id || ""],
+    method: id ? MutateRequestMethod.PATCH : MutateRequestMethod.POST,
     options: {
       onError: (error) => {
         toast({
@@ -54,32 +54,26 @@ const useStaffForm = ({ id, onSave }: FormProps) => {
           variant: "success",
           title: t(`Success`),
           description: id
-            ? t(`Staff updated successfully`)
-            : t(`Staff created successfully`),
+            ? t(`Successfully updated`)
+            : t(`Successfully created`),
         });
       },
     },
   });
 
   useEffect(() => {
-    const item = query.data?.user;
+    const item = query.data;
     if (item) {
-      form.setValue("first_name", item.first_name);
-      form.setValue("second_name", item.second_name);
-      form.setValue("middle_name", item.middle_name);
-      form.setValue("email", item.email);
-      form.setValue("phone", item.phone);
-      form.setValue("pinfl", item.pinfl);
-      form.setValue("role", item.role?._id);
-      form.setValue("position", item.position?._id);
+      form.reset({
+        name: item.name,
+        description: item.description || "",
+      });
     }
   }, [query.data, form]);
 
   const onSubmit = useCallback(
-    (data: StaffDto) => {
-      const payload = { ...data };
-      delete payload.passwordRepeat;
-      save.mutate(payload);
+    (data: PositionDto) => {
+      save.mutate(data);
     },
     [save],
   );
@@ -90,4 +84,4 @@ const useStaffForm = ({ id, onSave }: FormProps) => {
   };
 };
 
-export default useStaffForm;
+export default usePositionForm;
