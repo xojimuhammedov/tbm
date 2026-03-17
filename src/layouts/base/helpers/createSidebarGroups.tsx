@@ -31,7 +31,7 @@ const createSidebarGroups = (
           {
             title: t("17-96 ex/in document"),
             url: "exin-96",
-            roles: ["admin"],
+            roles: ["admin", "tbp"],
           },
           {
             title: t("17-97 ex/out document"),
@@ -64,18 +64,22 @@ const createSidebarGroups = (
           {
             title: t("Buyruqlar"),
             url: "orders",
+            roles: ["admin"],
           },
           {
             title: t("Farmoyishlar"),
             url: "decrees",
+            roles: ["admin"],
           },
           {
             title: t("Xabarnoma va farmoyish"),
             url: "notify",
+            roles: ["admin"],
           },
           {
             title: t("Chiquvchi hujjatlar"),
             url: "outgoing",
+            roles: ["admin"],
           },
         ],
       },
@@ -99,22 +103,27 @@ const createSidebarGroups = (
           {
             title: t("Application"),
             url: "application",
+            roles: ["admin"],
           },
           {
             title: t("F-51 document"),
             url: "f-51",
+            roles: ["admin"],
           },
           {
             title: t("F-56 document"),
             url: "f-56",
+            roles: ["admin"],
           },
           {
             title: t("F-54 document"),
             url: "f-54",
+            roles: ["admin"],
           },
           {
             title: t("17-96 document"),
             url: "eid-96",
+            roles: ["admin"],
           },
         ],
       },
@@ -123,19 +132,22 @@ const createSidebarGroups = (
         url: "rttsi",
         icon: SmartphoneCharging,
         isActive: isActive("rttsi"),
+        roles: ["admin"],
       },
       {
         title: t("Operational work"),
         url: "operational-work",
         icon: FileLock,
         isActive: isActive("operational-work"),
+        roles: ["admin"],
       },
       {
         title: t("Television"),
         url: "television",
         icon: Tv,
         isActive: isActive("television"),
-      },
+        roles: ["admin"],
+                },
     ],
   },
   {
@@ -150,10 +162,12 @@ const createSidebarGroups = (
           {
             title: t("RH-143"),
             url: "rh-143",
+            roles: ["admin"],
           },
           {
             title: t("RH-091"),
             url: "rh-091",
+            roles: ["admin"],
           },
           {
             title: t("RH-218"),
@@ -162,22 +176,27 @@ const createSidebarGroups = (
           {
             title: t("RH-226-1"),
             url: "rh-226-1",
+            roles: ["admin"],
           },
           {
             title: t("RH-226-2"),
             url: "rh-226-2",
+            roles: ["admin"],
           },
           {
             title: t("RH-249"),
             url: "rh-249",
+            roles: ["admin"],
           },
           {
             title: t("RH-251"),
             url: "rh-251",
+            roles: ["admin"],
           },
           {
             title: t("RH-260"),
             url: "rh-260",
+            roles: ["admin"],
           },
         ],
       },
@@ -195,30 +214,37 @@ const createSidebarGroups = (
           {
             title: t("A-Application"),
             url: "a-252",
+            roles: ["admin"],
           },
           {
             title: t("Kelishuv farmoyishlar"),
             url: "agreement-decrees",
+            roles: ["admin"],
           },
           {
             title: t("Imzolanadigan hujjatlar"),
             url: "hujjatlarni-imzolash",
+            roles: ["admin"],
           },
           {
             title: t("3.3 Application"),
             url: "rh-3_3",
+            roles: ["admin"],
           },
           {
             title: t("C Application"),
             url: "c-252",
-          },
+            roles: ["admin"],
+                      },
           {
             title: t("D Application"),
             url: "d-252",
+            roles: ["admin"],
           },
           {
             title: t("F Application"),
             url: "f-252",
+            roles: ["admin"],
           },
         ],
       },
@@ -231,6 +257,7 @@ const createSidebarGroups = (
           {
             title: t("A-Application"),
             url: "a-231",
+            roles: ["admin"],
           },
         ],
       },
@@ -288,10 +315,12 @@ const createSidebarGroups = (
           {
             title: t("Channels(5_3)"),
             url: "channels-5_3",
+            roles: ["admin"],
           },
           {
             title: t("Channels ID"),
             url: "channels-id",
+            roles: ["admin"],
           },
         ],
       },
@@ -304,10 +333,12 @@ const createSidebarGroups = (
           {
             title: t("Flows(5_1)"),
             url: "flows-5_1",
+            roles: ["admin"],
           },
           {
             title: t("Flows ID"),
             url: "flows-id",
+            roles: ["admin"],
           },
         ],
       },
@@ -316,6 +347,7 @@ const createSidebarGroups = (
         url: "card-indexes",
         icon: Database,
         isActive: isActive("card-indexes"),
+        roles: ["admin"],
       },
     ],
   },
@@ -362,12 +394,14 @@ const createSidebarGroups = (
         url: "staff",
         icon: User,
         isActive: isActive("staff"),
+        roles: ["admin"],
       },
       {
         title: t("Groups"),
         url: "groups",
         icon: Users,
         isActive: isActive("groups"),
+        roles: ["admin"],
       },
       {
         title: t("Settings"),
@@ -379,12 +413,14 @@ const createSidebarGroups = (
             title: t("Roles"),
             url: "roles",
             icon: ShieldUser,
+            roles: ["admin"],
           },
           {
             title: t("Positions"),
             url: "positions",
             icon: ShieldUser,
-          },
+            roles: ["admin"],
+            },
         ],
       },
     ],
