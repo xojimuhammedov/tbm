@@ -37,7 +37,7 @@ const useApplicationDocumentForm = ({
     defaultValues: {
       code: "",
       order_date: null,
-      to: "",
+      to: [],
       copy: "",
       point_a: "",
       point_b: "",
@@ -150,7 +150,7 @@ const useApplicationDocumentForm = ({
 
     form.setValue("code", prefix);
     form.setValue("order_date", doc.order_date ?? null);
-    form.setValue("to", listToText(doc.to));
+    form.setValue("to", Array.isArray(doc.to) ? doc.to.map((item: any) => typeof item === "object" && item?._id ? item._id : item) : []);
     form.setValue("copy", listToText(doc.copy));
 
     const handler = handlers[prefix];

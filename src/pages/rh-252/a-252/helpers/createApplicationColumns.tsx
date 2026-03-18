@@ -54,13 +54,16 @@ const createOrderColumns = (
     key: "to",
     dataIndex: "to",
     name: t("To"),
-    render: (to: string[]) => {
+    render: (to: any[]) => {
       if (!to || to.length === 0) return "-";
+      const names = to.map((item) =>
+        typeof item === "object" && item?.name ? item.name : item
+      );
       return (
-        <div className="max-w-xs truncate" title={to.join(", ")}>
-          {to.slice(0, 2).join(", ")}
-          {to.length > 2 && (
-            <span className="text-gray-500 font-medium"> +{to.length - 2}</span>
+        <div className="max-w-xs truncate" title={names.join(", ")}>
+          {names.slice(0, 3).join(", ")}
+          {names.length > 3 && (
+            <span className="text-gray-500 font-medium"> +{names.length - 3}</span>
           )}
         </div>
       );

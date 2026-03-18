@@ -14,12 +14,13 @@ import DynamicIdInput from "./DynamicDeleteInput";
 import useApplicationDocumentForm from "@/pages/rh-252/a-252/hooks/useApplicationDocumentForm";
 import UpdateFlowSection from "@/pages/rh-252/a-252/components/form/UpdateFlowSection.tsx";
 import TvRvFlowSection from "@/pages/rh-252/a-252/components/form/TvRvFlowSection.tsx";
-import CreateFlowSection from "@/pages/rh-252/a-252/components/form/ CreateFlowSection.tsx";
+import CreateFlowSection from "@/pages/rh-252/a-252/components/form/CreateFlowSection";
 import AAGBackupDeleteSection from "@/pages/rh-252/a-252/components/form/ReserveChannelDeleteSection.tsx";
 import { useNavigate, useParams } from "react-router-dom";
 import TelegraphPlannedWorkSection from "@/pages/rh-252/a-252/components/form/TelegraphPlannedWorkSection.tsx";
 import SettingsDocSection from "@/pages/rh-252/a-252/components/form/SettingsDocSection.tsx";
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
+import useGetAllQuery from "@/shared/hooks/query/useGetAllQuery";
 
 const ApplicationDocumentForm = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,6 +35,18 @@ const ApplicationDocumentForm = () => {
     currentUpdateType,
     isLoading,
   } = useApplicationDocumentForm({ id: id || null });
+
+  const { data: groupsData, isLoading: isGroupsLoading } = useGetAllQuery<any>({
+    key: "groups",
+    url: "/api/groups",
+  });
+
+  const groupOptions = useMemo(() => {
+    return (groupsData?.docs || []).map((group: any) => ({
+      label: group.name,
+      value: group._id,
+    }));
+  }, [groupsData]);
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -186,10 +199,14 @@ const ApplicationDocumentForm = () => {
                 <p>
                   <strong>Kimga:</strong>
                 </p>
-                <MyInput
+                <MySelect
                   name="to"
                   control={form.control}
-                  className="border border-t-0 border-l-0 border-r-0 rounded-none"
+                  options={groupOptions}
+                  isLoading={isGroupsLoading}
+                  placeholder={t("Tanlang...")}
+                  isClearable
+                  isMulti
                 />
               </div>
 
