@@ -128,13 +128,11 @@ const useApplicationDocumentForm = ({
   const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    // Agar id bo'lmasa, demak bu yangi yaratish rejimi
     if (!id) {
       isInitialLoad.current = false;
       return;
     }
 
-    // Agar id bo'lsa-yu, hali editData yuklanmagan bo'lsa - kutamiz
     if (!editData) return;
 
     const doc = unwrapDoc(editData);
