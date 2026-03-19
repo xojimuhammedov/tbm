@@ -95,13 +95,6 @@ const useApplicationDocuments = () => {
     [query, removeWithConfirm, t, toast],
   );
 
-  const handleEImzoProgress = useCallback(
-    (docId: string) => {
-      navigate(`/tbp/hujjatlar/progress/${docId}`);
-    },
-    [navigate],
-  );
-
   const columns: ColumnType<OrderApplication>[] = useMemo(
     () =>
       createOrderColumns(
@@ -110,7 +103,6 @@ const useApplicationDocuments = () => {
         handleDelete,
         handleView,
         handleEditCode,
-        handleEImzoProgress,
       ),
     [handleDelete, handleEdit, handleView, handleEditCode, t],
   );
@@ -126,7 +118,6 @@ const useApplicationDocuments = () => {
     currentItem: applicationDocumentQuery.data?.data,
     handleCloseView,
     openEditCode,
-    handleEImzoProgress,
     editCodeId,
     editCodeValue,
     handleCloseEditCode,

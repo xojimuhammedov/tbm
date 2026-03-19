@@ -6,7 +6,24 @@ const h1213: Handler = {
   populate: (form, payload) => {
     const basic = payload.basic || {};
 
-    form.setValue("payload.basic.title", basic.title ?? payload.title ?? "", { shouldDirty: true });
+    const titleFromApi = basic.title ?? payload.title ?? "";
+    const normalizedTitle = (() => {
+      if (typeof basic.is_ban === "boolean") {
+        return basic.is_ban ? "BAN" : "BAN_REMOVE";
+      }
+
+      const lowerTitle = String(titleFromApi).toLowerCase();
+      if (lowerTitle.includes("taqiq") && /yo'?q|bekor/.test(lowerTitle)) {
+        return "BAN_REMOVE";
+      }
+      if (lowerTitle.includes("taqiq")) {
+        return "BAN";
+      }
+
+      return titleFromApi;
+    })();
+
+    form.setValue("payload.basic.title", normalizedTitle, { shouldDirty: true });
     form.setValue("payload.basic.start_time", basic.start_time ?? payload.start_time ?? "", { shouldDirty: true });
     form.setValue("payload.basic.orientation", basic.orientation ?? "", { shouldDirty: true });
     form.setValue("payload.basic.context", basic.context ?? payload.context ?? "", { shouldDirty: true });
@@ -18,7 +35,7 @@ const h1213: Handler = {
     if (!Array.isArray(consumers) || consumers.length === 0) {
       consumers = payload.consumers_pending || [];
     }
-    
+
     const formatted = Array.isArray(consumers)
       ? consumers.map((item: any) => (typeof item === "string" ? item : item.code || item._id || item)).filter(Boolean)
       : [];

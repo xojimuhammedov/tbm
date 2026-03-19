@@ -154,7 +154,7 @@ const useApplicationDocumentForm = ({
     form.setValue("to", toValues);
     form.setValue("code", prefix);
     form.setValue("order_date", doc.order_date ?? null);
-    form.setValue("to", listToText(doc.to));
+    form.setValue("to", Array.isArray(doc.to) ? doc.to.map((item: any) => typeof item === "object" && item?._id ? item._id : item) : []);
     form.setValue("copy", listToText(doc.copy));
 
     const handler = handlers[prefix];

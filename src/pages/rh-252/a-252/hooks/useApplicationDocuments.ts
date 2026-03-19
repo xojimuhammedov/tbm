@@ -1,16 +1,16 @@
-import { useCallback, useMemo, useState } from "react";
-import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import { useTranslation } from "react-i18next";
-import useLists from "@/shared/hooks/useLists.ts";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/shared/hooks/useToast.ts";
-import useDelete from "@/shared/hooks/api/useDelete.ts";
-import { get } from "lodash";
-import URLS from "@/shared/constants/urls";
-import KEYS from "@/shared/constants/keys";
-import { OrderApplication } from "../interfaces/order.interface";
-import createOrderColumns from "../helpers/createApplicationColumns";
 import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument.ts";
+import KEYS from "@/shared/constants/keys";
+import URLS from "@/shared/constants/urls";
+import useDelete from "@/shared/hooks/api/useDelete.ts";
+import useLists from "@/shared/hooks/useLists.ts";
+import { useToast } from "@/shared/hooks/useToast.ts";
+import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
+import { get } from "lodash";
+import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import createOrderColumns from "../helpers/createApplicationColumns";
+import { OrderApplication } from "../interfaces/order.interface";
 
 const useApplicationDocuments = () => {
   const { t } = useTranslation();
@@ -95,13 +95,6 @@ const useApplicationDocuments = () => {
     [query, removeWithConfirm, t, toast],
   );
 
-  const handleEImzoProgress = useCallback(
-    (docId: string) => {
-      navigate(`/rh-252/a-252/progress/${docId}`);
-    },
-    [navigate],
-  );
-
   const columns: ColumnType<OrderApplication>[] = useMemo(
     () =>
       createOrderColumns(
@@ -110,7 +103,6 @@ const useApplicationDocuments = () => {
         handleDelete,
         handleView,
         handleEditCode,
-        handleEImzoProgress,
       ),
     [handleDelete, handleEdit, handleView, handleEditCode, t],
   );
@@ -126,7 +118,6 @@ const useApplicationDocuments = () => {
     currentItem: applicationDocumentQuery.data?.data,
     handleCloseView,
     openEditCode,
-    handleEImzoProgress,
     editCodeId,
     editCodeValue,
     handleCloseEditCode,
