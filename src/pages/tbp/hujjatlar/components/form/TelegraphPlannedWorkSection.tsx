@@ -15,21 +15,15 @@ const TelegraphPlannedWorkSection = ({
     control,
     name: "payload.flow_ids",
   });
-
-  // max_duration_minutes qiymatini kuzatish
   const maxDuration = useWatch({
     control,
     name: "payload.basic.max_duration_minutes",
     defaultValue: 0,
   });
-
-  // Shart: 0 ga teng yoki bo'sh bo'lsa
   const isDurationZero = Number(maxDuration) === 0 || !maxDuration;
-
   const handleAddId = () => {
     append("");
   };
-
   return (
     <div className="">
       <div className="mb-8 space-y-6">

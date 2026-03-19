@@ -33,6 +33,19 @@ const OrderApplicationView1214 = ({
     });
   };
 
+  const renderText = (item: any) => {
+    if (item === null || item === undefined) return "";
+    if (typeof item === "string") return item;
+    if (typeof item === "number" || typeof item === "boolean")
+      return String(item);
+    if (typeof item === "object") {
+      return (
+        item?.name ?? item?.description ?? item?._id ?? JSON.stringify(item)
+      );
+    }
+    return String(item);
+  };
+
   const DocumentContent = (
     <div
       ref={contentRef}
@@ -48,7 +61,8 @@ const OrderApplicationView1214 = ({
       <DocumentHeader />
 
       <div className="text-center font-bold text-[14px] uppercase mb-4">
-        "O'zbekiston telekommunikatsiya tarmoqlarini boshqarish respublika markazi"
+        "O'zbekiston telekommunikatsiya tarmoqlarini boshqarish respublika
+        markazi"
         <br />
         DAVLAT UNITAR KORXONASI
       </div>
@@ -75,26 +89,30 @@ const OrderApplicationView1214 = ({
       <div className="grid grid-cols-[80px_1fr] mb-8 text-[15px]">
         <span className="font-bold">Kimga:</span>
         <div className="font-bold uppercase">
-          {document?.to?.map((item: string, i: number) => (
-            <p key={i}>{item}</p>
+          {document?.to?.map((item: any, i: number) => (
+            <p key={i}>{renderText(item)}</p>
           )) || "________________"}
         </div>
         <span className="font-bold">Nusxasi:</span>
         <div className="uppercase">
-          {document?.copy?.length > 0 ? document.copy.join(", ") : "TPB"}
+          {document?.copy?.length > 0
+            ? document.copy.map((item: any) => renderText(item)).join(", ")
+            : "TPB"}
         </div>
       </div>
 
       <div className="text-center space-y-4 mb-10">
         <p className="font-bold text-[17px] uppercase">
-          {basic?.organization_name} hamkori tarmog'ida ishlar to'g'risida хаЬаrпоmа
+          {basic?.organization_name} hamkori tarmog'ida ishlar to'g'risida
+          хаЬаrпоmа
         </p>
 
         <p className="text-[15px] italic">
           (Asos: "{basic?.organization_name}"ning{" "}
           {basic?.request_date
             ? dateFormatter(basic.request_date, "DD.MM.YYYY")
-            : "____"} yildagi {basic?.request_number || "___"}-sonli xati)
+            : "____"}{" "}
+          yildagi {basic?.request_number || "___"}-sonli xati)
         </p>
 
         <div className="text-[16px] space-y-2">
@@ -102,16 +120,24 @@ const OrderApplicationView1214 = ({
             {basic?.connection_closure_type || "2-8 aloqani yopish yo'li bilan"}
           </p>
           <p className="font-bold">
-            {basic?.start_time ? dateFormatter(basic.start_time, "YYYY-yil DD-MMMM", "uz") : ""} {formatTime(basic?.start_time)} dan {formatTime(basic?.end_time)} gacha
+            {basic?.start_time
+              ? dateFormatter(basic.start_time, "YYYY-yil DD-MMMM", "uz")
+              : ""}{" "}
+            {formatTime(basic?.start_time)} dan {formatTime(basic?.end_time)}{" "}
+            gacha
           </p>
         </div>
       </div>
 
       <div className="mb-8">
-        <p className="font-bold text-[15px] mb-2">To'xtalish kuzatiladigan oqimlar:</p>
+        <p className="font-bold text-[15px] mb-2">
+          To'xtalish kuzatiladigan oqimlar:
+        </p>
         <div className="grid grid-cols-4 gap-2">
           {flowIds.map((flow: any, idx: number) => (
-            <span key={idx} className="font-bold text-[15px]">ID {flow.code || flow}</span>
+            <span key={idx} className="font-bold text-[15px]">
+              ID {renderText(flow.code ?? flow)}
+            </span>
           ))}
         </div>
       </div>

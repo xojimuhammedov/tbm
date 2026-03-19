@@ -1,7 +1,5 @@
 import DocumentHeader from "@/pages/tbp/hujjatlar/components/View/DocumentHeader.tsx";
-import type {
-    OrderApplication,
-} from "@/pages/tbp/hujjatlar/interfaces/order.interface.ts";
+import type { OrderApplication } from "@/pages/tbp/hujjatlar/interfaces/order.interface.ts";
 import { MyModal } from "@/shared/components/moleculas/modal";
 import { dateFormatter } from "@/shared/utils/utils";
 import { useRef } from "react";
@@ -25,6 +23,19 @@ const OrderView1248 = ({
   const basic = payload?.basic;
   const withAPause = payload?.with_a_pause || [];
   const responsible = document?.responsible;
+
+  const renderText = (item: any) => {
+    if (item === null || item === undefined) return "";
+    if (typeof item === "string") return item;
+    if (typeof item === "number" || typeof item === "boolean")
+      return String(item);
+    if (typeof item === "object") {
+      return (
+        item?.name ?? item?.description ?? item?._id ?? JSON.stringify(item)
+      );
+    }
+    return String(item);
+  };
 
   const formatTime = (dateStr: string) => {
     if (!dateStr) return "00:00";
@@ -58,7 +69,12 @@ const OrderView1248 = ({
 
       <div className="flex justify-between font-bold py-1 mb-5 text-[14px]">
         <div>
-          SANA: <span>{document?.order_date ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz") : ""}</span>
+          SANA:{" "}
+          <span>
+            {document?.order_date
+              ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz")
+              : ""}
+          </span>
         </div>
         <div>№ {document?.code || "12-48"}</div>
         <div>SONI: 1</div>
@@ -67,14 +83,14 @@ const OrderView1248 = ({
       <div className="grid grid-cols-[70px_1fr] gap-y-1 mb-8 text-[15px]">
         <span className="font-bold">Kimga:</span>
         <div className="font-bold uppercase">
-          {document?.to?.map((item: string, i: number) => (
-            <p key={i}>{item}</p>
+          {document?.to?.map((item: any, i: number) => (
+            <p key={i}>{renderText(item)}</p>
           )) || "________________"}
         </div>
         <span className="font-bold">Nusxasi:</span>
         <div className="uppercase">
-          {document?.copy?.map((item: string, i: number) => (
-            <p key={i}>{item}</p>
+          {document?.copy?.map((item: any, i: number) => (
+            <p key={i}>{renderText(item)}</p>
           )) || "TPB"}
         </div>
       </div>
@@ -87,20 +103,24 @@ const OrderView1248 = ({
         <div className="indent-12">
           {basic?.station_interval && (
             <p>
-              <span className="font-bold">Stansiya intervali:</span> {basic.station_interval}
+              <span className="font-bold">Stansiya intervali:</span>{" "}
+              {basic.station_interval}
             </p>
           )}
 
           {basic?.no_raqami?.length > 0 && (
             <p>
-              <span className="font-bold">N/O raqamlari:</span> {basic.no_raqami.join(", ")}
+              <span className="font-bold">N/O raqamlari:</span>{" "}
+              {basic.no_raqami.join(", ")}
             </p>
           )}
 
           {basic?.no_status && (
             <p>
               <span className="font-bold">N/O statusi:</span> {basic.no_status}
-              {basic.no_status_date ? ` (${dateFormatter(basic.no_status_date, "DD.MM.YYYY")})` : ""}
+              {basic.no_status_date
+                ? ` (${dateFormatter(basic.no_status_date, "DD.MM.YYYY")})`
+                : ""}
             </p>
           )}
 
@@ -112,7 +132,8 @@ const OrderView1248 = ({
 
           {basic?.control_station && (
             <p>
-              <span className="font-bold">Nazorat stansiyasi:</span> {basic.control_station}
+              <span className="font-bold">Nazorat stansiyasi:</span>{" "}
+              {basic.control_station}
             </p>
           )}
 
@@ -124,24 +145,39 @@ const OrderView1248 = ({
 
           {basic?.requirement_ip && (
             <p>
-              <span className="font-bold">Talabnoma:</span> {basic.requirement_ip}
-              {basic.requirement_ip_date ? ` (${dateFormatter(basic.requirement_ip_date, "DD.MM.YYYY")})` : ""}
+              <span className="font-bold">Talabnoma:</span>{" "}
+              {basic.requirement_ip}
+              {basic.requirement_ip_date
+                ? ` (${dateFormatter(basic.requirement_ip_date, "DD.MM.YYYY")})`
+                : ""}
               {basic.requirement_user ? ` - ${basic.requirement_user}` : ""}
             </p>
           )}
 
           <p>
-            <span className="font-bold">Vaqti:</span> {basic?.start_time ? dateFormatter(basic.start_time, "YYYY-yil DD-MMMM", "uz") : ""} {formatTime(basic?.start_time)} dan {formatTime(basic?.end_time)} gacha {basic?.connection_closure_type ? `(${basic.connection_closure_type})` : ""}
+            <span className="font-bold">Vaqti:</span>{" "}
+            {basic?.start_time
+              ? dateFormatter(basic.start_time, "YYYY-yil DD-MMMM", "uz")
+              : ""}{" "}
+            {formatTime(basic?.start_time)} dan {formatTime(basic?.end_time)}{" "}
+            gacha{" "}
+            {basic?.connection_closure_type
+              ? `(${basic.connection_closure_type})`
+              : ""}
           </p>
         </div>
       </div>
 
       {withAPause?.length > 0 && (
         <div className="text-[15px] mb-8">
-          <div className="font-bold mb-2">To'xtalish kuzatiladigan oqimlar:</div>
+          <div className="font-bold mb-2">
+            To'xtalish kuzatiladigan oqimlar:
+          </div>
           <div className="grid grid-cols-4 gap-2">
             {withAPause.map((flow: any, idx: number) => (
-              <span key={idx} className="font-bold">ID {flow.code || flow}</span>
+              <span key={idx} className="font-bold">
+                ID {renderText(flow.code ?? flow)}
+              </span>
             ))}
           </div>
         </div>

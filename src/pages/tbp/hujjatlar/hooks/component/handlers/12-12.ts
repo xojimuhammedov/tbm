@@ -1,7 +1,7 @@
-import { buildBasePayload } from "../utils/commonPayload";
-import { safeArray } from "../utils/common";
-import { formatToISO } from "../utils/time";
 import { Handler } from "@/pages/tbp/hujjatlar/hooks/component/types/types.ts";
+import { safeArray } from "../utils/common";
+import { buildBasePayload } from "../utils/commonPayload";
+import { formatToISO } from "../utils/time";
 
 // ─── Update payload builder ───────────────────────────────────────────────────
 
@@ -149,10 +149,10 @@ const h1212: Handler = {
 
     const createPayload = actions.includes("create")
       ? {
-          flow_ids: safeArray(data.payload.create?.flow_ids).map(
-            ({ id_exist, ...rest }: any) => rest,
-          ),
-        }
+        flow_ids: safeArray(data.payload.create?.flow_ids).map(
+          ({ id_exist, ...rest }: any) => rest,
+        ),
+      }
       : undefined;
 
     const updatePayload = actions.includes("update")
@@ -161,14 +161,16 @@ const h1212: Handler = {
 
     const deletePayload = actions.includes("delete")
       ? {
-          elements: safeArray(data.payload?.delete?.elements)
-            .map((item: any) => (typeof item === "string" ? item : item.value))
-            .filter((val: string) => val && val.trim() !== ""),
-        }
+        elements: safeArray(data.payload?.delete?.elements)
+          .map((item: any) => (typeof item === "string" ? item : item.value))
+          .filter((val: string) => val && val.trim() !== ""),
+      }
       : undefined;
 
+    const basePayload = buildBasePayload(data, ctx.fullCode);
     return {
-      ...buildBasePayload(data, ctx.fullCode),
+      ...basePayload,
+      code: basePayload.code || "12-12",
       payload: {
         basic: {
           organization_name: data.payload.basic.organization_name,

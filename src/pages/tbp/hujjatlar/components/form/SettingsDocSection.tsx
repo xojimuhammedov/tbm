@@ -25,7 +25,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
 
   return (
     <div className="space-y-6">
-      {/* Title and Main Info */}
       <div className="text-center space-y-4 w-full border-b pb-6">
         <MyInput
           name="payload.basic.title"
@@ -61,7 +60,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
       </div>
 
       <div className="space-y-6 w-full">
-        {/* Row 1: Station Interval */}
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Stansiya oralig'i:</label>
           <div className="flex-1">
@@ -74,7 +72,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
           </div>
         </div>
 
-        {/* Row 2: N/O raqamlari */}
         <div className="flex items-start gap-4">
           <label className="font-bold min-w-[170px] pt-2">NO raqami:</label>
           <div className="flex-1 space-y-2">
@@ -99,7 +96,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
           </div>
         </div>
 
-        {/* Row 3: N/O statusi */}
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">NO xolati:</label>
           <div className="flex-1 flex items-center gap-4">
@@ -123,7 +119,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
           </div>
         </div>
 
-        {/* Row 4: Cause */}
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Ish olib borish sababi:</label>
           <div className="flex-1">
@@ -136,7 +131,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
           </div>
         </div>
 
-        {/* Row 5: Flows (To'xtalish bilan) */}
         <div className="space-y-3">
             <div className="flex items-center gap-4">
               <label className="font-bold min-w-[170px]">To'xtalish bilan:</label>
@@ -162,7 +156,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
             </div>
         </div>
 
-        {/* Row 6: Control Station */}
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Boshqaruv stansiya:</label>
           <div className="flex-1">
@@ -175,7 +168,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
           </div>
         </div>
 
-        {/* Row 7: Agreed */}
         <div className="flex items-start gap-4">
           <label className="font-bold min-w-[170px] pt-1">Kelishilgan:</label>
           <div className="flex-1">
@@ -187,7 +179,6 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
           </div>
         </div>
 
-        {/* Row 8 & 9: Requirements */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
             <div className="space-y-2">
                <label className="font-bold text-sm">Talabnoma tuzuvchi (IP):</label>

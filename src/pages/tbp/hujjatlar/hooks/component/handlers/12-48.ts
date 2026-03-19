@@ -1,6 +1,6 @@
+import { Handler } from "@/pages/tbp/hujjatlar/hooks/component/types/types.ts";
 import { buildBasePayload } from "../utils/commonPayload";
 import { formatToISO } from "../utils/time";
-import { Handler } from "@/pages/tbp/hujjatlar/hooks/component/types/types.ts";
 
 const h1248: Handler = {
   populate: (form, payload) => {
@@ -28,31 +28,34 @@ const h1248: Handler = {
     form.setValue("payload.with_a_pause", formattedWithAPause, { shouldDirty: true });
   },
 
-  build: (data, ctx) => ({
-    ...buildBasePayload(data, ctx.fullCode),
-    code: "12-48",
-    payload: {
-      basic: {
-        title: data.payload.basic.title,
-        station_interval: data.payload.basic.station_interval,
-        no_raqami: data.payload.basic.no_raqami || [],
-        no_status: data.payload.basic.no_status,
-        no_status_date: formatToISO(data.payload.basic.no_status_date),
-        cause: data.payload.basic.cause,
-        control_station: data.payload.basic.control_station,
-        agreed: data.payload.basic.agreed,
-        requirement_ip: data.payload.basic.requirement_ip,
-        requirement_ip_date: formatToISO(data.payload.basic.requirement_ip_date),
-        requirement_user: data.payload.basic.requirement_user,
-        requirement_user_date: formatToISO(data.payload.basic.requirement_user_date),
-        connection_closure_type: data.payload.basic.connection_closure_type,
-        start_time: formatToISO(data.payload.basic.start_time),
-        end_time: formatToISO(data.payload.basic.end_time),
-        base_file: data.payload.file_name || "",
+  build: (data, ctx) => {
+    const basePayload = buildBasePayload(data, ctx.fullCode);
+    return {
+      ...basePayload,
+      code: basePayload.code || "12-48",
+      payload: {
+        basic: {
+          title: data.payload.basic.title,
+          station_interval: data.payload.basic.station_interval,
+          no_raqami: data.payload.basic.no_raqami || [],
+          no_status: data.payload.basic.no_status,
+          no_status_date: formatToISO(data.payload.basic.no_status_date),
+          cause: data.payload.basic.cause,
+          control_station: data.payload.basic.control_station,
+          agreed: data.payload.basic.agreed,
+          requirement_ip: data.payload.basic.requirement_ip,
+          requirement_ip_date: formatToISO(data.payload.basic.requirement_ip_date),
+          requirement_user: data.payload.basic.requirement_user,
+          requirement_user_date: formatToISO(data.payload.basic.requirement_user_date),
+          connection_closure_type: data.payload.basic.connection_closure_type,
+          start_time: formatToISO(data.payload.basic.start_time),
+          end_time: formatToISO(data.payload.basic.end_time),
+          base_file: data.payload.file_name || "",
+        },
+        with_a_pause: data.payload.with_a_pause || [],
       },
-      with_a_pause: data.payload.with_a_pause || [],
-    },
-  }),
+    };
+  },
 };
 
 export default h1248;

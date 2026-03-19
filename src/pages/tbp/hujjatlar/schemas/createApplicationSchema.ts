@@ -1,5 +1,5 @@
-import { TranslationArgsType } from "dgz-ui-shared/types";
 import { config } from "@/shared/utils/config.ts";
+import { TranslationArgsType } from "dgz-ui-shared/types";
 import { z } from "zod";
 
 export const createOrderSchema = (
@@ -126,8 +126,22 @@ export const createOrderSchema = (
     file_name: z.string().optional(),
   });
 
+  const payload1213Schema = z.object({
+    basic: z.object({
+      title: z.string().min(1, requiredMsg("Title")),
+      start_time: z.string().min(1, requiredMsg("Start time")),
+      orientation: z.string().min(1, requiredMsg("Orientation")),
+      context: z.string().optional(),
+      responsible: z.string().optional(),
+      base_file: z.string().optional(),
+    }),
+    consumers: z.array(z.string()).optional(),
+    file_name: z.string().optional(),
+  });
+
   return z.discriminatedUnion("code", [
     baseSchema.extend({ code: z.literal("12-12"), payload: payload1212Schema }),
+    baseSchema.extend({ code: z.literal("12-13"), payload: payload1213Schema }),
     baseSchema.extend({ code: z.literal("12-14"), payload: payload1214Schema }),
     baseSchema.extend({ code: z.literal("12-48"), payload: payload1248Schema }),
   ]);

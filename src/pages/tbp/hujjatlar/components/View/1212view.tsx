@@ -29,6 +29,19 @@ const OrderView1212 = ({
 
   const actions: string[] = basic?.actions || [];
 
+  const renderText = (item: any) => {
+    if (item === null || item === undefined) return "";
+    if (typeof item === "string") return item;
+    if (typeof item === "number" || typeof item === "boolean")
+      return String(item);
+    if (typeof item === "object") {
+      return (
+        item?.name ?? item?.description ?? item?._id ?? JSON.stringify(item)
+      );
+    }
+    return String(item);
+  };
+
   const formatDate = (dateStr: string) => {
     if (!dateStr) return "____";
     return dateFormatter(dateStr, "DD.MM.YYYY");
@@ -48,14 +61,12 @@ const OrderView1212 = ({
     >
       <DocumentHeader />
 
-      {/* Title */}
       <div className="text-center font-bold text-[17px] mb-2 leading-tight">
         <p>"O'zbekiston telekommunikatsiya tarmoqlarini boshqarish</p>
         <p>respublika markazi" davlat unitar korxonasi</p>
         <p className="mt-2 tracking-[0.2em] text-[18px]">FARMOYISHI</p>
       </div>
 
-      {/* Date / Code / Count */}
       <div className="flex justify-between font-bold py-1 mb-5 text-[14px]">
         <div>
           SANA:{" "}
@@ -69,20 +80,19 @@ const OrderView1212 = ({
         <div>SONI: 1</div>
       </div>
 
-      {/* To / Nusxasi / Kimdan */}
       <div className="grid grid-cols-[90px_1fr] gap-y-1 mb-6 text-[15px]">
         <span className="font-bold">Kimga:</span>
         <div className="font-bold uppercase">
-          {document?.to?.map((item: string, i: number) => (
-            <p key={i}>{item}</p>
+          {document?.to?.map((item: any, i: number) => (
+            <p key={i}>{renderText(item)}</p>
           )) || "________________"}
         </div>
         {document?.copy?.length > 0 && (
           <>
             <span className="font-bold">Nusxasi:</span>
             <div className="uppercase">
-              {document.copy.map((item: string, i: number) => (
-                <p key={i}>{item}</p>
+              {document.copy.map((item: any, i: number) => (
+                <p key={i}>{renderText(item)}</p>
               ))}
             </div>
           </>
@@ -91,18 +101,19 @@ const OrderView1212 = ({
           <>
             <span className="font-bold">Kimdan:</span>
             <div className="uppercase">
-              {document.from.map((item: string, i: number) => (
-                <p key={i}>{item}</p>
+              {document.from.map((item: any, i: number) => (
+                <p key={i}>{renderText(item)}</p>
               ))}
             </div>
           </>
         )}
       </div>
 
-      {/* Intro paragraph */}
       <div className="text-[15px] text-justify mb-6 space-y-3">
         <p className="indent-12">
-          <span className="font-bold">{basic?.organization_name || "____"}</span>{" "}
+          <span className="font-bold">
+            {basic?.organization_name || "____"}
+          </span>{" "}
           {formatDate(basic?.request_date)}{" "}
           {basic?.request_number ? `№ ${basic.request_number}-sonli` : ""}{" "}
           murojaatiga binoan{" "}
@@ -157,27 +168,59 @@ const OrderView1212 = ({
           <table className="w-full text-[13px] border-collapse">
             <thead>
               <tr className="bg-gray-100">
-                <th className="border border-gray-400 px-2 py-1 text-left">Code</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Signal</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Point A</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Port A</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Device A</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Point B</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Port B</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Device B</th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Code
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Signal
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Point A
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Port A
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Device A
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Point B
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Port B
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Device B
+                </th>
               </tr>
             </thead>
             <tbody>
               {createFlows.map((f: any, i: number) => (
                 <tr key={i} className="even:bg-gray-50">
-                  <td className="border border-gray-300 px-2 py-1 font-bold">{f.code}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.signal_level}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.point_a}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.port_a}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.device_a}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.point_b}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.port_b}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.device_b}</td>
+                  <td className="border border-gray-300 px-2 py-1 font-bold">
+                    {f.code}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.signal_level}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.point_a}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.port_a}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.device_a}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.point_b}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.port_b}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.device_b}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -185,7 +228,6 @@ const OrderView1212 = ({
         </div>
       )}
 
-      {/* Update – channels */}
       {actions.includes("update") && updateChannels.length > 0 && (
         <div className="mb-6">
           <p className="font-bold text-[15px] mb-2 uppercase">
@@ -206,7 +248,9 @@ const OrderView1212 = ({
               {updateChannels.map((ch: any, i: number) => (
                 <tr key={i} className="even:bg-gray-50">
                   <td className="border border-gray-300 px-3 py-1">{ch.old}</td>
-                  <td className="border border-gray-300 px-3 py-1 font-bold">{ch.new}</td>
+                  <td className="border border-gray-300 px-3 py-1 font-bold">
+                    {ch.new}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -214,7 +258,6 @@ const OrderView1212 = ({
         </div>
       )}
 
-      {/* Update – flows */}
       {actions.includes("update") && updateFlows.length > 0 && (
         <div className="mb-6">
           <p className="font-bold text-[15px] mb-2 uppercase">
@@ -223,25 +266,53 @@ const OrderView1212 = ({
           <table className="w-full text-[13px] border-collapse">
             <thead>
               <tr className="bg-gray-100">
-                <th className="border border-gray-400 px-2 py-1 text-left">Code</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Point A</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Point B</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Device A</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Device B</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Port A</th>
-                <th className="border border-gray-400 px-2 py-1 text-left">Port B</th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Code
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Point A
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Point B
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Device A
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Device B
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Port A
+                </th>
+                <th className="border border-gray-400 px-2 py-1 text-left">
+                  Port B
+                </th>
               </tr>
             </thead>
             <tbody>
               {updateFlows.map((f: any, i: number) => (
                 <tr key={i} className="even:bg-gray-50">
-                  <td className="border border-gray-300 px-2 py-1 font-bold">{f.code}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.point_a}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.point_b}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.device_a}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.device_b}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.port_a}</td>
-                  <td className="border border-gray-300 px-2 py-1">{f.port_b}</td>
+                  <td className="border border-gray-300 px-2 py-1 font-bold">
+                    {f.code}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.point_a}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.point_b}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.device_a}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.device_b}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.port_a}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-1">
+                    {f.port_b}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -249,7 +320,6 @@ const OrderView1212 = ({
         </div>
       )}
 
-      {/* Delete */}
       {actions.includes("delete") && deleteElements.length > 0 && (
         <div className="mb-6">
           <p className="font-bold text-[15px] mb-2 uppercase">
@@ -267,8 +337,6 @@ const OrderView1212 = ({
           </div>
         </div>
       )}
-
-      {/* Signature */}
       <div className="flex justify-between items-end text-[15px] font-bold mt-auto mb-10">
         <div className="w-1/2">TTMQ va B xizmati boshlig'i</div>
         <div className="w-1/2 text-right">
@@ -302,7 +370,9 @@ const OrderView1212 = ({
       className="overflow-auto p-0"
       header={null}
     >
-      <div className="bg-gray-100 min-h-full w-full py-5">{DocumentContent}</div>
+      <div className="bg-gray-100 min-h-full w-full py-5">
+        {DocumentContent}
+      </div>
     </MyModal>
   );
 };

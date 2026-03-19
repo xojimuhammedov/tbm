@@ -32,24 +32,27 @@ const h1214: Handler = {
     form.setValue("payload.flow_ids", formattedFlowIds, { shouldDirty: true, shouldValidate: true });
   },
 
-  build: (data, ctx) => ({
-    ...buildBasePayload(data, ctx.fullCode),
-    code: "12-14",
-    payload: {
-      basic: {
-        title: data.payload.basic.title,
-        organization_name: data.payload.basic.organization_name,
-        request_number: data.payload.basic.request_number,
-        request_date: data.payload.basic.request_date,
-        connection_closure_type: data.payload.basic.connection_closure_type,
-        start_time: formatToISO(data.payload.basic.start_time),
-        end_time: formatToISO(data.payload.basic.end_time),
-        context: data.payload.basic.context || null,
-        base_file: data.payload.file_name || "",
+  build: (data, ctx) => {
+    const basePayload = buildBasePayload(data, ctx.fullCode);
+    return {
+      ...basePayload,
+      code: basePayload.code || "12-14",
+      payload: {
+        basic: {
+          title: data.payload.basic.title,
+          organization_name: data.payload.basic.organization_name,
+          request_number: data.payload.basic.request_number,
+          request_date: data.payload.basic.request_date,
+          connection_closure_type: data.payload.basic.connection_closure_type,
+          start_time: formatToISO(data.payload.basic.start_time),
+          end_time: formatToISO(data.payload.basic.end_time),
+          context: data.payload.basic.context || null,
+          base_file: data.payload.file_name || "",
+        },
+        flow_ids: data.payload.flow_ids || [],
       },
-      flow_ids: data.payload.flow_ids || [],
-    },
-  }),
+    };
+  },
 };
 
 export default h1214;

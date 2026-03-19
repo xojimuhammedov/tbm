@@ -408,7 +408,6 @@ const OrderForm1212 = ({ control, watch }: OrderForm1212Props) => {
 
   return (
     <>
-      {/* Signal level + Actions */}
       <div className="flex items-center justify-center gap-4 mb-8">
         <MyInput
           control={control}
@@ -431,7 +430,6 @@ const OrderForm1212 = ({ control, watch }: OrderForm1212Props) => {
         <p className="text-xl font-semibold">to'g'risida.</p>
       </div>
 
-      {/* Organization + Request date + Request number + Start time */}
       <div className="flex flex-wrap items-center gap-2 my-8">
         <MyInput
           control={control}
@@ -459,7 +457,6 @@ const OrderForm1212 = ({ control, watch }: OrderForm1212Props) => {
         <span>quyidagi ishlar amalga oshirilsin:</span>
       </div>
 
-      {/* N/O raqami */}
       <div className="flex items-center gap-2 mb-4">
         <span className="font-semibold whitespace-nowrap">N/O raqami:</span>
         <MyInput

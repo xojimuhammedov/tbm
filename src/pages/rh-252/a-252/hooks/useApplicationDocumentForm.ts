@@ -37,7 +37,7 @@ const useApplicationDocumentForm = ({
     defaultValues: {
       code: "",
       order_date: null,
-      to: "",
+      to: [],
       copy: "",
       point_a: "",
       point_b: "",
@@ -145,9 +145,15 @@ const useApplicationDocumentForm = ({
 
     const fullCode = doc.code || "";
     const prefix = codePrefix(fullCode);
-
+    const normalizeToValue = (item: any) =>
+        typeof item === "string"
+            ? item
+            : item?._id ?? item?.value ?? item?.name ?? "";
+    const toValues = (Array.isArray(doc.to) ? doc.to : [])
+        .map(normalizeToValue)
+        .filter(Boolean);
     fullCodeRef.current = fullCode;
-
+    form.setValue("to", toValues);
     form.setValue("code", prefix);
     form.setValue("order_date", doc.order_date ?? null);
     form.setValue("to", listToText(doc.to));

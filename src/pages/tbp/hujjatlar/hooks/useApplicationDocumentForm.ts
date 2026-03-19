@@ -50,6 +50,9 @@ const useApplicationDocumentForm = ({
           start_time: "",
           end_time: "",
           context: "",
+          orientation: "",
+          responsible: "",
+          base_file: "",
           // 12-48 fields
           station_interval: "",
           no_raqami: [],
@@ -72,6 +75,7 @@ const useApplicationDocumentForm = ({
         update: { update_type: "", channels: [], flows: [] },
         delete: { elements: [] },
         flow_ids: [],
+        consumers: [],
         file_name: "",
       },
     },
@@ -138,7 +142,16 @@ const useApplicationDocumentForm = ({
     form.setValue("code", prefix);
     form.setValue("order_date", doc.order_date ?? null);
     form.setValue("nomenclature_number", doc.nomenclature_number || doc.document_index || "");
-    form.setValue("to", doc.to || []);
+    const normalizeToValue = (item: any) =>
+      typeof item === "string"
+        ? item
+        : item?._id ?? item?.value ?? item?.name ?? "";
+
+    const toValues = (Array.isArray(doc.to) ? doc.to : [])
+      .map(normalizeToValue)
+      .filter(Boolean);
+
+    form.setValue("to", toValues);
     form.setValue("copy", listToText(doc.copy));
     form.setValue("from", listToText(doc.from));
     form.setValue("signer", doc.signer?._id ?? doc.signer ?? "");

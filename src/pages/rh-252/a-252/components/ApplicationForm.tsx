@@ -20,12 +20,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import TelegraphPlannedWorkSection from "@/pages/rh-252/a-252/components/form/TelegraphPlannedWorkSection.tsx";
 import SettingsDocSection from "@/pages/rh-252/a-252/components/form/SettingsDocSection.tsx";
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
+import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
 
 const ApplicationDocumentForm = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
   const navigate = useNavigate();
-
+  const { groupOptions } = useGroupOptions();
   const {
     form,
     handleSubmit,
@@ -186,10 +187,12 @@ const ApplicationDocumentForm = () => {
                 <p>
                   <strong>Kimga:</strong>
                 </p>
-                <MyInput
-                  name="to"
-                  control={form.control}
-                  className="border border-t-0 border-l-0 border-r-0 rounded-none"
+                <MySelect
+                    name="to"
+                    control={form.control}
+                    options={groupOptions || []}
+                    placeholder="Guruhlarni tanlang"
+                    isMulti
                 />
               </div>
 
@@ -289,7 +292,7 @@ const ApplicationDocumentForm = () => {
                 <div className="mt-6 border p-6 my-2 rounded-xl bg-gray-50/50">
                   <DynamicIdInput
                     control={form.control}
-                    name="payload.delete.flow_ids" // Formadagi path
+                    name="payload.delete.flow_ids"
                   />
                 </div>
               )}
