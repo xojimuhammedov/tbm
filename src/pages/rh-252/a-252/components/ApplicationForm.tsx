@@ -36,6 +36,18 @@ const ApplicationDocumentForm = () => {
     isLoading,
   } = useApplicationDocumentForm({ id: id || null });
 
+  const { data: groupsData, isLoading: isGroupsLoading } = useGetAllQuery<any>({
+    key: "groups",
+    url: "/api/groups",
+  });
+
+  const groupOptions = useMemo(() => {
+    return (groupsData?.docs || []).map((group: any) => ({
+      label: group.name,
+      value: group._id,
+    }));
+  }, [groupsData]);
+
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "payload.create.flow_ids",
@@ -193,6 +205,8 @@ const ApplicationDocumentForm = () => {
                     options={groupOptions || []}
                     placeholder="Guruhlarni tanlang"
                     isMulti
+                    isLoading={isGroupsLoading}
+                    isClearable
                 />
               </div>
 
