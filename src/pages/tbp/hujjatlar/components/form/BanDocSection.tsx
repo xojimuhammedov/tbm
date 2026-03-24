@@ -26,14 +26,16 @@ const BanDocSection = ({ control }: BanDocSectionProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-4 w-full border-b pb-6">
-        <MySelect
-          name="payload.basic.title"
-          control={control}
-          options={titleOptions}
-          placeholder="Taqiq turi"
-          isClearable
-          className="text-center text-xl border-none w-full p-0 rounded-none font-bold uppercase"
-        />
+        <div className="w-full max-w-2xl mx-auto">
+          <MySelect
+            name="payload.basic.title"
+            control={control}
+            options={titleOptions}
+            placeholder="Taqiq turi"
+            isClearable
+            className="text-xl border-none w-full p-0 rounded-none"
+          />
+        </div>
 
         <div className="flex items-center justify-center gap-4">
           <MyDateTimePicker
@@ -46,7 +48,7 @@ const BanDocSection = ({ control }: BanDocSectionProps) => {
             name="payload.basic.orientation"
             control={control}
             placeholder="O'zbekiston Respublikasi bo'yicha"
-            className="text-center border-none font-bold"
+            className="border-none h-8 p-0 pl-1.5 font-medium w-70"
           />
         </div>
       </div>
@@ -54,12 +56,14 @@ const BanDocSection = ({ control }: BanDocSectionProps) => {
       <div className="space-y-4">
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Mas'ul:</label>
+          <div className="flex-1 w-full max-w-lg">
           <MyInput
             name="payload.basic.responsible"
             control={control}
             placeholder="МВР AI-9 - Аkrоmov"
-            className="flex-1 border-none p-0 font-medium"
+            className="border-none h-8 p-0 pl-1.5 font-medium"
           />
+          </div>
         </div>
 
         <div className="flex items-start gap-4">
@@ -68,7 +72,7 @@ const BanDocSection = ({ control }: BanDocSectionProps) => {
             <textarea
               {...control.register("payload.basic.context")}
               placeholder="Taqiq matni..."
-              className="w-full border-none p-0 min-h-[80px] bg-transparent focus:ring-0 resize-none text-sm"
+              className="w-full border-none p-0 min-h-[80px] pl-1.5 pt-2 bg-transparent focus:ring-0 resize-none text-sm"
             />
           </div>
         </div>
@@ -88,7 +92,7 @@ const BanDocSection = ({ control }: BanDocSectionProps) => {
                     name={`payload.consumers.${index}`}
                     control={control}
                     placeholder="AI-98"
-                    className="border-none bg-transparent p-0 w-28 h-6 text-sm font-mono"
+                    className="border-none bg-transparent p-0 w-28 h-8 pl-1.5 text-sm font-mono"
                   />
                   <button
                     type="button"
