@@ -18,8 +18,6 @@ const Page = () => {
   const { dataSource, loading, params, handleFilter, columns, filters } =
     useListSocket((record) => setSelectedRecord(record));
 
-  console.log(dataSource);
-
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
