@@ -26,12 +26,15 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
   return (
     <div className="space-y-6">
       <div className="text-center space-y-4 w-full border-b pb-6">
-        <MyInput
-          name="payload.basic.title"
-          control={control}
-          placeholder="Tezkor ishlar"
-          className="text-center text-xl border-none w-full p-0 rounded-none font-bold uppercase"
-        />
+        <div className="w-full max-w-2xl mx-auto">
+          <MyInput
+            name="payload.basic.title"
+            control={control}
+            placeholder="Tezkor ishlar"
+            className="text-xl border-none w-full p-0 rounded-none font-bold uppercase pl-1.5"
+          />
+        </div>
+
 
         <div className="flex flex-col items-center gap-2">
           <div className="w-full max-w-lg">
@@ -39,20 +42,20 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
               name="payload.basic.connection_closure_type"
               control={control}
               placeholder="«2-1» aloqani yopish yo’li bilan"
-              className="text-center font-bold border-none h-8 p-0"
+              className="font-bold border-none h-8 p-0 pl-1.5"
             />
           </div>
           <div className="flex items-center gap-2 font-medium">
             <MyDateTimePicker
               name="payload.basic.start_time"
               control={control}
-              className="w-44 border-none p-0 text-center"
+              className="w-55 border-none p-0 text-center"
             />
             <span className="text-gray-500">dan</span>
             <MyDateTimePicker
               name="payload.basic.end_time"
               control={control}
-              className="w-44 border-none p-0 text-center"
+              className="w-55 border-none p-0 text-center"
             />
             <span className="text-gray-500">gacha</span>
           </div>
@@ -62,12 +65,12 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
       <div className="space-y-6 w-full">
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Stansiya oralig'i:</label>
-          <div className="flex-1">
+          <div className="flex-1 w-full max-w-lg">
             <MyInput
               name="payload.basic.station_interval"
               control={control}
               placeholder="К711А a.1 m.61272 - m.61261."
-              className="border-none p-0 h-auto font-medium"
+              className="border-none h-8 p-0 pl-1.5 font-medium"
             />
           </div>
         </div>
@@ -82,7 +85,7 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
                       name={`payload.basic.no_raqami.${index}`}
                       control={control}
                       placeholder="1015473"
-                      className="border-none bg-transparent p-0 w-24 h-6 text-sm font-mono"
+                      className="border-none bg-transparent p-0 w-24 h-8 pl-1.5 text-sm font-mono"
                     />
                     <button type="button" onClick={() => removeNo(index)} className="text-slate-400 hover:text-red-500">
                       <X className="w-3 h-3" />
@@ -104,7 +107,7 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
                 name="payload.basic.no_status"
                 control={control}
                 placeholder="«3»"
-                className="border-none p-0 font-medium"
+                className="border-none h-8 p-0 pl-1.5 font-medium"
               />
             </div>
             <div className="flex items-center gap-2">
@@ -121,12 +124,12 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
 
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Ish olib borish sababi:</label>
-          <div className="flex-1">
+          <div className="flex-1 w-full max-w-lg">
             <MyInput
               name="payload.basic.cause"
               control={control}
               placeholder="1063O-Xayraton yo'nalishida signal so'nish sababini aniqlash..."
-              className="border-none p-0 h-auto font-medium"
+              className="border-none h-8 p-0 pl-1.5 font-medium"
             />
           </div>
         </div>
@@ -146,7 +149,7 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
                     control={control}
                     name={`payload.with_a_pause.${index}`}
                     placeholder="ID-3881..."
-                    className="border-none bg-transparent p-0 h-6 font-mono text-sm w-32"
+                    className="border-none bg-transparent p-0 h-8 pl-1.5 font-mono text-sm w-32"
                   />
                   <button type="button" onClick={() => removeFlow(index)} className="text-slate-300 hover:text-red-500">
                     <Trash2 className="w-4 h-4" />
@@ -158,12 +161,12 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
 
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Boshqaruv stansiya:</label>
-          <div className="flex-1">
+          <div className="flex-1 w-full max-w-lg">
             <MyInput
               name="payload.basic.control_station"
               control={control}
               placeholder="Janubiy filiali 6-bog'lama hududiy menejeri..."
-              className="border-none p-0 h-auto font-medium"
+              className="border-none h-8 p-0 pl-1.5 font-medium"
             />
           </div>
         </div>
@@ -174,7 +177,7 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
             <textarea
               {...control.register("payload.basic.agreed")}
               placeholder="Texnik direktori J.Aripov..."
-              className="w-full border-none p-0 min-h-[60px] font-medium bg-transparent focus:ring-0 resize-none text-sm"
+              className="w-full border-none p-0 min-h-[60px] font-medium pl-1.5 pt-1.5 bg-transparent focus:ring-0 resize-none text-sm"
             />
           </div>
         </div>
@@ -187,7 +190,7 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
                     name="payload.basic.requirement_ip"
                     control={control}
                     placeholder="Н7-0-2-12/686"
-                    className="border-b h-8 p-0"
+                    className="border-none h-8 p-0 pl-1.5 font-medium"
                   />
                   <div className="w-32 border-b">
                     <MyDatePicker
