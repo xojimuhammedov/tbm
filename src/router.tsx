@@ -144,6 +144,9 @@ const E231FormPage = lazy(
 const A252Page = lazy(() => import("@/pages/rh-252/a-252/Page"));
 const A252FormPage = lazy(() => import("@/pages/rh-252/a-252/pages/FormPage"));
 
+const HujjatlarPage = lazy(() => import("@/pages/tbp/hujjatlar/Page"));
+const HujjatlarFormPage = lazy(() => import("@/pages/tbp/hujjatlar/pages/FormPage"));
+
 const RH3_3Page = lazy(() => import("@/pages/rh-252/rh-3_3/Page"));
 const RH3_3FormPage = lazy(() => import("@/pages/rh-252/rh-3_3/page/FormPage"));
 const RH_CDocument = lazy(() => import("@/pages/rh-252/c-252/Page"));
@@ -1064,6 +1067,62 @@ function Router() {
           element: (
             <HasAccess roles={["admin"]}>
               <ProgreesDoc />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar",
+          element: (
+            <HasAccess roles={["admin", "tbp"]}>
+              <HujjatlarPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar/create",
+          element: (
+            <HasAccess roles={["admin", "tbp"]}>
+              <HujjatlarFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp"]}>
+              <HujjatlarFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar/sign/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp"]}>
+              <EImzoSignPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar/progress/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp"]}>
+              <ProgreesDoc />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/imzolanadigan-hujjatlar",
+          element: (
+            <HasAccess roles={["admin", "tbp"]}>
+              <HujjatlarniImzolashPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/imzolanadigan-hujjatlar/:id/shared/:sharedId",
+          element: (
+            <HasAccess roles={["admin", "tbp"]}>
+              <HujjatlarniImzolashFormPage />
             </HasAccess>
           ),
         },

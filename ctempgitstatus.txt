@@ -1,0 +1,36 @@
+On branch main
+Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   src/pages/tbp/hujjatlar/components/View/tbm_logo_doc.png
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/layouts/base/helpers/createSidebarGroups.tsx
+	modified:   src/pages/imzolash/page.tsx
+	modified:   src/router.tsx
+	modified:   src/shared/constants/keys.ts
+	modified:   src/shared/constants/urls.ts
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	"c\357\200\272tempgitstatus.txt"
+	files_to_fix.txt
+	src/pages/tbp/hujjatlar/Page.tsx
+	src/pages/tbp/hujjatlar/components/ApplicationForm.tsx
+	src/pages/tbp/hujjatlar/components/DynamicDeleteInput.tsx
+	src/pages/tbp/hujjatlar/components/View/1212view.tsx
+	src/pages/tbp/hujjatlar/components/View/1214view.tsx
+	src/pages/tbp/hujjatlar/components/View/1248view.tsx
+	src/pages/tbp/hujjatlar/components/View/DocumentHeader.tsx
+	src/pages/tbp/hujjatlar/components/edit/
+	src/pages/tbp/hujjatlar/components/form/
+	src/pages/tbp/hujjatlar/helpers/
+	src/pages/tbp/hujjatlar/hooks/
+	src/pages/tbp/hujjatlar/interfaces/
+	src/pages/tbp/hujjatlar/pages/
+	src/pages/tbp/hujjatlar/schemas/
+

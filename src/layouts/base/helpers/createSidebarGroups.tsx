@@ -31,7 +31,7 @@ const createSidebarGroups = (
           {
             title: t("17-96 ex/in document"),
             url: "exin-96",
-            roles: ["admin", "tbp"],
+            roles: ["admin",],
           },
           {
             title: t("17-97 ex/out document"),
@@ -172,6 +172,7 @@ const createSidebarGroups = (
           {
             title: t("RH-218"),
             url: "rh-218",
+            roles: ["admin"],
           },
           {
             title: t("RH-226-1"),
@@ -258,6 +259,29 @@ const createSidebarGroups = (
             title: t("A-Application"),
             url: "a-231",
             roles: ["admin"],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: t("TBP hujjatlari"),
+    items: [
+      {
+        title: t("TBP"),
+        url: "tbp",
+        icon: ChartBarBig,
+        isActive: isActive("tbp"),
+        children: [
+          {
+            title: t("Hujjatlar"),
+            url: "hujjatlar",
+            roles: ["admin", "tbp"],
+          },
+          {
+            title: t("Imzolanadigan hujjatlar"),
+            url: "imzolanadigan-hujjatlar",
+            roles: ["admin", "tbp"],
           },
         ],
       },

@@ -6,7 +6,6 @@ import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import {
   EditIcon,
   EyeIcon,
-  FileDown,
   PencilLineIcon,
   Trash2Icon,
 } from "lucide-react";
@@ -116,33 +115,11 @@ const createOrderColumns = (
     key: "actions",
     dataIndex: "_id",
     name: "",
-    render: (id: string | undefined, record: OrderApplication) => {
+    render: (id: string | undefined) => {
       if (!id) return null;
-
-      const isFinished =
-        record.status === "SIGNED" || record.status === "EXECUTED";
-      const hasPdf = !!record.pdf_path;
-
-      const handleDownloadPdf = () => {
-        if (record.pdf_path) {
-          const fileName = record.pdf_path.split("/").pop();
-          if (fileName) {
-            window.open(`/api/temp-pdf/${fileName}`, "_blank");
-          }
-        }
-      };
 
       return (
         <div className={"flex items-center gap-2 justify-end"}>
-          {hasPdf && (
-            <MyTooltip content={t("PDF yuklab olish")}>
-              <FileDown
-                className="size-4 cursor-pointer text-emerald-600 hover:text-emerald-700 transition-colors"
-                onClick={handleDownloadPdf}
-              />
-            </MyTooltip>
-          )}
-
           <div className="h-4 w-[1px] bg-slate-200 mx-1" />
 
           <MyTooltip content={t("View")}>

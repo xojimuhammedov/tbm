@@ -1,4 +1,4 @@
-import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument.ts";
+import useOrderDocument from "@/pages/tbp/hujjatlar/hooks/useApplicationDocument.ts";
 import KEYS from "@/shared/constants/keys";
 import URLS from "@/shared/constants/urls";
 import useDelete from "@/shared/hooks/api/useDelete.ts";
@@ -23,21 +23,21 @@ const useApplicationDocuments = () => {
   const [editCodeValue, setEditCodeValue] = useState<string>("");
   const [viewId, setViewId] = useState<OrderApplication["_id"] | null>(null);
 
-  const { removeWithConfirm } = useDelete([KEYS.RH_Order_Application]);
+  const { removeWithConfirm } = useDelete([KEYS.TBP_Order_Application]);
   const { query, handleFilter, params } = useLists<OrderApplication>({
-    url: [URLS.RH_Order_Application],
-    queryKey: [KEYS.RH_Order_Application],
+    url: [URLS.TBP_Order_Application],
+    queryKey: [KEYS.TBP_Order_Application],
   });
 
   const { applicationDocumentQuery } = useOrderDocument(viewId as string);
 
   const handleAdd = useCallback(() => {
-    navigate("/rh-252/a-252/create");
+    navigate("/tbp/hujjatlar/create");
   }, [navigate]);
 
   const handleEdit = useCallback(
     (docId: string) => {
-      navigate(`/rh-252/a-252/edit/${docId}`);
+      navigate(`/tbp/hujjatlar/edit/${docId}`);
     },
     [navigate],
   );

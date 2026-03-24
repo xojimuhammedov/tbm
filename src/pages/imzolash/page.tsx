@@ -6,6 +6,8 @@ import OrderApplicationView1745 from "@/pages/rh-252/a-252/components/View/1745v
 import OrderView1748 from "@/pages/rh-252/a-252/components/View/1748view";
 import OrderApplicationView1754 from "@/pages/rh-252/a-252/components/View/1754view";
 import OrderApplicationView1770 from "@/pages/rh-252/a-252/components/View/1770view";
+import OrderApplicationView1214 from "@/pages/tbp/hujjatlar/components/View/1214view";
+import OrderView1248 from "@/pages/tbp/hujjatlar/components/View/1248view";
 import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
 import { PageWrapper } from "@/shared/components/containers/page";
 import { MyModal } from "@/shared/components/moleculas/modal";
@@ -15,10 +17,10 @@ import { dateFormatter } from "@/shared/utils/utils";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import { Button } from "dgz-ui/button";
 import {
-  ChevronLeftIcon,
-  FileTextIcon,
-  FileType2,
-  LoaderCircleIcon,
+    ChevronLeftIcon,
+    FileTextIcon,
+    FileType2,
+    LoaderCircleIcon,
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -95,6 +97,26 @@ function PdfModal({
     if (model === "17_31_payloads") {
       return (
         <OrderApplicationView1731
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    if (model === "12_14_payloads") {
+      return (
+        <OrderApplicationView1214
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    if (model === "12_48_payloads") {
+      return (
+        <OrderView1248
           open={true}
           onOpenChange={() => {}}
           document={doc}

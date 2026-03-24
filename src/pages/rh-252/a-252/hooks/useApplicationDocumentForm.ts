@@ -128,13 +128,11 @@ const useApplicationDocumentForm = ({
   const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    // Agar id bo'lmasa, demak bu yangi yaratish rejimi
     if (!id) {
       isInitialLoad.current = false;
       return;
     }
 
-    // Agar id bo'lsa-yu, hali editData yuklanmagan bo'lsa - kutamiz
     if (!editData) return;
 
     const doc = unwrapDoc(editData);
@@ -145,9 +143,15 @@ const useApplicationDocumentForm = ({
 
     const fullCode = doc.code || "";
     const prefix = codePrefix(fullCode);
-
+    const normalizeToValue = (item: any) =>
+        typeof item === "string"
+            ? item
+            : item?._id ?? item?.value ?? item?.name ?? "";
+    const toValues = (Array.isArray(doc.to) ? doc.to : [])
+        .map(normalizeToValue)
+        .filter(Boolean);
     fullCodeRef.current = fullCode;
-
+    form.setValue("to", toValues);
     form.setValue("code", prefix);
     form.setValue("order_date", doc.order_date ?? null);
     form.setValue("to", Array.isArray(doc.to) ? doc.to.map((item: any) => typeof item === "object" && item?._id ? item._id : item) : []);

@@ -14,19 +14,19 @@ import DynamicIdInput from "./DynamicDeleteInput";
 import useApplicationDocumentForm from "@/pages/rh-252/a-252/hooks/useApplicationDocumentForm";
 import UpdateFlowSection from "@/pages/rh-252/a-252/components/form/UpdateFlowSection.tsx";
 import TvRvFlowSection from "@/pages/rh-252/a-252/components/form/TvRvFlowSection.tsx";
-import CreateFlowSection from "@/pages/rh-252/a-252/components/form/CreateFlowSection";
 import AAGBackupDeleteSection from "@/pages/rh-252/a-252/components/form/ReserveChannelDeleteSection.tsx";
 import { useNavigate, useParams } from "react-router-dom";
 import TelegraphPlannedWorkSection from "@/pages/rh-252/a-252/components/form/TelegraphPlannedWorkSection.tsx";
 import SettingsDocSection from "@/pages/rh-252/a-252/components/form/SettingsDocSection.tsx";
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
-import useGetAllQuery from "@/shared/hooks/query/useGetAllQuery";
+import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
+import CreateFlowSection from "@/pages/rh-252/a-252/components/form/CreateFlowSection.tsx";
 
 const ApplicationDocumentForm = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
   const navigate = useNavigate();
-
+  const { groupOptions } = useGroupOptions();
   const {
     form,
     handleSubmit,
@@ -200,13 +200,13 @@ const ApplicationDocumentForm = () => {
                   <strong>Kimga:</strong>
                 </p>
                 <MySelect
-                  name="to"
-                  control={form.control}
-                  options={groupOptions}
-                  isLoading={isGroupsLoading}
-                  placeholder={t("Tanlang...")}
-                  isClearable
-                  isMulti
+                    name="to"
+                    control={form.control}
+                    options={groupOptions || []}
+                    placeholder="Guruhlarni tanlang"
+                    isMulti
+                    isLoading={isGroupsLoading}
+                    isClearable
                 />
               </div>
 
@@ -306,7 +306,7 @@ const ApplicationDocumentForm = () => {
                 <div className="mt-6 border p-6 my-2 rounded-xl bg-gray-50/50">
                   <DynamicIdInput
                     control={form.control}
-                    name="payload.delete.flow_ids" // Formadagi path
+                    name="payload.delete.flow_ids"
                   />
                 </div>
               )}
