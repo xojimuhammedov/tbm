@@ -85,7 +85,6 @@ const createOrderColumns = (
     render: (status: string | undefined) => {
       let label = status || "---";
       let colorClass = "bg-slate-100 text-slate-700";
-
       if (status === "EXECUTED" || status === "SIGNED") {
         label = "Imzolangan";
         colorClass = "bg-emerald-100 text-emerald-700";
@@ -118,9 +117,6 @@ const createOrderColumns = (
     name: "",
     render: (id: string | undefined, record: OrderApplication) => {
       if (!id) return null;
-
-      const isFinished =
-        record.status === "SIGNED" || record.status === "EXECUTED";
       const hasPdf = !!record.pdf_path;
 
       const handleDownloadPdf = () => {
