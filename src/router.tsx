@@ -234,6 +234,9 @@ const F252_ApplicationForm = lazy(
 // Administration Pages
 const StaffPage = lazy(() => import("@/pages/staff/Page"));
 const GroupPage = lazy(() => import("@/pages/groups/Page"));
+const OrganizationsPage = lazy(
+  () => import("@/pages/organizations/Page.tsx"),
+);
 const SettingsPage = lazy(() => import("@/pages/staff/Page"));
 const RolesPage = lazy(() => import("@/pages/role/Page"));
 const PositionsPage = lazy(() => import("@/pages/position/Page"));
@@ -1026,6 +1029,14 @@ function Router() {
           element: (
             <HasAccess roles={["admin", 'superadmin']}>
               <GroupPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "organizations",
+          element: (
+            <HasAccess roles={["admin", 'superadmin']}>
+              <OrganizationsPage />
             </HasAccess>
           ),
         },
