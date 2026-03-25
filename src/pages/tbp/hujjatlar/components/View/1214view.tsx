@@ -11,18 +11,18 @@ interface Props {
   document?: OrderApplication | any | null;
 }
 
-const OrderView1248 = ({
+const OrderView1214 = ({
   open,
   onOpenChange,
   document,
   asComponent,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
-
   const payload = document?.payload;
   const basic = payload?.basic;
   const withAPause = payload?.with_a_pause || [];
   const responsible = document?.responsible;
+
 
   const renderText = (item: any) => {
     if (item === null || item === undefined) return "";
@@ -223,4 +223,4 @@ const OrderView1248 = ({
   );
 };
 
-export default OrderView1248;
+export default OrderView1214;

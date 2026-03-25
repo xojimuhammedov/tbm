@@ -10,14 +10,13 @@ interface Props {
   document?: any;
 }
 
-const OrderApplicationView1214 = ({
+const OrderApplicationView1234 = ({
   open,
   onOpenChange,
   document,
   asComponent,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
-
   const payload = document?.payload;
   const basic = payload?.basic;
   const flowIds = payload?.flow_ids || [];
@@ -189,4 +188,4 @@ const OrderApplicationView1214 = ({
   );
 };
 
-export default OrderApplicationView1214;
+export default OrderApplicationView1234;

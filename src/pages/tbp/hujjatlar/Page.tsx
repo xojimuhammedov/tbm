@@ -1,8 +1,7 @@
-import EditCodeModal from "@/pages/tbp/hujjatlar/components/edit/OrderEdit.tsx";
 import OrderView1212 from "@/pages/tbp/hujjatlar/components/View/1212view.tsx";
 import OrderView1213 from "@/pages/tbp/hujjatlar/components/View/1213view.tsx";
-import OrderApplicationView1214 from "@/pages/tbp/hujjatlar/components/View/1234view";
-import OrderView1248 from "@/pages/tbp/hujjatlar/components/View/1214view";
+import OrderApplicationView1234 from "@/pages/tbp/hujjatlar/components/View/1234view";
+import OrderView1214 from "@/pages/tbp/hujjatlar/components/View/1214view";
 import useApplicationDocuments from "@/pages/tbp/hujjatlar/hooks/useApplicationDocuments.ts";
 import { PageWrapper } from "@/shared/components/containers/page";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
@@ -27,11 +26,6 @@ const Page = () => {
     currentItem,
     handleCloseView,
     openView,
-    openEditCode,
-    editCodeId,
-    editCodeValue,
-    handleCloseEditCode,
-    handleEditCodeSuccess,
   } = useApplicationDocuments();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
@@ -64,18 +58,18 @@ const Page = () => {
         />
       );
     }
-    if (model === "12_14_payloads") {
+    if (model === "12_34_payloads") {
       return (
-        <OrderApplicationView1214
+        <OrderApplicationView1234
           open={openView}
           onOpenChange={handleCloseView}
           document={currentItem}
         />
       );
     }
-    if (model === "12_48_payloads") {
+    if (model === "12_14_payloads") {
       return (
-        <OrderView1248
+        <OrderView1214
           open={openView}
           onOpenChange={handleCloseView}
           document={currentItem}
@@ -89,14 +83,6 @@ const Page = () => {
   return (
     <>
       {renderOrderView()}
-
-      <EditCodeModal
-        open={openEditCode}
-        onOpenChange={handleCloseEditCode}
-        documentId={editCodeId}
-        currentCode={editCodeValue}
-        onSuccess={handleEditCodeSuccess}
-      />
 
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <Button size={"sm"} onClick={handleAdd}>

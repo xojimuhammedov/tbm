@@ -34,12 +34,6 @@ const BanDocSection = ({ control }: BanDocSectionProps) => {
             className="w-52 border-none p-0 text-center"
           />
           <span className="text-gray-500">dan</span>
-          <MyInput
-            name="payload.basic.orientation"
-            control={control}
-            placeholder="O'zbekiston Respublikasi bo'yicha"
-            className="border-none h-8 p-0 pl-1.5 font-medium w-70"
-          />
         </div>
       </div>
 

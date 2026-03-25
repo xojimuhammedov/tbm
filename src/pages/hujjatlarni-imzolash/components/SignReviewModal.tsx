@@ -14,13 +14,8 @@ import {
 import React, { useState } from "react";
 import { useRejectDocument } from "../hooks/useRejectDocument";
 import SignActions from "./SignActions";
+import useGeneratePdf from "@/pages/imzolash/hooks/useGeneratePdf";
 
-import OrderApplicationView1731 from "@/pages/rh-252/a-252/components/View/1731view";
-import OrderApplicationView1733 from "@/pages/rh-252/a-252/components/View/1733view";
-import OrderApplicationView1745 from "@/pages/rh-252/a-252/components/View/1745view";
-import OrderView1748 from "@/pages/rh-252/a-252/components/View/1748view";
-import OrderApplicationView1754 from "@/pages/rh-252/a-252/components/View/1754view";
-import OrderApplicationView1770 from "@/pages/rh-252/a-252/components/View/1770view";
 import { UserIcon } from "lucide-react";
 
 const fullName = (u?: { first_name?: string; second_name?: string }) =>
@@ -84,6 +79,9 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
 }) => {
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [comment, setComment] = useState("");
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+
+  const { generatePdf, isGenerating } = useGeneratePdf();
 
   const { rejectQuery, isPending } = useRejectDocument(sharedId || "", () => {
     setIsRejectModalOpen(false);
@@ -112,76 +110,21 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
   const doc = fullDoc || currentItem;
   const idToUse = fullDoc?._id || docId;
 
-  if (!doc || !open) return null;
+  React.useEffect(() => {
+    if (open && idToUse) {
+      generatePdf(idToUse as string)
+        .then((url) => setPdfUrl(url))
+        .catch((err) => {
+          console.error("PDF yuklashda xatolik:", err);
+          setPdfUrl(null);
+        });
+    } else {
+      setPdfUrl(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, idToUse]);
 
-  const renderOrderView = () => {
-    const model = doc.payload_model;
-    if (model === "17_54_payloads") {
-      return (
-        <OrderApplicationView1754
-          open={true}
-          onOpenChange={() => {}}
-          document={doc}
-          asComponent
-        />
-      );
-    }
-    if (model === "17_45_payloads") {
-      return (
-        <OrderApplicationView1745
-          open={true}
-          onOpenChange={() => {}}
-          document={doc}
-          asComponent
-        />
-      );
-    }
-    if (model === "17_33_payloads") {
-      return (
-        <OrderApplicationView1733
-          open={true}
-          onOpenChange={() => {}}
-          document={doc}
-          asComponent
-        />
-      );
-    }
-    if (model === "17_70_payloads") {
-      return (
-        <OrderApplicationView1770
-          open={true}
-          onOpenChange={() => {}}
-          document={doc}
-          asComponent
-        />
-      );
-    }
-    if (model === "17_48_payloads") {
-      return (
-        <OrderView1748
-          open={true}
-          onOpenChange={() => {}}
-          document={doc}
-          asComponent
-        />
-      );
-    }
-    if (model === "17_31_payloads") {
-      return (
-        <OrderApplicationView1731
-          open={true}
-          onOpenChange={() => {}}
-          document={doc}
-          asComponent
-        />
-      );
-    }
-    return (
-      <div className="p-8 text-center text-gray-500">
-        Hujjat ko'rinishi topilmadi
-      </div>
-    );
-  };
+  if (!doc || !open) return null;
 
   const renderParticipant = (user: any, role: string) => {
     if (!user) return null;
@@ -215,7 +158,22 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
       <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
         {/* LEFT SIDE: Document View */}
         <div className="flex-1 flex flex-col overflow-hidden bg-gray-100 border-b lg:border-b-0 lg:border-r border-gray-200">
-          {renderOrderView()}
+          {isGenerating ? (
+            <div className="flex-1 flex flex-col items-center justify-center p-8 text-slate-500 gap-4">
+              <div className="w-8 h-8 rounded-full border-4 border-slate-200 border-t-sky-500 animate-spin"></div>
+              Hujjat PDF formati o'qilmoqda...
+            </div>
+          ) : pdfUrl ? (
+            <iframe
+              src={pdfUrl}
+              className="w-full h-full border-0"
+              title="PDF Document"
+            />
+          ) : (
+            <div className="p-8 text-center text-gray-500">
+              Hujjat ko'rinishi topilmadi
+            </div>  
+          )}
         </div>
 
         {/* RIGHT SIDE: Metadata and Actions */}
