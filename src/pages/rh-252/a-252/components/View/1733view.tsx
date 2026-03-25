@@ -60,7 +60,7 @@ const OrderApplicationView1733 = ({
         <div className="font-bold uppercase">
           {document?.to?.map((item: any, i: number) => (
             <p key={i} className="mb-1">
-              {item}
+              {item?.name}
             </p>
           )) || "________________"}
         </div>
