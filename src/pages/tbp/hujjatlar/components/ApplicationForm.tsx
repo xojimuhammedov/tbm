@@ -35,14 +35,14 @@ const ApplicationDocumentForm = () => {
   const selectedCode = form.watch("code");
   const isOrder1212Mode = selectedCode === "12-12";
   const isBanMode = selectedCode === "12-13";
-  const isTelegraphPlannedWorkMode = selectedCode === "12-14";
-  const isSettingsDocMode = selectedCode === "12-48";
+  const isTelegraphPlannedWorkMode = selectedCode === "12-34";
+  const isSettingsDocMode = selectedCode === "12-14";
 
   const prefixOptions = [
     { label: "12-12", value: "12-12" },
     { label: "12-13", value: "12-13" },
+    { label: "12-34", value: "12-34" },
     { label: "12-14", value: "12-14" },
-    { label: "12-48", value: "12-48" },
   ];
 
   if (isLoading && id) {
@@ -131,17 +131,6 @@ const ApplicationDocumentForm = () => {
             />
           </div>
 
-          <div className="mb-8 text-lg">
-            <p>
-              <strong>Kimdan:</strong>
-            </p>
-            <MyInput
-              name="from"
-              control={form.control}
-              className="border border-t-0 border-l-0 border-r-0 rounded-none"
-            />
-          </div>
-
           {/* Form 12-12 ga xos bo'lgan qism */}
           {isOrder1212Mode && (
             <OrderForm1212 control={form.control} watch={form.watch} />
@@ -150,12 +139,12 @@ const ApplicationDocumentForm = () => {
           {/* Form 12-13 ga xos bo'lgan qism */}
           {isBanMode && <BanDocSection control={form.control} />}
 
-          {/* Form 12-14 ga xos bo'lgan qism */}
+          {/* Form 12-34 ga xos bo'lgan qism */}
           {isTelegraphPlannedWorkMode && (
             <TelegraphPlannedWorkSection control={form.control} />
           )}
 
-          {/* Form 12-48 ga xos bo'lgan qism */}
+          {/* Form 12-14 ga xos bo'lgan qism */}
           {isSettingsDocMode && (
             <SettingsDocSection
               control={form.control}

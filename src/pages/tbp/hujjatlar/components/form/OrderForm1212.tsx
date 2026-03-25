@@ -457,27 +457,6 @@ const OrderForm1212 = ({ control, watch }: OrderForm1212Props) => {
         <span>quyidagi ishlar amalga oshirilsin:</span>
       </div>
 
-      <div className="flex items-center gap-2 mb-4">
-        <span className="font-semibold whitespace-nowrap">N/O raqami:</span>
-        <MyInput
-          control={control}
-          name="payload.basic.no_raqami"
-          placeholder="150170050Ц, 150170051Ц 10975–10392"
-          className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 flex-1"
-        />
-      </div>
-
-      {/* Description */}
-      <div className="mb-4">
-        <span className="font-semibold block mb-1">Tavsif:</span>
-        <MyInput
-          control={control}
-          name="payload.basic.description"
-          placeholder="Mazkur raqamli oqim to'g'risida..."
-          className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-full"
-        />
-      </div>
-
       {/* CRUD sections — faqat tanlanganda ko'rinadi */}
       {selectedActions.includes("update") && (
         <UpdateFlowSection1212 control={control} />
