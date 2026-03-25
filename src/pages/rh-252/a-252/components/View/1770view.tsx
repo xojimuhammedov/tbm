@@ -91,9 +91,9 @@ const OrderApplicationView1770 = ({
       <div className="grid grid-cols-[60px_1fr] mb-8 text-[15px]">
         <span className="font-bold">Kimga:</span>
         <div className="font-bold">
-          {document?.to?.map((item: string, i: number) => (
+          {document?.to?.map((item: any, i: number) => (
             <span key={i}>
-              {item}
+              {item?.name}
               {i !== document?.to?.length - 1 ? ", " : ""}
             </span>
           )) || "________________"}

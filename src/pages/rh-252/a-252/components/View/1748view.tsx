@@ -111,7 +111,7 @@ const OrderView1748 = ({
   const mainRoutesOk = hasText(payload?.main_routes);
   const reserveRoutesOk = hasText(payload?.reserve_routes);
   const routesOk = mainRoutesOk || reserveRoutesOk;
-  const stoppedFlowsOk = hasArray(payload?.stopped_flows);
+  const stoppedFlowsOk = hasArray(payload?.stopped_flows_pending);
   const includingOk = hasText(payload?.including);
   const responsibleOk = hasText(payload?.responsible_person);
   const concertOk = hasText(payload?.concert_text);
@@ -157,8 +157,8 @@ const OrderView1748 = ({
             <>
               <span className="font-bold">Kimga:</span>
               <div className="font-bold uppercase">
-                {document.to.map((item: string, i: number) => (
-                  <p key={i}>{item}</p>
+                {document?.to?.map((item: any, i: number) => (
+                  <p key={i}>{item?.name}</p>
                 ))}
               </div>
             </>
@@ -167,7 +167,7 @@ const OrderView1748 = ({
             <>
               <span className="font-bold">Nusxasi:</span>
               <div>
-                {document.copy.map((item: string, i: number) => (
+                {document?.copy?.map((item: any, i: number) => (
                   <p key={i}>{item}</p>
                 ))}
               </div>
@@ -235,7 +235,7 @@ const OrderView1748 = ({
           </div>
           <div className="leading-relaxed">
             {Object.entries(
-              payload!.stopped_flows.reduce(
+              payload!.stopped_flows_pending.reduce(
                 (acc, f) => {
                   const key = f.point_b;
                   if (!acc[key]) acc[key] = [];
