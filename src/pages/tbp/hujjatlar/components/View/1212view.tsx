@@ -21,10 +21,10 @@ const OrderView1212 = ({
 
   const payload = document?.payload;
   const basic = payload?.basic;
-  const createFlows = payload?.create?.flow_ids || [];
-  const updateChannels = payload?.update?.channels || [];
-  const updateFlows = payload?.update?.flows || [];
-  const deleteElements = payload?.delete?.elements || [];
+  const createFlows = payload?.create_pending?.flow_ids || [];
+  const updateChannels = payload?.update_pending?.channels || [];
+  const updateFlows = payload?.update_pending?.flows || [];
+  const deleteElements = payload?.delete_pending?.elements || [];
   const responsible = document?.responsible;
 
   const actions: string[] = basic?.actions || [];
@@ -160,7 +160,7 @@ const OrderView1212 = ({
       </div>
 
       {/* Create section */}
-      {actions.includes("create") && createFlows.length > 0 && (
+      {actions.includes("create_pending") && createFlows.length > 0 && (
         <div className="mb-6">
           <p className="font-bold text-[15px] mb-2 uppercase">
             Tashkil etiladigan oqimlar:
@@ -228,7 +228,7 @@ const OrderView1212 = ({
         </div>
       )}
 
-      {actions.includes("update") && updateChannels.length > 0 && (
+      {actions.includes("update_pending") && updateChannels.length > 0 && (
         <div className="mb-6">
           <p className="font-bold text-[15px] mb-2 uppercase">
             Ko'chiriladigan kanallar:
@@ -258,7 +258,7 @@ const OrderView1212 = ({
         </div>
       )}
 
-      {actions.includes("update") && updateFlows.length > 0 && (
+      {actions.includes("update_pending") && updateFlows.length > 0 && (
         <div className="mb-6">
           <p className="font-bold text-[15px] mb-2 uppercase">
             Ko'chiriladigan oqimlar:
@@ -320,7 +320,7 @@ const OrderView1212 = ({
         </div>
       )}
 
-      {actions.includes("delete") && deleteElements.length > 0 && (
+      {actions.includes("delete_pending") && deleteElements.length > 0 && (
         <div className="mb-6">
           <p className="font-bold text-[15px] mb-2 uppercase">
             O'chiriladigan elementlar:
