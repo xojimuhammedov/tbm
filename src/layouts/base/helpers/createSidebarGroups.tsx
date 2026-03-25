@@ -2,6 +2,7 @@ import { MenuGroupInterface } from "@/layouts/base/interfaces/menu-group.interfa
 import { TranslationArgsType } from "dgz-ui-shared/types";
 import {
   BarChart3,
+  Building,
   ChartBarBig,
   Database,
   FileLock,
@@ -12,7 +13,6 @@ import {
   SmartphoneCharging,
   Tv,
   User,
-  Users,
 } from "lucide-react";
 
 const createSidebarGroups = (
@@ -453,11 +453,18 @@ const createSidebarGroups = (
         isActive: isActive("staff"),
         roles: ["admin", 'superadmin'],
       },
+      // {
+      //   title: t("Groups"),
+      //   url: "groups",
+      //   icon: Users,
+      //   isActive: isActive("groups"),
+      //   roles: ["admin", 'superadmin'],
+      // },
       {
-        title: t("Groups"),
-        url: "groups",
-        icon: Users,
-        isActive: isActive("groups"),
+        title: t("Organizations"),
+        url: "organizations",
+        icon: Building,
+        isActive: isActive("organizations"),
         roles: ["admin", 'superadmin'],
       },
       {
