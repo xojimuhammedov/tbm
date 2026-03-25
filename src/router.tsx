@@ -1,6 +1,7 @@
 import { IsGuest, IsLoggedIn, HasAccess } from "@/shared/guards";
 import { lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
+import useUserStore from "@/shared/store/useUserStore.ts";
 
 const CommonLayout = lazy(() => import("./layouts/CommonLayout"));
 const BaseLayout = lazy(() => import("./layouts/base/BaseLayout"));
@@ -56,18 +57,84 @@ const OrdersPage = lazy(() => import("@/pages/Journals/orders/Page.tsx"));
 const OrdersFormPage = lazy(
   () => import("@/pages/Journals/orders/pages/FormPage.tsx"),
 );
+const OrdersTbpPage = lazy(
+  () => import("@/pages/Journals-tbp/orders-tbp/Page.tsx"),
+);
+const OrdersTbpFormPage = lazy(
+  () => import("@/pages/Journals-tbp/orders-tbp/pages/FormPage.tsx"),
+);
 const DecreesPage = lazy(() => import("@/pages/Journals/decrees/Page.tsx"));
 const DecreesFormPage = lazy(
   () => import("@/pages/Journals/decrees/pages/FormPage.tsx"),
+);
+const DecreesTbpPage = lazy(() => import("@/pages/Journals-tbp/decrees-tbp/Page.tsx"));
+const DecreesTbpFormPage = lazy(
+  () => import("@/pages/Journals-tbp/decrees-tbp/pages/FormPage.tsx"),
 );
 const NotifyPage = lazy(() => import("@/pages/Journals/notify/Page.tsx"));
 const NotifyFormPage = lazy(
   () => import("@/pages/Journals/notify/pages/FormPage.tsx"),
 );
+const NotifyTbpPage = lazy(() => import("@/pages/Journals-tbp/notify-tbp/Page.tsx"));
+const NotifyTbpFormPage = lazy(
+  () => import("@/pages/Journals-tbp/notify-tbp/pages/FormPage.tsx"),
+);
 const OutgoingPage = lazy(() => import("@/pages/Journals/outgoing/Page.tsx"));
 const OutgoingFormPage = lazy(
   () => import("@/pages/Journals/outgoing/pages/FormPage.tsx"),
 );
+const OutgoingTbpPage = lazy(() => import("@/pages/Journals-tbp/outgoing-tbp/Page.tsx"));
+const OutgoingTbpFormPage = lazy(
+  () => import("@/pages/Journals-tbp/outgoing-tbp/pages/FormPage.tsx"),
+);
+
+const JournalsOrdersRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <OrdersTbpPage /> : <OrdersPage />;
+};
+
+const JournalsOrdersFormRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <OrdersTbpFormPage /> : <OrdersFormPage />;
+};
+
+const JournalsDecreesRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <DecreesTbpPage /> : <DecreesPage />;
+};
+
+const JournalsDecreesFormRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <DecreesTbpFormPage /> : <DecreesFormPage />;
+};
+
+const JournalsNotifyRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <NotifyTbpPage /> : <NotifyPage />;
+};
+
+const JournalsNotifyFormRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <NotifyTbpFormPage /> : <NotifyFormPage />;
+};
+
+const JournalsOutgoingRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <OutgoingTbpPage /> : <OutgoingPage />;
+};
+
+const JournalsOutgoingFormRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <OutgoingTbpFormPage /> : <OutgoingFormPage />;
+};
 
 // NM Information Pages
 const ReceivedDocumentsPage = lazy(() => import("@/pages/inbox/Page"));
@@ -336,96 +403,194 @@ function Router() {
         {
           path: "journals/orders",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <OrdersPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOrdersRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/orders/create",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <OrdersFormPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOrdersFormRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/orders/edit/:id",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <OrdersFormPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOrdersFormRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/decrees",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <DecreesPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsDecreesRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/decrees/create",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <DecreesFormPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsDecreesFormRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/decrees/edit/:id",
             element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <DecreesFormPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsDecreesFormRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/notify",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <NotifyPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsNotifyRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/notify/create",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <NotifyFormPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsNotifyFormRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/notify/edit/:id",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <NotifyFormPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsNotifyFormRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/outgoing",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <OutgoingPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOutgoingRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/outgoing/create",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <OutgoingFormPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOutgoingFormRoute />
             </HasAccess>
           ),
         },
         {
           path: "journals/outgoing/edit/:id",
           element: (
-            <HasAccess roles={["admin", 'superadmin']}>
-              <OutgoingFormPage />
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOutgoingFormRoute />
+            </HasAccess>
+          ),
+        },
+
+        // Journals TBP Routes
+        {
+          path: "journals/orders-tbp",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OrdersTbpPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/orders-tbp/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OrdersTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/orders-tbp/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OrdersTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/decrees-tbp",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <DecreesTbpPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/decrees-tbp/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <DecreesTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/decrees-tbp/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <DecreesTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/notify-tbp",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <NotifyTbpPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/notify-tbp/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <NotifyTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/notify-tbp/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <NotifyTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/outgoing-tbp",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OutgoingTbpPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/outgoing-tbp/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OutgoingTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/outgoing-tbp/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OutgoingTbpFormPage />
             </HasAccess>
           ),
         },
