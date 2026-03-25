@@ -6,8 +6,8 @@ import OrderApplicationView1745 from "@/pages/rh-252/a-252/components/View/1745v
 import OrderView1748 from "@/pages/rh-252/a-252/components/View/1748view";
 import OrderApplicationView1754 from "@/pages/rh-252/a-252/components/View/1754view";
 import OrderApplicationView1770 from "@/pages/rh-252/a-252/components/View/1770view";
-import OrderApplicationView1214 from "@/pages/tbp/hujjatlar/components/View/1214view";
-import OrderView1248 from "@/pages/tbp/hujjatlar/components/View/1248view";
+import OrderApplicationView1214 from "@/pages/tbp/hujjatlar/components/View/1234view";
+import OrderView1248 from "@/pages/tbp/hujjatlar/components/View/1214view";
 import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
 import { PageWrapper } from "@/shared/components/containers/page";
 import { MyModal } from "@/shared/components/moleculas/modal";
@@ -17,10 +17,10 @@ import { dateFormatter } from "@/shared/utils/utils";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import { Button } from "dgz-ui/button";
 import {
-    ChevronLeftIcon,
-    FileTextIcon,
-    FileType2,
-    LoaderCircleIcon,
+  ChevronLeftIcon,
+  FileTextIcon,
+  FileType2,
+  LoaderCircleIcon,
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -48,7 +48,7 @@ function PdfModal({
       return (
         <OrderApplicationView1754
           open={true}
-          onOpenChange={() => {}}
+          onOpenChange={() => { }}
           document={doc}
           asComponent
         />
@@ -58,7 +58,7 @@ function PdfModal({
       return (
         <OrderApplicationView1745
           open={true}
-          onOpenChange={() => {}}
+          onOpenChange={() => { }}
           document={doc}
           asComponent
         />
@@ -68,7 +68,7 @@ function PdfModal({
       return (
         <OrderApplicationView1733
           open={true}
-          onOpenChange={() => {}}
+          onOpenChange={() => { }}
           document={doc}
           asComponent
         />
@@ -78,7 +78,7 @@ function PdfModal({
       return (
         <OrderApplicationView1770
           open={true}
-          onOpenChange={() => {}}
+          onOpenChange={() => { }}
           document={doc}
           asComponent
         />
@@ -88,7 +88,7 @@ function PdfModal({
       return (
         <OrderView1748
           open={true}
-          onOpenChange={() => {}}
+          onOpenChange={() => { }}
           document={doc}
           asComponent
         />
@@ -98,7 +98,7 @@ function PdfModal({
       return (
         <OrderApplicationView1731
           open={true}
-          onOpenChange={() => {}}
+          onOpenChange={() => { }}
           document={doc}
           asComponent
         />
@@ -108,7 +108,7 @@ function PdfModal({
       return (
         <OrderApplicationView1214
           open={true}
-          onOpenChange={() => {}}
+          onOpenChange={() => { }}
           document={doc}
           asComponent
         />
@@ -118,7 +118,7 @@ function PdfModal({
       return (
         <OrderView1248
           open={true}
-          onOpenChange={() => {}}
+          onOpenChange={() => { }}
           document={doc}
           asComponent
         />
@@ -212,7 +212,7 @@ function MetaCard({
     [
       "Kimga",
       (doc.to?.slice(0, 2).join(", ") ?? "") +
-        (doc.to?.length > 2 ? ` +${doc.to.length - 2}` : ""),
+      (doc.to?.length > 2 ? ` +${doc.to.length - 2}` : ""),
     ],
     ["Nusxasi", doc.copy?.join(", ") ?? "—"],
   ];
@@ -318,7 +318,7 @@ const ApplicationDocumentDetailPage = () => {
           await handleAddRecipient(values.director_id, false, "SIGNING");
         }
         handleCloseAddModal();
-      } catch {}
+      } catch { }
     },
     [handleAddRecipient, form],
   );

@@ -3,12 +3,7 @@ import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
 import { dateFormatter } from "@/shared/utils/utils";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import {
-  EditIcon,
-  EyeIcon,
-  PencilLineIcon,
-  Trash2Icon,
-} from "lucide-react";
+import { EditIcon, EyeIcon, Trash2Icon } from "lucide-react";
 import { OrderApplication } from "../interfaces/order.interface";
 
 const createOrderColumns = (
@@ -16,7 +11,6 @@ const createOrderColumns = (
   handleEdit: (id: string) => void,
   handleDelete: (id: string) => void,
   handleView: (id: string) => void,
-  handleEditCode: (id: string, code: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
     key: "code",
@@ -27,15 +21,6 @@ const createOrderColumns = (
       return (
         <div className="flex items-center gap-2">
           <span>{code}</span>
-          <MyTooltip content={t("Edit code")}>
-            <PencilLineIcon
-              className="size-3.5 cursor-pointer text-slate-400 hover:text-blue-600 transition-colors"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleEditCode(record._id!, code);
-              }}
-            />
-          </MyTooltip>
         </div>
       );
     },

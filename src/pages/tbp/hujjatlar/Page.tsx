@@ -1,8 +1,8 @@
 import EditCodeModal from "@/pages/tbp/hujjatlar/components/edit/OrderEdit.tsx";
 import OrderView1212 from "@/pages/tbp/hujjatlar/components/View/1212view.tsx";
 import OrderView1213 from "@/pages/tbp/hujjatlar/components/View/1213view.tsx";
-import OrderApplicationView1214 from "@/pages/tbp/hujjatlar/components/View/1214view.tsx";
-import OrderView1248 from "@/pages/tbp/hujjatlar/components/View/1248view.tsx";
+import OrderApplicationView1214 from "@/pages/tbp/hujjatlar/components/View/1234view";
+import OrderView1248 from "@/pages/tbp/hujjatlar/components/View/1214view";
 import useApplicationDocuments from "@/pages/tbp/hujjatlar/hooks/useApplicationDocuments.ts";
 import { PageWrapper } from "@/shared/components/containers/page";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";

@@ -18,9 +18,6 @@ const useApplicationDocuments = () => {
   const { toast } = useToast();
 
   const [openView, setOpenView] = useState(false);
-  const [openEditCode, setOpenEditCode] = useState(false);
-  const [editCodeId, setEditCodeId] = useState<string | null>(null);
-  const [editCodeValue, setEditCodeValue] = useState<string>("");
   const [viewId, setViewId] = useState<OrderApplication["_id"] | null>(null);
 
   const { removeWithConfirm } = useDelete([KEYS.TBP_Order_Application]);
@@ -42,23 +39,6 @@ const useApplicationDocuments = () => {
     [navigate],
   );
 
-  const handleEditCode = useCallback((docId: string, currentCode: string) => {
-    setEditCodeId(docId);
-    setEditCodeValue(currentCode);
-    setOpenEditCode(true);
-  }, []);
-
-  const handleCloseEditCode = useCallback((open: boolean) => {
-    setOpenEditCode(open);
-    if (!open) {
-      setEditCodeId(null);
-      setEditCodeValue("");
-    }
-  }, []);
-
-  const handleEditCodeSuccess = useCallback(() => {
-    query.refetch();
-  }, [query]);
 
   const handleView = useCallback((docId: string) => {
     setViewId(docId);
@@ -102,9 +82,8 @@ const useApplicationDocuments = () => {
         handleEdit,
         handleDelete,
         handleView,
-        handleEditCode,
       ),
-    [handleDelete, handleEdit, handleView, handleEditCode, t],
+    [handleDelete, handleEdit, handleView, t],
   );
 
   return {
@@ -117,11 +96,6 @@ const useApplicationDocuments = () => {
     openView,
     currentItem: applicationDocumentQuery.data?.data,
     handleCloseView,
-    openEditCode,
-    editCodeId,
-    editCodeValue,
-    handleCloseEditCode,
-    handleEditCodeSuccess,
   };
 };
 
