@@ -86,6 +86,39 @@ const createSidebarGroups = (
     ],
   },
   {
+    title: t("TBP Jurnallar"),
+    items: [
+      {
+        title: t("Jurnallar"),
+        url: "journals",
+        icon: FileSignature,
+        isActive: isActive("journals"),
+        children: [
+          {
+            title: t("Buyruqlar"),
+            url: "orders-tbp",
+            roles: ["tbp"],
+          },
+          {
+            title: t("Farmoyishlar"),
+            url: "decrees-tbp",
+            roles: ["tbp"],
+          },
+          {
+            title: t("Xabarnoma va farmoyish"),
+            url: "notify-tbp",
+            roles: ["tbp"],
+          },
+          {
+            title: t("Chiquvchi hujjatlar"),
+            url: "outgoing-tbp",
+            roles: ["tbp"],
+          },
+        ],
+      },
+    ],
+  },
+  {
     title: t("NM information"),
     items: [
       // {
