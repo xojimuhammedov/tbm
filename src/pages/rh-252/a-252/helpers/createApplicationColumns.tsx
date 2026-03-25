@@ -7,6 +7,7 @@ import {
   EditIcon,
   EyeIcon,
   FileDown,
+  FileSignature,
   PencilLineIcon,
   Trash2Icon,
 } from "lucide-react";
@@ -18,6 +19,7 @@ const createOrderColumns = (
   handleDelete: (id: string) => void,
   handleView: (id: string) => void,
   handleEditCode: (id: string, code: string) => void,
+  handleEImzoProgress: (id: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
     key: "code",
@@ -117,6 +119,9 @@ const createOrderColumns = (
     name: "",
     render: (id: string | undefined, record: OrderApplication) => {
       if (!id) return null;
+
+      const isFinished =
+        record.status === "SIGNED" || record.status === "EXECUTED";
       const hasPdf = !!record.pdf_path;
 
       const handleDownloadPdf = () => {
@@ -130,13 +135,24 @@ const createOrderColumns = (
 
       return (
         <div className={"flex items-center gap-2 justify-end"}>
-          {hasPdf && (
-            <MyTooltip content={t("PDF yuklab olish")}>
-              <FileDown
-                className="size-4 cursor-pointer text-emerald-600 hover:text-emerald-700 transition-colors"
-                onClick={handleDownloadPdf}
-              />
-            </MyTooltip>
+          {!isFinished ? (
+            <>
+              <MyTooltip content={t("Imzolash jarayoni")}>
+                <FileSignature
+                  className="size-4 cursor-pointer text-slate-500 hover:text-emerald-600 transition-colors"
+                  onClick={() => handleEImzoProgress(id)}
+                />
+              </MyTooltip>
+            </>
+          ) : (
+            hasPdf && (
+              <MyTooltip content={t("PDF yuklab olish")}>
+                <FileDown
+                  className="size-4 cursor-pointer text-emerald-600 hover:text-emerald-700 transition-colors"
+                  onClick={handleDownloadPdf}
+                />
+              </MyTooltip>
+            )
           )}
 
           <div className="h-4 w-[1px] bg-slate-200 mx-1" />

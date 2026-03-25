@@ -95,6 +95,13 @@ const useApplicationDocuments = () => {
     [query, removeWithConfirm, t, toast],
   );
 
+  const handleEImzoProgress = useCallback(
+    (docId: string) => {
+      navigate(`/rh-252/a-252/progress/${docId}`);
+    },
+    [navigate],
+  );
+
   const columns: ColumnType<OrderApplication>[] = useMemo(
     () =>
       createOrderColumns(
@@ -103,8 +110,9 @@ const useApplicationDocuments = () => {
         handleDelete,
         handleView,
         handleEditCode,
+        handleEImzoProgress,
       ),
-    [handleDelete, handleEdit, handleView, handleEditCode, t],
+    [handleDelete, handleEdit, handleView, handleEditCode, handleEImzoProgress, t],
   );
 
   return {
@@ -118,6 +126,7 @@ const useApplicationDocuments = () => {
     currentItem: applicationDocumentQuery.data?.data,
     handleCloseView,
     openEditCode,
+    handleEImzoProgress,
     editCodeId,
     editCodeValue,
     handleCloseEditCode,
