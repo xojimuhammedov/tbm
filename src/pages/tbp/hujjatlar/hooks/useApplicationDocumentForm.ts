@@ -141,11 +141,14 @@ const useApplicationDocumentForm = ({
 
     form.setValue("code", prefix);
     form.setValue("order_date", doc.order_date ?? null);
-    form.setValue("nomenclature_number", doc.nomenclature_number || doc.document_index || "");
+    form.setValue(
+      "nomenclature_number",
+      doc.nomenclature_number || doc.document_index || "",
+    );
     const normalizeToValue = (item: any) =>
       typeof item === "string"
         ? item
-        : item?._id ?? item?.value ?? item?.name ?? "";
+        : (item?._id ?? item?.value ?? item?.name ?? "");
 
     const toValues = (Array.isArray(doc.to) ? doc.to : [])
       .map(normalizeToValue)

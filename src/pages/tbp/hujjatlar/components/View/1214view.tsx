@@ -132,8 +132,7 @@ const OrderView1214 = ({
     ),
   ) as Array<[string, string[]]>;
 
-  
-  const stoppedFlowsOk = stoppedFlowsGrouped.length > 0
+  const stoppedFlowsOk = stoppedFlowsGrouped.length > 0;
   const includingOk = hasText(payload?.including);
   const responsibleOk = hasText(payload?.responsible_person);
   const concertOk = hasText(payload?.concert_text);
@@ -142,8 +141,7 @@ const OrderView1214 = ({
   const copyOk = hasArray(document?.copy);
 
   const closureText =
-    payload?.basic?.connection_closure_type ||
-    "2-8 aloqani yopish yoʻli bilan";
+    payload?.basic?.connection_closure_type || "2-8 aloqani yopish yoʻli bilan";
 
   const DocumentContent = (
     <div

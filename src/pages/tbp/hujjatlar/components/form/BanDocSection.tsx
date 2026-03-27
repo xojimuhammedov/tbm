@@ -7,7 +7,6 @@ interface BanDocSectionProps {
 }
 
 const BanDocSection = ({ control }: BanDocSectionProps) => {
-
   const titleOptions = [
     { label: "Taqiq qo'yildi", value: "BAN" },
     { label: "Taqiq yechildi", value: "BAN_REMOVE" },
@@ -41,12 +40,12 @@ const BanDocSection = ({ control }: BanDocSectionProps) => {
         <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Mas'ul:</label>
           <div className="flex-1 w-full max-w-lg">
-          <MyInput
-            name="payload.basic.responsible"
-            control={control}
-            placeholder="МВР AI-9 - Аkrоmov"
-            className="border-none h-8 p-0 pl-1.5 font-medium"
-          />
+            <MyInput
+              name="payload.basic.responsible"
+              control={control}
+              placeholder="МВР AI-9 - Аkrоmov"
+              className="border-none h-8 p-0 pl-1.5 font-medium"
+            />
           </div>
         </div>
 

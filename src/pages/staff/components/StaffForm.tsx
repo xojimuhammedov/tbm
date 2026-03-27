@@ -118,7 +118,7 @@ const StaffForm = ({ id, onSave, readOnly = false }: StaffFormProps) => {
             required
             isDisabled={readOnly}
           />
-         <MySelect<StaffDto>
+          <MySelect<StaffDto>
             control={form.control}
             name={"organization"}
             options={organizationOptions || []}

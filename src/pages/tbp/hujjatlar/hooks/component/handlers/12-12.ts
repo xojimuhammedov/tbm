@@ -44,11 +44,17 @@ const h1212: Handler = {
   populate: (form, payload, ctx) => {
     const basic = payload.basic || {};
 
-    form.setValue("payload.basic.organization_name", basic.organization_name ?? "");
+    form.setValue(
+      "payload.basic.organization_name",
+      basic.organization_name ?? "",
+    );
     form.setValue("payload.basic.request_number", basic.request_number ?? "");
     form.setValue("payload.basic.request_date", basic.request_date ?? null);
     form.setValue("payload.basic.signal_level", basic.signal_level ?? "");
-    form.setValue("payload.basic.actions", safeArray<string>(basic.actions ?? payload.actions));
+    form.setValue(
+      "payload.basic.actions",
+      safeArray<string>(basic.actions ?? payload.actions),
+    );
     form.setValue("payload.basic.start_time", basic.start_time ?? "");
     form.setValue("payload.basic.description", basic.description ?? "");
     form.setValue("payload.basic.no_raqami", basic.no_raqami ?? "");
@@ -92,11 +98,17 @@ const h1212: Handler = {
 
     if (apiChannels.length > 0) {
       setTimeout(() => {
-        form.setValue("payload.update.update_type", "channels", { shouldDirty: true });
-        form.setValue("payload.update.channels", apiChannels.map((ch: any) => ({
-          old: ch?.old ?? "",
-          new: ch?.new ?? "",
-        })), { shouldDirty: true, shouldValidate: true });
+        form.setValue("payload.update.update_type", "channels", {
+          shouldDirty: true,
+        });
+        form.setValue(
+          "payload.update.channels",
+          apiChannels.map((ch: any) => ({
+            old: ch?.old ?? "",
+            new: ch?.new ?? "",
+          })),
+          { shouldDirty: true, shouldValidate: true },
+        );
       }, 0);
     } else if (apiFlows.length > 0) {
       const rows = apiFlows.map((fl: any) => ({
@@ -109,7 +121,9 @@ const h1212: Handler = {
         port_b: fl?.port_b ?? "",
       }));
       setTimeout(() => {
-        form.setValue("payload.update.update_type", "flows", { shouldDirty: true });
+        form.setValue("payload.update.update_type", "flows", {
+          shouldDirty: true,
+        });
         form.setValue("payload.update.flows", rows, {
           shouldDirty: true,
           shouldValidate: true,
@@ -149,10 +163,10 @@ const h1212: Handler = {
 
     const createPayload = actions.includes("create")
       ? {
-        flow_ids: safeArray(data.payload.create?.flow_ids).map(
-          ({ id_exist, ...rest }: any) => rest,
-        ),
-      }
+          flow_ids: safeArray(data.payload.create?.flow_ids).map(
+            ({ id_exist, ...rest }: any) => rest,
+          ),
+        }
       : undefined;
 
     const updatePayload = actions.includes("update")
@@ -161,10 +175,10 @@ const h1212: Handler = {
 
     const deletePayload = actions.includes("delete")
       ? {
-        elements: safeArray(data.payload?.delete?.elements)
-          .map((item: any) => (typeof item === "string" ? item : item.value))
-          .filter((val: string) => val && val.trim() !== ""),
-      }
+          elements: safeArray(data.payload?.delete?.elements)
+            .map((item: any) => (typeof item === "string" ? item : item.value))
+            .filter((val: string) => val && val.trim() !== ""),
+        }
       : undefined;
 
     const basePayload = buildBasePayload(data, ctx.fullCode);
@@ -181,7 +195,9 @@ const h1212: Handler = {
           start_time: formatToISO(data.payload.basic.start_time),
           description: data.payload.basic.description || "",
           no_raqami: data.payload.basic.no_raqami || "",
-          ...(data.payload.file_name ? { base_file: data.payload.file_name } : {}),
+          ...(data.payload.file_name
+            ? { base_file: data.payload.file_name }
+            : {}),
         },
         ...(createPayload ? { create: createPayload } : {}),
         ...(updatePayload ? { update: updatePayload } : {}),

@@ -23,12 +23,32 @@ const h1213: Handler = {
       return titleFromApi;
     })();
 
-    form.setValue("payload.basic.title", normalizedTitle, { shouldDirty: true });
-    form.setValue("payload.basic.start_time", basic.start_time ?? payload.start_time ?? "", { shouldDirty: true });
-    form.setValue("payload.basic.orientation", basic.orientation ?? "", { shouldDirty: true });
-    form.setValue("payload.basic.context", basic.context ?? payload.context ?? "", { shouldDirty: true });
-    form.setValue("payload.basic.responsible", basic.responsible ?? payload.responsible ?? "", { shouldDirty: true });
-    form.setValue("payload.basic.base_file", basic.base_file ?? payload.base_file ?? "", { shouldDirty: true });
+    form.setValue("payload.basic.title", normalizedTitle, {
+      shouldDirty: true,
+    });
+    form.setValue(
+      "payload.basic.start_time",
+      basic.start_time ?? payload.start_time ?? "",
+      { shouldDirty: true },
+    );
+    form.setValue("payload.basic.orientation", basic.orientation ?? "", {
+      shouldDirty: true,
+    });
+    form.setValue(
+      "payload.basic.context",
+      basic.context ?? payload.context ?? "",
+      { shouldDirty: true },
+    );
+    form.setValue(
+      "payload.basic.responsible",
+      basic.responsible ?? payload.responsible ?? "",
+      { shouldDirty: true },
+    );
+    form.setValue(
+      "payload.basic.base_file",
+      basic.base_file ?? payload.base_file ?? "",
+      { shouldDirty: true },
+    );
 
     // Try consumers, then consumers_pending
     let consumers = payload.consumers || [];
@@ -37,10 +57,17 @@ const h1213: Handler = {
     }
 
     const formatted = Array.isArray(consumers)
-      ? consumers.map((item: any) => (typeof item === "string" ? item : item.code || item._id || item)).filter(Boolean)
+      ? consumers
+          .map((item: any) =>
+            typeof item === "string" ? item : item.code || item._id || item,
+          )
+          .filter(Boolean)
       : [];
 
-    form.setValue("payload.consumers", formatted, { shouldDirty: true, shouldValidate: true });
+    form.setValue("payload.consumers", formatted, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
   },
 
   build: (data, ctx) => {

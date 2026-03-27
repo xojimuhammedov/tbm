@@ -25,9 +25,7 @@ const NotifyFormPage = () => {
       },
       {
         name: id ? t("Edit") : t("Create"),
-        path: id
-          ? `/journals/notify-tbp/${id}`
-          : "/journals/notify-tbp/create",
+        path: id ? `/journals/notify-tbp/${id}` : "/journals/notify-tbp/create",
         isActive: true,
       },
     ],

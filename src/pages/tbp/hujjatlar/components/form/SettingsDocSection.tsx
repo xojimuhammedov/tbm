@@ -7,7 +7,14 @@ import {
 } from "react-hook-form";
 import { MyInput } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui";
-import { AlertCircle, CheckCircle, ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle,
+  ChevronDown,
+  ChevronUp,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import { MyDateTimePicker } from "./MyDateTimePicker.tsx";
 import { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill-new";
@@ -24,10 +31,7 @@ interface ValidationStates {
   [key: string]: boolean;
 }
 
-const SettingsDocSection = ({
-  control,
-  setValue,
-}: SettingsDocSectionProps) => {
+const SettingsDocSection = ({ control, setValue }: SettingsDocSectionProps) => {
   const [showJumladan, setShowJumladan] = useState(false);
   const [showFlows, setShowFlows] = useState(false);
   const [validationStates, setValidationStates] = useState<ValidationStates>(
@@ -151,8 +155,8 @@ const SettingsDocSection = ({
           </div>
         </div>
       </div>
-        {/* Jumladan Section */}
-        <div className="border rounded-lg overflow-hidden">
+      {/* Jumladan Section */}
+      <div className="border rounded-lg overflow-hidden">
         <button
           type="button"
           onClick={() => setShowJumladan(!showJumladan)}
@@ -213,8 +217,8 @@ const SettingsDocSection = ({
         )}
       </div>
 
-           {/* To'xtalish kuzatiladigan oqimlar Section */}
-           <div className="border rounded-lg overflow-hidden">
+      {/* To'xtalish kuzatiladigan oqimlar Section */}
+      <div className="border rounded-lg overflow-hidden">
         <button
           type="button"
           onClick={() => setShowFlows(!showFlows)}
@@ -400,7 +404,7 @@ const SettingsDocSection = ({
           </div>
         </div>
       </div>
-      
+
       <div className="space-y-6 w-full">
         {/* <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Stansiya oralig'i:</label>

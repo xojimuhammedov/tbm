@@ -16,7 +16,7 @@ const useMySidebar = () => {
 
   const groups = useMemo(() => {
     const defaultGroups = createSidebarGroups(t, isActive);
-    
+
     if (!userRole) return defaultGroups;
 
     const filterItems = (items: MenuItemInterface[]): MenuItemInterface[] => {
@@ -42,9 +42,9 @@ const useMySidebar = () => {
         .filter((item) => {
           // If it has children and they were all filtered out, and it's a parent menu without a direct valid URL
           if (item.children && item.children.length === 0) {
-             return false;
+            return false;
           }
-           return true;
+          return true;
         });
     };
 

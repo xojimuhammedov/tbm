@@ -25,9 +25,7 @@ const OrdersFormPage = () => {
       },
       {
         name: id ? t("Edit") : t("Create"),
-        path: id
-          ? `/journals/orders-tbp/${id}`
-          : "/journals/orders-tbp/create",
+        path: id ? `/journals/orders-tbp/${id}` : "/journals/orders-tbp/create",
         isActive: true,
       },
     ],

@@ -109,9 +109,7 @@ const OrderApplicationView1733 = ({
                 <b>{flow.name_point_a || "____"}</b> –{" "}
                 <b>{flow.name_point_b || "____"}</b> yo'nalishidagi{" "}
                 <b>{flow.code || "ID-____"}</b> oqimdagi kanallar
-                {flow.signal_level ? (
-                  <span> ({flow.signal_level})</span>
-                ) : null}
+                {flow.signal_level ? <span> ({flow.signal_level})</span> : null}
                 ;
               </span>
             </div>

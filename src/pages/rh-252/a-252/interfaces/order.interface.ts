@@ -168,7 +168,7 @@ export interface Payload1748 {
   reserve_routes: string;
   main_routes: string;
   stopped_flows: StoppedFlow[];
-  stopped_flows_pending:StoppedFlow[];
+  stopped_flows_pending: StoppedFlow[];
   including: string;
   responsible_person: string;
   concert_text: string;

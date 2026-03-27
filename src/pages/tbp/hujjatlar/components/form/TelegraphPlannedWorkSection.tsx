@@ -101,7 +101,6 @@ const TelegraphPlannedWorkSection = ({
             <span>gacha.</span>
           </div>
         </div>
-
       </div>
 
       <hr className="my-8 border-gray-100" />
