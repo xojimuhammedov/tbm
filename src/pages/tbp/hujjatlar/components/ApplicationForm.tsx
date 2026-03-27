@@ -1,5 +1,6 @@
 import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
+import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
 import BanDocSection from "@/pages/tbp/hujjatlar/components/form/BanDocSection.tsx";
 import OrderForm1212 from "@/pages/tbp/hujjatlar/components/form/OrderForm1212.tsx";
 import SettingsDocSection from "@/pages/tbp/hujjatlar/components/form/SettingsDocSection.tsx";
@@ -28,6 +29,7 @@ const ApplicationDocumentForm = () => {
     id: id || null,
   });
 
+  const { staffOptions } = useStaffOptions();
   const { groupOptions } = useGroupOptions();
 
   const selectedCode = form.watch("code");
@@ -149,9 +151,23 @@ const ApplicationDocumentForm = () => {
               setValue={form.setValue}
             />
           )}
+          <div className="mt-8 mb-4 pt-6 border-t">
+          <div className="max-w-md">
+            <MySelect
+              control={form.control}
+              name="signer"
+              options={staffOptions || []}
+              label={t("Imzolovchi")}
+              placeholder={t("Tanlang...")}
+              isClearable
+              required
+            />
+          </div>
+        </div>
           <IDSection1731 control={form.control} setValue={form.setValue} />
         </div>
 
+  
         <FormContainerFooter>
           <Button
             size="sm"
