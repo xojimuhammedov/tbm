@@ -98,7 +98,7 @@ const SettingsDocSection = ({ control, setValue }: SettingsDocSectionProps) => {
 
   const getValidationStatus = (index: number) => {
     const key = `flow-${index}`;
-    const value = watchedFlows?.[index];
+    const value = fields?.[index];
     if (!value) return undefined;
     if (validationStates[key] === undefined) return "checking";
     return validationStates[key] ? "valid" : "invalid";

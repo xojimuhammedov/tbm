@@ -10,6 +10,7 @@ import { StaffDto } from "@/pages/staff/schemas/createStaffSchema.ts";
 import useStaffForm from "@/pages/staff/hooks/useStaffForm.ts";
 import useRoleOptions from "@/pages/role/hooks/useRoleOptions.ts";
 import usePositionOptions from "@/pages/position/hooks/usePositionOptions.ts";
+import useOrganizationOptions from "@/pages/organizations/hooks/useOrganizationOptions.ts";
 
 interface StaffFormProps {
   id: string | null;
@@ -25,6 +26,7 @@ const StaffForm = ({ id, onSave, readOnly = false }: StaffFormProps) => {
   });
   const { roleOptions } = useRoleOptions();
   const { positionOptions } = usePositionOptions();
+  const { organizationOptions } = useOrganizationOptions();
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-4"}>
@@ -113,6 +115,15 @@ const StaffForm = ({ id, onSave, readOnly = false }: StaffFormProps) => {
             options={positionOptions || []}
             label={t("Position")}
             placeholder={t("Select position")}
+            required
+            isDisabled={readOnly}
+          />
+         <MySelect<StaffDto>
+            control={form.control}
+            name={"organization"}
+            options={organizationOptions || []}
+            label={t("Organization")}
+            placeholder={t("Select organization")}
             required
             isDisabled={readOnly}
           />

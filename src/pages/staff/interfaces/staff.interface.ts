@@ -6,6 +6,7 @@ export interface StaffInterface {
   email: string;
   role: { _id: string; name: string };
   position: { _id: string; name: string };
+  organization?: { _id: string; name: string } ;
   pinfl: string;
   phone: string;
   creatorId: string;

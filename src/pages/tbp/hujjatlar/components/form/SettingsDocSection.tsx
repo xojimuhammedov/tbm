@@ -1,69 +1,408 @@
 import {
   Control,
+  Controller,
   useFieldArray,
+  useWatch,
+  UseFormSetValue,
 } from "react-hook-form";
-import { MyInput, MyDatePicker, MySelect } from "dgz-ui-shared/components/form";
+import { MyInput } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui";
-import { Plus, Trash2, X } from "lucide-react";
+import { AlertCircle, CheckCircle, ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
 import { MyDateTimePicker } from "./MyDateTimePicker.tsx";
+import { useEffect, useRef, useState } from "react";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
+import { debounce } from "lodash";
+import { request } from "@/request";
 
 interface SettingsDocSectionProps {
   control: Control<any>;
-  staffOptions: { label: string; value: string }[];
+  setValue: UseFormSetValue<any>;
 }
 
-const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) => {
-  const { fields: flows, append: appendFlow, remove: removeFlow } = useFieldArray({
+interface ValidationStates {
+  [key: string]: boolean;
+}
+
+const SettingsDocSection = ({
+  control,
+  setValue,
+}: SettingsDocSectionProps) => {
+  const [showJumladan, setShowJumladan] = useState(false);
+  const [showFlows, setShowFlows] = useState(false);
+  const [validationStates, setValidationStates] = useState<ValidationStates>(
+    {},
+  );
+
+  const { fields, append, remove } = useFieldArray({
     control,
-    name: "payload.with_a_pause",
+    name: "payload.stopped_flows",
   });
 
-  const { fields: noRaqami, append: appendNo, remove: removeNo } = useFieldArray({
+  const watchedFlows = useWatch({
     control,
-    name: "payload.basic.no_raqami",
+    name: "payload.stopped_flows",
   });
 
+  const includingContent = useWatch({
+    control,
+    name: "payload.including",
+  });
+
+  const checkValidation = async (value: string, key: string) => {
+    if (!value || value.trim() === "") {
+      setValidationStates((prev) => {
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
+      return;
+    }
+
+    try {
+      const res = await request.get(
+        `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=${false}`,
+      );
+      const isValid = res.data?.valid !== false;
+
+      setValidationStates((prev) => ({
+        ...prev,
+        [key]: isValid,
+      }));
+    } catch (error) {
+      console.error("Validation error:", error);
+      setValidationStates((prev) => ({
+        ...prev,
+        [key]: false,
+      }));
+    }
+  };
+
+  const debouncedCheck = useRef(
+    debounce((value: string, key: string) => {
+      checkValidation(value, key);
+    }, 500),
+  ).current;
+
+  useEffect(() => {
+    if (!watchedFlows) return;
+    watchedFlows.forEach((value: string, index: number) => {
+      if (value) debouncedCheck(value, `flow-${index}`);
+    });
+  }, [watchedFlows]);
+
+  const getValidationStatus = (index: number) => {
+    const key = `flow-${index}`;
+    const value = fields?.[index];
+    if (!value) return undefined;
+    if (validationStates[key] === undefined) return "checking";
+    return validationStates[key] ? "valid" : "invalid";
+  };
+
+  const handleAddFlow = () => {
+    append("");
+  };
   return (
     <div className="space-y-6">
-      <div className="text-center space-y-4 w-full border-b pb-6">
-        <div className="w-full max-w-2xl mx-auto">
-          <MyInput
-            name="payload.basic.title"
-            control={control}
-            placeholder="Tezkor ishlar"
-            className="text-xl border-none w-full p-0 rounded-none font-bold uppercase pl-1.5"
-          />
-        </div>
+      <div className="text-center mb-8">
+        <MyInput
+          name="payload.basic.title"
+          control={control}
+          placeholder={
+            "Rejadan tashqari ta’mirlash-sozlash ishlari to‘g‘risida"
+          }
+          className="border border-t-0 border-l-0 border-r-0 rounded-none"
+        />
+        <div className="text-gray-800 leading-relaxed text-justify p-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex gap-6 items-end ">
+              <MyDateTimePicker
+                control={control}
+                name="payload.basic.start_time"
+                label="Boshlanish vaqti"
+              />
+              <span>dan </span>
+              <MyDateTimePicker
+                control={control}
+                name="payload.basic.end_time"
+                label="Tugash vaqti"
+              />
+              <span>gacha </span>
+              <span>“2-8” aloqani yopish yoʻli bilan</span>
+            </div>
 
-
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-full max-w-lg">
-            <MyInput
-              name="payload.basic.connection_closure_type"
-              control={control}
-              placeholder="«2-1» aloqani yopish yo’li bilan"
-              className="font-bold border-none h-8 p-0 pl-1.5"
-            />
-          </div>
-          <div className="flex items-center gap-2 font-medium">
-            <MyDateTimePicker
-              name="payload.basic.start_time"
-              control={control}
-              className="w-55 border-none p-0 text-center"
-            />
-            <span className="text-gray-500">dan</span>
-            <MyDateTimePicker
-              name="payload.basic.end_time"
-              control={control}
-              className="w-55 border-none p-0 text-center"
-            />
-            <span className="text-gray-500">gacha</span>
+            <span className="inline-block w-full">
+              <Controller
+                name="payload.content"
+                control={control}
+                render={({ field }) => (
+                  <textarea
+                    {...field}
+                    placeholder="XKM-1, XKM-4 stansiyalaridagi shaharlararo va mobil aloqa operatorlarining..."
+                    className="w-full border-2 border-gray-400
+               rounded-none bg-transparent resize-none leading-7
+               focus:outline-none focus:ring-0 focus:border-blue-600
+               transition-colors duration-200"
+                    rows={4}
+                  />
+                )}
+              />
+            </span>
           </div>
         </div>
       </div>
+        {/* Jumladan Section */}
+        <div className="border rounded-lg overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setShowJumladan(!showJumladan)}
+          className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+        >
+          <h3 className="text-lg font-semibold text-gray-700">Jumladan</h3>
+          {showJumladan ? (
+            <ChevronUp className="w-5 h-5 text-gray-600" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-gray-600" />
+          )}
+        </button>
 
+        {showJumladan && (
+          <div className="p-4 bg-white border-t">
+            <div className="min-h-[300px] bg-white">
+              <ReactQuill
+                theme="snow"
+                value={includingContent || ""}
+                onChange={(val) => setValue("payload.including", val)}
+                className="h-[250px] mb-5"
+              />
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2 text-lg">
+                <span className="font-semibold">
+                  Kanallar asosiy trassalari:
+                </span>
+                <MyInput
+                  control={control}
+                  name="payload.main_routes"
+                  placeholder="PS716 (test) (AI-7) avtozaxira."
+                  className="border-t-0 border-l-0 border-r-0 rounded-none h-7 bg-transparent inline-block w-64"
+                />
+              </div>
+              <div className="flex flex-wrap items-center gap-2 text-lg">
+                <span className="font-semibold">
+                  Kanallar zaxira trassalari:
+                </span>
+                <MyInput
+                  control={control}
+                  name="payload.reserve_routes"
+                  placeholder="PS714, PS718, PS719 (AI-7), SP126 (AI-9)."
+                  className="border-t-0 border-l-0 border-r-0 rounded-none h-7 bg-transparent inline-block w-64"
+                />
+              </div>
+              <div className="flex flex-wrap items-center gap-2 text-lg">
+                <span className="font-semibold">Kelishilgan:</span>
+                <MyInput
+                  control={control}
+                  name="payload.concert_second"
+                  placeholder=" Sh. Hamroyev (AI-7), B. Mansurxonov (AI-9)."
+                  className="border-t-0 border-l-0 border-r-0 rounded-none h-7 bg-transparent inline-block w-64"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+           {/* To'xtalish kuzatiladigan oqimlar Section */}
+           <div className="border rounded-lg overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setShowFlows(!showFlows)}
+          className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+        >
+          <h3 className="text-lg font-semibold text-gray-700">
+            To'xtalish kuzatiladigan oqimlar
+          </h3>
+          {showFlows ? (
+            <ChevronUp className="w-5 h-5 text-gray-600" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-gray-600" />
+          )}
+        </button>
+
+        {showFlows && (
+          <div className="p-4 bg-white border-t">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm text-gray-600">
+                Oqim ID raqamlarini kiriting (har biri tekshiriladi)
+              </p>
+              <Button
+                type="button"
+                onClick={handleAddFlow}
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md transition-all text-sm"
+              >
+                <Plus className="w-4 h-4" />
+                ID qo'shish
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {fields.map((field, index) => {
+                const status = getValidationStatus(index);
+                return (
+                  <div
+                    key={field.id}
+                    className={`flex items-center gap-2 p-2 bg-white border rounded-lg shadow-sm transition-colors ${
+                      status === "valid"
+                        ? "border-green-300 bg-green-50"
+                        : status === "invalid"
+                          ? "border-red-300 bg-red-50"
+                          : "border-gray-200 hover:border-blue-300"
+                    }`}
+                  >
+                    <div className="bg-gray-100 text-gray-500 text-xs font-mono px-2 py-1 rounded">
+                      {index + 1}.
+                    </div>
+                    <div className="flex-1">
+                      <MyInput
+                        control={control}
+                        name={`payload.stopped_flows.${index}`}
+                        placeholder="ID3161"
+                        className="border-none focus:ring-0 h-8 text-sm font-medium"
+                      />
+                    </div>
+                    {status === "checking" && (
+                      <div className="text-blue-500 animate-spin text-lg">
+                        ⟳
+                      </div>
+                    )}
+                    {status === "valid" && (
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                    )}
+                    {status === "invalid" && (
+                      <span title="ID topilmadi">
+                        <AlertCircle className="w-4 h-4 text-red-500" />
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="text-red-400 hover:text-red-600 p-1 transition-colors"
+                      title="O'chirish"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {fields.length === 0 && (
+              <div className="text-center py-10 border-2 border-dashed border-gray-200 rounded-lg text-gray-400">
+                Hali hech qanday oqim ID kiritmadingiz. "ID qo'shish" tugmasini
+                bosing.
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Additional Sections from Image */}
+      <div className="space-y-6 mt-8">
+        {/* Ish o'tkazish bo'yicha mas'ul */}
+        <div className="flex flex-col gap-1 w-full">
+          <div className="flex items-start gap-2 text-lg">
+            <span className="font-semibold whitespace-nowrap pt-1">
+              Ish o‘tkazish bo‘yicha mas’ul:
+            </span>
+            <div className="flex-1">
+              <Controller
+                name="payload.responsible_person"
+                control={control}
+                render={({ field }) => (
+                  <textarea
+                    {...field}
+                    rows={1}
+                    placeholder="“O‘zbektelekom” AK “IT” filiali KTB xizmat boshlig‘i – S. Yakubov."
+                    className="w-full border-b border-t-0 border-l-0 border-r-0 border-gray-400
+               rounded-none bg-transparent resize-none leading-7
+               focus:outline-none focus:ring-0 focus:border-blue-600
+               transition-colors duration-200"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      e.target.style.height = "auto";
+                      e.target.style.height = e.target.scrollHeight + "px";
+                    }}
+                  />
+                )}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Kelishilgan */}
+        <div className="flex flex-col gap-1 w-full">
+          <div className="flex items-start gap-2 text-lg">
+            <span className="font-semibold whitespace-nowrap pt-1">
+              Kelishilgan:
+            </span>
+            <div className="flex-1">
+              <Controller
+                name="payload.concert_text"
+                control={control}
+                render={({ field }) => (
+                  <textarea
+                    {...field}
+                    rows={1}
+                    placeholder="“O‘zbektelekom” AK boshqaruv raisining birinchi o‘rinbosari – J. Aripov..."
+                    className="w-full border-b border-t-0 border-l-0 border-r-0 border-gray-400
+               rounded-none bg-transparent resize-none leading-7
+               focus:outline-none focus:ring-0 focus:border-blue-600
+               transition-colors duration-200"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      e.target.style.height = "auto";
+                      e.target.style.height = e.target.scrollHeight + "px";
+                    }}
+                  />
+                )}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Asos */}
+        <div className="flex flex-col gap-1 w-full">
+          <div className="flex items-start gap-2 text-lg">
+            <span className="font-semibold whitespace-nowrap pt-1">Asos:</span>
+            <div className="flex-1">
+              <Controller
+                name="payload.basis"
+                control={control}
+                render={({ field }) => (
+                  <textarea
+                    {...field}
+                    rows={1}
+                    placeholder="MBB-1 1-toifali muhandisi D. Abdalimovaning 2026-yil 9-yanvardagi 10-son talabnomasi."
+                    className="w-full border-b border-t-0 border-l-0 border-r-0 border-gray-400
+               rounded-none bg-transparent resize-none leading-7
+               focus:outline-none focus:ring-0 focus:border-blue-600
+               transition-colors duration-200"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      e.target.style.height = "auto";
+                      e.target.style.height = e.target.scrollHeight + "px";
+                    }}
+                  />
+                )}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div className="space-y-6 w-full">
-        <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Stansiya oralig'i:</label>
           <div className="flex-1 w-full max-w-lg">
             <MyInput
@@ -73,33 +412,46 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
               className="border-none h-8 p-0 pl-1.5 font-medium"
             />
           </div>
-        </div>
+        </div> */}
 
-        <div className="flex items-start gap-4">
+        {/* <div className="flex items-start gap-4">
           <label className="font-bold min-w-[170px] pt-2">NO raqami:</label>
           <div className="flex-1 space-y-2">
-             <div className="flex flex-wrap gap-2">
-                {noRaqami.map((field, index) => (
-                  <div key={field.id} className="flex items-center gap-1 border-b px-1 py-1 group">
-                    <MyInput
-                      name={`payload.basic.no_raqami.${index}`}
-                      control={control}
-                      placeholder="1015473"
-                      className="border-none bg-transparent p-0 w-24 h-8 pl-1.5 text-sm font-mono"
-                    />
-                    <button type="button" onClick={() => removeNo(index)} className="text-slate-400 hover:text-red-500">
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-                <Button type="button" size="sm" variant="ghost" className="h-8 text-blue-600" onClick={() => appendNo("")}>
-                  <Plus className="w-3 h-3 mr-1" /> Qo'shish
-                </Button>
-             </div>
+            <div className="flex flex-wrap gap-2">
+              {noRaqami.map((field, index) => (
+                <div
+                  key={field.id}
+                  className="flex items-center gap-1 border-b px-1 py-1 group"
+                >
+                  <MyInput
+                    name={`payload.basic.no_raqami.${index}`}
+                    control={control}
+                    placeholder="1015473"
+                    className="border-none bg-transparent p-0 w-24 h-8 pl-1.5 text-sm font-mono"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeNo(index)}
+                    className="text-slate-400 hover:text-red-500"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                className="h-8 text-blue-600"
+                onClick={() => appendNo("")}
+              >
+                <Plus className="w-3 h-3 mr-1" /> Qo'shish
+              </Button>
+            </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">NO xolati:</label>
           <div className="flex-1 flex items-center gap-4">
             <div className="w-20">
@@ -111,19 +463,21 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
               />
             </div>
             <div className="flex items-center gap-2">
-               <div className="w-auto">
-                  <MyDateTimePicker
-                    name="payload.basic.no_status_date"
-                    control={control}
-                  />
-               </div>
+              <div className="w-auto">
+                <MyDateTimePicker
+                  name="payload.basic.no_status_date"
+                  control={control}
+                />
+              </div>
               <span className="text-gray-500 font-medium">dan</span>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="flex items-center gap-4">
-          <label className="font-bold min-w-[170px]">Ish olib borish sababi:</label>
+        {/* <div className="flex items-center gap-4">
+          <label className="font-bold min-w-[170px]">
+            Ish olib borish sababi:
+          </label>
           <div className="flex-1 w-full max-w-lg">
             <MyInput
               name="payload.basic.cause"
@@ -132,34 +486,49 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
               className="border-none h-8 p-0 pl-1.5 font-medium"
             />
           </div>
-        </div>
+        </div> */}
 
-        <div className="space-y-3">
-            <div className="flex items-center gap-4">
-              <label className="font-bold min-w-[170px]">To'xtalish bilan:</label>
-              <Button type="button" size="sm" variant="ghost" onClick={() => appendFlow("")} className="text-blue-600 h-8">
-                <Plus className="w-3 h-3 mr-1" /> Yangi ID qo'shish
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {flows.map((field, index) => (
-                <div key={field.id} className="flex items-center gap-2 p-1 border-b">
-                  <span className="text-xs font-bold text-slate-400">{index + 1}.</span>
-                  <MyInput
-                    control={control}
-                    name={`payload.with_a_pause.${index}`}
-                    placeholder="ID-3881..."
-                    className="border-none bg-transparent p-0 h-8 pl-1.5 font-mono text-sm w-32"
-                  />
-                  <button type="button" onClick={() => removeFlow(index)} className="text-slate-300 hover:text-red-500">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-        </div>
+        {/* <div className="space-y-3">
+          <div className="flex items-center gap-4">
+            <label className="font-bold min-w-[170px]">To'xtalish bilan:</label>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={() => appendFlow("")}
+              className="text-blue-600 h-8"
+            >
+              <Plus className="w-3 h-3 mr-1" /> Yangi ID qo'shish
+            </Button>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {flows.map((field, index) => (
+              <div
+                key={field.id}
+                className="flex items-center gap-2 p-1 border-b"
+              >
+                <span className="text-xs font-bold text-slate-400">
+                  {index + 1}.
+                </span>
+                <MyInput
+                  control={control}
+                  name={`payload.with_a_pause.${index}`}
+                  placeholder="ID-3881..."
+                  className="border-none bg-transparent p-0 h-8 pl-1.5 font-mono text-sm w-32"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeFlow(index)}
+                  className="text-slate-300 hover:text-red-500"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div> */}
 
-        <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
           <label className="font-bold min-w-[170px]">Boshqaruv stansiya:</label>
           <div className="flex-1 w-full max-w-lg">
             <MyInput
@@ -169,9 +538,9 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
               className="border-none h-8 p-0 pl-1.5 font-medium"
             />
           </div>
-        </div>
+        </div> */}
 
-        <div className="flex items-start gap-4">
+        {/* <div className="flex items-start gap-4">
           <label className="font-bold min-w-[170px] pt-1">Kelishilgan:</label>
           <div className="flex-1">
             <textarea
@@ -180,50 +549,52 @@ const SettingsDocSection = ({ control, staffOptions }: SettingsDocSectionProps) 
               className="w-full border-none p-0 min-h-[60px] font-medium pl-1.5 pt-1.5 bg-transparent focus:ring-0 resize-none text-sm"
             />
           </div>
-        </div>
+        </div> */}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
-            <div className="space-y-2">
-               <label className="font-bold text-sm">Talabnoma tuzuvchi (IP):</label>
-               <div className="flex items-center gap-2">
-                  <MyInput
-                    name="payload.basic.requirement_ip"
-                    control={control}
-                    placeholder="Н7-0-2-12/686"
-                    className="border-none h-8 p-0 pl-1.5 font-medium"
-                  />
-                  <div className="w-32 border-b">
-                    <MyDatePicker
-                      name="payload.basic.requirement_ip_date"
-                      control={control}
-                    />
-                  </div>
-               </div>
-            </div>
-            <div className="space-y-2">
-              <label className="font-bold text-sm">Talabnoma tuzuvchi:</label>
-              <div className="flex items-center gap-2">
-                <div className="flex-1">
-                  <MySelect
-                    control={control}
-                    name="payload.basic.requirement_user"
-                    options={staffOptions || []}
-                    placeholder="Tanlang..."
-                    isClearable
-                    required
-                  />
-                </div>
-                <div className="w-32">
-                  <MyDatePicker
-                    name="payload.basic.requirement_user_date"
-                    control={control}
-                  />
-                </div>
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
+          <div className="space-y-2">
+            <label className="font-bold text-sm">
+              Talabnoma tuzuvchi (IP):
+            </label>
+            <div className="flex items-center gap-2">
+              <MyInput
+                name="payload.basic.requirement_ip"
+                control={control}
+                placeholder="Н7-0-2-12/686"
+                className="border-none h-8 p-0 pl-1.5 font-medium"
+              />
+              <div className="w-32 border-b">
+                <MyDatePicker
+                  name="payload.basic.requirement_ip_date"
+                  control={control}
+                />
               </div>
             </div>
-           </div>
+          </div>
+          <div className="space-y-2">
+            <label className="font-bold text-sm">Talabnoma tuzuvchi:</label>
+            <div className="flex items-center gap-2">
+              <div className="flex-1">
+                <MySelect
+                  control={control}
+                  name="payload.basic.requirement_user"
+                  options={staffOptions || []}
+                  placeholder="Tanlang..."
+                  isClearable
+                  required
+                />
+              </div>
+              <div className="w-32">
+                <MyDatePicker
+                  name="payload.basic.requirement_user_date"
+                  control={control}
+                />
+              </div>
             </div>
+          </div>
+        </div> */}
       </div>
+    </div>
   );
 };
 
