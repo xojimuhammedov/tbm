@@ -10,7 +10,7 @@ const useOrganizationOptions = () => {
     defaultParams: { page: 1, limit: MAX_LIMIT },
   });
 
-  const staffOptions = useMemo(
+  const organizationOptions = useMemo(
     () =>
       query.data?.docs?.map((item) => ({
         label: item.name,
@@ -20,7 +20,7 @@ const useOrganizationOptions = () => {
   );
 
   return {
-    staffOptions,
+    organizationOptions,
   };
 };
 

@@ -141,11 +141,7 @@ const CreateFlowSection1212 = ({
 
 // ─── Update section ──────────────────────────────────────────────────────────
 
-const UpdateFlowSection1212 = ({
-  control,
-}: {
-  control: Control<any>;
-}) => {
+const UpdateFlowSection1212 = ({ control }: { control: Control<any> }) => {
   const updateType = useWatch({ control, name: "payload.update.update_type" });
 
   const {
@@ -170,7 +166,9 @@ const UpdateFlowSection1212 = ({
       <div className="flex items-center justify-between border-b pb-4">
         <h3 className="font-bold text-lg">Ko'chirish (Update)</h3>
         <div className="flex items-center gap-4">
-          <span className="text-sm font-medium text-gray-600">Turini tanlang:</span>
+          <span className="text-sm font-medium text-gray-600">
+            Turini tanlang:
+          </span>
           <MySelect
             control={control}
             name="payload.update.update_type"
@@ -335,11 +333,7 @@ const UpdateFlowSection1212 = ({
 
 // ─── Delete section ──────────────────────────────────────────────────────────
 
-const DeleteElementSection1212 = ({
-  control,
-}: {
-  control: Control<any>;
-}) => {
+const DeleteElementSection1212 = ({ control }: { control: Control<any> }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "payload.delete.elements",

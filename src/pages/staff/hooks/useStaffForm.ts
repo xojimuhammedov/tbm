@@ -72,6 +72,7 @@ const useStaffForm = ({ id, onSave }: FormProps) => {
       form.setValue("pinfl", item.pinfl);
       form.setValue("role", item.role?._id);
       form.setValue("position", item.position?._id);
+      form.setValue("organization", item.organization?._id ?? "");
     }
   }, [query.data, form]);
 

@@ -112,7 +112,14 @@ const useApplicationDocuments = () => {
         handleEditCode,
         handleEImzoProgress,
       ),
-    [handleDelete, handleEdit, handleView, handleEditCode, handleEImzoProgress, t],
+    [
+      handleDelete,
+      handleEdit,
+      handleView,
+      handleEditCode,
+      handleEImzoProgress,
+      t,
+    ],
   );
 
   return {

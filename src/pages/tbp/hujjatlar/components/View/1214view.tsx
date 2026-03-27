@@ -18,34 +18,130 @@ const OrderView1214 = ({
   asComponent,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const payload = document?.payload;
-  const basic = payload?.basic;
-  const withAPause = payload?.with_a_pause || [];
-  const responsible = document?.responsible;
+  const payload = (document?.payload || null) as any;
 
-
-  const renderText = (item: any) => {
-    if (item === null || item === undefined) return "";
-    if (typeof item === "string") return item;
-    if (typeof item === "number" || typeof item === "boolean")
-      return String(item);
-    if (typeof item === "object") {
-      return (
-        item?.name ?? item?.description ?? item?._id ?? JSON.stringify(item)
-      );
-    }
-    return String(item);
+  const cleanText = (v: unknown) => {
+    if (typeof v !== "string") return "";
+    return v
+      .replace(/<[^>]*>/g, "")
+      .replace(/\u00A0/g, " ")
+      .trim();
   };
 
-  const formatTime = (dateStr: string) => {
-    if (!dateStr) return "00:00";
-    const date = new Date(dateStr);
-    return date.toLocaleTimeString("uz-UZ", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
+  const hasText = (v: unknown) => {
+    const s = cleanText(v);
+    if (!s) return false;
+    const emptyLike = new Set([
+      "..",
+      ".",
+      "-",
+      "—",
+      "_",
+      "__",
+      "___",
+      "____",
+      "________________",
+    ]);
+    if (emptyLike.has(s)) return false;
+    if (/^[._\-\s—]+$/.test(s)) return false;
+    return true;
   };
+
+  const hasArray = (v: unknown) => Array.isArray(v) && v.length > 0;
+
+  const isSameDay = (a?: string, b?: string) => {
+    if (!a || !b) return false;
+    const d1 = new Date(a);
+    const d2 = new Date(b);
+    return (
+      d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate()
+    );
+  };
+
+  const isSameDateTime = (a?: string, b?: string) => {
+    if (!a || !b) return false;
+    return new Date(a).getTime() === new Date(b).getTime();
+  };
+
+  const orderDateText = document?.order_date
+    ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz")
+    : "";
+
+  const startFullText = payload?.basic?.start_time
+    ? dateFormatter(payload.basic.start_time, "YYYY-yil DD-MMMM HH:mm", "uz")
+    : "";
+
+  const endFullText = payload?.basic?.end_time
+    ? dateFormatter(payload.basic.end_time, "YYYY-yil DD-MMMM HH:mm", "uz")
+    : "";
+
+  const endOnlyTimeText = payload?.basic?.end_time
+    ? dateFormatter(payload.basic.end_time, "HH:mm", "uz")
+    : "";
+
+  const docNumber = document?.code || "12-14";
+  const docTitle = hasText(payload?.basic?.title) ? payload?.basic?.title : "";
+
+  const contentText =
+    (typeof payload?.content === "string"
+      ? payload.content
+      : payload?.basic?.context) ?? "";
+
+  const contentOk = hasText(contentText);
+  const timeOk =
+    hasText(payload?.basic?.start_time) && hasText(payload?.basic?.end_time);
+
+  const sameDay = timeOk
+    ? isSameDay(payload?.basic?.start_time, payload?.basic?.end_time)
+    : false;
+
+  const sameDateTime = timeOk
+    ? isSameDateTime(payload?.basic?.start_time, payload?.basic?.end_time)
+    : false;
+
+  const mainRoutesOk = hasText(payload?.main_routes);
+  const reserveRoutesOk = hasText(payload?.reserve_routes);
+  const routesOk = mainRoutesOk || reserveRoutesOk;
+
+  type StoppedFlowPending = { point_b: string; code: string };
+  const stoppedFlowsPending: StoppedFlowPending[] = Array.isArray(
+    payload?.stopped_flows_pending,
+  )
+    ? (payload.stopped_flows_pending as any[]).map((f: any) => ({
+        point_b: String(f?.point_b ?? ""),
+        code: String(f?.code ?? ""),
+      }))
+    : Array.isArray(payload?.flow_ids)
+      ? (payload.flow_ids as any[]).map((f: any) => ({
+          point_b: "",
+          code: String(f?.code ?? f),
+        }))
+      : [];
+
+  const stoppedFlowsGrouped = Object.entries(
+    stoppedFlowsPending.reduce(
+      (acc: Record<string, string[]>, f: StoppedFlowPending) => {
+        const key = f.point_b || "";
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(f.code);
+        return acc;
+      },
+      {} as Record<string, string[]>,
+    ),
+  ) as Array<[string, string[]]>;
+
+  const stoppedFlowsOk = stoppedFlowsGrouped.length > 0;
+  const includingOk = hasText(payload?.including);
+  const responsibleOk = hasText(payload?.responsible_person);
+  const concertOk = hasText(payload?.concert_text);
+  const basisOk = hasText(payload?.basis);
+  const toOk = hasArray(document?.to);
+  const copyOk = hasArray(document?.copy);
+
+  const closureText =
+    payload?.basic?.connection_closure_type || "2-8 aloqani yopish yoʻli bilan";
 
   const DocumentContent = (
     <div
@@ -67,128 +163,141 @@ const OrderView1214 = ({
         <p className="mt-2 tracking-[0.2em] text-[18px]">FARMOYISHI</p>
       </div>
 
-      <div className="flex justify-between font-bold py-1 mb-5 text-[14px]">
+      <div className="flex justify-between font-bold py-1 mb-1 text-[14px]">
         <div>
-          SANA:{" "}
-          <span>
-            {document?.order_date
-              ? dateFormatter(document.order_date, "YYYY-yil DD-MMMM", "uz")
-              : ""}
-          </span>
+          {hasText(orderDateText) ? (
+            <>
+              SANA: <span>{orderDateText}</span>
+            </>
+          ) : null}
         </div>
-        <div>№ {document?.code || "12-48"}</div>
+        <div>№ {docNumber}</div>
         <div>SONI: 1</div>
       </div>
 
-      <div className="grid grid-cols-[70px_1fr] gap-y-1 mb-8 text-[15px]">
-        <span className="font-bold">Kimga:</span>
-        <div className="font-bold uppercase">
-          {document?.to?.map((item: any, i: number) => (
-            <p key={i}>{renderText(item)}</p>
-          )) || "________________"}
+      {(toOk || copyOk) && (
+        <div className="grid grid-cols-[70px_1fr] gap-y-1 mb-5 text-[15px]">
+          {toOk ? (
+            <>
+              <span className="font-bold">Kimga:</span>
+              <div className="font-bold uppercase">
+                {document?.to?.map((item: any, i: number) => (
+                  <p key={i}>{item?.name}</p>
+                ))}
+              </div>
+            </>
+          ) : null}
+          {copyOk ? (
+            <>
+              <span className="font-bold">Nusxasi:</span>
+              <div>
+                {document?.copy?.map((item: any, i: number) => (
+                  <p key={i}>{item}</p>
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
-        <span className="font-bold">Nusxasi:</span>
-        <div className="uppercase">
-          {document?.copy?.map((item: any, i: number) => (
-            <p key={i}>{renderText(item)}</p>
-          )) || "TPB"}
+      )}
+
+      {hasText(docTitle) || timeOk || contentOk ? (
+        <div className="text-[15px] text-justify space-y-2 mb-4">
+          {hasText(docTitle) ? (
+            <div className="font-bold text-center text-[16px]">{docTitle}</div>
+          ) : null}
+          {timeOk || contentOk ? (
+            <div className="indent-12 m-0">
+              {timeOk ? (
+                <>
+                  {sameDateTime ? (
+                    startFullText
+                  ) : sameDay ? (
+                    <>
+                      {startFullText} dan {endOnlyTimeText} gacha
+                    </>
+                  ) : (
+                    <>
+                      {startFullText} dan {endFullText} gacha
+                    </>
+                  )}
+                  <span>{closureText}</span>
+                </>
+              ) : null}
+            </div>
+          ) : null}
+          {contentOk ? <p className="w-full">{contentText}</p> : null}
         </div>
-      </div>
+      ) : null}
 
-      <div className="text-[15px] text-justify space-y-4 mb-8">
-        <div className="font-bold text-center text-[16px] uppercase underline">
-          {basic?.title || "Tezkor ishlar"}
+      {routesOk ? (
+        <div className="text-[15px] mb-2 space-y-2">
+          {mainRoutesOk ? (
+            <div>
+              <span className="font-bold">Asosiy yo'nalishlar:</span>{" "}
+              <span className="u-pre">{payload!.main_routes}</span>
+            </div>
+          ) : null}
+          {reserveRoutesOk ? (
+            <div>
+              <span className="font-bold">Zaxira yo'nalishlar:</span>{" "}
+              <span className="u-pre">{payload!.reserve_routes}</span>
+            </div>
+          ) : null}
+          {reserveRoutesOk ? (
+            <div>
+              <span className="font-bold">Kelishilgan:</span>{" "}
+              <span className="u-pre">{payload!.concert_second}</span>
+            </div>
+          ) : null}
         </div>
+      ) : null}
 
-        <div className="indent-12">
-          {basic?.station_interval && (
-            <p>
-              <span className="font-bold">Stansiya intervali:</span>{" "}
-              {basic.station_interval}
-            </p>
-          )}
-
-          {basic?.no_raqami?.length > 0 && (
-            <p>
-              <span className="font-bold">N/O raqamlari:</span>{" "}
-              {basic.no_raqami.join(", ")}
-            </p>
-          )}
-
-          {basic?.no_status && (
-            <p>
-              <span className="font-bold">N/O statusi:</span> {basic.no_status}
-              {basic.no_status_date
-                ? ` (${dateFormatter(basic.no_status_date, "DD.MM.YYYY")})`
-                : ""}
-            </p>
-          )}
-
-          {basic?.cause && (
-            <p>
-              <span className="font-bold">Sabab:</span> {basic.cause}
-            </p>
-          )}
-
-          {basic?.control_station && (
-            <p>
-              <span className="font-bold">Nazorat stansiyasi:</span>{" "}
-              {basic.control_station}
-            </p>
-          )}
-
-          {basic?.agreed && (
-            <p>
-              <span className="font-bold">Kelishilgan:</span> {basic.agreed}
-            </p>
-          )}
-
-          {basic?.requirement_ip && (
-            <p>
-              <span className="font-bold">Talabnoma:</span>{" "}
-              {basic.requirement_ip}
-              {basic.requirement_ip_date
-                ? ` (${dateFormatter(basic.requirement_ip_date, "DD.MM.YYYY")})`
-                : ""}
-              {basic.requirement_user ? ` - ${basic.requirement_user}` : ""}
-            </p>
-          )}
-
-          <p>
-            <span className="font-bold">Vaqti:</span>{" "}
-            {basic?.start_time
-              ? dateFormatter(basic.start_time, "YYYY-yil DD-MMMM", "uz")
-              : ""}{" "}
-            {formatTime(basic?.start_time)} dan {formatTime(basic?.end_time)}{" "}
-            gacha{" "}
-            {basic?.connection_closure_type
-              ? `(${basic.connection_closure_type})`
-              : ""}
-          </p>
-        </div>
-      </div>
-
-      {withAPause?.length > 0 && (
-        <div className="text-[15px] mb-8">
+      {stoppedFlowsOk ? (
+        <div className="text-[15px] mb-4">
           <div className="font-bold mb-2">
             To'xtalish kuzatiladigan oqimlar:
           </div>
-          <div className="grid grid-cols-4 gap-2">
-            {withAPause.map((flow: any, idx: number) => (
-              <span key={idx} className="font-bold">
-                ID {renderText(flow.code ?? flow)}
+          <div className="leading-relaxed">
+            {stoppedFlowsGrouped.map(([pointB, codes], index, array) => (
+              <span key={`${pointB}-${index}`}>
+                <span className="font-bold">ID {codes.join(", ")}</span> (
+                {pointB || "—"}){index < array.length - 1 ? " – " : "."}
               </span>
             ))}
           </div>
         </div>
-      )}
+      ) : null}
 
-      <div className="flex justify-between items-end text-[15px] font-bold mt-12">
-        <div className="w-1/2">TTMQ va B xizmati boshlig'i</div>
-        <div className="w-1/2 text-right">
-          {responsible?.first_name} {responsible?.second_name}
+      {includingOk ? (
+        <div className="text-[15px] mb-2">
+          <div className="font-bold mb-2">Shu jumladan:</div>
+          <div
+            className="html-content"
+            dangerouslySetInnerHTML={{ __html: payload!.including }}
+          />
         </div>
-      </div>
+      ) : null}
+
+      {responsibleOk ? (
+        <div className="text-[15px] mb-2">
+          <span className="font-bold mr-2">Ish o'tkazish bo'yicha mas'ul:</span>
+          <span>{payload!.responsible_person}</span>
+        </div>
+      ) : null}
+
+      {concertOk ? (
+        <div className="text-[15px] mb-2">
+          <span className="font-bold mr-2">Kelishilgan:</span>
+          <span>{payload!.concert_text}</span>
+        </div>
+      ) : null}
+
+      {basisOk ? (
+        <div className="text-[15px]">
+          <span className="font-bold mr-2">Asos:</span>
+          <span>{payload!.basis}</span>
+        </div>
+      ) : null}
 
       <div className="mt-auto text-sm text-[#5a76a8]">
         <p>
@@ -199,7 +308,6 @@ const OrderView1214 = ({
       </div>
     </div>
   );
-
   if (asComponent) {
     return (
       <div className="w-full bg-gray-100 p-0 overflow-auto">

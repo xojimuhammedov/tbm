@@ -36,7 +36,6 @@ const ApplicationDocumentForm = () => {
     isLoading,
   } = useApplicationDocumentForm({ id: id || null });
 
-
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "payload.create.flow_ids",
@@ -189,12 +188,12 @@ const ApplicationDocumentForm = () => {
                   <strong>Kimga:</strong>
                 </p>
                 <MySelect
-                    name="to"
-                    control={form.control}
-                    options={groupOptions || []}
-                    placeholder="Guruhlarni tanlang"
-                    isMulti
-                    isClearable
+                  name="to"
+                  control={form.control}
+                  options={groupOptions || []}
+                  placeholder="Guruhlarni tanlang"
+                  isMulti
+                  isClearable
                 />
               </div>
 

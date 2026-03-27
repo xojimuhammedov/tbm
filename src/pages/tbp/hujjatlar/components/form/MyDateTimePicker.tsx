@@ -9,7 +9,12 @@ interface Props {
   className?: string;
 }
 
-export const MyDateTimePicker: React.FC<Props> = ({ control, name, label, className }) => {
+export const MyDateTimePicker: React.FC<Props> = ({
+  control,
+  name,
+  label,
+  className,
+}) => {
   const { field } = useController({ name, control });
   const initialDate =
     field.value && dayjs(field.value).isValid()

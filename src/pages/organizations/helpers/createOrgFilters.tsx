@@ -3,7 +3,6 @@ import { FilterInterface } from "dgz-ui-shared/components/filters";
 
 const createOrgFilters = (
   _t: (...args: TranslationArgsType) => string,
-): FilterInterface[] => [
-];
+): FilterInterface[] => [];
 
 export default createOrgFilters;

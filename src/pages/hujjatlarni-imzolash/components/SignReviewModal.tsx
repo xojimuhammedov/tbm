@@ -172,7 +172,7 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
           ) : (
             <div className="p-8 text-center text-gray-500">
               Hujjat ko'rinishi topilmadi
-            </div>  
+            </div>
           )}
         </div>
 

@@ -39,7 +39,6 @@ const useApplicationDocuments = () => {
     [navigate],
   );
 
-
   const handleView = useCallback((docId: string) => {
     setViewId(docId);
     setOpenView(true);

@@ -47,7 +47,10 @@ const h1745: Handler = {
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
     form.setValue("payload.basic.justification", basic.justification ?? "");
     form.setValue("payload.basic.signal_level", basic.signal_level ?? "");
-    form.setValue("payload.basic.actions", safeArray<string>(basic.actions ?? payload.actions));
+    form.setValue(
+      "payload.basic.actions",
+      safeArray<string>(basic.actions ?? payload.actions),
+    );
     form.setValue(
       "payload.basic.responsible_organizing",
       basic.responsible_organizing ?? payload.responsible_organizing ?? "",
@@ -60,10 +63,11 @@ const h1745: Handler = {
     // file_name is intentionally omitted to require re-upload on edit
 
     // 1. Create section
-    const createSource = (payload.create?.flow_ids?.length > 0) 
-      ? payload.create.flow_ids 
-      : (payload.create_pending?.flow_ids || []);
-      
+    const createSource =
+      payload.create?.flow_ids?.length > 0
+        ? payload.create.flow_ids
+        : payload.create_pending?.flow_ids || [];
+
     if (createSource.length > 0) {
       const rows = safeArray(createSource).map((x: any) => ({
         code: x?.code ?? "",
@@ -77,25 +81,35 @@ const h1745: Handler = {
         id_exist: null,
       }));
       setTimeout(() => {
-        form.setValue("payload.create.flow_ids", rows, { shouldDirty: true, shouldValidate: true });
+        form.setValue("payload.create.flow_ids", rows, {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
       }, 0);
     }
 
     // 2. Update section
-    const updateSource = (payload.update?.channels?.length > 0 || payload.update?.flows?.length > 0)
-      ? payload.update
-      : (payload.update_pending || {});
-      
+    const updateSource =
+      payload.update?.channels?.length > 0 || payload.update?.flows?.length > 0
+        ? payload.update
+        : payload.update_pending || {};
+
     const apiChannels = safeArray(updateSource.channels);
     const apiFlows = safeArray(updateSource.flows);
 
     if (apiChannels.length > 0) {
       setTimeout(() => {
-        form.setValue("payload.update.update_type", "channels", { shouldDirty: true });
-        form.setValue("payload.update.flow_ids", apiChannels.map((ch: any) => ({
-          old: ch?.old ?? "",
-          new: ch?.new ?? ""
-        })), { shouldDirty: true, shouldValidate: true });
+        form.setValue("payload.update.update_type", "channels", {
+          shouldDirty: true,
+        });
+        form.setValue(
+          "payload.update.flow_ids",
+          apiChannels.map((ch: any) => ({
+            old: ch?.old ?? "",
+            new: ch?.new ?? "",
+          })),
+          { shouldDirty: true, shouldValidate: true },
+        );
       }, 0);
     } else if (apiFlows.length > 0) {
       const rows = apiFlows.map((fl: any) => {
@@ -108,31 +122,46 @@ const h1745: Handler = {
           device_b: item?.device_b ?? "",
           port_a: item?.port_a ?? "",
           port_b: item?.port_b ?? "",
-          signal_level: item?.signal_level || fl?.signal_level || basic.signal_level || "",
+          signal_level:
+            item?.signal_level || fl?.signal_level || basic.signal_level || "",
           old_data: fl.old,
         };
       });
       setTimeout(() => {
-        form.setValue("payload.update.update_type", "flows", { shouldDirty: true });
-        form.setValue("payload.update.flow_ids", rows, { shouldDirty: true, shouldValidate: true });
+        form.setValue("payload.update.update_type", "flows", {
+          shouldDirty: true,
+        });
+        form.setValue("payload.update.flow_ids", rows, {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
       }, 0);
     }
 
     // 3. Delete section
-    const deleteSource = (payload.delete?.elements?.length > 0 || payload.delete?.flow_ids?.length > 0)
-      ? payload.delete
-      : (payload.delete_pending || {});
-      
-    const deleteList = safeArray<any>(deleteSource.elements || deleteSource.flow_ids || []);
-    
+    const deleteSource =
+      payload.delete?.elements?.length > 0 ||
+      payload.delete?.flow_ids?.length > 0
+        ? payload.delete
+        : payload.delete_pending || {};
+
+    const deleteList = safeArray<any>(
+      deleteSource.elements || deleteSource.flow_ids || [],
+    );
+
     if (deleteList.length > 0) {
-      const delElements = deleteList.map((item) => 
-        typeof item === "string" ? item : (item.code || item.value || "")
-      ).filter(Boolean);
-      
+      const delElements = deleteList
+        .map((item) =>
+          typeof item === "string" ? item : item.code || item.value || "",
+        )
+        .filter(Boolean);
+
       const mappedForForm = delElements.map((id) => ({ value: id }));
       setTimeout(() => {
-        form.setValue("payload.delete.flow_ids", mappedForForm, { shouldDirty: true, shouldValidate: true });
+        form.setValue("payload.delete.flow_ids", mappedForForm, {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
         ctx.setCurrentIds(delElements);
       }, 0);
     }
@@ -171,7 +200,9 @@ const h1745: Handler = {
           justification: data.payload.basic.justification,
           signal_level: data.payload.basic.signal_level,
           actions,
-          ...(data.payload.file_name ? { base_file: data.payload.file_name } : {}),
+          ...(data.payload.file_name
+            ? { base_file: data.payload.file_name }
+            : {}),
         },
         responsible_form_3_3: data.payload.basic.responsible_form_3_3 || "",
         ...(actions.includes("create")

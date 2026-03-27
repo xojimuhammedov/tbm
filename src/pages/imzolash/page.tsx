@@ -48,7 +48,7 @@ function PdfModal({
       return (
         <OrderApplicationView1754
           open={true}
-          onOpenChange={() => { }}
+          onOpenChange={() => {}}
           document={doc}
           asComponent
         />
@@ -58,7 +58,7 @@ function PdfModal({
       return (
         <OrderApplicationView1745
           open={true}
-          onOpenChange={() => { }}
+          onOpenChange={() => {}}
           document={doc}
           asComponent
         />
@@ -68,7 +68,7 @@ function PdfModal({
       return (
         <OrderApplicationView1733
           open={true}
-          onOpenChange={() => { }}
+          onOpenChange={() => {}}
           document={doc}
           asComponent
         />
@@ -78,7 +78,7 @@ function PdfModal({
       return (
         <OrderApplicationView1770
           open={true}
-          onOpenChange={() => { }}
+          onOpenChange={() => {}}
           document={doc}
           asComponent
         />
@@ -88,7 +88,7 @@ function PdfModal({
       return (
         <OrderView1748
           open={true}
-          onOpenChange={() => { }}
+          onOpenChange={() => {}}
           document={doc}
           asComponent
         />
@@ -98,7 +98,7 @@ function PdfModal({
       return (
         <OrderApplicationView1731
           open={true}
-          onOpenChange={() => { }}
+          onOpenChange={() => {}}
           document={doc}
           asComponent
         />
@@ -108,7 +108,7 @@ function PdfModal({
       return (
         <OrderApplicationView1214
           open={true}
-          onOpenChange={() => { }}
+          onOpenChange={() => {}}
           document={doc}
           asComponent
         />
@@ -118,7 +118,7 @@ function PdfModal({
       return (
         <OrderView1248
           open={true}
-          onOpenChange={() => { }}
+          onOpenChange={() => {}}
           document={doc}
           asComponent
         />
@@ -212,7 +212,7 @@ function MetaCard({
     [
       "Kimga",
       (doc.to?.slice(0, 2).join(", ") ?? "") +
-      (doc.to?.length > 2 ? ` +${doc.to.length - 2}` : ""),
+        (doc.to?.length > 2 ? ` +${doc.to.length - 2}` : ""),
     ],
     ["Nusxasi", doc.copy?.join(", ") ?? "—"],
   ];
@@ -318,7 +318,7 @@ const ApplicationDocumentDetailPage = () => {
           await handleAddRecipient(values.director_id, false, "SIGNING");
         }
         handleCloseAddModal();
-      } catch { }
+      } catch {}
     },
     [handleAddRecipient, form],
   );
@@ -401,10 +401,7 @@ const ApplicationDocumentDetailPage = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[340px_1fr] gap-4 items-start">
-            <MetaCard
-              doc={doc}
-              handleOpenPdf={handleOpenPdf}
-            />
+            <MetaCard doc={doc} handleOpenPdf={handleOpenPdf} />
             <DocumentStatusBar
               documentId={id}
               onAddRecipient={handleAddRecipient}

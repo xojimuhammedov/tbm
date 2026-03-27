@@ -63,8 +63,11 @@ const useOrganizationForm = ({ id, onSave }: FormProps) => {
   useEffect(() => {
     // API response shape may vary; support common keys.
     const item =
-      query.data?.organization ?? query.data?.organizations ??
-      query.data?.org ?? query.data?.user ?? query.data;
+      query.data?.organization ??
+      query.data?.organizations ??
+      query.data?.org ??
+      query.data?.user ??
+      query.data;
 
     if (item?.name !== undefined) {
       form.setValue("name", item.name ?? "");

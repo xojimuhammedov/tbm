@@ -1,8 +1,4 @@
-import {
-  Form,
-  MyInput,
-  MyTextarea,
-} from "dgz-ui-shared/components/form";
+import { Form, MyInput, MyTextarea } from "dgz-ui-shared/components/form";
 import { useTranslation } from "react-i18next";
 import { FormContainerFooter } from "@/shared/components/templates/form";
 import { StaffDto } from "@/pages/organizations/schemas/createOrgSchema.ts";
