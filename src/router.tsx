@@ -1,6 +1,7 @@
 import { IsGuest, IsLoggedIn, HasAccess } from "@/shared/guards";
 import { lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
+import useUserStore from "@/shared/store/useUserStore.ts";
 
 const CommonLayout = lazy(() => import("./layouts/CommonLayout"));
 const BaseLayout = lazy(() => import("./layouts/base/BaseLayout"));
@@ -56,18 +57,90 @@ const OrdersPage = lazy(() => import("@/pages/Journals/orders/Page.tsx"));
 const OrdersFormPage = lazy(
   () => import("@/pages/Journals/orders/pages/FormPage.tsx"),
 );
+const OrdersTbpPage = lazy(
+  () => import("@/pages/Journals-tbp/orders-tbp/Page.tsx"),
+);
+const OrdersTbpFormPage = lazy(
+  () => import("@/pages/Journals-tbp/orders-tbp/pages/FormPage.tsx"),
+);
 const DecreesPage = lazy(() => import("@/pages/Journals/decrees/Page.tsx"));
 const DecreesFormPage = lazy(
   () => import("@/pages/Journals/decrees/pages/FormPage.tsx"),
+);
+const DecreesTbpPage = lazy(
+  () => import("@/pages/Journals-tbp/decrees-tbp/Page.tsx"),
+);
+const DecreesTbpFormPage = lazy(
+  () => import("@/pages/Journals-tbp/decrees-tbp/pages/FormPage.tsx"),
 );
 const NotifyPage = lazy(() => import("@/pages/Journals/notify/Page.tsx"));
 const NotifyFormPage = lazy(
   () => import("@/pages/Journals/notify/pages/FormPage.tsx"),
 );
+const NotifyTbpPage = lazy(
+  () => import("@/pages/Journals-tbp/notify-tbp/Page.tsx"),
+);
+const NotifyTbpFormPage = lazy(
+  () => import("@/pages/Journals-tbp/notify-tbp/pages/FormPage.tsx"),
+);
 const OutgoingPage = lazy(() => import("@/pages/Journals/outgoing/Page.tsx"));
 const OutgoingFormPage = lazy(
   () => import("@/pages/Journals/outgoing/pages/FormPage.tsx"),
 );
+const OutgoingTbpPage = lazy(
+  () => import("@/pages/Journals-tbp/outgoing-tbp/Page.tsx"),
+);
+const OutgoingTbpFormPage = lazy(
+  () => import("@/pages/Journals-tbp/outgoing-tbp/pages/FormPage.tsx"),
+);
+
+const JournalsOrdersRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <OrdersTbpPage /> : <OrdersPage />;
+};
+
+const JournalsOrdersFormRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <OrdersTbpFormPage /> : <OrdersFormPage />;
+};
+
+const JournalsDecreesRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <DecreesTbpPage /> : <DecreesPage />;
+};
+
+const JournalsDecreesFormRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <DecreesTbpFormPage /> : <DecreesFormPage />;
+};
+
+const JournalsNotifyRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <NotifyTbpPage /> : <NotifyPage />;
+};
+
+const JournalsNotifyFormRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <NotifyTbpFormPage /> : <NotifyFormPage />;
+};
+
+const JournalsOutgoingRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <OutgoingTbpPage /> : <OutgoingPage />;
+};
+
+const JournalsOutgoingFormRoute = () => {
+  const { me } = useUserStore();
+  const userRole = (me as any)?.role?.name;
+  return userRole === "tbp" ? <OutgoingTbpFormPage /> : <OutgoingFormPage />;
+};
 
 // NM Information Pages
 const ReceivedDocumentsPage = lazy(() => import("@/pages/inbox/Page"));
@@ -144,6 +217,11 @@ const E231FormPage = lazy(
 const A252Page = lazy(() => import("@/pages/rh-252/a-252/Page"));
 const A252FormPage = lazy(() => import("@/pages/rh-252/a-252/pages/FormPage"));
 
+const HujjatlarPage = lazy(() => import("@/pages/tbp/hujjatlar/Page"));
+const HujjatlarFormPage = lazy(
+  () => import("@/pages/tbp/hujjatlar/pages/FormPage"),
+);
+
 const RH3_3Page = lazy(() => import("@/pages/rh-252/rh-3_3/Page"));
 const RH3_3FormPage = lazy(() => import("@/pages/rh-252/rh-3_3/page/FormPage"));
 const RH_CDocument = lazy(() => import("@/pages/rh-252/c-252/Page"));
@@ -164,6 +242,7 @@ const F252_ApplicationForm = lazy(
 // Administration Pages
 const StaffPage = lazy(() => import("@/pages/staff/Page"));
 const GroupPage = lazy(() => import("@/pages/groups/Page"));
+const OrganizationsPage = lazy(() => import("@/pages/organizations/Page.tsx"));
 const SettingsPage = lazy(() => import("@/pages/staff/Page"));
 const RolesPage = lazy(() => import("@/pages/role/Page"));
 const PositionsPage = lazy(() => import("@/pages/position/Page"));
@@ -232,248 +311,582 @@ function Router() {
 
         {
           path: "inout/exin-96",
-          element: <Eid_17_96_Page />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <Eid_17_96_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exin-96/create",
-          element: <Eid_17_96_FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_96_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exin-96/edit/:id",
-          element: <Eid_17_96_FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_96_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exout-97",
-          element: <Eid_17_97 />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_97 />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exout-97/create",
-          element: <Eid_17_97_FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_97_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/exout-97/edit/:id",
-          element: <Eid_17_97_FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_97_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locin-98",
-          element: <Eid_17_98 />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_98 />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locin-98/create",
-          element: <Eid_17_98_FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_98_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locin-98/edit/:id",
-          element: <Eid_17_98_FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_98_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locout-99",
-          element: <Eid_17_99 />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_99 />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locout-99/create",
-          element: <Eid_17_99_FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_99_FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "inout/locout-99/edit/:id",
-          element: <Eid_17_99_FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Eid_17_99_FormPage />
+            </HasAccess>
+          ),
         },
 
         //Journals
         {
           path: "journals/orders",
-          element: <OrdersPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOrdersRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/orders/create",
-          element: <OrdersFormPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOrdersFormRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/orders/edit/:id",
-          element: <OrdersFormPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOrdersFormRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/decrees",
-          element: <DecreesPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsDecreesRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/decrees/create",
-          element: <DecreesFormPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsDecreesFormRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/decrees/edit/:id",
-          element: <DecreesFormPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsDecreesFormRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/notify",
-          element: <NotifyPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsNotifyRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/notify/create",
-          element: <NotifyFormPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsNotifyFormRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/notify/edit/:id",
-          element: <NotifyFormPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsNotifyFormRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/outgoing",
-          element: <OutgoingPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOutgoingRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/outgoing/create",
-          element: <OutgoingFormPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOutgoingFormRoute />
+            </HasAccess>
+          ),
         },
         {
           path: "journals/outgoing/edit/:id",
-          element: <OutgoingFormPage />,
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <JournalsOutgoingFormRoute />
+            </HasAccess>
+          ),
+        },
+
+        // Journals TBP Routes
+        {
+          path: "journals/orders-tbp",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OrdersTbpPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/orders-tbp/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OrdersTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/orders-tbp/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OrdersTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/decrees-tbp",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <DecreesTbpPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/decrees-tbp/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <DecreesTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/decrees-tbp/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <DecreesTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/notify-tbp",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <NotifyTbpPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/notify-tbp/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <NotifyTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/notify-tbp/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <NotifyTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/outgoing-tbp",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OutgoingTbpPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/outgoing-tbp/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OutgoingTbpFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "journals/outgoing-tbp/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <OutgoingTbpFormPage />
+            </HasAccess>
+          ),
         },
 
         // NM Information Routes
         {
           path: "received-documents",
-          element: <ReceivedDocumentsPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <ReceivedDocumentsPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi",
-          element: <RTSIPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RTSIPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/application",
-          element: <ApplicationPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <ApplicationPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/application/create",
-          element: <ApplicationFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <ApplicationFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/application/edit/:id",
-          element: <ApplicationFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <ApplicationFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-51",
-          element: <F51Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F51Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-51/create",
-          element: <F51FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F51FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-51/edit/:id",
-          element: <F51FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F51FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-54",
-          element: <F54Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F54Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-54/create",
-          element: <F54FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F54FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-54/edit/:id",
-          element: <F54FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F54FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-56",
-          element: <F56Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F56Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-56/create",
-          element: <F56FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F56FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rtsi/f-56/edit/:id",
-          element: <F56FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F56FormPage />
+            </HasAccess>
+          ),
         },
         // RH files section
         {
           path: "rh/rh-143",
-          element: <Rh_143_Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Rh_143_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-091",
-          element: <Rh_091_Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Rh_091_Page />
+            </HasAccess>
+          ),
         },
 
         {
           path: "rh/rh-218",
-          element: <Rh_218_Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Rh_218_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-249",
-          element: <Rh_249_Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Rh_249_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-251",
-          element: <Rh_251_Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Rh_251_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-226-1",
-          element: <Rh_226_1_Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Rh_226_1_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-226-2",
-          element: <Rh_226_2_Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Rh_226_2_Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh/rh-260",
-          element: <Rh_260_Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Rh_260_Page />
+            </HasAccess>
+          ),
         },
 
         // RTTSI sectioni
         {
           path: "rttsi",
-          element: <RTTSIPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RTTSIPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rttsi/create",
-          element: <RTTSIFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RTTSIFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rttsi/edit/:id",
-          element: <RTTSIFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RTTSIFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "operational-work",
-          element: <OperationalWorkPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <OperationalWorkPage />
+            </HasAccess>
+          ),
         },
         {
           path: "operational-work/create",
-          element: <OperativeFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <OperativeFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "operational-work/edit/:id",
-          element: <OperativeFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <OperativeFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "television",
-          element: <TelevisionPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <TelevisionPage />
+            </HasAccess>
+          ),
         },
         {
           path: "television/create",
-          element: <TelevisionFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <TelevisionFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "television/edit/:id",
-          element: <TelevisionFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <TelevisionFormPage />
+            </HasAccess>
+          ),
         },
         // Resource Database Routes
         {
           path: "nokia",
-          element: <NokiaPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <NokiaPage />
+            </HasAccess>
+          ),
         },
         {
           path: "zte",
-          element: <ZTEPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <ZTEPage />
+            </HasAccess>
+          ),
         },
         {
           path: "huawei-p30-pro",
-          element: <HuaweiP30ProPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <HuaweiP30ProPage />
+            </HasAccess>
+          ),
         },
         {
           path: "huawei-p30-lite",
-          element: <HuaweiP30LitePage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <HuaweiP30LitePage />
+            </HasAccess>
+          ),
         },
 
         {
@@ -481,15 +894,27 @@ function Router() {
           children: [
             {
               index: true,
-              element: <Channels51Page />,
+              element: (
+                <HasAccess roles={["admin", "superadmin"]}>
+                  <Channels51Page />
+                </HasAccess>
+              ),
             },
             {
               path: "create",
-              element: <Channels51FormPage />,
+              element: (
+                <HasAccess roles={["admin", "superadmin"]}>
+                  <Channels51FormPage />
+                </HasAccess>
+              ),
             },
             {
               path: "edit/:id",
-              element: <Channels51FormPage />,
+              element: (
+                <HasAccess roles={["admin", "superadmin"]}>
+                  <Channels51FormPage />
+                </HasAccess>
+              ),
             },
           ],
         },
@@ -498,76 +923,152 @@ function Router() {
           children: [
             {
               index: true,
-              element: <Flows53Page />,
+              element: (
+                <HasAccess roles={["admin", "superadmin"]}>
+                  <Flows53Page />
+                </HasAccess>
+              ),
             },
             {
               path: "create",
-              element: <Flows53FormPage />,
+              element: (
+                <HasAccess roles={["admin", "superadmin"]}>
+                  <Flows53FormPage />
+                </HasAccess>
+              ),
             },
             {
               path: "edit/:id",
-              element: <Flows53FormPage />,
+              element: (
+                <HasAccess roles={["admin", "superadmin"]}>
+                  <Flows53FormPage />
+                </HasAccess>
+              ),
             },
           ],
         },
         {
           path: "channels-5_3",
-          element: <Channels51Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Channels51Page />
+            </HasAccess>
+          ),
         },
         {
           path: "channels-5_3/create",
-          element: <Channels51FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Channels51FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "channels-5_3/edit/:id",
-          element: <Channels51FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Channels51FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-5_1",
-          element: <Flows53Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Flows53Page />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-5_1/create",
-          element: <Flows53FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Flows53FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-5_1/edit/:id",
-          element: <Flows53FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <Flows53FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "card-indexes",
-          element: <CardIndexesPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <CardIndexesPage />
+            </HasAccess>
+          ),
         },
         {
           path: "card-indexes/create",
-          element: <CardIndexesFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <CardIndexesFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "card-indexes/edit/:id",
-          element: <CardIndexesFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <CardIndexesFormPage />
+            </HasAccess>
+          ),
         },
         // Administration Routes
         {
           path: "staff",
-          element: <StaffPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <StaffPage />
+            </HasAccess>
+          ),
         },
         {
           path: "groups",
-          element: <GroupPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <GroupPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "organizations",
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <OrganizationsPage />
+            </HasAccess>
+          ),
         },
         {
           path: "settings",
-          element: <SettingsPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <SettingsPage />
+            </HasAccess>
+          ),
         },
         // Settings -> Roles route
         {
           path: "settings/roles",
-          element: <RolesPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RolesPage />
+            </HasAccess>
+          ),
         },
         // Settings -> Positions route
         {
           path: "settings/positions",
-          element: <PositionsPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <PositionsPage />
+            </HasAccess>
+          ),
         },
         // {
         //   path: "gras",
@@ -575,152 +1076,344 @@ function Router() {
         // },
         {
           path: "gras/b-231",
-          element: <B231Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <B231Page />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/b-231/create",
-          element: <B231FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <B231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/b-231/edit/:id",
-          element: <B231FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <B231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/c-231",
-          element: <C231Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <C231Page />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/c-231/create",
-          element: <C231FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <C231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/c-231/edit/:id",
-          element: <C231FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <C231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/d-231",
           element: (
-            <HasAccess roles={["admin"]}>
+            <HasAccess roles={["admin", "superadmin"]}>
               <D231Page />
             </HasAccess>
           ),
         },
         {
           path: "gras/d-231/create",
-          element: <D231FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <D231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/d-231/edit/:id",
-          element: <D231FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <D231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/e-231",
-          element: <E231Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <E231Page />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/e-231/create",
-          element: <E231FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <E231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "gras/e-231/edit/:id",
-          element: <E231FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <E231FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-id",
-          element: <FlowsIdPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <FlowsIdPage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-id/create",
-          element: <FlowsIdCreatePage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <FlowsIdCreatePage />
+            </HasAccess>
+          ),
         },
         {
           path: "flows-id/edit/:id",
-          element: <FlowsIdCreatePage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <FlowsIdCreatePage />
+            </HasAccess>
+          ),
         },
         {
           path: "channels-id",
-          element: <ChannelsIdPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <ChannelsIdPage />
+            </HasAccess>
+          ),
         },
         {
           path: "channels-id/create",
-          element: <ChannelsCreatePage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <ChannelsCreatePage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252",
-          element: <A252Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <A252Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252/create",
-          element: <A252FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <A252FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252/edit/:id",
-          element: <A252FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <A252FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252/sign/:id",
-          element: <EImzoSignPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <EImzoSignPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/a-252/progress/:id",
-          element: <ProgreesDoc />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <ProgreesDoc />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <HujjatlarPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar/create",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <HujjatlarFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <HujjatlarFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar/sign/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <EImzoSignPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/hujjatlar/progress/:id",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <ProgreesDoc />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/imzolanadigan-hujjatlar",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <HujjatlarniImzolashPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "tbp/imzolanadigan-hujjatlar/:id/shared/:sharedId",
+          element: (
+            <HasAccess roles={["admin", "tbp", "superadmin"]}>
+              <HujjatlarniImzolashFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/rh-3_3",
-          element: <RH3_3Page />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RH3_3Page />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/rh-3_3/create",
-          element: <RH3_3FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RH3_3FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/rh-3_3/edit/:id",
-          element: <RH3_3FormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RH3_3FormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/c-252",
-          element: <RH_CDocument />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RH_CDocument />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/c-252/create",
-          element: <RH_CFormDocument />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RH_CFormDocument />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/d-252",
-          element: <RH_D_Application />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RH_D_Application />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/d-252/create",
-          element: <RH_D_ApplicationForm />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RH_D_ApplicationForm />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/d-252/edit/:id",
-          element: <RH_D_ApplicationForm />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <RH_D_ApplicationForm />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/f-252",
-          element: <F252_Application />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F252_Application />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/f-252/create",
-          element: <F252_ApplicationForm />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F252_ApplicationForm />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/f-252/edit/:id",
-          element: <F252_ApplicationForm />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <F252_ApplicationForm />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/agreement-decrees",
-          element: <AgreementDecreesPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <AgreementDecreesPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/agreement-decrees/:id/shared/:sharedId",
-          element: <AgreementDecreesFormPage />,
+          element: (
+            <HasAccess roles={["admin", "superadmin"]}>
+              <AgreementDecreesFormPage />
+            </HasAccess>
+          ),
         },
         {
           path: "rh-252/hujjatlarni-imzolash",
           element: (
-            <HasAccess roles={["admin"]}>
+            <HasAccess roles={["admin", "superadmin"]}>
               <HujjatlarniImzolashPage />
             </HasAccess>
           ),
@@ -728,14 +1421,13 @@ function Router() {
         {
           path: "rh-252/hujjatlarni-imzolash/:id/shared/:sharedId",
           element: (
-            <HasAccess roles={["admin"]}>
+            <HasAccess roles={["admin", "superadmin"]}>
               <HujjatlarniImzolashFormPage />
             </HasAccess>
           ),
         },
       ],
     },
-
     {
       path: "error",
       element: <CommonLayout />,
@@ -750,7 +1442,6 @@ function Router() {
         },
       ],
     },
-
     {
       path: "*",
       element: <Navigate to={"/error/not-found"} />,

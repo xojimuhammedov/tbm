@@ -67,6 +67,12 @@ export const createStaffSchema = (
           ns: config.LANG.NS.VALIDATION,
         }),
       ),
+      organization: z.string().nonempty(
+        t("required {{field}}", {
+          field: t("Organization"),
+          ns: config.LANG.NS.VALIDATION,
+        }),
+      ),
       password: z
         .string()
         .min(
@@ -148,4 +154,6 @@ export const createStaffSchema = (
       return ctx;
     });
 
-export type StaffDto = z.infer<ReturnType<typeof createStaffSchema>>;
+export type StaffDto = z.infer<ReturnType<typeof createStaffSchema>> & {
+  organization: string;
+};

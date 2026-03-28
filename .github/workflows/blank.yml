@@ -1,0 +1,48 @@
+name: CI/CD + Server Deploy Self Hosted
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: 📦 Kodni yuklab olish
+        uses: actions/checkout@v4
+
+      - name: 🧰 Node.js o'rnatish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
+
+      - name: 🏗️ Build yaratish
+        run: npm run build
+        env:
+          VITE_EIMZO_API_KEY: ${{ secrets.VITE_EIMZO_API_KEY }}
+          VITE_EIMZO_BASE_URL: ${{ secrets.VITE_EIMZO_BASE_URL }}
+          VITE_APP_NAME: ${{ secrets.VITE_APP_NAME }}
+          VITE_APP_LOGO: ${{ secrets.VITE_APP_LOGO }}
+          VITE_APP_LOGO_MIN: ${{ secrets.VITE_APP_LOGO_MIN }}
+          VITE_OWNER_URL: ${{ secrets.VITE_OWNER_URL }}
+          VITE_OWNER_NAME: ${{ secrets.VITE_OWNER_NAME }}
+          VITE_SIGNED: ${{ secrets.VITE_SIGNED }}
+          VITE_DEFAULT_LOCALE: ${{ secrets.VITE_DEFAULT_LOCALE }}
+          VITE_DEFAULT_NS: ${{ secrets.VITE_DEFAULT_NS }}
+          VITE_VALIDATION_NS: ${{ secrets.VITE_VALIDATION_NS }}
+          VITE_ERROR_NS: ${{ secrets.VITE_ERROR_NS }}
+
+      - name: 🚀 Deploy qilish
+        env:
+          SSH_TARGET: ${{ secrets.SSH_TARGET }}
+        run: |
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            dist/ "$SSH_TARGET/"

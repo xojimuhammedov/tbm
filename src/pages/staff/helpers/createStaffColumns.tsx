@@ -43,6 +43,12 @@ const createStaffColumns = (
     render: (role) => role?.name,
   },
   {
+    key: "organization",
+    dataIndex: "organization",
+    name: t("Organization"),
+    render: (organization) => organization?.name,
+  },
+  {
     key: "updated_at",
     dataIndex: "updated_at",
     name: t("Updated date"),

@@ -10,19 +10,22 @@ const useMySidebar = () => {
   const { isActive } = useMenuActive();
   const { me } = useUserStore();
 
-  const userRole = (me as any)?.role?.name;
+  const userRole = (((me as any)?.role?.name as string | undefined) ?? "")
+    .toLowerCase()
+    .trim();
 
   const groups = useMemo(() => {
     const defaultGroups = createSidebarGroups(t, isActive);
 
-    // If no userRole is found, we can optionally return defaultGroups
-    // or return everything. Assume we return defaultGroups for safety.
     if (!userRole) return defaultGroups;
 
     const filterItems = (items: MenuItemInterface[]): MenuItemInterface[] => {
       return items
         .filter((item) => {
-          if (item.roles && !item.roles.includes(userRole)) {
+          if (
+            item.roles &&
+            !item.roles.some((role) => role.toLowerCase().trim() === userRole)
+          ) {
             return false;
           }
           return true;
@@ -47,7 +50,10 @@ const useMySidebar = () => {
 
     return defaultGroups
       .filter((group) => {
-        if (group.roles && !group.roles.includes(userRole)) {
+        if (
+          group.roles &&
+          !group.roles.some((role) => role.toLowerCase().trim() === userRole)
+        ) {
           return false;
         }
         return true;

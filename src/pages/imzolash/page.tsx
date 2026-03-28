@@ -6,6 +6,8 @@ import OrderApplicationView1745 from "@/pages/rh-252/a-252/components/View/1745v
 import OrderView1748 from "@/pages/rh-252/a-252/components/View/1748view";
 import OrderApplicationView1754 from "@/pages/rh-252/a-252/components/View/1754view";
 import OrderApplicationView1770 from "@/pages/rh-252/a-252/components/View/1770view";
+import OrderApplicationView1214 from "@/pages/tbp/hujjatlar/components/View/1234view";
+import OrderView1248 from "@/pages/tbp/hujjatlar/components/View/1214view";
 import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
 import { PageWrapper } from "@/shared/components/containers/page";
 import { MyModal } from "@/shared/components/moleculas/modal";
@@ -102,6 +104,26 @@ function PdfModal({
         />
       );
     }
+    if (model === "12_14_payloads") {
+      return (
+        <OrderApplicationView1214
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
+    if (model === "12_48_payloads") {
+      return (
+        <OrderView1248
+          open={true}
+          onOpenChange={() => {}}
+          document={doc}
+          asComponent
+        />
+      );
+    }
     return (
       <div className="p-8 text-center text-gray-500">
         Hujjat ko'rinishi topilmadi
@@ -113,7 +135,7 @@ function PdfModal({
     <MyModal
       open={open}
       onOpenChange={(v) => !v && onClose()}
-      size="8xl"
+      size="5xl"
       className="overflow-auto"
       header={
         <div className="flex items-center gap-2.5 pr-10">

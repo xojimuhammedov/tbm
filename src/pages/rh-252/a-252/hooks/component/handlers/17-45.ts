@@ -47,23 +47,29 @@ const h1745: Handler = {
     form.setValue("payload.basic.deadline", basic.deadline ?? null);
     form.setValue("payload.basic.justification", basic.justification ?? "");
     form.setValue("payload.basic.signal_level", basic.signal_level ?? "");
-    form.setValue("payload.basic.actions", safeArray<string>(basic.actions));
+    form.setValue(
+      "payload.basic.actions",
+      safeArray<string>(basic.actions ?? payload.actions),
+    );
     form.setValue(
       "payload.basic.responsible_organizing",
-      basic.responsible_organizing ?? "",
+      basic.responsible_organizing ?? payload.responsible_organizing ?? "",
     );
     form.setValue(
       "payload.basic.responsible_form_3_3",
-      basic.responsible_form_3_3 ?? "",
+      basic.responsible_form_3_3 ?? payload.responsible_form_3_3 ?? "",
     );
 
-    form.setValue(
-      "payload.file_name",
-      basic.base_file ?? payload?.file_name ?? "",
-    );
+    // file_name is intentionally omitted to require re-upload on edit
 
-    if (payload.create?.flow_ids) {
-      const rows = safeArray(payload.create.flow_ids).map((x: any) => ({
+    // 1. Create section
+    const createSource =
+      payload.create?.flow_ids?.length > 0
+        ? payload.create.flow_ids
+        : payload.create_pending?.flow_ids || [];
+
+    if (createSource.length > 0) {
+      const rows = safeArray(createSource).map((x: any) => ({
         code: x?.code ?? "",
         point_a: x?.point_a ?? "",
         point_b: x?.point_b ?? "",
@@ -74,41 +80,90 @@ const h1745: Handler = {
         device_b: x?.device_b ?? "",
         id_exist: null,
       }));
-      form.setValue("payload.create.flow_ids", rows);
-    } else {
-      form.setValue("payload.create.flow_ids", []);
+      setTimeout(() => {
+        form.setValue("payload.create.flow_ids", rows, {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
+      }, 0);
     }
 
-    const apiChannels = safeArray(payload.update?.channels);
-    const apiFlows = safeArray(payload.update?.flows);
+    // 2. Update section
+    const updateSource =
+      payload.update?.channels?.length > 0 || payload.update?.flows?.length > 0
+        ? payload.update
+        : payload.update_pending || {};
+
+    const apiChannels = safeArray(updateSource.channels);
+    const apiFlows = safeArray(updateSource.flows);
 
     if (apiChannels.length > 0) {
-      form.setValue("payload.update.update_type", "channels");
-      const rows = apiChannels.map((ch: any) => ({
-        old_code: ch?.old ?? "",
-        new_code: ch?.new ?? "",
-      }));
-      form.setValue("payload.update.flow_ids", rows);
+      setTimeout(() => {
+        form.setValue("payload.update.update_type", "channels", {
+          shouldDirty: true,
+        });
+        form.setValue(
+          "payload.update.flow_ids",
+          apiChannels.map((ch: any) => ({
+            old: ch?.old ?? "",
+            new: ch?.new ?? "",
+          })),
+          { shouldDirty: true, shouldValidate: true },
+        );
+      }, 0);
     } else if (apiFlows.length > 0) {
-      form.setValue("payload.update.update_type", "flows");
-      const rows = apiFlows.map((fl: any) => ({
-        code: fl?.code ?? "",
-        point_a: fl?.point_a ?? "",
-        point_b: fl?.point_b ?? "",
-        device_a: fl?.device_a ?? "",
-        device_b: fl?.device_b ?? "",
-        port_a: fl?.port_a ?? "",
-        port_b: fl?.port_b ?? "",
-        signal_level: fl?.signal_level ?? "",
-      }));
-      form.setValue("payload.update.flow_ids", rows);
+      const rows = apiFlows.map((fl: any) => {
+        const item = fl.new || fl;
+        return {
+          code: item?.code ?? "",
+          point_a: item?.point_a ?? "",
+          point_b: item?.point_b ?? "",
+          device_a: item?.device_a ?? "",
+          device_b: item?.device_b ?? "",
+          port_a: item?.port_a ?? "",
+          port_b: item?.port_b ?? "",
+          signal_level:
+            item?.signal_level || fl?.signal_level || basic.signal_level || "",
+          old_data: fl.old,
+        };
+      });
+      setTimeout(() => {
+        form.setValue("payload.update.update_type", "flows", {
+          shouldDirty: true,
+        });
+        form.setValue("payload.update.flow_ids", rows, {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
+      }, 0);
     }
 
-    if (payload.delete?.elements) {
-      const delElements = safeArray<string>(payload.delete.elements);
+    // 3. Delete section
+    const deleteSource =
+      payload.delete?.elements?.length > 0 ||
+      payload.delete?.flow_ids?.length > 0
+        ? payload.delete
+        : payload.delete_pending || {};
+
+    const deleteList = safeArray<any>(
+      deleteSource.elements || deleteSource.flow_ids || [],
+    );
+
+    if (deleteList.length > 0) {
+      const delElements = deleteList
+        .map((item) =>
+          typeof item === "string" ? item : item.code || item.value || "",
+        )
+        .filter(Boolean);
+
       const mappedForForm = delElements.map((id) => ({ value: id }));
-      form.setValue("payload.delete.flow_ids", mappedForForm);
-      ctx.setCurrentIds(delElements);
+      setTimeout(() => {
+        form.setValue("payload.delete.flow_ids", mappedForForm, {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
+        ctx.setCurrentIds(delElements);
+      }, 0);
     }
   },
 
@@ -145,7 +200,9 @@ const h1745: Handler = {
           justification: data.payload.basic.justification,
           signal_level: data.payload.basic.signal_level,
           actions,
-          base_file: data.payload.file_name || "",
+          ...(data.payload.file_name
+            ? { base_file: data.payload.file_name }
+            : {}),
         },
         responsible_form_3_3: data.payload.basic.responsible_form_3_3 || "",
         ...(actions.includes("create")

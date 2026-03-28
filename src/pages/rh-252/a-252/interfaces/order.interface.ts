@@ -1,3 +1,5 @@
+import { GroupInterface } from "@/pages/groups/interfaces/group.interface.ts";
+
 export type OrderCode =
   | "17-45"
   | "17-54"
@@ -15,7 +17,7 @@ export interface BaseOrder {
   pdf_path?: string;
   responsible: ResponsibleUser;
   director: ResponsibleUser;
-  to: string[];
+  to: GroupInterface[] | string[];
   copy: string[];
   payload_model?: string;
   created_at: string;
@@ -166,6 +168,7 @@ export interface Payload1748 {
   reserve_routes: string;
   main_routes: string;
   stopped_flows: StoppedFlow[];
+  stopped_flows_pending: StoppedFlow[];
   including: string;
   responsible_person: string;
   concert_text: string;

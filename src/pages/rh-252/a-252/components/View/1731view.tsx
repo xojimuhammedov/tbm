@@ -53,131 +53,136 @@ const OrderApplicationView1731 = ({
         <div>Nusxa: 1</div>
       </div>
 
-      {flows.map((flow: any, fIdx: number) => (
-        <div key={flow._id || fIdx} className="mb-10 last:mb-0">
-          <div className="bg-gray-50 border border-black border-b-0 p-2 font-bold text-[13px]">
-            OQIM (ID): {flow.flow_id}
-          </div>
-          <table
-            className="w-full text-[11px]"
-            style={{ borderCollapse: "collapse", border: "1px solid black" }}
-          >
-            <thead>
-              <tr className="bg-gray-100/50">
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  To'g'ri raqam
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  Teskari raqam
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  Port A
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  Multipleksor A
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  p.A
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  Name_MS_final
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  Tezlik
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  № stm
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  Oqim №
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  p.B
-                </th>
-                <th style={{ border: "1px solid black", padding: "4px" }}>
-                  Multipleksor B
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {flow.route.map((route: any, rIdx: number) => (
-                <tr key={rIdx} className="text-center">
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.forward_number}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.reverse_number}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.port_a}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.mux_a}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.pa}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.final_ms_name}
-                  </td>
-                  <td
-                    style={{ border: "1px solid black", padding: "4px" }}
-                    className="uppercase"
-                  >
-                    {route.speed}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.stm}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.potok_number}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.pb}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "4px" }}>
-                    {route.mux_b}
-                  </td>
+      {flows.map((flow: any, fIdx: number) => {
+        const meta = flow.flow_id_metadata;
+        const firstRoute = flow.route?.[0];
+
+        return (
+          <div key={meta?._id || fIdx} className="mb-10 last:mb-0">
+            <div className="bg-gray-50 border border-black border-b-0 p-2 font-bold text-[13px]">
+              OQIM (ID): {flow.flow_id}
+            </div>
+            <table
+              className="w-full text-[11px]"
+              style={{ borderCollapse: "collapse", border: "1px solid black" }}
+            >
+              <thead>
+                <tr className="bg-gray-100/50">
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    To'g'ri raqam
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    Teskari raqam
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    Port A
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    Multipleksor A
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    p.A
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    Name_MS_final
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    Tezlik
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    № ts
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    p.B
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    Multipleksor B
+                  </th>
+                  <th style={{ border: "1px solid black", padding: "4px" }}>
+                    Port B
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="grid grid-cols-2 gap-x-10 gap-y-3 p-4 border border-black border-t-0 text-[12px]">
-            <div className="flex items-end gap-2">
-              <span className="font-bold text-gray-700 whitespace-nowrap">
-                Xalqaro raqam:
-              </span>
-              <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5 italic">
-                {flow.route[0]?.international_number || " "}
-              </span>
-            </div>
-            <div className="flex items-end gap-2">
-              <span className="font-bold text-gray-700 whitespace-nowrap">
-                Farmoyish №:
-              </span>
-              <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
-                {flow.route[0]?.order_number || " "}
-              </span>
-            </div>
-            <div className="flex items-end gap-2">
-              <span className="font-bold text-gray-700 whitespace-nowrap">
-                Iste'molchi:
-              </span>
-              <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
-                {flow.route[0]?.consumer || " "}
-              </span>
-            </div>
-            <div className="flex items-end gap-2">
-              <span className="font-bold text-gray-700 whitespace-nowrap">
-                Manfaatdorlik:
-              </span>
-              <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
-                {flow.route[0]?.interest_level || " "}
-              </span>
+              </thead>
+              <tbody>
+                {flow.route.map((route: any, rIdx: number) => (
+                  <tr key={rIdx} className="text-center">
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.forward}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.reverse}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.port_a}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.mux_a}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.pa}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.final_ms_name}
+                    </td>
+                    <td
+                      style={{ border: "1px solid black", padding: "4px" }}
+                      className="uppercase"
+                    >
+                      {route.speed}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.ts}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.pb}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.mux_b}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "4px" }}>
+                      {route.port_b}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="grid grid-cols-2 gap-x-10 gap-y-3 p-4 border border-black border-t-0 text-[12px]">
+              <div className="flex items-end gap-2">
+                <span className="font-bold text-gray-700 whitespace-nowrap">
+                  Xalqaro raqam:
+                </span>
+                <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5 italic">
+                  {meta?.international_code || firstRoute?.international || " "}
+                </span>
+              </div>
+              <div className="flex items-end gap-2">
+                <span className="font-bold text-gray-700 whitespace-nowrap">
+                  Farmoyish №:
+                </span>
+                <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
+                  {meta?.order_number || firstRoute?.order_number || " "}
+                </span>
+              </div>
+              <div className="flex items-end gap-2">
+                <span className="font-bold text-gray-700 whitespace-nowrap">
+                  Iste'molchi:
+                </span>
+                <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
+                  {meta?.consumer_for_route || firstRoute?.consumer || " "}
+                </span>
+              </div>
+              <div className="flex items-end gap-2">
+                <span className="font-bold text-gray-700 whitespace-nowrap">
+                  Manfaatdorlik:
+                </span>
+                <span className="border-b border-dotted border-gray-400 flex-1 pb-0.5">
+                  {meta?.note || firstRoute?.interest_level || " "}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       <div className="mt-auto text-sm text-[#5a76a8]">
         <p>

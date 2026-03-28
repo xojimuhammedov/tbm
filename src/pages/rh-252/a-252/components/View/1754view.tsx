@@ -56,7 +56,9 @@ const OrderApplicationView1754 = ({
         <span className="font-bold">Kimga:</span>
         <div className="font-bold uppercase">
           {document?.to?.length
-            ? document.to.map((item, i) => <p key={i}>{item}</p>)
+            ? document.to.map((item: any, i: number) => (
+                <p key={i}>{item?.name}</p>
+              ))
             : "________________"}
         </div>
         <span className="font-bold">Nusxasi:</span>

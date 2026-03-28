@@ -156,6 +156,8 @@ export const AgreementReviewModal: React.FC<AgreementReviewModalProps> = ({
     );
   };
 
+  console.log(doc);
+
   const rows: [string, React.ReactNode][] = [
     ["Buyurtma sanasi", dateFormatter(doc.order_date, DATE) || "—"],
     ["Yaratilgan vaqt", dateFormatter(doc.created_at, DATE_TIME) || "—"],
@@ -164,8 +166,11 @@ export const AgreementReviewModal: React.FC<AgreementReviewModalProps> = ({
     ["Yaratuvchi", fullName(doc.created_by)],
     [
       "Kimga",
-      (doc.to?.slice(0, 2).join(", ") ?? "") +
-        (doc.to?.length > 2 ? ` +${doc.to.length - 2}` : ""),
+      (doc.to
+        ?.slice(0, 1)
+        .map((item: any) => item?.name)
+        .join(", ") ?? "") +
+        (doc.to?.length > 1 ? ` +${doc.to.length - 1}` : ""),
     ],
     ["Nusxasi", doc.copy?.join(", ") ?? "—"],
     [

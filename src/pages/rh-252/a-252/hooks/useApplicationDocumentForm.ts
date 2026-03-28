@@ -37,7 +37,7 @@ const useApplicationDocumentForm = ({
     defaultValues: {
       code: "",
       order_date: null,
-      to: "",
+      to: [],
       copy: "",
       point_a: "",
       point_b: "",
@@ -125,28 +125,64 @@ const useApplicationDocumentForm = ({
     },
   });
 
+  const isInitialLoad = useRef(true);
+
   useEffect(() => {
-    if (!editData || !id) return;
+    if (!id) {
+      isInitialLoad.current = false;
+      return;
+    }
+
+    if (!editData) return;
+
     const doc = unwrapDoc(editData);
-    if (!doc?.code) return;
+    if (!doc?.code) {
+      isInitialLoad.current = false;
+      return;
+    }
 
     const fullCode = doc.code || "";
     const prefix = codePrefix(fullCode);
-
+    const normalizeToValue = (item: any) =>
+      typeof item === "string"
+        ? item
+        : (item?._id ?? item?.value ?? item?.name ?? "");
+    const toValues = (Array.isArray(doc.to) ? doc.to : [])
+      .map(normalizeToValue)
+      .filter(Boolean);
     fullCodeRef.current = fullCode;
-
+    form.setValue("to", toValues);
     form.setValue("code", prefix);
     form.setValue("order_date", doc.order_date ?? null);
-    form.setValue("to", listToText(doc.to));
+    form.setValue(
+      "to",
+      Array.isArray(doc.to)
+        ? doc.to.map((item: any) =>
+            typeof item === "object" && item?._id ? item._id : item,
+          )
+        : [],
+    );
     form.setValue("copy", listToText(doc.copy));
 
     const handler = handlers[prefix];
-    if (!handler) return;
+    if (!handler) {
+      isInitialLoad.current = false;
+      return;
+    }
 
     handler.populate(form, doc.payload || {}, { setCurrentIds });
-  }, [editData, id]);
+
+    // Initial loading tugaganini belgilaymiz.
+    // Timeoutni biroz oshiramizki, handler ichidagi setTimeouts ulgurib qolsin
+    setTimeout(() => {
+      isInitialLoad.current = false;
+    }, 200);
+  }, [editData, id, form]);
 
   useEffect(() => {
+    // Agar dastlabki yuklash bo'layotgan bo'lsa, tozalashni amalga oshirmaymiz
+    if (isInitialLoad.current) return;
+
     const prefix = codePrefix(fullCodeRef.current || "");
     if (prefix !== "17-45") return;
     if (!currentUpdateType) return;

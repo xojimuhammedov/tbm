@@ -2,6 +2,7 @@ import { MenuGroupInterface } from "@/layouts/base/interfaces/menu-group.interfa
 import { TranslationArgsType } from "dgz-ui-shared/types";
 import {
   BarChart3,
+  Building,
   ChartBarBig,
   Database,
   FileLock,
@@ -12,7 +13,6 @@ import {
   SmartphoneCharging,
   Tv,
   User,
-  Users,
 } from "lucide-react";
 
 const createSidebarGroups = (
@@ -31,22 +31,22 @@ const createSidebarGroups = (
           {
             title: t("17-96 ex/in document"),
             url: "exin-96",
-            roles: ["admin"],
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("17-97 ex/out document"),
             url: "exout-97",
-            roles: ["admin"],
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("17-98 loc/in document"),
             url: "locin-98",
-            roles: ["admin"],
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("17-99 loc/out document"),
             url: "locout-99",
-            roles: ["admin"],
+            roles: ["admin", "superadmin"],
           },
         ],
       },
@@ -64,18 +64,55 @@ const createSidebarGroups = (
           {
             title: t("Buyruqlar"),
             url: "orders",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("Farmoyishlar"),
             url: "decrees",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("Xabarnoma va farmoyish"),
             url: "notify",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("Chiquvchi hujjatlar"),
             url: "outgoing",
+            roles: ["admin", "superadmin"],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: t("TBP Jurnallar"),
+    items: [
+      {
+        title: t("Jurnallar"),
+        url: "journals",
+        icon: FileSignature,
+        isActive: isActive("journals"),
+        children: [
+          {
+            title: t("Buyruqlar"),
+            url: "orders-tbp",
+            roles: ["tbp"],
+          },
+          {
+            title: t("Farmoyishlar"),
+            url: "decrees-tbp",
+            roles: ["tbp"],
+          },
+          {
+            title: t("Xabarnoma va farmoyish"),
+            url: "notify-tbp",
+            roles: ["tbp"],
+          },
+          {
+            title: t("Chiquvchi hujjatlar"),
+            url: "outgoing-tbp",
+            roles: ["tbp"],
           },
         ],
       },
@@ -99,22 +136,27 @@ const createSidebarGroups = (
           {
             title: t("Application"),
             url: "application",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("F-51 document"),
             url: "f-51",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("F-56 document"),
             url: "f-56",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("F-54 document"),
             url: "f-54",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("17-96 document"),
             url: "eid-96",
+            roles: ["admin", "superadmin"],
           },
         ],
       },
@@ -123,18 +165,21 @@ const createSidebarGroups = (
         url: "rttsi",
         icon: SmartphoneCharging,
         isActive: isActive("rttsi"),
+        roles: ["admin", "superadmin"],
       },
       {
         title: t("Operational work"),
         url: "operational-work",
         icon: FileLock,
         isActive: isActive("operational-work"),
+        roles: ["admin", "superadmin"],
       },
       {
         title: t("Television"),
         url: "television",
         icon: Tv,
         isActive: isActive("television"),
+        roles: ["admin", "superadmin"],
       },
     ],
   },
@@ -150,34 +195,42 @@ const createSidebarGroups = (
           {
             title: t("RH-143"),
             url: "rh-143",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("RH-091"),
             url: "rh-091",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("RH-218"),
             url: "rh-218",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("RH-226-1"),
             url: "rh-226-1",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("RH-226-2"),
             url: "rh-226-2",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("RH-249"),
             url: "rh-249",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("RH-251"),
             url: "rh-251",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("RH-260"),
             url: "rh-260",
+            roles: ["admin", "superadmin"],
           },
         ],
       },
@@ -195,30 +248,37 @@ const createSidebarGroups = (
           {
             title: t("A-Application"),
             url: "a-252",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("Kelishuv farmoyishlar"),
             url: "agreement-decrees",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("Imzolanadigan hujjatlar"),
             url: "hujjatlarni-imzolash",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("3.3 Application"),
             url: "rh-3_3",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("C Application"),
             url: "c-252",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("D Application"),
             url: "d-252",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("F Application"),
             url: "f-252",
+            roles: ["admin", "superadmin"],
           },
         ],
       },
@@ -231,6 +291,30 @@ const createSidebarGroups = (
           {
             title: t("A-Application"),
             url: "a-231",
+            roles: ["admin", "superadmin"],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: t("TBP hujjatlari"),
+    items: [
+      {
+        title: t("TBP"),
+        url: "tbp",
+        icon: ChartBarBig,
+        isActive: isActive("tbp"),
+        children: [
+          {
+            title: t("Hujjatlar"),
+            url: "hujjatlar",
+            roles: ["admin", "tbp", "superadmin"],
+          },
+          {
+            title: t("Imzolanadigan hujjatlar"),
+            url: "imzolanadigan-hujjatlar",
+            roles: ["admin", "tbp", "superadmin"],
           },
         ],
       },
@@ -288,10 +372,12 @@ const createSidebarGroups = (
           {
             title: t("Channels(5_3)"),
             url: "channels-5_3",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("Channels ID"),
             url: "channels-id",
+            roles: ["admin", "superadmin"],
           },
         ],
       },
@@ -304,10 +390,12 @@ const createSidebarGroups = (
           {
             title: t("Flows(5_1)"),
             url: "flows-5_1",
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("Flows ID"),
             url: "flows-id",
+            roles: ["admin", "superadmin"],
           },
         ],
       },
@@ -316,6 +404,7 @@ const createSidebarGroups = (
         url: "card-indexes",
         icon: Database,
         isActive: isActive("card-indexes"),
+        roles: ["admin", "superadmin"],
       },
     ],
   },
@@ -362,12 +451,21 @@ const createSidebarGroups = (
         url: "staff",
         icon: User,
         isActive: isActive("staff"),
+        roles: ["admin", "superadmin"],
       },
+      // {
+      //   title: t("Groups"),
+      //   url: "groups",
+      //   icon: Users,
+      //   isActive: isActive("groups"),
+      //   roles: ["admin", 'superadmin'],
+      // },
       {
-        title: t("Groups"),
-        url: "groups",
-        icon: Users,
-        isActive: isActive("groups"),
+        title: t("Organizations"),
+        url: "organizations",
+        icon: Building,
+        isActive: isActive("organizations"),
+        roles: ["admin", "superadmin"],
       },
       {
         title: t("Settings"),
@@ -379,11 +477,13 @@ const createSidebarGroups = (
             title: t("Roles"),
             url: "roles",
             icon: ShieldUser,
+            roles: ["admin", "superadmin"],
           },
           {
             title: t("Positions"),
             url: "positions",
             icon: ShieldUser,
+            roles: ["admin", "superadmin"],
           },
         ],
       },

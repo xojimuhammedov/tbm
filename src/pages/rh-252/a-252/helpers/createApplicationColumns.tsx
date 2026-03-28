@@ -1,3 +1,4 @@
+import { GroupInterface } from "@/pages/groups/interfaces/group.interface.ts";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
 import { dateFormatter } from "@/shared/utils/utils";
@@ -54,13 +55,19 @@ const createOrderColumns = (
     key: "to",
     dataIndex: "to",
     name: t("To"),
-    render: (to: string[]) => {
+    render: (to: GroupInterface[] | string[]) => {
       if (!to || to.length === 0) return "-";
+      const names = to
+        .map((g: any) => (typeof g === "string" ? g : g.name))
+        .filter(Boolean);
       return (
-        <div className="max-w-xs truncate" title={to.join(", ")}>
-          {to.slice(0, 2).join(", ")}
-          {to.length > 2 && (
-            <span className="text-gray-500 font-medium"> +{to.length - 2}</span>
+        <div className="max-w-xs truncate" title={names.join(", ")}>
+          {names.slice(0, 2).join(", ")}
+          {names.length > 2 && (
+            <span className="text-gray-500 font-medium">
+              {" "}
+              +{names.length - 2}
+            </span>
           )}
         </div>
       );
@@ -80,7 +87,6 @@ const createOrderColumns = (
     render: (status: string | undefined) => {
       let label = status || "---";
       let colorClass = "bg-slate-100 text-slate-700";
-
       if (status === "EXECUTED" || status === "SIGNED") {
         label = "Imzolangan";
         colorClass = "bg-emerald-100 text-emerald-700";

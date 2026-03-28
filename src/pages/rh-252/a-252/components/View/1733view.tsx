@@ -21,7 +21,7 @@ const OrderApplicationView1733 = ({
 
   const payload = (document as any)?.payload;
   const basic = payload?.basic;
-  const channels = payload?.delete?.channels || [];
+  const flowIds = payload?.delete?.flow_ids || [];
   const responsible = document?.responsible;
 
   const DocumentContent = (
@@ -55,16 +55,30 @@ const OrderApplicationView1733 = ({
         <div>SONI: 1</div>
       </div>
 
-      <div className="grid grid-cols-[60px_1fr] gap-y-2 mb-5 text-[15px]">
+      <div className="grid grid-cols-[60px_1fr] gap-y-2 mb-2 text-[15px]">
         <span className="font-bold">Kimga:</span>
         <div className="font-bold uppercase">
-          {document?.to?.map((item: string, i: number) => (
+          {document?.to?.map((item: any, i: number) => (
             <p key={i} className="mb-1">
-              {item}
+              {item?.name}
             </p>
           )) || "________________"}
         </div>
       </div>
+
+      {/* Nusxa field */}
+      {(document as any)?.copy?.length > 0 && (
+        <div className="grid grid-cols-[60px_1fr] gap-y-2 mb-3 text-[15px]">
+          <span className="font-bold">Nusxa:</span>
+          <div className="font-bold uppercase">
+            {(document as any).copy.map((item: string, i: number) => (
+              <p key={i} className="mb-1">
+                {item}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="text-center font-bold text-[17px] mb-2">
         Zaxira AAG kanallarni o'chirish to'g'risida
@@ -72,39 +86,48 @@ const OrderApplicationView1733 = ({
 
       <div className="text-[15px] text-justify space-y-4 mb-6">
         <p className="indent-12">
-          {basic?.organization_name || "________________"}ning{" "}
+          {basic?.organization_name || "________________"}{" "}
           {basic?.request_date
             ? dateFormatter(basic.request_date, "YYYY-yil DD-MMMM", "uz")
             : "____-yil __-________"}
-          dagi {basic?.request_number || "____"} ga binoan{" "}
-          {basic?.justification || "___________________________________"}
+          dagi {basic?.request_number || "____"}-sonli xatiga binoan{" "}
+          {basic?.justification || "___________________________________"},{" "}
           {basic?.deadline
-            ? dateFormatter(basic.deadline, " YYYY-yil DD-MMMM", "uz")
-            : "____-yildan"}
+            ? dateFormatter(basic.deadline, "YYYY-yil DD-MMMM", "uz")
+            : "____-yil __-________"}
           dan boshlab ushbu kanallar uchun ishlagan quyidagi zaxira (AAG)
           kanallari o'chirilsin:
         </p>
       </div>
 
       <div className="space-y-3 mb-4 text-[15px] ml-4">
-        {channels.map((ch: any, idx: number) => (
-          <div key={idx} className="flex">
-            <span className="mr-2">{idx + 1})</span>
-            <span>
-              <b>{ch.international_stream_number || "____"}</b> yo'nalishidagi{" "}
-              <b>{ch.flow_id?.code || "ID-____"}</b> oqimdagi{" "}
-              <b>{ch.channel_number_in_stream || "____"}</b> kanallar;
-            </span>
+        {flowIds.length > 0 ? (
+          flowIds.map((flow: any, idx: number) => (
+            <div key={idx} className="flex">
+              <span className="mr-2">{idx + 1})</span>
+              <span>
+                <b>{flow.name_point_a || "____"}</b> –{" "}
+                <b>{flow.name_point_b || "____"}</b> yo'nalishidagi{" "}
+                <b>{flow.code || "ID-____"}</b> oqimdagi kanallar
+                {flow.signal_level ? <span> ({flow.signal_level})</span> : null}
+                ;
+              </span>
+            </div>
+          ))
+        ) : (
+          <div className="flex">
+            <span className="mr-2">1)</span>
+            <span>________________</span>
           </div>
-        ))}
+        )}
       </div>
 
       <div className="text-[15px] mb-12 text-justify">
         <p className="indent-12">
           Shuningdek zaxira (AAG) kanallari o'chirilgandan so'ng bo'shagan
-          {channels.length > 0 && (
+          {flowIds.length > 0 && (
             <span className="font-bold mx-1">
-              1x2 Mbit/s {channels[0]?.flow_id?.code || ""}
+              {flowIds[0]?.signal_level || ""} {flowIds[0]?.code || ""}
             </span>
           )}
           oqim ishlab chiqarish ehtiyoji yo'qligi sababli tarmoqdan o'chirilsin.

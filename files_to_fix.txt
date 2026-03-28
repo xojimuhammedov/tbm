@@ -1,0 +1,12 @@
+src/pages/tbp/hujjatlar/components/form/ CreateFlowSection.tsx
+src/pages/tbp/hujjatlar/components/form/NetworkDoc.tsx
+src/pages/tbp/hujjatlar/components/form/NormalFlowSection.tsx
+src/pages/tbp/hujjatlar/components/form/SettingsDocSection.tsx
+src/pages/tbp/hujjatlar/components/form/TelegraphPlannedWorkSection.tsx
+src/pages/tbp/hujjatlar/components/View/1248view.tsx
+src/pages/tbp/hujjatlar/components/View/1270view.tsx
+src/pages/tbp/hujjatlar/components/View/DocumentHeader.tsx
+src/pages/tbp/hujjatlar/hooks/component/utils/time.ts
+src/pages/tbp/hujjatlar/hooks/useApplicationDocumentForm.ts
+src/pages/tbp/hujjatlar/hooks/useApplicationDocuments.ts
+src/pages/tbp/hujjatlar/pages/FormPage.tsx

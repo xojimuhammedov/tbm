@@ -24,17 +24,21 @@ const OrderApplicationView1745 = ({
 
   const actions: string[] = basic?.actions || [];
 
+  // _pending fieldlardan o'qiymiz
+  const createData = payload?.create_pending;
+  const updateData = payload?.update_pending;
+  const deleteData = payload?.delete_pending;
+
   const hasCreate =
-    actions.includes("create") && payload?.create?.flow_ids?.length > 0;
+    actions.includes("create") && createData?.flow_ids?.length > 0;
   const hasUpdate =
     actions.includes("update") &&
-    (payload?.update?.channels?.length > 0 ||
-      payload?.update?.flows?.length > 0);
+    (updateData?.channels?.length > 0 || updateData?.flows?.length > 0);
   const hasDelete =
     actions.includes("delete") &&
-    (payload?.delete?.channels?.length > 0 ||
-      payload?.delete?.channel_ids?.length > 0 ||
-      payload?.delete?.flow_ids?.length > 0);
+    (deleteData?.channels?.length > 0 ||
+      deleteData?.channel_ids?.length > 0 ||
+      deleteData?.flow_ids?.length > 0);
 
   const totalActiveActions = [hasCreate, hasUpdate, hasDelete].filter(Boolean);
   const isMultiple = totalActiveActions.length > 1;
@@ -91,7 +95,7 @@ const OrderApplicationView1745 = ({
               </p>
             ) : null}
             <div className={isMultiple ? "pl-12 mt-2" : "mt-2"}>
-              {payload.create.flow_ids.map((item: any, i: number) => (
+              {createData.flow_ids.map((item: any, i: number) => (
                 <p key={`cre-${i}`} className="leading-relaxed">
                   {item.point_a} ({item.device_a || ""}) – {item.point_b} (
                   {item.device_b || ""}) oralig'idagi{" "}
@@ -113,7 +117,7 @@ const OrderApplicationView1745 = ({
       }
 
       if (action === "update" && hasUpdate) {
-        for (const item of payload?.update?.channels || []) {
+        for (const item of updateData?.channels || []) {
           step++;
           sections.push(
             <div key={`upd-ch-${step}`} className="pl-4">
@@ -138,7 +142,7 @@ const OrderApplicationView1745 = ({
           );
         }
 
-        for (const item of payload?.update?.flows || []) {
+        for (const item of updateData?.flows || []) {
           step++;
           const old = item.old;
           const nw = item.new;
@@ -182,9 +186,9 @@ const OrderApplicationView1745 = ({
       if (action === "delete" && hasDelete) {
         step++;
         const deleteCodes: string[] = [
-          ...(payload?.delete?.channels || []),
-          ...(payload?.delete?.channel_ids || []),
-          ...(payload?.delete?.flow_ids || []).map((f: any) => f.code || f._id),
+          ...(deleteData?.channels || []),
+          ...(deleteData?.channel_ids || []),
+          ...(deleteData?.flow_ids || []).map((f: any) => f.code || f._id),
         ].filter(Boolean);
 
         sections.push(
@@ -206,7 +210,6 @@ const OrderApplicationView1745 = ({
     return sections;
   };
 
-  // bitta action bo'lganda intro matni inline davomi
   const renderIntroWithSingleAction = () => {
     if (isMultiple) {
       return (
@@ -226,8 +229,8 @@ const OrderApplicationView1745 = ({
     }
 
     if (hasUpdate) {
-      const channels = payload?.update?.channels || [];
-      const flows = payload?.update?.flows || [];
+      const channels = updateData?.channels || [];
+      const flows = updateData?.flows || [];
 
       if (channels.length > 0) {
         const item = channels[0];
@@ -258,9 +261,9 @@ const OrderApplicationView1745 = ({
 
     if (hasDelete) {
       const deleteCodes: string[] = [
-        ...(payload?.delete?.channels || []),
-        ...(payload?.delete?.channel_ids || []),
-        ...(payload?.delete?.flow_ids || []).map((f: any) => f.code || f._id),
+        ...(deleteData?.channels || []),
+        ...(deleteData?.channel_ids || []),
+        ...(deleteData?.flow_ids || []).map((f: any) => f.code || f._id),
       ].filter(Boolean);
 
       return (
@@ -279,14 +282,13 @@ const OrderApplicationView1745 = ({
     );
   };
 
-  // bitta action bo'lganda sections render qilish (intro inline bo'lgani uchun ba'zilari skip)
   const renderSingleActionSections = () => {
-    if (hasDelete) return null; // delete inline yozildi
-    if (hasUpdate) {
-      const channels = payload?.update?.channels || [];
-      const flows = payload?.update?.flows || [];
+    if (hasDelete) return null;
 
-      // birinchi item intro ga kirgani uchun, qolganlarini render qilish
+    if (hasUpdate) {
+      const channels = updateData?.channels || [];
+      const flows = updateData?.flows || [];
+
       const remainingChannels = channels.slice(1);
       const remainingFlows = channels.length > 0 ? flows : flows.slice(1);
       const firstFlow = channels.length === 0 ? flows[0] : null;
@@ -294,7 +296,6 @@ const OrderApplicationView1745 = ({
       const sections: JSX.Element[] = [];
 
       if (firstFlow) {
-        // birinchi flow intro ga kirdi, detail qismini chiqaramiz
         const old = firstFlow.old;
         const nw = firstFlow.new;
         sections.push(
@@ -401,7 +402,7 @@ const OrderApplicationView1745 = ({
     if (hasCreate) {
       return (
         <div className="mt-2">
-          {payload.create.flow_ids.map((item: any, i: number) => (
+          {createData.flow_ids.map((item: any, i: number) => (
             <p key={`cre-${i}`} className="leading-relaxed">
               {item.point_a} ({item.device_a || ""}) – {item.point_b} (
               {item.device_b || ""}) oralig'idagi{" "}
@@ -481,13 +482,13 @@ const OrderApplicationView1745 = ({
       <div className="grid grid-cols-[100px_1fr] gap-y-1 mb-8 text-[15px]">
         <span className="font-bold italic">Kimga:</span>
         <div className="font-bold uppercase">
-          {document?.to?.map((item: string, i: number) => (
-            <p key={i}>{item}</p>
+          {document?.to?.map((item: any, i: number) => (
+            <p key={i}>{item?.name}</p>
           ))}
         </div>
         <span className="font-bold italic">Nusxasi:</span>
         <div>
-          {document?.copy?.map((item: string, i: number) => (
+          {(document as any)?.copy?.map((item: string, i: number) => (
             <p key={i}>{item}</p>
           ))}
         </div>
