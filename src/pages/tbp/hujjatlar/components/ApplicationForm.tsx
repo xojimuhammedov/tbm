@@ -122,7 +122,7 @@ const ApplicationDocumentForm = () => {
               <strong>Nusxasi:</strong>
             </p>
             <MySelect
-              name="to"
+              name="copy"
               control={form.control}
               options={organizationOptions || []}
               placeholder="Nusxalarni tanlang"
