@@ -85,32 +85,32 @@ const createSidebarGroups = (
       },
     ],
   },
-  {
+    {
     title: t("TBP Jurnallar"),
     items: [
       {
         title: t("Jurnallar"),
-        url: "journals",
+         url: "journals",
         icon: FileSignature,
         isActive: isActive("journals"),
         children: [
           {
-            title: t("Buyruqlar"),
-            url: "orders-tbp",
+            title: t("17-96 ex/in document"),
+               url: "orders-tbp",
             roles: ["tbp"],
           },
           {
-            title: t("Farmoyishlar"),
-            url: "decrees-tbp",
+            title: t("17-97 ex/out document"),
+             url: "decrees-tbp",
             roles: ["tbp"],
           },
           {
-            title: t("Xabarnoma va farmoyish"),
-            url: "notify-tbp",
+            title: t("17-98 loc/in document"),
+             url: "notify-tbp",
             roles: ["tbp"],
           },
           {
-            title: t("Chiquvchi hujjatlar"),
+            title: t("17-99 loc/out document"),
             url: "outgoing-tbp",
             roles: ["tbp"],
           },
@@ -118,6 +118,7 @@ const createSidebarGroups = (
       },
     ],
   },
+
   {
     title: t("NM information"),
     items: [
