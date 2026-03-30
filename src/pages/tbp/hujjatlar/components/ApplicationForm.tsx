@@ -1,4 +1,4 @@
-import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
+// import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
 import useOrganizationOptions from "@/pages/organizations/hooks/useOrganizationOptions.ts";
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
 import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
@@ -26,7 +26,7 @@ const ApplicationDocumentForm = () => {
   });
 
   const { staffOptions } = useStaffOptions();
-  const { groupOptions } = useGroupOptions();
+  // const { groupOptions } = useGroupOptions();
   const { organizationOptions } = useOrganizationOptions();
 
   const selectedCode = form.watch("code");
@@ -111,7 +111,7 @@ const ApplicationDocumentForm = () => {
             <MySelect
               name="to"
               control={form.control}
-              options={groupOptions || []}
+              options={organizationOptions || []}
               placeholder="Guruhlarni tanlang"
               isMulti
             />
