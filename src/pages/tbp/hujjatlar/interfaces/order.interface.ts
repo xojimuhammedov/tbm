@@ -32,20 +32,18 @@ export interface ResponsibleUser {
 
 export interface Payload1214 {
   basic: {
+    organization_name: string;
+    request_number: string;
+    request_date: string | null;
     title: string;
+    connection_closure_type: string;
     start_time: string;
     end_time: string;
-    base_file?: string;
+    context: string | null;
+    base_file: string;
   };
-  stopped_flows: string[];
-  including: string;
-  main_routes: string;
-  reserve_routes: string;
-  responsible_person: string;
-  concert_text: string;
-  concert_second: string;
-  basis: string;
-  content: string;
+  flow_ids: string[];
+  file_name?: string;
 }
 
 export interface Payload1212FlowId {
@@ -99,12 +97,16 @@ export interface Payload1212 {
   file_name?: string;
 }
 
-export interface Payload1234 {
+export interface Payload1248 {
   basic: {
     title: string;
     station_interval: string;
+    no_raqami: string[];
+    no_status: string;
+    no_status_date: string | null;
     cause: string;
     control_station: string;
+    agreed: string;
     requirement_ip: string;
     requirement_ip_date: string | null;
     requirement_user: string;
@@ -122,4 +124,4 @@ export interface Payload1234 {
 export type OrderApplication =
   | (BaseOrder & { code: "12-12"; payload: Payload1212 })
   | (BaseOrder & { code: "12-14"; payload: Payload1214 })
-  | (BaseOrder & { code: "12-34"; payload: Payload1234 });
+  | (BaseOrder & { code: "12-48"; payload: Payload1248 });

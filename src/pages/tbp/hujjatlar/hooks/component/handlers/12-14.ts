@@ -2,37 +2,46 @@ import { Handler } from "@/pages/tbp/hujjatlar/hooks/component/types/types.ts";
 import { buildBasePayload } from "../utils/commonPayload";
 import { formatToISO } from "../utils/time";
 
-const h1214: Handler = {
+const h1248: Handler = {
   populate: (form, payload) => {
     const basic = payload.basic || {};
     form.setValue("payload.basic.title", basic.title ?? payload.title ?? "");
     form.setValue(
-      "payload.basic.start_time",
-      basic.start_time ?? payload.start_time ?? ""
+      "payload.basic.station_interval",
+      basic.station_interval ?? "",
+    );
+    form.setValue("payload.basic.no_raqami", basic.no_raqami ?? []);
+    form.setValue("payload.basic.no_status", basic.no_status ?? "");
+    form.setValue("payload.basic.no_status_date", basic.no_status_date ?? null);
+    form.setValue("payload.basic.cause", basic.cause ?? "");
+    form.setValue("payload.basic.control_station", basic.control_station ?? "");
+    form.setValue("payload.basic.agreed", basic.agreed ?? "");
+    form.setValue("payload.basic.requirement_ip", basic.requirement_ip ?? "");
+    form.setValue(
+      "payload.basic.requirement_ip_date",
+      basic.requirement_ip_date ?? null,
     );
     form.setValue(
-      "payload.basic.end_time",
-      basic.end_time ?? payload.end_time ?? ""
+      "payload.basic.requirement_user",
+      basic.requirement_user?._id ?? basic.requirement_user ?? "",
     );
+    form.setValue(
+      "payload.basic.requirement_user_date",
+      basic.requirement_user_date ?? null,
+    );
+    form.setValue(
+      "payload.basic.connection_closure_type",
+      basic.connection_closure_type ?? "",
+    );
+    form.setValue("payload.basic.start_time", basic.start_time ?? "");
+    form.setValue("payload.basic.end_time", basic.end_time ?? "");
 
-    form.setValue("payload.content", payload.content ?? "");
-    form.setValue("payload.including", payload.including ?? "");
-    form.setValue("payload.main_routes", payload.main_routes ?? "");
-    form.setValue("payload.reserve_routes", payload.reserve_routes ?? "");
-    form.setValue("payload.concert_second", payload.concert_second ?? "");
-    form.setValue("payload.responsible_person", payload.responsible_person ?? "");
-    form.setValue("payload.concert_text", payload.concert_text ?? "");
-    form.setValue("payload.basis", payload.basis ?? "");
-    form.setValue("payload.file_name", basic.base_file ?? payload.file_name ?? "");
-
-    const stoppedFlows = payload.stopped_flows || [];
-    const formattedStoppedFlows = Array.isArray(stoppedFlows)
-      ? stoppedFlows.map((item: any) => item.code || item)
+    const withAPause = payload.with_a_pause || payload.flow_ids || [];
+    const formattedWithAPause = Array.isArray(withAPause)
+      ? withAPause.map((item: any) => item.code || item)
       : [];
-
-    form.setValue("payload.stopped_flows", formattedStoppedFlows, {
+    form.setValue("payload.with_a_pause", formattedWithAPause, {
       shouldDirty: true,
-      shouldValidate: true,
     });
   },
 
@@ -40,26 +49,34 @@ const h1214: Handler = {
     const basePayload = buildBasePayload(data, ctx.fullCode);
     return {
       ...basePayload,
-      code: basePayload.code || "12-14",
+      code: basePayload.code || "12-48",
       payload: {
         basic: {
           title: data.payload.basic.title,
+          station_interval: data.payload.basic.station_interval,
+          no_raqami: data.payload.basic.no_raqami || [],
+          no_status: data.payload.basic.no_status,
+          no_status_date: formatToISO(data.payload.basic.no_status_date),
+          cause: data.payload.basic.cause,
+          control_station: data.payload.basic.control_station,
+          agreed: data.payload.basic.agreed,
+          requirement_ip: data.payload.basic.requirement_ip,
+          requirement_ip_date: formatToISO(
+            data.payload.basic.requirement_ip_date,
+          ),
+          requirement_user: data.payload.basic.requirement_user,
+          requirement_user_date: formatToISO(
+            data.payload.basic.requirement_user_date,
+          ),
+          connection_closure_type: data.payload.basic.connection_closure_type,
           start_time: formatToISO(data.payload.basic.start_time),
           end_time: formatToISO(data.payload.basic.end_time),
-          base_file: data.payload.file_name || data.payload?.basic?.base_file || "",
+          base_file: data.payload.file_name || "",
         },
-        content: data.payload.content || "",
-        stopped_flows: data.payload.stopped_flows || [],
-        including: data.payload.including || "",
-        main_routes: data.payload.main_routes || "",
-        reserve_routes: data.payload.reserve_routes || "",
-        responsible_person: data.payload.responsible_person || "",
-        concert_text: data.payload.concert_text || "",
-        concert_second: data.payload.concert_second || "",
-        basis: data.payload.basis || "",
+        with_a_pause: data.payload.with_a_pause || [],
       },
     };
   },
 };
 
-export default h1214;
+export default h1248;

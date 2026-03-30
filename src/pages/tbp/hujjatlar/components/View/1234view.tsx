@@ -19,7 +19,7 @@ const OrderApplicationView1234 = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const payload = document?.payload;
   const basic = payload?.basic;
-  const flowIds = payload?.flow_ids_pending || [];
+  const flowIds = payload?.flow_ids || [];
   const responsible = document?.responsible;
 
   const formatTime = (dateStr: string) => {
