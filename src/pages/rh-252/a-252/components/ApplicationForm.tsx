@@ -21,12 +21,14 @@ import SettingsDocSection from "@/pages/rh-252/a-252/components/form/SettingsDoc
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
 import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
 import CreateFlowSection from "@/pages/rh-252/a-252/components/form/CreateFlowSection.tsx";
+import useOrganizationOptions from "@/pages/organizations/hooks/useOrganizationOptions.ts";
 
 const ApplicationDocumentForm = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { groupOptions } = useGroupOptions();
+  const { organizationOptions } = useOrganizationOptions();
   const {
     form,
     handleSubmit,
@@ -201,10 +203,12 @@ const ApplicationDocumentForm = () => {
                 <p>
                   <strong>Nusxasi:</strong>
                 </p>
-                <MyInput
-                  name="copy"
+                <MySelect
+                  name="to"
                   control={form.control}
-                  className="border border-t-0 border-l-0 border-r-0 rounded-none"
+                  options={organizationOptions || []}
+                  placeholder="Nusxalarni tanlang"
+                  isMulti
                 />
               </div>
 

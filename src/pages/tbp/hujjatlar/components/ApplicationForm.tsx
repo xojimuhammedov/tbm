@@ -1,4 +1,5 @@
 import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
+import useOrganizationOptions from "@/pages/organizations/hooks/useOrganizationOptions.ts";
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
 import useStaffOptions from "@/pages/staff/hooks/useStaffOptions";
 import BanDocSection from "@/pages/tbp/hujjatlar/components/form/BanDocSection.tsx";
@@ -8,12 +9,7 @@ import TelegraphPlannedWorkSection from "@/pages/tbp/hujjatlar/components/form/T
 import useApplicationDocumentForm from "@/pages/tbp/hujjatlar/hooks/useApplicationDocumentForm";
 import { FormContainerFooter } from "@/shared/components/templates/form";
 import { Button } from "dgz-ui";
-import {
-  Form,
-  MyDatePicker,
-  MyInput,
-  MySelect,
-} from "dgz-ui-shared/components/form";
+import { Form, MyDatePicker, MySelect } from "dgz-ui-shared/components/form";
 import { ArrowLeftIcon, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -31,6 +27,7 @@ const ApplicationDocumentForm = () => {
 
   const { staffOptions } = useStaffOptions();
   const { groupOptions } = useGroupOptions();
+  const { organizationOptions } = useOrganizationOptions();
 
   const selectedCode = form.watch("code");
   const isOrder1212Mode = selectedCode === "12-12";
@@ -124,10 +121,12 @@ const ApplicationDocumentForm = () => {
             <p>
               <strong>Nusxasi:</strong>
             </p>
-            <MyInput
-              name="copy"
+            <MySelect
+              name="to"
               control={form.control}
-              className="border border-t-0 border-l-0 border-r-0 rounded-none"
+              options={organizationOptions || []}
+              placeholder="Nusxalarni tanlang"
+              isMulti
             />
           </div>
 
@@ -152,22 +151,21 @@ const ApplicationDocumentForm = () => {
             />
           )}
           <div className="mt-8 mb-4 pt-6 border-t">
-          <div className="max-w-md">
-            <MySelect
-              control={form.control}
-              name="signer"
-              options={staffOptions || []}
-              label={t("Imzolovchi")}
-              placeholder={t("Tanlang...")}
-              isClearable
-              required
-            />
+            <div className="max-w-md">
+              <MySelect
+                control={form.control}
+                name="signer"
+                options={staffOptions || []}
+                label={t("Imzolovchi")}
+                placeholder={t("Tanlang...")}
+                isClearable
+                required
+              />
+            </div>
           </div>
-        </div>
           <IDSection1731 control={form.control} setValue={form.setValue} />
         </div>
 
-  
         <FormContainerFooter>
           <Button
             size="sm"
