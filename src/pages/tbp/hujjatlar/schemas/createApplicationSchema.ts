@@ -130,13 +130,9 @@ export const createOrderSchema = (
     basic: z.object({
       title: z.string().min(1, requiredMsg("Title")),
       start_time: z.string().min(1, requiredMsg("Start time")),
-      orientation: z.string().min(1, requiredMsg("Orientation")),
       context: z.string().optional(),
       responsible: z.string().optional(),
-      base_file: z.string().optional(),
     }),
-    consumers: z.array(z.string()).optional(),
-    file_name: z.string().optional(),
   });
 
   return z.discriminatedUnion("code", [
