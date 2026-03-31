@@ -64,7 +64,9 @@ const OrderApplicationView1754 = ({
         <span className="font-bold">Nusxasi:</span>
         <div>
           {document?.copy?.length
-            ? document.copy.map((item, i) => <p key={i}>{item}</p>)
+            ? document.copy.map((item: any, i: number) => (
+                <p key={i}>{item?.name}</p>
+              ))
             : "________________"}
         </div>
       </div>

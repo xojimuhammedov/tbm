@@ -71,9 +71,9 @@ const OrderApplicationView1733 = ({
         <div className="grid grid-cols-[60px_1fr] gap-y-2 mb-3 text-[15px]">
           <span className="font-bold">Nusxa:</span>
           <div className="font-bold uppercase">
-            {(document as any).copy.map((item: string, i: number) => (
+            {(document as any).copy.map((item: any, i: number) => (
               <p key={i} className="mb-1">
-                {item}
+                {item?.name}
               </p>
             ))}
           </div>
