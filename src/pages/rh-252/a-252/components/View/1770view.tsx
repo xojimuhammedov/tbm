@@ -100,9 +100,9 @@ const OrderApplicationView1770 = ({
         </div>
         <span className="font-bold">Nusxasi:</span>
         <div className="font-bold uppercase">
-          {document?.copy?.map((item: string, i: number) => (
+          {document?.copy?.map((item: any, i: number) => (
             <span key={i}>
-              {item}
+              {item?.name}
               {i !== document?.copy?.length - 1 ? ", " : ""}
             </span>
           )) || "TPB"}
