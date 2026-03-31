@@ -95,7 +95,7 @@ const OrderApplicationView1234 = ({
         <span className="font-bold">Nusxasi:</span>
         <div className="uppercase">
           {document?.copy?.length > 0
-            ? document.copy.map((item: any) => renderText(item)).join(", ")
+            ? document.copy.map((item: any) => renderText(item?.name)).join(", ")
             : "TPB"}
         </div>
       </div>

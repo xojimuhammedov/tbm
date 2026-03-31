@@ -92,7 +92,7 @@ const OrderView1212 = ({
             <span className="font-bold">Nusxasi:</span>
             <div className="uppercase">
               {document.copy.map((item: any, i: number) => (
-                <p key={i}>{renderText(item)}</p>
+                <p key={i}>{renderText(item?.name)}</p>
               ))}
             </div>
           </>
@@ -102,7 +102,7 @@ const OrderView1212 = ({
             <span className="font-bold">Kimdan:</span>
             <div className="uppercase">
               {document.from.map((item: any, i: number) => (
-                <p key={i}>{renderText(item)}</p>
+                <p key={i}>{renderText(item?.name)}</p>
               ))}
             </div>
           </>

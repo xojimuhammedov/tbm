@@ -192,7 +192,7 @@ const OrderView1214 = ({
               <span className="font-bold">Nusxasi:</span>
               <div>
                 {document?.copy?.map((item: any, i: number) => (
-                  <p key={i}>{item}</p>
+                  <p key={i}>{item?.name}</p>
                 ))}
               </div>
             </>
