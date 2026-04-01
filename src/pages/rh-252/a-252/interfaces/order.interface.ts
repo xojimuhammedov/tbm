@@ -6,7 +6,8 @@ export type OrderCode =
   | "17-33"
   | "17-70"
   | "17-48"
-  | "17-31";
+  | "17-31"
+  | "17-46";
 
 export interface BaseOrder {
   _id?: string;
@@ -186,10 +187,28 @@ export interface Payload1731 {
   file_name: string;
 }
 
+export interface Payload1746 {
+  basic: {
+    direction: string;
+    action_type: string;
+    company_name: string;
+    request_date: string;
+    request_number: string;
+    reason: string;
+    start_date: string;
+    responsible_3_3: string;
+    flow_signal_level: string;
+    base_file: string;
+  };
+  flow_ids: string[];
+  channels: string[];
+}
+
 export type OrderApplication =
   | (BaseOrder & { code: "17-45"; payload: Payload1745 })
   | (BaseOrder & { code: "17-54"; payload: Payload1754 })
   | (BaseOrder & { code: "17-33"; payload: Payload1733 })
   | (BaseOrder & { code: "17-70"; payload: Payload1770 })
   | (BaseOrder & { code: "17-48"; payload: Payload1748 })
-  | (BaseOrder & { code: "17-31"; payload: Payload1731 });
+  | (BaseOrder & { code: "17-31"; payload: Payload1731 })
+  | (BaseOrder & { code: "17-46"; payload: Payload1746 });

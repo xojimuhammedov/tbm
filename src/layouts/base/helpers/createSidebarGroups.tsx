@@ -95,23 +95,23 @@ const createSidebarGroups = (
         isActive: isActive("journals"),
         children: [
           {
-            title: t("Buyruqlar"),
-            url: "orders-tbp",
+            title: t("17-96 ex/in document"),
+            url: "exin-96",
             roles: ["tbp"],
           },
           {
-            title: t("Farmoyishlar"),
-            url: "decrees-tbp",
+            title: t("17-97 ex/out document"),
+            url: "exout-97",
             roles: ["tbp"],
           },
           {
-            title: t("Xabarnoma va farmoyish"),
-            url: "notify-tbp",
+            title: t("17-98 loc/in document"),
+            url: "locin-98",
             roles: ["tbp"],
           },
           {
-            title: t("Chiquvchi hujjatlar"),
-            url: "outgoing-tbp",
+            title: t("17-99 loc/out document"),
+            url: "locout-99",
             roles: ["tbp"],
           },
         ],

@@ -5,6 +5,7 @@ import h1733 from "@/pages/rh-252/a-252/hooks/component/handlers/17-33.ts";
 import h1770 from "@/pages/rh-252/a-252/hooks/component/handlers/17-70.ts";
 import h1748 from "@/pages/rh-252/a-252/hooks/component/handlers/17-48.ts";
 import h1731 from "@/pages/rh-252/a-252/hooks/component/handlers/17-31.ts";
+import h1746 from "@/pages/rh-252/a-252/hooks/component/handlers/17-46.ts";
 
 export const handlers: Record<string, Handler> = {
   "17-45": h1745,
@@ -13,4 +14,5 @@ export const handlers: Record<string, Handler> = {
   "17-70": h1770,
   "17-48": h1748,
   "17-31": h1731,
+  "17-46": h1746,
 };
