@@ -4,11 +4,11 @@ import { Button } from "dgz-ui";
 import { Plus, Loader2, UploadCloud, File, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useFileUpload } from "@/pages/rh-252/a-252/hooks/useFileUpload.ts";
-import { OrderApplication } from "@/pages/rh-252/a-252/interfaces/order.interface.ts";
 
 interface IDSection1731Props {
-  control: Control<OrderApplication>;
-  setValue: UseFormSetValue<OrderApplication>;
+  control: Control<any>;
+  setValue: UseFormSetValue<any>;
+  fieldName?: string; // default: "payload.file_name"
 }
 
 interface UploadedFile {
@@ -17,11 +17,11 @@ interface UploadedFile {
   uploadedAt: Date;
 }
 
-const IDSection1731 = ({ control, setValue }: IDSection1731Props) => {
+const IDSection1731 = ({ control, setValue, fieldName = "payload.file_name" }: IDSection1731Props) => {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { handleUpload, loading: isUploading } = useFileUpload((file_name) => {
-    setValue("payload.file_name", file_name, { shouldValidate: true });
+    setValue(fieldName, file_name, { shouldValidate: true });
     const newFile: UploadedFile = {
       id: Date.now().toString(),
       file_name: file_name,
@@ -37,10 +37,10 @@ const IDSection1731 = ({ control, setValue }: IDSection1731Props) => {
     setUploadedFiles((prev) => prev.filter((file) => file.id !== fileId));
     const remainingFiles = uploadedFiles.filter((file) => file.id !== fileId);
     if (remainingFiles.length === 0) {
-      setValue("payload.file_name", "", { shouldValidate: true });
+      setValue(fieldName, "", { shouldValidate: true });
     } else {
       setValue(
-        "payload.file_name",
+        fieldName,
         remainingFiles[remainingFiles.length - 1].file_name,
         { shouldValidate: true },
       );
@@ -86,7 +86,7 @@ const IDSection1731 = ({ control, setValue }: IDSection1731Props) => {
           <div className="relative">
             <MyInput
               control={control}
-              name="payload.file_name"
+              name={fieldName}
               placeholder="Fayl nomi avtomatik yuklanadi..."
               readOnly
               className="bg-gray-100 border-gray-200 cursor-not-allowed font-mono text-xs"

@@ -67,7 +67,7 @@ const OrderApplicationView1731 = ({
               style={{ borderCollapse: "collapse", border: "1px solid black" }}
             >
               <thead>
-                <tr className="bg-gray-100/50">
+                <tr className="bg-gray-100/50">   
                   <th style={{ border: "1px solid black", padding: "4px" }}>
                     To'g'ri raqam
                   </th>

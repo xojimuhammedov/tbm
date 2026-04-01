@@ -483,13 +483,13 @@ const OrderApplicationView1745 = ({
         <span className="font-bold italic">Kimga:</span>
         <div className="font-bold uppercase">
           {document?.to?.map((item: any, i: number) => (
-            <p key={i}>{item?.name}</p>
+            <p key={i}>{item?.name?.name}</p>
           ))}
         </div>
         <span className="font-bold italic">Nusxasi:</span>
         <div>
-          {(document as any)?.copy?.map((item: string, i: number) => (
-            <p key={i}>{item}</p>
+          {(document as any)?.copy?.map((item: any, i: number) => (
+            <p key={i}>{item?.name}</p>
           ))}
         </div>
         <span className="font-bold italic">Kimdan:</span>

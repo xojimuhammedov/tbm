@@ -19,7 +19,7 @@ const OrderApplicationView1234 = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const payload = document?.payload;
   const basic = payload?.basic;
-  const flowIds = payload?.flow_ids || [];
+  const flowIds = payload?.flow_ids_pending || [];
   const responsible = document?.responsible;
 
   const formatTime = (dateStr: string) => {
@@ -95,7 +95,7 @@ const OrderApplicationView1234 = ({
         <span className="font-bold">Nusxasi:</span>
         <div className="uppercase">
           {document?.copy?.length > 0
-            ? document.copy.map((item: any) => renderText(item)).join(", ")
+            ? document.copy.map((item: any) => renderText(item?.name)).join(", ")
             : "TPB"}
         </div>
       </div>

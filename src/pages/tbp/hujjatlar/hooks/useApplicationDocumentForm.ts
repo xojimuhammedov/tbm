@@ -35,7 +35,7 @@ const useApplicationDocumentForm = ({
       code: "",
       order_date: null,
       to: [],
-      copy: "",
+      copy: [],
       from: "",
       position: "",
       signer: "",
@@ -76,7 +76,6 @@ const useApplicationDocumentForm = ({
         delete: { elements: [] },
         flow_ids: [],
         consumers: [],
-        file_name: "",
       },
     },
   });
@@ -155,7 +154,11 @@ const useApplicationDocumentForm = ({
       .filter(Boolean);
 
     form.setValue("to", toValues);
-    form.setValue("copy", listToText(doc.copy));
+
+    const copyValues = (Array.isArray(doc.copy) ? doc.copy : [])
+      .map(normalizeToValue)
+      .filter(Boolean);
+    form.setValue("copy", copyValues);
     form.setValue("from", listToText(doc.from));
     form.setValue("signer", doc.signer?._id ?? doc.signer ?? "");
     form.setValue("position", doc.position?._id ?? doc.position ?? "");
