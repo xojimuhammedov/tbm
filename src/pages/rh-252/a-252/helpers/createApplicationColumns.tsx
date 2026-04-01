@@ -5,6 +5,7 @@ import { dateFormatter } from "@/shared/utils/utils";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import {
   EditIcon,
+  XCircleIcon,
   EyeIcon,
   FileDown,
   FileSignature,
@@ -13,12 +14,14 @@ import {
 } from "lucide-react";
 import { OrderApplication } from "../interfaces/order.interface";
 
+const CANCEL_DOCUMENT_TYPES = new Set(["17_70", "17_48", "12_14", "12_34"]);
 const createOrderColumns = (
   t: (...args: TranslationArgsType) => string,
   handleEdit: (id: string) => void,
   handleDelete: (id: string) => void,
   handleView: (id: string) => void,
   handleEditCode: (id: string, code: string) => void,
+  handleCancel: (id: string) => void,
   handleEImzoProgress: (id: string) => void,
 ): ColumnType<OrderApplication>[] => [
   {
@@ -103,7 +106,10 @@ const createOrderColumns = (
         label = "Rad etildi";
         colorClass = "bg-red-100 text-red-700";
       }
-
+      else if (status === "CANCEL") {
+        label = "Bekor qilindi";
+        colorClass = "bg-gray-200 text-gray-700";
+      }
       return (
         <span
           className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}
@@ -124,6 +130,9 @@ const createOrderColumns = (
         record.status === "SIGNED" || record.status === "EXECUTED";
       const hasPdf = !!record.pdf_path;
 
+      const documentType = (record as any)?.document_type ?? record.code;
+      const showCancel = CANCEL_DOCUMENT_TYPES.has(documentType);
+
       const handleDownloadPdf = () => {
         if (record.pdf_path) {
           const fileName = record.pdf_path.split("/").pop();
@@ -135,6 +144,17 @@ const createOrderColumns = (
 
       return (
         <div className={"flex items-center gap-2 justify-end"}>
+          {showCancel && (
+            <MyTooltip content={t("Cancel")}>
+              <XCircleIcon
+                className="size-4 cursor-pointer text-red-500 hover:text-red-600 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCancel(id);
+                }}
+              />
+            </MyTooltip>
+          )}
           {!isFinished ? (
             <>
               <MyTooltip content={t("Imzolash jarayoni")}>
@@ -154,8 +174,6 @@ const createOrderColumns = (
               </MyTooltip>
             )
           )}
-
-          <div className="h-4 w-[1px] bg-slate-200 mx-1" />
 
           <MyTooltip content={t("View")}>
             <EyeIcon

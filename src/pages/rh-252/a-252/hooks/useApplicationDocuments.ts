@@ -1,9 +1,10 @@
-import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument.ts";
+import useOrderDocument from "@/pages/rh-252/a-252/hooks/useApplicationDocument";
 import KEYS from "@/shared/constants/keys";
 import URLS from "@/shared/constants/urls";
-import useDelete from "@/shared/hooks/api/useDelete.ts";
-import useLists from "@/shared/hooks/useLists.ts";
-import { useToast } from "@/shared/hooks/useToast.ts";
+import useDelete from "@/shared/hooks/api/useDelete";
+import useCancel from "@/shared/hooks/api/useCancel";
+import useLists from "@/shared/hooks/useLists";
+import { useToast } from "@/shared/hooks/useToast";
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { get } from "lodash";
 import { useCallback, useMemo, useState } from "react";
@@ -24,6 +25,7 @@ const useApplicationDocuments = () => {
   const [viewId, setViewId] = useState<OrderApplication["_id"] | null>(null);
 
   const { removeWithConfirm } = useDelete([KEYS.RH_Order_Application]);
+  const { cancelWithConfirm } = useCancel([URLS.RH_Order_Application, "cancel"]);
   const { query, handleFilter, params } = useLists<OrderApplication>({
     url: [URLS.RH_Order_Application],
     queryKey: [KEYS.RH_Order_Application],
@@ -35,7 +37,7 @@ const useApplicationDocuments = () => {
     navigate("/rh-252/a-252/create");
   }, [navigate]);
 
-  const handleEdit = useCallback(
+  const handleEdit = useCallback( 
     (docId: string) => {
       navigate(`/rh-252/a-252/edit/${docId}`);
     },
@@ -95,6 +97,31 @@ const useApplicationDocuments = () => {
     [query, removeWithConfirm, t, toast],
   );
 
+  
+  const handleCancel = useCallback(
+    (id: OrderApplication["_id"]) => {
+      if (!id) return;
+      cancelWithConfirm(id, { status: "CANCEL" })
+        .then(() => {
+          query.refetch();
+          toast({
+            variant: "success",
+            title: t(`Success`),
+            description: t(`Application document successfully canceled`),
+          });
+        })
+        .catch((error: any) => {
+          toast({
+            variant: "destructive",
+            title: t(`${get(error, "response.statusText", "Error")}`),
+            description: t(
+              `${get(error, "response.data.message", "An error occurred. Contact the administrator")}`,
+            ),
+          });
+        });
+    },
+    [cancelWithConfirm, query, t, toast],
+  );
   const handleEImzoProgress = useCallback(
     (docId: string) => {
       navigate(`/rh-252/a-252/progress/${docId}`);
@@ -110,6 +137,7 @@ const useApplicationDocuments = () => {
         handleDelete,
         handleView,
         handleEditCode,
+        handleCancel,
         handleEImzoProgress,
       ),
     [
@@ -117,6 +145,7 @@ const useApplicationDocuments = () => {
       handleEdit,
       handleView,
       handleEditCode,
+      handleCancel,
       handleEImzoProgress,
       t,
     ],
