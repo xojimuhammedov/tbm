@@ -163,7 +163,13 @@ const ApplicationDocumentForm = () => {
               />
             </div>
           </div>
-          <IDSection1731 control={form.control} setValue={form.setValue} />
+          <IDSection1731
+            control={form.control}
+            setValue={form.setValue}
+            fieldName={
+              isSettingsDocMode ? "payload.basic.base_file" : "payload.file_name"
+            }
+          />
         </div>
 
         <FormContainerFooter>

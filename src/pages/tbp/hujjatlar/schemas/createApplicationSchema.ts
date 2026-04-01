@@ -91,30 +91,28 @@ export const createOrderSchema = (
 
   const payload1214Schema = z.object({
     basic: z.object({
-      organization_name: z.string().min(1, requiredMsg("Organization")),
-      request_number: z.string().min(1, requiredMsg("Request number")),
-      request_date: z.string().min(1, requiredMsg("Request date")),
       title: z.string().min(1, requiredMsg("Title")),
-      connection_closure_type: z.string().min(1, requiredMsg("Closure Type")),
-      max_duration_minutes: z.number().optional(),
       start_time: z.string().min(1, requiredMsg("Start time")),
       end_time: z.string().min(1, requiredMsg("End time")),
-      context: z.string().optional(),
+      base_file: z.string().optional(),
     }),
-    flow_ids: z.array(z.string()).optional(),
-    file_name: z.string().optional(),
+    content: z.string().optional(),
+    stopped_flows: z.array(z.string()).optional(),
+    including: z.string().optional(),
+    main_routes: z.string().optional(),
+    reserve_routes: z.string().optional(),
+    responsible_person: z.string().optional(),
+    concert_text: z.string().optional(),
+    concert_second: z.string().optional(),
+    basis: z.string().optional(),
   });
 
-  const payload1248Schema = z.object({
+  const payload1234Schema = z.object({
     basic: z.object({
       title: z.string().min(1, requiredMsg("Title")),
       station_interval: z.string().min(1, requiredMsg("Station interval")),
-      no_raqami: z.array(z.string()).optional(),
-      no_status: z.string().optional(),
-      no_status_date: z.string().optional(),
       cause: z.string().optional(),
       control_station: z.string().optional(),
-      agreed: z.string().optional(),
       requirement_ip: z.string().optional(),
       requirement_ip_date: z.string().optional(),
       requirement_user: z.string().optional(),
@@ -139,7 +137,7 @@ export const createOrderSchema = (
     baseSchema.extend({ code: z.literal("12-12"), payload: payload1212Schema }),
     baseSchema.extend({ code: z.literal("12-13"), payload: payload1213Schema }),
     baseSchema.extend({ code: z.literal("12-14"), payload: payload1214Schema }),
-    baseSchema.extend({ code: z.literal("12-48"), payload: payload1248Schema }),
+    baseSchema.extend({ code: z.literal("12-34"), payload: payload1234Schema }),
   ]);
 };
 

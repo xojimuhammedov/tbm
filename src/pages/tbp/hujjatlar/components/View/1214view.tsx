@@ -105,34 +105,11 @@ const OrderView1214 = ({
   const reserveRoutesOk = hasText(payload?.reserve_routes);
   const routesOk = mainRoutesOk || reserveRoutesOk;
 
-  type StoppedFlowPending = { point_b: string; code: string };
-  const stoppedFlowsPending: StoppedFlowPending[] = Array.isArray(
-    payload?.stopped_flows_pending,
-  )
-    ? (payload.stopped_flows_pending as any[]).map((f: any) => ({
-        point_b: String(f?.point_b ?? ""),
-        code: String(f?.code ?? ""),
-      }))
-    : Array.isArray(payload?.flow_ids)
-      ? (payload.flow_ids as any[]).map((f: any) => ({
-          point_b: "",
-          code: String(f?.code ?? f),
-        }))
-      : [];
+  const stoppedFlows: string[] = Array.isArray(payload?.stopped_flows_pending)
+    ? (payload.stopped_flows_pending as any[]).map((f) => String(f ?? ""))
+    : [];
 
-  const stoppedFlowsGrouped = Object.entries(
-    stoppedFlowsPending.reduce(
-      (acc: Record<string, string[]>, f: StoppedFlowPending) => {
-        const key = f.point_b || "";
-        if (!acc[key]) acc[key] = [];
-        acc[key].push(f.code);
-        return acc;
-      },
-      {} as Record<string, string[]>,
-    ),
-  ) as Array<[string, string[]]>;
-
-  const stoppedFlowsOk = stoppedFlowsGrouped.length > 0;
+  const stoppedFlowsOk = hasArray(payload?.stopped_flows_pending);
   const includingOk = hasText(payload?.including);
   const responsibleOk = hasText(payload?.responsible_person);
   const concertOk = hasText(payload?.concert_text);
@@ -142,6 +119,7 @@ const OrderView1214 = ({
 
   const closureText =
     payload?.basic?.connection_closure_type || "2-8 aloqani yopish yoʻli bilan";
+
 
   const DocumentContent = (
     <div
@@ -258,12 +236,7 @@ const OrderView1214 = ({
             To'xtalish kuzatiladigan oqimlar:
           </div>
           <div className="leading-relaxed">
-            {stoppedFlowsGrouped.map(([pointB, codes], index, array) => (
-              <span key={`${pointB}-${index}`}>
-                <span className="font-bold">ID {codes.join(", ")}</span> (
-                {pointB || "—"}){index < array.length - 1 ? " – " : "."}
-              </span>
-            ))}
+            {stoppedFlows.join(", ")}.
           </div>
         </div>
       ) : null}
