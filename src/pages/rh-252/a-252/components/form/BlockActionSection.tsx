@@ -1,60 +1,15 @@
 import { Control } from "react-hook-form";
 import {
   MyInput,
-  MySelect,
   MyDatePicker,
 } from "dgz-ui-shared/components/form";
-import { useMemo } from "react";
-import useLists from "@/shared/hooks/useLists";
-import { FLOWS_ID_QUERY_KEY } from "@/pages/flows-id/constants/flows.constants";
-import { FlowInterface } from "@/pages/flows-id/interfaces/flow.interface";
-import { CHANNELS_ID_QUERY_KEY } from "@/pages/channels-id/constants/channels.constants";
-import { ChannelInterface } from "@/pages/channels-id/interfaces/channel.interface";
-import IDSection1731 from "./NetworkDoc";
 
 interface BlockActionSectionProps {
   control: Control<any>;
   setValue: (name: string, value: any, options?: any) => void;
 }
 
-const BlockActionSection = ({ control, setValue }: BlockActionSectionProps) => {
-  const { query: flowsQuery } = useLists<FlowInterface>({
-    url: [FLOWS_ID_QUERY_KEY],
-    defaultParams: { page: 1, limit: 1000 },
-  });
-
-  const { query: channelsQuery } = useLists<ChannelInterface>({
-    url: [CHANNELS_ID_QUERY_KEY],
-    defaultParams: { page: 1, limit: 1000 },
-  });
-
-  const flowOptions = useMemo(
-    () =>
-      flowsQuery.data?.docs?.map((item) => ({
-        label: item.code,
-        value: item.code,
-      })) || [],
-    [flowsQuery.data],
-  );
-
-  const channelOptions = useMemo(
-    () =>
-      channelsQuery.data?.docs?.map((item) => ({
-        label: item.code,
-        value: item.code,
-      })) || [],
-    [channelsQuery.data],
-  );
-
-  const directionOptions = [
-    { label: "global", value: "global" },
-    { label: "local", value: "local" },
-  ];
-
-  const actionTypeOptions = [
-    { label: "bloklansin", value: "block" },
-    { label: "blokdan chiqarilsin", value: "unblock" },
-  ];
+const BlockActionSection = ({ control }: BlockActionSectionProps) => {
 
   return (
     <div className="space-y-12 mt-8">
