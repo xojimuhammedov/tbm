@@ -82,12 +82,12 @@ const useLocalOutbounds = () => {
   }, [handleDeleteAllAction, remove]);
 
   const handleAdd = useCallback(() => {
-    navigate("/inout/locout-99/create");
+    navigate("/journals/locout-99/create");
   }, [navigate]);
 
   const handleEdit = useCallback(
     (id: string) => {
-      navigate(`/inout/locout-99/edit/${id}`);
+      navigate(`/journals/locout-99/edit/${id}`);
     },
     [navigate],
   );
