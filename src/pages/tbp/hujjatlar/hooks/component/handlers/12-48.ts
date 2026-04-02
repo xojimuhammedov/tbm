@@ -10,9 +10,6 @@ const h1248: Handler = {
       "payload.basic.station_interval",
       basic.station_interval ?? "",
     );
-    form.setValue("payload.basic.no_raqami", basic.no_raqami ?? []);
-    form.setValue("payload.basic.no_status", basic.no_status ?? "");
-    form.setValue("payload.basic.no_status_date", basic.no_status_date ?? null);
     form.setValue("payload.basic.cause", basic.cause ?? "");
     form.setValue("payload.basic.control_station", basic.control_station ?? "");
     form.setValue("payload.basic.agreed", basic.agreed ?? "");
@@ -54,9 +51,6 @@ const h1248: Handler = {
         basic: {
           title: data.payload.basic.title,
           station_interval: data.payload.basic.station_interval,
-          no_raqami: data.payload.basic.no_raqami || [],
-          no_status: data.payload.basic.no_status,
-          no_status_date: formatToISO(data.payload.basic.no_status_date),
           cause: data.payload.basic.cause,
           control_station: data.payload.basic.control_station,
           agreed: data.payload.basic.agreed,

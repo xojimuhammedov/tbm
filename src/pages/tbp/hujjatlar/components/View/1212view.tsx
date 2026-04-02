@@ -146,12 +146,6 @@ const OrderView1212 = ({
           </p>
         )}
 
-        {basic?.no_raqami && (
-          <p className="indent-12">
-            <span className="font-bold">N/O raqami:</span> {basic.no_raqami}
-          </p>
-        )}
-
         {basic?.description && (
           <p className="text-[14px] italic border-l-4 border-gray-300 pl-3 py-1">
             {basic.description}
