@@ -378,7 +378,6 @@ const ApplicationDocumentForm = () => {
               {isBlockActionMode && (
                 <BlockActionSection
                   control={form.control}
-                  setValue={form.setValue}
                 />
               )}
 
@@ -407,20 +406,6 @@ const ApplicationDocumentForm = () => {
             <ArrowLeftIcon />
             {t("Back")}
           </Button>
-          {/*<Button*/}
-          {/*    size="sm"*/}
-          {/*    type="submit"*/}
-          {/*    disabled={isLoading}*/}
-          {/*>*/}
-          {/*  {isLoading ? (*/}
-          {/*      <>*/}
-          {/*        <Loader2 className="w-4 h-4 animate-spin mr-2" />*/}
-          {/*        {t("Saving...")}*/}
-          {/*      </>*/}
-          {/*  ) : (*/}
-          {/*      t(id ? "Update" : "Create")*/}
-          {/*  )}*/}
-          {/*</Button>*/}
         </FormContainerFooter>
       </form>
     </Form>
