@@ -20,7 +20,6 @@ const OrderApplicationView1234 = ({
   const payload = document?.payload;
   const basic = payload?.basic;
   const flowIds = payload?.flow_ids_pending || [];
-  const responsible = document?.responsible;
 
   const formatTime = (dateStr: string) => {
     if (!dateStr) return "00:00";
@@ -102,19 +101,18 @@ const OrderApplicationView1234 = ({
 
       <div className="text-center space-y-4 mb-10">
         <p className="font-bold text-[17px] uppercase">
-          {basic?.organization_name} hamkori tarmog'ida ishlar to'g'risida
-          хаЬаrпоmа
+          {basic?.organization_name} 
         </p>
 
         <p className="text-[15px] italic">
           (Asos: "{basic?.organization_name}"ning{" "}
           {basic?.request_date
-            ? dateFormatter(basic.request_date, "DD.MM.YYYY")
+            ? dateFormatter(basic.request_date, "YYYY-yil DD-MMMM", "uz")
             : "____"}{" "}
-          yildagi {basic?.request_number || "___"}-sonli xati)
+           {basic?.request_number || "___"}-sonli xati)
         </p>
 
-        <div className="text-[16px] space-y-2">
+        <div className="text-[16px]">
           <p className="font-bold">
             {basic?.connection_closure_type || "2-8 aloqani yopish yo'li bilan"}
           </p>
@@ -148,10 +146,10 @@ const OrderApplicationView1234 = ({
         </div>
       )}
 
-      <div className="flex justify-between items-end text-[15px] font-bold mt-auto mb-12">
-        <div className="w-1/2 text-left">TTMQ va B xizmati boshlig'i</div>
-        <div className="w-1/2 text-right">
-          {responsible?.first_name} {responsible?.second_name}
+      <div className="flex items-end text-[15px] gap-2 font-bold mt-auto mb-12">
+        <div >{document?.signer?.position?.name}:</div>
+        <div >
+          {document?.signer?.first_name} {document?.signer?.second_name}
         </div>
       </div>
 
@@ -160,7 +158,7 @@ const OrderApplicationView1234 = ({
           {(document as any)?.created_by?.first_name?.[0]}.{" "}
           {(document as any)?.created_by?.second_name}
         </p>
-        <p>{(document as any)?.created_by?.short_phone}</p>
+        <p>{(document as any)?.created_by?.phone}</p>
       </div>
     </div>
   );

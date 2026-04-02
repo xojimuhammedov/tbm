@@ -65,14 +65,14 @@ const createLocalOutboundColumns = (
       </div>
     ),
   },
-  {
-    key: "notes",
-    dataIndex: "notes",
-    name: t("Eslatma"),
-    render: (text) => (
-      <span className="text-orange-600 font-semibold">{text}</span>
-    ),
-  },
+  // {
+  //   key: "notes",
+  //   dataIndex: "notes",
+  //   name: t("Eslatma"),
+  //   render: (text) => (
+  //     <span className="text-orange-600 font-semibold">{text}</span>
+  //   ),
+  // },
   {
     key: "_id",
     dataIndex: "_id",
