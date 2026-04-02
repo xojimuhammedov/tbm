@@ -4,8 +4,8 @@ import { FormContainerFooter } from "@/shared/components/templates/form";
 import { Button } from "dgz-ui/button";
 import { ArrowLeftIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { ExternalInboundDto } from "@/pages/in & out documents/17-96 external inbound document/schemas/createExternalInboundSchema.ts";
-import useExternalInboundForm from "@/pages/in & out documents/17-96 external inbound document/hooks/useExternalInboundForm.ts";
+import { ExternalInboundDto } from "@/pages/tbp-documents/17-96 external inbound document/schemas/createExternalInboundSchema.ts";
+import useExternalInboundForm from "@/pages/tbp-documents/17-96 external inbound document/hooks/useExternalInboundForm.ts";
 
 interface ExternalInboundFormProps {
   id: string | null;

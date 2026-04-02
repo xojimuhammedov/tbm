@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PageWrapper } from "@/shared/components/containers/page";
-import LocalInboundForm from "@/pages/in & out documents/17-98 local inbound document/components/LocalInboundForm.tsx";
+import LocalInboundForm from "@/pages/tbp-documents/17-98 local inbound document/components/LocalInboundForm.tsx";
 
 const LocalInboundFormPage = () => {
   const { t } = useTranslation();

@@ -7,12 +7,12 @@ import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import { EXTERNAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-97 external outbound document/constants/external.outbound.constants.ts";
+import { EXTERNAL_OUTBOUND_QUERY_KEY } from "@/pages/tbp-documents/17-97 external outbound document/constants/external.outbound.constants.ts";
 import {
   createExternalOutboundSchema,
   ExternalOutboundDto,
-} from "@/pages/in & out documents/17-97 external outbound document/schemas/createExternalOutboundSchema.ts";
-import { ExternalOutboundInterface } from "@/pages/in & out documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
+} from "@/pages/tbp-documents/17-97 external outbound document/schemas/createExternalOutboundSchema.ts";
+import { ExternalOutboundInterface } from "@/pages/tbp-documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
 
 export type ExternalOutboundFormProps = {
   id: string | null;

@@ -5,9 +5,9 @@ import useDelete from "@/shared/hooks/api/useDelete.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { EXTERNAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-96 external inbound document/constants/external-inbound.constants.ts";
-import { ExternalInboundDocument } from "@/pages/in & out documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
-import createExternalInboundColumns from "@/pages/in & out documents/17-96 external inbound document/helpers/createExternalInboundColumns.tsx";
+import { EXTERNAL_INBOUND_QUERY_KEY } from "@/pages/tbp-documents/17-96 external inbound document/constants/external-inbound.constants.ts";
+import { ExternalInboundDocument } from "@/pages/tbp-documents/17-96 external inbound document/interfaces/ex-in.interface.ts";
+import createExternalInboundColumns from "@/pages/tbp-documents/17-96 external inbound document/helpers/createExternalInboundColumns.tsx";
 import { useFlowDeleteActions } from "@/shared/hooks/flow/useFlowDeleteActions.ts";
 
 const useExternalInbounds = () => {

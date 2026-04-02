@@ -7,10 +7,10 @@ import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
 import { CirclePlusIcon, UploadIcon, Trash2Icon, Layers } from "lucide-react";
-import useLocalInbounds from "@/pages/in & out documents/17-98 local inbound document/hooks/useLocalInbounds.ts";
-import { LocalInboundInterface } from "@/pages/in & out documents/17-98 local inbound document/interfaces/local.inbound.interface.ts";
-import { LOCAL_INBOUND_QUERY_KEY } from "@/pages/in & out documents/17-98 local inbound document/constants/local.inbound.constants.ts";
-import ImportLocalInboundModal from "@/pages/in & out documents/17-98 local inbound document/components/ImportLocalInboundModal.tsx";
+import useLocalInbounds from "@/pages/tbp-documents/17-98 local inbound document/hooks/useLocalInbounds.ts";
+import { LocalInboundInterface } from "@/pages/tbp-documents/17-98 local inbound document/interfaces/local.inbound.interface.ts";
+import { LOCAL_INBOUND_QUERY_KEY } from "@/pages/tbp-documents/17-98 local inbound document/constants/local.inbound.constants.ts";
+import ImportLocalInboundModal from "@/pages/tbp-documents/17-98 local inbound document/components/ImportLocalInboundModal.tsx";
 
 const Page = () => {
   const { t } = useTranslation();

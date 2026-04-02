@@ -4,8 +4,8 @@ import { FormContainerFooter } from "@/shared/components/templates/form";
 import { Button } from "dgz-ui/button";
 import { ArrowLeftIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import useLocalInboundForm from "@/pages/in & out documents/17-98 local inbound document/hooks/useLocalInboundForm.ts";
-import { LocalInboundDto } from "@/pages/in & out documents/17-98 local inbound document/schemas/createLocalInboundSchema.ts";
+import useLocalInboundForm from "@/pages/tbp-documents/17-98 local inbound document/hooks/useLocalInboundForm.ts";
+import { LocalInboundDto } from "@/pages/tbp-documents/17-98 local inbound document/schemas/createLocalInboundSchema.ts";
 
 interface LocalInboundFormProps {
   id: string | null;

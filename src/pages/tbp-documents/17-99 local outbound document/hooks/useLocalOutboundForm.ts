@@ -10,9 +10,9 @@ import { useToast } from "@/shared/hooks/useToast.ts";
 import {
   createLocalOutboundSchema,
   LocalOutboundDto,
-} from "@/pages/in & out documents/17-99 local outbound document/schemas/createChannelSchema.ts";
-import { LocalOutboundInterface } from "@/pages/in & out documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
-import { LOCAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-99 local outbound document/constants/local.outbound.constants.ts";
+} from "@/pages/tbp-documents/17-99 local outbound document/schemas/createChannelSchema.ts";
+import { LocalOutboundInterface } from "@/pages/tbp-documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
+import { LOCAL_OUTBOUND_QUERY_KEY } from "@/pages/tbp-documents/17-99 local outbound document/constants/local.outbound.constants.ts";
 
 export type ExternalOutboundFormProps = {
   id: string | null;

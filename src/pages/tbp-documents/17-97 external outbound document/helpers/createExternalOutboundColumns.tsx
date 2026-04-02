@@ -1,7 +1,7 @@
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { EditIcon, Trash2Icon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
-import { ExternalOutboundInterface } from "@/pages/in & out documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
+import { ExternalOutboundInterface } from "@/pages/tbp-documents/17-97 external outbound document/interfaces/external.outbound.interface.ts";
 import { dateFormatter } from "@/shared/utils/utils.ts";
 import { DATE } from "@/shared/constants/date.constants.ts";
 

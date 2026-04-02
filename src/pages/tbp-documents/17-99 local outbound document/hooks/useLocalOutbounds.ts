@@ -5,9 +5,9 @@ import useDelete from "@/shared/hooks/api/useDelete.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { LOCAL_OUTBOUND_QUERY_KEY } from "@/pages/in & out documents/17-99 local outbound document/constants/local.outbound.constants.ts";
-import { LocalOutboundInterface } from "@/pages/in & out documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
-import createLocalOutboundColumns from "@/pages/in & out documents/17-99 local outbound document/helpers/createLocalOutboundColumns.tsx";
+import { LOCAL_OUTBOUND_QUERY_KEY } from "@/pages/tbp-documents/17-99 local outbound document/constants/local.outbound.constants.ts";
+import { LocalOutboundInterface } from "@/pages/tbp-documents/17-99 local outbound document/interfaces/local.outbound.interface.ts";
+import createLocalOutboundColumns from "@/pages/tbp-documents/17-99 local outbound document/helpers/createLocalOutboundColumns.tsx";
 import { useFlowDeleteActions } from "@/shared/hooks/flow/useFlowDeleteActions.ts";
 
 const useLocalOutbounds = () => {

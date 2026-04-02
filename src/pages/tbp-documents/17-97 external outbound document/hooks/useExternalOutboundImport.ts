@@ -7,7 +7,7 @@ import { useToast } from "@/shared/hooks/useToast.ts";
 import {
   EXTERNAL_OUTBOUND_IMPORT_API,
   EXTERNAL_OUTBOUND_QUERY_KEY,
-} from "@/pages/in & out documents/17-97 external outbound document/constants/external.outbound.constants.ts";
+} from "@/pages/tbp-documents/17-97 external outbound document/constants/external.outbound.constants.ts";
 export type FlowImportProps = {
   onSuccess?: () => void;
 };
