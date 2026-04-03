@@ -42,7 +42,7 @@ const OrderView1213 = ({
   };
 
   const headerTitle =
-    basic?.title === "BAN_REMOVE" ? "Taqiq (yechildi)" : "Taqiq";
+    basic?.title === "BAN_REMOVE" ? "Taqiq (yechildi)" : "Taqiq kiritildi";
 
   const DocumentContent = (
     <div
@@ -105,7 +105,7 @@ const OrderView1213 = ({
           {basic?.start_time
             ? `${formatDate(basic.start_time)} yil ${new Date(basic.start_time).toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit", hour12: false })}`
             : "____"}{" "}
-          dan alohida farmoishgacha {basic?.orientation || ""}{" "}
+          dan {basic?.orientation || ""}{" "}
           {basic?.context || ""}
         </p>
 
