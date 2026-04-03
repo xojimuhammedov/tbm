@@ -95,22 +95,22 @@ const createSidebarGroups = (
         isActive: isActive("journals"),
         children: [
           {
-            title: t("17-96 ex/in document"),
+            title: t("12-22 ex/in document"),
             url: "exin-96",
             roles: ["tbp"],
           },
           {
-            title: t("17-97 ex/out document"),
+            title: t("12-23 ex/out document"),
             url: "exout-97",
             roles: ["tbp"],
           },
           {
-            title: t("17-98 loc/in document"),
+            title: t("12-24 loc/in document"),
             url: "locin-98",
             roles: ["tbp"],
           },
           {
-            title: t("17-99 loc/out document"),
+            title: t("12-25 loc/out document"),
             url: "locout-99",
             roles: ["tbp"],
           },
