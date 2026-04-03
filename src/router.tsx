@@ -57,42 +57,32 @@ const OrdersPage = lazy(() => import("@/pages/Journals/orders/Page.tsx"));
 const OrdersFormPage = lazy(
   () => import("@/pages/Journals/orders/pages/FormPage.tsx"),
 );
-const OrdersTbpPage = lazy(
-  () => import("@/pages/Journals-tbp/orders-tbp/Page.tsx"),
-);
-const OrdersTbpFormPage = lazy(
-  () => import("@/pages/Journals-tbp/orders-tbp/pages/FormPage.tsx"),
-);
+
 const DecreesPage = lazy(() => import("@/pages/Journals/decrees/Page.tsx"));
 const DecreesFormPage = lazy(
   () => import("@/pages/Journals/decrees/pages/FormPage.tsx"),
-);
-const DecreesTbpPage = lazy(
-  () => import("@/pages/Journals-tbp/decrees-tbp/Page.tsx"),
-);
-const DecreesTbpFormPage = lazy(
-  () => import("@/pages/Journals-tbp/decrees-tbp/pages/FormPage.tsx"),
 );
 const NotifyPage = lazy(() => import("@/pages/Journals/notify/Page.tsx"));
 const NotifyFormPage = lazy(
   () => import("@/pages/Journals/notify/pages/FormPage.tsx"),
 );
-const NotifyTbpPage = lazy(
-  () => import("@/pages/Journals-tbp/notify-tbp/Page.tsx"),
-);
-const NotifyTbpFormPage = lazy(
-  () => import("@/pages/Journals-tbp/notify-tbp/pages/FormPage.tsx"),
-);
 const OutgoingPage = lazy(() => import("@/pages/Journals/outgoing/Page.tsx"));
 const OutgoingFormPage = lazy(
   () => import("@/pages/Journals/outgoing/pages/FormPage.tsx"),
 );
-const OutgoingTbpPage = lazy(
-  () => import("@/pages/Journals-tbp/outgoing-tbp/Page.tsx"),
-);
-const OutgoingTbpFormPage = lazy(
-  () => import("@/pages/Journals-tbp/outgoing-tbp/pages/FormPage.tsx"),
-);
+
+const OrdersTbpPage = lazy(() => import("@/pages/tbp-documents/17-96 external inbound document/Page.tsx"));
+const OrdersTbpFormPage = lazy(() => import("@/pages/tbp-documents/17-96 external inbound document/pages/FormPage.tsx"));
+
+const DecreesTbpPage = lazy(() => import("@/pages/tbp-documents/17-97 external outbound document/Page.tsx"));
+const DecreesTbpFormPage = lazy(() => import("@/pages/tbp-documents/17-97 external outbound document/pages/FormPage.tsx"));
+
+const NotifyTbpPage = lazy(() => import("@/pages/tbp-documents/17-98 local inbound document/Page.tsx"));
+const NotifyTbpFormPage = lazy(() => import("@/pages/tbp-documents/17-98 local inbound document/pages/FormPage.tsx"));
+
+const OutgoingTbpPage = lazy(() => import("@/pages/tbp-documents/17-99 local outbound document/Page.tsx"));
+const OutgoingTbpFormPage = lazy(() => import("@/pages/tbp-documents/17-99 local outbound document/pages/FormPage.tsx"));
+
 
 const JournalsOrdersRoute = () => {
   const { me } = useUserStore();
@@ -506,7 +496,7 @@ function Router() {
 
         // Journals TBP Routes
         {
-          path: "journals/orders-tbp",
+          path: "journals/exin-96",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <OrdersTbpPage />
@@ -514,7 +504,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/orders-tbp/create",
+          path: "journals/exin-96/create",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <OrdersTbpFormPage />
@@ -522,7 +512,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/orders-tbp/edit/:id",
+          path: "journals/exin-96/edit/:id",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <OrdersTbpFormPage />
@@ -530,7 +520,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/decrees-tbp",
+          path: "journals/exout-97",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <DecreesTbpPage />
@@ -538,7 +528,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/decrees-tbp/create",
+          path: "journals/exout-97/create",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <DecreesTbpFormPage />
@@ -546,7 +536,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/decrees-tbp/edit/:id",
+          path: "journals/exout-97/edit/:id",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <DecreesTbpFormPage />
@@ -554,7 +544,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/notify-tbp",
+          path: "journals/locin-98",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <NotifyTbpPage />
@@ -562,7 +552,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/notify-tbp/create",
+          path: "journals/locin-98/create",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <NotifyTbpFormPage />
@@ -570,7 +560,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/notify-tbp/edit/:id",
+          path: "journals/locin-98/edit/:id",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <NotifyTbpFormPage />
@@ -578,7 +568,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/outgoing-tbp",
+          path: "journals/locout-99",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <OutgoingTbpPage />
@@ -586,7 +576,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/outgoing-tbp/create",
+          path: "journals/locout-99/create",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <OutgoingTbpFormPage />
@@ -594,7 +584,7 @@ function Router() {
           ),
         },
         {
-          path: "journals/outgoing-tbp/edit/:id",
+          path: "journals/locout-99/edit/:id",
           element: (
             <HasAccess roles={["admin", "tbp", "superadmin"]}>
               <OutgoingTbpFormPage />

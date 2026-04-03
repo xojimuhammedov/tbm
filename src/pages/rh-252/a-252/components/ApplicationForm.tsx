@@ -22,6 +22,7 @@ import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
 import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
 import CreateFlowSection from "@/pages/rh-252/a-252/components/form/CreateFlowSection.tsx";
 import useOrganizationOptions from "@/pages/organizations/hooks/useOrganizationOptions.ts";
+import BlockActionSection from "@/pages/rh-252/a-252/components/form/BlockActionSection.tsx";
 
 const ApplicationDocumentForm = () => {
   const { id } = useParams<{ id: string }>();
@@ -60,6 +61,7 @@ const ApplicationDocumentForm = () => {
   const isTelegraphPlannedWorkMode = selectedCode === "17-70";
   const isSettingsDocMode = selectedCode === "17-48";
   const isNetworkDocMode = selectedCode === "17-31";
+  const isBlockActionMode = selectedCode === "17-46";
 
   const handleAddUpdateRow = () => {
     if (currentUpdateType === "channels") {
@@ -117,6 +119,7 @@ const ApplicationDocumentForm = () => {
     { label: "17-45", value: "17-45" },
     { label: "17-33", value: "17-33" },
     { label: "17-31", value: "17-31" },
+    { label: "17-46", value: "17-46" },
   ];
 
   // Loading state - edit mode uchun
@@ -199,18 +202,20 @@ const ApplicationDocumentForm = () => {
                 />
               </div>
 
-              <div className="mb-8 text-lg">
-                <p>
-                  <strong>Nusxasi:</strong>
-                </p>
-                <MySelect
-                  name="to"
-                  control={form.control}
-                  options={organizationOptions || []}
-                  placeholder="Nusxalarni tanlang"
-                  isMulti
-                />
-              </div>
+              {!isBlockActionMode && (
+                <div className="mb-8 text-lg">
+                  <p>
+                    <strong>Nusxasi:</strong>
+                  </p>
+                  <MySelect
+                    name="to"
+                    control={form.control}
+                    options={organizationOptions || []}
+                    placeholder="Nusxalarni tanlang"
+                    isMulti
+                  />
+                </div>
+              )}
 
               {/* Form 17-45 ga xos bo'lgan qism */}
               {isNormalMode && (
@@ -369,6 +374,13 @@ const ApplicationDocumentForm = () => {
                 />
               )}
 
+              {/* Form 17-46 ha xos bo'lgan qism */}
+              {isBlockActionMode && (
+                <BlockActionSection
+                  control={form.control}
+                />
+              )}
+
               <div className={"mb-5 mt-5"}>
                 <IDSection1731
                   control={form.control}
@@ -394,20 +406,6 @@ const ApplicationDocumentForm = () => {
             <ArrowLeftIcon />
             {t("Back")}
           </Button>
-          {/*<Button*/}
-          {/*    size="sm"*/}
-          {/*    type="submit"*/}
-          {/*    disabled={isLoading}*/}
-          {/*>*/}
-          {/*  {isLoading ? (*/}
-          {/*      <>*/}
-          {/*        <Loader2 className="w-4 h-4 animate-spin mr-2" />*/}
-          {/*        {t("Saving...")}*/}
-          {/*      </>*/}
-          {/*  ) : (*/}
-          {/*      t(id ? "Update" : "Create")*/}
-          {/*  )}*/}
-          {/*</Button>*/}
         </FormContainerFooter>
       </form>
     </Form>

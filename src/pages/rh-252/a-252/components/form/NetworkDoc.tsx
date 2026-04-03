@@ -110,7 +110,7 @@ const IDSection1731 = ({ control, setValue, fieldName = "payload.file_name" }: I
                     className="flex items-center justify-between p-2 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors"
                   >
                     <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <File className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                      <File className="w-4 h-4 text-blue-500 size-4" />
                       <span className="text-sm text-gray-700 truncate font-mono">
                         {file.file_name}
                       </span>
@@ -118,7 +118,7 @@ const IDSection1731 = ({ control, setValue, fieldName = "payload.file_name" }: I
                     <button
                       type="button"
                       onClick={() => handleRemoveFile(file.id)}
-                      className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors flex-shrink-0"
+                      className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors size-4"
                       title="Faylni o'chirish"
                     >
                       <X className="w-4 h-4" />
