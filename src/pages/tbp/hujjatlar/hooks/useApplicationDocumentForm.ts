@@ -55,6 +55,9 @@ const useApplicationDocumentForm = ({
           base_file: "",
           // 12-48 fields
           station_interval: "",
+          no_raqami: [],
+          no_status: "",
+          no_status_date: null,
           cause: "",
           control_station: "",
           agreed: "",

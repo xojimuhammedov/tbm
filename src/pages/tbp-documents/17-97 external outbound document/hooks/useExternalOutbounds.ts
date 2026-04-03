@@ -83,12 +83,12 @@ const useExternalOutbounds = () => {
   }, [handleDeleteAllAction, remove]);
 
   const handleAdd = useCallback(() => {
-    navigate("/journals/exout-97/create");
+    navigate("/inout/exout-97/create");
   }, [navigate]);
 
   const handleEdit = useCallback(
     (id: string) => {
-      navigate(`/journals/exout-97/edit/${id}`);
+      navigate(`/inout/exout-97/edit/${id}`);
     },
     [navigate],
   );
