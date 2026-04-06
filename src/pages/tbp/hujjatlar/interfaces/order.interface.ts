@@ -83,7 +83,6 @@ export interface Payload1212 {
     actions: string[];
     start_time: string | null;
     description: string;
-    no_raqami: string;
     base_file?: string;
   };
   create?: {

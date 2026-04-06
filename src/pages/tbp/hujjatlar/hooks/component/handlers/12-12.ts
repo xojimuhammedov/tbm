@@ -57,9 +57,6 @@ const h1212: Handler = {
     );
     form.setValue("payload.basic.start_time", basic.start_time ?? "");
     form.setValue("payload.basic.description", basic.description ?? "");
-    form.setValue("payload.basic.no_raqami", basic.no_raqami ?? "");
-    // file re-upload required on edit
-    // form.setValue("payload.basic.base_file", basic.base_file ?? "");
 
     // ── Create section ────────────────────────────────────────────────────────
     const createSource =
@@ -194,7 +191,6 @@ const h1212: Handler = {
           actions,
           start_time: formatToISO(data.payload.basic.start_time),
           description: data.payload.basic.description || "",
-          no_raqami: data.payload.basic.no_raqami || "",
           ...(data.payload.file_name
             ? { base_file: data.payload.file_name }
             : {}),
