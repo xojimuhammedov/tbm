@@ -35,6 +35,10 @@ const CreateFlowSection1212 = ({
       point_a: "",
       point_b: "",
       signal_level: "",
+      port_a: "",
+      port_b: "",
+      device_a: "",
+      device_b: "",
       id_exist: null,
     });
 
@@ -47,7 +51,7 @@ const CreateFlowSection1212 = ({
         return (
           <div
             key={field.id}
-            className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-4 my-2 w-full items-center"
+            className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_auto] gap-4 my-2 w-full items-center"
           >
             <MyInput
               control={control}
@@ -72,16 +76,36 @@ const CreateFlowSection1212 = ({
               placeholder="Point A"
               className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
             />
- 
-
+            <MyInput
+              control={control}
+              name={`payload.create.flow_ids.${index}.port_a`}
+              placeholder="Port A"
+              className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+            />
+            <MyInput
+              control={control}
+              name={`payload.create.flow_ids.${index}.device_a`}
+              placeholder="Device A"
+              className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+            />
             <MyInput
               control={control}
               name={`payload.create.flow_ids.${index}.point_b`}
               placeholder="Point B"
               className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
             />
-
-    
+            <MyInput
+              control={control}
+              name={`payload.create.flow_ids.${index}.port_b`}
+              placeholder="Port B"
+              className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+            />
+            <MyInput
+              control={control}
+              name={`payload.create.flow_ids.${index}.device_b`}
+              placeholder="Device B"
+              className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
+            />
             <div className="flex gap-2">
               {isLast && (
                 <PlusSquare
@@ -214,6 +238,10 @@ const UpdateFlowSection1212 = ({ control }: { control: Control<any> }) => {
               <div>Code</div>
               <div>Point A</div>
               <div>Point B</div>
+              <div>Device A</div>
+              <div>Device B</div>
+              <div>Port A</div>
+              <div>Port B</div>
               <div />
             </div>
           )}
@@ -221,7 +249,7 @@ const UpdateFlowSection1212 = ({ control }: { control: Control<any> }) => {
           <div className="flex flex-col gap-2">
             {flowFields.map((field, index) => (
               <div key={field.id} className="flex items-center gap-2">
-                <div className="grid grid-cols-[1.2fr_1fr_1fr] gap-2 flex-1">
+                <div className="grid grid-cols-[1.2fr_1fr_1fr_1fr_1fr_0.8fr_0.8fr] gap-2 flex-1">
                   <MyInput
                     control={control}
                     name={`payload.update.flows.${index}.code`}
@@ -238,6 +266,30 @@ const UpdateFlowSection1212 = ({ control }: { control: Control<any> }) => {
                     control={control}
                     name={`payload.update.flows.${index}.point_b`}
                     placeholder="Point B"
+                    className="h-9 text-xs"
+                  />
+                  <MyInput
+                    control={control}
+                    name={`payload.update.flows.${index}.device_a`}
+                    placeholder="Device A"
+                    className="h-9 text-xs"
+                  />
+                  <MyInput
+                    control={control}
+                    name={`payload.update.flows.${index}.device_b`}
+                    placeholder="Device B"
+                    className="h-9 text-xs"
+                  />
+                  <MyInput
+                    control={control}
+                    name={`payload.update.flows.${index}.port_a`}
+                    placeholder="554"
+                    className="h-9 text-xs"
+                  />
+                  <MyInput
+                    control={control}
+                    name={`payload.update.flows.${index}.port_b`}
+                    placeholder="47"
                     className="h-9 text-xs"
                   />
                 </div>

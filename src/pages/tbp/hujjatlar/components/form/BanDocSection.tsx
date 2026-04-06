@@ -8,7 +8,7 @@ interface BanDocSectionProps {
 
 const BanDocSection = ({ control }: BanDocSectionProps) => {
   const titleOptions = [
-    { label: "Taqiq qo'yildi", value: "BAN" },
+    { label: "Taqiq kiritildi", value: "BAN" },
     { label: "Taqiq yechildi", value: "BAN_REMOVE" },
   ];
 

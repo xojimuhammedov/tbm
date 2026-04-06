@@ -21,25 +21,28 @@ const OrderView1213 = ({
   const payload = document?.payload;
   const basic = payload?.basic;
   const consumers = payload?.consumers || [];
+  const responsible = document?.responsible;
 
-  const renderText = (item: any): string => {
+  const renderText = (item: any) => {
     if (item === null || item === undefined) return "";
-    if (Array.isArray(item)) {
-      return item.map(i => renderText(i)).filter(Boolean).join(", ");
-    }
     if (typeof item === "string") return item;
     if (typeof item === "number" || typeof item === "boolean")
       return String(item);
     if (typeof item === "object") {
-      return String(
+      return (
         item?.name ?? item?.description ?? item?._id ?? JSON.stringify(item)
       );
     }
     return String(item);
   };
 
+  const formatDate = (dateStr: string) => {
+    if (!dateStr) return "____";
+    return dateFormatter(dateStr, "DD.MM.YYYY");
+  };
+
   const headerTitle =
-    basic?.title === "BAN_REMOVE" ? "Taqiq (yechildi)" : "Taqiq";
+    basic?.title === "BAN_REMOVE" ? "Taqiq (yechildi)" : "Taqiq kiritildi";
 
   const DocumentContent = (
     <div
@@ -77,9 +80,9 @@ const OrderView1213 = ({
       <div className="grid grid-cols-[90px_1fr] gap-y-1 mb-6 text-[15px]">
         <span className="font-bold">Kimga:</span>
         <div className="font-bold uppercase">
-          {document?.to?.length > 0
-            ? document.to.map((item: any) => renderText(item)).join(", ")
-            : "________________"}
+          {document?.to?.map((item: any, i: number) => (
+            <p key={i}>{renderText(item)}</p>
+          )) || "________________"}
         </div>
 
         <span className="font-bold">Nusxasi:</span>
@@ -88,14 +91,21 @@ const OrderView1213 = ({
             ? document.copy.map((item: any) => renderText(item)).join(", ")
             : "TPB"}
         </div>
+
+        <span className="font-bold">Kimdan:</span>
+        <div className="uppercase">
+          {document?.from?.length > 0
+            ? document.from.map((item: any) => renderText(item)).join(", ")
+            : ""}
+        </div>
       </div>
 
       <div className="text-[15px] text-justify mb-6 space-y-3">
         <p className="indent-12">
           {basic?.start_time
-            ? `${dateFormatter(basic.start_time, "YYYY-yil DD-MMMM", "uz")} ${new Date(basic.start_time).toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit", hour12: false })}`
+            ? `${formatDate(basic.start_time)} yil ${new Date(basic.start_time).toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit", hour12: false })}`
             : "____"}{" "}
-          dan alohida farmoyishgacha {basic?.orientation || ""}{" "}
+          dan {basic?.orientation || ""}{" "}
           {basic?.context || ""}
         </p>
 
@@ -121,10 +131,10 @@ const OrderView1213 = ({
         )}
       </div>
 
-      <div className="flex items-end text-[15px] gap-2 font-bold mt-auto">
-        <div className="">{document?.signer?.position?.name}:</div>
-        <div className="text-right">
-          {document?.signer?.first_name} {document?.signer?.second_name}
+      <div className="flex justify-between items-end text-[15px] font-bold mt-auto">
+        <div className="w-1/2">TTMQ va B xizmati boshlig'i</div>
+        <div className="w-1/2 text-right">
+          {responsible?.first_name} {responsible?.second_name}
         </div>
       </div>
 
@@ -133,7 +143,7 @@ const OrderView1213 = ({
           {(document as any)?.created_by?.first_name?.[0]}.{" "}
           {(document as any)?.created_by?.second_name}
         </p>
-        <p>{(document as any)?.created_by?.phone}</p>
+        <p>{(document as any)?.created_by?.short_phone}</p>
       </div>
     </div>
   );

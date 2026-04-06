@@ -57,8 +57,6 @@ const h1212: Handler = {
     );
     form.setValue("payload.basic.start_time", basic.start_time ?? "");
     form.setValue("payload.basic.description", basic.description ?? "");
-    // file re-upload required on edit
-    // form.setValue("payload.basic.base_file", basic.base_file ?? "");
 
     // ── Create section ────────────────────────────────────────────────────────
     const createSource =
