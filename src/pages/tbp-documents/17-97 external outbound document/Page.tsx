@@ -30,7 +30,7 @@ const Page = () => {
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
-        name: t("Exout-17-97"),
+        name: t("Exout-12-23"),
         path: "/exout-97",
         isActive: true,
       },

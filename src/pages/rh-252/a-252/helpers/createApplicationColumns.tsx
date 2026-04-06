@@ -105,8 +105,7 @@ const createOrderColumns = (
       } else if (status === "REJECTED") {
         label = "Rad etildi";
         colorClass = "bg-red-100 text-red-700";
-      }
-      else if (status === "CANCEL") {
+      } else if (status === "CANCEL") {
         label = "Bekor qilindi";
         colorClass = "bg-gray-200 text-gray-700";
       }

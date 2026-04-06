@@ -1,9 +1,5 @@
 import { Control, useFieldArray, useWatch } from "react-hook-form";
-import {
-  MyInput,
-  MyDatePicker,
-  MySelect,
-} from "dgz-ui-shared/components/form";
+import { MyInput, MyDatePicker, MySelect } from "dgz-ui-shared/components/form";
 import { Button, cn } from "dgz-ui";
 import { Plus, Trash2, AlertCircle, CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -19,7 +15,9 @@ interface ValidationStates {
 }
 
 const BlockActionSection = ({ control }: BlockActionSectionProps) => {
-  const [validationStates, setValidationStates] = useState<ValidationStates>({});
+  const [validationStates, setValidationStates] = useState<ValidationStates>(
+    {},
+  );
 
   const directionOptions = [
     { label: "Global", value: "global" },
@@ -42,12 +40,20 @@ const BlockActionSection = ({ control }: BlockActionSectionProps) => {
     defaultValue: "channels",
   });
 
-  const { fields: flowFields, append: appendFlow, remove: removeFlow } = useFieldArray({
+  const {
+    fields: flowFields,
+    append: appendFlow,
+    remove: removeFlow,
+  } = useFieldArray({
     control,
     name: "payload.flow_ids" as never,
   });
 
-  const { fields: channelFields, append: appendChannel, remove: removeChannel } = useFieldArray({
+  const {
+    fields: channelFields,
+    append: appendChannel,
+    remove: removeChannel,
+  } = useFieldArray({
     control,
     name: "payload.channels" as never,
   });
@@ -75,7 +81,7 @@ const BlockActionSection = ({ control }: BlockActionSectionProps) => {
     try {
       // using isEmpty=false for generic check based on UpdateFlowSection.tsx format
       const res = await request.get(
-        `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=false`
+        `/api/rh-252/order/check?idOrChannel=${encodeURIComponent(value)}&isEmpty=false`,
       );
       const isValid = res.data?.success === true || res.data?.valid !== false;
 
@@ -94,7 +100,7 @@ const BlockActionSection = ({ control }: BlockActionSectionProps) => {
   const debouncedCheck = useRef(
     debounce((value: string, key: string) => {
       checkValidation(value, key);
-    }, 500)
+    }, 500),
   ).current;
 
   useEffect(() => {
@@ -117,16 +123,26 @@ const BlockActionSection = ({ control }: BlockActionSectionProps) => {
     }
   }, [watchedFlows, watchedChannels, currentSelectionType, debouncedCheck]);
 
-  const getValidationStatus = (index: number, type: "flow" | "channel"): "valid" | "invalid" | "checking" | undefined => {
+  const getValidationStatus = (
+    index: number,
+    type: "flow" | "channel",
+  ): "valid" | "invalid" | "checking" | undefined => {
     const key = `${type}-${index}`;
-    const value = type === "flow" ? watchedFlows?.[index]?.value : watchedChannels?.[index]?.value;
+    const value =
+      type === "flow"
+        ? watchedFlows?.[index]?.value
+        : watchedChannels?.[index]?.value;
 
     if (!value || value.trim() === "") return undefined;
     if (validationStates[key] === undefined) return "checking";
     return validationStates[key] ? "valid" : "invalid";
   };
 
-  const getInputClassName = (index: number, type: "flow" | "channel", baseClassName: string = "") => {
+  const getInputClassName = (
+    index: number,
+    type: "flow" | "channel",
+    baseClassName: string = "",
+  ) => {
     const key = `${type}-${index}`;
     const isInvalid = validationStates[key] === false;
     return cn(baseClassName, isInvalid ? "bg-red-100 border-red-300" : "");
@@ -134,7 +150,9 @@ const BlockActionSection = ({ control }: BlockActionSectionProps) => {
 
   const isFlows = currentSelectionType === "flows";
   const fields = isFlows ? flowFields : channelFields;
-  const onAddRow = isFlows ? () => appendFlow({ value: "" }) : () => appendChannel({ value: "" });
+  const onAddRow = isFlows
+    ? () => appendFlow({ value: "" })
+    : () => appendChannel({ value: "" });
   const onRemoveRow = isFlows ? removeFlow : removeChannel;
   const fieldNamePrefix = isFlows ? "payload.flow_ids" : "payload.channels";
   const fieldType = isFlows ? "flow" : "channel";
@@ -184,10 +202,7 @@ const BlockActionSection = ({ control }: BlockActionSectionProps) => {
           </div>
           <span className="font-medium">ning</span>
           <div className="w-[180px]">
-            <MyDatePicker
-              name="payload.basic.request_date"
-              control={control}
-            />
+            <MyDatePicker name="payload.basic.request_date" control={control} />
           </div>
           <span className="font-medium">dagi</span>
           <div className="w-[140px]">
@@ -212,10 +227,7 @@ const BlockActionSection = ({ control }: BlockActionSectionProps) => {
           </span>
 
           <div className="w-[180px]">
-            <MyDatePicker
-              name="payload.basic.start_date"
-              control={control}
-            />
+            <MyDatePicker name="payload.basic.start_date" control={control} />
           </div>
           <span className="font-medium">dan,</span>
           <span className="text-slate-900">
@@ -249,14 +261,16 @@ const BlockActionSection = ({ control }: BlockActionSectionProps) => {
                 <MyInput
                   control={control}
                   name={`${fieldNamePrefix}.${index}.value`}
-                  placeholder={isFlows ? "ID reyestri (masalan: 12345)" : "Kanal (masalan: 98765)"}
+                  placeholder={
+                    isFlows
+                      ? "ID reyestri (masalan: 12345)"
+                      : "Kanal (masalan: 98765)"
+                  }
                   className={getInputClassName(index, fieldType, "h-10")}
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
                   {getValidationStatus(index, fieldType) === "checking" && (
-                    <div className="text-blue-500 animate-spin text-sm">
-                      ⟳
-                    </div>
+                    <div className="text-blue-500 animate-spin text-sm">⟳</div>
                   )}
                   {getValidationStatus(index, fieldType) === "valid" && (
                     <CheckCircle className="w-5 h-5 text-green-500" />

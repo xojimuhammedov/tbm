@@ -120,7 +120,6 @@ const OrderView1214 = ({
   const closureText =
     payload?.basic?.connection_closure_type || "2-8 aloqani yopish yoʻli bilan";
 
-
   const DocumentContent = (
     <div
       ref={contentRef}
@@ -235,9 +234,7 @@ const OrderView1214 = ({
           <div className="font-bold mb-2">
             To'xtalish kuzatiladigan oqimlar:
           </div>
-          <div className="leading-relaxed">
-            {stoppedFlows.join(", ")}.
-          </div>
+          <div className="leading-relaxed">{stoppedFlows.join(", ")}.</div>
         </div>
       ) : null}
 

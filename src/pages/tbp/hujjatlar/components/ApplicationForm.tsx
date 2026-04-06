@@ -166,7 +166,9 @@ const ApplicationDocumentForm = () => {
             control={form.control}
             setValue={form.setValue}
             fieldName={
-              isSettingsDocMode ? "payload.basic.base_file" : "payload.file_name"
+              isSettingsDocMode
+                ? "payload.basic.base_file"
+                : "payload.file_name"
             }
           />
         </div>

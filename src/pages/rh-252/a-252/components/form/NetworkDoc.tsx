@@ -17,7 +17,11 @@ interface UploadedFile {
   uploadedAt: Date;
 }
 
-const IDSection1731 = ({ control, setValue, fieldName = "payload.file_name" }: IDSection1731Props) => {
+const IDSection1731 = ({
+  control,
+  setValue,
+  fieldName = "payload.file_name",
+}: IDSection1731Props) => {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { handleUpload, loading: isUploading } = useFileUpload((file_name) => {
@@ -39,11 +43,9 @@ const IDSection1731 = ({ control, setValue, fieldName = "payload.file_name" }: I
     if (remainingFiles.length === 0) {
       setValue(fieldName, "", { shouldValidate: true });
     } else {
-      setValue(
-        fieldName,
-        remainingFiles[remainingFiles.length - 1].file_name,
-        { shouldValidate: true },
-      );
+      setValue(fieldName, remainingFiles[remainingFiles.length - 1].file_name, {
+        shouldValidate: true,
+      });
     }
   };
 

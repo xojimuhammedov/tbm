@@ -28,36 +28,51 @@ const OrderApplicationView1746 = ({
   const updateData = payload?.update_pending;
   const deleteData = payload?.delete_pending;
 
-  const hasCreate = actions.includes("create") && createData?.flow_ids?.length > 0;
-  const hasUpdate = actions.includes("update") &&
+  const hasCreate =
+    actions.includes("create") && createData?.flow_ids?.length > 0;
+  const hasUpdate =
+    actions.includes("update") &&
     (updateData?.channels?.length > 0 || updateData?.flows?.length > 0);
-  const hasDelete = actions.includes("delete") &&
+  const hasDelete =
+    actions.includes("delete") &&
     (deleteData?.channels?.length > 0 ||
       deleteData?.channel_ids?.length > 0 ||
       deleteData?.flow_ids?.length > 0);
 
   // ✅ block / unblock
-  const hasBlock = (actionType === "block" || actions.includes("block")) &&
+  const hasBlock =
+    (actionType === "block" || actions.includes("block")) &&
     (payload?.flow_ids?.length > 0 || payload?.channels?.length > 0);
-  const hasUnblock = (actionType === "unblock" || actions.includes("unblock")) &&
+  const hasUnblock =
+    (actionType === "unblock" || actions.includes("unblock")) &&
     (payload?.flow_ids?.length > 0 || payload?.channels?.length > 0);
 
-  const totalActiveActions = [hasCreate, hasUpdate, hasDelete, hasBlock, hasUnblock].filter(Boolean);
+  const totalActiveActions = [
+    hasCreate,
+    hasUpdate,
+    hasDelete,
+    hasBlock,
+    hasUnblock,
+  ].filter(Boolean);
   const isMultiple = totalActiveActions.length > 1;
 
   const getDynamicTitle = () => {
-    const directionName = basic?.direction === "global" ? "Xalqaro" : "Mahalliy";
+    const directionName =
+      basic?.direction === "global" ? "Xalqaro" : "Mahalliy";
     const actionLabels: string[] = [];
 
     for (const action of [...actions, actionType].filter(Boolean)) {
       if (action === "create" && hasCreate) actionLabels.push("tashkil etish");
-      if (action === "update" && hasUpdate) actionLabels.push("yo'nalishini o'zgartirish");
+      if (action === "update" && hasUpdate)
+        actionLabels.push("yo'nalishini o'zgartirish");
       if (action === "delete" && hasDelete) actionLabels.push("o'chirish");
       if (action === "block" && hasBlock) actionLabels.push("bloklash");
-      if (action === "unblock" && hasUnblock) actionLabels.push("blokdan chiqarish");
+      if (action === "unblock" && hasUnblock)
+        actionLabels.push("blokdan chiqarish");
     }
 
-    if (actionLabels.length === 0) return `${directionName} oqimlar to'g'risida`;
+    if (actionLabels.length === 0)
+      return `${directionName} oqimlar to'g'risida`;
 
     const actionText =
       actionLabels.length > 1
@@ -73,8 +88,7 @@ const OrderApplicationView1746 = ({
       {basic?.request_date
         ? dateFormatter(basic.request_date, "YYYY-yil D-MMMM", "uz")
         : "____-yil __-________"}
-      dagi {basic?.request_number}-son xatiga asosan,{" "}
-      {basic?.reason}{" "}
+      dagi {basic?.request_number}-son xatiga asosan, {basic?.reason}{" "}
       {document?.order_date
         ? dateFormatter(document.order_date, "YYYY-yil D-MMMM", "uz")
         : "____-yil __-________"}
@@ -95,8 +109,7 @@ const OrderApplicationView1746 = ({
             {channels.map((ch: string, i: number) => (
               <div key={i}>
                 <p>
-                  {i + 1}. Nomlanishi:{" "}
-                  <span className="font-bold">{ch}</span>
+                  {i + 1}. Nomlanishi: <span className="font-bold">{ch}</span>
                 </p>
                 <p className="pl-4">
                   "O'zbektelekom" AK dagi identifikator{" "}
@@ -198,14 +211,17 @@ const OrderApplicationView1746 = ({
           {flowIds.length > 0 && (
             <>
               "O'zbektelekom" AK dagi identifikatori{" "}
-              <span className="font-bold">{flowIds.join(", ")}</span> bo'lgan{" "}
+              <span className="font-bold">{flowIds.join(", ")}</span>{" "}
+              bo'lgan{" "}
             </>
           )}
           <span className="font-bold">{basic?.flow_signal_level}</span> xalqaro
           oqim bloklansin
           {channels.length > 0 && (
-            <>, quyidagi yo'nalishlardagi xalqaro kanallar tarmoqda
-            vaqtinchalik bloklansin:</>
+            <>
+              , quyidagi yo'nalishlardagi xalqaro kanallar tarmoqda vaqtinchalik
+              bloklansin:
+            </>
           )}
           {channels.length === 0 && <>.</>}
         </p>
@@ -224,14 +240,16 @@ const OrderApplicationView1746 = ({
           {flowIds.length > 0 && (
             <>
               "O'zbektelekom" AK dagi identifikatori{" "}
-              <span className="font-bold">{flowIds.join(", ")}</span> bo'lgan{" "}
+              <span className="font-bold">{flowIds.join(", ")}</span>{" "}
+              bo'lgan{" "}
             </>
           )}
           <span className="font-bold">{basic?.flow_signal_level}</span> xalqaro
           oqim blokdan chiqarilsin
           {channels.length > 0 && (
-            <>, quyidagi yo'nalishlardagi xalqaro kanallar blokdan
-            chiqarilsin:</>
+            <>
+              , quyidagi yo'nalishlardagi xalqaro kanallar blokdan chiqarilsin:
+            </>
           )}
           {channels.length === 0 && <>.</>}
         </p>
@@ -273,10 +291,12 @@ const OrderApplicationView1746 = ({
             {payload?.responsible_organizing && (
               <p className="mt-3">
                 Mas'ul tashkilot:{" "}
-                <span className="font-bold">{payload.responsible_organizing}</span>
+                <span className="font-bold">
+                  {payload.responsible_organizing}
+                </span>
               </p>
             )}
-          </div>
+          </div>,
         );
       }
 
@@ -293,10 +313,16 @@ const OrderApplicationView1746 = ({
                 o'zgartirilsin:
               </p>
               <div className="pl-12 mt-2 text-[14px]">
-                <p>Oldin: {item.old?.international_stream_number} (Kod: {item.old?.code})</p>
-                <p>Hozir: {item.new?.international_stream_number} (Kod: {item.new?.code})</p>
+                <p>
+                  Oldin: {item.old?.international_stream_number} (Kod:{" "}
+                  {item.old?.code})
+                </p>
+                <p>
+                  Hozir: {item.new?.international_stream_number} (Kod:{" "}
+                  {item.new?.code})
+                </p>
               </div>
-            </div>
+            </div>,
           );
         }
 
@@ -316,19 +342,27 @@ const OrderApplicationView1746 = ({
                 <p>
                   Oldin: {old?.point_a}
                   {old?.device_a ? ` (${old.device_a}` : ""}
-                  {old?.port_a ? `&${old.port_a})` : old?.device_a ? ")" : ""} – {old?.point_b}
+                  {old?.port_a
+                    ? `&${old.port_a})`
+                    : old?.device_a
+                      ? ")"
+                      : ""} – {old?.point_b}
                   {old?.device_b ? ` (${old.device_b}` : ""}
                   {old?.port_b ? `&${old.port_b})` : old?.device_b ? ")" : ""}
                 </p>
                 <p>
                   Hozir: {nw?.point_a}
                   {nw?.device_a ? ` (${nw.device_a}` : ""}
-                  {nw?.port_a ? `&${nw.port_a})` : nw?.device_a ? ")" : ""} – {nw?.point_b}
+                  {nw?.port_a
+                    ? `&${nw.port_a})`
+                    : nw?.device_a
+                      ? ")"
+                      : ""} – {nw?.point_b}
                   {nw?.device_b ? ` (${nw.device_b}` : ""}
                   {nw?.port_b ? `&${nw.port_b})` : nw?.device_b ? ")" : ""}
                 </p>
               </div>
-            </div>
+            </div>,
           );
         }
       }
@@ -352,7 +386,7 @@ const OrderApplicationView1746 = ({
             <p className={`font-bold italic mt-1 ${isMultiple ? "pl-12" : ""}`}>
               {deleteCodes.join(", ")}
             </p>
-          </div>
+          </div>,
         );
       }
 
@@ -367,13 +401,15 @@ const OrderApplicationView1746 = ({
             <p>
               {isMultiple && `${step}. `}
               "O'zbektelekom" AK dagi identifikatori{" "}
-              <span className="font-bold">{flowIds.join(", ")}</span> bo'lgan{" "}
-              <span className="font-bold">{basic?.flow_signal_level}</span> xalqaro
-              oqim bloklansin, quyidagi yo'nalishlardagi xalqaro kanallar tarmoqda
-              vaqtinchalik bloklansin:
+              <span className="font-bold">
+                {flowIds.join(", ")}
+              </span> bo'lgan{" "}
+              <span className="font-bold">{basic?.flow_signal_level}</span>{" "}
+              xalqaro oqim bloklansin, quyidagi yo'nalishlardagi xalqaro
+              kanallar tarmoqda vaqtinchalik bloklansin:
             </p>
             {renderBlockSection("block")}
-          </div>
+          </div>,
         );
       }
 
@@ -388,13 +424,15 @@ const OrderApplicationView1746 = ({
             <p>
               {isMultiple && `${step}. `}
               "O'zbektelekom" AK dagi identifikatori{" "}
-              <span className="font-bold">{flowIds.join(", ")}</span> bo'lgan{" "}
-              <span className="font-bold">{basic?.flow_signal_level}</span> xalqaro
-              oqim blokdan chiqarilsin, quyidagi yo'nalishlardagi xalqaro kanallar
-              blokdan chiqarilsin:
+              <span className="font-bold">
+                {flowIds.join(", ")}
+              </span> bo'lgan{" "}
+              <span className="font-bold">{basic?.flow_signal_level}</span>{" "}
+              xalqaro oqim blokdan chiqarilsin, quyidagi yo'nalishlardagi
+              xalqaro kanallar blokdan chiqarilsin:
             </p>
             {renderBlockSection("unblock")}
-          </div>
+          </div>,
         );
       }
     }
@@ -427,18 +465,23 @@ const OrderApplicationView1746 = ({
             <p>
               Oldin: {old?.point_a}
               {old?.device_a ? ` (${old.device_a}` : ""}
-              {old?.port_a ? `&${old.port_a})` : old?.device_a ? ")" : ""} – {old?.point_b}
+              {old?.port_a
+                ? `&${old.port_a})`
+                : old?.device_a
+                  ? ")"
+                  : ""} – {old?.point_b}
               {old?.device_b ? ` (${old.device_b}` : ""}
               {old?.port_b ? `&${old.port_b})` : old?.device_b ? ")" : ""}
             </p>
             <p>
               Hozir: {nw?.point_a}
               {nw?.device_a ? ` (${nw.device_a}` : ""}
-              {nw?.port_a ? `&${nw.port_a})` : nw?.device_a ? ")" : ""} – {nw?.point_b}
+              {nw?.port_a ? `&${nw.port_a})` : nw?.device_a ? ")" : ""} –{" "}
+              {nw?.point_b}
               {nw?.device_b ? ` (${nw.device_b}` : ""}
               {nw?.port_b ? `&${nw.port_b})` : nw?.device_b ? ")" : ""}
             </p>
-          </div>
+          </div>,
         );
       }
 
@@ -446,9 +489,15 @@ const OrderApplicationView1746 = ({
         const firstCh = channels[0];
         sections.push(
           <div key="upd-ch-detail-0" className="pl-12 mt-2 text-[14px]">
-            <p>Oldin: {firstCh.old?.international_stream_number} (Kod: {firstCh.old?.code})</p>
-            <p>Hozir: {firstCh.new?.international_stream_number} (Kod: {firstCh.new?.code})</p>
-          </div>
+            <p>
+              Oldin: {firstCh.old?.international_stream_number} (Kod:{" "}
+              {firstCh.old?.code})
+            </p>
+            <p>
+              Hozir: {firstCh.new?.international_stream_number} (Kod:{" "}
+              {firstCh.new?.code})
+            </p>
+          </div>,
         );
       }
 
@@ -461,10 +510,16 @@ const OrderApplicationView1746 = ({
               yo'nalishiga quyidagicha o'zgartirilsin:
             </p>
             <div className="pl-12 mt-2 text-[14px]">
-              <p>Oldin: {item.old?.international_stream_number} (Kod: {item.old?.code})</p>
-              <p>Hozir: {item.new?.international_stream_number} (Kod: {item.new?.code})</p>
+              <p>
+                Oldin: {item.old?.international_stream_number} (Kod:{" "}
+                {item.old?.code})
+              </p>
+              <p>
+                Hozir: {item.new?.international_stream_number} (Kod:{" "}
+                {item.new?.code})
+              </p>
             </div>
-          </div>
+          </div>,
         );
       });
 
@@ -482,19 +537,24 @@ const OrderApplicationView1746 = ({
               <p>
                 Oldin: {old?.point_a}
                 {old?.device_a ? ` (${old.device_a}` : ""}
-                {old?.port_a ? `&${old.port_a})` : old?.device_a ? ")" : ""} – {old?.point_b}
+                {old?.port_a
+                  ? `&${old.port_a})`
+                  : old?.device_a
+                    ? ")"
+                    : ""} – {old?.point_b}
                 {old?.device_b ? ` (${old.device_b}` : ""}
                 {old?.port_b ? `&${old.port_b})` : old?.device_b ? ")" : ""}
               </p>
               <p>
                 Hozir: {nw?.point_a}
                 {nw?.device_a ? ` (${nw.device_a}` : ""}
-                {nw?.port_a ? `&${nw.port_a})` : nw?.device_a ? ")" : ""} – {nw?.point_b}
+                {nw?.port_a ? `&${nw.port_a})` : nw?.device_a ? ")" : ""} –{" "}
+                {nw?.point_b}
                 {nw?.device_b ? ` (${nw.device_b}` : ""}
                 {nw?.port_b ? `&${nw.port_b})` : nw?.device_b ? ")" : ""}
               </p>
             </div>
-          </div>
+          </div>,
         );
       });
 
@@ -515,7 +575,9 @@ const OrderApplicationView1746 = ({
           {payload?.responsible_organizing && (
             <p className="mt-3">
               Mas'ul tashkilot:{" "}
-              <span className="font-bold">{payload.responsible_organizing}</span>
+              <span className="font-bold">
+                {payload.responsible_organizing}
+              </span>
             </p>
           )}
         </div>
@@ -582,7 +644,9 @@ const OrderApplicationView1746 = ({
 
       <div className="grid grid-cols-[100px_1fr] gap-y-1 mb-8 text-[15px]">
         <span className="font-bold italic">Kimdan:</span>
-        <div className="font-bold uppercase">tbm, Legacy Registration Organization</div>
+        <div className="font-bold uppercase">
+          tbm, Legacy Registration Organization
+        </div>
       </div>
 
       <div className="text-center font-bold text-[16px] mb-2">

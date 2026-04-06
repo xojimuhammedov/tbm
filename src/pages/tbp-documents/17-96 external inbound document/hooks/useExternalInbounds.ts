@@ -80,12 +80,12 @@ const useExternalInbounds = () => {
   }, [handleDeleteAllAction, remove]);
 
   const handleAdd = useCallback(() => {
-    navigate("/inout/exin-96/create");
+    navigate("/journals/exin-96/create");
   }, [navigate]);
 
   const handleEdit = useCallback(
     (id: string) => {
-      navigate(`/inout/exin-96/edit/${id}`);
+      navigate(`/journals/exin-96/edit/${id}`);
     },
     [navigate],
   );

@@ -81,12 +81,12 @@ const useLocalInbounds = () => {
   }, [handleDeleteAllAction, remove]);
 
   const handleAdd = useCallback(() => {
-    navigate("/inout/locin-98/create");
+    navigate("/journals/locin-98/create");
   }, [navigate]);
 
   const handleEdit = useCallback(
     (id: string) => {
-      navigate(`/inout/locin-98/edit/${id}`);
+      navigate(`/journals/locin-98/edit/${id}`);
     },
     [navigate],
   );

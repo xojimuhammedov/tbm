@@ -15,7 +15,10 @@ const h1214: Handler = {
     form.setValue("payload.main_routes", payload.main_routes ?? "");
     form.setValue("payload.reserve_routes", payload.reserve_routes ?? "");
     form.setValue("payload.concert_second", payload.concert_second ?? "");
-    form.setValue("payload.responsible_person", payload.responsible_person ?? "");
+    form.setValue(
+      "payload.responsible_person",
+      payload.responsible_person ?? "",
+    );
     form.setValue("payload.concert_text", payload.concert_text ?? "");
     form.setValue("payload.basis", payload.basis ?? "");
 

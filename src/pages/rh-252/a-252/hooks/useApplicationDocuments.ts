@@ -25,7 +25,10 @@ const useApplicationDocuments = () => {
   const [viewId, setViewId] = useState<OrderApplication["_id"] | null>(null);
 
   const { removeWithConfirm } = useDelete([KEYS.RH_Order_Application]);
-  const { cancelWithConfirm } = useCancel([URLS.RH_Order_Application, "cancel"]);
+  const { cancelWithConfirm } = useCancel([
+    URLS.RH_Order_Application,
+    "cancel",
+  ]);
   const { query, handleFilter, params } = useLists<OrderApplication>({
     url: [URLS.RH_Order_Application],
     queryKey: [KEYS.RH_Order_Application],
@@ -37,7 +40,7 @@ const useApplicationDocuments = () => {
     navigate("/rh-252/a-252/create");
   }, [navigate]);
 
-  const handleEdit = useCallback( 
+  const handleEdit = useCallback(
     (docId: string) => {
       navigate(`/rh-252/a-252/edit/${docId}`);
     },
@@ -97,7 +100,6 @@ const useApplicationDocuments = () => {
     [query, removeWithConfirm, t, toast],
   );
 
-  
   const handleCancel = useCallback(
     (id: OrderApplication["_id"]) => {
       if (!id) return;
