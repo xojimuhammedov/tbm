@@ -73,36 +73,36 @@ const OutgoingFormPage = lazy(
 
 const OrdersTbpPage = lazy(
   () =>
-    import("@/pages/tbp-documents/17-96 external inbound document/Page.tsx"),
+    import("@/pages/tbp-documents/12-22 external inbound document/Page.tsx"),
 );
 const OrdersTbpFormPage = lazy(
   () =>
-    import("@/pages/tbp-documents/17-96 external inbound document/pages/FormPage.tsx"),
+    import("@/pages/tbp-documents/12-22 external inbound document/pages/FormPage.tsx"),
 );
 
 const DecreesTbpPage = lazy(
   () =>
-    import("@/pages/tbp-documents/17-97 external outbound document/Page.tsx"),
+    import("@/pages/tbp-documents/12-23 external outbound document/Page.tsx"),
 );
 const DecreesTbpFormPage = lazy(
   () =>
-    import("@/pages/tbp-documents/17-97 external outbound document/pages/FormPage.tsx"),
+    import("@/pages/tbp-documents/12-23 external outbound document/pages/FormPage.tsx"),
 );
 
 const NotifyTbpPage = lazy(
-  () => import("@/pages/tbp-documents/17-98 local inbound document/Page.tsx"),
+  () => import("@/pages/tbp-documents/12-24 local inbound document/Page.tsx"),
 );
 const NotifyTbpFormPage = lazy(
   () =>
-    import("@/pages/tbp-documents/17-98 local inbound document/pages/FormPage.tsx"),
+    import("@/pages/tbp-documents/12-24 local inbound document/pages/FormPage.tsx"),
 );
 
 const OutgoingTbpPage = lazy(
-  () => import("@/pages/tbp-documents/17-99 local outbound document/Page.tsx"),
+  () => import("@/pages/tbp-documents/12-25 local outbound document/Page.tsx"),
 );
 const OutgoingTbpFormPage = lazy(
   () =>
-    import("@/pages/tbp-documents/17-99 local outbound document/pages/FormPage.tsx"),
+    import("@/pages/tbp-documents/12-25 local outbound document/pages/FormPage.tsx"),
 );
 
 const JournalsOrdersRoute = () => {
