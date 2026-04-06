@@ -20,12 +20,12 @@ const Eid_17_96_FormPage = () => {
       },
       {
         name: t("17-96 external inbound"),
-        path: "inout/exin-96",
+        path: "journals/exin-96",
         isActive: false,
       },
       {
         name: id ? t("Edit") : t("Create"),
-        path: id ? `/inout/exin-96/${id}` : "/inout/exin-96/create",
+        path: id ? `/journals/exin-96/${id}` : "/journals/exin-96/create",
         isActive: true,
       },
     ],

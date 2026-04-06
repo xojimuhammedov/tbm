@@ -20,12 +20,12 @@ const Channels51FormPage = () => {
       },
       {
         name: t("External outbound"),
-        path: "/inout/exout-97",
+        path: "/journals/exout-97",
         isActive: false,
       },
       {
         name: id ? t("Edit") : t("Create"),
-        path: id ? `/inout/exout-97/edit/${id}` : "/inout/exout-97/create",
+        path: id ? `/journals/exout-97/edit/${id}` : "/journals/exout-97/create",
         isActive: true,
       },
     ],

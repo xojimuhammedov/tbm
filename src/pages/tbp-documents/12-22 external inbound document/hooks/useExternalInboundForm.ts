@@ -73,7 +73,6 @@ const useExternalInboundForm = ({ id, onSave }: ExternalInboundFormProps) => {
         reg_num: item.reg_num,
         reg_date: formatDate(item.reg_date),
         journal_index: item.journal_index,
-        reception_num: item.reception_num,
         reception_date: formatDate(item.reception_date),
         original_num: item.original_num,
         original_date: formatDate(item.original_date),
@@ -82,8 +81,6 @@ const useExternalInboundForm = ({ id, onSave }: ExternalInboundFormProps) => {
         content: item.content,
         assignee: item.assignee,
         resolution: item.resolution,
-        deadline: formatDate(item.deadline),
-        status: item.status,
         reply_order_date: formatDate(item.reply_order_date),
       });
     }

@@ -20,12 +20,12 @@ const LocalInboundFormPage = () => {
       },
       {
         name: t("17-98 external inbound"),
-        path: "/inout/locin-98",
+        path: "/journals/locin-98",
         isActive: false,
       },
       {
         name: id ? t("Edit") : t("Create"),
-        path: id ? `/inout/locin-98/${id}` : "/inout/locin-98/create",
+        path: id ? `/journals/locin-98/${id}` : "/journals/locin-98/create",
         isActive: true,
       },
     ],

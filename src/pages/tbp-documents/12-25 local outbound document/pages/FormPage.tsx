@@ -18,12 +18,12 @@ const Channels51FormPage = () => {
       },
       {
         name: t("Local outbound"),
-        path: "/inout/locout-99",
+        path: "/journals/locout-99",
         isActive: false,
       },
       {
         name: id ? t("Edit") : t("Create"),
-        path: id ? `/inout/locout-99/edit/${id}` : "/inout/locout-99/create",
+        path: id ? `/journals/locout-99/edit/${id}` : "/journals/locout-99/create",
         isActive: true,
       },
     ],

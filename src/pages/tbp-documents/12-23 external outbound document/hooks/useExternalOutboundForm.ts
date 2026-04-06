@@ -75,7 +75,6 @@ const useExternalOutboundForm = ({ id, onSave }: ExternalOutboundFormProps) => {
         external_out_doc_number: item.external_out_doc_number,
         recipient: item.recipient,
         summary: item.summary,
-        response_reference_number: item.response_reference_number,
         external_inbound_id: item.external_inbound_id,
       });
     }
