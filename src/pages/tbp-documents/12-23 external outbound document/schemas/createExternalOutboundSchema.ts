@@ -36,7 +36,6 @@ export const createExternalOutboundSchema = (
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    response_reference_number: z.string().nullable().optional(),
     external_inbound_id: z.string().optional(),
   });
 

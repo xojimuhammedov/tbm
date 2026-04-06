@@ -71,12 +71,6 @@ const ExternalOutboundForm = ({
             disabled={readOnly}
           />
 
-          <MyInput<ExternalOutboundDto>
-            control={form.control}
-            name={"response_reference_number"}
-            label={"6. Kelib tushgan javob raqami"}
-            disabled={readOnly}
-          />
         </div>
 
         {!readOnly && (

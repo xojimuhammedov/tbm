@@ -7,7 +7,7 @@ import { useToast } from "@/shared/hooks/useToast.ts";
 import {
   LOCAL_INBOUND_IMPORT_API,
   LOCAL_INBOUND_QUERY_KEY,
-} from "@/pages/tbp-documents/17-98 local inbound document/constants/local.inbound.constants.ts";
+} from "@/pages/tbp-documents/12-24 local inbound document/constants/local.inbound.constants.ts";
 
 export type FlowImportProps = {
   onSuccess?: () => void;

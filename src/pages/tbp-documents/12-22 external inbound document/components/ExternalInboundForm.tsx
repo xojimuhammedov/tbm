@@ -56,15 +56,8 @@ const ExternalInboundForm = ({
 
           <MyInput<ExternalInboundDto>
             control={form.control}
-            name={"reception_num"}
-            label={"4. Қабулхона рўйхат рақами"}
-            disabled={readOnly}
-          />
-
-          <MyInput<ExternalInboundDto>
-            control={form.control}
             name={"reception_date"}
-            label={"5. Қабулхона рўйхат санаси"}
+            label={"4. Қабулхона рўйхат санаси"}
             type="date"
             disabled={readOnly}
           />
@@ -72,14 +65,14 @@ const ExternalInboundForm = ({
           <MyInput<ExternalInboundDto>
             control={form.control}
             name={"original_num"}
-            label={"6. Хатнинг тартиб рақами"}
+            label={"5. Хатнинг тартиб рақами"}
             disabled={readOnly}
           />
 
           <MyInput<ExternalInboundDto>
             control={form.control}
             name={"original_date"}
-            label={"7. Ҳужжат асл санаси"}
+            label={"6. Ҳужжат асл санаси"}
             type="date"
             disabled={readOnly}
           />
@@ -87,57 +80,42 @@ const ExternalInboundForm = ({
           <MyInput<ExternalInboundDto>
             control={form.control}
             name={"doc_type"}
-            label={"8. Ҳужжат тури"}
+            label={"7. Ҳужжат тури"}
             disabled={readOnly}
           />
 
           <MyInput<ExternalInboundDto>
             control={form.control}
             name={"organization"}
-            label={"9. Юборган ташкилот"}
+            label={"8. Юборган ташкилот"}
             disabled={readOnly}
           />
 
           <MyInput<ExternalInboundDto>
             control={form.control}
             name={"content"}
-            label={"10. Қисқача мазмуни"}
+            label={"9. Қисқача мазмуни"}
             disabled={readOnly}
           />
 
           <MyInput<ExternalInboundDto>
             control={form.control}
             name={"assignee"}
-            label={"11. Ижрочи (кимга)"}
+            label={"10. Ижрочи (кимга)"}
             disabled={readOnly}
           />
 
           <MyInput<ExternalInboundDto>
             control={form.control}
             name={"resolution"}
-            label={"12. Раҳбарият қарори"}
-            disabled={readOnly}
-          />
-
-          <MyInput<ExternalInboundDto>
-            control={form.control}
-            name={"deadline"}
-            label={"13. Ижро муддати"}
-            type="date"
-            disabled={readOnly}
-          />
-
-          <MyInput<ExternalInboundDto>
-            control={form.control}
-            name={"status"}
-            label={"14. Ижро белгиси / Сабаб"}
+            label={"11. Раҳбарият қарори"}
             disabled={readOnly}
           />
 
           <MyInput<ExternalInboundDto>
             control={form.control}
             name={"reply_order_date"}
-            label={"15. Жавоб хати санаси"}
+            label={"12. Жавоб хати санаси"}
             type="date"
             disabled={readOnly}
           />

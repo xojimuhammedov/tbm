@@ -61,22 +61,6 @@ const createExternalInboundColumns = (
       name: t("Ijrochi"),
     },
     {
-      key: "deadline",
-      dataIndex: "deadline",
-      name: t("Muddat"),
-      render: (val) => dateFormatter(val, DATE),
-    },
-    {
-      key: "status",
-      dataIndex: "status",
-      name: t("Holat"),
-      render: (status) => (
-        <span className={`status-badge status-${status}`}>
-          {status ? t(status.charAt(0).toUpperCase() + status.slice(1)) : ""}
-        </span>
-      ),
-    },
-    {
       key: "_id",
       dataIndex: "_id",
       name: t(""),

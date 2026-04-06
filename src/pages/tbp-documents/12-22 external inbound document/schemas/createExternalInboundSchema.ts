@@ -24,12 +24,6 @@ export const createExternalInboundSchema = (
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    reception_num: z.string().nonempty(
-      t("required {{field}}", {
-        field: t("Reception number"),
-        ns: config.LANG.NS.VALIDATION,
-      }),
-    ),
     reception_date: z.string().nonempty(
       t("required {{field}}", {
         field: t("Reception date"),
@@ -78,18 +72,6 @@ export const createExternalInboundSchema = (
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    deadline: z.string().nonempty(
-      t("required {{field}}", {
-        field: t("Deadline"),
-        ns: config.LANG.NS.VALIDATION,
-      }),
-    ),
-    status: z.enum(["pending", "completed", "in_process", "rejected"], {
-      required_error: t("required {{field}}", {
-        field: t("Status"),
-        ns: config.LANG.NS.VALIDATION,
-      }),
-    }),
     reply_order_date: z.string().nullable().optional(),
   });
 

@@ -61,12 +61,6 @@ const createExternalOutboundColumns = (
       name: t("Qisqacha mazmuni"),
     },
     {
-      key: "response_reference_number",
-      dataIndex: "response_reference_number",
-      name: t("Javob xati raqami"),
-      render: (value) => value || t("-"),
-    },
-    {
       key: "_id",
       dataIndex: "_id",
       name: t("Amallar"),

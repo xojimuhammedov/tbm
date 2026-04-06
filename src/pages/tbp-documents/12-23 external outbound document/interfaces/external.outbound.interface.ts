@@ -5,6 +5,5 @@ export interface ExternalOutboundInterface {
   external_out_doc_number: string;
   recipient: string;
   summary: string;
-  response_reference_number: string | null;
   external_inbound_id: string;
 }
