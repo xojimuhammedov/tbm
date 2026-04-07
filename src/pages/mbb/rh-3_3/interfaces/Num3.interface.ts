@@ -1,10 +1,9 @@
 export interface Num3ApplicationInterface {
   _id: string;
   id: string;
-  action_type: string[];
-  ap_input: string;
-  ubp_input: string;
-  request_number: string;
+  code: string;
+  title: string;
+  signer: string;
   created_at: string;
   data: OrderData[];
 }
@@ -12,9 +11,9 @@ export interface Num3ApplicationInterface {
 export interface OrderData {
   _id: string;
   order_code: string;
-  execution_status: "completed" | "pending" | "failed" | string;
+  assigned_time: string;
+  completed_time: string;
   responsible_executor: string;
   customer_details: string;
-  failure_reason: string;
   comment: string;
 }

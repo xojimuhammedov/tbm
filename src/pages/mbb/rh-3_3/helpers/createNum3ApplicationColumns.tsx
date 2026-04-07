@@ -1,21 +1,8 @@
 import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
-import { Badge } from "dgz-ui/badge";
 import { EditIcon, EyeIcon, Trash2Icon } from "lucide-react";
 import { MyTooltip } from "@/shared/components/atoms/tooltip";
 import { Num3ApplicationInterface } from "../interfaces/Num3.interface";
 
-const getActionVariant = (type: string) => {
-  switch (type) {
-    case "create":
-      return "green-outlined" as const;
-    case "update":
-      return "blue-outlined" as const;
-    case "delete":
-      return "red-outlined" as const;
-    default:
-      return "gray-outlined" as const;
-  }
-};
 
 const createNum3ApplicationColumns = (
   t: (...args: TranslationArgsType) => string,
@@ -24,38 +11,20 @@ const createNum3ApplicationColumns = (
   handleView: (id: string) => void,
 ): ColumnType<Num3ApplicationInterface>[] => [
   {
-    key: "request_number",
-    dataIndex: "request_number",
+    key: "code",
+    dataIndex: "code",
     name: t("So'rov raqami"),
     render: (value) => <span className="font-medium">{value}</span>,
   },
   {
-    key: "ap_input",
-    dataIndex: "ap_input",
+    key: "title",
+    dataIndex: "title",
     name: t("Yuboruvchi"),
   },
   {
-    key: "ubp_input",
-    dataIndex: "ubp_input",
+    key: "signer",
+    dataIndex: "signer",
     name: t("Qabul qiluvchi"),
-  },
-  {
-    key: "action_type",
-    dataIndex: "action_type",
-    name: t("Harakat turi"),
-    render: (types) => (
-      <div className="flex flex-wrap gap-1">
-        {Array.isArray(types) ? (
-          types.map((type) => (
-            <Badge key={type} variant={getActionVariant(type)}>
-              {type}
-            </Badge>
-          ))
-        ) : (
-          <Badge variant="gray-outlined">{types}</Badge>
-        )}
-      </div>
-    ),
   },
   {
     key: "actions",

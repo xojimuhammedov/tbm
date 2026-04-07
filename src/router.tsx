@@ -233,8 +233,6 @@ const HujjatlarFormPage = lazy(
   () => import("@/pages/tbp/hujjatlar/pages/FormPage"),
 );
 
-const RH3_3Page = lazy(() => import("@/pages/rh-252/rh-3_3/Page"));
-const RH3_3FormPage = lazy(() => import("@/pages/rh-252/rh-3_3/page/FormPage"));
 const RH_CDocument = lazy(() => import("@/pages/rh-252/c-252/Page"));
 const RH_CFormDocument = lazy(
   () => import("@/pages/rh-252/c-252/page/FormPage"),
@@ -276,6 +274,11 @@ const HujjatlarniImzolashPage = lazy(
 const HujjatlarniImzolashFormPage = lazy(
   () => import("@/pages/hujjatlarni-imzolash/pages/FormPage"),
 );
+
+
+// MBB page
+const RH3_3Page = lazy(() => import("@/pages/mbb/rh-3_3/Page"));
+const RH3_3FormPage = lazy(() => import("@/pages/mbb/rh-3_3/page/FormPage"));
 
 function Router() {
   const routes: RouteObject[] = [
@@ -1318,18 +1321,26 @@ function Router() {
           ),
         },
         {
-          path: "rh-252/rh-3_3",
+          path: "mbb/rh-3_3",
           element: (
-            <HasAccess roles={["admin", "superadmin"]}>
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
               <RH3_3Page />
             </HasAccess>
           ),
         },
         {
-          path: "rh-252/rh-3_3/create",
+          path: "mbb/rh-3_3/create",
           element: (
-            <HasAccess roles={["admin", "superadmin"]}>
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
               <RH3_3FormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-imzolanadigan-hujjatlar",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <HujjatlarniImzolashPage />
             </HasAccess>
           ),
         },

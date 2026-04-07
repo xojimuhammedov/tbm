@@ -24,7 +24,7 @@ const BApplicationDocumentView = ({
 
   const handlePrint = useReactToPrint({
     contentRef: contentRef,
-    documentTitle: `Hujjat_${document?.request_number || "3-3-shakl"}`,
+    documentTitle: `Hujjat_${document?.code || "3-3-shakl"}`,
   });
 
   return (
@@ -86,7 +86,7 @@ const BApplicationDocumentView = ({
             </p>
             <p className="mt-4 uppercase text-[16px]">
               <span className="inline-block border-b-2 border-black px-4 min-w-[120px] font-bold">
-                {document?.request_number || "_________"}
+                {document?.code || "_________"}
               </span>{" "}
               -son MA’LUMOT
             </p>
@@ -123,7 +123,7 @@ const BApplicationDocumentView = ({
                 <tr className="h-14 text-center">
                   <td className="border-[1.5px] border-black">1</td>
                   <td className="border-[1.5px] border-black font-medium">
-                    {document?.request_number} <br />
+                    {document?.code} <br />
                     {document?.created_at
                       ? dateFormatter(document.created_at, DATE)
                       : ""}
@@ -137,10 +137,10 @@ const BApplicationDocumentView = ({
                     Bajarildi
                   </td>
                   <td className="border-[1.5px] border-black font-semibold uppercase">
-                    {document?.ap_input}
+                    {document?.signer}
                   </td>
                   <td className="border-[1.5px] border-black font-semibold uppercase">
-                    {document?.ubp_input}
+                    {document?.title}
                   </td>
                   <td className="border-[1.5px] border-black">-</td>
                   <td className="border-[1.5px] border-black">-</td>
@@ -176,7 +176,7 @@ const BApplicationDocumentView = ({
               <span className="font-bold">1.</span>
               <div className="flex-1 flex flex-col">
                 <div className="min-h-[24px] px-2 font-bold text-[15px] italic uppercase">
-                  {document?.ap_input}
+                  {document?.signer}
                 </div>
                 <div className="border-t-2 border-black"></div>
                 <div className="text-[11px] text-center pt-1 italic font-medium text-gray-700">
@@ -188,7 +188,7 @@ const BApplicationDocumentView = ({
               <span className="font-bold">2.</span>
               <div className="flex-1 flex flex-col">
                 <div className="min-h-[24px] px-2 font-bold text-[15px] italic uppercase">
-                  {document?.ubp_input}
+                  {document?.title}
                 </div>
                 <div className="border-t-2 border-black"></div>
                 <div className="text-[11px] text-center pt-1 italic font-medium text-gray-700">

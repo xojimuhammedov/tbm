@@ -1,18 +1,19 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import dayjs from "dayjs";
 import useMutate from "@/shared/hooks/api/useMutate.ts";
 import { MutateRequestMethod } from "@/shared/enums/MutateRequestMethod.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
-import useApplicationDocumentB from "@/pages/rh-252/rh-3_3/hooks/useBApplication.ts";
+import useApplicationDocumentB from "@/pages/mbb/rh-3_3/hooks/useBApplication.ts";
 import {
   createNum3ApplicationSchema,
   Num3ApplicationDto,
-} from "@/pages/rh-252/rh-3_3/schemas/createNum3ApplicationSchema.ts";
+} from "@/pages/mbb/rh-3_3/schemas/createNum3ApplicationSchema.ts";
 import URLS from "@/shared/constants/urls.ts";
 
 export interface Num3ApplicationFormProps {
@@ -29,30 +30,20 @@ const useNum3ApplicationForm = ({
   const navigate = useNavigate();
   const { applicationDocumentQuery } = useApplicationDocumentB(id as string);
 
-  const actionOptions = useMemo(
-    () => [
-      { label: t("Tashkil etish"), value: "create" },
-      { label: t("Ko'chirish"), value: "update" },
-      { label: t("O'chirish"), value: "delete" },
-    ],
-    [t],
-  );
-
   const form = useForm<Num3ApplicationDto>({
     resolver: zodResolver(createNum3ApplicationSchema(t)),
     mode: "onChange",
     defaultValues: {
-      request_number: "",
-      ap_input: "",
-      ubp_input: "",
-      action_type: [],
+      code: "",
+      title: "",
+      signer: "",
       data: [
         {
           order_code: "",
-          execution_status: "",
+          assigned_time: "",
+          completed_time: "",
           responsible_executor: "",
           customer_details: "",
-          failure_reason: "",
           comment: "",
         },
       ],
@@ -67,20 +58,19 @@ const useNum3ApplicationForm = ({
     const item = applicationDocumentQuery.data?.data;
     if (item && id) {
       form.reset({
-        request_number: item.request_number || "",
-        ap_input: item.ap_input || "",
-        ubp_input: item.ubp_input || "",
-        action_type: item.action_type || [],
+        code: item.code || "",
+        title: item.title || "",
+        signer: item.signer || "",
         data:
           item.data?.length > 0
             ? item.data
             : [
                 {
                   order_code: "",
-                  execution_status: "",
+                  assigned_time: "",
+                  completed_time: "",
                   responsible_executor: "",
                   customer_details: "",
-                  failure_reason: "",
                   comment: "",
                 },
               ],
@@ -102,7 +92,7 @@ const useNum3ApplicationForm = ({
             : t("Application created successfully"),
         });
         onSave?.();
-        navigate("/rh-252/rh-3_3");
+        navigate("/mbb/rh-3_3");
       },
       onError: (error: unknown) => {
         const axiosError = error as AxiosError<{ message?: string }>;
@@ -121,10 +111,10 @@ const useNum3ApplicationForm = ({
   const handleAppend = useCallback(() => {
     append({
       order_code: "",
-      execution_status: "",
+      assigned_time: "",
+      completed_time: "",
       responsible_executor: "",
       customer_details: "",
-      failure_reason: "",
       comment: "",
     });
   }, [append]);
@@ -140,7 +130,19 @@ const useNum3ApplicationForm = ({
 
   const onSubmit = useCallback(
     (values: Num3ApplicationDto) => {
-      save.mutate(values);
+      const formattedValues = {
+        ...values,
+        data: values.data?.map(item => ({
+          ...item,
+          assigned_time: item.assigned_time instanceof Date 
+            ? dayjs(item.assigned_time).format('DD.MM.YYYY')
+            : item.assigned_time,
+          completed_time: item.completed_time instanceof Date 
+            ? dayjs(item.completed_time).format('DD.MM.YYYY')
+            : item.completed_time
+        }))
+      };
+      save.mutate(formattedValues);
     },
     [save],
   );
@@ -148,7 +150,6 @@ const useNum3ApplicationForm = ({
   return {
     form,
     fields,
-    actionOptions,
     isLoading: save.isPending || applicationDocumentQuery.isFetching,
     handleAppend,
     handleRemove,

@@ -3,13 +3,13 @@ import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { get } from "lodash";
-import { Num3ApplicationInterface } from "@/pages/rh-252/rh-3_3/interfaces/Num3.interface.ts";
+import { Num3ApplicationInterface } from "@/pages/mbb/rh-3_3/interfaces/Num3.interface.ts";
 import useLists from "@/shared/hooks/useLists.ts";
 import useDelete from "@/shared/hooks/api/useDelete.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import KEYS from "@/shared/constants/keys";
-import createNum3ApplicationColumns from "@/pages/rh-252/rh-3_3/helpers/createNum3ApplicationColumns.tsx";
-import useApplicationDocumentB from "@/pages/rh-252/rh-3_3/hooks/useBApplication.ts";
+import createNum3ApplicationColumns from "@/pages/mbb/rh-3_3/helpers/createNum3ApplicationColumns.tsx";
+import useApplicationDocumentB from "@/pages/mbb/rh-3_3/hooks/useBApplication.ts";
 import URLS from "@/shared/constants/urls.ts";
 
 const useNum3Application = () => {
@@ -27,11 +27,11 @@ const useNum3Application = () => {
     viewId as string,
   );
   const handleAdd = useCallback(() => {
-    navigate("/rh-252/rh-3_3/create");
+    navigate("/mbb/rh-3_3/create");
   }, [navigate]);
   const handleEdit = useCallback(
     (id: string) => {
-      navigate(`/rh-252/rh-3_3/edit/${id}`);
+      navigate(`/mbb/rh-3_3/edit/${id}`);
     },
     [navigate],
   );

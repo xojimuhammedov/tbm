@@ -1,7 +1,7 @@
 import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 import KEYS from "@/shared/constants/keys";
 import URLS from "@/shared/constants/urls";
-import { Num3ApplicationInterface } from "@/pages/rh-252/rh-3_3/interfaces/Num3.interface.ts";
+import { Num3ApplicationInterface } from "@/pages/mbb/rh-3_3/interfaces/Num3.interface.ts";
 
 const useApplicationDocumentB = (id: string) => {
   const applicationDocumentQuery = useGetOne<{

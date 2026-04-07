@@ -9,8 +9,8 @@ import { Button } from "dgz-ui/button";
 import { CirclePlusIcon } from "lucide-react";
 import KEYS from "@/shared/constants/keys";
 import { Num3ApplicationInterface } from "./interfaces/Num3.interface";
-import useNum3Application from "@/pages/rh-252/rh-3_3/hooks/useNum3Application.ts";
-import BApplicationDocumentView from "@/pages/rh-252/rh-3_3/components/B-ApplicationDocumentView.tsx";
+import useNum3Application from "@/pages/mbb/rh-3_3/hooks/useNum3Application.ts";
+import BApplicationDocumentView from "@/pages/mbb/rh-3_3/components/B-ApplicationDocumentView.tsx";
 
 const Num3ApplicationPage = () => {
   const { t } = useTranslation();
@@ -30,12 +30,12 @@ const Num3ApplicationPage = () => {
     () => [
       {
         name: t("RH-252"),
-        path: "/rh-252",
+        path: "/mbb/rh-3_3",
         isActive: false,
       },
       {
         name: t("3.3 Application"),
-        path: "/rh-252/3.3",
+        path: "/mbb/rh-3_3",
         isActive: true,
       },
     ],

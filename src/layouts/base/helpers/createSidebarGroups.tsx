@@ -121,12 +121,6 @@ const createSidebarGroups = (
   {
     title: t("NM information"),
     items: [
-      // {
-      //   title: t("Documents received"),
-      //   url: "received-documents",
-      //   icon: Download,
-      //   isActive: isActive("received-documents"),
-      // },
       {
         title: t("RTSI"),
         url: "rtsi",
@@ -320,6 +314,29 @@ const createSidebarGroups = (
       },
     ],
   },
+   {
+    title: t("MBB hujjatlari"),
+    items: [
+      {
+        title: t("MBB"),
+        url: "mbb",
+        icon: ChartBarBig,
+        isActive: isActive("mbb"),
+        children: [
+          {
+            title: t("Hujjatlar"),
+            url: "rh-3_3",
+            roles: ["admin", "mbb", "superadmin"],
+          },
+          {
+            title: t("Imzolanadigan hujjatlar"),
+            url: "mbb-imzolanadigan-hujjatlar",
+            roles: ["admin", "mbb", "superadmin"],
+          },
+        ],
+      },
+    ],
+  },
   // {
   //   title: t("NM information"),
   //   items: [
@@ -408,41 +425,6 @@ const createSidebarGroups = (
       },
     ],
   },
-  // {
-  //   title: t("Resource Database"),
-  //   items: [
-  //     {
-  //       title: t("Channels(5_3)"),
-  //       url: "channels-5_3",
-  //       icon: Database,
-  //       isActive: isActive("channels-5_3"),
-  //     },
-  //     {
-  //       title: t("Channels ID"),
-  //       url: "channels-id",
-  //       icon: Database,
-  //       isActive: isActive("channels-id"),
-  //     },
-  //     {
-  //       title: t("Flows(5_1)"),
-  //       url: "flows-5_1",
-  //       icon: Database,
-  //       isActive: isActive("flows-5_1"),
-  //     },
-  //     {
-  //       title: t("Flows ID"),
-  //       url: "flows-id",
-  //       icon: Database,
-  //       isActive: isActive("flows-id"),
-  //     },
-  //     {
-  //       title: t("Card index"),
-  //       url: "card-indexes",
-  //       icon: Database,
-  //       isActive: isActive("card-indexes"),
-  //     },
-  //   ],
-  // },
   {
     title: t("Administration"),
     items: [
