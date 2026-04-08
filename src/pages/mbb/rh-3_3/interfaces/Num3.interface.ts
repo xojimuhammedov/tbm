@@ -3,9 +3,11 @@ export interface Num3ApplicationInterface {
   id: string;
   code: string;
   title: string;
-  signer: string;
+  signer: any;
   created_at: string;
+  created_by: any;
   data: OrderData[];
+  pdf_path?: string;
 }
 
 export interface OrderData {

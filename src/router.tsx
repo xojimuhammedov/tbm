@@ -275,6 +275,13 @@ const HujjatlarniImzolashFormPage = lazy(
   () => import("@/pages/hujjatlarni-imzolash/pages/FormPage"),
 );
 
+const MbbHujjatlarniImzolashPage = lazy(
+  () => import("@/pages/mbb/hujjatlarni-imzolash/Page"),
+);
+const MbbHujjatlarniImzolashFormPage = lazy(
+  () => import("@/pages/mbb/hujjatlarni-imzolash/pages/FormPage"),
+);
+
 
 // MBB page
 const RH3_3Page = lazy(() => import("@/pages/mbb/rh-3_3/Page"));
@@ -1340,7 +1347,15 @@ function Router() {
           path: "mbb/mbb-imzolanadigan-hujjatlar",
           element: (
             <HasAccess roles={["admin", "mbb", "superadmin"]}>
-              <HujjatlarniImzolashPage />
+              <MbbHujjatlarniImzolashPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-imzolanadigan-hujjatlar/:id/shared/:sharedId",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <MbbHujjatlarniImzolashFormPage />
             </HasAccess>
           ),
         },

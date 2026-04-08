@@ -19,12 +19,19 @@ const createNum3ApplicationColumns = (
   {
     key: "title",
     dataIndex: "title",
-    name: t("Yuboruvchi"),
+    name: t("Hujjat sarlavhasi"),
   },
   {
     key: "signer",
     dataIndex: "signer",
     name: t("Qabul qiluvchi"),
+    render: (signer: any) => `${signer?.first_name} ${signer?.second_name} ${signer?.middle_name}`,
+  },
+  {
+    key: "created_by",
+    dataIndex: "created_by",
+    name: t("Yuboruvchi"),
+    render: (created_by: any) => `${created_by?.first_name} ${created_by?.second_name} ${created_by?.middle_name}`,
   },
   {
     key: "actions",
