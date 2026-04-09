@@ -63,7 +63,7 @@ const useListSocket = (onView?: (record: any) => void): UseListSocketReturn => {
 
   const { data, isLoading, refetch } = useGetAllQuery<any>({
     key: "hujjatlarni-imzolash-list",
-    url: "/api/rh-252/b-app",
+    url: "/api/rh-252/share/my-shared",
     params: {
       ...params,
       type: "SIGNING",

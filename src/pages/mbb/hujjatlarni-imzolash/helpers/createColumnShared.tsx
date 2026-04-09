@@ -81,24 +81,14 @@ const createSharedColumns = (
   handleView: (record: SharedItemInterface) => void,
 ): ColumnType<SharedItemInterface>[] => [
   {
-    key: "code",
-    dataIndex: "code",
+    key: "document_id",
+    dataIndex: "document_id",
     name: t("Hujjat", { defaultValue: "Hujjat" }),
-    render: (_, record: any) => record?.code || "-",
+    render: (_, record: any) => record?.document_id?.code || "-",
   },
   {
-    key: "title",
-    dataIndex: "title",
-    name: t("Turi", { defaultValue: "Turi" }),
-    render: (_, record: any) => (
-      <span className="text-gray-600">
-        {record?.title || "-"}
-      </span>
-    ),
-  },
-  {
-    key: "stage",
-    dataIndex: "stage",
+    key: "stages",
+    dataIndex: "stages",
     name: t("Bosqich", { defaultValue: "Bosqich" }),
     render: (value: string | undefined) => renderStage(value),
   },
@@ -108,16 +98,16 @@ const createSharedColumns = (
     name: t("Holat", { defaultValue: "Holat" }),
     render: (value: string | undefined) => renderStatus(value),
   },
-  {
-    key: "signer",
-    dataIndex: "signer",
-    name: t("Imzolovchi", { defaultValue: "Imzolovchi" }),
-    render: (_, record: any) => (
-      <span className="text-gray-600">
-        {record?.signer?.first_name} {record?.signer?.second_name} {record?.signer?.middle_name}
-      </span>
-    ),
-  },
+  // {
+  //   key: "signer",
+  //   dataIndex: "signer",
+  //   name: t("Imzolovchi", { defaultValue: "Imzolovchi" }),
+  //   render: (_, record: any) => (
+  //     <span className="text-gray-600">
+  //       {record?.signer?.first_name} {record?.signer?.second_name} {record?.signer?.middle_name}
+  //     </span>
+  //   ),
+  // },
   {
     key: "actions",
     dataIndex: "document_id",

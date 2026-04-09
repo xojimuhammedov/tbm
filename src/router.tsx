@@ -287,6 +287,9 @@ const MbbHujjatlarniImzolashFormPage = lazy(
 const RH3_3Page = lazy(() => import("@/pages/mbb/rh-3_3/Page"));
 const RH3_3FormPage = lazy(() => import("@/pages/mbb/rh-3_3/page/FormPage"));
 
+const TalabnomaPage = lazy(() => import("@/pages/mbb/talabnoma/Page"));
+const TalabnomaFormPage = lazy(() => import("@/pages/mbb/talabnoma/page/FormPage"));
+
 function Router() {
   const routes: RouteObject[] = [
     {
@@ -1340,6 +1343,30 @@ function Router() {
           element: (
             <HasAccess roles={["admin", "mbb", "superadmin"]}>
               <RH3_3FormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/talabnoma",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TalabnomaPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/talabnoma/create",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TalabnomaFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/talabnoma/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TalabnomaFormPage />
             </HasAccess>
           ),
         },

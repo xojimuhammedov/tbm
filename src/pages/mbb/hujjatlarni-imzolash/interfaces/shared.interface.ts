@@ -17,5 +17,6 @@ export interface SharedItemInterface {
   title?: string;
   signature?: any;
   stage?: DocumentStage | string;
+  stages?: any;
   code?: string;
 }

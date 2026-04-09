@@ -1,11 +1,12 @@
 const URLS = {
   RH_D_Application: "rh-252/d-app",
   RH_F_Application: "rh-252/f-app",
-  RH_B_Application: "rh-252/b-app",
+  RH_B_Application: "memo",
   RH_Order_Application: "rh-252/orderv2",
   TBP_Order_Application: "order-12",
   RH_Order_Application_Check: "rh-252/order/check",
   // RH-231
   RH_231_Application: "rh-231/a-app",
+  MBB_Talabnoma: "requistion",
 };
 export default URLS;

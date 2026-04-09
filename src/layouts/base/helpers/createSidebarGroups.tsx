@@ -328,6 +328,11 @@ const createSidebarGroups = (
             url: "rh-3_3",
             roles: ["admin", "mbb", "superadmin"],
           },
+           {
+            title: t("Talabnoma"),
+            url: "talabnoma",
+            roles: ["admin", "mbb", "superadmin"],
+          },
           {
             title: t("Imzolanadigan hujjatlar"),
             url: "mbb-imzolanadigan-hujjatlar",
