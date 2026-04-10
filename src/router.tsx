@@ -71,18 +71,39 @@ const OutgoingFormPage = lazy(
   () => import("@/pages/Journals/outgoing/pages/FormPage.tsx"),
 );
 
-const OrdersTbpPage = lazy(() => import("@/pages/tbp-documents/17-96 external inbound document/Page.tsx"));
-const OrdersTbpFormPage = lazy(() => import("@/pages/tbp-documents/17-96 external inbound document/pages/FormPage.tsx"));
+const OrdersTbpPage = lazy(
+  () =>
+    import("@/pages/tbp-documents/12-22 external inbound document/Page.tsx"),
+);
+const OrdersTbpFormPage = lazy(
+  () =>
+    import("@/pages/tbp-documents/12-22 external inbound document/pages/FormPage.tsx"),
+);
 
-const DecreesTbpPage = lazy(() => import("@/pages/tbp-documents/17-97 external outbound document/Page.tsx"));
-const DecreesTbpFormPage = lazy(() => import("@/pages/tbp-documents/17-97 external outbound document/pages/FormPage.tsx"));
+const DecreesTbpPage = lazy(
+  () =>
+    import("@/pages/tbp-documents/12-23 external outbound document/Page.tsx"),
+);
+const DecreesTbpFormPage = lazy(
+  () =>
+    import("@/pages/tbp-documents/12-23 external outbound document/pages/FormPage.tsx"),
+);
 
-const NotifyTbpPage = lazy(() => import("@/pages/tbp-documents/17-98 local inbound document/Page.tsx"));
-const NotifyTbpFormPage = lazy(() => import("@/pages/tbp-documents/17-98 local inbound document/pages/FormPage.tsx"));
+const NotifyTbpPage = lazy(
+  () => import("@/pages/tbp-documents/12-24 local inbound document/Page.tsx"),
+);
+const NotifyTbpFormPage = lazy(
+  () =>
+    import("@/pages/tbp-documents/12-24 local inbound document/pages/FormPage.tsx"),
+);
 
-const OutgoingTbpPage = lazy(() => import("@/pages/tbp-documents/17-99 local outbound document/Page.tsx"));
-const OutgoingTbpFormPage = lazy(() => import("@/pages/tbp-documents/17-99 local outbound document/pages/FormPage.tsx"));
-
+const OutgoingTbpPage = lazy(
+  () => import("@/pages/tbp-documents/12-25 local outbound document/Page.tsx"),
+);
+const OutgoingTbpFormPage = lazy(
+  () =>
+    import("@/pages/tbp-documents/12-25 local outbound document/pages/FormPage.tsx"),
+);
 
 const JournalsOrdersRoute = () => {
   const { me } = useUserStore();
@@ -212,8 +233,6 @@ const HujjatlarFormPage = lazy(
   () => import("@/pages/tbp/hujjatlar/pages/FormPage"),
 );
 
-const RH3_3Page = lazy(() => import("@/pages/rh-252/rh-3_3/Page"));
-const RH3_3FormPage = lazy(() => import("@/pages/rh-252/rh-3_3/page/FormPage"));
 const RH_CDocument = lazy(() => import("@/pages/rh-252/c-252/Page"));
 const RH_CFormDocument = lazy(
   () => import("@/pages/rh-252/c-252/page/FormPage"),
@@ -255,6 +274,21 @@ const HujjatlarniImzolashPage = lazy(
 const HujjatlarniImzolashFormPage = lazy(
   () => import("@/pages/hujjatlarni-imzolash/pages/FormPage"),
 );
+
+const MbbHujjatlarniImzolashPage = lazy(
+  () => import("@/pages/mbb/hujjatlarni-imzolash/Page"),
+);
+const MbbHujjatlarniImzolashFormPage = lazy(
+  () => import("@/pages/mbb/hujjatlarni-imzolash/pages/FormPage"),
+);
+
+
+// MBB page
+const RH3_3Page = lazy(() => import("@/pages/mbb/rh-3_3/Page"));
+const RH3_3FormPage = lazy(() => import("@/pages/mbb/rh-3_3/page/FormPage"));
+
+const TalabnomaPage = lazy(() => import("@/pages/mbb/talabnoma/Page"));
+const TalabnomaFormPage = lazy(() => import("@/pages/mbb/talabnoma/page/FormPage"));
 
 function Router() {
   const routes: RouteObject[] = [
@@ -1297,18 +1331,58 @@ function Router() {
           ),
         },
         {
-          path: "rh-252/rh-3_3",
+          path: "mbb/rh-3_3",
           element: (
-            <HasAccess roles={["admin", "superadmin"]}>
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
               <RH3_3Page />
             </HasAccess>
           ),
         },
         {
-          path: "rh-252/rh-3_3/create",
+          path: "mbb/rh-3_3/create",
           element: (
-            <HasAccess roles={["admin", "superadmin"]}>
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
               <RH3_3FormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/talabnoma",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TalabnomaPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/talabnoma/create",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TalabnomaFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/talabnoma/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TalabnomaFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-imzolanadigan-hujjatlar",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <MbbHujjatlarniImzolashPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-imzolanadigan-hujjatlar/:id/shared/:sharedId",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <MbbHujjatlarniImzolashFormPage />
             </HasAccess>
           ),
         },

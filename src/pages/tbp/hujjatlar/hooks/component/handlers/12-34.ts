@@ -66,7 +66,8 @@ const h1234: Handler = {
           start_time: formatToISO(data.payload.basic.start_time),
           end_time: formatToISO(data.payload.basic.end_time),
           context: data.payload.basic.context || null,
-          base_file: data.payload.file_name || data.payload?.basic?.base_file || "",
+          base_file:
+            data.payload.file_name || data.payload?.basic?.base_file || "",
         },
         flow_ids: data.payload.flow_ids || [],
       },

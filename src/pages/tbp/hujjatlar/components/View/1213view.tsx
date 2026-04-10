@@ -105,8 +105,7 @@ const OrderView1213 = ({
           {basic?.start_time
             ? `${formatDate(basic.start_time)} yil ${new Date(basic.start_time).toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit", hour12: false })}`
             : "____"}{" "}
-          dan {basic?.orientation || ""}{" "}
-          {basic?.context || ""}
+          dan {basic?.orientation || ""} {basic?.context || ""}
         </p>
 
         {consumers.length > 0 && (

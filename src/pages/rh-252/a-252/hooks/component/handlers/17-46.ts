@@ -19,8 +19,14 @@ const h1746: Handler = {
     );
     form.setValue("payload.basic.base_file", basic.base_file ?? "");
 
-    form.setValue("payload.flow_ids", safeArray(payload.flow_ids).map((v: any) => ({ value: v })));
-    form.setValue("payload.channels", safeArray(payload.channels).map((v: any) => ({ value: v })));
+    form.setValue(
+      "payload.flow_ids",
+      safeArray(payload.flow_ids).map((v: any) => ({ value: v })),
+    );
+    form.setValue(
+      "payload.channels",
+      safeArray(payload.channels).map((v: any) => ({ value: v })),
+    );
   },
 
   build: (data, ctx) => {
@@ -41,10 +47,10 @@ const h1746: Handler = {
           base_file: data.payload.basic.base_file || data.payload.file_name,
         },
         flow_ids: safeArray(data.payload.flow_ids)
-          .map((item: any) => typeof item === "string" ? item : item?.value)
+          .map((item: any) => (typeof item === "string" ? item : item?.value))
           .filter(Boolean),
         channels: safeArray(data.payload.channels)
-          .map((item: any) => typeof item === "string" ? item : item?.value)
+          .map((item: any) => (typeof item === "string" ? item : item?.value))
           .filter(Boolean),
       },
     };

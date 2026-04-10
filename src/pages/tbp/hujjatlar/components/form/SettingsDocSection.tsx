@@ -34,7 +34,9 @@ interface ValidationStates {
 const SettingsDocSection = ({ control, setValue }: SettingsDocSectionProps) => {
   const [showJumladan, setShowJumladan] = useState(false);
   const [showFlows, setShowFlows] = useState(false);
-  const [validationStates, setValidationStates] = useState<ValidationStates>({});
+  const [validationStates, setValidationStates] = useState<ValidationStates>(
+    {},
+  );
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -110,7 +112,9 @@ const SettingsDocSection = ({ control, setValue }: SettingsDocSectionProps) => {
         <MyInput
           name="payload.basic.title"
           control={control}
-          placeholder={"Rejadan tashqari ta’mirlash-sozlash ishlari to‘g‘risida"}
+          placeholder={
+            "Rejadan tashqari ta’mirlash-sozlash ishlari to‘g‘risida"
+          }
           className="border border-t-0 border-l-0 border-r-0 rounded-none text-center font-bold"
         />
         <div className="text-gray-800 leading-relaxed text-justify p-4">
@@ -251,12 +255,13 @@ const SettingsDocSection = ({ control, setValue }: SettingsDocSectionProps) => {
                 return (
                   <div
                     key={field.id}
-                    className={`flex items-center gap-2 p-2 bg-white border rounded-lg shadow-sm transition-colors ${status === "valid"
+                    className={`flex items-center gap-2 p-2 bg-white border rounded-lg shadow-sm transition-colors ${
+                      status === "valid"
                         ? "border-green-300 bg-green-50"
                         : status === "invalid"
                           ? "border-red-300 bg-red-50"
                           : "border-gray-200 hover:border-blue-300"
-                      }`}
+                    }`}
                   >
                     <div className="bg-gray-100 text-gray-500 text-xs font-mono px-2 py-1 rounded">
                       {index + 1}.

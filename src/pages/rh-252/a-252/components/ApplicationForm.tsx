@@ -376,9 +376,7 @@ const ApplicationDocumentForm = () => {
 
               {/* Form 17-46 ha xos bo'lgan qism */}
               {isBlockActionMode && (
-                <BlockActionSection
-                  control={form.control}
-                />
+                <BlockActionSection control={form.control} />
               )}
 
               <div className={"mb-5 mt-5"}>
