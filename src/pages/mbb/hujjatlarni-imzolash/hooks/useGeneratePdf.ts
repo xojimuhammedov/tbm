@@ -1,11 +1,19 @@
 import { useState } from "react";
 
-const useGeneratePdf = () => {
+const useGeneratePdf = (docModel?: string) => {
   const [isGenerating, setIsGenerating] = useState(false);
   
-  const generatePdf = async (pdfPath: string): Promise<string> => {
+  const generatePdf = async (idToUse: string, pdfPath: string): Promise<string> => {
     try {
       setIsGenerating(true);
+      
+      if (docModel === "Requisition" || docModel === "Memo") {
+        const endpoint = docModel === "Requisition" ? "requistion" : "memo";
+        const url = `/api/${endpoint}/generate-pdf/${idToUse}`;
+        await new Promise(resolve => setTimeout(resolve, 300));
+        return url;
+      }
+
       // "uploads/" yoki "uploads/temp/" bo'lsa tozalab olamiz
       const cleanPath = pdfPath.replace(/^(uploads\/temp\/|uploads\/)/, "");
 

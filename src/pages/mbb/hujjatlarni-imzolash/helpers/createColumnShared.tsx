@@ -14,7 +14,8 @@ const renderStage = (status: string | undefined) => {
 
   if (status === "DONE") {
     label = "Yakunlangan";
-    colorClass = "bg-emerald-100 text-emerald-700";
+    label = "Yangi";
+    colorClass = "bg-purple-100 text-purple-700";    colorClass = "bg-emerald-100 text-emerald-700";
   } else if (status === "SIGNING") {
     label = "Imzolanmoqda";
     colorClass = "bg-amber-100 text-amber-700";
@@ -22,8 +23,7 @@ const renderStage = (status: string | undefined) => {
     label = "Kelishilmoqda";
     colorClass = "bg-blue-100 text-blue-700";
   } else if (status === "DRAFT") {
-    label = "Yangi";
-    colorClass = "bg-purple-100 text-purple-700";
+
   }
 
   return (
@@ -98,16 +98,6 @@ const createSharedColumns = (
     name: t("Holat", { defaultValue: "Holat" }),
     render: (value: string | undefined) => renderStatus(value),
   },
-  // {
-  //   key: "signer",
-  //   dataIndex: "signer",
-  //   name: t("Imzolovchi", { defaultValue: "Imzolovchi" }),
-  //   render: (_, record: any) => (
-  //     <span className="text-gray-600">
-  //       {record?.signer?.first_name} {record?.signer?.second_name} {record?.signer?.middle_name}
-  //     </span>
-  //   ),
-  // },
   {
     key: "actions",
     dataIndex: "document_id",

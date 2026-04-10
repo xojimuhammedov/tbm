@@ -108,8 +108,7 @@ const useEImzoSign = (documentId: string, pdfPath?: string) => {
 
   const preloadPdf = useCallback(async () => {
     try {
-      const pdfToUse = pdfPath || documentId;
-      const pdfName = await generatePdf(pdfToUse);
+      const pdfName = await generatePdf(documentId, pdfPath || "");
       // useGeneratePdf returns full URL now
       setPdfUrl(pdfName);
     } catch (err) {
@@ -134,10 +133,9 @@ const useEImzoSign = (documentId: string, pdfPath?: string) => {
     try {
       // 1. PDF yaratish / url olish
       let currentPdfUrl = pdfUrl;
-      const pdfToUse = pdfPath || documentId;
       if (!currentPdfUrl) {
         setStep("generating-pdf");
-        const pdfName = await generatePdf(pdfToUse);
+        const pdfName = await generatePdf(documentId, pdfPath || "");
         currentPdfUrl = pdfName; // useGeneratePdf handles format
         setPdfUrl(currentPdfUrl);
       }

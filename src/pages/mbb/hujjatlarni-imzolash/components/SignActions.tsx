@@ -152,6 +152,7 @@ const SignActions = ({
   documentId: string;
   pdfPath?: string;
   onReject?: () => void;
+  docModel?: string;
 }) => {
   const navigate = useNavigate();
 

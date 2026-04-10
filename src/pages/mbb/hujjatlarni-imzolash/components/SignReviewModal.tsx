@@ -1,4 +1,4 @@
-import useApplicationDocumentB from "@/pages/mbb/rh-3_3/hooks/useBApplication";
+import useSignDocumentData from "../hooks/useSignDocumentData";
 import { MyModal } from "@/shared/components/moleculas/modal";
 import { DATE_TIME } from "@/shared/constants/date.constants";
 import { dateFormatter } from "@/shared/utils/utils";
@@ -81,7 +81,28 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
   const [comment, setComment] = useState("");
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
-  const { generatePdf, isGenerating } = useGeneratePdf();
+  const docId =
+    typeof currentItem === "string"
+      ? currentItem
+      : currentItem?.document_id?._id ||
+        currentItem?.document_id ||
+        currentItem?._id;
+  
+  const initialDocModel =
+    typeof currentItem !== "string" && currentItem?.document_model
+      ? currentItem.document_model
+      : currentItem?.payload_model || "Requisition";
+
+  const { applicationDocumentQuery } = useSignDocumentData(docId as string, initialDocModel);
+  const fullDoc = applicationDocumentQuery.data?.data;
+
+  const doc = fullDoc || currentItem;
+  const docModel = doc?.document_model || doc?.payload_model || "";
+  
+  const idToUse = fullDoc?._id || docId;
+  const pdfPath = fullDoc?.pdf_path;
+
+  const { generatePdf, isGenerating } = useGeneratePdf(docModel);
 
   const { rejectQuery, isPending } = useRejectDocument(sharedId || "", () => {
     setIsRejectModalOpen(false);
@@ -98,22 +119,12 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
     });
   };
 
-  const docId =
-    typeof currentItem === "string"
-      ? currentItem
-      : currentItem?.document_id?._id ||
-        currentItem?.document_id ||
-        currentItem?._id;
-  const { applicationDocumentQuery } = useApplicationDocumentB(docId as string);
-  const fullDoc = applicationDocumentQuery.data?.data;
-
-  const doc = fullDoc || currentItem;
-  const idToUse = fullDoc?._id || docId;
-  const pdfPath = fullDoc?.pdf_path;
-
   React.useEffect(() => {
     if (open) {
-      generatePdf(pdfPath as string)
+      // const isRequisitionOrMemo = docModel === "Requisition" || docModel === "Memo";
+      // const targetParams = isRequisitionOrMemo ? (idToUse as string) : (pdfPath as string);
+      
+      generatePdf(idToUse, pdfPath)
         .then((url) => setPdfUrl(url))
         .catch((err) => {
           console.error("PDF yuklashda xatolik:", err);
@@ -123,7 +134,7 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
       setPdfUrl(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, pdfPath]);
+  }, [open, pdfPath, idToUse]);
 
   if (!doc || !open) return null;
 
@@ -299,6 +310,7 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
             <SignActions
               documentId={idToUse}
               pdfPath={pdfPath}
+              docModel={docModel}
               onReject={() => setIsRejectModalOpen(true)}
             />
           </div>

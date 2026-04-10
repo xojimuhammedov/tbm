@@ -12,9 +12,11 @@ interface VerifyResponse {
   [key: string]: unknown;
 }
 
-const useVerifySignature = () => {
+const useVerifySignature = (docModel?: string) => {
+  const baseUrl = docModel === "Memo" ? "memo" : "requistion";
+
   const { query } = useMutate<VerifyResponse>({
-    url: ["rh-252", "b-app", "verify-signature"],
+    url: [baseUrl, "verify-signature"],
     method: MutateRequestMethod.POST,
   });
 
