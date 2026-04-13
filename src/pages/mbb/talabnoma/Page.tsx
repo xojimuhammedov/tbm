@@ -8,9 +8,9 @@ import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts
 import { Button } from "dgz-ui/button";
 import { CirclePlusIcon } from "lucide-react";
 import KEYS from "@/shared/constants/keys";
-import { TalabnomaInterface } from "./interfaces/Talabnoma.interface";
-import useTalabnoma from "@/pages/mbb/talabnoma/hooks/useTalabnoma.ts";
-import TalabnomaDocumentView from "@/pages/mbb/talabnoma/components/TalabnomaDocumentView.tsx";
+import { MbbDocumentInterface } from "./interfaces/MbbDocument.interface";
+import useMbbDocument from "@/pages/mbb/talabnoma/hooks/useMbbDocument.ts";
+// import MbbDocumentView from "@/pages/mbb/talabnoma/components/MbbDocumentView.tsx";
 
 const TalabnomaPage = () => {
   const { t } = useTranslation();
@@ -21,10 +21,10 @@ const TalabnomaPage = () => {
     handleFilter,
     params,
     handleAdd,
-    openView,
-    handleCloseView,
-    currentItem,
-  } = useTalabnoma();
+    // openView,
+    // handleCloseView,
+    // currentItem,
+  } = useMbbDocument();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
@@ -34,7 +34,7 @@ const TalabnomaPage = () => {
         isActive: false,
       },
       {
-        name: t("Talabnoma"),
+        name: t("Hujjatlar"),
         path: "/mbb/talabnoma",
         isActive: true,
       },
@@ -44,11 +44,11 @@ const TalabnomaPage = () => {
 
   return (
     <>
-      <TalabnomaDocumentView
+      {/* <MbbDocumentView
         open={openView}
         onOpenChange={handleCloseView}
         document={currentItem}
-      />
+      /> */}
 
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <Button size={"sm"} onClick={handleAdd}>
@@ -59,10 +59,10 @@ const TalabnomaPage = () => {
 
       <PageWrapper>
         <DataTable<
-          TalabnomaInterface,
-          PaginationInterface<TalabnomaInterface>
+          MbbDocumentInterface,
+          PaginationInterface<MbbDocumentInterface>
         >
-          tableKey={KEYS.MBB_Talabnoma}
+          tableKey={KEYS.MBB_Document}
           hasNumbers
           hasSearch
           isStickyHeader

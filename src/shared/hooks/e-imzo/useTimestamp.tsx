@@ -6,7 +6,6 @@ const useTimestamp = () => {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "X-Real-IP": "1.2.3.4",
-        Host: window.location.hostname,
       },
       body: pkcs7,
     });

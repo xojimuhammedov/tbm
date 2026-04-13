@@ -87,22 +87,16 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
       : currentItem?.document_id?._id ||
         currentItem?.document_id ||
         currentItem?._id;
-  
-  const initialDocModel =
-    typeof currentItem !== "string" && currentItem?.document_model
-      ? currentItem.document_model
-      : currentItem?.payload_model || "Requisition";
 
-  const { applicationDocumentQuery } = useSignDocumentData(docId as string, initialDocModel);
+  const { applicationDocumentQuery } = useSignDocumentData(docId as string);
   const fullDoc = applicationDocumentQuery.data?.data;
 
   const doc = fullDoc || currentItem;
-  const docModel = doc?.document_model || doc?.payload_model || "";
   
   const idToUse = fullDoc?._id || docId;
-  const pdfPath = fullDoc?.pdf_path;
+  const pdfPath = fullDoc?.pdf_path || currentItem?.pdf_path;
 
-  const { generatePdf, isGenerating } = useGeneratePdf(docModel);
+  const { generatePdf, isGenerating } = useGeneratePdf();
 
   const { rejectQuery, isPending } = useRejectDocument(sharedId || "", () => {
     setIsRejectModalOpen(false);
@@ -119,24 +113,25 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
     });
   };
 
+  console.log("DEBUG: pdfPath", pdfPath);
+
   React.useEffect(() => {
-    if (open) {
-      // const isRequisitionOrMemo = docModel === "Requisition" || docModel === "Memo";
-      // const targetParams = isRequisitionOrMemo ? (idToUse as string) : (pdfPath as string);
-      
-      generatePdf(idToUse, pdfPath)
-        .then((url) => setPdfUrl(url))
+    if (open && pdfPath) {
+      generatePdf(pdfPath)
+        .then((url) => {
+          console.log("DEBUG: pdfUrl set to", url);
+          setPdfUrl(url);
+        })
         .catch((err) => {
           console.error("PDF yuklashda xatolik:", err);
           setPdfUrl(null);
         });
-    } else {
+    } else if (!open) {
       setPdfUrl(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, pdfPath, idToUse]);
+  }, [open, pdfPath, generatePdf]);
 
-  if (!doc || !open) return null;
+  if (!open) return null;
 
   const renderParticipant = (user: any, role: string) => {
     if (!user) return null;
@@ -310,7 +305,6 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
             <SignActions
               documentId={idToUse}
               pdfPath={pdfPath}
-              docModel={docModel}
               onReject={() => setIsRejectModalOpen(true)}
             />
           </div>

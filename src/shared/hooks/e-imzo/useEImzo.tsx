@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import useGeneratePdf from "./useGeneratePdf";
 import useTimestamp from "./useTimestamp";
 import useVerifySignature from "./useVerifySignature";
+import { request } from "@/request";
 
 export type Cert = {
   disk: string;
@@ -79,17 +80,20 @@ const useEImzoSign = (documentId: string) => {
 
   const fetchPdfAsBase64 = useCallback(
     async (filePath: string): Promise<string> => {
-      const response = await fetch(filePath, { credentials: "include" });
-      if (!response.ok) {
+      try {
+        const response = await request.get(filePath, {
+          responseType: "arraybuffer",
+        });
+        const bytes = new Uint8Array(response.data);
+        let binary = "";
+        for (let i = 0; i < bytes.byteLength; i++)
+          binary += String.fromCharCode(bytes[i]);
+        return btoa(binary);
+      } catch (err: any) {
         throw new Error(
-          `PDF yuklanmadi: ${response.status} ${response.statusText}`,
+          `PDF yuklanmadi: ${err.response?.status || "Unknown"} ${err.response?.statusText || ""}`,
         );
       }
-      const bytes = new Uint8Array(await response.arrayBuffer());
-      let binary = "";
-      for (let i = 0; i < bytes.byteLength; i++)
-        binary += String.fromCharCode(bytes[i]);
-      return btoa(binary);
     },
     [],
   );

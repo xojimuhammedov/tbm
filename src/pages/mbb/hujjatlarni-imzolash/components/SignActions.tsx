@@ -145,18 +145,15 @@ function CertDropdown({
 
 // SignActions komponenti
 const SignActions = ({
-  documentId,
   pdfPath,
   onReject,
+  documentId,
 }: {
-  documentId: string;
   pdfPath?: string;
   onReject?: () => void;
-  docModel?: string;
+  documentId: string;
 }) => {
   const navigate = useNavigate();
-
-  console.log(documentId);
 
   const {
     keys,
