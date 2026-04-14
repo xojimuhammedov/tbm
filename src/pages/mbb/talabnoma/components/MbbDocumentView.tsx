@@ -1,14 +1,9 @@
-import { useRef } from "react";
 import { MyModal } from "@/shared/components/moleculas/modal";
-import { FileTextIcon, DownloadIcon } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import {
   MbbDocumentInterface,
   RequisitionDocument,
   MemoDocument,
 } from "../interfaces/MbbDocument.interface";
-import { useReactToPrint } from "react-to-print";
-import { Button } from "dgz-ui/button";
 import dayjs from "dayjs";
 import { dateFormatter } from "@/shared/utils/utils";
 import { DATE } from "@/shared/constants/date.constants";
@@ -19,7 +14,6 @@ interface MbbDocumentViewProps {
   document?: MbbDocumentInterface | null;
 }
 
-/* ─── REQUISITION (Talabnoma) View ─── */
 const RequisitionView = ({
   document,
 }: {
@@ -261,7 +255,7 @@ const RequisitionView = ({
 
 /* ─── MEMO (Ma'lumotnoma) View ─── */
 const MemoView = ({ document }: { document: MemoDocument }) => {
-  const payload = document.payload;
+  const payload = document?.payload;
 
   return (
     <>
@@ -323,32 +317,32 @@ const MemoView = ({ document }: { document: MemoDocument }) => {
             </tr>
           </thead>
           <tbody>
-            {payload?.data && payload.data.length > 0 ? (
-              payload.data.map((item, index) => (
+            {payload?.data && payload?.data?.length > 0 ? (
+              payload?.data?.map((item, index) => (
                 <tr key={item._id || index} className="h-14 text-center">
                   <td className="border-[1.5px] border-black">{index + 1}</td>
                   <td className="border-[1.5px] border-black font-medium">
-                    {item.order_code}
+                    {item?.order_code}
                   </td>
                   <td className="border-[1.5px] border-black">
-                    {item.assigned_time
-                      ? dateFormatter(item.assigned_time, DATE)
+                    {item?.assigned_time
+                      ? dateFormatter(item?.assigned_time, DATE)
                       : ""}
                   </td>
                   <td className="border-[1.5px] border-black">
-                    {item.completed_time
-                      ? dateFormatter(item.completed_time, DATE)
+                    {item?.completed_time
+                      ? dateFormatter(item?.completed_time, DATE)
                       : ""}
                   </td>
                   <td className="border-[1.5px] border-black font-semibold">
-                    {item.responsible_executor}
+                    {item?.responsible_executor}
                   </td>
                   <td className="border-[1.5px] border-black">
-                    {item.customer_details}
+                    {item?.customer_details}
                   </td>
                   <td className="border-[1.5px] border-black">-</td>
                   <td className="border-[1.5px] border-black">
-                    {item.comment || "-"}
+                    {item?.comment || "-"}
                   </td>
                 </tr>
               ))
@@ -360,7 +354,7 @@ const MemoView = ({ document }: { document: MemoDocument }) => {
                 </td>
                 <td className="border-[1.5px] border-black">
                   {document?.created_at
-                    ? dateFormatter(document.created_at, DATE)
+                    ? dateFormatter(document?.created_at, DATE)
                     : ""}
                 </td>
                 <td className="border-[1.5px] border-black font-medium">
@@ -386,33 +380,6 @@ const MemoView = ({ document }: { document: MemoDocument }) => {
           bajarishning yangi muddatlari ko'rsatiladi
         </p>
       </div>
-
-      <div className="mt-12 space-y-12 text-[14px]">
-        <div className="flex gap-4">
-          <span className="font-bold">1.</span>
-          <div className="flex-1 flex flex-col">
-            <div className="min-h-[24px] px-2 font-bold text-[15px] italic uppercase">
-              {document?.signer}
-            </div>
-            <div className="border-t-2 border-black"></div>
-            <div className="text-[11px] text-center pt-1 italic font-medium text-gray-700">
-              (AP raqami, bajaruvchining ismi-sharifi, familiyasi va sana)
-            </div>
-          </div>
-        </div>
-        <div className="flex gap-4">
-          <span className="font-bold">2.</span>
-          <div className="flex-1 flex flex-col">
-            <div className="min-h-[24px] px-2 font-bold text-[15px] italic uppercase">
-              {payload?.title}
-            </div>
-            <div className="border-t-2 border-black"></div>
-            <div className="text-[11px] text-center pt-1 italic font-medium text-gray-700">
-              (UBP raqami, bajaruvchining ismi-sharifi, familiyasi va sana)
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
@@ -423,21 +390,6 @@ const MbbDocumentView = ({
   onOpenChange,
   document,
 }: MbbDocumentViewProps) => {
-  const { t } = useTranslation();
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  const handlePrint = useReactToPrint({
-    contentRef: contentRef,
-    documentTitle:
-      document?.document_type === "REQUISITION"
-        ? `Talabnoma_${document?.code || "raqamsiz"}`
-        : `Hujjat_${document?.code || "3-3-shakl"}`,
-  });
-
-  const headerTitle =
-    document?.document_type === "REQUISITION"
-      ? t("Talabnoma hujjati")
-      : t("Farmoyishlar bajarilganligi to'g'risida ma'lumot");
 
   return (
     <MyModal
@@ -445,28 +397,9 @@ const MbbDocumentView = ({
       onOpenChange={onOpenChange}
       size="8xl"
       className="overflow-auto"
-      header={
-        <div className="flex items-center justify-between w-full pr-12 font-sans">
-          <div className="flex items-center gap-2">
-            <FileTextIcon className="size-5 text-blue-600" />
-            <span className="font-semibold text-gray-800">{headerTitle}</span>
-          </div>
-
-          <Button
-            onClick={() => handlePrint()}
-            variant="default"
-            size="sm"
-            className="flex items-center gap-2 h-9 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors shadow-sm"
-          >
-            <DownloadIcon className="size-4" />
-            <span className="text-xs font-bold uppercase">PDF YUKLASH</span>
-          </Button>
-        </div>
-      }
     >
       <div className="py-10 px-4 flex justify-center bg-gray-100 min-h-screen">
         <div
-          ref={contentRef}
           style={{ fontFamily: '"Times New Roman", Times, serif' }}
           className={`bg-white w-full shadow-2xl relative text-black border border-gray-200 print:shadow-none print:border-none print:m-0 print:p-8 ${
             document?.document_type === "REQUISITION"
@@ -479,8 +412,6 @@ const MbbDocumentView = ({
           ) : document?.document_type === "MEMO" ? (
             <MemoView document={document as MemoDocument} />
           ) : null}
-
-          <div className="w-full border-t-2 border-dashed border-black mt-20"></div>
         </div>
       </div>
     </MyModal>
