@@ -8,33 +8,6 @@ const renderHeader = (label: string) => (
   <span style={{ whiteSpace: "nowrap" }}>{label}</span>
 );
 
-const renderStage = (status: string | undefined) => {
-  let label = status || "---";
-  let colorClass = "bg-slate-100 text-slate-700";
-
-  if (status === "DONE") {
-    label = "Yakunlangan";
-    label = "Yangi";
-    colorClass = "bg-purple-100 text-purple-700";    colorClass = "bg-emerald-100 text-emerald-700";
-  } else if (status === "SIGNING") {
-    label = "Imzolanmoqda";
-    colorClass = "bg-amber-100 text-amber-700";
-  } else if (status === "APPROVAL") {
-    label = "Kelishilmoqda";
-    colorClass = "bg-blue-100 text-blue-700";
-  } else if (status === "DRAFT") {
-
-  }
-
-  return (
-    <span
-      className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}
-    >
-      {label}
-    </span>
-  );
-};
-
 const renderStatus = (status: string | undefined) => {
   let label = status || "---";
   let colorClass = "bg-slate-100 text-slate-700";
@@ -80,39 +53,57 @@ const createSharedColumns = (
   t: (...args: TranslationArgsType) => string,
   handleView: (record: SharedItemInterface) => void,
 ): ColumnType<SharedItemInterface>[] => [
-  {
-    key: "document_id",
-    dataIndex: "document_id",
-    name: t("Hujjat", { defaultValue: "Hujjat" }),
-    render: (_, record: any) => record?.document_id?.code || "-",
-  },
-  {
-    key: "stages",
-    dataIndex: "stages",
-    name: t("Bosqich", { defaultValue: "Bosqich" }),
-    render: (value: string | undefined) => renderStage(value),
-  },
-  {
-    key: "document_status",
-    dataIndex: "status",
-    name: t("Holat", { defaultValue: "Holat" }),
-    render: (value: string | undefined) => renderStatus(value),
-  },
-  {
-    key: "actions",
-    dataIndex: "document_id",
-    name: renderHeader(t("Действия")),
-    render: (_, record) => (
-      <div className={"flex items-center gap-2"}>
-        <MyTooltip content={t("View")}>
-          <EyeIcon
-            className="size-4 cursor-pointer hover:text-blue-500"
-            onClick={() => record && handleView(record)}
-          />
-        </MyTooltip>
-      </div>
-    ),
-  },
-];
+    {
+      key: "document_id",
+      dataIndex: "document_id",
+      name: t("Hujjat", { defaultValue: "Hujjat" }),
+      render: (_, record) => record?.document_id?.code || "-",
+    },
+    {
+      key: "from_id",
+      dataIndex: "from_id",
+      name: t("Kimdan", { defaultValue: "Kimdan" }),
+      render: (value) =>
+        `${value?.first_name || ""} ${value?.second_name || ""} ${value?.middle_name || ""}`,
+    },
+    {
+      key: "document_id",
+      dataIndex: "document_id",
+      name: t("Hujjat turi"),
+      render: (item) => {
+        return (
+          <span
+            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${item?.document_type === "REQUISITION"
+              ? "bg-blue-100 text-blue-800"
+              : "bg-green-100 text-green-800"
+              }`}
+          >
+            {item?.document_type === "REQUISITION" ? "Talabnoma" : "Ma'lumotnoma"}
+          </span>
+        )
+      }
+    },
+    {
+      key: "document_status",
+      dataIndex: "status",
+      name: t("Holat", { defaultValue: "Holat" }),
+      render: (value: string | undefined) => renderStatus(value),
+    },
+    {
+      key: "actions",
+      dataIndex: "document_id",
+      name: renderHeader(t("Действия")),
+      render: (_, record) => (
+        <div className={"flex items-center gap-2"}>
+          <MyTooltip content={t("View")}>
+            <EyeIcon
+              className="size-4 cursor-pointer hover:text-blue-500"
+              onClick={() => record && handleView(record)}
+            />
+          </MyTooltip>
+        </div>
+      ),
+    },
+  ];
 
 export default createSharedColumns;
