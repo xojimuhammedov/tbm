@@ -113,7 +113,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
             : t("Application created successfully"),
         });
         onSave?.();
-        navigate("/mbb/talabnoma");
+        navigate("/mbb/rh-3_3");
       },
       onError: (error: unknown) => {
         const axiosError = error as AxiosError<{ message?: string }>;
