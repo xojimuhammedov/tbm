@@ -10,7 +10,7 @@ import { CirclePlusIcon } from "lucide-react";
 import KEYS from "@/shared/constants/keys";
 import { MbbDocumentInterface } from "./interfaces/MbbDocument.interface";
 import useMbbDocument from "@/pages/mbb/talabnoma/hooks/useMbbDocument.ts";
-// import MbbDocumentView from "@/pages/mbb/talabnoma/components/MbbDocumentView.tsx";
+import MbbDocumentView from "@/pages/mbb/talabnoma/components/MbbDocumentView.tsx";
 
 const TalabnomaPage = () => {
   const { t } = useTranslation();
@@ -21,9 +21,9 @@ const TalabnomaPage = () => {
     handleFilter,
     params,
     handleAdd,
-    // openView,
-    // handleCloseView,
-    // currentItem,
+    openView,
+    handleCloseView,
+    currentItem,
   } = useMbbDocument();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
@@ -44,11 +44,11 @@ const TalabnomaPage = () => {
 
   return (
     <>
-      {/* <MbbDocumentView
+      <MbbDocumentView
         open={openView}
         onOpenChange={handleCloseView}
         document={currentItem}
-      /> */}
+      />
 
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <Button size={"sm"} onClick={handleAdd}>

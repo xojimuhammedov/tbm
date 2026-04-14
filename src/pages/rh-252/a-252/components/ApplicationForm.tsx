@@ -19,7 +19,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import TelegraphPlannedWorkSection from "@/pages/rh-252/a-252/components/form/TelegraphPlannedWorkSection.tsx";
 import SettingsDocSection from "@/pages/rh-252/a-252/components/form/SettingsDocSection.tsx";
 import IDSection1731 from "@/pages/rh-252/a-252/components/form/NetworkDoc.tsx";
-import useGroupOptions from "@/pages/groups/hooks/useGroupOptions.ts";
 import CreateFlowSection from "@/pages/rh-252/a-252/components/form/CreateFlowSection.tsx";
 import useOrganizationOptions from "@/pages/organizations/hooks/useOrganizationOptions.ts";
 import BlockActionSection from "@/pages/rh-252/a-252/components/form/BlockActionSection.tsx";
@@ -28,7 +27,6 @@ const ApplicationDocumentForm = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { groupOptions } = useGroupOptions();
   const { organizationOptions } = useOrganizationOptions();
   const {
     form,
@@ -195,7 +193,7 @@ const ApplicationDocumentForm = () => {
                 <MySelect
                   name="to"
                   control={form.control}
-                  options={groupOptions || []}
+                  options={organizationOptions || []}
                   placeholder="Guruhlarni tanlang"
                   isMulti
                   isClearable
@@ -208,7 +206,7 @@ const ApplicationDocumentForm = () => {
                     <strong>Nusxasi:</strong>
                   </p>
                   <MySelect
-                    name="to"
+                    name="copy"
                     control={form.control}
                     options={organizationOptions || []}
                     placeholder="Nusxalarni tanlang"

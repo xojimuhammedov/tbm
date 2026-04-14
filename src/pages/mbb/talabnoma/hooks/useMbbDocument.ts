@@ -26,12 +26,12 @@ const useMbbDocument = () => {
   const { documentQuery } = useMbbDocumentQuery(viewId as string);
 
   const handleAdd = useCallback(() => {
-    navigate("/mbb/talabnoma/create");
+    navigate("/mbb/rh-3_3/create");
   }, [navigate]);
 
   const handleEdit = useCallback(
     (id: string) => {
-      navigate(`/mbb/talabnoma/edit/${id}`);
+      navigate(`/mbb/rh-3_3/edit/${id}`);
     },
     [navigate],
   );
