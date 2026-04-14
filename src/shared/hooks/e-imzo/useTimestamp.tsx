@@ -1,19 +1,14 @@
 const useTimestamp = () => {
   const addTimestamp = async (pkcs7: string): Promise<string> => {
-    const response = await fetch(
-      "http://localhost:8080/frontend/timestamp/pkcs7",
-      {
-        method: "POST",
-        mode: "cors",
-        credentials: "omit",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "X-Real-IP": "192.168.100.23",
-          Host: window.location.hostname,
-        },
-        body: pkcs7,
+    const response = await fetch("/frontend/timestamp/pkcs7", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-Real-IP": "1.2.3.4",
       },
-    );
+      body: pkcs7,
+    });
 
     if (!response.ok) {
       throw new Error(

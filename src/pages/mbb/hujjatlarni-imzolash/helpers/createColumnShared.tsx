@@ -15,7 +15,8 @@ const renderStage = (status: string | undefined) => {
   if (status === "DONE") {
     label = "Yakunlangan";
     label = "Yangi";
-    colorClass = "bg-purple-100 text-purple-700";    colorClass = "bg-emerald-100 text-emerald-700";
+    colorClass = "bg-purple-100 text-purple-700";
+    colorClass = "bg-emerald-100 text-emerald-700";
   } else if (status === "SIGNING") {
     label = "Imzolanmoqda";
     colorClass = "bg-amber-100 text-amber-700";
@@ -23,7 +24,6 @@ const renderStage = (status: string | undefined) => {
     label = "Kelishilmoqda";
     colorClass = "bg-blue-100 text-blue-700";
   } else if (status === "DRAFT") {
-
   }
 
   return (

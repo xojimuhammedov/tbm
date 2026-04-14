@@ -25,7 +25,9 @@ const Channels51FormPage = () => {
       },
       {
         name: id ? t("Edit") : t("Create"),
-        path: id ? `/journals/exout-97/edit/${id}` : "/journals/exout-97/create",
+        path: id
+          ? `/journals/exout-97/edit/${id}`
+          : "/journals/exout-97/create",
         isActive: true,
       },
     ],

@@ -1,11 +1,9 @@
 import useGetOne from "@/shared/hooks/api/useGetOne.ts";
 
-const useSignDocumentData = (id: string, docModel: string) => {
-  const baseUrl = docModel === "Requisition" ? "requistion" : "memo";
-  
+const useSignDocumentData = (id: string) => {
   const applicationDocumentQuery = useGetOne<any>({
-    url: [baseUrl, id || ""],
-    queryKey: [baseUrl, id],
+    url: ["document_mbb", id || ""],
+    queryKey: ["document_mbb", id],
     options: {
       enabled: Boolean(id),
     },

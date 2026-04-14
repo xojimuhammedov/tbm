@@ -8,5 +8,6 @@ const URLS = {
   // RH-231
   RH_231_Application: "rh-231/a-app",
   MBB_Talabnoma: "requistion",
+  MBB_Document: "document_mbb",
 };
 export default URLS;

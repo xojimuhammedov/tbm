@@ -282,13 +282,11 @@ const MbbHujjatlarniImzolashFormPage = lazy(
   () => import("@/pages/mbb/hujjatlarni-imzolash/pages/FormPage"),
 );
 
-
 // MBB page
-const RH3_3Page = lazy(() => import("@/pages/mbb/rh-3_3/Page"));
-const RH3_3FormPage = lazy(() => import("@/pages/mbb/rh-3_3/page/FormPage"));
-
 const TalabnomaPage = lazy(() => import("@/pages/mbb/talabnoma/Page"));
-const TalabnomaFormPage = lazy(() => import("@/pages/mbb/talabnoma/page/FormPage"));
+const MbbDocumentFormPage = lazy(
+  () => import("@/pages/mbb/talabnoma/page/MbbDocumentFormPage"),
+);
 
 function Router() {
   const routes: RouteObject[] = [
@@ -1334,7 +1332,7 @@ function Router() {
           path: "mbb/rh-3_3",
           element: (
             <HasAccess roles={["admin", "mbb", "superadmin"]}>
-              <RH3_3Page />
+              <TalabnomaPage />
             </HasAccess>
           ),
         },
@@ -1342,31 +1340,7 @@ function Router() {
           path: "mbb/rh-3_3/create",
           element: (
             <HasAccess roles={["admin", "mbb", "superadmin"]}>
-              <RH3_3FormPage />
-            </HasAccess>
-          ),
-        },
-        {
-          path: "mbb/talabnoma",
-          element: (
-            <HasAccess roles={["admin", "mbb", "superadmin"]}>
-              <TalabnomaPage />
-            </HasAccess>
-          ),
-        },
-        {
-          path: "mbb/talabnoma/create",
-          element: (
-            <HasAccess roles={["admin", "mbb", "superadmin"]}>
-              <TalabnomaFormPage />
-            </HasAccess>
-          ),
-        },
-        {
-          path: "mbb/talabnoma/edit/:id",
-          element: (
-            <HasAccess roles={["admin", "mbb", "superadmin"]}>
-              <TalabnomaFormPage />
+              <MbbDocumentFormPage />
             </HasAccess>
           ),
         },
@@ -1390,7 +1364,7 @@ function Router() {
           path: "rh-252/rh-3_3/edit/:id",
           element: (
             <HasAccess roles={["admin", "superadmin"]}>
-              <RH3_3FormPage />
+              <MbbDocumentFormPage />
             </HasAccess>
           ),
         },

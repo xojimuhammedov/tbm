@@ -1,5 +1,5 @@
 import { ApplicationDocument } from "@/pages/imzolash/interfaces/detail.interface";
-import useApplicationDocumentB from "@/pages/mbb/rh-3_3/hooks/useBApplication";
+import useApplicationDocumentB from "@/pages/mbb/talabnoma/hooks/useMbbDocumentQuery";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { DATE, DATE_TIME } from "@/shared/constants/date.constants";
 import { dateFormatter } from "@/shared/utils/utils";
@@ -92,10 +92,8 @@ const FormPage = () => {
     sharedId: string;
   }>();
 
-  const { applicationDocumentQuery } = useApplicationDocumentB(id as string);
-  const doc = applicationDocumentQuery.data?.data as
-    | ApplicationDocument
-    | undefined;
+  const { documentQuery } = useApplicationDocumentB(id as string);
+  const doc = documentQuery.data?.data as ApplicationDocument | undefined;
 
   return (
     <>

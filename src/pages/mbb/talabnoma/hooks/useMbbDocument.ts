@@ -3,46 +3,49 @@ import { ColumnType, TranslationArgsType } from "dgz-ui-shared/types";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { get } from "lodash";
-import { Num3ApplicationInterface } from "@/pages/mbb/rh-3_3/interfaces/Num3.interface.ts";
+import { MbbDocumentInterface } from "@/pages/mbb/talabnoma/interfaces/MbbDocument.interface.ts";
 import useLists from "@/shared/hooks/useLists.ts";
 import useDelete from "@/shared/hooks/api/useDelete.ts";
 import { useToast } from "@/shared/hooks/useToast.ts";
 import KEYS from "@/shared/constants/keys";
-import createNum3ApplicationColumns from "@/pages/mbb/rh-3_3/helpers/createNum3ApplicationColumns.tsx";
-import useApplicationDocumentB from "@/pages/mbb/rh-3_3/hooks/useBApplication.ts";
+import createMbbDocumentColumns from "@/pages/mbb/talabnoma/helpers/createMbbDocumentColumns.tsx";
+import useMbbDocumentQuery from "@/pages/mbb/talabnoma/hooks/useMbbDocumentQuery.ts";
 import URLS from "@/shared/constants/urls.ts";
 
-const useNum3Application = () => {
+const useMbbDocument = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [openView, setOpenView] = useState(false);
   const [viewId, setViewId] = useState<string | null>(null);
-  const { removeWithConfirm } = useDelete([URLS.RH_B_Application]);
-  const { query, handleFilter, params } = useLists<Num3ApplicationInterface>({
-    url: [URLS.RH_B_Application],
-    queryKey: [KEYS.RH_B_Application],
+  const { removeWithConfirm } = useDelete([URLS.MBB_Document]);
+  const { query, handleFilter, params } = useLists<MbbDocumentInterface>({
+    url: [URLS.MBB_Document],
+    queryKey: [KEYS.MBB_Document],
   });
-  const { applicationDocumentQuery } = useApplicationDocumentB(
-    viewId as string,
-  );
+  const { documentQuery } = useMbbDocumentQuery(viewId as string);
+
   const handleAdd = useCallback(() => {
-    navigate("/mbb/rh-3_3/create");
+    navigate("/mbb/talabnoma/create");
   }, [navigate]);
+
   const handleEdit = useCallback(
     (id: string) => {
-      navigate(`/mbb/rh-3_3/edit/${id}`);
+      navigate(`/mbb/talabnoma/edit/${id}`);
     },
     [navigate],
   );
+
   const handleView = useCallback((id: string) => {
     setViewId(id);
     setOpenView(true);
   }, []);
+
   const handleCloseView = useCallback((open: boolean) => {
     setOpenView(open);
     if (!open) setViewId(null);
   }, []);
+
   const handleDelete = useCallback(
     (id: string) => {
       removeWithConfirm(id)
@@ -67,9 +70,9 @@ const useNum3Application = () => {
     [query, removeWithConfirm, t, toast],
   );
 
-  const columns: ColumnType<Num3ApplicationInterface>[] = useMemo(
+  const columns: ColumnType<MbbDocumentInterface>[] = useMemo(
     () =>
-      createNum3ApplicationColumns(
+      createMbbDocumentColumns(
         t as unknown as (...args: TranslationArgsType) => string,
         handleEdit,
         handleDelete,
@@ -82,13 +85,13 @@ const useNum3Application = () => {
     params,
     handleAdd,
     handleFilter,
-    loading: query.isLoading || applicationDocumentQuery.isFetching,
+    loading: query.isLoading || documentQuery.isFetching,
     dataSource: query.data,
     columns,
     openView,
-    currentItem: applicationDocumentQuery.data?.data,
+    currentItem: documentQuery.data?.data,
     handleCloseView,
   };
 };
 
-export default useNum3Application;
+export default useMbbDocument;

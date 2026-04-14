@@ -314,7 +314,7 @@ const createSidebarGroups = (
       },
     ],
   },
-   {
+  {
     title: t("MBB hujjatlari"),
     items: [
       {
@@ -326,11 +326,6 @@ const createSidebarGroups = (
           {
             title: t("Hujjatlar"),
             url: "rh-3_3",
-            roles: ["admin", "mbb", "superadmin"],
-          },
-           {
-            title: t("Talabnoma"),
-            url: "talabnoma",
             roles: ["admin", "mbb", "superadmin"],
           },
           {

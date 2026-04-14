@@ -7,6 +7,7 @@ const KEYS = {
   // RH-231
   RH_231_Application: "RH_231_Application",
   MBB_Talabnoma: "requistion",
+  MBB_Document: "MBB_Document",
 };
 
 export default KEYS;

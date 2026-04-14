@@ -41,7 +41,7 @@ const PLUGIN_MAP: Record<string, string> = {
   baikey: "baikey",
 };
 
-const capiCall = <T = unknown,>(
+const capiCall = <T = unknown>(
   plugin: string,
   name: string,
   args: unknown[] = [],
@@ -79,7 +79,13 @@ const useEImzoSign = (documentId: string, pdfPath?: string) => {
 
   const fetchPdfAsBase64 = useCallback(
     async (filePath: string): Promise<string> => {
-      const response = await fetch(filePath, { credentials: "include" });
+      // Proxy orqali yuborish uchun faqat relative path-ni o'zini qoldiramiz
+      // Agar filePath absolute bo'lsa (https://...) uni relative-ga o'tkazamiz yoki to'g'ridan-to'g'ri ishlatamiz
+      const cleanPath = filePath.startsWith("http")
+        ? new URL(filePath).pathname + new URL(filePath).search
+        : filePath;
+
+      const response = await fetch(cleanPath, { credentials: "include" });
       if (!response.ok) {
         throw new Error(
           `PDF yuklanmadi: ${response.status} ${response.statusText}`,
@@ -108,13 +114,15 @@ const useEImzoSign = (documentId: string, pdfPath?: string) => {
 
   const preloadPdf = useCallback(async () => {
     try {
-      const pdfName = await generatePdf(documentId, pdfPath || "");
+      const pdfName = await generatePdf(pdfPath || "");
       // useGeneratePdf returns full URL now
       setPdfUrl(pdfName);
     } catch (err) {
       console.error("Preload xatosi:", err);
     }
   }, [pdfPath, documentId, generatePdf]);
+
+  // console.log(pdfUrl)
 
   const handleSign = useCallback(async () => {
     if (!selectedCert) {
@@ -133,9 +141,11 @@ const useEImzoSign = (documentId: string, pdfPath?: string) => {
     try {
       // 1. PDF yaratish / url olish
       let currentPdfUrl = pdfUrl;
+      console.log(currentPdfUrl);
       if (!currentPdfUrl) {
         setStep("generating-pdf");
-        const pdfName = await generatePdf(documentId, pdfPath || "");
+        const pdfName = await generatePdf(pdfPath || "");
+        console.log(pdfName);
         currentPdfUrl = pdfName; // useGeneratePdf handles format
         setPdfUrl(currentPdfUrl);
       }

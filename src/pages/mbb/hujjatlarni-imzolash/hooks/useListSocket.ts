@@ -42,7 +42,9 @@ const useListSocket = (onView?: (record: any) => void): UseListSocketReturn => {
         const allUsers = [...(record?.users || []), ...(record?.signers || [])];
         const me = allUsers.find((u) => u.is_current || u.status === "PENDING");
         const sharedId = record?.shared_id || me?.shared_id || "default";
-        navigate(`/mbb/mbb-imzolanadigan-hujjatlar/${docId}/shared/${sharedId}`);
+        navigate(
+          `/mbb/mbb-imzolanadigan-hujjatlar/${docId}/shared/${sharedId}`,
+        );
       }
     },
     [navigate, onView],
