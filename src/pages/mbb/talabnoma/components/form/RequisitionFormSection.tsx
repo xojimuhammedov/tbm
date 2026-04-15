@@ -1,7 +1,4 @@
-import {
-  MyInput,
-  MyTextarea,
-} from "dgz-ui-shared/components/form";
+import { MyInput, MyTextarea } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui";
 import { Plus, Trash2 } from "lucide-react";
 import useMbbDocumentForm from "@/pages/mbb/talabnoma/hooks/useMbbDocumentForm.ts";
