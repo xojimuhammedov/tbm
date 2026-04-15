@@ -23,7 +23,9 @@ const Channels51FormPage = () => {
       },
       {
         name: id ? t("Edit") : t("Create"),
-        path: id ? `/journals/locout-99/edit/${id}` : "/journals/locout-99/create",
+        path: id
+          ? `/journals/locout-99/edit/${id}`
+          : "/journals/locout-99/create",
         isActive: true,
       },
     ],

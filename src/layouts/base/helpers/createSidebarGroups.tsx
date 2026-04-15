@@ -314,7 +314,7 @@ const createSidebarGroups = (
       },
     ],
   },
-   {
+  {
     title: t("MBB hujjatlari"),
     items: [
       {

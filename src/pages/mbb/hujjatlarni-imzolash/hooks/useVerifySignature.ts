@@ -13,7 +13,6 @@ interface VerifyResponse {
 }
 
 const useVerifySignature = () => {
-
   const { query } = useMutate<VerifyResponse>({
     url: ["document_mbb", "verify-signature"],
     method: MutateRequestMethod.POST,

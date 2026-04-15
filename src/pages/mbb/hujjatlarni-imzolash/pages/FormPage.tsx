@@ -93,9 +93,7 @@ const FormPage = () => {
   }>();
 
   const { documentQuery } = useApplicationDocumentB(id as string);
-  const doc = documentQuery.data?.data as
-    | ApplicationDocument
-    | undefined;
+  const doc = documentQuery.data?.data as ApplicationDocument | undefined;
 
   return (
     <>

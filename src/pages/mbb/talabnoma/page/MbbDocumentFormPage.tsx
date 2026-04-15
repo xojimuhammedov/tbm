@@ -130,9 +130,7 @@ const RequisitionFormSection = ({
           placeholder="30"
         />
       </div>
-      <span className="text-xs font-normal text-gray-500">
-        (tartib raqami)
-      </span>
+      <span className="text-xs font-normal text-gray-500">(tartib raqami)</span>
     </div>
 
     <div className="space-y-6 text-[15px]">
@@ -533,8 +531,7 @@ const MemoFormSection = ({
             rowSpan={2}
             className="border border-gray-300 px-4 py-3 text-xs text-center"
           >
-            Iste'molchi (Aloqani ishga qabul qilib olgan ise'molchining
-            F.I.SH.)
+            Iste'molchi (Aloqani ishga qabul qilib olgan ise'molchining F.I.SH.)
           </th>
           <th
             rowSpan={2}

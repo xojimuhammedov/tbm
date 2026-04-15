@@ -92,7 +92,7 @@ export const SignReviewModal: React.FC<SignReviewModalProps> = ({
   const fullDoc = applicationDocumentQuery.data?.data;
 
   const doc = fullDoc || currentItem;
-  
+
   const idToUse = fullDoc?._id || docId;
   const pdfPath = fullDoc?.pdf_path || currentItem?.pdf_path;
 

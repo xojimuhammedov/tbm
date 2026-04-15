@@ -282,10 +282,11 @@ const MbbHujjatlarniImzolashFormPage = lazy(
   () => import("@/pages/mbb/hujjatlarni-imzolash/pages/FormPage"),
 );
 
-
 // MBB page
 const TalabnomaPage = lazy(() => import("@/pages/mbb/talabnoma/Page"));
-const MbbDocumentFormPage = lazy(() => import("@/pages/mbb/talabnoma/page/MbbDocumentFormPage"));
+const MbbDocumentFormPage = lazy(
+  () => import("@/pages/mbb/talabnoma/page/MbbDocumentFormPage"),
+);
 
 function Router() {
   const routes: RouteObject[] = [

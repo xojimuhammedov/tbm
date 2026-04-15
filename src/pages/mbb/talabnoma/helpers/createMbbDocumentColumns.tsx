@@ -69,9 +69,7 @@ const createMbbDocumentColumns = (
         </MyTooltip>
         <MyTooltip content={t("Delete")}>
           <Trash2Icon
-            className={
-              "size-4 cursor-pointer text-gray-500 hover:text-red-500"
-            }
+            className={"size-4 cursor-pointer text-gray-500 hover:text-red-500"}
             onClick={() => handleDelete(rid)}
           />
         </MyTooltip>

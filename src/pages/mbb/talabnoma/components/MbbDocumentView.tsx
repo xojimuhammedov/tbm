@@ -14,11 +14,7 @@ interface MbbDocumentViewProps {
   document?: MbbDocumentInterface | null;
 }
 
-const RequisitionView = ({
-  document,
-}: {
-  document: RequisitionDocument;
-}) => {
+const RequisitionView = ({ document }: { document: RequisitionDocument }) => {
   const payload = document.payload;
 
   const formatSchedule = () => {
@@ -50,9 +46,7 @@ const RequisitionView = ({
         <h2 className="font-bold text-[20px] uppercase">
           TALABNOMA №{document?.code || "30"}
         </h2>
-        <p className="text-[12px] font-normal leading-tight">
-          (tartib raqami)
-        </p>
+        <p className="text-[12px] font-normal leading-tight">(tartib raqami)</p>
       </div>
 
       <div className="space-y-6 text-[16px] text-justify tracking-wide">
@@ -390,7 +384,6 @@ const MbbDocumentView = ({
   onOpenChange,
   document,
 }: MbbDocumentViewProps) => {
-
   return (
     <MyModal
       open={open}

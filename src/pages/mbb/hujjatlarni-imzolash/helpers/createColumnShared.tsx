@@ -53,57 +53,58 @@ const createSharedColumns = (
   t: (...args: TranslationArgsType) => string,
   handleView: (record: SharedItemInterface) => void,
 ): ColumnType<SharedItemInterface>[] => [
-    {
-      key: "document_id",
-      dataIndex: "document_id",
-      name: t("Hujjat", { defaultValue: "Hujjat" }),
-      render: (_, record) => record?.document_id?.code || "-",
-    },
-    {
-      key: "from_id",
-      dataIndex: "from_id",
-      name: t("Kimdan", { defaultValue: "Kimdan" }),
-      render: (value) =>
-        `${value?.first_name || ""} ${value?.second_name || ""} ${value?.middle_name || ""}`,
-    },
-    {
-      key: "document_id",
-      dataIndex: "document_id",
-      name: t("Hujjat turi"),
-      render: (item) => {
-        return (
-          <span
-            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${item?.document_type === "REQUISITION"
+  {
+    key: "document_id",
+    dataIndex: "document_id",
+    name: t("Hujjat", { defaultValue: "Hujjat" }),
+    render: (_, record) => record?.document_id?.code || "-",
+  },
+  {
+    key: "from_id",
+    dataIndex: "from_id",
+    name: t("Kimdan", { defaultValue: "Kimdan" }),
+    render: (value) =>
+      `${value?.first_name || ""} ${value?.second_name || ""} ${value?.middle_name || ""}`,
+  },
+  {
+    key: "document_id",
+    dataIndex: "document_id",
+    name: t("Hujjat turi"),
+    render: (item) => {
+      return (
+        <span
+          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+            item?.document_type === "REQUISITION"
               ? "bg-blue-100 text-blue-800"
               : "bg-green-100 text-green-800"
-              }`}
-          >
-            {item?.document_type === "REQUISITION" ? "Talabnoma" : "Ma'lumotnoma"}
-          </span>
-        )
-      }
+          }`}
+        >
+          {item?.document_type === "REQUISITION" ? "Talabnoma" : "Ma'lumotnoma"}
+        </span>
+      );
     },
-    {
-      key: "document_status",
-      dataIndex: "status",
-      name: t("Holat", { defaultValue: "Holat" }),
-      render: (value: string | undefined) => renderStatus(value),
-    },
-    {
-      key: "actions",
-      dataIndex: "document_id",
-      name: renderHeader(t("Действия")),
-      render: (_, record) => (
-        <div className={"flex items-center gap-2"}>
-          <MyTooltip content={t("View")}>
-            <EyeIcon
-              className="size-4 cursor-pointer hover:text-blue-500"
-              onClick={() => record && handleView(record)}
-            />
-          </MyTooltip>
-        </div>
-      ),
-    },
-  ];
+  },
+  {
+    key: "document_status",
+    dataIndex: "status",
+    name: t("Holat", { defaultValue: "Holat" }),
+    render: (value: string | undefined) => renderStatus(value),
+  },
+  {
+    key: "actions",
+    dataIndex: "document_id",
+    name: renderHeader(t("Действия")),
+    render: (_, record) => (
+      <div className={"flex items-center gap-2"}>
+        <MyTooltip content={t("View")}>
+          <EyeIcon
+            className="size-4 cursor-pointer hover:text-blue-500"
+            onClick={() => record && handleView(record)}
+          />
+        </MyTooltip>
+      </div>
+    ),
+  },
+];
 
 export default createSharedColumns;

@@ -41,7 +41,7 @@ const PLUGIN_MAP: Record<string, string> = {
   baikey: "baikey",
 };
 
-const capiCall = <T = unknown,>(
+const capiCall = <T = unknown>(
   plugin: string,
   name: string,
   args: unknown[] = [],
@@ -77,12 +77,11 @@ const useEImzoSign = (documentId: string, pdfPath?: string) => {
   );
   const [error, setError] = useState<string | null>(null);
 
-
   const fetchPdfAsBase64 = useCallback(
     async (filePath: string): Promise<string> => {
-      // Proxy orqali yuborish uchun faqat relative path-ni o'zini qoldiramiz 
+      // Proxy orqali yuborish uchun faqat relative path-ni o'zini qoldiramiz
       // Agar filePath absolute bo'lsa (https://...) uni relative-ga o'tkazamiz yoki to'g'ridan-to'g'ri ishlatamiz
-      const cleanPath = filePath.startsWith("http") 
+      const cleanPath = filePath.startsWith("http")
         ? new URL(filePath).pathname + new URL(filePath).search
         : filePath;
 
@@ -142,11 +141,11 @@ const useEImzoSign = (documentId: string, pdfPath?: string) => {
     try {
       // 1. PDF yaratish / url olish
       let currentPdfUrl = pdfUrl;
-      console.log(currentPdfUrl)
+      console.log(currentPdfUrl);
       if (!currentPdfUrl) {
         setStep("generating-pdf");
         const pdfName = await generatePdf(pdfPath || "");
-        console.log(pdfName)
+        console.log(pdfName);
         currentPdfUrl = pdfName; // useGeneratePdf handles format
         setPdfUrl(currentPdfUrl);
       }

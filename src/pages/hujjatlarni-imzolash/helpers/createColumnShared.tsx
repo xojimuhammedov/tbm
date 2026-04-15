@@ -73,7 +73,7 @@ const createSharedColumns = (
     key: "from_id",
     dataIndex: "from_id",
     name: t("Kimdan", { defaultValue: "Kimdan" }),
-    render: (value:any) =>
+    render: (value: any) =>
       `${value?.first_name || ""} ${value?.second_name || ""} ${value?.middle_name || ""}`,
   },
   {

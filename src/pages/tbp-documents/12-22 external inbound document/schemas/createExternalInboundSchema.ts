@@ -25,7 +25,7 @@ export const createExternalInboundSchema = (
       }),
     ),
     reception_date: z.string().nonempty(
-      t("required {{field}}", {
+      t("required {{field}}", { 
         field: t("Reception date"),
         ns: config.LANG.NS.VALIDATION,
       }),

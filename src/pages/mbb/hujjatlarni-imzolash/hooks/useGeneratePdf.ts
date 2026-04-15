@@ -2,11 +2,11 @@ import { useState, useCallback } from "react";
 
 const useGeneratePdf = () => {
   const [isGenerating, setIsGenerating] = useState(false);
-  
+
   const generatePdf = useCallback(async (pdfPath?: string): Promise<string> => {
     try {
       setIsGenerating(true);
-      
+
       if (!pdfPath) {
         return "";
       }
@@ -16,9 +16,9 @@ const useGeneratePdf = () => {
 
       // Iframe PDF ni ochishi uchun to'g'ridan to'g'ri url qaytaramiz
       const url = `/api/temp-pdf/${cleanPath}`;
-      
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
+
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
       return url;
     } finally {
       setIsGenerating(false);
