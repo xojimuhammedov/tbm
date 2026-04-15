@@ -10,6 +10,5 @@ export interface ExternalInboundDocument {
   organization: string;
   content: string;
   assignee: string;
-  resolution: string;
   reply_order_date: string | null;
 }

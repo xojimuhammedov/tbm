@@ -66,12 +66,6 @@ export const createExternalInboundSchema = (
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    resolution: z.string().nonempty(
-      t("required {{field}}", {
-        field: t("Resolution"),
-        ns: config.LANG.NS.VALIDATION,
-      }),
-    ),
     reply_order_date: z.string().nullable().optional(),
   });
 

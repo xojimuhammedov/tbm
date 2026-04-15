@@ -78,14 +78,14 @@ const CreateFlowSection1212 = ({
             />
             <MyInput
               control={control}
-              name={`payload.create.flow_ids.${index}.port_a`}
-              placeholder="Port A"
+              name={`payload.create.flow_ids.${index}.device_a`}
+              placeholder="Device A"
               className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
             />
             <MyInput
               control={control}
-              name={`payload.create.flow_ids.${index}.device_a`}
-              placeholder="Device A"
+              name={`payload.create.flow_ids.${index}.port_a`}
+              placeholder="Port A"
               className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
             />
             <MyInput
@@ -96,14 +96,14 @@ const CreateFlowSection1212 = ({
             />
             <MyInput
               control={control}
-              name={`payload.create.flow_ids.${index}.port_b`}
-              placeholder="Port B"
+              name={`payload.create.flow_ids.${index}.device_b`}
+              placeholder="Device B"
               className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
             />
             <MyInput
               control={control}
-              name={`payload.create.flow_ids.${index}.device_b`}
-              placeholder="Device B"
+              name={`payload.create.flow_ids.${index}.port_b`}
+              placeholder="Port B"
               className="border border-t-0 border-l-0 border-r-0 rounded-none h-7"
             />
             <div className="flex gap-2">
