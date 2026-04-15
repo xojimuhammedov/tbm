@@ -84,6 +84,7 @@ export interface Payload1212 {
     start_time: string | null;
     description: string;
     base_file?: string;
+    justification: string;
   };
   create?: {
     flow_ids: Payload1212FlowId[];

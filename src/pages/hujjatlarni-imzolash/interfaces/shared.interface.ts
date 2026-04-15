@@ -27,4 +27,5 @@ export interface SharedItemInterface {
   status?: string;
   stages?: DocumentStage | string;
   shared_id?: string;
+  from_id: any;
 }

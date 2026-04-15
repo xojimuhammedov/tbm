@@ -107,16 +107,8 @@ const ExternalInboundForm = ({
 
           <MyInput<ExternalInboundDto>
             control={form.control}
-            name={"resolution"}
-            label={"11. Раҳбарият қарори"}
-            disabled={readOnly}
-          />
-
-          <MyInput<ExternalInboundDto>
-            control={form.control}
             name={"reply_order_date"}
-            label={"12. Жавоб хати санаси"}
-            type="date"
+            label={"11. Жавоб хати"}
             disabled={readOnly}
           />
         </div>

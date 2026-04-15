@@ -8,33 +8,6 @@ const renderHeader = (label: string) => (
   <span style={{ whiteSpace: "nowrap" }}>{label}</span>
 );
 
-const renderStage = (status: string | undefined) => {
-  let label = status || "---";
-  let colorClass = "bg-slate-100 text-slate-700";
-
-  if (status === "DONE") {
-    label = "Yakunlangan";
-    colorClass = "bg-emerald-100 text-emerald-700";
-  } else if (status === "SIGNING") {
-    label = "Imzolanmoqda";
-    colorClass = "bg-amber-100 text-amber-700";
-  } else if (status === "APPROVAL") {
-    label = "Kelishilmoqda";
-    colorClass = "bg-blue-100 text-blue-700";
-  } else if (status === "DRAFT") {
-    label = "Yangi";
-    colorClass = "bg-purple-100 text-purple-700";
-  }
-
-  return (
-    <span
-      className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}
-    >
-      {label}
-    </span>
-  );
-};
-
 const renderStatus = (status: string | undefined) => {
   let label = status || "---";
   let colorClass = "bg-slate-100 text-slate-700";
@@ -97,10 +70,11 @@ const createSharedColumns = (
     ),
   },
   {
-    key: "document_stage",
-    dataIndex: "stages",
-    name: t("Bosqich", { defaultValue: "Bosqich" }),
-    render: (value: string | undefined) => renderStage(value),
+    key: "from_id",
+    dataIndex: "from_id",
+    name: t("Kimdan", { defaultValue: "Kimdan" }),
+    render: (value: any) =>
+      `${value?.first_name || ""} ${value?.second_name || ""} ${value?.middle_name || ""}`,
   },
   {
     key: "document_status",

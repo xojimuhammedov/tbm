@@ -25,7 +25,7 @@ export const createExternalInboundSchema = (
       }),
     ),
     reception_date: z.string().nonempty(
-      t("required {{field}}", {
+      t("required {{field}}", { 
         field: t("Reception date"),
         ns: config.LANG.NS.VALIDATION,
       }),
@@ -63,12 +63,6 @@ export const createExternalInboundSchema = (
     assignee: z.string().nonempty(
       t("required {{field}}", {
         field: t("Assignee"),
-        ns: config.LANG.NS.VALIDATION,
-      }),
-    ),
-    resolution: z.string().nonempty(
-      t("required {{field}}", {
-        field: t("Resolution"),
         ns: config.LANG.NS.VALIDATION,
       }),
     ),

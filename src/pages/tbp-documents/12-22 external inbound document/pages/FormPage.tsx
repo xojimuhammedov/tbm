@@ -19,7 +19,7 @@ const Eid_17_96_FormPage = () => {
         isActive: false,
       },
       {
-        name: t("17-96 external inbound"),
+        name: t("12-22 external inbound"),
         path: "journals/exin-96",
         isActive: false,
       },

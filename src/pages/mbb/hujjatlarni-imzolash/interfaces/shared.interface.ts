@@ -16,7 +16,9 @@ export interface SharedItemInterface {
   shared_id?: string;
   title?: string;
   signature?: any;
+  from_id?: SharedUser;
   stage?: DocumentStage | string;
   stages?: any;
   code?: string;
+  document_type?: any;
 }
