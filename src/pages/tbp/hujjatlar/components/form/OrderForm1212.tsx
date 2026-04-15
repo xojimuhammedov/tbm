@@ -1,4 +1,4 @@
-import { MyInput, MySelect } from "dgz-ui-shared/components/form";
+import { MyInput, MySelect, MyTextarea } from "dgz-ui-shared/components/form";
 import { MyDatePicker } from "dgz-ui-shared/components/form";
 import { Button, cn } from "dgz-ui";
 import { Plus, PlusSquare, Trash2 } from "lucide-react";
@@ -450,6 +450,7 @@ const OrderForm1212 = ({ control, watch }: OrderForm1212Props) => {
         </div>
         <span>quyidagi ishlar amalga oshirilsin:</span>
       </div>
+      <MyTextarea name="payload.basic.justification" control={control} placeholder="Izoh" />
 
       {/* CRUD sections — faqat tanlanganda ko'rinadi */}
       {selectedActions.includes("update") && (
