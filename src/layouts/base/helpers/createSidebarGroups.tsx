@@ -376,6 +376,18 @@ const createSidebarGroups = (
   //     // },
   //   ],
   // },
+  {
+    title: t("Documents"),
+    items: [
+      {
+        title: t("Aylanma hujjatlar"),
+        url: "turnover-documents",
+        icon: Building,
+        isActive: isActive("turnover-documents"),
+        roles: ["admin", "superadmin", "mbb", "tbp", "tbm"],
+      },
+    ],
+  },
 
   {
     title: t("Resource Database"),

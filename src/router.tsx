@@ -288,6 +288,10 @@ const MbbDocumentFormPage = lazy(
   () => import("@/pages/mbb/talabnoma/page/MbbDocumentFormPage"),
 );
 
+const TurnoverDocumentsPage = lazy(
+  () => import("@/pages/turnover-documents/Page"),
+);
+
 function Router() {
   const routes: RouteObject[] = [
     {
@@ -1461,6 +1465,14 @@ function Router() {
           element: (
             <HasAccess roles={["admin", "superadmin"]}>
               <HujjatlarniImzolashFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "turnover-documents",
+          element: (
+            <HasAccess roles={["admin", "superadmin", "tbp", "mbb", "tbm"]}>
+              <TurnoverDocumentsPage />
             </HasAccess>
           ),
         },
