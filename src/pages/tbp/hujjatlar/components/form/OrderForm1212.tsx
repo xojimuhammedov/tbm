@@ -450,7 +450,11 @@ const OrderForm1212 = ({ control, watch }: OrderForm1212Props) => {
         </div>
         <span>quyidagi ishlar amalga oshirilsin:</span>
       </div>
-      <MyTextarea name="payload.basic.justification" control={control} placeholder="Izoh" />
+      <MyTextarea
+        name="payload.basic.justification"
+        control={control}
+        placeholder="Izoh"
+      />
 
       {/* CRUD sections — faqat tanlanganda ko'rinadi */}
       {selectedActions.includes("update") && (
@@ -469,5 +473,3 @@ const OrderForm1212 = ({ control, watch }: OrderForm1212Props) => {
 };
 
 export default OrderForm1212;
-
-

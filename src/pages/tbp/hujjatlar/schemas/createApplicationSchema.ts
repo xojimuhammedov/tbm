@@ -41,7 +41,7 @@ export const createOrderSchema = (
       actions: z.array(z.string()).min(1, requiredMsg("Actions")),
       start_time: z.string().optional().nullable(),
       description: z.string().optional(),
-      justification: z.string().optional()
+      justification: z.string().optional(),
     }),
     create: z
       .object({

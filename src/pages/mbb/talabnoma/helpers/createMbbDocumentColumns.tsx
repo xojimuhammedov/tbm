@@ -45,7 +45,7 @@ const createMbbDocumentColumns = (
     render: (created_by: any) =>
       `${created_by?.first_name || ""} ${created_by?.second_name || ""} ${created_by?.middle_name || ""}`,
   },
-    {
+  {
     key: "status",
     dataIndex: "status",
     name: t("Status"),
@@ -85,7 +85,8 @@ const createMbbDocumentColumns = (
     dataIndex: "_id",
     name: "",
     render: (rid: string, record: MbbDocumentInterface) => {
-      const isFinished = record.status === "EXECUTED" || record.status === "SIGNED";
+      const isFinished =
+        record.status === "EXECUTED" || record.status === "SIGNED";
 
       return (
         <div className={"flex items-center gap-2"}>
@@ -109,7 +110,9 @@ const createMbbDocumentColumns = (
           </MyTooltip>
           <MyTooltip content={t("Delete")}>
             <Trash2Icon
-              className={"size-4 cursor-pointer text-gray-500 hover:text-red-500"}
+              className={
+                "size-4 cursor-pointer text-gray-500 hover:text-red-500"
+              }
               onClick={() => handleDelete(rid)}
             />
           </MyTooltip>

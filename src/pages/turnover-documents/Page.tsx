@@ -1,4 +1,3 @@
-
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
 import { BreadcrumbInterface } from "dgz-ui/breadcrumb";
@@ -11,17 +10,16 @@ import { TurnoverDocument } from "./interfaces/turnover.interface";
 
 const Page = () => {
   const { t } = useTranslation();
-  const {
-    loading,
-    params,
-    dataSource,
-    handleFilter,
-    columns,
-  } = useTurnoverDocuments();
+  const { loading, params, dataSource, handleFilter, columns } =
+    useTurnoverDocuments();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
-      { name: t("Turnover documents"), path: "/turnover-documents", isActive: true },
+      {
+        name: t("Turnover documents"),
+        path: "/turnover-documents",
+        isActive: true,
+      },
     ],
     [t],
   );

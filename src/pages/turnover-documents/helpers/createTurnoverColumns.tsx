@@ -55,10 +55,10 @@ const createTurnoverColumns = (
     dataIndex: "reason",
     name: t("Reason"),
     render: (reason: string) => (
-       <div className="max-w-md truncate" title={reason}>
-         {reason}
-       </div>
-    )
+      <div className="max-w-md truncate" title={reason}>
+        {reason}
+      </div>
+    ),
   },
 ];
 

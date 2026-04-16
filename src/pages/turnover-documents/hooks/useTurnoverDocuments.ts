@@ -14,7 +14,10 @@ const useTurnoverDocuments = () => {
   });
 
   const columns = useMemo(
-    () => createTurnoverColumns(t as unknown as (...args: TranslationArgsType) => string),
+    () =>
+      createTurnoverColumns(
+        t as unknown as (...args: TranslationArgsType) => string,
+      ),
     [t],
   );
 
