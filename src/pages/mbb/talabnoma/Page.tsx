@@ -11,6 +11,7 @@ import KEYS from "@/shared/constants/keys";
 import { MbbDocumentInterface } from "./interfaces/MbbDocument.interface";
 import useMbbDocument from "@/pages/mbb/talabnoma/hooks/useMbbDocument.ts";
 import MbbDocumentView from "@/pages/mbb/talabnoma/components/MbbDocumentView.tsx";
+import { createDocumentFilters } from "./hooks/useDocumentFilters";
 
 const TalabnomaPage = () => {
   const { t } = useTranslation();
@@ -25,6 +26,8 @@ const TalabnomaPage = () => {
     handleCloseView,
     currentItem,
   } = useMbbDocument();
+
+  const filters = useMemo(() => createDocumentFilters(t), [t]);
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
@@ -70,6 +73,7 @@ const TalabnomaPage = () => {
           loading={loading}
           params={params}
           onParamChange={handleFilter}
+          filters={filters}
           rowKey={"_id"}
           dataSource={dataSource}
           dataKey={"docs"}
