@@ -46,35 +46,79 @@ const createMbbDocumentColumns = (
       `${created_by?.first_name || ""} ${created_by?.second_name || ""} ${created_by?.middle_name || ""}`,
   },
   {
+    key: "status",
+    dataIndex: "status",
+    name: t("Status"),
+    render: (status: string | undefined) => {
+      let label = status || "---";
+      let colorClass = "bg-slate-100 text-slate-700";
+      if (status === "EXECUTED" || status === "SIGNED") {
+        label = "Imzolangan";
+        colorClass = "bg-emerald-100 text-emerald-700";
+      } else if (status === "SIGNING") {
+        label = "Imzolanmoqda";
+        colorClass = "bg-amber-100 text-amber-700";
+      } else if (status === "IN_REVIEW") {
+        label = "Tekshirilmoqda";
+        colorClass = "bg-amber-100 text-amber-700";
+      } else if (status === "DRAFT") {
+        label = "Yangi";
+        colorClass = "bg-purple-100 text-purple-700";
+      } else if (status === "REJECTED") {
+        label = "Rad etildi";
+        colorClass = "bg-red-100 text-red-700";
+      } else if (status === "CANCEL") {
+        label = "Bekor qilindi";
+        colorClass = "bg-gray-200 text-gray-700";
+      }
+      return (
+        <span
+          className={`px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${colorClass}`}
+        >
+          {label}
+        </span>
+      );
+    },
+  },
+  {
     key: "actions",
     dataIndex: "_id",
     name: "",
-    render: (rid: string) => (
-      <div className={"flex items-center gap-2"}>
-        <MyTooltip content={t("View")}>
-          <EyeIcon
-            className={
-              "size-4 cursor-pointer text-gray-500 hover:text-blue-500"
-            }
-            onClick={() => handleView(rid)}
-          />
-        </MyTooltip>
-        <MyTooltip content={t("Edit")}>
-          <EditIcon
-            className={
-              "size-4 cursor-pointer text-gray-500 hover:text-green-500"
-            }
-            onClick={() => handleEdit(rid)}
-          />
-        </MyTooltip>
-        <MyTooltip content={t("Delete")}>
-          <Trash2Icon
-            className={"size-4 cursor-pointer text-gray-500 hover:text-red-500"}
-            onClick={() => handleDelete(rid)}
-          />
-        </MyTooltip>
-      </div>
-    ),
+    render: (rid: string, record: MbbDocumentInterface) => {
+      const isFinished =
+        record.status === "EXECUTED" || record.status === "SIGNED";
+
+      return (
+        <div className={"flex items-center gap-2"}>
+          <MyTooltip content={t("View")}>
+            <EyeIcon
+              className={
+                "size-4 cursor-pointer text-gray-500 hover:text-blue-500"
+              }
+              onClick={() => handleView(rid)}
+            />
+          </MyTooltip>
+          <MyTooltip content={t("Edit")}>
+            <EditIcon
+              className={`size-4 transition-colors ${
+                isFinished
+                  ? "opacity-40 cursor-not-allowed text-gray-400"
+                  : "cursor-pointer text-gray-500 hover:text-green-500"
+              }`}
+              onClick={() => !isFinished && handleEdit(rid)}
+            />
+          </MyTooltip>
+          <MyTooltip content={t("Delete")}>
+            <Trash2Icon
+              className={
+                "size-4 cursor-pointer text-gray-500 hover:text-red-500"
+              }
+              onClick={() => handleDelete(rid)}
+            />
+          </MyTooltip>
+        </div>
+      );
+    },
   },
 ];
 

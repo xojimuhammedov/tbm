@@ -80,8 +80,7 @@ const useExternalInboundForm = ({ id, onSave }: ExternalInboundFormProps) => {
         organization: item.organization,
         content: item.content,
         assignee: item.assignee,
-        resolution: item.resolution,
-        reply_order_date: formatDate(item.reply_order_date),
+        reply_order_date: item.reply_order_date,
       });
     }
   }, [query.data, form]);
