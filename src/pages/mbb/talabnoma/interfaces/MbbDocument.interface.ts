@@ -7,6 +7,7 @@ export interface BaseMbbDocument {
   created_at?: string;
   created_by?: any;
   pdf_path?: string;
+  status?: string;
 }
 
 export interface RequisitionDocument extends BaseMbbDocument {
@@ -40,6 +41,7 @@ export interface RequisitionPayload {
   creator_ip?: string;
   creator_mbb?: string;
   application?: MbbApplication[];
+  status?: string;
 }
 
 export interface MemoPayload {

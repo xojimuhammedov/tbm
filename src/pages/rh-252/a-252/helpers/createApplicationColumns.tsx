@@ -183,8 +183,12 @@ const createOrderColumns = (
 
           <MyTooltip content={t("Edit")}>
             <EditIcon
-              className="size-4 cursor-pointer text-slate-500 hover:text-amber-600 transition-colors"
-              onClick={() => handleEdit(id)}
+              className={`size-4 transition-colors ${
+                isFinished
+                  ? "opacity-40 cursor-not-allowed text-gray-400"
+                  : "cursor-pointer text-slate-500 hover:text-amber-600"
+              }`}
+              onClick={() => !isFinished && handleEdit(id)}
             />
           </MyTooltip>
 
