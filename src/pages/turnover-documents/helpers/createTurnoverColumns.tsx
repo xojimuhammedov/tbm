@@ -21,11 +21,6 @@ const createTurnoverColumns = (
     ),
   },
   {
-    key: "register_code",
-    dataIndex: "register_code",
-    name: t("Register code"),
-  },
-  {
     key: "to",
     dataIndex: "to",
     name: t("To"),
