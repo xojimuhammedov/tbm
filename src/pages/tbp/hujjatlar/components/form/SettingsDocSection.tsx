@@ -56,7 +56,7 @@ const SettingsDocSection = ({ control, setValue }: SettingsDocSectionProps) => {
       setIsLoading(true);
       try {
         const response = await request.get(
-          `api/flows/get-for-inbedding/${val}`,
+          `/api/flows/get-for-inbedding/${val}`,
         );
         setResults(response?.data?.data || []);
         setDropdownOpen(true);

@@ -52,7 +52,7 @@ const TelegraphPlannedWorkSection = ({
       setIsLoading(true);
       try {
         const response = await request.get(
-          `api/flows/get-for-inbedding/${val}`,
+          `/api/flows/get-for-inbedding/${val}`,
         );
         setResults(response?.data?.data || []);
         setShowDropdown(true);
