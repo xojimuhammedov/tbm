@@ -65,6 +65,19 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           comment: "",
         },
       ],
+      // T-MEMO defaults
+      request_number: "",
+      ap_input: "",
+      ubp_input: "",
+      action_type: [],
+      t_memo_data: [
+        {
+          order_code: "",
+          connection_established_date: "",
+          connection_route_details: "",
+          comment: "",
+        },
+      ],
     },
   });
 
@@ -97,6 +110,16 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
   } = useFieldArray({
     control: form.control,
     name: "data",
+  });
+
+  // T-MEMO field arrays
+  const {
+    fields: tMemoDataFields,
+    append: appendTMemoData,
+    remove: removeTMemoData,
+  } = useFieldArray({
+    control: form.control,
+    name: "t_memo_data",
   });
 
   const { query: save } = useMutate({
@@ -173,6 +196,22 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           creator_mbb,
           application,
         };
+      } else if (document_type === "T-MEMO") {
+        // Build T-MEMO payload
+        const {
+          request_number,
+          ap_input,
+          ubp_input,
+          action_type,
+          t_memo_data,
+        } = rest;
+        payload = {
+          request_number,
+          ap_input,
+          ubp_input,
+          action_type,
+          data: t_memo_data,
+        };
       } else {
         // Build MEMO payload
         const { title, data: memoData } = rest;
@@ -219,6 +258,25 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
     [removeData, dataFields.length],
   );
 
+  // T-MEMO helpers
+  const handleAppendTMemoData = useCallback(() => {
+    appendTMemoData({
+      order_code: "",
+      connection_established_date: "",
+      connection_route_details: "",
+      comment: "",
+    });
+  }, [appendTMemoData]);
+
+  const handleRemoveTMemoData = useCallback(
+    (index: number) => {
+      if (tMemoDataFields.length > 1) {
+        removeTMemoData(index);
+      }
+    },
+    [removeTMemoData, tMemoDataFields.length],
+  );
+
   return {
     form,
     documentType,
@@ -233,6 +291,10 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
     dataFields,
     handleAppendData,
     handleRemoveData,
+    // T-MEMO
+    tMemoDataFields,
+    handleAppendTMemoData,
+    handleRemoveTMemoData,
     // Common
     isLoading: save.isPending,
     onSubmit,
