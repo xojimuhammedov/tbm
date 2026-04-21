@@ -65,17 +65,15 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           comment: "",
         },
       ],
-      // T-MEMO defaults
-      request_number: "",
-      ap_input: "",
-      ubp_input: "",
-      action_type: [],
-      t_memo_data: [
+      // MEMO_3_3 defaults
+      ap_executor: "",
+      ubp_executor: "",
+      rows: [
         {
-          order_code: "",
-          connection_established_date: "",
-          connection_route_details: "",
-          comment: "",
+          branch_order_info: "",
+          connection_date: "",
+          connection_route: "",
+          note: "",
         },
       ],
     },
@@ -112,14 +110,14 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
     name: "data",
   });
 
-  // T-MEMO field arrays
+  // MEMO_3_3 field arrays
   const {
     fields: tMemoDataFields,
     append: appendTMemoData,
     remove: removeTMemoData,
   } = useFieldArray({
     control: form.control,
-    name: "t_memo_data",
+    name: "rows",
   });
 
   const { query: save } = useMutate({
@@ -196,21 +194,17 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           creator_mbb,
           application,
         };
-      } else if (document_type === "T-MEMO") {
-        // Build T-MEMO payload
+      } else if (document_type === "MEMO_3_3") {
+        // Build MEMO_3_3 payload
         const {
-          request_number,
-          ap_input,
-          ubp_input,
-          action_type,
-          t_memo_data,
+          ap_executor,
+          ubp_executor,
+          rows,
         } = rest;
         payload = {
-          request_number,
-          ap_input,
-          ubp_input,
-          action_type,
-          data: t_memo_data,
+          ap_executor,
+          ubp_executor,
+          rows,
         };
       } else {
         // Build MEMO payload
@@ -258,13 +252,13 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
     [removeData, dataFields.length],
   );
 
-  // T-MEMO helpers
+  // MEMO_3_3 helpers
   const handleAppendTMemoData = useCallback(() => {
     appendTMemoData({
-      order_code: "",
-      connection_established_date: "",
-      connection_route_details: "",
-      comment: "",
+      branch_order_info: "",
+      connection_date: "",
+      connection_route: "",
+      note: "",
     });
   }, [appendTMemoData]);
 
@@ -291,7 +285,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
     dataFields,
     handleAppendData,
     handleRemoveData,
-    // T-MEMO
+    // MEMO_3_3
     tMemoDataFields,
     handleAppendTMemoData,
     handleRemoveTMemoData,

@@ -1,7 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { MyInput, MySelect } from "dgz-ui-shared/components/form";
+import { MyInput, MyDatePicker } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui/button";
 import { Plus, Trash2 } from "lucide-react";
 import { MbbDocumentDto } from "../../schemas/createMbbDocumentSchema";
@@ -21,11 +21,8 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const actionOptions = [
-    { label: t("Tashkil etish"), value: "create" },
-    { label: t("Ko'chirish"), value: "update" },
-    { label: t("O'chirish"), value: "delete" },
-  ];
+  console.log(form?.formState?.errors)
+
 
   return (
     <div>
@@ -38,7 +35,7 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
             <span>
               «Ўзбектелеком» АК филиалларининг фармойишлари асосида алоқаларни
             </span>
-            <div className="w-[300px] text-left">
+            {/* <div className="w-[300px] text-left">
               <MySelect
                 control={form.control}
                 name="action_type"
@@ -47,7 +44,7 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
                 isClearable
                 isMulti
               />
-            </div>
+            </div> */}
             <span>тўғрисида</span>
           </div>
 
@@ -55,7 +52,7 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
             <MyInput
               control={form.control}
               placeholder={t("")}
-              name={"request_number"}
+              name={"code"}
               className="border border-t-0 border-l-0 border-r-0 rounded-none w-[100px]"
             />{" "}
             {t("сон МАЪЛУМОТ")}
@@ -109,23 +106,21 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
                     control={form.control}
-                    name={`t_memo_data.${index}.order_code`}
+                    name={`rows.${index}.branch_order_info`}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="Order #12345 - 2025-12-10"
                   />
                 </td>
                 <td className="border border-gray-300 px-2 py-2">
-                  <MyInput
+                  <MyDatePicker
                     control={form.control}
-                    name={`t_memo_data.${index}.connection_established_date`}
-                    className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
-                    placeholder="2025-12-20"
+                    name={`rows.${index}.connection_date`}
                   />
                 </td>
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
                     control={form.control}
-                    name={`t_memo_data.${index}.connection_route_details`}
+                    name={`rows.${index}.connection_route`}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="Completed"
                   />
@@ -133,7 +128,7 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
                 <td className="border border-gray-300 px-2 py-2">
                   <MyInput
                     control={form.control}
-                    name={`t_memo_data.${index}.comment`}
+                    name={`rows.${index}.note`}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="No issues"
                   />
@@ -170,12 +165,12 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
         <MyInput
           placeholder={t("")}
           control={form.control}
-          name="ap_input"
+          name="ap_executor"
           label={t("АП номери, бажарувчининг исм-шарифи, фамилияси ва сана")}
         />
         <MyInput
           control={form.control}
-          name="ubp_input"
+          name="ubp_executor"
           label={t("УБП номери, бажарувчининг исм-шарифи, фамилияси ва сана")}
           placeholder={t("")}
         />

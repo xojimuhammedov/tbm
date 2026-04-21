@@ -5,7 +5,7 @@ export const createMbbDocumentSchema = (
   t: (...args: TranslationArgsType) => string,
 ) => {
   return z.object({
-    document_type: z.enum(["MEMO", "REQUISITION", "T-MEMO"], {
+    document_type: z.enum(["MEMO", "REQUISITION", "MEMO_3_3"], {
       required_error: t("Majburiy maydon"),
     }),
     code: z.string().min(1, { message: t("Majburiy maydon") }),
@@ -16,8 +16,8 @@ export const createMbbDocumentSchema = (
     schedule: z
       .array(
         z.object({
-          start_at: z.union([z.string(), z.date()]).optional(),
-          end_at: z.union([z.string(), z.date()]).optional(),
+          start_at: z.union([z.string(), z.date()]).nullish(),
+          end_at: z.union([z.string(), z.date()]).nullish(),
         }),
       )
       .optional(),
@@ -56,8 +56,8 @@ export const createMbbDocumentSchema = (
       .array(
         z.object({
           order_code: z.string().optional(),
-          assigned_time: z.union([z.string(), z.date()]).optional(),
-          completed_time: z.union([z.string(), z.date()]).optional(),
+          assigned_time: z.union([z.string(), z.date()]).nullish(),
+          completed_time: z.union([z.string(), z.date()]).nullish(),
           responsible_executor: z.string().optional(),
           customer_details: z.string().optional(),
           comment: z.string().optional(),
@@ -65,18 +65,16 @@ export const createMbbDocumentSchema = (
       )
       .optional(),
 
-    // T-MEMO fields
-    request_number: z.string().optional(),
-    ap_input: z.string().optional(),
-    ubp_input: z.string().optional(),
-    action_type: z.array(z.any()).optional(),
-    t_memo_data: z
+    // MEMO_3_3 fields
+    ap_executor: z.string().optional(),
+    ubp_executor: z.string().optional(),
+    rows: z
       .array(
         z.object({
-          order_code: z.string().optional(),
-          connection_established_date: z.union([z.string(), z.date()]).optional(),
-          connection_route_details: z.string().optional(),
-          comment: z.string().optional(),
+          branch_order_info: z.string().optional(),
+          connection_date: z.union([z.string(), z.date()]).nullish(),
+          connection_route: z.string().optional(),
+          note: z.string().optional(),
         })
       )
       .optional(),

@@ -37,7 +37,7 @@ const MbbDocumentFormPage = () => {
   const documentTypeOptions = [
     { label: "Talabnoma (REQUISITION)", value: "REQUISITION" },
     { label: "Ma'lumotnoma (MEMO)", value: "MEMO" },
-    { label: "3.3-T shakl", value: "T-MEMO" },
+    { label: "3.3-T shakl", value: "MEMO_3_3" },
   ];
 
   return (
