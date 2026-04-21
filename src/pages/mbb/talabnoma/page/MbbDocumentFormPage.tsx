@@ -8,6 +8,7 @@ import { FormContainerFooter } from "@/shared/components/templates/form";
 import { useTranslation } from "react-i18next";
 import { MemoFormSection } from "../components/form/MemoFormSection";
 import { RequisitionFormSection } from "../components/form/RequisitionFormSection";
+import { TMemoFormSection } from "../components/form/TMemoFormSection";
 
 /* ─── Main Unified Form Page ─── */
 const MbbDocumentFormPage = () => {
@@ -24,6 +25,9 @@ const MbbDocumentFormPage = () => {
     dataFields,
     handleAppendData,
     handleRemoveData,
+    tMemoDataFields,
+    handleAppendTMemoData,
+    handleRemoveTMemoData,
     onSubmit,
   } = useMbbDocumentForm({ id });
   const { staffOptions } = useStaffOptions();
@@ -33,15 +37,16 @@ const MbbDocumentFormPage = () => {
   const documentTypeOptions = [
     { label: "Talabnoma (REQUISITION)", value: "REQUISITION" },
     { label: "Ma'lumotnoma (MEMO)", value: "MEMO" },
+    { label: "3.3-T shakl", value: "MEMO_3_3" },
   ];
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="p-4 bg-gray-50/50 min-h-screen"
+        className="p-4 bg-gray-50/50 min-h-screen mb-4"
       >
-        <div className="w-full max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+        <div className="w-full max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-200">
           {/* Document Type Select */}
           <div className="mb-8 flex justify-center">
             <div className="w-80">
@@ -66,12 +71,19 @@ const MbbDocumentFormPage = () => {
               appendApplication={appendApplication}
               removeApplication={removeApplication}
             />
-          ) : (
+          ) : documentType === "MEMO" ? (
             <MemoFormSection
               form={form}
               dataFields={dataFields}
               handleAppendData={handleAppendData}
               handleRemoveData={handleRemoveData}
+            />
+          ) : (
+            <TMemoFormSection
+              form={form}
+              dataFields={tMemoDataFields}
+              handleAppendData={handleAppendTMemoData}
+              handleRemoveData={handleRemoveTMemoData}
             />
           )}
 

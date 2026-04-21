@@ -6,4 +6,5 @@ export interface TurnoverDocument {
   to: string[];
   copy: string[];
   reason: string;
+  status: string;
 }

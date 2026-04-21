@@ -81,12 +81,16 @@ const OrderView1212 = ({
       </div>
 
       <div className="grid grid-cols-[90px_1fr] gap-y-1 mb-6 text-[15px]">
-        <span className="font-bold">Kimga:</span>
-        <div className="font-bold uppercase">
-          {document?.to?.map((item: any, i: number) => (
-            <p key={i}>{renderText(item)}</p>
-          )) || "________________"}
-        </div>
+        {document?.to?.length > 0 && (
+          <>
+            <span className="font-bold">Kimga:</span>
+            <div className="uppercase">
+              {document.to.map((item: any, i: number) => (
+                <p key={i}>{renderText(item?.name)}</p>
+              ))}
+            </div>
+          </>
+        )}
         {document?.copy?.length > 0 && (
           <>
             <span className="font-bold">Nusxasi:</span>
