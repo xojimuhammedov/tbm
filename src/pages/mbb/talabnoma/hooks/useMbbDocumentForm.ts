@@ -31,6 +31,8 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       document_type: "REQUISITION",
       code: "",
       signer: "",
+      to: [],
+      copy: [],
       // REQUISITION defaults
       working_condition: "",
       schedule: [{ start_at: "", end_at: "" }],
@@ -151,7 +153,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
 
   const onSubmit = useCallback(
     (values: MbbDocumentDto) => {
-      const { document_type, code, signer, ...rest } = values;
+      const { document_type, code, signer, to, copy, ...rest } = values;
 
       let payload: Record<string, unknown>;
 
@@ -222,6 +224,8 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       const body = {
         code,
         document_type,
+        to,
+        copy,
         payload,
         signer,
       };

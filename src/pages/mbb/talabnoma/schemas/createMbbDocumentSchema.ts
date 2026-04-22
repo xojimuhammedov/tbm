@@ -10,6 +10,8 @@ export const createMbbDocumentSchema = (
     }),
     code: z.string().min(1, { message: t("Majburiy maydon") }),
     signer: z.string().min(1, { message: t("Majburiy maydon") }),
+    to: z.array(z.string()).optional(),
+    copy: z.array(z.string()).optional(),
 
     // REQUISITION (Talabnoma) fields
     working_condition: z.string().optional(),

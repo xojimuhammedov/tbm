@@ -4,6 +4,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import useMbbDocumentForm from "@/pages/mbb/talabnoma/hooks/useMbbDocumentForm.ts";
 import { useNavigate, useParams } from "react-router-dom";
 import useStaffOptions from "@/pages/staff/hooks/useStaffOptions.ts";
+import useOrganizationOptions from "@/pages/organizations/hooks/useOrganizationOptions.ts";
 import { FormContainerFooter } from "@/shared/components/templates/form";
 import { useTranslation } from "react-i18next";
 import { MemoFormSection } from "../components/form/MemoFormSection";
@@ -31,6 +32,7 @@ const MbbDocumentFormPage = () => {
     onSubmit,
   } = useMbbDocumentForm({ id });
   const { staffOptions } = useStaffOptions();
+  const { organizationOptions } = useOrganizationOptions();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -58,6 +60,32 @@ const MbbDocumentFormPage = () => {
                 label="Hujjat turi"
               />
             </div>
+          </div>
+
+          <div className="mb-4 text-lg">
+            <p>
+              <strong>Kimga:</strong>
+            </p>
+            <MySelect
+              name="to"
+              control={form.control}
+              options={organizationOptions || []}
+              placeholder="Tanlang"
+              isMulti
+            />
+          </div>
+
+          <div className="mb-4 text-lg">
+            <p>
+              <strong>Nusxasi:</strong>
+            </p>
+            <MySelect
+              name="copy"
+              control={form.control}
+              options={organizationOptions || []}
+              placeholder="Tanlang"
+              isMulti
+            />
           </div>
 
           {/* Conditional Form Body */}
