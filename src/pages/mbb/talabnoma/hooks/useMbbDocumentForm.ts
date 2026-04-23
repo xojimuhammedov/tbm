@@ -78,6 +78,11 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           note: "",
         },
       ],
+      // DECLARATION defaults
+      organization_name: "",
+      request_number: "",
+      request_date: "",
+      context: "",
     },
   });
 
@@ -136,7 +141,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
             : t("Application created successfully"),
         });
         onSave?.();
-        navigate("/mbb/rh-3_3");
+        navigate("/mbb/talabnoma");
       },
       onError: (error: unknown) => {
         const axiosError = error as AxiosError<{ message?: string }>;
@@ -207,6 +212,17 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           ap_executor,
           ubp_executor,
           rows,
+        };
+      } else if (document_type === "DECLARATION") {
+        // Build DECLARATION payload
+        const { organization_name, request_number, request_date, context } = rest;
+        payload = {
+          basic: {
+            organization_name,
+            request_number,
+            request_date,
+          },
+          context,
         };
       } else {
         // Build MEMO payload

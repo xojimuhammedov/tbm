@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { MemoFormSection } from "../components/form/MemoFormSection";
 import { RequisitionFormSection } from "../components/form/RequisitionFormSection";
 import { TMemoFormSection } from "../components/form/TMemoFormSection";
+import { DeclarationFormSection } from "../components/form/DeclarationFormSection";
 
 /* ─── Main Unified Form Page ─── */
 const MbbDocumentFormPage = () => {
@@ -40,6 +41,7 @@ const MbbDocumentFormPage = () => {
     { label: "Talabnoma (REQUISITION)", value: "REQUISITION" },
     { label: "Ma'lumotnoma (MEMO)", value: "MEMO" },
     { label: "3.3-T shakl", value: "MEMO_3_3" },
+    { label: "Bildirgi (DECLARATION)", value: "DECLARATION" },
   ];
 
   return (
@@ -106,6 +108,8 @@ const MbbDocumentFormPage = () => {
               handleAppendData={handleAppendData}
               handleRemoveData={handleRemoveData}
             />
+          ) : documentType === "DECLARATION" ? (
+            <DeclarationFormSection control={form.control} setValue={form.setValue} />
           ) : (
             <TMemoFormSection
               form={form}
@@ -116,7 +120,7 @@ const MbbDocumentFormPage = () => {
           )}
 
           {/* Signer section (common to both) */}
-          <div className="mt-12 flex flex-col md:flex-row gap-4 items-center border-t border-gray-200 pt-8 justify-between">
+          <div className="mt-4 flex flex-col md:flex-row gap-4 items-center border-t border-gray-200 pt-8 justify-between">
             <div className="w-72">
               <MySelect
                 name="signer"

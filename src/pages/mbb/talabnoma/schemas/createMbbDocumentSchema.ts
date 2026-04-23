@@ -5,7 +5,7 @@ export const createMbbDocumentSchema = (
   t: (...args: TranslationArgsType) => string,
 ) => {
   return z.object({
-    document_type: z.enum(["MEMO", "REQUISITION", "MEMO_3_3"], {
+    document_type: z.enum(["MEMO", "REQUISITION", "MEMO_3_3", "DECLARATION"], {
       required_error: t("Majburiy maydon"),
     }),
     code: z.string().min(1, { message: t("Majburiy maydon") }),
@@ -80,6 +80,12 @@ export const createMbbDocumentSchema = (
         })
       )
       .optional(),
+
+    // DECLARATION fields
+    organization_name: z.string().optional(),
+    request_number: z.string().optional(),
+    request_date: z.union([z.string(), z.date()]).nullish(),
+    context: z.string().optional(),
   });
 };
 
