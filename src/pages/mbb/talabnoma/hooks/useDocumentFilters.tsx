@@ -26,7 +26,9 @@ export const createDocumentFilters = (
       isMulti: false,
       options: [
         { value: "REQUISITION", label: t("Talabnoma") },
-        { value: "MEMO", label: t("Ma'lumotnoma") },
+        { value: "MEMO", label: t("3.3 Ma'lumotnoma") },
+        { value: "DECLARATION", label: t("Bildirgi") },
+        { value: "MEMO_3_3", label: t("3.3-T Ma'lumotnoma") },
       ],
     },
   ];
