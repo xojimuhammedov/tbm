@@ -2,7 +2,7 @@ export interface BaseMbbDocument {
   _id: string;
   id?: string;
   code: string;
-  document_type: "MEMO" | "REQUISITION";
+  document_type: "MEMO" | "REQUISITION" | "MEMO_3_3" | "DECLARATION";
   signer: any;
   created_at?: string;
   created_by?: any;
@@ -20,9 +20,19 @@ export interface MemoDocument extends BaseMbbDocument {
   payload?: MemoPayload;
 }
 
-export type MbbDocumentInterface = RequisitionDocument | MemoDocument;
+export interface TMemoDocument extends BaseMbbDocument {
+  document_type: "MEMO_3_3";
+  payload?: TMemoPayload;
+}
 
-export type MbbPayloadInterface = RequisitionPayload | MemoPayload;
+export interface DeclarationDocument extends BaseMbbDocument {
+  document_type: "DECLARATION";
+  payload?: DeclarationPayload;
+}
+
+export type MbbDocumentInterface = RequisitionDocument | MemoDocument | TMemoDocument | DeclarationDocument;
+
+export type MbbPayloadInterface = RequisitionPayload | MemoPayload | TMemoPayload | DeclarationPayload;
 
 export interface RequisitionPayload {
   working_condition?: string;
@@ -47,6 +57,28 @@ export interface RequisitionPayload {
 export interface MemoPayload {
   title?: string;
   data?: MbbOrderData[];
+}
+
+export interface TMemoPayload {
+  ap_executor?: string;
+  ubp_executor?: string;
+  rows?: TMemoRow[];
+}
+
+export interface TMemoRow {
+  branch_order_info?: string;
+  connection_date?: string;
+  connection_route?: string;
+  note?: string;
+}
+
+export interface DeclarationPayload {
+  basic?: {
+    organization_name?: string;
+    request_number?: string;
+    request_date?: string;
+  };
+  context?: string;
 }
 
 export interface MbbSchedule {
