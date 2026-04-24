@@ -9,16 +9,19 @@ import { ISO_DATE } from "@/shared/constants/date.constants.ts";
 type UseDateRangeProps = {
   key: string;
   format?: string;
+  fromKey?: string;
+  toKey?: string;
+  excludeParams?: string[];
 };
 
-function useDateRange({ key, format = ISO_DATE }: UseDateRangeProps) {
-  const { params, handleSetParams } = useQueryParams({ dateRangeKey: key });
+function useDateRange({ key, format = ISO_DATE, fromKey = "from", toKey = "to", excludeParams }: UseDateRangeProps) {
+  const { params, handleSetParams } = useQueryParams({ dateRangeKey: key, fromKey, toKey, excludeParams });
   const { storedRanges, setStoredRange } = useDateRangeStore();
   const [range, setRange] = useState<DateRange | undefined>();
 
   const defaultRange = useMemo(() => {
-    const fromParam = get(params, "from");
-    const toParam = get(params, "to");
+    const fromParam = get(params, fromKey);
+    const toParam = get(params, toKey);
     let newRange: DateRange | undefined;
 
     if (fromParam && toParam) {
@@ -39,22 +42,22 @@ function useDateRange({ key, format = ISO_DATE }: UseDateRangeProps) {
       };
     }
     return newRange;
-  }, [params, format]);
+  }, [params, format, fromKey, toKey]);
 
   const handleRangeSelected = useCallback(
     (selected?: DateRange) => {
       handleSetParams({
         ...params,
-        from: selected?.from
+        [fromKey]: selected?.from
           ? dayjs(selected.from).utc(true).format(format)
           : undefined,
-        to: selected?.to
+        [toKey]: selected?.to
           ? dayjs(selected.to).utc(true).format(format)
           : undefined,
       });
       setRange(selected);
     },
-    [handleSetParams, params, format],
+    [handleSetParams, params, format, fromKey, toKey],
   );
 
   useEffect(() => {

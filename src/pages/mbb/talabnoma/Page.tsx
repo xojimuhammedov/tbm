@@ -54,10 +54,18 @@ const TalabnomaPage = () => {
       />
 
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-        <Button size={"sm"} onClick={handleAdd}>
-          <CirclePlusIcon className="mr-2 h-4 w-4" />
-          {t("Add new")}
-        </Button>
+        <div className="flex items-center gap-2">
+          {/* <DateRangeFilter
+            dateKey={KEYS.MBB_Document}
+            fromKey="req_start_date"
+            toKey="req_end_date"
+            excludeParams={["start", "end"]}
+          /> */}
+          <Button size={"sm"} onClick={handleAdd}>
+            <CirclePlusIcon className="mr-2 h-4 w-4" />
+            {t("Add new")}
+          </Button>
+        </div>
       </PageHeader>
 
       <PageWrapper>

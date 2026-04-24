@@ -11,6 +11,8 @@ type UseListParams = {
   defaultParams?: Record<string, unknown>;
   dateRangeKey?: string;
   excludeParams?: string[];
+  fromKey?: string;
+  toKey?: string;
 };
 
 const useLists = <TData>({
@@ -20,10 +22,14 @@ const useLists = <TData>({
   defaultParams,
   dateRangeKey,
   excludeParams = [],
+  fromKey,
+  toKey,
 }: UseListParams) => {
   const { params: queryParams, handleSetParams } = useQueryParams({
     dateRangeKey,
     excludeParams,
+    fromKey,
+    toKey,
   });
 
   const combinedUrl = useMemo(() => [...url], [url]);
