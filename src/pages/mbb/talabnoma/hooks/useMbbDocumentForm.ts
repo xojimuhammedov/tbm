@@ -31,6 +31,8 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       document_type: "REQUISITION",
       code: "",
       signer: "",
+      to: [],
+      copy: [],
       // REQUISITION defaults
       working_condition: "",
       schedule: [{ start_at: "", end_at: "" }],
@@ -76,6 +78,11 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           note: "",
         },
       ],
+      // DECLARATION defaults
+      organization_name: "",
+      request_number: "",
+      request_date: "",
+      context: "",
     },
   });
 
@@ -134,7 +141,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
             : t("Application created successfully"),
         });
         onSave?.();
-        navigate("/mbb/rh-3_3");
+        navigate("/mbb/talabnoma");
       },
       onError: (error: unknown) => {
         const axiosError = error as AxiosError<{ message?: string }>;
@@ -151,7 +158,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
 
   const onSubmit = useCallback(
     (values: MbbDocumentDto) => {
-      const { document_type, code, signer, ...rest } = values;
+      const { document_type, code, signer, to, copy, ...rest } = values;
 
       let payload: Record<string, unknown>;
 
@@ -206,6 +213,17 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           ubp_executor,
           rows,
         };
+      } else if (document_type === "DECLARATION") {
+        // Build DECLARATION payload
+        const { organization_name, request_number, request_date, context } = rest;
+        payload = {
+          basic: {
+            organization_name,
+            request_number,
+            request_date,
+          },
+          context,
+        };
       } else {
         // Build MEMO payload
         const { title, data: memoData } = rest;
@@ -222,6 +240,8 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       const body = {
         code,
         document_type,
+        to,
+        copy,
         payload,
         signer,
       };

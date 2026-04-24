@@ -325,7 +325,7 @@ const createSidebarGroups = (
         children: [
           {
             title: t("Hujjatlar"),
-            url: "rh-3_3",
+            url: "talabnoma",
             roles: ["admin", "mbb", "superadmin"],
           },
           {
