@@ -54,6 +54,7 @@ export const createMbbDocumentSchema = (
 
     // MEMO (Ma'lumotnoma) fields
     title: z.string().optional(),
+    comment: z.string().optional(),
     data: z
       .array(
         z.object({
