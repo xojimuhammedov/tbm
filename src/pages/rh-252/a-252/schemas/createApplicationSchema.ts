@@ -100,6 +100,7 @@ export const createOrderSchema = (
       justification: z.string().min(1, requiredMsg("Justification")),
       signal_level: z.string().min(1, requiredMsg("Signal level")),
       actions: z.array(z.enum(["create", "update", "delete"])),
+      responsible_form_3_3: z.string().optional(),
     }),
     create: z.object({ flow_ids: z.array(flowSchema) }).optional(),
     update: z

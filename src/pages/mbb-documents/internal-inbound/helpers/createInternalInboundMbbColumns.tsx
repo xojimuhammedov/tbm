@@ -42,18 +42,8 @@ const createInternalInboundMbbColumns = (
   {
     key: "reg_date",
     dataIndex: "reg_date",
-    name: t("Sana"),
+    name: t("Ro'yxat sanasi"),
     render: (val) => dateFormatter(val, DATE),
-  },
-  {
-    key: "journal_index",
-    dataIndex: "journal_index",
-    name: t("Jurnal indeksi"),
-  },
-  {
-    key: "recipient",
-    dataIndex: "recipient",
-    name: t("Qabul qiluvchi"),
   },
   {
     key: "organization",
@@ -61,9 +51,20 @@ const createInternalInboundMbbColumns = (
     name: t("Tashkilot"),
   },
   {
-    key: "summary",
-    dataIndex: "summary",
+    key: "content",
+    dataIndex: "content",
     name: t("Qisqacha mazmuni"),
+  },
+  {
+    key: "assignee",
+    dataIndex: "assignee",
+    name: t("Ijrochi"),
+  },
+  {
+    key: "deadline",
+    dataIndex: "deadline",
+    name: t("Muddat"),
+    render: (val) => dateFormatter(val, DATE),
   },
   {
     key: "_id",

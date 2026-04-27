@@ -322,6 +322,9 @@ const TvRvOutputLogPage = lazy(
 const TvRvOutputLogFormPage = lazy(
   () => import("@/pages/mbb-documents/tv-rv-output-log/pages/FormPage"),
 );
+const DocumentMbb33Page = lazy(
+  () => import("@/pages/mbb-documents/document-mbb-3-3/Page"),
+);
 
 const TurnoverDocumentsPage = lazy(
   () => import("@/pages/turnover-documents/Page"),
@@ -1537,6 +1540,14 @@ function Router() {
           element: (
             <HasAccess roles={["admin", "mbb", "superadmin"]}>
               <TvRvOutputLogFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/document-mbb-3-3",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <DocumentMbb33Page />
             </HasAccess>
           ),
         },

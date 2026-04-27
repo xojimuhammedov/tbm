@@ -73,11 +73,18 @@ const useInternalInboundMbbForm = ({ id, onSave }: InternalInboundMbbFormProps) 
         reg_num: item.reg_num,
         reg_date: formatDate(item.reg_date),
         journal_index: item.journal_index,
-        recipient: item.recipient,
-        summary: item.summary,
-        order_id: item.order_id,
+        original_num: item.original_num,
+        original_date: formatDate(item.original_date),
+        doc_num: item.doc_num,
+        doc_date: formatDate(item.doc_date),
+        doc_type: item.doc_type,
         organization: item.organization,
         content: item.content,
+        assignee: item.assignee,
+        resolution: item.resolution,
+        deadline: formatDate(item.deadline),
+        status: item.status,
+        reply_order_date: formatDate(item.reply_order_date),
       });
     }
   }, [query.data, form]);

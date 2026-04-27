@@ -325,11 +325,13 @@ const ApplicationDocumentForm = () => {
                   <span className="font-semibold whitespace-nowrap">
                     MBB shakl 3.3:
                   </span>
-                  <MyInput
+                  <MySelect
                     control={form.control}
                     name="payload.basic.responsible_form_3_3"
-                    placeholder="MBB-1, 5."
-                    className="border border-t-0 border-l-0 border-r-0 rounded-none h-7 w-[200px]"
+                    options={organizationOptions || []}
+                    placeholder={t("Tanlang...")}
+                    isClearable
+                    className="w-[300px]"
                   />
                 </div>
               )}

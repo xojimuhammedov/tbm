@@ -14,7 +14,7 @@ const FormPage = () => {
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       { name: t("MBB Reg Documents"), path: "/mbb/mbb-reg-documents", isActive: false },
-      { name: t("Telecom Operative"), path: "/mbb/mbb-reg-documents/telecom-operative", isActive: false },
+      { name: t("Telekommunikatsiya tarmog‘ining operativ holati bo’yicha jurnali"), path: "/mbb/mbb-reg-documents/telecom-operative", isActive: false },
       { name: id ? t("Edit") : t("Create"), path: id ? `/mbb/mbb-reg-documents/telecom-operative/edit/${id}` : "/mbb/mbb-reg-documents/telecom-operative/create", isActive: true },
     ],
     [id, t],

@@ -33,7 +33,7 @@ const InternalInboundMbbForm = ({
           <MyInput<InternalInboundMbbDto>
             control={form.control}
             name={"reg_num"}
-            label={"1. Рўйхат тартиб рақами"}
+            label={"Рўйхат тартиб рақами"}
             required
             disabled={readOnly}
           />
@@ -41,7 +41,7 @@ const InternalInboundMbbForm = ({
           <MyInput<InternalInboundMbbDto>
             control={form.control}
             name={"reg_date"}
-            label={"2. Рўйхат санаси"}
+            label={"Рўйхат санаси"}
             type="date"
             required
             disabled={readOnly}
@@ -50,40 +50,84 @@ const InternalInboundMbbForm = ({
           <MyInput<InternalInboundMbbDto>
             control={form.control}
             name={"journal_index"}
-            label={"3. Журнал индекси"}
+            label={"Журнал индеksi"}
             required
             disabled={readOnly}
           />
 
           <MyInput<InternalInboundMbbDto>
             control={form.control}
-            name={"recipient"}
-            label={"4. Қабул қилувчи"}
-            required
+            name={"original_num"}
+            label={"Юборилган рақами (Original)"}
+            disabled={readOnly}
+          />
+
+          <MyInput<InternalInboundMbbDto>
+            control={form.control}
+            name={"original_date"}
+            label={"Юборилган санаси (Original)"}
+            type="date"
+            disabled={readOnly}
+          />
+
+          <MyInput<InternalInboundMbbDto>
+            control={form.control}
+            name={"doc_num"}
+            label={"Ҳужжат рақами"}
+            disabled={readOnly}
+          />
+
+          <MyInput<InternalInboundMbbDto>
+            control={form.control}
+            name={"doc_date"}
+            label={"Ҳужжат санаси"}
+            type="date"
+            disabled={readOnly}
+          />
+
+          <MyInput<InternalInboundMbbDto>
+            control={form.control}
+            name={"doc_type"}
+            label={"Ҳужжат тури"}
             disabled={readOnly}
           />
 
           <MyInput<InternalInboundMbbDto>
             control={form.control}
             name={"organization"}
-            label={"5. Ташкилот"}
+            label={"Ташкилот"}
             required
             disabled={readOnly}
           />
 
           <MyInput<InternalInboundMbbDto>
             control={form.control}
-            name={"order_id"}
-            label={"6. Буйруқ ID"}
+            name={"assignee"}
+            label={"Ижрочи"}
+            disabled={readOnly}
+          />
+
+          <MyInput<InternalInboundMbbDto>
+            control={form.control}
+            name={"deadline"}
+            label={"Муддати (Deadline)"}
+            type="date"
+            disabled={readOnly}
+          />
+
+          <MyInput<InternalInboundMbbDto>
+            control={form.control}
+            name={"reply_order_date"}
+            label={"Жавоб бериш санаси"}
+            type="date"
             disabled={readOnly}
           />
 
           <div className="md:col-span-3">
             <MyInput<InternalInboundMbbDto>
               control={form.control}
-              name={"summary"}
-              label={"7. Қисқача мазмуни"}
-              required
+              name={"resolution"}
+              label={"Резолюция"}
               disabled={readOnly}
             />
           </div>
@@ -92,7 +136,7 @@ const InternalInboundMbbForm = ({
             <MyInput<InternalInboundMbbDto>
               control={form.control}
               name={"content"}
-              label={"8. Мазмуни"}
+              label={"Қисқача мазмуни"}
               required
               disabled={readOnly}
             />

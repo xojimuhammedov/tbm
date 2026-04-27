@@ -19,7 +19,7 @@ const FormPage = () => {
         isActive: false,
       },
       {
-        name: t("TV/RV Output Log"),
+        name: t("TV va RV chiqishlarining vaqtini qayd etish jurnali"),
         path: "/mbb/mbb-reg-documents/tv-rv-output-log",
         isActive: false,
       },
