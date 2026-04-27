@@ -9,9 +9,12 @@ type UseQueryParamsProps = {
   includeParams?: string[];
   dateRangeKey?: string;
   format?: string;
+  fromKey?: string;
+  toKey?: string;
 };
 
 const useQueryParams = (props?: UseQueryParamsProps) => {
+  const { fromKey = "start", toKey = "end" } = props || {};
   const [searchParams, setSearchParams] = useSearchParams();
   const { storedRanges } = useDateRangeStore();
 
@@ -31,16 +34,22 @@ const useQueryParams = (props?: UseQueryParamsProps) => {
   const memoizedParams = useMemo(() => {
     const parsedParams: Record<string, string | string[]> = {};
 
-    // Only inject stored range dates if they're not already in URL
     if (storedRange?.from && storedRange?.to) {
-      const hasStartInUrl = searchParams.has("start");
-      const hasEndInUrl = searchParams.has("end");
+      const hasStartInUrl = searchParams.has(fromKey);
+      const hasEndInUrl = searchParams.has(toKey);
 
-      if (!hasStartInUrl && !props?.excludeParams?.includes("start")) {
-        parsedParams["start"] = dayjs(storedRange.from).utc(true).toISOString();
+      const isValidFrom = dayjs(storedRange.from).isValid();
+      const isValidTo = dayjs(storedRange.to).isValid();
+
+      if (isValidFrom && !hasStartInUrl && !props?.excludeParams?.includes(fromKey)) {
+        parsedParams[fromKey] = props?.format 
+          ? dayjs(storedRange.from).utc(true).format(props.format) 
+          : dayjs(storedRange.from).utc(true).toISOString();
       }
-      if (!hasEndInUrl && !props?.excludeParams?.includes("end")) {
-        parsedParams["end"] = dayjs(storedRange.to).utc(true).toISOString();
+      if (isValidTo && !hasEndInUrl && !props?.excludeParams?.includes(toKey)) {
+        parsedParams[toKey] = props?.format 
+          ? dayjs(storedRange.to).utc(true).format(props.format) 
+          : dayjs(storedRange.to).utc(true).toISOString();
       }
     }
 
@@ -53,7 +62,7 @@ const useQueryParams = (props?: UseQueryParamsProps) => {
     });
 
     return parsedParams;
-  }, [searchParams, props?.excludeParams, props?.includeParams, storedRange]);
+  }, [searchParams, props?.excludeParams, props?.includeParams, props?.format, storedRange, fromKey, toKey]);
 
   const handleSetParams = useCallback(
     (data: Record<string, unknown>) => {

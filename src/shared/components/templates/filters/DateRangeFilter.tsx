@@ -6,13 +6,19 @@ import { DateRangePicker } from "dgz-ui-shared/components/datepicker";
 type DateRangePickerProps = {
   dateKey?: string;
   format?: string;
+  fromKey?: string;
+  toKey?: string;
+  excludeParams?: string[];
 };
 
 const DateRangeFilter = ({
   dateKey = DEFAULT_DATE_RANGE_KEY,
   format,
+  fromKey,
+  toKey,
+  excludeParams,
 }: DateRangePickerProps) => {
-  const { range, handleRangeSelected } = useDateRange({ key: dateKey, format });
+  const { range, handleRangeSelected } = useDateRange({ key: dateKey, format, fromKey, toKey, excludeParams });
   return (
     <DateRangePicker
       selected={range}

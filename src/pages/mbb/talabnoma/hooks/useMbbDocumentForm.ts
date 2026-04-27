@@ -57,6 +57,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       ],
       // MEMO defaults
       title: "",
+      comment: "",
       data: [
         {
           order_code: "",
@@ -226,9 +227,10 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
         };
       } else {
         // Build MEMO payload
-        const { title, data: memoData } = rest;
+        const { title, comment, data: memoData } = rest;
         payload = {
           title,
+          comment,
           data: memoData?.map((item) => ({
             ...item,
             assigned_time: item.assigned_time,

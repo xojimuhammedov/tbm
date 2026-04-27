@@ -54,10 +54,12 @@ const TalabnomaPage = () => {
       />
 
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-        <Button size={"sm"} onClick={handleAdd}>
-          <CirclePlusIcon className="mr-2 h-4 w-4" />
-          {t("Add new")}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button size={"sm"} onClick={handleAdd}>
+            <CirclePlusIcon className="mr-2 h-4 w-4" />
+            {t("Add new")}
+          </Button>
+        </div>
       </PageHeader>
 
       <PageWrapper>

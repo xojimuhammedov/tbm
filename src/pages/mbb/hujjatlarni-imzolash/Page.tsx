@@ -1,5 +1,4 @@
 import { PageWrapper } from "@/shared/components/containers/page";
-import { DateRangeFilter } from "@/shared/components/templates/filters";
 import PageHeader from "@/shared/components/templates/title/PageHeader.tsx";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { BreadcrumbInterface } from "dgz-ui";
@@ -34,7 +33,6 @@ const Page = () => {
   return (
     <>
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
-        <DateRangeFilter dateKey={HUJJATLARN_IMZOLASH_KEY} />
       </PageHeader>
 
       <PageWrapper>

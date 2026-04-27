@@ -22,6 +22,10 @@ const useMbbDocument = () => {
   const { query, handleFilter, params } = useLists<MbbDocumentInterface>({
     url: [URLS.MBB_Document],
     queryKey: [KEYS.MBB_Document],
+    dateRangeKey: KEYS.MBB_Document,
+    fromKey: "req_start_date",
+    toKey: "req_end_date",
+    excludeParams: ["start", "end"],
   });
   const { documentQuery } = useMbbDocumentQuery(viewId as string);
 

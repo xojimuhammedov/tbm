@@ -2,6 +2,9 @@ import { MyInput, MyDatePicker } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui";
 import { Plus, Trash2 } from "lucide-react";
 import useMbbDocumentForm from "@/pages/mbb/talabnoma/hooks/useMbbDocumentForm.ts";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
+import { useWatch } from "react-hook-form";
 
 export const MemoFormSection = ({
   form,
@@ -13,9 +16,15 @@ export const MemoFormSection = ({
   dataFields: ReturnType<typeof useMbbDocumentForm>["dataFields"];
   handleAppendData: ReturnType<typeof useMbbDocumentForm>["handleAppendData"];
   handleRemoveData: ReturnType<typeof useMbbDocumentForm>["handleRemoveData"];
-}) => (
-  <>
-    <h1 className="text-xl font-bold text-center">
+}) => {
+  const commentValue = useWatch({
+    control: form.control,
+    name: "comment",
+  });
+
+  return (
+    <>
+      <h1 className="text-xl font-bold text-center">
       ʻʻOʼzTTBRMʼʼ DUK farmoyishini bajarilishi boʼyicha 3.3.-son shakl
     </h1>
 
@@ -159,5 +168,19 @@ export const MemoFormSection = ({
         <Plus size={20} />
       </Button>
     </div>
+
+    <div className="mt-8 mb-8 text-gray-800 leading-relaxed">
+      <h2 className="text-lg font-semibold mb-2">Izoh</h2>
+      <div className="min-h-[250px]">
+        <ReactQuill
+          theme="snow"
+          value={commentValue || ""}
+          onChange={(val) => form.setValue("comment", val)}
+          className="h-[200px]"
+          placeholder="Izoh kiriting..."
+        />
+      </div>
+    </div>
   </>
-);
+  );
+};
