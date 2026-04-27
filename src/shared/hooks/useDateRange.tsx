@@ -15,7 +15,7 @@ type UseDateRangeProps = {
 };
 
 function useDateRange({ key, format = ISO_DATE, fromKey = "from", toKey = "to", excludeParams }: UseDateRangeProps) {
-  const { params, handleSetParams } = useQueryParams({ dateRangeKey: key, fromKey, toKey, excludeParams });
+  const { params, handleSetParams } = useQueryParams({ dateRangeKey: key, fromKey, toKey, excludeParams, format });
   const { storedRanges, setStoredRange } = useDateRangeStore();
   const [range, setRange] = useState<DateRange | undefined>();
 
@@ -25,17 +25,24 @@ function useDateRange({ key, format = ISO_DATE, fromKey = "from", toKey = "to", 
     let newRange: DateRange | undefined;
 
     if (fromParam && toParam) {
-      newRange = {
-        from: dayjs(fromParam as string, format)
-          .tz()
-          .startOf("day")
-          .toDate(),
-        to: dayjs(toParam as string, format)
-          .tz()
-          .endOf("day")
-          .toDate(),
-      };
-    } else {
+      const parsedFrom = dayjs(fromParam as string, format);
+      const parsedTo = dayjs(toParam as string, format);
+
+      if (parsedFrom.isValid() && parsedTo.isValid()) {
+        newRange = {
+          from: parsedFrom
+            .tz()
+            .startOf("day")
+            .toDate(),
+          to: parsedTo
+            .tz()
+            .endOf("day")
+            .toDate(),
+        };
+      }
+    } 
+    
+    if (!newRange) {
       newRange = {
         from: dayjs.tz().subtract(2, "week").startOf("day").toDate(),
         to: dayjs.tz().endOf("day").toDate(),
@@ -61,19 +68,18 @@ function useDateRange({ key, format = ISO_DATE, fromKey = "from", toKey = "to", 
   );
 
   useEffect(() => {
-    setRange((prevRange) => {
-      const tmpRange = isEqual(prevRange, defaultRange)
-        ? prevRange
-        : defaultRange;
+    const tmpRange = isEqual(range, defaultRange) ? range : defaultRange;
+    
+    if (tmpRange !== range) {
+      setRange(tmpRange);
+    }
 
-      if (tmpRange && key) {
-        if (key) {
-          setStoredRange({ ...storedRanges, [key]: tmpRange });
-        }
+    if (tmpRange && key) {
+      if (!isEqual(storedRanges[key], tmpRange)) {
+        setStoredRange({ ...storedRanges, [key]: tmpRange });
       }
-
-      return tmpRange;
-    });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultRange, key]);
 
   return {

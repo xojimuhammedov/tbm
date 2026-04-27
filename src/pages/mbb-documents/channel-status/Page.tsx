@@ -6,14 +6,12 @@ import { PageWrapper } from "@/shared/components/containers/page";
 import { DataTable } from "dgz-ui-shared/components/datatable";
 import { PaginationInterface } from "@/shared/interfaces/pagination.interface.ts";
 import { Button } from "dgz-ui/button";
-import { CirclePlusIcon } from "lucide-react";
-import KEYS from "@/shared/constants/keys";
-import { MbbDocumentInterface } from "./interfaces/MbbDocument.interface";
-import useMbbDocument from "@/pages/mbb/talabnoma/hooks/useMbbDocument.ts";
-import MbbDocumentView from "@/pages/mbb/talabnoma/components/MbbDocumentView.tsx";
-import { createDocumentFilters } from "./hooks/useDocumentFilters";
+import { CirclePlusIcon, Trash2Icon, Layers } from "lucide-react";
+import useChannelStatusList from "./hooks/useChannelStatusList";
+import { CHANNEL_STATUS_QUERY_KEY } from "./constants/channel-status.constants";
+import { ChannelStatusDocument } from "./interfaces/channel-status.interface";
 
-const TalabnomaPage = () => {
+const Page = () => {
   const { t } = useTranslation();
   const {
     loading,
@@ -22,23 +20,21 @@ const TalabnomaPage = () => {
     handleFilter,
     params,
     handleAdd,
-    openView,
-    handleCloseView,
-    currentItem,
-  } = useMbbDocument();
-
-  const filters = useMemo(() => createDocumentFilters(t), [t]);
+    selectedRowKeys,
+    handleDeleteMany,
+    handleDeleteAll,
+  } = useChannelStatusList();
 
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       {
-        name: t("MBB"),
-        path: "/mbb/talabnoma",
+        name: t("MBB Reg Documents"),
+        path: "/mbb/mbb-reg-documents",
         isActive: false,
       },
       {
-        name: t("Hujjatlar"),
-        path: "/mbb/talabnoma",
+        name: t("Channel Status"),
+        path: "/mbb/mbb-reg-documents/channel-status",
         isActive: true,
       },
     ],
@@ -47,16 +43,25 @@ const TalabnomaPage = () => {
 
   return (
     <>
-      <MbbDocumentView
-        open={openView}
-        onOpenChange={handleCloseView}
-        document={currentItem}
-      />
-
       <PageHeader className={"sticky top-0"} breadcrumbs={breadcrumbs}>
         <div className="flex items-center gap-2">
+          <Button size={"sm"} variant="destructive" onClick={handleDeleteAll}>
+            <Layers className="size-4" />
+            {t("Delete all")}
+          </Button>
+          <Button
+            disabled={selectedRowKeys.length === 0}
+            size={"sm"}
+            variant="destructive"
+            onClick={handleDeleteMany}
+          >
+            <Trash2Icon className="size-4" />
+            {t("O'chirish")}{" "}
+            {selectedRowKeys.length > 0 && `(${selectedRowKeys.length})`}
+          </Button>
+
           <Button size={"sm"} onClick={handleAdd}>
-            <CirclePlusIcon className="mr-2 h-4 w-4" />
+            <CirclePlusIcon className="size-4" />
             {t("Add new")}
           </Button>
         </div>
@@ -64,10 +69,10 @@ const TalabnomaPage = () => {
 
       <PageWrapper>
         <DataTable<
-          MbbDocumentInterface,
-          PaginationInterface<MbbDocumentInterface>
+          ChannelStatusDocument,
+          PaginationInterface<ChannelStatusDocument>
         >
-          tableKey={KEYS.MBB_Document}
+          tableKey={CHANNEL_STATUS_QUERY_KEY}
           hasNumbers
           hasSearch
           isStickyHeader
@@ -75,7 +80,6 @@ const TalabnomaPage = () => {
           loading={loading}
           params={params}
           onParamChange={handleFilter}
-          filters={filters}
           rowKey={"_id"}
           dataSource={dataSource}
           dataKey={"docs"}
@@ -86,4 +90,4 @@ const TalabnomaPage = () => {
   );
 };
 
-export default TalabnomaPage;
+export default Page;

@@ -335,6 +335,44 @@ const createSidebarGroups = (
           },
         ],
       },
+      {
+        title: t("MBB Reg Documents"),
+        url: "mbb/mbb-reg-documents",
+        icon: FileSignature,
+        isActive: isActive("mbb-reg-documents"),
+        children: [
+          {
+            title: t("Internal Inbound"),
+            url: "internal-inbound",
+            roles: ["admin", "mbb", "superadmin"],
+          },
+          {
+            title: t("Internal Outbound"),
+            url: "internal-outbound",
+            roles: ["admin", "mbb", "superadmin"],
+          },
+          {
+            title: t("Telecom Operative"),
+            url: "telecom-operative",
+            roles: ["admin", "mbb", "superadmin"],
+          },
+          {
+            title: t("Maintenance Log"),
+            url: "maintenance-log",
+            roles: ["admin", "mbb", "superadmin"],
+          },
+          {
+            title: t("Channel Status"),
+            url: "channel-status",
+            roles: ["admin", "mbb", "superadmin"],
+          },
+          {
+            title: t("TV/RV Output Log"),
+            url: "tv-rv-output-log",
+            roles: ["admin", "mbb", "superadmin"],
+          },
+        ],
+      },
     ],
   },
   // {

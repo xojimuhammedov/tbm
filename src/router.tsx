@@ -285,6 +285,44 @@ const MbbDocumentFormPage = lazy(
   () => import("@/pages/mbb/talabnoma/page/MbbDocumentFormPage"),
 );
 
+// MBB Reg Documents
+const InternalInboundMbbPage = lazy(
+  () => import("@/pages/mbb-documents/internal-inbound/Page"),
+);
+const InternalInboundMbbFormPage = lazy(
+  () => import("@/pages/mbb-documents/internal-inbound/pages/FormPage"),
+);
+const InternalOutboundMbbPage = lazy(
+  () => import("@/pages/mbb-documents/internal-outbound/Page"),
+);
+const InternalOutboundMbbFormPage = lazy(
+  () => import("@/pages/mbb-documents/internal-outbound/pages/FormPage"),
+);
+const TelecomOperativePage = lazy(
+  () => import("@/pages/mbb-documents/telecom-operative/Page"),
+);
+const TelecomOperativeFormPage = lazy(
+  () => import("@/pages/mbb-documents/telecom-operative/pages/FormPage"),
+);
+const MaintenanceLogPage = lazy(
+  () => import("@/pages/mbb-documents/maintenance-log/Page"),
+);
+const MaintenanceLogFormPage = lazy(
+  () => import("@/pages/mbb-documents/maintenance-log/pages/FormPage"),
+);
+const ChannelStatusPage = lazy(
+  () => import("@/pages/mbb-documents/channel-status/Page"),
+);
+const ChannelStatusFormPage = lazy(
+  () => import("@/pages/mbb-documents/channel-status/pages/FormPage"),
+);
+const TvRvOutputLogPage = lazy(
+  () => import("@/pages/mbb-documents/tv-rv-output-log/Page"),
+);
+const TvRvOutputLogFormPage = lazy(
+  () => import("@/pages/mbb-documents/tv-rv-output-log/pages/FormPage"),
+);
+
 const TurnoverDocumentsPage = lazy(
   () => import("@/pages/turnover-documents/Page"),
 );
@@ -1350,6 +1388,155 @@ function Router() {
           element: (
             <HasAccess roles={["admin", "mbb", "superadmin"]}>
               <MbbHujjatlarniImzolashPage />
+            </HasAccess>
+          ),
+        },
+        // MBB Reg Documents Routes
+        {
+          path: "mbb/mbb-reg-documents/internal-inbound",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <InternalInboundMbbPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/internal-inbound/create",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <InternalInboundMbbFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/internal-inbound/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <InternalInboundMbbFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/internal-outbound",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <InternalOutboundMbbPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/internal-outbound/create",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <InternalOutboundMbbFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/internal-outbound/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <InternalOutboundMbbFormPage />
+            </HasAccess>
+          ),
+        },
+        // Telecom Operative Routes
+        {
+          path: "mbb/mbb-reg-documents/telecom-operative",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TelecomOperativePage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/telecom-operative/create",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TelecomOperativeFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/telecom-operative/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TelecomOperativeFormPage />
+            </HasAccess>
+          ),
+        },
+        // Maintenance Log Routes
+        {
+          path: "mbb/mbb-reg-documents/maintenance-log",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <MaintenanceLogPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/maintenance-log/create",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <MaintenanceLogFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/maintenance-log/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <MaintenanceLogFormPage />
+            </HasAccess>
+          ),
+        },
+        // Channel Status Routes
+        {
+          path: "mbb/mbb-reg-documents/channel-status",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <ChannelStatusPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/channel-status/create",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <ChannelStatusFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/channel-status/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <ChannelStatusFormPage />
+            </HasAccess>
+          ),
+        },
+        // TV/RV Output Log Routes
+        {
+          path: "mbb/mbb-reg-documents/tv-rv-output-log",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TvRvOutputLogPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/tv-rv-output-log/create",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TvRvOutputLogFormPage />
+            </HasAccess>
+          ),
+        },
+        {
+          path: "mbb/mbb-reg-documents/tv-rv-output-log/edit/:id",
+          element: (
+            <HasAccess roles={["admin", "mbb", "superadmin"]}>
+              <TvRvOutputLogFormPage />
             </HasAccess>
           ),
         },
