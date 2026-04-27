@@ -19,17 +19,32 @@ const createMbbDocumentColumns = (
     key: "document_type",
     dataIndex: "document_type",
     name: t("Hujjat turi"),
-    render: (value: string) => (
-      <span
-        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-          value === "REQUISITION"
-            ? "bg-blue-100 text-blue-800"
-            : "bg-green-100 text-green-800"
-        }`}
-      >
-        {value === "REQUISITION" ? "Talabnoma" : "Ma'lumotnoma"}
-      </span>
-    ),
+    render: (value: string) => {
+      let label = value;
+      let colorClass = "bg-gray-100 text-gray-800";
+
+      if (value === "REQUISITION") {
+        label = "Talabnoma";
+        colorClass = "bg-blue-100 text-blue-800";
+      } else if (value === "MEMO") {
+        label = "3.3 Ma'lumotnoma";
+        colorClass = "bg-green-100 text-green-800";
+      } else if (value === "DECLARATION") {
+        label = "Bildirgi";
+        colorClass = "bg-purple-100 text-purple-800";
+      } else if (value === "MEMO_3_3") {
+        label = "3.3-T Ma'lumotnoma";
+        colorClass = "bg-indigo-100 text-indigo-800";
+      }
+
+      return (
+        <span
+          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${colorClass}`}
+        >
+          {label}
+        </span>
+      );
+    },
   },
   {
     key: "signer",
