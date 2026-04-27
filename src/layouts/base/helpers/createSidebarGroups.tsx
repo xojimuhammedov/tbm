@@ -371,6 +371,11 @@ const createSidebarGroups = (
             url: "tv-rv-output-log",
             roles: ["admin", "mbb", "superadmin"],
           },
+          {
+            title: t("3.3-ma'lumotnoma"),
+            url: "document-mbb-3-3",
+            roles: ["admin", "mbb", "superadmin"],
+          },
         ],
       },
     ],

@@ -205,12 +205,7 @@ const h1745: Handler = {
             : {}),
         },
         responsible_form_3_3: data.payload.basic.responsible_form_3_3 || "",
-        ...(actions.includes("create")
-          ? {
-              responsible_organizing:
-                data.payload.basic.responsible_organizing || "",
-            }
-          : {}),
+        responsible_organizing: data.payload.basic.responsible_organizing || "",
         ...(createPayload ? { create: createPayload } : {}),
         ...(updatePayload ? { update: updatePayload } : {}),
         ...(deletePayload ? { delete: deletePayload } : {}),
