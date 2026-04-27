@@ -21,7 +21,7 @@ const Page = () => {
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       { name: t("MBB Reg Documents"), path: "/mbb/mbb-reg-documents", isActive: false },
-      { name: t("Maintenance Log"), path: "/mbb/mbb-reg-documents/maintenance-log", isActive: true },
+      { name: t("Reja va rejadan tashqari tamirlash sozlash ishlarining natijalari"), path: "/mbb/mbb-reg-documents/maintenance-log", isActive: true },
     ],
     [t],
   );

@@ -14,7 +14,7 @@ const FormPage = () => {
   const breadcrumbs = useMemo<BreadcrumbInterface[]>(
     () => [
       { name: t("MBB Reg Documents"), path: "/mbb/mbb-reg-documents", isActive: false },
-      { name: t("Maintenance Log"), path: "/mbb/mbb-reg-documents/maintenance-log", isActive: false },
+      { name: t("Reja va rejadan tashqari tamirlash sozlash ishlarining natijalarini qayd etish jurnali"), path: "/mbb/mbb-reg-documents/maintenance-log", isActive: false },
       { name: id ? t("Edit") : t("Create"), path: id ? `/mbb/mbb-reg-documents/maintenance-log/edit/${id}` : "/mbb/mbb-reg-documents/maintenance-log/create", isActive: true },
     ],
     [id, t],

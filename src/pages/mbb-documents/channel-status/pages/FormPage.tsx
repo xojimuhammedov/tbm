@@ -19,7 +19,7 @@ const FormPage = () => {
         isActive: false,
       },
       {
-        name: t("Channel Status"),
+        name: t("AI-7, AI-9 va AI-98 ijarasidagi aloqa kanal va oqimlarining holati bo‘yicha jurnali"),
         path: "/mbb/mbb-reg-documents/channel-status",
         isActive: false,
       },

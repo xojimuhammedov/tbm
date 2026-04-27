@@ -61,8 +61,8 @@ const createInternalInboundMbbColumns = (
     name: t("Tashkilot"),
   },
   {
-    key: "summary",
-    dataIndex: "summary",
+    key: "content",
+    dataIndex: "content",
     name: t("Qisqacha mazmuni"),
   },
   {

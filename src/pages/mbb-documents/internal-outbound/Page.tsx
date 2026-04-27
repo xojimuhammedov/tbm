@@ -33,7 +33,7 @@ const Page = () => {
         isActive: false,
       },
       {
-        name: t("Internal Outbound"),
+        name: t("Chiqish hujjatlarini ro‘yxatga olish jurnali"),
         path: "/mbb/mbb-reg-documents/internal-outbound",
         isActive: true,
       },

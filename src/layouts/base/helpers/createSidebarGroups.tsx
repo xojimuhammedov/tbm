@@ -342,32 +342,32 @@ const createSidebarGroups = (
         isActive: isActive("mbb-reg-documents"),
         children: [
           {
-            title: t("Internal Inbound"),
+            title: t("Kirish hujjatlari"),
             url: "internal-inbound",
             roles: ["admin", "mbb", "superadmin"],
           },
           {
-            title: t("Internal Outbound"),
+            title: t("Chiqish hujjatlari"),
             url: "internal-outbound",
             roles: ["admin", "mbb", "superadmin"],
           },
           {
-            title: t("Telecom Operative"),
+            title: t("Telekommunikatsiya tarmog‘i"),
             url: "telecom-operative",
             roles: ["admin", "mbb", "superadmin"],
           },
           {
-            title: t("Maintenance Log"),
+            title: t("Reja/rejadan tashqari tamirlash"),
             url: "maintenance-log",
             roles: ["admin", "mbb", "superadmin"],
           },
           {
-            title: t("Channel Status"),
+            title: t("AI-7, AI-9/AI-98 ijarasida"),
             url: "channel-status",
             roles: ["admin", "mbb", "superadmin"],
           },
           {
-            title: t("TV/RV Output Log"),
+            title: t("TV/RV chiqishlar"),
             url: "tv-rv-output-log",
             roles: ["admin", "mbb", "superadmin"],
           },

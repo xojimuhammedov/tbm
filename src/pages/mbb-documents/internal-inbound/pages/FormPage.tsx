@@ -19,7 +19,7 @@ const FormPage = () => {
         isActive: false,
       },
       {
-        name: t("Internal Inbound"),
+        name: t("Kirish hujjatlarini ro‘yxatga olish jurnali"),
         path: "/mbb/mbb-reg-documents/internal-inbound",
         isActive: false,
       },

@@ -33,7 +33,7 @@ const Page = () => {
         isActive: false,
       },
       {
-        name: t("Channel Status"),
+        name: t("AI-7, AI-9/AI-98 ijarasidagi aloqa kanallar/oqimlar"),
         path: "/mbb/mbb-reg-documents/channel-status",
         isActive: true,
       },
