@@ -24,9 +24,11 @@ export const createInternalOutboundMbbSchema = (
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    recipient_address: z.string().nonempty(
+    doc_num: z.string().optional().default(""),
+    doc_date: z.string().optional().default(""),
+    recipient: z.string().nonempty(
       t("required {{field}}", {
-        field: t("Recipient address"),
+        field: t("Recipient"),
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
@@ -36,13 +38,11 @@ export const createInternalOutboundMbbSchema = (
         ns: config.LANG.NS.VALIDATION,
       }),
     ),
-    notes: z.string().optional().default(""),
-    recipient: z.string().nonempty(
-      t("required {{field}}", {
-        field: t("Recipient"),
-        ns: config.LANG.NS.VALIDATION,
-      }),
-    ),
+    response_reference_number: z.string().optional().default(""),
+    internal_inbound_id: z.string().optional().default(""),
+    assignee: z.string().optional().default(""),
+    deadline: z.string().optional().default(""),
+    status: z.string().optional().default("in_progress"),
   });
 
 export type InternalOutboundMbbDto = z.infer<

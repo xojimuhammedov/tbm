@@ -46,16 +46,6 @@ const createInternalOutboundMbbColumns = (
     render: (val) => dateFormatter(val, DATE),
   },
   {
-    key: "journal_index",
-    dataIndex: "journal_index",
-    name: t("Jurnal indeksi"),
-  },
-  {
-    key: "recipient_address",
-    dataIndex: "recipient_address",
-    name: t("Qabul qiluvchi manzili"),
-  },
-  {
     key: "recipient",
     dataIndex: "recipient",
     name: t("Qabul qiluvchi"),
@@ -64,6 +54,17 @@ const createInternalOutboundMbbColumns = (
     key: "summary",
     dataIndex: "summary",
     name: t("Qisqacha mazmuni"),
+  },
+  {
+    key: "assignee",
+    dataIndex: "assignee",
+    name: t("Ijrochi"),
+  },
+  {
+    key: "deadline",
+    dataIndex: "deadline",
+    name: t("Muddat"),
+    render: (val) => dateFormatter(val, DATE),
   },
   {
     key: "_id",
