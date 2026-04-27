@@ -24,7 +24,11 @@ export const createMbbDocumentSchema = (
       )
       .optional(),
     station: z.string().optional(),
-    no_number: z.string().optional(),
+    no_number_type: z.enum(["MANUAL", "FLOWID", "FLOW_5_1", "LPLT_5_1"]).optional(),
+    no_number_manual: z.string().optional(),
+    no_number_lplt_5_1: z.string().optional(),
+    no_number_flowid: z.array(z.string()).optional(),
+    no_number_flow_5_1: z.array(z.string()).optional(),
     ai_channel: z.string().optional(),
     reason_work: z.string().optional(),
     content_work: z.string().optional(),
@@ -36,21 +40,7 @@ export const createMbbDocumentSchema = (
     ai_agreed: z.string().optional(),
     creator_ip: z.string().optional(),
     creator_mbb: z.string().optional(),
-    application: z
-      .array(
-        z.object({
-          operator_name: z.string().optional(),
-          ranges: z
-            .array(
-              z.object({
-                from: z.string().optional(),
-                to: z.string().optional(),
-              }),
-            )
-            .optional(),
-        }),
-      )
-      .optional(),
+
 
     // MEMO (Ma'lumotnoma) fields
     title: z.string().optional(),
@@ -64,6 +54,7 @@ export const createMbbDocumentSchema = (
           responsible_executor: z.string().optional(),
           customer_details: z.string().optional(),
           comment: z.string().optional(),
+          base_file: z.string().optional(),
         }),
       )
       .optional(),
@@ -78,6 +69,7 @@ export const createMbbDocumentSchema = (
           connection_date: z.union([z.string(), z.date()]).nullish(),
           connection_route: z.string().optional(),
           note: z.string().optional(),
+          base_file: z.string().optional(),
         })
       )
       .optional(),

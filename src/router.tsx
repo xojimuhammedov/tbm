@@ -323,7 +323,7 @@ const TvRvOutputLogFormPage = lazy(
   () => import("@/pages/mbb-documents/tv-rv-output-log/pages/FormPage"),
 );
 const DocumentMbb33Page = lazy(
-  () => import("@/pages/mbb-documents/document-mbb-3-3/Page"),
+  () => import("@/pages/mbb-documents/document-mbb-3-3/Page.tsx"),
 );
 
 const TurnoverDocumentsPage = lazy(

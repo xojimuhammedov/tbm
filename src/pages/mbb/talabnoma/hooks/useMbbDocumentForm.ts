@@ -37,7 +37,11 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       working_condition: "",
       schedule: [{ start_at: "", end_at: "" }],
       station: "",
-      no_number: "",
+      no_number_type: "MANUAL",
+      no_number_manual: "",
+      no_number_lplt_5_1: "",
+      no_number_flowid: [],
+      no_number_flow_5_1: [],
       ai_channel: "",
       reason_work: "",
       content_work: "",
@@ -49,12 +53,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       ai_agreed: "",
       creator_ip: "",
       creator_mbb: "",
-      application: [
-        {
-          operator_name: "",
-          ranges: [{ from: "", to: "" }],
-        },
-      ],
+
       // MEMO defaults
       title: "",
       comment: "",
@@ -66,6 +65,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           responsible_executor: "",
           customer_details: "",
           comment: "",
+          base_file: "",
         },
       ],
       // MEMO_3_3 defaults
@@ -77,6 +77,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           connection_date: "",
           connection_route: "",
           note: "",
+          base_file: "",
         },
       ],
       // DECLARATION defaults
@@ -99,14 +100,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
     name: "schedule",
   });
 
-  const {
-    fields: applicationFields,
-    append: appendApplication,
-    remove: removeApplication,
-  } = useFieldArray({
-    control: form.control,
-    name: "application",
-  });
+
 
   // MEMO field arrays
   const {
@@ -169,7 +163,11 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           working_condition,
           schedule,
           station,
-          no_number,
+          no_number_type,
+          no_number_manual,
+          no_number_lplt_5_1,
+          no_number_flowid,
+          no_number_flow_5_1,
           ai_channel,
           reason_work,
           content_work,
@@ -181,14 +179,17 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           ai_agreed,
           creator_ip,
           creator_mbb,
-          application,
         } = rest;
 
         payload = {
           working_condition,
           schedule,
           station,
-          no_number,
+          no_number_type,
+          no_number_manual,
+          no_number_lplt_5_1,
+          no_number_flowid,
+          no_number_flow_5_1,
           ai_channel,
           reason_work,
           content_work,
@@ -200,7 +201,6 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
           ai_agreed,
           creator_ip,
           creator_mbb,
-          application,
         };
       } else if (document_type === "MEMO_3_3") {
         // Build MEMO_3_3 payload
@@ -262,6 +262,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       responsible_executor: "",
       customer_details: "",
       comment: "",
+      base_file: "",
     });
   }, [appendData]);
 
@@ -281,6 +282,7 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
       connection_date: "",
       connection_route: "",
       note: "",
+      base_file: "",
     });
   }, [appendTMemoData]);
 
@@ -298,11 +300,9 @@ const useMbbDocumentForm = ({ id, onSave }: MbbDocumentFormProps = {}) => {
     documentType,
     // REQUISITION
     scheduleFields,
-    applicationFields,
     appendSchedule,
     removeSchedule,
-    appendApplication,
-    removeApplication,
+
     // MEMO
     dataFields,
     handleAppendData,

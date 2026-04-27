@@ -4,6 +4,7 @@ import { Plus, Trash2 } from "lucide-react";
 import useMbbDocumentForm from "@/pages/mbb/talabnoma/hooks/useMbbDocumentForm.ts";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import { FileUploaderCell } from "./FileUploaderCell";
 import { useWatch } from "react-hook-form";
 
 export const MemoFormSection = ({
@@ -93,6 +94,12 @@ export const MemoFormSection = ({
           <th
             rowSpan={2}
             className="border border-gray-300 px-4 py-3 text-xs text-center w-12"
+          >
+            Hujjat
+          </th>
+          <th
+            rowSpan={2}
+            className="border border-gray-300 px-4 py-3 text-xs text-center w-12"
           ></th>
         </tr>
       </thead>
@@ -140,6 +147,12 @@ export const MemoFormSection = ({
                 name={`data.${index}.comment`}
                 control={form.control}
                 className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
+              />
+            </td>
+            <td className="border border-gray-300 px-2 py-2 text-center">
+              <FileUploaderCell
+                control={form.control}
+                name={`data.${index}.base_file`}
               />
             </td>
             <td className="border border-gray-300 px-2 py-2 text-center">

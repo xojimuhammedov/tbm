@@ -19,11 +19,8 @@ const MbbDocumentFormPage = () => {
     form,
     documentType,
     scheduleFields,
-    applicationFields,
     appendSchedule,
     removeSchedule,
-    appendApplication,
-    removeApplication,
     dataFields,
     handleAppendData,
     handleRemoveData,
@@ -95,11 +92,8 @@ const MbbDocumentFormPage = () => {
             <RequisitionFormSection
               form={form}
               scheduleFields={scheduleFields}
-              applicationFields={applicationFields}
               appendSchedule={appendSchedule}
               removeSchedule={removeSchedule}
-              appendApplication={appendApplication}
-              removeApplication={removeApplication}
             />
           ) : documentType === "MEMO" ? (
             <MemoFormSection

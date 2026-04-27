@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { MyInput, MyDatePicker } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui/button";
 import { Plus, Trash2 } from "lucide-react";
+import { FileUploaderCell } from "./FileUploaderCell";
 import { MbbDocumentDto } from "../../schemas/createMbbDocumentSchema";
 
 interface TMemoFormSectionProps {
@@ -94,6 +95,12 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
               >
                 Изох*
               </th>
+              <th
+                rowSpan={2}
+                className="border border-gray-300 px-4 py-3 text-xs text-center w-12"
+              >
+                Hujjat
+              </th>
               <th className="border border-gray-300 px-2 py-3 w-12"></th>
             </tr>
           </thead>
@@ -131,6 +138,12 @@ export const TMemoFormSection: React.FC<TMemoFormSectionProps> = ({
                     name={`rows.${index}.note`}
                     className="border-0 border-b border-gray-300 rounded-none focus-visible:ring-0"
                     placeholder="No issues"
+                  />
+                </td>
+                <td className="border border-gray-300 px-2 py-2 text-center">
+                  <FileUploaderCell
+                    control={form.control}
+                    name={`rows.${index}.base_file`}
                   />
                 </td>
                 <td className="border border-gray-300 px-2 py-2 text-center">

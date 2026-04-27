@@ -1,91 +1,232 @@
-import { MyInput, MyTextarea } from "dgz-ui-shared/components/form";
+import { MyInput, MyTextarea, MySelect } from "dgz-ui-shared/components/form";
 import { Button } from "dgz-ui";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Search, Loader2 } from "lucide-react";
 import useMbbDocumentForm from "@/pages/mbb/talabnoma/hooks/useMbbDocumentForm.ts";
 import { MyDateTimePicker } from "@/pages/tbp/hujjatlar/components/form/MyDateTimePicker";
-import { useFieldArray, Control } from "react-hook-form";
+import { Control, useWatch, useController } from "react-hook-form";
 import { MbbDocumentDto } from "../../schemas/createMbbDocumentSchema";
+import { useState, useCallback, useRef, useEffect } from "react";
+import debounce from "lodash/debounce";
+import { request } from "@/request";
 
-const ApplicationBlock = ({
+const FlowSearchSelect = ({
   control,
-  index,
-  removeApplication,
+  name,
 }: {
   control: Control<MbbDocumentDto>;
-  index: number;
-  removeApplication: (i: number) => void;
+  name: "no_number_flowid" | "no_number_flow_5_1";
 }) => {
-  const { fields, append, remove } = useFieldArray({
+  const [searchTerm, setSearchTerm] = useState("");
+  const [results, setResults] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [flowCodeMap, setFlowCodeMap] = useState<Record<string, string>>({});
+
+  const { field } = useController({
     control,
-    name: `application.${index}.ranges`,
+    name,
   });
 
+  const selectedIds = (field.value || []) as string[];
+
+  const debouncedSearch = useCallback(
+    debounce(async (val: string) => {
+      if (!val || val.length < 2) {
+        setResults([]);
+        setDropdownOpen(false);
+        return;
+      }
+      setIsLoading(true);
+      try {
+        const response = await request.get(
+          `/api/flows/get-for-inbedding/${val}`,
+        );
+        setResults(response?.data?.data || []);
+        setDropdownOpen(true);
+      } catch (error) {
+        console.error("Error fetching flows:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 500),
+    [],
+  );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setSearchTerm(val);
+    debouncedSearch(val);
+  };
+
+  const handleSelect = (item: any) => {
+    if (!selectedIds.includes(item._id)) {
+      setFlowCodeMap((prev) => ({ ...prev, [item._id]: item.flow_code }));
+      field.onChange([...selectedIds, item._id]);
+    }
+    setSearchTerm("");
+    setResults([]);
+    setDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col gap-3 relative">
-      <div className="absolute right-3 top-3">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => removeApplication(index)}
-          className="text-red-400 hover:text-red-600 h-6 w-6"
-        >
-          <Trash2 size={16} />
-        </Button>
-      </div>
-      <div className="w-56 pr-8">
-        <MyInput
-          label="Operator nomi"
-          name={`application.${index}.operator_name`}
-          control={control}
-          placeholder="Masalan: Ucell"
-          className="h-9 bg-white"
-        />
-      </div>
-      <div className="pt-2">
-        <label className="text-xs font-semibold text-gray-500 mb-2 block">
-          Oraliqlar (Ranges)
-        </label>
-        <div className="flex flex-col gap-3">
-          {fields.map((f, rIndex) => (
-            <div key={f.id} className="flex items-center gap-3">
-              <div className="w-24">
-                <MyInput
-                  name={`application.${index}.ranges.${rIndex}.from`}
-                  control={control}
-                  placeholder="2393"
-                  className="h-8 bg-white"
-                />
-              </div>
-              <span className="text-gray-400">-</span>
-              <div className="w-24">
-                <MyInput
-                  name={`application.${index}.ranges.${rIndex}.to`}
-                  control={control}
-                  placeholder="2400"
-                  className="h-8 bg-white"
-                />
-              </div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 text-red-500 hover:bg-red-50"
-                onClick={() => remove(rIndex)}
-              >
-                <Trash2 size={14} />
-              </Button>
-            </div>
-          ))}
+    <div className="w-full">
+      <div className="relative group mb-4">
+        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-blue-600 text-gray-400">
+          {isLoading ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            <Search className="h-5 w-5" />
+          )}
         </div>
-        <Button
-          type="button"
-          size="sm"
-          className="mt-3 h-7 text-xs border-dashed text-slate-500"
-          onClick={() => append({ from: "", to: "" })}
-        >
-          <Plus size={14} className="mr-1" /> Oraliq qo'shish
-        </Button>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleInputChange}
+          onFocus={() => results?.length > 0 && setDropdownOpen(true)}
+          className="block w-full pl-12 pr-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all placeholder:text-gray-400 text-sm"
+          placeholder="Flow ID yoki kodini qidiring..."
+        />
+        {dropdownOpen && results?.length > 0 && (
+          <div
+            ref={dropdownRef}
+            className="absolute z-50 mt-1 w-full bg-white border border-gray-100 rounded-lg shadow-xl max-h-[250px] overflow-y-auto"
+          >
+            <div className="p-2 space-y-1">
+              {results?.map((item) => (
+                <button
+                  key={item._id}
+                  type="button"
+                  onClick={() => handleSelect(item)}
+                  className="w-full text-left p-3 hover:bg-blue-50/50 rounded-lg transition-colors border border-transparent hover:border-blue-100 group"
+                >
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      {item.flow_code}
+                    </span>
+                    <span className="text-[11px] font-medium px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full group-hover:bg-blue-100 group-hover:text-blue-700">
+                      {item.speed}
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 truncate">
+                    {item.consumer}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        {selectedIds.map((currentId: string, index: number) => {
+          return (
+            <div
+              key={currentId}
+              className="flex items-center gap-3 p-2 bg-gray-50 border border-gray-200 rounded-lg"
+            >
+              <div className="flex-1 min-w-0">
+                <input
+                  value={flowCodeMap[currentId] || currentId || ""}
+                  readOnly
+                  className="border-none focus:ring-0 h-6 bg-transparent font-mono text-sm w-full cursor-default outline-none text-gray-700"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  const newValues = [...selectedIds];
+                  newValues.splice(index, 1);
+                  field.onChange(newValues);
+                }}
+                className="text-gray-400 hover:text-red-500 p-1"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const NoNumberSection = ({ control }: { control: Control<MbbDocumentDto> }) => {
+  const type = useWatch({
+    control,
+    name: "no_number_type",
+  });
+
+  const options = [
+    { label: "MANUAL", value: "MANUAL" },
+    { label: "FLOWID", value: "FLOWID" },
+    { label: "FLOW_5_1", value: "FLOW_5_1" },
+    { label: "LPLT_5_1", value: "LPLT_5_1" },
+  ];
+
+  return (
+    <div className="flex flex-col md:flex-row md:items-start gap-4">
+      <label className="font-semibold whitespace-nowrap md:w-56 text-gray-900 pt-2">
+        4. NO raqami:
+      </label>
+      <div className="flex-1 max-w-2xl space-y-4">
+        <div className="w-64">
+          <MySelect
+            name="no_number_type"
+            control={control}
+            options={options}
+            placeholder="Tanlang"
+          />
+        </div>
+
+        {type === "MANUAL" && (
+          <div>
+            <MyInput
+              name="no_number_manual"
+              control={control}
+              className="border-0 border-b border-gray-300 rounded-none h-8 px-1 focus-visible:ring-0"
+              placeholder="To'xtalish kuzatiladigan kanallar ilovada:"
+            />
+            <p className="text-[11px] text-gray-500 mt-1 w-full">
+              (uzatish liniyasi, liniyaviy/gruppa traktlar va x.k)
+            </p>
+          </div>
+        )}
+
+        {type === "LPLT_5_1" && (
+          <div>
+            <MyInput
+              name="no_number_lplt_5_1"
+              control={control}
+              className="border-0 border-b border-gray-300 rounded-none h-8 px-1 focus-visible:ring-0"
+              placeholder="LPLT 5_1 qiymati"
+            />
+            <p className="text-[11px] text-gray-500 mt-1 w-full">
+              (LPLT 5_1 bo'yicha qiymat)
+            </p>
+          </div>
+        )}
+
+        {type === "FLOWID" && (
+          <FlowSearchSelect control={control} name="no_number_flowid" />
+        )}
+
+        {type === "FLOW_5_1" && (
+          <FlowSearchSelect control={control} name="no_number_flow_5_1" />
+        )}
       </div>
     </div>
   );
@@ -94,19 +235,13 @@ const ApplicationBlock = ({
 export const RequisitionFormSection = ({
   form,
   scheduleFields,
-  applicationFields,
   appendSchedule,
   removeSchedule,
-  appendApplication,
-  removeApplication,
 }: {
   form: ReturnType<typeof useMbbDocumentForm>["form"];
   scheduleFields: ReturnType<typeof useMbbDocumentForm>["scheduleFields"];
-  applicationFields: ReturnType<typeof useMbbDocumentForm>["applicationFields"];
   appendSchedule: ReturnType<typeof useMbbDocumentForm>["appendSchedule"];
   removeSchedule: ReturnType<typeof useMbbDocumentForm>["removeSchedule"];
-  appendApplication: ReturnType<typeof useMbbDocumentForm>["appendApplication"];
-  removeApplication: ReturnType<typeof useMbbDocumentForm>["removeApplication"];
 }) => (
   <>
     <div className="flex flex-col items-center justify-center gap-2 text-lg font-bold mb-8">
@@ -177,10 +312,10 @@ export const RequisitionFormSection = ({
               </div>
             ))}
             <Button
-              type="button"
-              size="sm"
-              className="w-fit text-xs border-dashed"
-              onClick={() => appendSchedule({ start_at: "", end_at: "" })}
+               type="button"
+               size="sm"
+               className="w-fit text-xs border-dashed"
+               onClick={() => appendSchedule({ start_at: "", end_at: "" })}
             >
               <Plus size={14} className="mr-1" /> Vaqt qo'shish
             </Button>
@@ -210,52 +345,8 @@ export const RequisitionFormSection = ({
       </div>
 
       {/* 4 */}
-      <div className="flex flex-col md:flex-row md:items-center gap-4">
-        <label className="font-semibold whitespace-nowrap md:w-56 text-gray-900">
-          4. NO raqami:
-        </label>
-        <div className="flex-1 max-w-2xl">
-          <MyInput
-            name="no_number"
-            control={form.control}
-            className="border-0 border-b border-gray-300 rounded-none h-8 px-1 focus-visible:ring-0"
-            placeholder="To'xtalish kuzatiladigan kanallar ilovada:"
-          />
-          <p className="text-[11px] text-gray-500 mt-1 text-center w-full">
-            (uzatish liniyasi, liniyaviy/gruppa traktlar va x.k)
-          </p>
-        </div>
-      </div>
+      <NoNumberSection control={form.control} />
 
-      {/* Application Data nested array */}
-      <div className="ml-0 md:ml-60 border-l-[3px] border-indigo-200 pl-6 py-2 space-y-4 max-w-2xl">
-        <div className="flex items-center justify-between mb-2">
-          <h4 className="text-[15px] font-bold text-indigo-900">
-            Kanallar ilovasi (Array):
-          </h4>
-          <Button
-            type="button"
-            className="h-8 text-xs font-semibold text-indigo-700 border-indigo-200 hover:bg-indigo-50"
-            onClick={() =>
-              appendApplication({
-                operator_name: "",
-                ranges: [{ from: "", to: "" }],
-              })
-            }
-          >
-            <Plus size={14} className="mr-1" /> Operator qo'shish
-          </Button>
-        </div>
-
-        {applicationFields.map((field, index) => (
-          <ApplicationBlock
-            key={field.id}
-            control={form.control}
-            index={index}
-            removeApplication={removeApplication}
-          />
-        ))}
-      </div>
 
       {/* 5 */}
       <div className="flex flex-col md:flex-row md:items-center gap-4">

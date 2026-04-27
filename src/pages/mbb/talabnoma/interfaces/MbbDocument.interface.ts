@@ -38,7 +38,11 @@ export interface RequisitionPayload {
   working_condition?: string;
   schedule?: MbbSchedule[];
   station?: string;
-  no_number?: string;
+  no_number_type?: "MANUAL" | "FLOWID" | "FLOW_5_1" | "LPLT_5_1";
+  no_number_manual?: string;
+  no_number_lplt_5_1?: string;
+  no_number_flowid?: string[];
+  no_number_flow_5_1?: string[];
   ai_channel?: string;
   reason_work?: string;
   content_work?: string;
@@ -50,7 +54,6 @@ export interface RequisitionPayload {
   ai_agreed?: string;
   creator_ip?: string;
   creator_mbb?: string;
-  application?: MbbApplication[];
   status?: string;
 }
 
@@ -70,6 +73,7 @@ export interface TMemoRow {
   connection_date?: string;
   connection_route?: string;
   note?: string;
+  base_file?: string;
 }
 
 export interface DeclarationPayload {
@@ -86,15 +90,6 @@ export interface MbbSchedule {
   end_at: string;
 }
 
-export interface MbbApplication {
-  operator_name: string;
-  ranges: MbbRange[];
-}
-
-export interface MbbRange {
-  from: string;
-  to: string;
-}
 
 export interface MbbOrderData {
   _id?: string;
@@ -104,4 +99,5 @@ export interface MbbOrderData {
   responsible_executor: string;
   customer_details: string;
   comment: string;
+  base_file?: string;
 }
