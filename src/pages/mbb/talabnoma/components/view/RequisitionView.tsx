@@ -17,16 +17,6 @@ export const RequisitionView = ({ document }: { document: RequisitionDocument })
       .join(", ");
   };
 
-  const getApplicationsText = () => {
-    if (!payload?.application || payload.application.length === 0) return "";
-    return payload.application
-      .map((app) => {
-        const ranges = app.ranges?.map((r) => `${r.from}-${r.to}`).join(", ");
-        return `${app.operator_name}: ${ranges}`;
-      })
-      .join(" | ");
-  };
-
   return (
     <>
       <div className="text-center mb-10">
@@ -73,23 +63,6 @@ export const RequisitionView = ({ document }: { document: RequisitionDocument })
           </div>
           <div className="text-[12px] text-center w-full block ml-8 mt-1 italic leading-none">
             (Magistral nomi, № IP)
-          </div>
-        </div>
-
-        {/* 4 */}
-        <div className="flex flex-col">
-          <div>
-            <span className="min-w-[24px] inline-block">4.</span>
-            <span>NO raqami:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <span className="font-bold">{payload?.no_number || ""}</span>
-          </div>
-          <div className="text-[12px] text-center w-full block ml-8 mt-1 italic leading-none">
-            (uzatish liniyasi, liniyaviy/gruppa traktlar va x.k)
-            {payload?.application && payload.application.length > 0 && (
-              <span className="block font-bold no-italic text-[14px] mt-2">
-                Kanallar: {getApplicationsText()}
-              </span>
-            )}
           </div>
         </div>
 
